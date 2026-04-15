@@ -1,0 +1,4 @@
+interface:
+  display_name: "厚黑式判断"
+  short_description: "看清局面、筹码与试探，体面但不吃亏"
+  default_prompt: "请用厚黑式局面判断的方法，帮我拆这段关系或对话里的真实意图、筹码和应对方式。"

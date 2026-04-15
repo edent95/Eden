@@ -1,0 +1,4 @@
+interface:
+  display_name: "孙子式策略"
+  short_description: "先判断胜势，再决定打、拖、退、绕"
+  default_prompt: "请用孙子兵法的策略框架，帮我判断这个局该怎么布局、该不该正面打，以及最稳的赢法是什么。"
