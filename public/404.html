@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting...</title>
+    <script>
+      // GitHub Pages project site SPA redirect.
+      // Keep the first path segment (repo name), move the rest into ?p=.
+      var pathSegmentsToKeep = 1;
+
+      var l = window.location;
+      var pathname = l.pathname.split('/').filter(Boolean);
+      var kept = pathname.slice(0, pathSegmentsToKeep);
+      var rest = pathname.slice(pathSegmentsToKeep).join('/');
+
+      var base = l.origin + '/' + (kept.length ? kept.join('/') + '/' : '');
+      var targetPath = rest ? '/' + rest : '/';
+      var redirect = base + '?p=' + encodeURIComponent(targetPath) + l.hash;
+
+      window.location.replace(redirect);
+    </script>
+  </head>
+  <body></body>
+</html>
