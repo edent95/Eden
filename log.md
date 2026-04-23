@@ -16,6 +16,30 @@
 
 ## Entries
 
+### 2026-04-23 15:22
+
+- 类型：代码 / 前台 / 静态资源路径修复
+- 改动：在 `App.tsx` 新增 `resolveAssetPath(baseUrl, value)`，并将 `Analog Tech` 页面及 `archive` 页面的本地图片渲染统一改为 base-aware 路径拼接（不再直接使用根路径绝对地址）。
+- 原因：线上访问 `analog-tech` 时出现图片空白，根因是根路径资源在 GitHub Pages 子路径部署下会指向错误地址。
+- 影响：`/analog-tech` 与 `/archive/*` 页面本地图片在本地与 GitHub Pages 子路径场景都能正确加载。
+- 后续：部署后优先验证 `.../analog-tech` 与 `.../archive/soccerking-project` 图片是否正常。
+
+### 2026-04-23 15:20
+
+- 类型：代码 / 前台 / Life 页面视觉净化
+- 改动：将 `/life` 页面 YouTube 显示方式从 iframe 播放器改为自定义封面卡（`thumbnailSrc`）+ 中央播放 CTA + 点击外链打开 YouTube，移除页面内嵌播放器。
+- 原因：YouTube iframe 的顶部/底部 overlay 属于平台层 UI，参数方案无法稳定彻底去除。
+- 影响：页面内视频卡片不再出现 YouTube overlay；视觉更干净一致，播放入口仍保留。
+- 后续：若需要站内直接播放且完全可控，可追加自托管视频或自建播放器源。
+
+### 2026-04-23 15:16
+
+- 类型：代码 / 前台 / Life 页面视频嵌入
+- 改动：在 `App.tsx` 新增 `createYouTubeEmbedSrc`，为 `/life` 页面三个 YouTube iframe 统一添加 `controls=0`、`modestbranding=1`、`iv_load_policy=3`、`rel=0` 等参数，尽量移除播放器顶部和底部干扰元素。
+- 原因：用户反馈 `/life` 页视频卡片中出现不希望展示的 YouTube 顶部标题条与底部控件条。
+- 影响：页面展示更干净，视频卡片视觉更接近纯封面展示；外链“在 YouTube 打开”仍保留完整跳转能力。
+- 后续：部署后在 `http://localhost:4180/life` 与 GitHub Pages `/life` 实测三条视频卡片，确认是否仍有平台强制保留元素。
+
 ### 2026-04-15 17:40
 
 - 类型：代码 / 前台 / 多页面双语

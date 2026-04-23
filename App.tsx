@@ -504,17 +504,17 @@ const lifeVideos = [
   {
     title: 'Pulau Tioman',
     href: 'https://www.youtube.com/watch?v=WMqBLHCMtps',
-    embedSrc: 'https://www.youtube.com/embed/WMqBLHCMtps',
+    thumbnailSrc: 'https://i.ytimg.com/vi/WMqBLHCMtps/hqdefault.jpg',
   },
   {
     title: 'Desaru Surfing',
     href: 'https://www.youtube.com/watch?v=Ingu-WLZWhA',
-    embedSrc: 'https://www.youtube.com/embed/Ingu-WLZWhA',
+    thumbnailSrc: 'https://i.ytimg.com/vi/Ingu-WLZWhA/hqdefault.jpg',
   },
   {
     title: 'Pulau Kapas',
     href: 'https://www.youtube.com/watch?v=qC8KuD9n14g',
-    embedSrc: 'https://www.youtube.com/embed/qC8KuD9n14g',
+    thumbnailSrc: 'https://i.ytimg.com/vi/qC8KuD9n14g/hqdefault.jpg',
   },
 ];
 
@@ -712,6 +712,11 @@ const joinBasePath = (base: string, path: string) => {
   return `${safeBase}${safePath}`;
 };
 
+const resolveAssetPath = (base: string, value: string) => {
+  if (/^(?:[a-z]+:)?\/\//i.test(value)) return value;
+  return joinBasePath(base, value);
+};
+
 type Language = 'en' | 'zh';
 
 const LanguageToggle: React.FC<{
@@ -742,9 +747,10 @@ const LanguageToggle: React.FC<{
 
 const AnalogTechFullPage: React.FC<{
   homeHref: string;
+  baseUrl: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
-}> = ({ homeHref, language, setLanguage }) => {
+}> = ({ homeHref, baseUrl, language, setLanguage }) => {
   const isZh = language === 'zh';
   return (
     <div className="min-h-screen bg-stone-50 text-stone-800 selection:bg-stone-900 selection:text-white">
@@ -776,7 +782,12 @@ const AnalogTechFullPage: React.FC<{
           <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
             {analogTechGalleryPhotos.map((photo) => (
               <figure key={photo.src} className="overflow-hidden rounded-xl border border-stone-200 bg-white shadow-sm">
-                <img src={photo.src} alt={photo.alt} className="h-80 w-full object-cover" loading="lazy" />
+                <img
+                  src={resolveAssetPath(baseUrl, photo.src)}
+                  alt={photo.alt}
+                  className="h-80 w-full object-cover"
+                  loading="lazy"
+                />
                 <figcaption className="px-4 py-3 text-sm text-stone-600">{photo.caption}</figcaption>
               </figure>
             ))}
@@ -833,17 +844,28 @@ const LifeFullPage: React.FC<{
                     <ExternalLink size={14} />
                   </a>
                 </div>
-                <div className="mt-4 overflow-hidden rounded-xl border border-stone-200 bg-black">
-                  <iframe
-                    src={video.embedSrc}
-                    title={video.title}
-                    className="aspect-video w-full"
-                    loading="lazy"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                  />
-                </div>
+                <a
+                  href={video.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group mt-4 block overflow-hidden rounded-xl border border-stone-200 bg-black"
+                >
+                  <div className="relative aspect-video w-full">
+                    <img
+                      src={video.thumbnailSrc}
+                      alt={`${video.title} thumbnail`}
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                      loading="lazy"
+                    />
+                    <div className="pointer-events-none absolute inset-0 bg-black/20 transition-colors group-hover:bg-black/10" />
+                    <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                      <span className="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-stone-900 shadow">
+                        {isZh ? '在 YouTube 播放' : 'Play on YouTube'}
+                        <ExternalLink size={14} />
+                      </span>
+                    </div>
+                  </div>
+                </a>
               </section>
             ))}
           </div>
@@ -855,10 +877,11 @@ const LifeFullPage: React.FC<{
 
 const ArchivedWorkPage: React.FC<{
   homeHref: string;
+  baseUrl: string;
   work: (typeof archivedWorks)[number];
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
-}> = ({ homeHref, work, language, setLanguage }) => {
+}> = ({ homeHref, baseUrl, work, language, setLanguage }) => {
   const isZh = language === 'zh';
   return (
     <div className="min-h-screen bg-stone-50 text-stone-800 selection:bg-stone-900 selection:text-white">
@@ -898,7 +921,7 @@ const ArchivedWorkPage: React.FC<{
             {work.imagePath && (
               <figure className="mt-6 overflow-hidden rounded-xl border border-stone-200 bg-stone-100">
                 <img
-                  src={work.imagePath}
+                  src={resolveAssetPath(baseUrl, work.imagePath)}
                   alt={work.imageAlt ?? `${work.title} archived visual`}
                   className="h-auto w-full object-cover"
                   loading="lazy"
@@ -915,7 +938,7 @@ const ArchivedWorkPage: React.FC<{
                 {work.imageGallery.map((image) => (
                   <figure key={image.src} className="overflow-hidden rounded-xl border border-stone-200 bg-stone-100">
                     <img
-                      src={image.src}
+                      src={resolveAssetPath(baseUrl, image.src)}
                       alt={image.alt}
                       className="h-56 w-full object-cover"
                       loading="lazy"
@@ -1272,7 +1295,7 @@ const App: React.FC = () => {
   }
 
   if (isAnalogTechFullPage) {
-    return <AnalogTechFullPage homeHref={homeHref} language={language} setLanguage={setLanguage} />;
+    return <AnalogTechFullPage homeHref={homeHref} baseUrl={baseUrl} language={language} setLanguage={setLanguage} />;
   }
 
   if (isLifeFullPage) {
@@ -1283,6 +1306,7 @@ const App: React.FC = () => {
     return (
       <ArchivedWorkPage
         homeHref={homeHref}
+        baseUrl={baseUrl}
         work={activeArchivedWork}
         language={language}
         setLanguage={setLanguage}
