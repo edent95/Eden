@@ -19,7 +19,7 @@ Eden 的个人站：单页式 React 应用，多路由、中英双语，用于�
 
 - 对外展示：主页、时间线、品牌指南、图库、Life 视频区、项目归档与详情页。
 - 技术叙事：`/jiju-pet` 等长文区块说明 0→1 构建方法。
-- 运营侧静态页：根目录的 `mnm11.html`、`Promotion Page.html` 由主站链出（路径见 `App.tsx`），不参与 React 路由，部署时与 `index.html` 一同落在站点根下。
+- 运营侧静态页：`public/mnm11.html` 与 `public/Promotion Page.html`（Vite 会挂到与 `index` 同级的站根 URL）由主站链出，不参与 React 路由。本地需 `http://localhost:4180/mnm11.html` 等形式访问，勿放在仓库根（dev 不提供服务）。
 
 ---
 

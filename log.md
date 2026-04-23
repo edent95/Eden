@@ -16,6 +16,13 @@
 
 ## Entries
 
+### 2026-04-24 (mnm11 / Promotion：移入 public，本地可打开)
+
+- 类型：结构
+- 改动：将 `mnm11.html` 与 `Promotion Page.html` 从仓库根目录 `git mv` 至 `public/`，Vite 开发时按静态资源挂在站点根，故 `http://localhost:4180/mnm11.html` 与 `.../Promotion%20Page.html` 可访问；`npm run build` 仍会复制到 `dist/` 根，线上路径不变。
+- 原因：Vite 仅对 `index.html` 与 `public/` 提供 dev 下访问，根目录裸 HTML 不会出现在 `:4180`。
+- 影响：`App.tsx` 内原有 `/mnm11.html` 等链接仍有效；无需改业务路径。
+
 ### 2026-04-24 (部署：自定义域根路径 + 修复 /Eden/ 资源 404)
 
 - 类型：代码 / 部署
