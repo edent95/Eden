@@ -16,6 +16,12 @@
 
 ## Entries
 
+### 2026-04-24 (mnm11：Claim Combo CTA 改链回主站)
+
+- 类型：内容 / 链接
+- 改动：`public/mnm11.html` 顶部 CTA 由 `https://t.me/EdisonTan97` 改为同目录 `index.html`（主站首页），并去掉新窗口打开（站内跳转）。
+- 原因：用户要求用主页替代该 Telegram 链接。
+
 ### 2026-04-24 (mnm11 / Promotion：移入 public，本地可打开)
 
 - 类型：结构
