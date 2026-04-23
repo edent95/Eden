@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>🎯 1+1 Bonus Key Combo Builder
+</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fafaf9; --card:#ffffff; --ink:#1c1917; --muted:#f5f5f4; --brand:#7bdcb5; --accent:#ffa340ed;
+    --border:#e7e5e4; --ok:#16a34a; --warn:#f59e0b;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif}
+  
+  /* FIX 1: Make header fixed, full width, and fully opaque */
+  header{
+    position:static;
+    background:rgba(250,250,249,.92);
+    padding:14px 16px;
+    border-bottom:1px solid var(--border);
+  }
+  
+
+  h1{margin:0 0 6px;color:#1c1917;font-weight:900;letter-spacing:.2px}
+  .sub{margin:0;color:#78716c;font-size:.9rem}
+  
+  /* Remove excessive padding from .wrap now that spacer is used */
+  .wrap{
+    max-width:1120px;
+    margin:0 auto 120px;
+    padding:0 16px;
+    display:grid;
+    gap:18px;
+    grid-template-columns:1fr;
+  }
+  @media (min-width:1024px){
+    .wrap{padding-top:0;}
+  }
+  
+  .bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px;font-size:.85rem}
+  .pill{background:var(--muted);border:1px solid var(--border);border-radius:999px;padding:6px 10px;color:#57534e}
+  .lang{margin-left:auto}
+  .lang button{background:#fff;border:1px solid var(--border);color:#57534e;padding:6px 10px;border-radius:999px;cursor:pointer}
+  .lang button.active{background:var(--brand);color:#1c1917;border-color:#6fcaa4}
+
+  /* cards */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+  .card{position:relative;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px;min-height:146px;cursor:pointer;transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease}
+  .card:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(28,25,23,.08)}
+  .card.selected{border-color:var(--brand);box-shadow:0 0 0 2px rgb(123 220 181 / .25) inset}
+  .card.disabled{opacity:.45;filter:grayscale(.35)}
+  .overlay{position:absolute;inset:0;display:grid;place-items:center;background:rgb(245 245 244 / .88);color:#57534e;font-size:.8rem;text-align:center;padding:10px;border-radius:14px;pointer-events:none}
+  .logo{height:38px;object-fit:contain;max-width:100%;margin:0 auto}
+  .logo-emoji{height:38px;display:grid;place-items:center;font-size:30px;line-height:1;margin:0 auto}
+  .chip-emoji,.used-emoji{width:24px;height:24px;display:grid;place-items:center;font-size:20px;line-height:1}
+  .slot-emoji{font-size:30px;line-height:1}
+  .name{font-weight:800;font-size:1rem;text-align:center}
+  .tnc{font-size:.78rem;color:#78716c;min-height:32px;text-align:center}
+  .foot{display:flex;justify-content:space-between;align-items:center;margin-top:auto;gap:8px}
+  .badge{background:#f5f5f4;border:1px solid #e7e5e4;color:#44403c;border-radius:999px;padding:2px 8px;font-size:.68rem}
+  .count{background:#243150;border:1px solid #3b4b73;color:#e6efff;border-radius:6px;padding:2px 8px;font-size:.68rem}
+  .btn-use{background:#1c1917;color:#fafaf9;border:none;border-radius:9px;padding:6px 10px;font-size:.72rem;cursor:pointer}
+  .btn-use:hover{filter:brightness(1.1)}
+
+  /* right column */
+  aside .phone{border:1px solid var(--border);border-radius:26px;background:#fff;padding:12px;max-width:360px;margin:0 auto}
+  .notch{width:120px;height:16px;margin:0 auto 8px;background:#06070c;border:1px solid #1f2738;border-bottom:none;border-radius:0 0 10px 10px}
+  .screen{background:#fafaf9;border:1px solid var(--border);border-radius:18px;padding:10px;min-height:480px}
+  .banner{height:48px;border-radius:10px;border:1px solid var(--border);background:linear-gradient(135deg,#f5f5f4,#fff);display:flex;align-items:center;overflow:hidden;margin-bottom:8px}
+  .marquee{white-space:nowrap;animation:scroll 12s linear infinite;color:#44403c;font-weight:900;letter-spacing:.18em;text-transform:uppercase;opacity:.95}
+  .marquee span{margin-right:32px}
+  @keyframes scroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+  .slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .tile{height:84px;border:1px solid var(--border);background:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+  .tile.big{grid-column:1/-1;height:108px}
+  .tile img{max-width:86%;max-height:78%;object-fit:contain}
+  .slot-label{position:absolute;right:6px;bottom:6px;background:#fafaf9;border:1px solid var(--border);color:#57534e;border-radius:7px;padding:1px 6px;font-size:10px}
+
+  .panel{margin-top:14px;background:#fff;border:1px solid var(--border);border-radius:14px;padding:12px}
+  .panel h3{margin:0 0 8px;color:#44403c}
+  .chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+  .chip{display:flex;align-items:center;gap:10px;background:#fafaf9;border:1px solid var(--border);border-radius:12px;padding:10px 12px;font-weight:800}
+  .chip img{height:22px;width:auto}
+  .chip .x{margin-left:auto;background:#f5f5f4;border:none;color:#44403c;border-radius:999px;width:24px;height:24px;display:grid;place-items:center;cursor:pointer}
+  .chip .use{background:var(--brand);border:none;color:#1c1917;font-weight:900;border-radius:999px;padding:6px 10px;cursor:pointer}
+
+  /* used panel */
+  .used-panel .used-item{display:flex;align-items:center;gap:10px;background:#fafaf9;border:1px solid var(--border);border-radius:10px;padding:8px 10px;margin-bottom:8px}
+  .used-panel img{height:22px}
+  .btn-unuse{background:#f5f5f4;color:#44403c;border:none;padding:6px 10px;border-radius:999px;font-size:.8rem;cursor:pointer}
+  .btn-unuse:hover{filter:brightness(1.05)}
+  .muted{color:#78716c;font-size:.9rem}
+
+  .cta{position:fixed;left:0;right:0;bottom:14px;display:flex;justify-content:center}
+  .cta a{display:inline-flex;gap:8px;align-items:center;background:var(--brand);color:#1c1917;font-weight:900;padding:12px 18px;border-radius:999px;text-decoration:none;box-shadow:0 10px 22px rgb(123 220 181 / .28);border:1px solid #6fcaa4}
+
+  .note{font-size:.85rem;color:#bcd0f6}
+  .hide{display:none !important;}
+  .preview-top{order:-1;}
+  @media (max-width:1023px){.preview-top{order:-1;}}
+  .back-home-wrap{display:flex;justify-content:center;margin:26px 0 98px;}
+  .back-home-btn{display:inline-flex;align-items:center;gap:8px;border:1px solid #e7e5e4;background:#fff;color:#1c1917;border-radius:999px;padding:10px 16px;font-weight:700;text-decoration:none;box-shadow:0 4px 12px rgba(28,25,23,.06);}
+  .back-home-btn:hover{background:#7bdcb5;border-color:#6fcaa4;}
+
+</style>
+</head>
+<body>
+  <header>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div>
+        <h1 class="i18n" data-en="🎯1+1 Bonus Key Combo Builder
+" data-zh="🎯 1+1 Bonus Key 活动组合器
+">🎯 1+1 Bonus Key Combo Builder
+</h1>
+        <p class="sub i18n" data-en="Mix & Match 1+1 Bonus key · Choose providers by T&C and maximize key usage." data-zh="Mix & Match 1+1 Bonus key · 按 T&C 选择供应商并尽量最大化 Bonus key 使用。">Mix & Match 1+1 Bonus key · Choose providers by T&C and maximize key usage.</p>
+      </div>
+      <div class="bar" style="margin-left:auto">
+        <span class="pill" id="capsPill">—</span>
+        <div class="lang">
+          <button id="btnEN" class="active">EN</button>
+          <button id="btnZH">中</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  
+  <main class="wrap">
+    <aside class="preview-top">
+      <div class="phone" aria-label="Mobile preview">
+        <div class="notch"></div>
+        <div class="screen">
+          <div class="banner"><div class="marquee"><span>Slot Game</span><span>Slot Game</span><span>Slot Game</span><span>Slot Game</span><span>Slot Game</span></div></div>
+          <div class="slots">
+            <div class="tile big" id="slot-t1"><span class="slot-label">Top 1</span></div>
+            <div class="tile" id="slot-t2"><span class="slot-label">Top 2</span></div>
+            <div class="tile" id="slot-t3"><span class="slot-label">Top 3</span></div>
+            <div class="tile" id="slot-t5a"><span class="slot-label">Top 5</span></div>
+            <div class="tile" id="slot-t5b"><span class="slot-label">Top 5</span></div>
+            <div class="tile" id="slot-t10a"><span class="slot-label">Top 10</span></div>
+            <div class="tile" id="slot-t10b"><span class="slot-label">Top 10</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:14px">
+        <h3 class="i18n" data-en="Your Campaign Combo" data-zh="你的活动组合">Your Campaign Combo</h3>
+        <div id="chips" class="chips"></div>
+        <div class="note" id="selNote"></div>
+      </div>
+    </aside>
+
+    <section>
+      <div id="grid" class="grid"></div>
+
+      <div class="panel used-panel">
+        <h3 class="i18n" data-en="Used Providers (Previously claimed)" data-zh="已使用的供应商（已申请）">Used Providers (Previously claimed)</h3>
+        <div id="usedList"></div>
+        <div id="usedEmpty" class="muted i18n" data-en="No providers marked as used yet." data-zh="尚未标记任何供应商为已使用。">No providers marked as used yet.</div>
+      </div>
+    </section>
+  </main>
+
+  <div class="cta"><a href="https://t.me/EdisonTan97" target="_blank" rel="noopener">🚀 <span class="i18n" data-en="Claim Combo" data-zh="申请组合">Claim Combo</span> (<span id="selCount">0</span>)</a></div>
+
+  <div class="back-home-wrap">
+    <a id="back-home-mnm" class="back-home-btn" href="http://localhost:4180/">
+      <span aria-hidden>←</span>
+      <span class="i18n" data-en="Back to Home" data-zh="返回主页">Back to Home</span>
+    </a>
+  </div>
+
+
+<script>
+/*** ======= Config (slot-based) ======= ***/
+const TOTAL_MAX = 7;                 // total providers you can select (NOW 7)
+const SLOTS = [1,2,3,5,5,10,10];     // actual position slots available (NOW 7)
+const NON_POS_TIER = 99;             // e.g., YGR (does not consume a slot)
+const HIDE_INELIGIBLE = false;       // false = show but disabled, true = auto-hide
+
+// Provider data
+  const FALLBACK_LOGO = 'data:image/svg+xml;utf8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="160" height="64" viewBox="0 0 160 64"><rect width="160" height="64" rx="10" fill="#111827"/><text x="50%" y="54%" fill="#f9fafb" font-size="22" font-family="Arial" font-weight="700" dominant-baseline="middle" text-anchor="middle">Provider</text></svg>`);
+function bindLogoFallback(img){
+  if(!img) return;
+  img.onerror = () => {
+    img.onerror = null;
+    img.src = FALLBACK_LOGO;
+    img.style.background = '#0f172a';
+    img.style.padding = '4px 8px';
+    img.style.borderRadius = '8px';
+  };
+}
+
+const providers = [
+  { name: "Rich Gaming", logo: "https://titangroup.tech/wp-content/uploads/2025/08/Rich-Gaming.png", tnc: "Top 2 Placement + Popup Banner + Crossover Banner", tier: 2 },
+  { name: "Evo888H5", logo: "https://titangroup.tech/wp-content/uploads/2025/08/logo.webp", tnc: "Top 3 Placement + Banner", tier: 3 },
+  { name: "MegaH5", logo: "https://titangroup.tech/wp-content/uploads/2025/08/imgi_1_b6f07a2c57f76391b2b94.webp", tnc: "Top 2 Placement + Popup Banner", tier: 2 },
+  { name: "WF Gaming", logo: "https://titangroup.tech/wp-content/uploads/2025/08/Wf-Gaming.png", tnc: "Top 2 Placement + Popup Banner", tier: 2 },
+  { name: "Epic WIn", logo: "https://titangroup.tech/wp-content/uploads/2025/08/EpicWin_horizontalLOGO-1-scaled.png", tnc: "Top 3 Placement + Sliding Banner", tier: 3 },
+  { name: "UU slots", logo: "https://titangroup.tech/wp-content/uploads/2025/08/UU-Slot.png", tnc: "Top 3 Placement + Popup Banner + Hot Game List", tier: 3 },
+  { name: "AFB", logo: "https://titangroup.tech/wp-content/uploads/2025/08/logo-f658d6b8.png", tnc: "Top 2 Placement + Popup Banner", tier: 2 },
+  { name: "Advant Play", logo: "https://titangroup.tech/wp-content/uploads/2025/08/knkaf-ap.png", tnc: "Top 5 Placement", tier: 5 },
+  { name: "888King", logo: "https://titangroup.tech/wp-content/uploads/2025/08/888KING-LOGO-HORIZON.png", tnc: "Top 1 Placement + Banner + Promotion", tier: 1 },
+  { name: "BT Gaming", logo: "https://titangroup.tech/wp-content/uploads/2025/08/1754463881788.webp", tnc: "Top 3 Placement + Banner", tier: 3 },
+  { name: "Creative Gaming", logo: "https://titangroup.tech/wp-content/uploads/2025/08/Creative-gaming.png", tnc: "Top 5 Placement + Promotion", tier: 5 },
+  { name: "BNG", logo: "https://titangroup.tech/wp-content/uploads/2025/08/1754463908411-scaled.webp", tnc: "Top 5 Placement + Banner (MYR only)", tier: 5 },
+  { name: "Joker", logo: "https://titangroup.tech/wp-content/uploads/2025/08/imgi_1_117-1178651_joker123-gaming-offer-a-wide-range-of-exciting.webp", tnc: "Top 5 Placement + Hot tag + Banner (New Agent only)", tier: 5 },
+  { name: "Meta Gaming", logo: "https://titangroup.tech/wp-content/uploads/2025/09/MetaGaming_logo_HORIZON-scaled.webp", tnc: "Top 10 Placement  + Banner", tier: 10 },
+  { name:"CP games", logo:"https://titangroup.tech/wp-content/uploads/2025/10/logo_500_500.webp", tnc:"Top 3 Placement", tier:3 },
+  { name:"PEGASUS", logo:"https://titangroup.tech/wp-content/uploads/2025/09/PEGASUS-Horizontal-Logo-PNG-scaled.png", tnc:"Top 1 Placement + Sliding Banner + Pop-out Banner + 3 Promotions", tier:1 },
+  { name:"CrowdPlay", logo:"https://titangroup.tech/wp-content/uploads/2025/10/logo-2.webp", tnc:"Top 1 Placement + Banner + Promotion + HOT Tag (90 Days)", tier:1 },
+  { name:"RSG", logo:"https://titangroup.tech/wp-content/uploads/2025/10/logo.webp", tnc:"Top 2 Placement + Banner + Promotion (Free Account in Front)", tier:2 },
+  { name:"PlayStar", logo:"https://titangroup.tech/wp-content/uploads/2025/08/Playstar.png", tnc:"Top 2 Placement + Popup Banner + Promotion + HOT Tag + Hot Game List ( AUD Only)", tier:2 },
+  { name:"Mancala Gaming", logo:"https://titangroup.tech/wp-content/uploads/2025/08/download-4.svg", tnc:"Top 10 Placement + Banner + Popup Banner + HOT/Exclusive/Top Tag (Both Accounts Live)", tier:10 },
+  { name:"ClotPlay", logo:"https://titangroup.tech/wp-content/uploads/2025/08/clot_logo.webp", tnc:"Top 5 Placement + Slider Banner + Popup Banner + Promotion (2nd API Free, 2 Months)", tier:5 },
+];
+
+
+// ===== i18n =====
+let lang = 'en';
+const i18nAll = () => {
+  document.querySelectorAll('.i18n').forEach(el=>{
+    const text = el.getAttribute(lang==='en'?'data-en':'data-zh');
+    if(text) el.textContent = text;
+  });
+};
+const t = (en, zh) => (lang==='en'?en:zh);
+
+const EMOJI_SET = ['🎮','⚽','🔥','🚀','🎯','💎','🧩','🪙','🎲','🕹️','🏆','✨','🛡️','🧠'];
+function providerEmoji(name){
+  let h = 0;
+  for (let i=0;i<name.length;i++) h = (h + name.charCodeAt(i)*(i+1)) % 997;
+  return EMOJI_SET[h % EMOJI_SET.length];
+}
+
+// ===== State =====
+const selected = new Set();   // provider names
+const used = new Set();       // previously claimed; not selectable
+
+// ===== Helpers =====
+// robust parse: read Top numbers/ranges like "Top 1–3", "Top 1-3", or "Top 3 Placement"
+function maxTierFromTNC(tnc){
+  const m = tnc.match(/Top\s*(\d+)\s*(?:[–-]\s*(\d+))?/i);
+  if(!m) return null;
+  const a = parseInt(m[1],10);
+  const b = m[2] ? parseInt(m[2],10) : null;
+  return b ? Math.max(a,b) : a;
+}
+
+// Build adjacency list: provider index -> list of slot indices they can occupy
+function buildGraph(listNames){
+  const list = listNames
+    .map(n => providers.find(p=>p.name===n))
+    .filter(p => p && p.tier !== NON_POS_TIER);
+  const edges = list.map(_=>[]);
+  list.forEach((p,pi)=>{
+    const tier = p.tier ?? maxTierFromTNC(p.tnc) ?? 0;
+    SLOTS.forEach((slotVal, si)=>{
+      // provider with Top X can occupy any slot with value <= X
+      if(slotVal <= tier) edges[pi].push(si);
+    });
+  });
+  return {list, edges};
+}
+
+// Maximum bipartite matching (Kuhn)
+function canMatchAll(listNames){
+  const {list, edges} = buildGraph(listNames);
+  if(list.length > SLOTS.length) return false;
+
+  const matchToSlot = new Array(SLOTS.length).fill(-1);
+
+  function dfs(u, seen){
+    for(const v of edges[u]){
+      if(seen[v]) continue;
+      seen[v] = true;
+      if(matchToSlot[v] === -1 || dfs(matchToSlot[v], seen)){
+        matchToSlot[v] = u;
+        return true;
+      }
+    }
+    return false;
+  }
+
+  let matched = 0;
+  for(let u=0; u<list.length; u++){
+    const seen = new Array(SLOTS.length).fill(false);
+    if(dfs(u, seen)) matched++;
+  }
+  return matched === list.length;
+}
+
+// Get an actual assignment to display on the phone
+function getAssignment(listNames){
+  const {list, edges} = buildGraph(listNames);
+  const matchToSlot = new Array(SLOTS.length).fill(-1);
+
+  function dfs(u, seen){
+    for(const v of edges[u]){
+      if(seen[v]) continue;
+      seen[v] = true;
+      if(matchToSlot[v] === -1 || dfs(matchToSlot[v], seen)){
+        matchToSlot[v] = u;
+        return true;
+      }
+    }
+    return false;
+  }
+
+  for(let u=0; u<list.length; u++){
+    const seen = new Array(SLOTS.length).fill(false);
+    dfs(u, seen);
+  }
+  // produce {slotIndex: provider} mapping
+  const map = {};
+  matchToSlot.forEach((u,slotIdx)=>{
+    if(u !== -1) map[slotIdx] = list[u];
+  });
+  return map;
+}
+
+function canPick(provider){
+  if(used.has(provider.name)) return false;
+  if(selected.has(provider.name)) return true;               // allow de-select
+  if(selected.size >= TOTAL_MAX) return false;               // total cap
+  // non-position never blocks matching
+  if(provider.tier === NON_POS_TIER) return true;
+  const attempt = [...selected, provider.name];
+  return canMatchAll(attempt);
+}
+
+// ===== Render =====
+const gridEl   = document.getElementById('grid');
+const chipsEl  = document.getElementById('chips');
+const capsPill = document.getElementById('capsPill');
+const selNote  = document.getElementById('selNote');
+const selCount = document.getElementById('selCount');
+const usedList = document.getElementById('usedList');
+const usedEmpty= document.getElementById('usedEmpty');
+
+function renderCaps(){
+  const withSlots = [...selected].map(n=>providers.find(p=>p.name===n)).filter(p=>p.tier!==NON_POS_TIER).length;
+  capsPill.textContent = `Selected ${selected.size}/${TOTAL_MAX} · Using ${withSlots}/${SLOTS.length} slots`;
+}
+
+function renderGrid(){
+  gridEl.innerHTML = '';
+  providers.forEach(p=>{
+    if(used.has(p.name)) return; // hide used from grid
+    const allowed = canPick(p);
+    if(HIDE_INELIGIBLE && !allowed && !selected.has(p.name)) return;
+
+    const card = document.createElement('div');
+    card.className = 'card' + (selected.has(p.name)?' selected':'') + (!allowed && !selected.has(p.name)?' disabled':'');
+    card.innerHTML = `
+      <div class="logo-emoji" aria-hidden="true">${providerEmoji(p.name)}</div>
+      <div class="name">${p.name}</div>
+      <div class="tnc">${p.tnc}${p.tier===NON_POS_TIER?' (NP)':''}</div>
+      <div class="foot">
+        <span class="badge">${p.tier===NON_POS_TIER?'No position':'Top '+(p.tier)}</span>
+        <button class="btn-use" type="button">${t('Mark used','标记为已使用')}</button>
+      </div>
+    `;
+
+    bindLogoFallback(card.querySelector('.logo'));
+
+    // reason overlay when disabled (but allow the "Mark used" button to still be clickable)
+    if(!allowed && !selected.has(p.name)){
+      const ov = document.createElement('div');
+      ov.className = 'overlay';
+      ov.textContent = t('No compatible slot left','没有可用的排名位置');
+      card.appendChild(ov);
+    }
+
+    // click on card toggles selection
+    card.onclick = (e)=>{
+      // ignore clicks on the "Mark used" button (handled below)
+      if(e.target && e.target.classList.contains('btn-use')) return;
+      if(selected.has(p.name)) selected.delete(p.name);
+      else if(allowed) selected.add(p.name);
+      renderAll();
+    };
+
+    // mark used button
+    card.querySelector('.btn-use').onclick = (e)=>{
+      e.stopPropagation();
+      used.add(p.name);
+      selected.delete(p.name);
+      renderAll();
+    };
+
+    gridEl.appendChild(card);
+  });
+}
+
+function renderChips(){
+  chipsEl.innerHTML = '';
+  [...selected].forEach(n=>{
+    const p = providers.find(x=>x.name===n);
+    const chip = document.createElement('div');
+    chip.className = 'chip';
+    chip.innerHTML = `<span class="chip-emoji" aria-hidden="true">${providerEmoji(p.name)}</span><span>${p.name}</span>
+      <button class="use" type="button">${t('Used','已使用')}</button>
+      <button class="x" title="${t('Remove','移除')}">×</button>`;
+    bindLogoFallback(chip.querySelector('img'));
+    chip.querySelector('.x').onclick = (e)=>{ e.stopPropagation(); selected.delete(n); renderAll(); };
+    chip.querySelector('.use').onclick = (e)=>{ e.stopPropagation(); used.add(n); selected.delete(n); renderAll(); };
+    chipsEl.appendChild(chip);
+  });
+
+  selNote.textContent = [...selected].length
+    ? t('System auto-assigns each pick to an available slot. “Top X” can occupy any slot ≤ X.',
+        '系统将自动分配每个选择到可用位置。“Top X”可放在任意 ≤ X 的位置。')
+    : '';
+  selCount.textContent = selected.size;
+}
+
+function putLogo(slotId, prov){
+  const el = document.getElementById(slotId);
+  el.innerHTML = prov ? `<span class="slot-emoji" aria-hidden="true" title="${prov.name}">${providerEmoji(prov.name)}</span>` : '';
+}
+
+function renderPhone(){
+  const assign = getAssignment([...selected]); // only slot-needed providers are considered
+  // clear
+  putLogo('slot-t1', null); putLogo('slot-t2', null); putLogo('slot-t3', null);
+  putLogo('slot-t5a', null); putLogo('slot-t5b', null); 
+  putLogo('slot-t10a', null); putLogo('slot-t10b', null); 
+
+  const slotIdByIndex = {
+    0:'slot-t1',
+    1:'slot-t2',
+    2:'slot-t3',
+    3:'slot-t5a',
+    4:'slot-t5b',
+    5:'slot-t10a', // Mapped to the first Top 10 slot element
+    6:'slot-t10b'  // Mapped to the second Top 10 slot element
+  };
+  Object.keys(assign).forEach(si=>{
+    const tileId = slotIdByIndex[si];
+    if(tileId) putLogo(tileId, assign[si]);
+  });
+}
+
+function renderUsed(){
+  usedList.innerHTML = '';
+  if(used.size===0){
+    usedEmpty.classList.remove('hide');
+    return;
+  }
+  usedEmpty.classList.add('hide');
+  [...used].forEach(name=>{
+    const p = providers.find(x=>x.name===name);
+    const row = document.createElement('div');
+    row.className = 'used-item';
+    row.innerHTML = `<span class="used-emoji" aria-hidden="true">${providerEmoji(p.name)}</span><div style="flex:1">${p.name} — <span style="opacity:.8">${p.tnc}</span></div>
+      <button class="btn-unuse" type="button">${t('Unuse','取消已使用')}</button>`;
+    bindLogoFallback(row.querySelector('img'));
+    row.querySelector('.btn-unuse').onclick = ()=>{
+      used.delete(name);
+      renderAll();
+    };
+    usedList.appendChild(row);
+  });
+}
+
+function renderAll(){
+  renderCaps();
+  renderGrid();
+  renderChips();
+  renderPhone();
+  renderUsed();
+}
+
+// ===== Language toggle =====
+document.getElementById('btnEN').onclick = ()=>{ lang='en'; i18nAll(); document.getElementById('btnEN').classList.add('active'); document.getElementById('btnZH').classList.remove('active'); renderAll(); };
+document.getElementById('btnZH').onclick = ()=>{ lang='zh'; i18nAll(); document.getElementById('btnZH').classList.add('active'); document.getElementById('btnEN').classList.remove('active'); renderAll(); };
+
+// init
+i18nAll();
+renderAll();
+</script>
+</body>
+</html>

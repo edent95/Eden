@@ -5,17 +5,11 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { applyPageSeo } from './seo';
 import { 
   Linkedin, 
-  Instagram, 
-  Youtube, 
   ExternalLink,
   Download,
-  Briefcase,
-  GraduationCap,
-  Compass,
-  Camera,
-  Brain,
   MapPin,
   ArrowLeft
 } from 'lucide-react';
@@ -36,17 +30,43 @@ const staggerContainer = {
   }
 };
 
+const FlatEmoji: React.FC<{
+  emoji: string;
+  size?: 'sm' | 'md' | 'lg';
+  bob?: boolean;
+  tilt?: boolean;
+  delayMs?: number;
+  className?: string;
+}> = ({ emoji, size = 'md', bob = true, tilt = false, delayMs = 0, className = '' }) => {
+  const sizeClass = size === 'sm' ? 'flat-emoji-sm' : size === 'lg' ? 'flat-emoji-lg' : 'flat-emoji';
+  const motion = tilt ? 'emoji-tilt' : bob ? 'emoji-bob' : '';
+  return (
+    <span
+      className={`${sizeClass} ${motion} ${className}`.trim()}
+      style={delayMs ? { animationDelay: `${delayMs}ms` } : undefined}
+      aria-hidden
+    >
+      {emoji}
+    </span>
+  );
+};
+
 const jijuBuildFromZeroToOne = [
   {
     phase: { en: 'Phase 01 · Foundation', zh: '阶段 01 · 基础稳定化' },
+    chapterVoice: {
+      en: 'What scared me then wasn’t missing features—it was the silent drop-off when someone opened the app and nothing held.',
+      zh: '那一阵子我最怕的不是缺功能，是用户第一次点开就卡住——那种无声的流失，比被骂还难受。',
+    },
+    emoji: '🧱',
     when: { en: 'Mar 25 - Apr 2, 2026', zh: '2026/03/25 - 2026/04/02' },
     why: {
-      en: 'I had to eliminate recurring reliability failures before scaling features.',
-      zh: '在扩功能前，我必须先消除反复出现的稳定性故障。',
+      en: 'Before shipping anything new, I had to stop recurring reliability failures that were quietly burning trust.',
+      zh: '在加新功能之前，我得先止住那些反复发生、却一直在偷走信任的稳定性问题。',
     },
     thinking: {
-      en: 'I prioritized the highest user-loss risks first: auth instability, permission drift, and route inconsistency.',
-      zh: '我先处理最会造成用户流失的风险：登录不稳、权限漂移、路由不一致。',
+      en: 'I ranked fixes by user-loss risk first: auth instability, permission drift, and route inconsistency.',
+      zh: '我按“最容易流失用户”的顺序下手：登录不稳、权限漂移、路由不一致。',
     },
     planning: {
       en: 'I split the work into three tracks: auth bootstrap, data/storage rules, and route/error resilience.',
@@ -65,20 +85,25 @@ const jijuBuildFromZeroToOne = [
       ],
     },
     outcome: {
-      en: 'The product moved from fragile to dependable, enabling faster iteration.',
-      zh: '产品从“能跑但脆弱”变成“可依赖可迭代”的状态。',
+      en: 'The product moved from fragile to dependable, so iteration speed no longer depended on luck.',
+      zh: '产品从“能跑但脆”进到“可依赖可迭代”，后续速度不再靠运气。',
     },
   },
   {
     phase: { en: 'Phase 02 · Core Journey Completion', zh: '阶段 02 · 主路径闭环' },
+    chapterVoice: {
+      en: 'Once features lit up, I realized lit modules aren’t a journey—I had to wire an ending people could actually reach.',
+      zh: '功能一个个亮灯之后，我才发现：灯亮了，路没接通。得让别人能真的走到终点。',
+    },
+    emoji: '🧭',
     when: { en: 'Apr 2 - Apr 7, 2026', zh: '2026/04/02 - 2026/04/07' },
     why: {
-      en: 'Feature availability was not equal to journey completion.',
-      zh: '“有功能”不等于“用户能完整走完流程”。',
+      en: 'Having modules on-screen did not mean users could actually finish the journey.',
+      zh: '功能都在，不代表用户真的走得到终点。',
     },
     thinking: {
-      en: 'I optimized for end-to-end flow completion, not feature quantity.',
-      zh: '我优化的是端到端完成率，而不是功能数量。',
+      en: 'I optimized for end-to-end completion rate, not feature count.',
+      zh: '我盯的是端到端完成率，不是“又多了几个功能”。',
     },
     planning: {
       en: 'I mapped and repaired each critical step in Home -> Discovery -> Detail -> Review/Check-in -> Passport/Community.',
@@ -97,20 +122,25 @@ const jijuBuildFromZeroToOne = [
       ],
     },
     outcome: {
-      en: 'User experience became connected and finishable, not fragmented.',
-      zh: '用户体验从碎片化变成连贯、可完成的流程。',
+      en: 'The experience became connected and finishable instead of fragmented and easy to abandon.',
+      zh: '体验从碎片化变成可连贯完成，不再走到一半就散掉。',
     },
   },
   {
     phase: { en: 'Phase 03 · Analytics Foundation', zh: '阶段 03 · 分析体系打底' },
+    chapterVoice: {
+      en: 'I wanted visibility—not how busy I was, but where people hesitated and where they quietly left.',
+      zh: '我开始想要「看见」：不是看见自己多忙，而是看见用户在第几步犹豫、在第几步离开。',
+    },
+    emoji: '📊',
     when: { en: 'Apr 7 - Apr 8, 2026', zh: '2026/04/07 - 2026/04/08' },
     why: {
-      en: 'I needed behavioral visibility to make better product decisions.',
-      zh: '我需要先看见真实行为，才能做更准确的产品决策。',
+      en: 'I needed behavioral visibility before making product decisions with confidence.',
+      zh: '我要先看见真实行为，决策才有把握。',
     },
     thinking: {
-      en: 'If I cannot observe a journey, I cannot improve it.',
-      zh: '看不见路径，就无法优化路径。',
+      en: 'If a journey is not observable, it is not optimizable.',
+      zh: '一条路径看不见，就谈不上优化。',
     },
     planning: {
       en: 'I aligned event models across product actions, analytics pipelines, and attribution.',
@@ -129,20 +159,25 @@ const jijuBuildFromZeroToOne = [
       ],
     },
     outcome: {
-      en: 'Decisions shifted from assumptions to measurable user behavior.',
-      zh: '决策从经验猜测，转向可观测、可验证的数据判断。',
+      en: 'Decisions shifted from assumptions to measurable behavior and repeatable checks.',
+      zh: '决策从“猜”转到“可观测、可复核”的判断方式。',
     },
   },
   {
     phase: { en: 'Phase 04 · Mobile UX Hardening', zh: '阶段 04 · 移动端体验加固' },
+    chapterVoice: {
+      en: 'Desktop forgives a lot; on a small screen, every extra pixel can feel like an argument.',
+      zh: '桌面把一切说得很轻巧；一换到小屏，每个多出来的摩擦都像在跟人作对。',
+    },
+    emoji: '📱',
     when: { en: 'Apr 7 - Apr 14, 2026', zh: '2026/04/07 - 2026/04/14' },
     why: {
-      en: 'Mobile friction was blocking activation and install success.',
-      zh: '移动端摩擦正在直接阻碍激活与安装转化。',
+      en: 'Mobile friction was directly hurting activation and install success.',
+      zh: '移动端摩擦正在直接拖慢激活和安装转化。',
     },
     thinking: {
-      en: 'Minor mobile friction creates major retention loss.',
-      zh: '移动端的小摩擦，会放大成留存流失。',
+      en: 'Small mobile friction compounds into large retention loss.',
+      zh: '手机上的小摩擦，最后会变成大的留存损失。',
     },
     planning: {
       en: 'I focused on install flow clarity, modal accessibility, and first-session guidance.',
@@ -161,20 +196,25 @@ const jijuBuildFromZeroToOne = [
       ],
     },
     outcome: {
-      en: 'The mobile first-session experience became clearer and easier to complete.',
-      zh: '移动端首会话更清晰，完成关键动作更顺畅。',
+      en: 'First-session mobile flow became clearer, lighter, and easier to complete.',
+      zh: '移动端首会话更清楚、更轻、更容易走完关键动作。',
     },
   },
   {
     phase: { en: 'Phase 05 · Sanctuary Productization', zh: '阶段 05 · Sanctuary 产品化' },
+    chapterVoice: {
+      en: 'Sanctuary couldn’t stay a noble sentence—it needed a door you could open, a loop you could finish, and a signal that something moved.',
+      zh: 'Sanctuary 不能只是好看的一句使命——它得让人点得进去、走得完，还知道自己帮上了什么。',
+    },
+    emoji: '🐾',
     when: { en: 'Apr 2 - Apr 10, 2026', zh: '2026/04/02 - 2026/04/10' },
     why: {
-      en: 'Sanctuary needed to function as a real user loop, not a conceptual page.',
-      zh: 'Sanctuary 必须成为真实可运行闭环，而不是概念页。',
+      en: 'Sanctuary had to work as a real loop, not stay as a well-written concept page.',
+      zh: 'Sanctuary 不能停在理念页，必须跑成真实闭环。',
     },
     thinking: {
-      en: 'A module is only real if users can enter, act, and see impact.',
-      zh: '用户能进入、能行动、能看到影响，模块才算真实存在。',
+      en: 'A module is real only when users can enter, act, and see impact.',
+      zh: '用户进得去、动得了、看得到影响，模块才算真的存在。',
     },
     planning: {
       en: 'I staged the build as routing -> performance -> interactions -> visible impact.',
@@ -193,20 +233,25 @@ const jijuBuildFromZeroToOne = [
       ],
     },
     outcome: {
-      en: 'Sanctuary became a functioning product loop with user and trust value.',
-      zh: 'Sanctuary 从概念模块升级为有用户价值与信任价值的闭环。',
+      en: 'Sanctuary became an operating loop that carries both user value and trust value.',
+      zh: 'Sanctuary 从概念升级成可运行闭环，同时承载用户价值与信任价值。',
     },
   },
   {
     phase: { en: 'Phase 06 · SEO Architecture', zh: '阶段 06 · SEO 结构升级' },
+    chapterVoice: {
+      en: 'Volume mattered less than being findable—I worked on the map that makes searchers feel they landed in the right room.',
+      zh: '写得多不如被找得到。我就去做那张让人搜进来时觉得「嗯，来对了」的地图。',
+    },
+    emoji: '🔍',
     when: { en: 'Apr 9 - Apr 13, 2026', zh: '2026/04/09 - 2026/04/13' },
     why: {
-      en: 'Discovery bottlenecks came from structure gaps, not content volume gaps.',
-      zh: '增长瓶颈主要来自结构缺口，而不是内容数量不足。',
+      en: 'Discovery bottlenecks came from structural gaps, not content quantity.',
+      zh: '发现增长的瓶颈主要在结构，不在“内容不够多”。',
     },
     thinking: {
-      en: 'Search growth depends on intent coverage and internal authority flow.',
-      zh: '搜索增长依赖意图覆盖与站内权重流动。',
+      en: 'Search growth depends on intent coverage plus internal authority flow.',
+      zh: '搜索增长靠两件事：意图覆盖和站内权重流动。',
     },
     planning: {
       en: 'I expanded high-intent answer surfaces and redistributed high-value internal links.',
@@ -225,20 +270,25 @@ const jijuBuildFromZeroToOne = [
       ],
     },
     outcome: {
-      en: 'Discovery quality improved through stronger relevance and site structure.',
-      zh: '通过更强相关性与更稳结构，整体发现质量明显提升。',
+      en: 'Discovery quality improved through stronger relevance, cleaner structure, and better crawl paths.',
+      zh: '相关性、结构和抓取路径一起变稳后，整体发现质量明显上升。',
     },
   },
   {
     phase: { en: 'Phase 07 · Backoffice Safety', zh: '阶段 07 · 后台操作安全' },
+    chapterVoice: {
+      en: 'The backoffice is a kitchen—one clumsy move seasons the whole dining room. I narrowed the blast radius of honest mistakes.',
+      zh: '后台像厨房：一失手，前台整桌菜都变味。我想把「手滑」的伤害关小一点。',
+    },
+    emoji: '🛡️',
     when: { en: 'Apr 13 - Apr 15, 2026', zh: '2026/04/13 - 2026/04/15' },
     why: {
-      en: 'Broad BO save writes were overwriting valid production settings.',
-      zh: '后台整包写入会覆盖线上有效配置，风险过高。',
+      en: 'Broad BO save writes were overwriting valid production settings too easily.',
+      zh: '后台整包写入太容易覆盖线上有效配置，风险不可接受。',
     },
     thinking: {
-      en: 'Operational safety must be built into write behavior.',
-      zh: '操作安全必须体现在写入机制本身。',
+      en: 'Operational safety has to be designed into write behavior itself.',
+      zh: '操作安全必须写进机制本身，不靠“大家小心点”。',
     },
     planning: {
       en: 'I replaced full-object writes with scoped patch writes in risk-prone areas.',
@@ -257,20 +307,25 @@ const jijuBuildFromZeroToOne = [
       ],
     },
     outcome: {
-      en: 'Backoffice became significantly safer for daily use.',
-      zh: '后台日常操作安全性显著提升。',
+      en: 'Backoffice became safer for daily operations without slowing teams down.',
+      zh: '后台日常操作更安全，同时不牺牲交付速度。',
     },
   },
   {
     phase: { en: 'Phase 08 · Documentation System', zh: '阶段 08 · 文档与记忆系统' },
+    chapterVoice: {
+      en: 'Chats sink; memory blurs. I kept logs like leaving breathing room for a future me who would forget the heat of today.',
+      zh: '聊天记录会沉，脑子会忘。我只好认真写日志——像给未来的自己留一口气。',
+    },
+    emoji: '📚',
     when: { en: 'Mar 25 - Present', zh: '2026/03/25 - 至今' },
     why: {
-      en: 'I wanted decisions to compound, not disappear into temporary chats.',
-      zh: '我希望决策可复利沉淀，而不是消失在临时对话里。',
+      en: 'I wanted decisions to compound over time, not disappear in temporary chats.',
+      zh: '我希望决策能复利沉淀，而不是沉在临时对话里。',
     },
     thinking: {
-      en: 'Documentation is execution infrastructure, not admin overhead.',
-      zh: '文档是执行基础设施，不是管理负担。',
+      en: 'Documentation is execution infrastructure, not administrative overhead.',
+      zh: '文档是执行基础设施，不是“额外行政工作”。',
     },
     planning: {
       en: 'I enforced a strict log pattern: what changed, why, impact, and next.',
@@ -289,20 +344,25 @@ const jijuBuildFromZeroToOne = [
       ],
     },
     outcome: {
-      en: 'The project gained a durable memory layer that speeds future decisions.',
-      zh: '项目形成可持续调用的记忆层，后续决策速度更快。',
+      en: 'The project gained a durable memory layer that makes future decisions faster and cleaner.',
+      zh: '项目形成可持续调用的记忆层，后续决策更快也更干净。',
     },
   },
   {
     phase: { en: 'Phase 09 · Build Philosophy', zh: '阶段 09 · 构建哲学' },
+    chapterVoice: {
+      en: 'By chapter nine, the honest line is: I mind repeating the same hole more than I mind moving slowly.',
+      zh: '写到第九段，我其实想说的是：我不怕慢，我怕同一个坑踩两次还当姿势好看。',
+    },
+    emoji: '💡',
     when: { en: 'Current', zh: '当前进行中' },
     why: {
-      en: 'I want readers to understand how I think, not just what I shipped.',
-      zh: '我希望别人看到的不只是产出，更是我如何判断与执行。',
+      en: 'I want readers to see how I make decisions, not only what I shipped.',
+      zh: '我希望别人看到的不只是产出，还有我怎么判断、怎么推进。',
     },
     thinking: {
-      en: 'I optimize for truth, continuity, and repeatability over short-term vanity.',
-      zh: '我优先真相、连续性、可复用性，而不是短期展示效果。',
+      en: 'I optimize for truth, continuity, and repeatability over short-term vanity wins.',
+      zh: '我优先真相、连续性、可复用性，不追短期好看的成绩单。',
     },
     planning: {
       en: 'For each cycle: detect root cause -> define minimal stable fix -> validate -> document -> scale.',
@@ -321,14 +381,15 @@ const jijuBuildFromZeroToOne = [
       ],
     },
     outcome: {
-      en: 'jiju.pet evolves as a compounding system, not a one-off build.',
-      zh: 'jiju.pet 以“可复利系统”持续演进，而不是一次性开发。',
+      en: 'jiju.pet now evolves as a compounding system, not a one-off build artifact.',
+      zh: 'jiju.pet 正在以“可复利系统”持续演进，而不是一次性作品。',
     },
   },
 ];
 
 const decisionDna = [
   {
+    emoji: '🧱',
     trait: { en: 'Stability before expansion', zh: '先稳定，再扩张' },
     detail: {
       en: 'I do not chase visible wins while core reliability is unstable. I fix failure points first.',
@@ -336,6 +397,7 @@ const decisionDna = [
     },
   },
   {
+    emoji: '🧭',
     trait: { en: 'Journey completion before feature breadth', zh: '先保证闭环，再谈功能广度' },
     detail: {
       en: 'I prioritize whether users can complete key flows from start to finish.',
@@ -343,6 +405,7 @@ const decisionDna = [
     },
   },
   {
+    emoji: '📝',
     trait: { en: 'Every change is documented for reuse', zh: '每次改动都沉淀可复用知识' },
     detail: {
       en: 'I capture why, impact, and next actions so future decisions become faster and cleaner.',
@@ -353,6 +416,7 @@ const decisionDna = [
 
 const jijuKnowledgeHighlights = [
   {
+    emoji: '🐾',
     title: { en: 'Product Positioning', zh: '产品定位' },
     points: {
       en: [
@@ -368,6 +432,7 @@ const jijuKnowledgeHighlights = [
     },
   },
   {
+    emoji: '⚙️',
     title: { en: 'Execution System', zh: '执行系统' },
     points: {
       en: [
@@ -383,6 +448,7 @@ const jijuKnowledgeHighlights = [
     },
   },
   {
+    emoji: '🔒',
     title: { en: 'Trust and Safety Priorities', zh: '信任与安全优先级' },
     points: {
       en: [
@@ -398,6 +464,7 @@ const jijuKnowledgeHighlights = [
     },
   },
   {
+    emoji: '📈',
     title: { en: 'Growth and Analytics', zh: '增长与分析' },
     points: {
       en: [
@@ -413,6 +480,7 @@ const jijuKnowledgeHighlights = [
     },
   },
   {
+    emoji: '🎨',
     title: { en: 'Design and Experience Principles', zh: '设计与体验原则' },
     points: {
       en: [
@@ -428,6 +496,7 @@ const jijuKnowledgeHighlights = [
     },
   },
   {
+    emoji: '🤝',
     title: { en: 'Community and Sanctuary Direction', zh: '社区与 Sanctuary 方向' },
     points: {
       en: [
@@ -447,58 +516,94 @@ const jijuKnowledgeHighlights = [
 const analogTechGalleryPhotos = [
   {
     src: '/analog-tech/analog-tech-1.png',
-    alt: { en: 'Analog street photography scene', zh: '胶片街景摄影' },
-    caption: { en: 'Street perspective captured on analog film.', zh: '胶片质感下的街景透视。' },
+    alt: {
+      en: 'Film photograph of a street receding into soft depth, everyday scale',
+      zh: '胶片街景，景深将路面与街景分成柔和层次',
+    },
+    caption: {
+      en: 'A quiet street read in layers: a soft near plane, honest everyday scale, no staging.',
+      zh: '用景深把街面读成层次：前景柔和，日常尺度，非摆拍场面。',
+    },
   },
   {
     src: '/analog-tech/analog-tech-2.png',
-    alt: { en: 'Analog city skyline scene', zh: '胶片城市天际线' },
-    caption: { en: 'City skyline and weather texture on film grain.', zh: '天际线与天气层次在颗粒中的呈现。' },
+    alt: { en: 'Hazy city skyline on film, layered grays and blues', zh: '胶片中的城市天际线，灰蓝层次' },
+    caption: {
+      en: 'Humid air over the city—haze and distance rendered as believable, restrained tones.',
+      zh: '城市上空的湿气与距离，被胶片压成克制、可信的灰与蓝。',
+    },
   },
   {
     src: '/analog-tech/analog-tech-3.png',
-    alt: { en: 'Analog tower photograph', zh: '胶片高塔建筑' },
-    caption: { en: 'Urban architecture study on analog film.', zh: '胶片记录的城市建筑观察。' },
+    alt: { en: 'Tall building on film, glass catching a sliver of light', zh: '高塔与玻璃上一道细光' },
+    caption: {
+      en: 'A vertical study: weight, edge, and a thin strip of light along glass.',
+      zh: '竖向的体量与边线，玻璃上的一条薄光把材质说清楚。',
+    },
   },
   {
     src: '/analog-tech/analog-tech-4.png',
-    alt: { en: 'Analog waterfront scene', zh: '胶片滨水场景' },
-    caption: { en: 'Waterfront perspective with soft film highlights.', zh: '柔和高光下的滨水视角。' },
+    alt: { en: 'Calm waterfront, soft highlights on open water', zh: '平静水面与细碎高光' },
+    caption: {
+      en: 'Open water, small speculars, and a horizon line that gives the eye a place to rest.',
+      zh: '开阔水面、细碎高光，与一条让视线能落稳的水平线。',
+    },
   },
   {
     src: '/analog-tech/analog-tech-5.png',
-    alt: { en: 'Analog garden and light leak scene', zh: '胶片花园与漏光' },
-    caption: { en: 'Natural texture and light leak character from film.', zh: '自然纹理与胶片漏光气质。' },
+    alt: { en: 'Film frame with a gentle light leak along the edge of the scene', zh: '画缘一道柔和的漏光' },
+    caption: {
+      en: 'A light leak that reads like a mark of process—kept, not “fixed out.”',
+      zh: '漏光像流程留下的签名：保留，而不是当成失误修掉。',
+    },
   },
   {
     src: '/analog-tech/analog-tech-6.png',
-    alt: { en: 'Analog temple architecture detail', zh: '胶片庙宇建筑细节' },
-    caption: { en: 'Architectural detail and texture captured in film grain.', zh: '颗粒中保留的建筑细节与材质。' },
+    alt: { en: 'Ornate temple details softened by emulsion grain', zh: '庙宇细部在颗粒中变得可信' },
+    caption: {
+      en: 'Carving and shadow held in grain: detail that would go plastic if over-sharpened.',
+      zh: '雕刻与阴影像嵌在乳剂里，过度锐化才会显“塑料”。',
+    },
   },
   {
     src: '/analog-tech/analog-tech-7.png',
-    alt: { en: 'Analog mountain landscape', zh: '胶片山景' },
-    caption: { en: 'Atmospheric landscape depth from analog exposure.', zh: '曝光层次带来的空气感与景深。' },
+    alt: { en: 'Mountain haze, long tonal gradients in the distance', zh: '远山与漫开的空气感' },
+    caption: {
+      en: 'Atmosphere over drama—distance carried by long, quiet tonal ramps.',
+      zh: '不追求戏剧性，靠长调子把远距托成可感的空气。',
+    },
   },
   {
     src: '/analog-tech/analog-tech-8.png',
-    alt: { en: 'Analog city coastline scene', zh: '胶片城市海岸线' },
-    caption: { en: 'Coastal city framing with film color response.', zh: '胶片色彩响应下的海岸城市构图。' },
+    alt: { en: 'Coastal view of a city, modest color separation on film', zh: '海岸线上的城市，色彩关系克制' },
+    caption: {
+      en: 'A coastal read of the city, color kept modest and believable in mixed light.',
+      zh: '混合光里读海岸城市，色彩不抢戏，但站得住。',
+    },
   },
   {
     src: '/analog-tech/analog-tech-9.png',
-    alt: { en: 'Analog sea and sky horizon', zh: '胶片海天交界' },
-    caption: { en: 'Open horizon composition under dynamic cloud layers.', zh: '云层变化下的开阔海平线构图。' },
+    alt: { en: 'Open horizon where sea and sky meet under heavy clouds', zh: '重云下海天相接的开阔线' },
+    caption: {
+      en: 'A simple split between water and weather—room left for the eye to move.',
+      zh: '水与天的交界故意留到最简，好让视线有路可走。',
+    },
   },
   {
     src: '/analog-tech/analog-tech-10.png',
-    alt: { en: 'Analog geometric frame and bicycle scene', zh: '胶片几何构图与单车' },
-    caption: { en: 'Geometric urban composition with strong visual center.', zh: '强视觉中心的城市几何构图。' },
+    alt: { en: 'Geometric city scene, bicycle as a clear visual anchor', zh: '城市几何，单车作视觉锚点' },
+    caption: {
+      en: 'Geometry in the block: a wheel, a line, a center that orders the rest of the frame.',
+      zh: '街区里的几何：一轮、一线，用清晰的重心把余下元素收住。',
+    },
   },
   {
     src: '/analog-tech/analog-tech-11.png',
-    alt: { en: 'Analog candid portrait by the sea', zh: '胶片海边抓拍人像' },
-    caption: { en: 'Candid social moment documented on analog film.', zh: '胶片记录的海边日常瞬间。' },
+    alt: { en: 'Candid people by the sea, unposed', zh: '水边未加导演的日常一瞬' },
+    caption: {
+      en: 'A candid exchange at the water’s edge—ordinary, and meant to stay that way.',
+      zh: '水边的寻常交谈，刻意保留不必“升格”的平凡。',
+    },
   },
 ];
 
@@ -506,16 +611,19 @@ const lifeVideos = [
   {
     title: { en: 'Pulau Tioman', zh: '刁曼岛' },
     href: 'https://www.youtube.com/watch?v=WMqBLHCMtps',
+    embedSrc: 'https://www.youtube.com/embed/WMqBLHCMtps',
     thumbnailSrc: 'https://i.ytimg.com/vi/WMqBLHCMtps/hqdefault.jpg',
   },
   {
     title: { en: 'Desaru Surfing', zh: '迪沙鲁冲浪' },
     href: 'https://www.youtube.com/watch?v=Ingu-WLZWhA',
+    embedSrc: 'https://www.youtube.com/embed/Ingu-WLZWhA',
     thumbnailSrc: 'https://i.ytimg.com/vi/Ingu-WLZWhA/hqdefault.jpg',
   },
   {
     title: { en: 'Pulau Kapas', zh: '棉花岛' },
     href: 'https://www.youtube.com/watch?v=qC8KuD9n14g',
+    embedSrc: 'https://www.youtube.com/embed/qC8KuD9n14g',
     thumbnailSrc: 'https://i.ytimg.com/vi/qC8KuD9n14g/hqdefault.jpg',
   },
 ];
@@ -549,8 +657,12 @@ const previousProjectsData = [
     },
     relatedLinks: [
       {
-        label: { en: '1+1 Bonus Key Combo Builder', zh: '1+1 奖金密钥组合构建器' },
-        href: '/archive/11-bonus-key-combo-builder',
+        label: { en: 'Mix & Match 1+1 Bonus key', zh: 'Mix & Match 1+1 Bonus key' },
+        href: '/mnm11.html',
+      },
+      {
+        label: { en: 'Promotion Page (Campaign Board)', zh: 'Promotion 页面（活动总览）' },
+        href: '/Promotion%20Page.html',
       },
     ],
   },
@@ -636,57 +748,65 @@ const previousProjectsData = [
 const archivedWorks = [
   {
     slug: '11-bonus-key-combo-builder',
-    title: { en: '1+1 Bonus Key Combo Builder', zh: '1+1 奖金密钥组合构建器' },
-    origin: { en: 'Archived from my former domain.', zh: '归档自我曾使用的域名项目。' },
+    title: {
+      en: '1+1 Bonus Key Combo Builder · Internal ops tool',
+      zh: '1+1 奖金密钥组合构建器｜内部运营工具',
+    },
+    origin: {
+      en: 'Archived from an internal utility I ran on a former domain—built for campaign ops who lived in combinations, not slides.',
+      zh: '归档自曾托管在旧域名上的内部小工具：给天天和「组合、申领、条款」打交道的活动运营用，而不是给幻灯片用。',
+    },
     summary: {
-      en: 'An internal utility page for planning provider combinations, ranking constraints, and claim-ready campaign mixes.',
-      zh: '内部工具页：用于规划供应商组合、排序约束与可申领的活动配方。',
+      en: '“1+1” style promos sound simple until you are in a hurry: the wrong pairing, a duplicate claim, or a top-slot rule that only surfaces after publish. This page was a working surface to assemble provider mixes with constraints baked in—so the team could see conflicts before they became customer-facing mistakes.',
+      zh: '「1+1」听起来很轻巧，真正急的时候才会踩雷：配错合作方、重复申领、或置顶位规则要上线后才发现。这个页面是把「能申领的组合」放在一张可操作的桌面上——让冲突尽量出在发布前，而不是出在客诉里。',
     },
     sections: [
       {
-        heading: { en: 'Purpose and Use Case', zh: '用途与场景' },
+        heading: { en: 'What was actually broken', zh: '当时真正卡在哪' },
         points: {
           en: [
-            'Help campaign operators quickly assemble promotion combinations.',
-            'Reduce manual errors when selecting and pairing partner campaigns.',
-            'Create a repeatable workflow for claim and tracking operations.',
+            'Combinations were often negotiated in chat and spreadsheets—fast to type, slow to audit, easy to contradict a week later.',
+            'Duplicate claims and incompatible top placements were the expensive mistakes; they rarely looked “urgent” until finance or support pinged you.',
+            'Without a shared object model, “what is allowed” lived in tribal knowledge instead of something the whole desk could point at.',
           ],
           zh: [
-            '帮助活动运营快速拼出可用的活动组合。',
-            '降低选择与合作方配对时的人工失误。',
-            '形成可重复的申领与跟踪工作流。',
+            '组合常在聊天与表格里拼出来——打得快，难审计，过两周就容易和口头约定打架。',
+            '重复申领、置顶位不兼容这类问题，成本很高，却往往要等到财务或客服找来才显得「急」。',
+            '没有共用的对象模型时，「到底能不能这样配」会变成小圈子经验，而不是全组能对齐的参照。',
           ],
         },
       },
       {
-        heading: { en: 'Interface and Logic Preserved', zh: '界面与逻辑（保留）' },
+        heading: { en: 'How the UI encoded the rules', zh: '界面怎么把规则写死' },
         points: {
           en: [
-            'Interface centered around partner cards, tier visibility, and combo claim actions.',
-            'Included used-partner state controls to prevent duplicate claim mistakes.',
-            'Top-position slot model enforced ranking compatibility before final selection.',
-            'Campaign combo count and slot occupancy were continuously updated in-page.',
+            'Partner-first layout: cards, tier visibility, and claim actions were the spine—not decorative chrome.',
+            'Used-partner state prevented “double-tap” mistakes when the same provider had already been committed in a flow.',
+            'A top-position slot model checked ranking compatibility before the combo was treated as final—cheap insurance against late surprises.',
+            'Combo counts and slot occupancy updated in-page so operators always knew whether a mix was still “open” or already full.',
+            'The goal was a repeatable claim-and-track rhythm: same desk, same object language, fewer one-off hero saves.',
           ],
           zh: [
-            '界面以合作方卡片、层级可见性与组合申领动作为中心。',
-            '包含「已使用合作方」状态，避免重复申领错误。',
-            '置顶位槽位模型在最终选择前校验排序兼容性。',
-            '活动组合数量与槽位占用会在页面内持续更新。',
+            '以合作方为骨架：卡片、层级可见性、申领动作是主轴，而不是堆装饰。',
+            '「已使用合作方」状态用来挡住流程里重复点选——减少同一供应方被误绑两次。',
+            '置顶位槽位在「视为定稿」前就做排序兼容性校验——用便宜的前置检查换晚场惊吓。',
+            '组合数量与槽位占用实时落在页面上，运营随时知道这套配方还能不能塞、是不是已经满。',
+            '目标是一条可重复的申领与跟踪节奏：同一套对象语言，少几次靠个人救火。',
           ],
         },
       },
       {
-        heading: { en: 'Partner Scope Captured', zh: '已覆盖的合作方范围' },
+        heading: { en: 'Partner catalog and clause context', zh: '合作方清单与条款语境' },
         points: {
           en: [
-            'Partner set includes Rich Gaming, Evo888H5, MegaH5, WF Gaming, EpicWin, UU Slots, AFB, Advant Play, 888King, BT Gaming, Creative Gaming, BNG, Joker, Meta Gaming, CP Games, PEGASUS, CrowdPlay, RSG, PlayStar, Mancala Gaming, and ClotPlay.',
-            'Each partner record carried T&C context such as top-placement requirements, banner obligations, and campaign clauses.',
-            'Operational behavior focused on execution safety, not visual marketing.',
+            'Each row was not just a logo—it carried the operational clauses that actually change behavior: top-placement requirements, banner obligations, campaign text, and other T&C hooks.',
+            'Full partner set captured in the builder included Rich Gaming, Evo888H5, MegaH5, WF Gaming, EpicWin, UU Slots, AFB, Advant Play, 888King, BT Gaming, Creative Gaming, BNG, Joker, Meta Gaming, CP Games, PEGASUS, CrowdPlay, RSG, PlayStar, Mancala Gaming, and ClotPlay.',
+            'I biased the product toward execution safety and auditability—if it looked boring, that usually meant fewer midnight messages.',
           ],
           zh: [
-            '合作方集合包含 Rich Gaming、Evo888H5、MegaH5、WF Gaming、EpicWin、UU Slots、AFB、Advant Play、888King、BT Gaming、Creative Gaming、BNG、Joker、Meta Gaming、CP Games、PEGASUS、CrowdPlay、RSG、PlayStar、Mancala Gaming、ClotPlay 等。',
-            '每条合作方记录附带条款语境，如置顶要求、横幅义务与活动条款。',
-            '操作逻辑优先保证执行安全，而非视觉营销展示。',
+            '每一行不只是 logo，而是带着会改变行为的条款语境：置顶要求、横幅义务、活动文案与其它 T&C 挂钩。',
+            '工具内覆盖的合作方集合包括：Rich Gaming、Evo888H5、MegaH5、WF Gaming、EpicWin、UU Slots、AFB、Advant Play、888King、BT Gaming、Creative Gaming、BNG、Joker、Meta Gaming、CP Games、PEGASUS、CrowdPlay、RSG、PlayStar、Mancala Gaming、ClotPlay 等。',
+            '我刻意把产品偏向「执行安全、可审计」——界面若显得朴素，通常意味着半夜少几条消息。',
           ],
         },
       },
@@ -737,69 +857,92 @@ const archivedWorks = [
   },
   {
     slug: 'soccerking-project',
-    title: { en: 'Soccerking Content System', zh: 'Soccerking 内容体系' },
-    origin: { en: 'Archived from my former domain.', zh: '归档自我曾使用的域名项目。' },
+    title: { en: 'Soccerking · Football Social Content', zh: 'Soccerking｜足球社媒内容' },
+    origin: {
+      en: 'Archived from my Black Sire chapter (~2018–2021). Soccerking was one of the pages I lived in daily.',
+      zh: '归档自 Black Sire 时期（约 2018–2021）。Soccerking 是我当时几乎天天盯的主页之一。',
+    },
     summary: {
-      en: 'A social content operation framework designed to attract traffic, improve engagement, and increase brand awareness.',
-      zh: '面向社媒运营的内容框架：引流、提升互动并强化品牌认知。',
+      en: 'Match days are noisy; the real fight is the few hours after the final whistle when attention is still warm. I helped the team see content as three different jobs—pull people in, get them to react, give them something worth sharing—then wired that into templates and cadence so we were not improvising in the group chat every night.',
+      zh: '比赛日很吵，真正的窗口往往在终场后那几小时——热度还在，手却容易乱。我做的是帮团队用「三种帖子、三件不同的活」来看内容：谁负责把人拉进来，谁负责让人点赞留言，谁适合被转发；再落到模板和排期上，避免每晚在群里临时救火。',
     },
     imageGallery: [
       {
         src: '/archive-images/soccerking/icon.png',
         alt: { en: 'Soccerking project icon', zh: 'Soccerking 项目图标' },
-        caption: { en: 'Original Soccerking project icon.', zh: '原始 Soccerking 项目图标。' },
+        caption: { en: 'Brand mark used on the page at the time.', zh: '当时页面使用的品牌图标。' },
       },
       {
         src: '/archive-images/soccerking/P1.png',
-        alt: { en: 'Soccerking archive visual P1', zh: 'Soccerking 归档图 P1' },
+        alt: { en: 'Soccerking content planning or type overview screenshot', zh: 'Soccerking 内容规划或类型总览截图' },
+        caption: { en: 'How post types sat next to each other in planning.', zh: '规划里几种帖子如何并排对齐。' },
       },
       {
         src: '/archive-images/soccerking/P2.png',
-        alt: { en: 'Soccerking archive visual P2', zh: 'Soccerking 归档图 P2' },
+        alt: { en: 'Soccerking link or highlight post example', zh: 'Soccerking 链接或高光帖示例' },
+        caption: { en: 'Link-style surface for traffic and highlight distribution.', zh: '偏链接形态：承接引流与高光分发。' },
       },
       {
         src: '/archive-images/soccerking/P3.png',
-        alt: { en: 'Soccerking archive visual P3', zh: 'Soccerking 归档图 P3' },
+        alt: { en: 'Soccerking photo post or engagement layout', zh: 'Soccerking 图片帖或互动版式' },
+        caption: { en: 'Photo-led layout tuned for comments and lightweight actions.', zh: '偏图片形态：引导评论与轻互动。' },
       },
       {
         src: '/archive-images/soccerking/P4.png',
-        alt: { en: 'Soccerking archive visual P4', zh: 'Soccerking 归档图 P4' },
+        alt: { en: 'Soccerking album or informative carousel', zh: 'Soccerking 相册或可分享资讯' },
+        caption: { en: 'Album / carousel pattern for shareable explainers.', zh: '相册 / 轮播：适合可转发的资讯向内容。' },
       },
       {
         src: '/archive-images/soccerking/P5.png',
-        alt: { en: 'Soccerking archive visual P5', zh: 'Soccerking 归档图 P5' },
+        alt: { en: 'Soccerking template, workflow, or campaign capture', zh: 'Soccerking 模板、流程或活动截图' },
+        caption: { en: 'Template or workflow capture from the post-match sprint.', zh: '赛后抢发阶段的模板或流程留底。' },
       },
     ],
     sections: [
       {
-        heading: { en: 'Content Strategy Framework', zh: '内容策略框架' },
+        heading: { en: 'What was actually broken', zh: '当时真正卡在哪' },
         points: {
           en: [
-            'Link posts for traffic acquisition and game-highlight distribution.',
-            'Photo posts for engagement actions and conversation triggers.',
-            'Album posts for shareable informative content and audience expansion.',
-            'Template-driven post production to accelerate turnaround after match end.',
+            'One-off “big idea” posts could spike reach, but they did not teach the team what to do next Tuesday.',
+            'Link, photo, and album formats were all in use, yet the why behind each format was fuzzy—so priorities argued instead of compounding.',
+            'After matches, speed mattered; without a shared template, quality swung between hero saves and silent gaps.',
           ],
           zh: [
-            '链接帖：引流与比赛高光分发。',
-            '图片帖：引导互动动作与话题触发。',
-            '相册帖：可分享资讯内容与受众扩张。',
-            '模板化生产：缩短赛后出稿时间。',
+            '偶尔一条「爆款」能带来峰值，但团队不知道下周二该复制什么。',
+            '链接、图片、相册都在用，但各自要解决的题不清楚，容易在群里争优先级而不是叠加效果。',
+            '赛后窗口短，没有共用模板时，质量就会在「神救场」和「空窗」之间摇摆。',
           ],
         },
       },
       {
-        heading: { en: 'Campaign Objective', zh: '活动目标' },
+        heading: { en: 'Three post types, three jobs', zh: '三种帖子，三件不同的活' },
         points: {
           en: [
-            'Increase traffic and brand exposure with structured content cadence.',
-            'Drive stronger ROI by matching post types to audience behavior patterns.',
-            'Use repeatable templates to accelerate publishing after matches.',
+            'Link posts: pull traffic in and ship highlights while search and share intent is still hot.',
+            'Photo posts: earn Reacts and comments with clear, low-friction prompts—not decoration for its own sake.',
+            'Album posts: package explainers people can forward; built for saves and reshares, not just impressions.',
+            'Naming the job before naming the creative kept briefs shorter and reviews less emotional.',
           ],
           zh: [
-            '以结构化排期提升流量与品牌曝光。',
-            '按受众行为匹配帖子类型，提升 ROI。',
-            '用可复用模板加速赛后发布。',
+            '链接帖：在搜索与分享意愿还在时，把人带进来并把高光送出去。',
+            '图片帖：用清晰、低摩擦的引导换互动——图不是为好看而堆。',
+            '相册帖：把资讯包成「愿意转给好友」的形态，看重收藏与转发，而不只是曝光。',
+            '先讲清楚「这条帖要干什么」，再谈创意，Brief 会短很多，争执也少很多。',
+          ],
+        },
+      },
+      {
+        heading: { en: 'Cadence, templates, and what we watched', zh: '排期、模板，以及我们看什么数' },
+        points: {
+          en: [
+            'Match-led rhythm: templates shortened the path from full-time to publish so the page did not go quiet when everyone was tired.',
+            'Facebook Page insights framed which post type earned reach versus depth; we used that to adjust the mix, not to chase a single vanity metric.',
+            'Paid and organic loops (likes, shares, tags, landing experiments) sat beside this system—I treated ads as acceleration, not a replacement for clear organic jobs.',
+          ],
+          zh: [
+            '比赛驱动节奏：模板把「终场 → 发出」的路径压短，避免大家累了主页却断更。',
+            '主页洞察用来看「哪种帖型在吃 reach、哪种在吃深度」，用来调比例，而不是盯单一虚荣指标。',
+            '点赞、分享、标注与落地实验等付费/活动闭环叠在这套之上——我把广告当放大器，而不是替代清晰的有机分工。',
           ],
         },
       },
@@ -846,7 +989,7 @@ const LanguageToggle: React.FC<{
       type="button"
       onClick={() => setLanguage('en')}
       className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
-        language === 'en' ? 'bg-stone-900 text-white' : 'text-stone-600 hover:text-stone-900'
+        language === 'en' ? 'bg-eden-mint text-stone-900 shadow-sm' : 'text-stone-600 hover:text-stone-900'
       }`}
     >
       EN
@@ -855,7 +998,7 @@ const LanguageToggle: React.FC<{
       type="button"
       onClick={() => setLanguage('zh')}
       className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
-        language === 'zh' ? 'bg-stone-900 text-white' : 'text-stone-600 hover:text-stone-900'
+        language === 'zh' ? 'bg-eden-mint text-stone-900 shadow-sm' : 'text-stone-600 hover:text-stone-900'
       }`}
     >
       中文
@@ -871,7 +1014,7 @@ const AnalogTechFullPage: React.FC<{
 }> = ({ homeHref, baseUrl, language, setLanguage }) => {
   const isZh = language === 'zh';
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-800 selection:bg-stone-900 selection:text-white">
+    <div className="min-h-screen bg-stone-50 text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
       <main className="px-6 py-12 md:py-16">
         <div className="mx-auto max-w-4xl">
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -893,7 +1036,14 @@ const AnalogTechFullPage: React.FC<{
               {isZh ? '胶片图库' : 'Film Gallery'}
             </h1>
             <p className="mt-4 text-base leading-relaxed text-stone-700">
-              {isZh ? '这里是我模拟摄影档案中的一组精选作品。' : 'A small collection from my analog photography archive.'}
+              {isZh
+                ? '我仍用 35mm 与部分中画幅做日常练习。这一角是档案里的私人选集：街面、水岸、山海之间与零星建筑，不是为 brief 而铺陈；更像把「如何在场」用化学与曝光诚实写下来。'
+                : 'I still keep a 35mm and occasional medium-format practice. This is a private edit from that archive: streets, waterlines, the coast, and a few building studies—less a “portfolio deck,” more an honest log of how attention lands on a frame.'}
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-stone-600">
+              {isZh
+                ? '乳剂带来的颗粒、漏光与软高光，我都当作可读的材质，不是必须修掉的杂讯。下面 11 张，按情绪与结构线索挑出来，不追求“唯一正确”的完整系列。'
+                : 'Soft highlights, uneven grain, and the occasional light leak are part of the material for me, not glitches to erase. The eleven images below are chosen for line and mood rather than a single, exhaustive “set.”'}
             </p>
           </section>
 
@@ -923,7 +1073,7 @@ const LifeFullPage: React.FC<{
 }> = ({ homeHref, language, setLanguage }) => {
   const isZh = language === 'zh';
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-800 selection:bg-stone-900 selection:text-white">
+    <div className="min-h-screen bg-stone-50 text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
       <main className="px-6 py-12 md:py-16">
         <div className="mx-auto max-w-4xl">
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -962,31 +1112,375 @@ const LifeFullPage: React.FC<{
                     <ExternalLink size={14} />
                   </a>
                 </div>
-                <a
-                  href={video.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group mt-4 block overflow-hidden rounded-xl border border-stone-200 bg-black"
-                >
+                <div className="mt-4 overflow-hidden rounded-xl border border-stone-200 bg-black">
                   <div className="relative aspect-video w-full">
-                    <img
-                      src={video.thumbnailSrc}
-                      alt={`${video.title[language]} thumbnail`}
-                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                    <iframe
+                      src={video.embedSrc}
+                      title={`${video.title[language]} YouTube player`}
+                      className="h-full w-full"
                       loading="lazy"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
                     />
-                    <div className="pointer-events-none absolute inset-0 bg-black/20 transition-colors group-hover:bg-black/10" />
-                    <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                      <span className="inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-stone-900 shadow">
-                        {isZh ? '在 YouTube 播放' : 'Play on YouTube'}
-                        <ExternalLink size={14} />
-                      </span>
-                    </div>
                   </div>
-                </a>
+                </div>
               </section>
             ))}
           </div>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+const brandGuidePalette = [
+  {
+    bg: 'bg-stone-50',
+    border: 'border-stone-200',
+    text: 'text-stone-900',
+    hex: '#fafaf9',
+    usage: { en: 'Primary canvas · page background', zh: '主画布 · 页面背景' },
+  },
+  {
+    bg: 'bg-stone-200',
+    border: 'border-stone-300',
+    text: 'text-stone-800',
+    hex: '#e7e5e4',
+    usage: { en: 'Pills, emoji tiles, soft fills', zh: '胶囊标签、emoji 方底、柔和填充' },
+  },
+  {
+    bg: 'bg-stone-600',
+    border: 'border-stone-500',
+    text: 'text-white',
+    hex: '#57534e',
+    usage: { en: 'Secondary emphasis (sparingly)', zh: '次级强调（少用）' },
+  },
+  {
+    bg: 'bg-stone-900',
+    border: 'border-stone-900',
+    text: 'text-stone-50',
+    hex: '#1c1917',
+    usage: { en: 'Primary text, primary buttons, inverted panels', zh: '主文案、主按钮、反色块' },
+  },
+] as const;
+
+const brandGuideAccent = [
+  {
+    bg: 'bg-eden-mint',
+    border: 'border-teal-700/25',
+    text: 'text-stone-900',
+    hex: '#7bdcb5',
+    usage: {
+      en: 'Accent mint · selection, language toggle, quote rail, emoji tile rim, footer hovers',
+      zh: '薄荷强调 · 文本划选、语言切换、引用竖线、emoji 细边、页脚链接悬停',
+    },
+  },
+  {
+    bg: 'bg-eden-amber',
+    border: 'border-amber-700/30',
+    text: 'text-stone-900',
+    hex: '#ffa340ed',
+    usage: {
+      en: 'Accent amber (with alpha) · “Present” chips, flat-emoji hover rim, primary CTA focus ring',
+      zh: '琥珀强调（含透明度）·「进行中」标签、emoji 悬停描边、主按钮焦点环',
+    },
+  },
+] as const;
+
+const BrandGuideFullPage: React.FC<{
+  homeHref: string;
+  baseUrl: string;
+  language: Language;
+  setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+}> = ({ homeHref, baseUrl, language, setLanguage }) => {
+  const isZh = language === 'zh';
+  const faviconSrc = joinBasePath(baseUrl, 'favicon.svg');
+
+  return (
+    <div className="min-h-screen bg-stone-50 text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
+      <main className="px-6 py-12 md:py-16">
+        <div className="mx-auto max-w-4xl">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <a
+              href={homeHref}
+              className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 transition-colors hover:border-stone-900 hover:text-stone-900"
+            >
+              <ArrowLeft size={16} />
+              {isZh ? '返回主页' : 'Back to Home'}
+            </a>
+            <LanguageToggle language={language} setLanguage={setLanguage} />
+          </div>
+
+          <header className="mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
+            <div className="flex flex-wrap items-start gap-4">
+              <FlatEmoji emoji="🎨" size="lg" bob />
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-semibold uppercase tracking-wider text-stone-500">
+                  {isZh ? '站点识别' : 'Site identity'}
+                </p>
+                <h1 className="mt-2 font-display text-4xl font-bold tracking-tight text-stone-900 md:text-5xl">
+                  {isZh ? '品牌指南' : 'Brand guide'}
+                </h1>
+                <p className="mt-4 max-w-2xl text-base leading-relaxed text-stone-600">
+                  {isZh
+                    ? '这份页面把 Eden 作品集站的视觉与语气收成一份「对内对外都能用」的说明：偏编辑感、低饱和 stone、叙事先于口号。第三方若要引用样式，请以这里为准。'
+                    : 'A single reference for how this portfolio looks and sounds: editorial calm, low-saturation stone, narrative before slogans. Use this page as the source of truth when aligning visuals or copy.'}
+                </p>
+              </div>
+            </div>
+          </header>
+
+          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+            <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
+              <FlatEmoji emoji="✨" size="md" tilt />
+              {isZh ? '品牌内核' : 'Brand essence'}
+            </h2>
+            <ul className="mt-4 space-y-2 text-stone-700">
+              {(isZh
+                ? [
+                    '知识系统感：像杂志排版，而不是典型 SaaS 营销站。',
+                    '真诚叙事：先场景与判断，再能力标签；少用空泛「赋能」。',
+                    '留白与层级：标题用 display 字体，正文保持可读行宽。',
+                    '轻趣味：扁平底 emoji + 轻动效点缀，不抢正文。',
+                  ]
+                : [
+                    'Knowledge-system feel: editorial layout, not generic SaaS marketing chrome.',
+                    'Honest narrative: context and judgment before capability labels; avoid empty “empowerment” language.',
+                    'Hierarchy and air: display type for headings, comfortable measure for body copy.',
+                    'Light play: flat emoji tiles and gentle motion as accents, never competing with the text.',
+                  ]
+              ).map((line) => (
+                <li key={line} className="flex gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-stone-400" />
+                  <span>{line}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+            <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
+              <FlatEmoji emoji="🧱" size="md" bob />
+              {isZh ? '色彩' : 'Color'}
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-stone-600">
+              {isZh
+                ? '全站以 Tailwind `stone` 阶为主轴；另有两枚品牌强调色（薄荷 / 琥珀，含透明度）用于状态、划选与轻点缀，不抢 stone 的编辑基调。'
+                : 'Stone remains the spine. Two accent swatches—mint and amber (with alpha)—signal status, selection, and light highlights without breaking the editorial calm.'}
+            </p>
+            <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-stone-500">
+              {isZh ? '中性阶（stone）' : 'Neutral ramp (stone)'}
+            </p>
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+              {brandGuidePalette.map((row) => (
+                <div
+                  key={row.hex}
+                  className={`flex gap-3 rounded-xl border ${row.border} p-4 ${row.bg}`}
+                >
+                  <div className={`min-w-0 flex-1 text-sm ${row.text}`}>
+                    <p className="font-mono text-xs opacity-80">{row.hex}</p>
+                    <p className="mt-1 font-medium leading-snug">{row.usage[language]}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 text-xs font-semibold uppercase tracking-wide text-stone-500">
+              {isZh ? '品牌强调色' : 'Brand accents'}
+            </p>
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+              {brandGuideAccent.map((row) => (
+                <div
+                  key={row.hex}
+                  className={`flex gap-3 rounded-xl border ${row.border} p-4 ${row.bg}`}
+                >
+                  <div className={`min-w-0 flex-1 text-sm ${row.text}`}>
+                    <p className="font-mono text-xs opacity-90">{row.hex}</p>
+                    <p className="mt-1 font-medium leading-snug">{row.usage[language]}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+            <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
+              <FlatEmoji emoji="🔤" size="md" tilt />
+              {isZh ? '字体' : 'Typography'}
+            </h2>
+            <div className="mt-4 space-y-4 text-sm text-stone-700">
+              <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
+                <p className="font-mono text-xs uppercase tracking-wider text-stone-500">Space Grotesk · display</p>
+                <p className="font-display mt-2 text-2xl font-bold text-stone-900">
+                  {isZh ? '标题与引用：干净、略具编辑性格。' : 'Headlines & pull quotes: clean, slightly editorial.'}
+                </p>
+              </div>
+              <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
+                <p className="font-mono text-xs uppercase tracking-wider text-stone-500">Inter · sans</p>
+                <p className="mt-2 text-base leading-relaxed">
+                  {isZh
+                    ? '正文与 UI：中性、易读；避免过细字重导致灰度不足。'
+                    : 'Body and UI: neutral and readable; avoid ultra-light weights that lose contrast.'}
+                </p>
+              </div>
+              <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
+                <p className="font-mono text-xs uppercase tracking-wider text-stone-500">JetBrains Mono · mono</p>
+                <p className="mt-2 font-mono text-sm text-stone-700">
+                  {isZh ? '标签、时间、状态：小写宽、与 stone-500 标签搭配。' : 'Labels, dates, and status chips: wide, paired with stone-500 meta text.'}
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+            <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
+              <FlatEmoji emoji="🔖" size="md" bob />
+              {isZh ? '标志与图标' : 'Logo & mark'}
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-stone-600">
+              {isZh
+                ? '站点字标为「Eden Tan」全名，使用 display 字重；图形标为圆角方底上的「E」字母标（见 favicon）。'
+                : 'Wordmark is the full name “Eden Tan” in display weight; the pictogram is a rounded-square “E” mark (see favicon).'}
+            </p>
+            <div className="mt-5 flex flex-wrap items-center gap-4">
+              <img
+                src={faviconSrc}
+                alt=""
+                width={64}
+                height={64}
+                className="rounded-2xl border border-stone-200 bg-white p-1 shadow-sm"
+              />
+              <div className="font-display text-3xl font-bold tracking-tight text-stone-900">Eden Tan</div>
+            </div>
+          </section>
+
+          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+            <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
+              <FlatEmoji emoji="📐" size="md" tilt />
+              {isZh ? '版式与形状' : 'Layout & shape'}
+            </h2>
+            <ul className="mt-4 space-y-2 text-sm text-stone-700">
+              {(isZh
+                ? [
+                    '主内容宽约 `max-w-4xl`（内页）或 `max-w-5xl`（主页），两侧留白。',
+                    '卡片：`rounded-2xl` + `border-stone-200` + 轻阴影；避免重投影。',
+                    '分隔：细边线优于粗分割条；时间轴可用左侧竖线 + 圆点。',
+                    '顶栏可用极淡 `border-eden-mint` 作为品牌线，不抢内容。',
+                  ]
+                : [
+                    'Main column: about `max-w-4xl` on inner pages, `max-w-5xl` on home—keep generous margins.',
+                    'Cards: `rounded-2xl`, `border-stone-200`, subtle shadow—skip heavy drop shadows.',
+                    'Dividers: hairline borders over thick bands; timelines use a left rail with dots.',
+                    'The fixed nav can carry a whisper-thin `border-eden-mint` brand line—keep it subtle.',
+                  ]
+              ).map((line) => (
+                <li key={line} className="flex gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-stone-400" />
+                  <span>{line}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+            <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
+              <FlatEmoji emoji="🧩" size="md" bob />
+              {isZh ? '组件习惯' : 'Component habits'}
+            </h2>
+            <div className="mt-4 space-y-4">
+              <div className="flex flex-wrap items-center gap-2">
+                <FlatEmoji emoji="🗺️" delayMs={0} />
+                <FlatEmoji emoji="✨" delayMs={120} />
+                <span className="text-sm text-stone-600">
+                  {isZh ? '`.flat-emoji` + `emoji-bob` / `emoji-tilt`（见 `index.css`）' : '`.flat-emoji` + `emoji-bob` / `emoji-tilt` (see `index.css`)'}
+                </span>
+              </div>
+              <p className="text-sm text-stone-600">
+                {isZh
+                  ? '强调色 Token：`eden-mint`（#7bdcb5）、`eden-amber`（#ffa340ed）—在 `index.css` 的 `@theme` 注册，可用 `bg-eden-mint`、`border-eden-amber` 等工具类。'
+                  : 'Accent tokens: `eden-mint` (#7bdcb5) and `eden-amber` (#ffa340ed) are registered in `@theme` inside `index.css`—use utilities like `bg-eden-mint` and `border-eden-amber`.'}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <span className="rounded-full border border-stone-200 bg-stone-50 px-3 py-1 text-xs font-medium text-stone-700">
+                  {isZh ? '示例标签' : 'Sample chip'}
+                </span>
+                <span className="rounded-full bg-stone-900 px-3 py-1 text-xs font-semibold text-white">
+                  {isZh ? '主按钮语气' : 'Primary CTA tone'}
+                </span>
+              </div>
+              <div className="rounded-2xl bg-stone-900 p-5 text-stone-100">
+                <p className="font-display text-lg font-bold">{isZh ? '反色联系块' : 'Inverted connect panel'}</p>
+                <p className="mt-2 text-sm text-stone-400">
+                  {isZh ? '用于侧栏强调链接；文字层级用 stone-50 / stone-400。' : 'For sidebar emphasis; use stone-50 / stone-400 for hierarchy.'}
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+            <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
+              <FlatEmoji emoji="💬" size="md" tilt />
+              {isZh ? '语气与写作' : 'Voice & writing'}
+            </h2>
+            <div className="mt-4 grid gap-4 md:grid-cols-2">
+              <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-stone-500">
+                  {isZh ? '更贴近' : 'Prefer'}
+                </p>
+                <ul className="mt-2 space-y-1 text-sm text-stone-700">
+                  {(isZh
+                    ? ['具体场景与时间点', '短句 + 可接话的留白', '先承认再建议']
+                    : ['Concrete scenes and timestamps', 'Short lines with room to respond', 'Acknowledge, then advise']
+                  ).map((t) => (
+                    <li key={t}>· {t}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-stone-500">
+                  {isZh ? '尽量避开' : 'Avoid'}
+                </p>
+                <ul className="mt-2 space-y-1 text-sm text-stone-700">
+                  {(isZh
+                    ? ['堆叠抽象大词', '成功学金句压场', '客服腔 / 主持稿腔']
+                    : ['Stacks of abstract buzzwords', 'Motivational poster quotes', 'Support-script or host-script tone']
+                  ).map((t) => (
+                    <li key={t}>· {t}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+            <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
+              <FlatEmoji emoji="🌀" size="md" bob />
+              {isZh ? '动效与无障碍' : 'Motion & accessibility'}
+            </h2>
+            <ul className="mt-4 space-y-2 text-sm text-stone-700">
+              {(isZh
+                ? [
+                    '动效宜轻：`emoji-bob`、`chapter-voice-enter` 级别即可。',
+                    '尊重 `prefers-reduced-motion`：动画与 hover 缩放会关闭。',
+                    '装饰性 emoji 使用 `aria-hidden`，避免屏幕阅读器重复读表情。',
+                  ]
+                : [
+                    'Keep motion subtle: `emoji-bob`, `chapter-voice-enter` scale is enough.',
+                    'Honor `prefers-reduced-motion`: animations and hover scaling disable automatically.',
+                    'Decorative emojis use `aria-hidden` so assistive tech is not flooded with glyph names.',
+                  ]
+              ).map((line) => (
+                <li key={line} className="flex gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-stone-400" />
+                  <span>{line}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <p className="mt-8 text-center text-xs text-stone-500">
+            {isZh ? '最后更新以代码库与 log 为准。' : 'For the latest changes, follow the repo and `log.md`.'}
+          </p>
         </div>
       </main>
     </div>
@@ -1002,7 +1496,7 @@ const ArchivedWorkPage: React.FC<{
 }> = ({ homeHref, baseUrl, work, language, setLanguage }) => {
   const isZh = language === 'zh';
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-800 selection:bg-stone-900 selection:text-white">
+    <div className="min-h-screen bg-stone-50 text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
       <main className="px-6 py-12 md:py-16">
         <div className="mx-auto max-w-4xl">
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -1122,7 +1616,7 @@ const PreviousProjectsFullPage: React.FC<{
 }> = ({ homeHref, baseUrl, language, setLanguage }) => {
   const isZh = language === 'zh';
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-800 selection:bg-stone-900 selection:text-white">
+    <div className="min-h-screen bg-stone-50 text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
       <main className="px-6 py-12 md:py-16">
         <div className="mx-auto max-w-4xl">
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -1211,7 +1705,7 @@ const JijuPetFullPage: React.FC<{
   const isZh = language === 'zh';
 
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-800 selection:bg-stone-900 selection:text-white">
+    <div className="min-h-screen bg-stone-50 text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
       <main className="px-6 py-12 md:py-16">
         <div className="mx-auto max-w-4xl">
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -1229,7 +1723,7 @@ const JijuPetFullPage: React.FC<{
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wider text-stone-500">
-                  {isZh ? '持续构建与实战经验' : 'Active Build & Experience'}
+                  {isZh ? '手上还在长的几件事' : 'What I am building now'}
                 </p>
                 <h1 className="mt-2 font-display text-4xl font-bold tracking-tight text-stone-900 md:text-5xl">
                   {isZh ? 'Jiju.pet：从 0 到 1' : 'Jiju.pet: From 0 to 1'}
@@ -1239,17 +1733,23 @@ const JijuPetFullPage: React.FC<{
                 href="https://jiju.pet"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-stone-900 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-stone-800"
+                className="inline-flex items-center gap-2 rounded-full bg-stone-900 px-4 py-2 text-sm font-semibold text-white ring-2 ring-transparent transition-all hover:bg-stone-800 hover:ring-eden-amber/55 focus-visible:outline-none focus-visible:ring-eden-amber/60"
               >
                 {isZh ? '打开 jiju.pet' : 'Open jiju.pet'}
                 <ExternalLink size={14} />
               </a>
             </div>
 
+            <div className="mt-5 flex flex-wrap items-center gap-2">
+              <FlatEmoji emoji="🐾" delayMs={0} />
+              <FlatEmoji emoji="📖" delayMs={160} />
+              <FlatEmoji emoji="✨" delayMs={320} />
+            </div>
+
             <p className="mt-6 text-base leading-relaxed text-stone-600">
               {isZh
-                ? '这是我的真实构建叙事日志。我希望读者不仅看到我做了什么，也能看懂我是怎么做、什么时候做、为什么这样做。'
-                : 'This is my personal build log narrative. I wrote it so readers can understand what I built, how I built it, when each decision happened, and why each step mattered.'}
+                ? '这一页不是修好才拿出来展示的故事，而是我边做边记录的现场版本。你会先看到我反复使用的三条决策 DNA，再看知识摘要，最后进入九段连载：每段先一句旁白，再拆当时为什么这样判断、怎么落地、最后换来什么。'
+                : 'This page is not a polished retrospective. It is the live operating log: three decision habits I keep repeating, a distilled knowledge summary, then nine chapters in sequence. Each chapter opens with a short voice-over, followed by why I chose that path, how I executed, and what changed.'}
             </p>
           </div>
 
@@ -1257,14 +1757,21 @@ const JijuPetFullPage: React.FC<{
             <p className="text-sm font-semibold uppercase tracking-wide text-stone-500">
               {isZh ? '决策 DNA' : 'Decision DNA'}
             </p>
-            <h2 className="mt-2 font-display text-2xl font-bold text-stone-900 md:text-3xl">
+            <h2 className="mt-2 flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900 md:text-3xl">
+              <FlatEmoji emoji="🧬" size="lg" bob />
               {isZh ? '我的思考、规划与执行方式' : 'How I think, plan, and execute'}
             </h2>
             <div className="mt-5 space-y-4">
-              {decisionDna.map((item) => (
-                <div key={item.trait.en} className="rounded-xl border border-stone-200 bg-stone-50 p-4">
-                  <p className="text-base font-semibold text-stone-900">{item.trait[language]}</p>
-                  <p className="mt-1 text-sm leading-relaxed text-stone-700">{item.detail[language]}</p>
+              {decisionDna.map((item, dnaIndex) => (
+                <div
+                  key={item.trait.en}
+                  className="flex gap-3 rounded-xl border border-stone-200 bg-stone-50 p-4 transition-shadow duration-300 hover:shadow-md"
+                >
+                  <FlatEmoji emoji={item.emoji} size="sm" bob delayMs={dnaIndex * 140} />
+                  <div className="min-w-0 flex-1">
+                    <p className="text-base font-semibold text-stone-900">{item.trait[language]}</p>
+                    <p className="mt-1 text-sm leading-relaxed text-stone-700">{item.detail[language]}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -1274,18 +1781,25 @@ const JijuPetFullPage: React.FC<{
             <p className="text-sm font-semibold uppercase tracking-wide text-stone-500">
               {isZh ? '知识摘要' : 'Knowledge Summary'}
             </p>
-            <h2 className="mt-2 font-display text-2xl font-bold text-stone-900 md:text-3xl">
+            <h2 className="mt-2 flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900 md:text-3xl">
+              <FlatEmoji emoji="📚" size="lg" tilt />
               {isZh ? '来自 Jiju 知识库的核心要点' : 'Core points extracted from my Jiju knowledge base'}
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-stone-600">
               {isZh
-                ? '这部分提炼自目前全部 Jiju 笔记内容，覆盖产品记忆、运营 SOP、后台结构、治理文档与完整变更日志。'
-                : 'This summary is distilled from all current Jiju notes, including product memory, operating SOPs, backoffice structures, governance docs, and full change logs.'}
+                ? '这部分从 Jiju 当前全部笔记里抽出了“最常被反复验证”的要点，覆盖产品定位、执行体系、安全边界、增长分析、设计原则与社区方向。'
+                : 'This section distills the most repeatedly validated points from current Jiju notes: product positioning, execution system, safety boundaries, growth analytics, design principles, and community direction.'}
             </p>
             <div className="mt-5 space-y-4">
               {jijuKnowledgeHighlights.map((section) => (
-                <section key={section.title.en} className="rounded-xl border border-stone-200 bg-stone-50 p-4">
-                  <h3 className="text-base font-semibold text-stone-900">{section.title[language]}</h3>
+                <section
+                  key={section.title.en}
+                  className="rounded-xl border border-stone-200 bg-stone-50 p-4 transition-shadow duration-300 hover:shadow-md"
+                >
+                  <h3 className="flex items-center gap-2 text-base font-semibold text-stone-900">
+                    <FlatEmoji emoji={section.emoji} size="sm" bob={false} tilt />
+                    {section.title[language]}
+                  </h3>
                   <ul className="mt-2 space-y-2 text-sm text-stone-700">
                     {section.points[language].map((point) => (
                       <li key={point} className="flex gap-2">
@@ -1303,14 +1817,17 @@ const JijuPetFullPage: React.FC<{
             <div className="flex flex-wrap items-end justify-between gap-3">
               <div>
                 <p className="text-sm font-semibold uppercase tracking-wide text-stone-500">
-                  {isZh ? '阶段时间轴' : 'Phase Timeline'}
+                  {isZh ? '九段连载' : 'Nine chapters'}
                 </p>
-                <h2 className="mt-1 font-display text-2xl font-bold text-stone-900 md:text-3xl">
-                  {isZh ? 'Phase 01 到 09' : 'Phase 01 to 09'}
+                <h2 className="mt-1 flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900 md:text-3xl">
+                  <FlatEmoji emoji="🎞️" size="lg" bob />
+                  {isZh ? '从地基，到今天的写法' : 'From foundation to how I build now'}
                 </h2>
               </div>
-              <p className="text-xs font-medium uppercase tracking-wider text-stone-500">
-                {isZh ? '左右滑动查看' : 'Swipe left to right'}
+              <p className="max-w-xs text-xs font-medium leading-relaxed text-stone-500 md:text-right">
+                {isZh
+                  ? '左右滑动阅读。每张卡都是同一结构：旁白开场 -> 当时判断 -> 方案落地 -> 结果变化。'
+                  : 'Swipe horizontally. Every card follows the same rhythm: voice-over -> decision logic -> execution -> outcome.'}
               </p>
             </div>
 
@@ -1318,51 +1835,97 @@ const JijuPetFullPage: React.FC<{
             {jijuBuildFromZeroToOne.map((item, index) => (
                 <section
                   key={item.phase.en}
-                  className="min-w-[88%] snap-start rounded-2xl border border-stone-200 bg-white p-6 shadow-sm md:min-w-[560px] md:p-7 lg:min-w-[620px]"
+                  className="min-w-[88%] snap-start rounded-2xl border border-stone-200 bg-gradient-to-b from-stone-50/70 to-white p-6 shadow-sm outline outline-1 -outline-offset-1 outline-stone-200/80 ring-1 ring-stone-900/[0.04] transition-shadow duration-300 hover:shadow-md md:min-w-[560px] md:p-7 lg:min-w-[620px]"
                 >
-                <div className="flex items-center justify-between gap-3">
-                  <h2 className="font-display text-2xl font-bold text-stone-900 md:text-3xl">
-                    {item.phase[language]}
-                  </h2>
-                  <span className="rounded bg-stone-100 px-2 py-1 font-mono text-xs text-stone-500">
+                <div className="flex items-start justify-between gap-3 border-b border-dashed border-stone-200/90 pb-4">
+                  <div className="flex min-w-0 flex-1 items-start gap-3">
+                    <FlatEmoji emoji={item.emoji} bob delayMs={index * 120} />
+                    <h2 className="font-display text-2xl font-bold text-stone-900 md:text-3xl">
+                      {item.phase[language]}
+                    </h2>
+                  </div>
+                  <span className="shrink-0 rounded-lg border border-amber-700/20 bg-gradient-to-br from-eden-amber/40 to-amber-100/50 px-2.5 py-1 font-mono text-xs font-semibold text-amber-950 tabular-nums">
                     0{index + 1}
                   </span>
                 </div>
-                <p className="mt-3 text-sm font-semibold uppercase tracking-wide text-stone-500">
-                  {isZh ? '时间' : 'When'}
-                </p>
-                <p className="mt-1 text-base leading-relaxed text-stone-700">{item.when[language]}</p>
 
-                <p className="mt-5 text-sm font-semibold uppercase tracking-wide text-stone-500">
-                  {isZh ? '为什么做' : 'Why'}
-                </p>
-                <p className="mt-1 text-base leading-relaxed text-stone-700">{item.why[language]}</p>
+                <div className="mt-4 rounded-xl border border-eden-mint/30 bg-gradient-to-br from-eden-mint/25 via-stone-50/90 to-white p-4 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.6)] outline outline-1 -outline-offset-1 outline-eden-mint/20">
+                  <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-teal-900/80">
+                    <span aria-hidden>💬</span>
+                    {isZh ? '旁白' : 'Voice'}
+                  </p>
+                  <p className="chapter-voice-enter mt-2 border-l-[3px] border-eden-mint pl-3 text-base leading-relaxed text-stone-700">
+                    {item.chapterVoice[language]}
+                  </p>
+                </div>
 
-                <p className="mt-5 text-sm font-semibold uppercase tracking-wide text-stone-500">
-                  {isZh ? '思考判断' : 'Thinking'}
-                </p>
-                <p className="mt-1 text-base leading-relaxed text-stone-700">{item.thinking[language]}</p>
+                <div className="mt-4 overflow-hidden rounded-xl border border-stone-200/90 bg-white outline outline-1 -outline-offset-1 outline-amber-700/10 ring-1 ring-amber-700/[0.06]">
+                  <p className="flex items-center gap-2 border-b border-amber-700/10 bg-gradient-to-r from-eden-amber/15 to-amber-50/40 px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-amber-950/90">
+                    <span aria-hidden>🧩</span>
+                    {isZh ? '背景与判断' : 'Context & judgment'}
+                  </p>
+                  <div className="divide-y divide-stone-200/80">
+                    <div className="px-3 py-3">
+                      <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-amber-900/70">
+                        <span aria-hidden>📅</span>
+                        {isZh ? '时间' : 'When'}
+                      </p>
+                      <p className="mt-1 text-base leading-relaxed text-stone-700">{item.when[language]}</p>
+                    </div>
+                    <div className="px-3 py-3">
+                      <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-amber-900/70">
+                        <span aria-hidden>🎯</span>
+                        {isZh ? '为什么做' : 'Why'}
+                      </p>
+                      <p className="mt-1 text-base leading-relaxed text-stone-700">{item.why[language]}</p>
+                    </div>
+                    <div className="px-3 py-3">
+                      <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-amber-900/70">
+                        <span aria-hidden>💭</span>
+                        {isZh ? '思考判断' : 'Thinking'}
+                      </p>
+                      <p className="mt-1 text-base leading-relaxed text-stone-700">{item.thinking[language]}</p>
+                    </div>
+                  </div>
+                </div>
 
-                <p className="mt-5 text-sm font-semibold uppercase tracking-wide text-stone-500">
-                  {isZh ? '规划方案' : 'Planning'}
-                </p>
-                <p className="mt-1 text-base leading-relaxed text-stone-700">{item.planning[language]}</p>
+                <div className="mt-3 overflow-hidden rounded-xl border border-stone-200/90 bg-white outline outline-1 -outline-offset-1 outline-teal-700/12 ring-1 ring-teal-800/[0.05]">
+                  <p className="flex items-center gap-2 border-b border-eden-mint/20 bg-gradient-to-r from-eden-mint/20 to-stone-50/80 px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-teal-950/80">
+                    <span aria-hidden>🛠️</span>
+                    {isZh ? '规划与执行' : 'Plan & execution'}
+                  </p>
+                  <div className="space-y-0 divide-y divide-stone-200/80">
+                    <div className="px-3 py-3">
+                      <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-teal-900/70">
+                        <span aria-hidden>🗺️</span>
+                        {isZh ? '规划方案' : 'Planning'}
+                      </p>
+                      <p className="mt-1 text-base leading-relaxed text-stone-700">{item.planning[language]}</p>
+                    </div>
+                    <div className="px-3 py-3">
+                      <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-teal-900/70">
+                        <span aria-hidden>✅</span>
+                        {isZh ? '问题解决' : 'Problem Solving'}
+                      </p>
+                      <ul className="mt-2 space-y-2 text-stone-700">
+                        {item.solving[language].map((step, stepIndex) => (
+                          <li key={`${item.phase.en}-${stepIndex}`} className="flex gap-2">
+                            <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-eden-mint shadow-[0_0_0_1px_rgba(15,23,20,0.08)]" />
+                            <span>{step}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
 
-                <p className="mt-5 text-sm font-semibold uppercase tracking-wide text-stone-500">
-                  {isZh ? '问题解决' : 'Problem Solving'}
-                </p>
-                <ul className="mt-2 space-y-2 text-stone-700">
-                  {item.solving[language].map((step, stepIndex) => (
-                    <li key={`${item.phase.en}-${stepIndex}`} className="flex gap-2">
-                      <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-stone-400" />
-                      <span>{step}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <p className="mt-5 rounded-lg bg-stone-100 px-3 py-2 text-sm text-stone-700">
-                  <span className="font-semibold">{isZh ? '结果：' : 'Outcome:'}</span> {item.outcome[language]}
-                </p>
+                <div className="mt-3 rounded-xl border border-eden-mint/40 bg-gradient-to-br from-eden-mint/15 via-stone-50/95 to-white px-3 py-3.5 text-sm text-stone-800 outline outline-1 -outline-offset-1 outline-eden-mint/30 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.55)]">
+                  <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-teal-900/85">
+                    <span aria-hidden>🌱</span>
+                    {isZh ? '结果' : 'Outcome'}
+                  </p>
+                  <p className="mt-1.5 leading-relaxed text-stone-800">{item.outcome[language]}</p>
+                </div>
                 </section>
             ))}
             </div>
@@ -1372,6 +1935,101 @@ const JijuPetFullPage: React.FC<{
     </div>
   );
 };
+
+type ActiveBuildSkill = {
+  label: string;
+  kind: 'hard' | 'soft';
+};
+
+const activeBuildSkillSets = {
+  jiju: {
+    en: [
+      { label: 'Product & GTM', kind: 'hard' },
+      { label: 'React / TypeScript', kind: 'hard' },
+      { label: 'Firebase', kind: 'hard' },
+      { label: 'Maps & geo', kind: 'hard' },
+      { label: 'SEO & content', kind: 'hard' },
+      { label: 'Ops delivery', kind: 'hard' },
+      { label: 'User empathy', kind: 'soft' },
+      { label: 'Stakeholder alignment', kind: 'soft' },
+    ],
+    zh: [
+      { label: '产品与 GTM', kind: 'hard' },
+      { label: 'React / TypeScript', kind: 'hard' },
+      { label: 'Firebase', kind: 'hard' },
+      { label: '地图与地理', kind: 'hard' },
+      { label: 'SEO 与内容', kind: 'hard' },
+      { label: '运营落地', kind: 'hard' },
+      { label: '用户同理心', kind: 'soft' },
+      { label: '跨方对齐', kind: 'soft' },
+    ],
+  },
+  poker: {
+    en: [
+      { label: 'React / TypeScript', kind: 'hard' },
+      { label: 'Realtime rooms', kind: 'hard' },
+      { label: 'Game rules design', kind: 'hard' },
+      { label: 'i18n', kind: 'hard' },
+      { label: 'Host UX', kind: 'hard' },
+      { label: 'Asset pipeline', kind: 'hard' },
+      { label: 'Facilitation', kind: 'soft' },
+      { label: 'Clear communication', kind: 'soft' },
+    ],
+    zh: [
+      { label: 'React / TypeScript', kind: 'hard' },
+      { label: '实时房间', kind: 'hard' },
+      { label: '规则与机制设计', kind: 'hard' },
+      { label: '国际化', kind: 'hard' },
+      { label: '主持人体验', kind: 'hard' },
+      { label: '素材流程', kind: 'hard' },
+      { label: '引导能力', kind: 'soft' },
+      { label: '清晰沟通', kind: 'soft' },
+    ],
+  },
+  marketing: {
+    en: [
+      { label: 'Growth strategy', kind: 'hard' },
+      { label: 'Performance marketing', kind: 'hard' },
+      { label: 'Funnel optimization', kind: 'hard' },
+      { label: 'CRM & lifecycle', kind: 'hard' },
+      { label: 'Analytics', kind: 'hard' },
+      { label: 'Cross-functional delivery', kind: 'hard' },
+      { label: 'Ownership', kind: 'soft' },
+      { label: 'Decision making', kind: 'soft' },
+    ],
+    zh: [
+      { label: '增长战略', kind: 'hard' },
+      { label: '效果营销', kind: 'hard' },
+      { label: '漏斗优化', kind: 'hard' },
+      { label: 'CRM 与生命周期', kind: 'hard' },
+      { label: '数据分析', kind: 'hard' },
+      { label: '跨职能交付', kind: 'hard' },
+      { label: '主人翁意识', kind: 'soft' },
+      { label: '决策判断', kind: 'soft' },
+    ],
+  },
+} as const;
+
+const ActiveBuildSkillRow: React.FC<{ isZh: boolean; skills: readonly ActiveBuildSkill[] }> = ({ isZh, skills }) => (
+  <div className="mt-3">
+    <p className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-stone-500">
+      <FlatEmoji emoji="🏷️" size="sm" bob={false} tilt />
+      {isZh ? '技能' : 'Skills'}
+    </p>
+    <div className="flex flex-wrap gap-2">
+      {skills.map((skill) => (
+        <span
+          key={`${skill.label}-${skill.kind}`}
+          className={`rounded-full border border-stone-200 bg-stone-50 px-2.5 py-1 text-xs font-medium transition-all duration-200 hover:-translate-y-0.5 hover:border-eden-mint/50 hover:shadow-sm ${
+            skill.kind === 'soft' ? 'text-teal-700' : 'text-stone-700'
+          }`}
+        >
+          {skill.label}
+        </span>
+      ))}
+    </div>
+  </div>
+);
 
 const App: React.FC = () => {
   const [language, setLanguage] = React.useState<Language>(() => readStoredLanguage() ?? 'en');
@@ -1390,6 +2048,7 @@ const App: React.FC = () => {
   const previousProjectsHref = joinBasePath(baseUrl, 'previous-projects');
   const analogTechHref = joinBasePath(baseUrl, 'analog-tech');
   const lifeHref = joinBasePath(baseUrl, 'life');
+  const brandGuideHref = joinBasePath(baseUrl, 'brand-guide');
   const homeHref = baseUrl;
   const currentPath = typeof window !== 'undefined' ? normalizePath(window.location.pathname) : '/';
   const normalizedBase = normalizePath(baseUrl);
@@ -1401,10 +2060,15 @@ const App: React.FC = () => {
   const isPreviousProjectsFullPage = pathWithoutBase === '/previous-projects';
   const isAnalogTechFullPage = pathWithoutBase === '/analog-tech';
   const isLifeFullPage = pathWithoutBase === '/life';
+  const isBrandGuideFullPage = pathWithoutBase === '/brand-guide';
   const archivedWorkSlug = pathWithoutBase.startsWith('/archive/')
     ? pathWithoutBase.replace('/archive/', '')
     : '';
   const activeArchivedWork = archivedWorks.find((item) => item.slug === archivedWorkSlug);
+
+  React.useEffect(() => {
+    applyPageSeo(pathWithoutBase, language, activeArchivedWork);
+  }, [pathWithoutBase, language, activeArchivedWork]);
 
   if (isJijuPetFullPage) {
     return <JijuPetFullPage homeHref={homeHref} language={language} setLanguage={setLanguage} />;
@@ -1429,6 +2093,17 @@ const App: React.FC = () => {
     return <LifeFullPage homeHref={homeHref} language={language} setLanguage={setLanguage} />;
   }
 
+  if (isBrandGuideFullPage) {
+    return (
+      <BrandGuideFullPage
+        homeHref={homeHref}
+        baseUrl={baseUrl}
+        language={language}
+        setLanguage={setLanguage}
+      />
+    );
+  }
+
   if (activeArchivedWork) {
     return (
       <ArchivedWorkPage
@@ -1442,15 +2117,15 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-800 font-sans selection:bg-stone-900 selection:text-white">
+    <div className="min-h-screen bg-stone-50 text-stone-800 font-sans selection:bg-eden-mint/30 selection:text-stone-900">
       
       {/* Navigation / Header */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-stone-50/80 backdrop-blur-md border-b border-stone-200">
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-eden-mint/35 bg-stone-50/80 backdrop-blur-md">
         <div className="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="font-display font-bold text-xl tracking-tight">Eden Tan</div>
           <div className="flex items-center gap-3">
             <LanguageToggle language={language} setLanguage={setLanguage} />
-            <a href="https://drive.google.com/uc?export=download&id=1bidz8DdSkgYu2KrsKUXnfR04J8EUo3IZ" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm font-medium bg-stone-900 text-white px-4 py-2 rounded-full hover:bg-stone-800 transition-colors">
+            <a href="https://drive.google.com/uc?export=download&id=1bidz8DdSkgYu2KrsKUXnfR04J8EUo3IZ" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-full bg-stone-900 px-4 py-2 text-sm font-medium text-white ring-2 ring-transparent transition-all hover:bg-stone-800 hover:ring-eden-amber/55 focus-visible:outline-none focus-visible:ring-eden-amber/60">
               <Download size={16} />
               <span>{isZh ? '简历' : 'Resume'}</span>
             </a>
@@ -1467,8 +2142,14 @@ const App: React.FC = () => {
           animate="animate"
           variants={staggerContainer}
         >
-          <motion.div variants={fadeIn} className="inline-flex items-center gap-2 px-3 py-1 bg-stone-200 text-stone-700 text-xs font-bold tracking-widest uppercase rounded-full mb-6">
-            <MapPin size={14} /> {isZh ? '马来西亚' : 'Malaysia Based'}
+          <motion.div variants={fadeIn} className="mb-6 inline-flex items-center gap-2 rounded-full border border-eden-mint/45 bg-eden-mint/30 px-3 py-1 text-xs font-bold uppercase tracking-widest text-stone-800">
+            <MapPin size={14} className="text-stone-700" /> {isZh ? '马来西亚' : 'Malaysia Based'}
+          </motion.div>
+
+          <motion.div variants={fadeIn} className="mb-6 flex flex-wrap gap-2">
+            <FlatEmoji emoji="🗺️" delayMs={0} />
+            <FlatEmoji emoji="🐾" delayMs={180} />
+            <FlatEmoji emoji="✨" delayMs={360} />
           </motion.div>
           
           <motion.h1 variants={fadeIn} className="font-display text-5xl md:text-7xl font-bold tracking-tight text-stone-900 mb-6 leading-tight">
@@ -1476,39 +2157,33 @@ const App: React.FC = () => {
               <>
                 系统架构设计者。<br />
                 数字战略执行者。<br />
-                <span className="text-stone-400">技术探索者。</span>
+                <span className="text-stone-400">也爱把想法丢进真实场景里试试。</span>
               </>
             ) : (
               <>
                 Systems Architect.<br />
                 Digital Strategist.<br />
-                <span className="text-stone-400">Tech Explorer.</span>
+                <span className="text-stone-400">Still stress-testing ideas in the real world.</span>
               </>
             )}
           </motion.h1>
           
           <motion.p variants={fadeIn} className="text-xl text-stone-600 max-w-2xl mb-10 leading-relaxed">
             {isZh
-              ? '我是一名数字战略执行者，拥有 7 年以上经验，专注于构建可扩展的增长系统、结构化活动运营流程，以及可衡量的跨渠道执行框架。'
-              : 'I am a digital strategist with 7+ years of experience building scalable growth systems, structured campaign operations, and measurable cross-channel execution frameworks.'}
+              ? '我大部分时间在做一件事：把「增长」从口号拆成能跑、能测、也敢复盘的一条链路。若你也带过从 0 到 1 的东西，你会懂那种——白天对齐预期、晚上改路由、还要说服自己「这一步值得」的感觉。下面是我还在写的故事；你可以挑感兴趣的往下翻。'
+              : 'Most weeks, I help teams turn growth from a slogan into something that ships, can be measured, and can be reviewed without shame. If you have ever owned a zero-to-one thread, you know the mix of aligning expectations, fixing routes at night, and convincing yourself the next step still matters. This page is a few stories I am still writing—read whatever pulls you in.'}
           </motion.p>
           
           <motion.div variants={fadeIn} className="flex flex-wrap gap-4 mb-12">
-            <a href="https://www.linkedin.com/in/daniel-yi-tern-tan-461567199/" target="_blank" rel="noopener noreferrer" className="p-3 bg-stone-200 rounded-full text-stone-700 hover:bg-stone-900 hover:text-white transition-colors">
+            <a href="https://www.linkedin.com/in/daniel-yi-tern-tan-461567199/" target="_blank" rel="noopener noreferrer" className="rounded-full bg-stone-200 p-3 text-stone-700 transition-colors hover:bg-eden-mint hover:text-stone-900">
               <Linkedin size={20} />
-            </a>
-            <a href="https://www.youtube.com/@DanielTan95" target="_blank" rel="noopener noreferrer" className="p-3 bg-stone-200 rounded-full text-stone-700 hover:bg-stone-900 hover:text-white transition-colors">
-              <Youtube size={20} />
-            </a>
-            <a href="https://www.instagram.com/eden___j/" target="_blank" rel="noopener noreferrer" className="p-3 bg-stone-200 rounded-full text-stone-700 hover:bg-stone-900 hover:text-white transition-colors">
-              <Instagram size={20} />
             </a>
           </motion.div>
 
           <motion.blockquote variants={fadeIn} className="border-l-4 border-stone-300 pl-6 py-2">
-            <p className="font-display text-xl text-stone-500 italic">
+            <p className="font-display text-xl text-stone-500 italic leading-relaxed">
               {isZh
-                ? '"那些疯狂到认为自己可以改变世界的人，最后真的改变了世界。"' 
+                ? '"那些疯狂到认为自己可以改变世界的人，最后真的改变了世界。"'
                 : '"The people who are crazy enough to think they can change the world are the ones who do."'}
             </p>
           </motion.blockquote>
@@ -1527,62 +2202,92 @@ const App: React.FC = () => {
               variants={staggerContainer}
             >
               <motion.div variants={fadeIn} className="flex items-center gap-3 mb-8">
-                <div className="p-2 bg-stone-200 rounded-lg text-stone-700"><Briefcase size={24} /></div>
+                <FlatEmoji emoji="🧰" size="lg" tilt />
                 <h2 className="font-display text-3xl font-bold text-stone-900">
-                  {isZh ? '持续构建与实战经验' : 'Active Build & Experience'}
+                  {isZh ? '手上还在长的几件事' : 'What I am building now'}
                 </h2>
               </motion.div>
 
               <motion.div variants={fadeIn} className="mb-12 group">
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-xl font-bold text-stone-900 flex items-center gap-2">
+                  <h3 className="flex items-center gap-2 text-xl font-bold text-stone-900">
+                    <FlatEmoji emoji="🐾" size="sm" bob delayMs={0} />
                     Jiju.pet 
                     <a href="https://jiju.pet" target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-stone-900 transition-colors">
                       <ExternalLink size={16} />
                     </a>
                   </h3>
-                  <span className="text-sm font-mono text-stone-500 bg-stone-200 px-2 py-1 rounded">
+                  <span className="rounded border border-eden-amber/45 bg-eden-amber/35 px-2 py-1 font-mono text-sm font-medium text-stone-900">
                     {isZh ? '进行中' : 'Present'}
                   </span>
                 </div>
                 <p className="text-stone-600 leading-relaxed">
                   {isZh
-                    ? '一个完整的宠物友好生态系统，帮助宠物主人在槟城、雪兰莪与新加坡进行地点发现、体验记录与持续探索。'
-                    : 'A comprehensive pet-friendly ecosystem designed to help owners discover and log adventures across Penang, Selangor, and Singapore.'}
+                    ? '养宠的人，常常不是不够爱，而是信息太散：这家店真的欢迎毛孩吗？那次出门值不值得记下来？Jiju.pet 是我在槟城、雪兰莪和新加坡之间，试着把「带牠出门」变小、变清楚的一条路径——像给回忆多一个放得稳的抽屉。'
+                    : 'Pet parents rarely run out of love—they run out of trustworthy, structured information: which places truly welcome pets, and which outings deserve to be remembered. Jiju.pet is my attempt to make pet-friendly discovery and memory-keeping smaller, clearer, and repeatable across Penang, Selangor, and Singapore.'}
                 </p>
+                <ActiveBuildSkillRow isZh={isZh} skills={activeBuildSkillSets.jiju[isZh ? 'zh' : 'en']} />
 
                 <a
                   href={fullPageHref}
                   className="mt-4 inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-700 transition-colors hover:border-stone-900 hover:text-stone-900"
                 >
-                  {isZh ? '查看构建日志' : 'View log'}
+                  {isZh ? '看我怎么一路改到能上线' : 'View log'}
                   <ExternalLink size={14} />
                 </a>
 
               </motion.div>
 
+              <motion.div variants={fadeIn} className="mb-12 group">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="flex items-center gap-2 text-xl font-bold text-stone-900">
+                    <FlatEmoji emoji="🃏" size="sm" bob delayMs={80} />
+                    Poker Power Card
+                    <a
+                      href="https://poker.edentan.site/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-stone-400 hover:text-stone-900 transition-colors"
+                    >
+                      <ExternalLink size={16} />
+                    </a>
+                  </h3>
+                  <span className="rounded border border-eden-amber/45 bg-eden-amber/35 px-2 py-1 font-mono text-sm font-medium text-stone-900">
+                    {isZh ? '进行中' : 'Present'}
+                  </span>
+                </div>
+                <p className="text-stone-600 leading-relaxed">
+                  {isZh
+                    ? '熟人局的快乐，一半在牌，一半在规矩怎么好玩又不吵翻。Poker Power Card 是给实桌加的一层「力量牌」：房间口令进场，Hero / Magic / Trap / Control 四类效果叠在真实发牌节奏上；法力、轮次、图库和素材下载，都是为了让主持人少费口舌、玩家多留在当下。'
+                    : 'Half the fun of a home game is the cards; the other half is house rules that stay playful without turning into arguments. Poker Power Card adds a hosted layer of themed power cards—Hero, Magic, Trap, Control—on top of live play, with room codes, pacing, a searchable gallery, and assets so hosts spend less energy explaining and players stay in the moment.'}
+                </p>
+                <ActiveBuildSkillRow isZh={isZh} skills={activeBuildSkillSets.poker[isZh ? 'zh' : 'en']} />
+              </motion.div>
+
               <motion.div variants={fadeIn} className="group">
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-xl font-bold text-stone-900">
+                  <h3 className="flex items-center gap-2 text-xl font-bold text-stone-900">
+                    <FlatEmoji emoji="📈" size="sm" bob delayMs={160} />
                     {isZh ? '营销与增长负责人' : 'Marketing Executive'}
                   </h3>
-                  <span className="text-sm font-mono text-stone-500 bg-stone-200 px-2 py-1 rounded">
+                  <span className="rounded border border-eden-mint/45 bg-eden-mint/30 px-2 py-1 font-mono text-sm font-medium text-stone-900">
                     {isZh ? '7+ 年' : '7+ Years'}
                   </span>
                 </div>
                 <p className="text-stone-500 font-medium mb-3">
-                  {isZh ? '数字平台运营' : 'Digital Platform Operations'}
+                  {isZh ? '数字平台里的增长与交付' : 'Growth and delivery on digital platforms'}
                 </p>
                 <p className="text-stone-600 leading-relaxed">
                   {isZh
-                    ? '在高压业务环境中，搭建增长基础并执行覆盖获客、激活、留存与运营交付的全漏斗方案。'
-                    : 'Built strategic growth foundations and executed full-funnel campaigns across acquisition, activation, retention, and operational delivery in high-pressure environments.'}
+                    ? '增长最容易变成「报表很好看，现场很慌乱」。我那几年做的，多是先把漏斗哪一段在漏人看清楚，再谈投放、创意和运营能不能接得住。压力还在，但至少大家知道卡在哪一格。'
+                    : 'Growth work quietly turns into great dashboards and messy reality. For several years my focus was naming which stage leaked people first—then aligning acquisition, creative, and operations so the story on the slide matched what the team could actually deliver.'}
                 </p>
+                <ActiveBuildSkillRow isZh={isZh} skills={activeBuildSkillSets.marketing[isZh ? 'zh' : 'en']} />
                 <a
                   href={previousProjectsHref}
                   className="mt-4 inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-700 transition-colors hover:border-stone-900 hover:text-stone-900"
                 >
-                  {isZh ? '历史项目' : 'Previous project'}
+                  {isZh ? '想看我以前完整接过的案子和时间线' : 'Older projects & timeline'}
                   <ExternalLink size={14} />
                 </a>
               </motion.div>
@@ -1596,16 +2301,17 @@ const App: React.FC = () => {
               variants={staggerContainer}
             >
               <motion.div variants={fadeIn} className="flex items-center gap-3 mb-8">
-                <div className="p-2 bg-stone-200 rounded-lg text-stone-700"><GraduationCap size={24} /></div>
+                <FlatEmoji emoji="🎓" size="lg" bob />
                 <h2 className="font-display text-3xl font-bold text-stone-900">
-                  {isZh ? '关键里程碑' : 'Milestones'}
+                  {isZh ? '后来回头看，挺关键的节点' : 'Milestones that still matter'}
                 </h2>
               </motion.div>
 
               <div className="space-y-8 border-l-2 border-stone-200 pl-6 ml-3 relative">
                 <motion.div variants={fadeIn} className="relative">
                   <div className="absolute -left-[35px] top-1 w-4 h-4 rounded-full bg-stone-300 border-4 border-stone-50"></div>
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="flex items-center gap-2 text-lg font-bold text-stone-900">
+                    <FlatEmoji emoji="🧠" size="sm" bob={false} tilt />
                     {isZh ? '门萨会员' : 'Mensa Membership'}
                   </h3>
                   <p className="text-stone-500 text-sm mb-1">August 2025</p>
@@ -1627,7 +2333,8 @@ const App: React.FC = () => {
 
                 <motion.div variants={fadeIn} className="relative">
                   <div className="absolute -left-[35px] top-1 w-4 h-4 rounded-full bg-stone-300 border-4 border-stone-50"></div>
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="flex items-center gap-2 text-lg font-bold text-stone-900">
+                    <FlatEmoji emoji="🤿" size="sm" bob />
                     {isZh ? '进阶开放水域潜水证书' : 'Advanced Open Water Certification'}
                   </h3>
                   <p className="text-stone-500 text-sm mb-1">PADI · April 2024</p>
@@ -1638,7 +2345,8 @@ const App: React.FC = () => {
 
                 <motion.div variants={fadeIn} className="relative">
                   <div className="absolute -left-[35px] top-1 w-4 h-4 rounded-full bg-stone-300 border-4 border-stone-50"></div>
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="flex items-center gap-2 text-lg font-bold text-stone-900">
+                    <FlatEmoji emoji="🏛️" size="sm" tilt />
                     {isZh ? '新兴经济体中的创业学' : 'Entrepreneurship in Emerging Economies'}
                   </h3>
                   <p className="text-stone-500 text-sm mb-1">HarvardX · May 2020</p>
@@ -1655,7 +2363,8 @@ const App: React.FC = () => {
 
                 <motion.div variants={fadeIn} className="relative">
                   <div className="absolute -left-[35px] top-1 w-4 h-4 rounded-full bg-stone-300 border-4 border-stone-50"></div>
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="flex items-center gap-2 text-lg font-bold text-stone-900">
+                    <FlatEmoji emoji="🔎" size="sm" bob />
                     {isZh ? '数字营销基础认证' : 'The Fundamental of Digital Marketing'}
                   </h3>
                   <p className="text-stone-500 text-sm mb-1">Google · Issued Dec 2019</p>
@@ -1664,7 +2373,8 @@ const App: React.FC = () => {
 
                 <motion.div variants={fadeIn} className="relative">
                   <div className="absolute -left-[35px] top-1 w-4 h-4 rounded-full bg-stone-300 border-4 border-stone-50"></div>
-                  <h3 className="text-lg font-bold text-stone-900">
+                  <h3 className="flex items-center gap-2 text-lg font-bold text-stone-900">
+                    <FlatEmoji emoji="📜" size="sm" tilt />
                     {isZh ? '市场营销高级文凭' : 'Executive Diploma in Marketing'}
                   </h3>
                   <p className="text-stone-500 text-sm mb-1">London Examination Board · 2016 – 2018</p>
@@ -1685,25 +2395,35 @@ const App: React.FC = () => {
               variants={staggerContainer}
               className="bg-white p-8 rounded-2xl border border-stone-200 shadow-sm"
             >
-              <h2 className="font-display text-2xl font-bold text-stone-900 mb-6">
+              <h2 className="mb-6 flex items-center gap-3 font-display text-2xl font-bold text-stone-900">
+                <FlatEmoji emoji="🧭" size="md" tilt />
                 {isZh ? '兴趣方向' : 'Interests'}
               </h2>
               
               <div className="space-y-6">
                 <motion.div variants={fadeIn}>
-                  <div className="flex items-center gap-2 text-stone-900 font-bold mb-2">
-                    <Brain size={18} className="text-stone-500" /> {isZh ? '玄学与命理' : 'Metaphysics'}
+                  <div className="mb-2 flex items-center gap-2 font-bold text-stone-900">
+                    <FlatEmoji emoji="🔮" size="sm" bob />
+                    <a
+                      href="https://edent95.github.io/8g/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 transition-colors hover:text-stone-600"
+                    >
+                      <span>{isZh ? '玄学与命理' : 'Metaphysics'}</span>
+                      <ExternalLink size={14} className="text-stone-400" />
+                    </a>
                   </div>
                   <p className="text-sm text-stone-600 leading-relaxed">
                     {isZh
-                      ? '长期实践八字、紫微斗数与易经，并将其视作古代数据系统进行结构化研究。'
-                      : 'Applied study of Bazi, Zi Wei Dou Shu, and I Ching as ancient data systems.'}
+                      ? '长期实践八字、紫微斗数与易经，并将其视作古代数据系统进行结构化研究。公开笔记见 8G。'
+                      : 'Applied study of Bazi, Zi Wei Dou Shu, and I Ching as ancient data systems. Public notes on 8G.'}
                   </p>
                 </motion.div>
 
                 <motion.div variants={fadeIn}>
-                  <div className="flex items-center gap-2 text-stone-900 font-bold mb-2">
-                    <Camera size={18} className="text-stone-500" />
+                  <div className="mb-2 flex items-center gap-2 font-bold text-stone-900">
+                    <FlatEmoji emoji="📷" size="sm" bob delayMs={100} />
                     <a
                       href={analogTechHref}
                       className="inline-flex items-center gap-2 transition-colors hover:text-stone-600"
@@ -1720,8 +2440,8 @@ const App: React.FC = () => {
                 </motion.div>
 
                 <motion.div variants={fadeIn}>
-                  <div className="flex items-center gap-2 text-stone-900 font-bold mb-2">
-                    <Compass size={18} className="text-stone-500" />
+                  <div className="mb-2 flex items-center gap-2 font-bold text-stone-900">
+                    <FlatEmoji emoji="🌊" size="sm" tilt />
                     <a
                       href={lifeHref}
                       className="inline-flex items-center gap-2 transition-colors hover:text-stone-600"
@@ -1745,18 +2465,12 @@ const App: React.FC = () => {
               whileInView="animate"
               viewport={{ once: true }}
               variants={staggerContainer}
-              className="bg-stone-900 text-stone-50 p-8 rounded-2xl shadow-sm"
+              className="rounded-2xl border border-eden-mint/25 bg-stone-900 p-8 text-stone-50 shadow-sm ring-1 ring-eden-mint/15"
             >
-              <h2 className="font-display text-xl font-bold mb-6">{isZh ? '联系我' : 'Connect'}</h2>
+              <h2 className="mb-6 font-display text-xl font-bold">{isZh ? '联系我' : 'Connect'}</h2>
               <div className="space-y-4">
-                <a href="https://www.linkedin.com/in/daniel-yi-tern-tan-461567199/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-stone-400 hover:text-white transition-colors">
+                <a href="https://www.linkedin.com/in/daniel-yi-tern-tan-461567199/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-stone-400 transition-colors hover:text-eden-mint">
                   <Linkedin size={18} /> LinkedIn
-                </a>
-                <a href="https://www.youtube.com/@DanielTan95" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-stone-400 hover:text-white transition-colors">
-                  <Youtube size={18} /> YouTube
-                </a>
-                <a href="https://www.instagram.com/eden___j/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-stone-400 hover:text-white transition-colors">
-                  <Instagram size={18} /> Instagram
                 </a>
               </div>
             </motion.section>
@@ -1768,6 +2482,17 @@ const App: React.FC = () => {
       <footer className="border-t border-stone-200 py-8 text-center text-stone-500 text-sm">
         <p>
           © {new Date().getFullYear()} Eden Tan. {isZh ? '保留所有权利。' : 'All rights reserved.'}
+        </p>
+        <p className="mt-4">
+          <a
+            href={brandGuideHref}
+            className="inline-flex items-center gap-2 font-medium text-stone-600 transition-colors hover:text-eden-mint"
+          >
+            <span className="text-base leading-none" aria-hidden>
+              🎨
+            </span>
+            {isZh ? '品牌指南' : 'Brand guide'}
+          </a>
         </p>
       </footer>
     </div>

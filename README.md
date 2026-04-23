@@ -56,6 +56,7 @@ npm run preview
 - `/previous-projects`：完整项目记录
 - `/analog-tech`：Analog Tech 图库页
 - `/life`：Life 视频页
+- `/brand-guide`：品牌指南（视觉、语气、组件与动效约定）
 - `/archive/:slug`：归档项目详情页
 
 ---
