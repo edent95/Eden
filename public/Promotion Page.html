@@ -1273,13 +1273,13 @@ details summary:hover {
 <!-- Banner + One Active Language Button -->
 <div class="mm-banner" style="text-align: center; margin-bottom: 16px; position: relative;">
 <div class="mm-banner">
-  <a href="http://localhost:4180/mnm11.html" target="_blank">
+  <a href="mnm11.html" target="_blank">
     <img src="https://titangroup.tech/wp-content/uploads/2025/09/Titan-Mix-Match2-2.jpg" alt="mm Promo Banner" style="width: 100%; max-width: 100%; height: auto; border-radius: 12px;" />
   </a>
 </div>
   <!-- EN Button (only shown in EN mode) -->
   <span lang="en" style="display: inline-block;">
-    <a href="http://localhost:4180/mnm11.html" target="_blank">
+    <a href="mnm11.html" target="_blank">
       <button class="play-btn" style="padding: 12px 24px; font-size: 16px; border-radius: 8px; background-color: #7bdcb5; color: #000; font-weight: bold; margin-bottom: 12px;">
         Check Now
       </button>
@@ -1288,7 +1288,7 @@ details summary:hover {
 
   <!-- ZH Button (only shown in ZH mode) -->
   <span lang="zh" style="display: inline-block;">
-    <a href="http://localhost:4180/mnm11.html" target="_blank">
+    <a href="mnm11.html" target="_blank">
       <button class="play-btn" style="padding: 12px 24px; font-size: 16px; border-radius: 8px; background-color: #fcb900; color: #000; font-weight: bold; margin-bottom: 12px;">
         立即查看
       </button>
@@ -2877,7 +2877,7 @@ details summary:hover {
     if(best){
       const img=best.querySelector('img');
       if(img) img.remove();
-      best.setAttribute('onclick',"window.location.href='http://localhost:4180/'");
+      best.setAttribute('onclick',"window.location.href='index.html'");
       if(!best.querySelector('.logo-emoji-badge')){
         const b=document.createElement('span');
         b.className='logo-emoji-badge';
@@ -2906,8 +2906,8 @@ details summary:hover {
   }
 
   function retargetCheckNow(){
-    document.querySelectorAll('a[href*="/tools/mnm"], a[href*="/tools/mnm_zh"], a[href="http://localhost:4180/mnm11.html"]').forEach(a=>{
-      a.setAttribute('href','http://localhost:4180/mnm11.html');
+    document.querySelectorAll('a[href*="/tools/mnm"], a[href*="/tools/mnm_zh"], a[href="mnm11.html"]').forEach(a=>{
+      a.setAttribute('href','mnm11.html');
     });
   }
 
@@ -2930,7 +2930,7 @@ details summary:hover {
   .back-home-btn:hover{background:#7bdcb5;border-color:#6fcaa4;}
 </style>
 <div class="back-home-wrap">
-  <a id="back-home-promo" class="back-home-btn" href="http://localhost:4180/">
+  <a id="back-home-promo" class="back-home-btn" href="index.html">
     <span aria-hidden>←</span>
     <span lang="en">Back to Home</span>
     <span lang="zh">返回主页</span>

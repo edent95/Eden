@@ -16,6 +16,12 @@
 
 ## Entries
 
+### 2026-04-24 (Promotion Page：浮动「本月最佳游戏」与返回主页、Check now 去 localhost化)
+
+- 类型：内容 / 链接
+- 改动：`public/Promotion Page.html` 中 `replaceFloatingIcons` 的 Best Game 按钮由 `http://localhost:4180/` 改为 `index.html`；`Check now` 与脚本内 mnm 目标统一为相对路径 `mnm11.html`；`Back to Home` 为 `index.html`。
+- 原因：用户要求不指向本地 dev URL，在任意环境回到主站与站内 MNM 页。
+
 ### 2026-04-24 (mnm11：Claim Combo CTA 改链回主站)
 
 - 类型：内容 / 链接
