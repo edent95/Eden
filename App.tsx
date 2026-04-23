@@ -824,6 +824,19 @@ const resolveAssetPath = (base: string, value: string) => {
   return joinBasePath(base, value);
 };
 
+const LANGUAGE_STORAGE_KEY = 'eden-portfolio-language';
+
+const readStoredLanguage = (): Language | null => {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+    if (raw === 'en' || raw === 'zh') return raw;
+  } catch {
+    // ignore (private mode, storage disabled, etc.)
+  }
+  return null;
+};
+
 const LanguageToggle: React.FC<{
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
@@ -1361,7 +1374,16 @@ const JijuPetFullPage: React.FC<{
 };
 
 const App: React.FC = () => {
-  const [language, setLanguage] = React.useState<Language>('zh');
+  const [language, setLanguage] = React.useState<Language>(() => readStoredLanguage() ?? 'en');
+
+  React.useEffect(() => {
+    try {
+      window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+    } catch {
+      // ignore
+    }
+  }, [language]);
+
   const isZh = language === 'zh';
   const baseUrl = import.meta.env.BASE_URL || '/';
   const fullPageHref = joinBasePath(baseUrl, 'jiju-pet');
