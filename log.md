@@ -31,3 +31,11 @@
 - 原因：用户要求提升后续 agent 协作质量，降低重复沟通和返工成本。
 - 影响：仓库已具备面向后续 agent 的统一执行入口（`README.md` + `AGENTS.md` + `soul.md` + `log.md`）。
 - 后续：后续每次真实改动继续按本日志规则追加，保持可追溯。
+
+### 2026-04-23 15:05
+
+- 类型：代码 / 部署 / GitHub Pages 路由修复
+- 改动：新增 `public/404.html` 作为 GitHub Pages SPA fallback 重定向页；在 `index.html` 增加恢复脚本，把 `?p=/sub-route` 还原为真实路由路径。
+- 原因：GitHub Pages 不会自动把子路由回退到 `index.html`，导致 `/Eden/previous-projects` 等子页发布后直接 404。
+- 影响：发布后子页面支持直开与刷新，不再因为服务端找不到静态文件而报 404。
+- 后续：重新部署后需验证 `https://edent95.github.io/Eden/previous-projects`、`/jiju-pet`、`/life`、`/analog-tech`、`/archive/...` 是否都可直接访问。
