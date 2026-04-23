@@ -1587,6 +1587,20 @@ const App: React.FC = () => {
                     {isZh ? '门萨会员' : 'Mensa Membership'}
                   </h3>
                   <p className="text-stone-500 text-sm mb-1">August 2025</p>
+                  <p className="text-stone-600 text-sm leading-relaxed">
+                    {isZh
+                      ? '门萨（Mensa）是国际性非营利高智商社团，须在认可的标准化智商测验中达到规定分数方可入会。'
+                      : 'Mensa is a nonprofit high-IQ society—you qualify through supervised, standardized tests that place you in the top percentiles.'}
+                  </p>
+                  <a
+                    href="https://www.mensa.org/about-us/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 inline-flex items-center gap-2 text-sm text-stone-600 transition-colors hover:text-stone-900"
+                  >
+                    {isZh ? '了解门萨（官网）' : 'About Mensa (official)'}
+                    <ExternalLink size={14} />
+                  </a>
                 </motion.div>
 
                 <motion.div variants={fadeIn} className="relative">
