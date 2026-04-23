@@ -16,6 +16,14 @@
 
 ## Entries
 
+### 2026-04-24 (部署：自定义域根路径 + 修复 /Eden/ 资源 404)
+
+- 类型：代码 / 部署
+- 改动：`vite.config.ts` 在 production 中支持 `VITE_BASE` 覆盖，否则沿用 `/<repo>/`；根据 `base` 在 `closeBundle` 中重写 `dist/404.html` 的 `pathSegmentsToKeep`（0=根域，1=子路径），`public/404.html` 使用占位符 `__PATH_SEGMENTS_TO_KEEP__`。`.github/workflows/deploy-pages.yml` 的 build 步设置 `VITE_BASE=/` 与 `VITE_SITE_URL=https://edentan.site`。README 说明 base 与双 URL 取舍。
+- 原因：自定义域 `edentan.site` 上站点在路径根，而此前构建 `base` 为 `/Eden/`，导致线上请求 `/Eden/assets/*.css` 等 404；GitHub 实际产物在 `/assets/`。
+- 影响：以 `https://edentan.site` 访问时静态资源与 favicon 正常；`github.io/.../Eden/` 与当前 CI 构建立场不一致，应以自定义域为入口。
+- 后续：若需再次支持纯 `github.io/Repo` 无自定义域，可去掉 workflow 中 `VITE_BASE` 或改回 `/<repo>/`。
+
 ### 2026-04-24 (README / 元数据：定稿「当前这版」说明)
 
 - 类型：文档

@@ -39,6 +39,12 @@ jobs:
         run: npm ci
 
       - name: Build site
+        env:
+          # Custom domain (edentan.site) is served at URL root, not /Repo/. This must
+          # match Vite `base` or CSS/JS/favicon 404. Omit VITE_BASE to use /Repo/ for
+          # default github.io/Repo/ only.
+          VITE_BASE: '/'
+          VITE_SITE_URL: 'https://edentan.site'
         run: npm run build
 
       - name: Upload Pages artifact

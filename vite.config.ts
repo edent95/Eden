@@ -1,4 +1,4 @@
-import { writeFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
@@ -52,10 +52,32 @@ function resolvePublicSiteBase(env: Readonly<Record<string, string>>): string | 
   return null;
 }
 
+function resolveProductionBase(
+  env: Readonly<Record<string, string>>,
+  repoName: string | undefined,
+): string {
+  const explicit = (env.VITE_BASE || process.env.VITE_BASE || '').trim();
+  if (explicit) {
+    if (explicit === '/' || explicit === './') return '/';
+    const withLeading = explicit.startsWith('/') ? explicit : `/${explicit}`;
+    return withLeading.endsWith('/') ? withLeading : `${withLeading}/`;
+  }
+  if (repoName) return `/${repoName}/`;
+  return '/';
+}
+
+/** Match Vite `base` path depth for GitHub Pages 404 → `?p=` redirect. */
+function pathSegmentsToKeepForBase(base: string): number {
+  const normalized = base.replace(/\/$/, '') || '/';
+  if (normalized === '' || normalized === '/') return 0;
+  return normalized.split('/').filter(Boolean).length;
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
   const repoName = process.env.GITHUB_REPOSITORY?.split('/')[1];
-  const base = mode === 'production' && repoName ? `/${repoName}/` : '/';
+  const base = mode === 'production' ? resolveProductionBase(env, repoName) : '/';
+  const spaKeepSegments = pathSegmentsToKeepForBase(base);
 
   return {
     base,
@@ -109,6 +131,22 @@ export default defineConfig(({ mode }) => {
           if (!site) return;
           const outDir = path.resolve(__dirname, 'dist');
           generateSitemapAndRobots(outDir, site);
+        },
+      },
+      {
+        name: 'spa-404-redirect-segments',
+        closeBundle() {
+          if (mode !== 'production') return;
+          const outDir = path.resolve(__dirname, 'dist');
+          const templatePath = path.join(__dirname, 'public/404.html');
+          let html: string;
+          try {
+            html = readFileSync(templatePath, 'utf8');
+          } catch {
+            return;
+          }
+          const out = html.replace('__PATH_SEGMENTS_TO_KEEP__', String(spaKeepSegments));
+          writeFileSync(path.join(outDir, '404.html'), out, 'utf8');
         },
       },
     ],

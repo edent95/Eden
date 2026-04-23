@@ -9,9 +9,9 @@ Eden 的个人站：单页式 React 应用，多路由、中英双语，用于�
 | 环境 | URL |
 |------|-----|
 | 自定义域（主） | <https://edentan.site> |
-| GitHub Pages 默认 | <https://edent95.github.io/Eden/> |
+| GitHub Pages 默认 | <https://edent95.github.io/Eden/>（当前 CI 以自定义域为优先，**未**为这条 URL 单独构建，见下） |
 
-`vite` 生产构建在子路径下会自动把 `base` 设为 `/<仓库名>/`，因此默认 Pages 地址带 `/Eden/`。使用自定义域时，按 GitHub Pages 约定站点挂在域名根路径。
+**Base 路径：** GitHub Actions 在构建时设置 `VITE_BASE=/` 与 `VITE_SITE_URL=https://edentan.site`，使资源与路由以**域名根**为基准（`https://edentan.site/assets/...`）。若你**不设** `VITE_BASE`，本仓库的默认是 `/<仓库名>/`（适合只用 `user.github.io/Repo/`、不用自定义域）。**同一套构建不能同时**兼容「仅子路径」与「仅根域」；以自定义域为主时，请用主域名访问。若从旧版缓存里仍看到请求 `/Eden/assets/...` 的 404，强刷或清缓存即可。
 
 ---
 

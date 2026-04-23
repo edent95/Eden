@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <title>Redirecting...</title>
     <script>
-      // GitHub Pages project site SPA redirect.
-      // Keep the first path segment (repo name), move the rest into ?p=.
-      var pathSegmentsToKeep = 1;
+      // GitHub Pages SPA redirect: `pathSegmentsToKeep` must match Vite `base` path depth
+      // (0 = custom domain at apex; 1 = user.github.io/Repo/ …). Replaced at build time.
+      var pathSegmentsToKeep = __PATH_SEGMENTS_TO_KEEP__;
 
       var l = window.location;
       var pathname = l.pathname.split('/').filter(Boolean);
