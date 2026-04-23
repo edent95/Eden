@@ -20,6 +20,8 @@ import {
   ArrowLeft
 } from 'lucide-react';
 
+type Language = 'en' | 'zh';
+
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -445,74 +447,74 @@ const jijuKnowledgeHighlights = [
 const analogTechGalleryPhotos = [
   {
     src: '/analog-tech/analog-tech-1.png',
-    alt: 'Analog street photography scene',
-    caption: 'Street perspective captured on analog film.',
+    alt: { en: 'Analog street photography scene', zh: '胶片街景摄影' },
+    caption: { en: 'Street perspective captured on analog film.', zh: '胶片质感下的街景透视。' },
   },
   {
     src: '/analog-tech/analog-tech-2.png',
-    alt: 'Analog city skyline scene',
-    caption: 'City skyline and weather texture on film grain.',
+    alt: { en: 'Analog city skyline scene', zh: '胶片城市天际线' },
+    caption: { en: 'City skyline and weather texture on film grain.', zh: '天际线与天气层次在颗粒中的呈现。' },
   },
   {
     src: '/analog-tech/analog-tech-3.png',
-    alt: 'Analog tower photograph',
-    caption: 'Urban architecture study on analog film.',
+    alt: { en: 'Analog tower photograph', zh: '胶片高塔建筑' },
+    caption: { en: 'Urban architecture study on analog film.', zh: '胶片记录的城市建筑观察。' },
   },
   {
     src: '/analog-tech/analog-tech-4.png',
-    alt: 'Analog waterfront scene',
-    caption: 'Waterfront perspective with soft film highlights.',
+    alt: { en: 'Analog waterfront scene', zh: '胶片滨水场景' },
+    caption: { en: 'Waterfront perspective with soft film highlights.', zh: '柔和高光下的滨水视角。' },
   },
   {
     src: '/analog-tech/analog-tech-5.png',
-    alt: 'Analog garden and light leak scene',
-    caption: 'Natural texture and light leak character from film.',
+    alt: { en: 'Analog garden and light leak scene', zh: '胶片花园与漏光' },
+    caption: { en: 'Natural texture and light leak character from film.', zh: '自然纹理与胶片漏光气质。' },
   },
   {
     src: '/analog-tech/analog-tech-6.png',
-    alt: 'Analog temple architecture detail',
-    caption: 'Architectural detail and texture captured in film grain.',
+    alt: { en: 'Analog temple architecture detail', zh: '胶片庙宇建筑细节' },
+    caption: { en: 'Architectural detail and texture captured in film grain.', zh: '颗粒中保留的建筑细节与材质。' },
   },
   {
     src: '/analog-tech/analog-tech-7.png',
-    alt: 'Analog mountain landscape',
-    caption: 'Atmospheric landscape depth from analog exposure.',
+    alt: { en: 'Analog mountain landscape', zh: '胶片山景' },
+    caption: { en: 'Atmospheric landscape depth from analog exposure.', zh: '曝光层次带来的空气感与景深。' },
   },
   {
     src: '/analog-tech/analog-tech-8.png',
-    alt: 'Analog city coastline scene',
-    caption: 'Coastal city framing with film color response.',
+    alt: { en: 'Analog city coastline scene', zh: '胶片城市海岸线' },
+    caption: { en: 'Coastal city framing with film color response.', zh: '胶片色彩响应下的海岸城市构图。' },
   },
   {
     src: '/analog-tech/analog-tech-9.png',
-    alt: 'Analog sea and sky horizon',
-    caption: 'Open horizon composition under dynamic cloud layers.',
+    alt: { en: 'Analog sea and sky horizon', zh: '胶片海天交界' },
+    caption: { en: 'Open horizon composition under dynamic cloud layers.', zh: '云层变化下的开阔海平线构图。' },
   },
   {
     src: '/analog-tech/analog-tech-10.png',
-    alt: 'Analog geometric frame and bicycle scene',
-    caption: 'Geometric urban composition with strong visual center.',
+    alt: { en: 'Analog geometric frame and bicycle scene', zh: '胶片几何构图与单车' },
+    caption: { en: 'Geometric urban composition with strong visual center.', zh: '强视觉中心的城市几何构图。' },
   },
   {
     src: '/analog-tech/analog-tech-11.png',
-    alt: 'Analog candid portrait by the sea',
-    caption: 'Candid social moment documented on analog film.',
+    alt: { en: 'Analog candid portrait by the sea', zh: '胶片海边抓拍人像' },
+    caption: { en: 'Candid social moment documented on analog film.', zh: '胶片记录的海边日常瞬间。' },
   },
 ];
 
 const lifeVideos = [
   {
-    title: 'Pulau Tioman',
+    title: { en: 'Pulau Tioman', zh: '刁曼岛' },
     href: 'https://www.youtube.com/watch?v=WMqBLHCMtps',
     thumbnailSrc: 'https://i.ytimg.com/vi/WMqBLHCMtps/hqdefault.jpg',
   },
   {
-    title: 'Desaru Surfing',
+    title: { en: 'Desaru Surfing', zh: '迪沙鲁冲浪' },
     href: 'https://www.youtube.com/watch?v=Ingu-WLZWhA',
     thumbnailSrc: 'https://i.ytimg.com/vi/Ingu-WLZWhA/hqdefault.jpg',
   },
   {
-    title: 'Pulau Kapas',
+    title: { en: 'Pulau Kapas', zh: '棉花岛' },
     href: 'https://www.youtube.com/watch?v=qC8KuD9n14g',
     thumbnailSrc: 'https://i.ytimg.com/vi/qC8KuD9n14g/hqdefault.jpg',
   },
@@ -520,63 +522,111 @@ const lifeVideos = [
 
 const previousProjectsData = [
   {
-    title: 'Promotion & Account Manager at Titan Group',
-    period: '2024 - 2026',
-    points: [
-      'Partner and client coordination for API integrations, campaign tooling, onboarding, and troubleshooting.',
-      'Planned and executed campaign structures, including trial incentives and bonus mechanics.',
-      'Tracked applications and partner participation; prepared and distributed campaign assets and announcements.',
-      'Managed event logistics for SiGMA and related exhibitions, including travel, meetings, booth needs, and follow-up actions.',
-      'Maintained structured documentation for request tracking, promotion status, and test-account workflows.',
-      'Drafted group announcements, collected operational feedback, and escalated issues to relevant teams.',
-      'Worked across finance, design, and technical teams to improve campaign delivery quality and speed.',
-    ],
+    title: {
+      en: 'Promotion & Account Manager at Titan Group',
+      zh: 'Titan Group｜推广与客户经理',
+    },
+    period: { en: '2024 - 2026', zh: '2024 - 2026' },
+    points: {
+      en: [
+        'Partner and client coordination for API integrations, campaign tooling, onboarding, and troubleshooting.',
+        'Planned and executed campaign structures, including trial incentives and bonus mechanics.',
+        'Tracked applications and partner participation; prepared and distributed campaign assets and announcements.',
+        'Managed event logistics for SiGMA and related exhibitions, including travel, meetings, booth needs, and follow-up actions.',
+        'Maintained structured documentation for request tracking, promotion status, and test-account workflows.',
+        'Drafted group announcements, collected operational feedback, and escalated issues to relevant teams.',
+        'Worked across finance, design, and technical teams to improve campaign delivery quality and speed.',
+      ],
+      zh: [
+        '协调合作伙伴与客户，推进 API 对接、活动工具、上线培训与问题排查。',
+        '策划并落地活动结构，包含试用激励与奖金机制设计。',
+        '跟踪报名与合作方参与情况；制作并分发活动素材与公告。',
+        '统筹 SiGMA 及相关展会后勤，含行程、会议、展位需求与会后跟进。',
+        '维护请求跟踪、活动状态与测试账号流程的结构化文档。',
+        '撰写群组公告，收集运营反馈并升级至相关团队。',
+        '联动财务、设计与技术团队，提升活动交付质量与速度。',
+      ],
+    },
     relatedLinks: [
       {
-        label: '1+1 Bonus Key Combo Builder',
+        label: { en: '1+1 Bonus Key Combo Builder', zh: '1+1 奖金密钥组合构建器' },
         href: '/archive/11-bonus-key-combo-builder',
       },
     ],
   },
   {
-    title: 'Senior Marketing Specialist at Job Social Malaysia',
-    period: '2023 - 2024',
-    points: [
-      'Built an automated Excel brand report system for outsourced marketing analysis.',
-      'Improved promotion retention planning with clearer weekly and monthly visibility.',
-      'Built structured problem analysis workflows: discover, analyze, and solve.',
-      'Maintained operational reports including Facebook Ad ROI, Promotion & VIP report, overall monthly report, game analysis report, and abnormal list tracking.',
-      'Standardized reporting structure so decision-making could be faster and cleaner.',
-    ],
+    title: {
+      en: 'Senior Marketing Specialist at Job Social Malaysia',
+      zh: 'Job Social Malaysia｜高级营销专员',
+    },
+    period: { en: '2023 - 2024', zh: '2023 - 2024' },
+    points: {
+      en: [
+        'Built an automated Excel brand report system for outsourced marketing analysis.',
+        'Improved promotion retention planning with clearer weekly and monthly visibility.',
+        'Built structured problem analysis workflows: discover, analyze, and solve.',
+        'Maintained operational reports including Facebook Ad ROI, Promotion & VIP report, overall monthly report, game analysis report, and abnormal list tracking.',
+        'Standardized reporting structure so decision-making could be faster and cleaner.',
+      ],
+      zh: [
+        '搭建自动化 Excel 品牌报告体系，支撑外包营销分析。',
+        '以更清晰的周/月视图改进活动留存规划。',
+        '建立结构化问题分析流程：发现、分析、解决。',
+        '维护运营报表，含 Facebook 广告 ROI、活动与 VIP 报表、月度总览、游戏分析与异常名单跟踪。',
+        '统一报表结构，让决策更快、更干净。',
+      ],
+    },
   },
   {
-    title: 'Digital Marketing Manager at Atlantis Agency',
-    period: '2021 - 2023',
-    points: [
-      'Led UI/UX direction and built a new website structure from scratch.',
-      'Aligned desktop and mobile experiences under one consistent brand system.',
-      'Created a practical handoff-ready prototype flow for implementation alignment.',
-    ],
+    title: {
+      en: 'Digital Marketing Manager at Atlantis Agency',
+      zh: 'Atlantis Agency｜数字营销经理',
+    },
+    period: { en: '2021 - 2023', zh: '2021 - 2023' },
+    points: {
+      en: [
+        'Led UI/UX direction and built a new website structure from scratch.',
+        'Aligned desktop and mobile experiences under one consistent brand system.',
+        'Created a practical handoff-ready prototype flow for implementation alignment.',
+      ],
+      zh: [
+        '主导 UI/UX 方向，从零搭建新网站信息架构。',
+        '在统一品牌体系下对齐桌面端与移动端体验。',
+        '输出可交付的原型流程，便于研发对齐落地。',
+      ],
+    },
     relatedLinks: [
       {
-        label: 'UI/UX Prototype (Adobe XD)',
+        label: { en: 'UI/UX Prototype (Adobe XD)', zh: 'UI/UX 原型（Adobe XD）' },
         href: 'https://xd.adobe.com/view/26a08b2d-feb3-429e-9c76-45cf3eed8274-73f3/',
       },
     ],
   },
   {
-    title: 'Social Media Marketing Specialist at Black Sire Technology',
-    period: '2018 - 2021',
-    points: [
-      'Soccerking: content generation, brand strategy planning, and Facebook insight analysis.',
-      'Built post-type systems for traffic, highlight distribution, engagement, and shareable informative albums.',
-      'Executed Like / Share / Tag and campaign-style traffic loops to strengthen page growth.',
-      'Facebook Ads: lead collection, page-like growth, and traffic acquisition to landing pages.',
-      'Ran a gamified campaign landing concept to increase click-through and interaction depth.',
-    ],
+    title: {
+      en: 'Social Media Marketing Specialist at Black Sire Technology',
+      zh: 'Black Sire Technology｜社交媒体营销专员',
+    },
+    period: { en: '2018 - 2021', zh: '2018 - 2021' },
+    points: {
+      en: [
+        'Soccerking: content generation, brand strategy planning, and Facebook insight analysis.',
+        'Built post-type systems for traffic, highlight distribution, engagement, and shareable informative albums.',
+        'Executed Like / Share / Tag and campaign-style traffic loops to strengthen page growth.',
+        'Facebook Ads: lead collection, page-like growth, and traffic acquisition to landing pages.',
+        'Ran a gamified campaign landing concept to increase click-through and interaction depth.',
+      ],
+      zh: [
+        'Soccerking：内容生产、品牌策略规划与 Facebook 数据洞察分析。',
+        '搭建帖子类型体系，覆盖引流、高光分发、互动与可分享资讯相册。',
+        '执行点赞/分享/标注及活动式流量闭环，强化主页增长。',
+        'Facebook 广告：潜客收集、涨粉与落地页引流。',
+        '落地游戏化活动页概念，提升点击与互动深度。',
+      ],
+    },
     relatedLinks: [
       {
-        label: 'Soccerking Project',
+        label: { en: 'Soccerking Project', zh: 'Soccerking 项目' },
         href: '/archive/soccerking-project',
       },
     ],
@@ -586,115 +636,172 @@ const previousProjectsData = [
 const archivedWorks = [
   {
     slug: '11-bonus-key-combo-builder',
-    title: '1+1 Bonus Key Combo Builder',
-    origin: 'Archived from my former domain.',
-    summary:
-      'An internal utility page for planning provider combinations, ranking constraints, and claim-ready campaign mixes.',
+    title: { en: '1+1 Bonus Key Combo Builder', zh: '1+1 奖金密钥组合构建器' },
+    origin: { en: 'Archived from my former domain.', zh: '归档自我曾使用的域名项目。' },
+    summary: {
+      en: 'An internal utility page for planning provider combinations, ranking constraints, and claim-ready campaign mixes.',
+      zh: '内部工具页：用于规划供应商组合、排序约束与可申领的活动配方。',
+    },
     sections: [
       {
-        heading: 'Purpose and Use Case',
-        points: [
-          'Help campaign operators quickly assemble promotion combinations.',
-          'Reduce manual errors when selecting and pairing partner campaigns.',
-          'Create a repeatable workflow for claim and tracking operations.',
-        ],
+        heading: { en: 'Purpose and Use Case', zh: '用途与场景' },
+        points: {
+          en: [
+            'Help campaign operators quickly assemble promotion combinations.',
+            'Reduce manual errors when selecting and pairing partner campaigns.',
+            'Create a repeatable workflow for claim and tracking operations.',
+          ],
+          zh: [
+            '帮助活动运营快速拼出可用的活动组合。',
+            '降低选择与合作方配对时的人工失误。',
+            '形成可重复的申领与跟踪工作流。',
+          ],
+        },
       },
       {
-        heading: 'Interface and Logic Preserved',
-        points: [
-          'Interface centered around partner cards, tier visibility, and combo claim actions.',
-          'Included used-partner state controls to prevent duplicate claim mistakes.',
-          'Top-position slot model enforced ranking compatibility before final selection.',
-          'Campaign combo count and slot occupancy were continuously updated in-page.',
-        ],
+        heading: { en: 'Interface and Logic Preserved', zh: '界面与逻辑（保留）' },
+        points: {
+          en: [
+            'Interface centered around partner cards, tier visibility, and combo claim actions.',
+            'Included used-partner state controls to prevent duplicate claim mistakes.',
+            'Top-position slot model enforced ranking compatibility before final selection.',
+            'Campaign combo count and slot occupancy were continuously updated in-page.',
+          ],
+          zh: [
+            '界面以合作方卡片、层级可见性与组合申领动作为中心。',
+            '包含「已使用合作方」状态，避免重复申领错误。',
+            '置顶位槽位模型在最终选择前校验排序兼容性。',
+            '活动组合数量与槽位占用会在页面内持续更新。',
+          ],
+        },
       },
       {
-        heading: 'Partner Scope Captured',
-        points: [
-          'Partner set includes Rich Gaming, Evo888H5, MegaH5, WF Gaming, EpicWin, UU Slots, AFB, Advant Play, 888King, BT Gaming, Creative Gaming, BNG, Joker, Meta Gaming, CP Games, PEGASUS, CrowdPlay, RSG, PlayStar, Mancala Gaming, and ClotPlay.',
-          'Each partner record carried T&C context such as top-placement requirements, banner obligations, and campaign clauses.',
-          'Operational behavior focused on execution safety, not visual marketing.',
-        ],
+        heading: { en: 'Partner Scope Captured', zh: '已覆盖的合作方范围' },
+        points: {
+          en: [
+            'Partner set includes Rich Gaming, Evo888H5, MegaH5, WF Gaming, EpicWin, UU Slots, AFB, Advant Play, 888King, BT Gaming, Creative Gaming, BNG, Joker, Meta Gaming, CP Games, PEGASUS, CrowdPlay, RSG, PlayStar, Mancala Gaming, and ClotPlay.',
+            'Each partner record carried T&C context such as top-placement requirements, banner obligations, and campaign clauses.',
+            'Operational behavior focused on execution safety, not visual marketing.',
+          ],
+          zh: [
+            '合作方集合包含 Rich Gaming、Evo888H5、MegaH5、WF Gaming、EpicWin、UU Slots、AFB、Advant Play、888King、BT Gaming、Creative Gaming、BNG、Joker、Meta Gaming、CP Games、PEGASUS、CrowdPlay、RSG、PlayStar、Mancala Gaming、ClotPlay 等。',
+            '每条合作方记录附带条款语境，如置顶要求、横幅义务与活动条款。',
+            '操作逻辑优先保证执行安全，而非视觉营销展示。',
+          ],
+        },
       },
     ],
   },
   {
     slug: 'atlantis-ui-ux-prototype',
-    title: 'Atlantis Website UI/UX Prototype',
-    origin: 'Archived from previous Adobe XD prototype link.',
-    summary:
-      'This record preserves the design intent of the Atlantis website revamp for both desktop and mobile experiences.',
+    title: { en: 'Atlantis Website UI/UX Prototype', zh: 'Atlantis 网站 UI/UX 原型' },
+    origin: { en: 'Archived from previous Adobe XD prototype link.', zh: '归档自历史 Adobe XD 原型链接。' },
+    summary: {
+      en: 'This record preserves the design intent of the Atlantis website revamp for both desktop and mobile experiences.',
+      zh: '本记录保留 Atlantis 网站改版在桌面端与移动端的设计意图。',
+    },
     externalLink: 'https://xd.adobe.com/view/26a08b2d-feb3-429e-9c76-45cf3eed8274-73f3/',
-    externalLabel: 'Open Adobe XD Prototype',
+    externalLabel: { en: 'Open Adobe XD Prototype', zh: '打开 Adobe XD 原型' },
     sections: [
       {
-        heading: 'Design Direction',
-        points: [
-          'Rebuilt the website structure to improve clarity, hierarchy, and conversion flow.',
-          'Aligned desktop and mobile layouts under one coherent brand language.',
-          'Prioritized practical navigation and content readability for marketing audiences.',
-        ],
+        heading: { en: 'Design Direction', zh: '设计方向' },
+        points: {
+          en: [
+            'Rebuilt the website structure to improve clarity, hierarchy, and conversion flow.',
+            'Aligned desktop and mobile layouts under one coherent brand language.',
+            'Prioritized practical navigation and content readability for marketing audiences.',
+          ],
+          zh: [
+            '重构网站结构，提升清晰度、层级与转化路径。',
+            '在统一品牌语言下对齐桌面与移动布局。',
+            '优先保证实用导航与营销受众的可读性。',
+          ],
+        },
       },
       {
-        heading: 'Execution Context',
-        points: [
-          'Used as a handoff artifact for implementation and stakeholder alignment.',
-          'Captured a full-site UX baseline before engineering delivery.',
-          'Served as the reference layer for iterative visual refinement.',
-        ],
+        heading: { en: 'Execution Context', zh: '落地语境' },
+        points: {
+          en: [
+            'Used as a handoff artifact for implementation and stakeholder alignment.',
+            'Captured a full-site UX baseline before engineering delivery.',
+            'Served as the reference layer for iterative visual refinement.',
+          ],
+          zh: [
+            '作为交付物，用于研发落地与干系人对齐。',
+            '在工程交付前沉淀全站 UX 基线。',
+            '作为后续视觉迭代的对照层。',
+          ],
+        },
       },
     ],
   },
   {
     slug: 'soccerking-project',
-    title: 'Soccerking Content System',
-    origin: 'Archived from my former domain.',
-    summary:
-      'A social content operation framework designed to attract traffic, improve engagement, and increase brand awareness.',
+    title: { en: 'Soccerking Content System', zh: 'Soccerking 内容体系' },
+    origin: { en: 'Archived from my former domain.', zh: '归档自我曾使用的域名项目。' },
+    summary: {
+      en: 'A social content operation framework designed to attract traffic, improve engagement, and increase brand awareness.',
+      zh: '面向社媒运营的内容框架：引流、提升互动并强化品牌认知。',
+    },
     imageGallery: [
       {
         src: '/archive-images/soccerking/icon.png',
-        alt: 'Soccerking project icon',
-        caption: 'Original Soccerking project icon.',
+        alt: { en: 'Soccerking project icon', zh: 'Soccerking 项目图标' },
+        caption: { en: 'Original Soccerking project icon.', zh: '原始 Soccerking 项目图标。' },
       },
       {
         src: '/archive-images/soccerking/P1.png',
-        alt: 'Soccerking archive visual P1',
+        alt: { en: 'Soccerking archive visual P1', zh: 'Soccerking 归档图 P1' },
       },
       {
         src: '/archive-images/soccerking/P2.png',
-        alt: 'Soccerking archive visual P2',
+        alt: { en: 'Soccerking archive visual P2', zh: 'Soccerking 归档图 P2' },
       },
       {
         src: '/archive-images/soccerking/P3.png',
-        alt: 'Soccerking archive visual P3',
+        alt: { en: 'Soccerking archive visual P3', zh: 'Soccerking 归档图 P3' },
       },
       {
         src: '/archive-images/soccerking/P4.png',
-        alt: 'Soccerking archive visual P4',
+        alt: { en: 'Soccerking archive visual P4', zh: 'Soccerking 归档图 P4' },
       },
       {
         src: '/archive-images/soccerking/P5.png',
-        alt: 'Soccerking archive visual P5',
+        alt: { en: 'Soccerking archive visual P5', zh: 'Soccerking 归档图 P5' },
       },
     ],
     sections: [
       {
-        heading: 'Content Strategy Framework',
-        points: [
-          'Link posts for traffic acquisition and game-highlight distribution.',
-          'Photo posts for engagement actions and conversation triggers.',
-          'Album posts for shareable informative content and audience expansion.',
-          'Template-driven post production to accelerate turnaround after match end.',
-        ],
+        heading: { en: 'Content Strategy Framework', zh: '内容策略框架' },
+        points: {
+          en: [
+            'Link posts for traffic acquisition and game-highlight distribution.',
+            'Photo posts for engagement actions and conversation triggers.',
+            'Album posts for shareable informative content and audience expansion.',
+            'Template-driven post production to accelerate turnaround after match end.',
+          ],
+          zh: [
+            '链接帖：引流与比赛高光分发。',
+            '图片帖：引导互动动作与话题触发。',
+            '相册帖：可分享资讯内容与受众扩张。',
+            '模板化生产：缩短赛后出稿时间。',
+          ],
+        },
       },
       {
-        heading: 'Campaign Objective',
-        points: [
-          'Increase traffic and brand exposure with structured content cadence.',
-          'Drive stronger ROI by matching post types to audience behavior patterns.',
-          'Use repeatable templates to accelerate publishing after matches.',
-        ],
+        heading: { en: 'Campaign Objective', zh: '活动目标' },
+        points: {
+          en: [
+            'Increase traffic and brand exposure with structured content cadence.',
+            'Drive stronger ROI by matching post types to audience behavior patterns.',
+            'Use repeatable templates to accelerate publishing after matches.',
+          ],
+          zh: [
+            '以结构化排期提升流量与品牌曝光。',
+            '按受众行为匹配帖子类型，提升 ROI。',
+            '用可复用模板加速赛后发布。',
+          ],
+        },
       },
     ],
   },
@@ -716,8 +823,6 @@ const resolveAssetPath = (base: string, value: string) => {
   if (/^(?:[a-z]+:)?\/\//i.test(value)) return value;
   return joinBasePath(base, value);
 };
-
-type Language = 'en' | 'zh';
 
 const LanguageToggle: React.FC<{
   language: Language;
@@ -784,11 +889,11 @@ const AnalogTechFullPage: React.FC<{
               <figure key={photo.src} className="overflow-hidden rounded-xl border border-stone-200 bg-white shadow-sm">
                 <img
                   src={resolveAssetPath(baseUrl, photo.src)}
-                  alt={photo.alt}
+                  alt={photo.alt[language]}
                   className="h-80 w-full object-cover"
                   loading="lazy"
                 />
-                <figcaption className="px-4 py-3 text-sm text-stone-600">{photo.caption}</figcaption>
+                <figcaption className="px-4 py-3 text-sm text-stone-600">{photo.caption[language]}</figcaption>
               </figure>
             ))}
           </div>
@@ -833,7 +938,7 @@ const LifeFullPage: React.FC<{
             {lifeVideos.map((video) => (
               <section key={video.href} className="rounded-2xl border border-stone-200 bg-white p-5 md:p-6 shadow-sm">
                 <div className="flex flex-wrap items-center justify-between gap-3">
-                  <h2 className="font-display text-2xl font-bold text-stone-900">{video.title}</h2>
+                  <h2 className="font-display text-2xl font-bold text-stone-900">{video.title[language]}</h2>
                   <a
                     href={video.href}
                     target="_blank"
@@ -853,7 +958,7 @@ const LifeFullPage: React.FC<{
                   <div className="relative aspect-video w-full">
                     <img
                       src={video.thumbnailSrc}
-                      alt={`${video.title} thumbnail`}
+                      alt={`${video.title[language]} thumbnail`}
                       className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                       loading="lazy"
                     />
@@ -903,10 +1008,10 @@ const ArchivedWorkPage: React.FC<{
               {isZh ? '归档项目' : 'Archived Work'}
             </p>
             <h1 className="mt-2 font-display text-4xl font-bold tracking-tight text-stone-900 md:text-5xl">
-              {work.title}
+              {work.title[language]}
             </h1>
-            <p className="mt-4 text-sm text-stone-500">{work.origin}</p>
-            <p className="mt-4 text-base leading-relaxed text-stone-700">{work.summary}</p>
+            <p className="mt-4 text-sm text-stone-500">{work.origin[language]}</p>
+            <p className="mt-4 text-base leading-relaxed text-stone-700">{work.summary[language]}</p>
             {work.externalLink && (
               <a
                 href={work.externalLink}
@@ -914,7 +1019,7 @@ const ArchivedWorkPage: React.FC<{
                 rel="noopener noreferrer"
                 className="mt-5 inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-700 transition-colors hover:border-stone-900 hover:text-stone-900"
               >
-                {work.externalLabel ?? (isZh ? '打开原始链接' : 'Open Source Link')}
+                {work.externalLabel?.[language] ?? (isZh ? '打开原始链接' : 'Open Source Link')}
                 <ExternalLink size={14} />
               </a>
             )}
@@ -922,13 +1027,13 @@ const ArchivedWorkPage: React.FC<{
               <figure className="mt-6 overflow-hidden rounded-xl border border-stone-200 bg-stone-100">
                 <img
                   src={resolveAssetPath(baseUrl, work.imagePath)}
-                  alt={work.imageAlt ?? `${work.title} archived visual`}
+                  alt={work.imageAlt?.[language] ?? `${work.title[language]} archived visual`}
                   className="h-auto w-full object-cover"
                   loading="lazy"
                 />
                 {work.imageCaption && (
                   <figcaption className="border-t border-stone-200 bg-white px-4 py-3 text-sm text-stone-600">
-                    {work.imageCaption}
+                    {work.imageCaption[language]}
                   </figcaption>
                 )}
               </figure>
@@ -939,13 +1044,13 @@ const ArchivedWorkPage: React.FC<{
                   <figure key={image.src} className="overflow-hidden rounded-xl border border-stone-200 bg-stone-100">
                     <img
                       src={resolveAssetPath(baseUrl, image.src)}
-                      alt={image.alt}
+                      alt={image.alt[language]}
                       className="h-56 w-full object-cover"
                       loading="lazy"
                     />
                     {image.caption && (
                       <figcaption className="border-t border-stone-200 bg-white px-3 py-2 text-sm text-stone-600">
-                        {image.caption}
+                        {image.caption[language]}
                       </figcaption>
                     )}
                   </figure>
@@ -956,11 +1061,11 @@ const ArchivedWorkPage: React.FC<{
 
           <div className="mt-6 space-y-5">
             {work.sections.map((section) => (
-              <section key={section.heading} className="rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
-                <h2 className="font-display text-2xl font-bold text-stone-900">{section.heading}</h2>
+              <section key={section.heading.en} className="rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+                <h2 className="font-display text-2xl font-bold text-stone-900">{section.heading[language]}</h2>
                 <ul className="mt-4 space-y-2 text-stone-700">
-                  {section.points.map((point) => (
-                    <li key={point} className="flex gap-2">
+                  {section.points[language].map((point, pointIndex) => (
+                    <li key={`${section.heading.en}-${pointIndex}`} className="flex gap-2">
                       <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-stone-400" />
                       <span>{point}</span>
                     </li>
@@ -982,7 +1087,7 @@ const ArchivedWorkPage: React.FC<{
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-3 py-1.5 text-sm font-medium text-stone-700 transition-colors hover:border-stone-900 hover:text-stone-900"
                     >
-                      {reference.label}
+                      {reference.label[language]}
                       <ExternalLink size={13} />
                     </a>
                   ))}
@@ -1034,10 +1139,10 @@ const PreviousProjectsFullPage: React.FC<{
 
           <div className="mt-8 space-y-5">
             {previousProjectsData.map((project, index) => (
-              <section key={project.title} className="rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+              <section key={project.title.en} className="rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
                 <div className="flex items-center justify-between gap-3">
                   <h2 className="font-display text-2xl font-bold text-stone-900 md:text-3xl">
-                    {project.title}
+                    {project.title[language]}
                   </h2>
                   <span className="rounded bg-stone-100 px-2 py-1 font-mono text-xs text-stone-500">
                     0{index + 1}
@@ -1046,10 +1151,10 @@ const PreviousProjectsFullPage: React.FC<{
                 <p className="mt-3 text-sm font-semibold uppercase tracking-wide text-stone-500">
                   {isZh ? '时间线' : 'Timeline'}
                 </p>
-                <p className="mt-1 text-base leading-relaxed text-stone-700">{project.period}</p>
+                <p className="mt-1 text-base leading-relaxed text-stone-700">{project.period[language]}</p>
                 <ul className="mt-4 space-y-2 text-stone-700">
-                  {project.points.map((point) => (
-                    <li key={point} className="flex gap-2">
+                  {project.points[language].map((point, pointIndex) => (
+                    <li key={`${project.title.en}-${pointIndex}`} className="flex gap-2">
                       <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-stone-400" />
                       <span>{point}</span>
                     </li>
@@ -1069,7 +1174,7 @@ const PreviousProjectsFullPage: React.FC<{
                           rel={link.href.startsWith('/') ? undefined : 'noopener noreferrer'}
                           className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-3 py-1.5 text-sm font-medium text-stone-700 transition-colors hover:border-stone-900 hover:text-stone-900"
                         >
-                          {link.label}
+                          {link.label[language]}
                           <ExternalLink size={13} />
                         </a>
                       ))}
