@@ -16,6 +16,14 @@
 
 ## Entries
 
+### 2026-04-24 (README / 元数据：定稿「当前这版」说明)
+
+- 类型：文档
+- 改动：重写 `README.md`：线上地址（`edentan.site`、GitHub Pages）、定位、技术栈、路由、部署/GA/SEO/SPA 行为、与 `AGENTS`/`log` 的维护约定。更新 `metadata.json` 的 name/description；`package.json` 更名为 `eden-portfolio`、version `1.0.0`、补 description。
+- 原因：用户认可当前产品形态，要求把读我与仓库元信息对齐真实上线状态。
+- 影响：新协作者可更快理解站点边界；`npm` 包名与版本更语义化，非强制对外发布。
+- 后续：若主域名或 GA ID 再变，只须同步 `README` 与 `index.html` 中对应片段。
+
 ### 2026-04-24 (主页：8G 仅从「手上还在长」移除)
 
 - 类型：代码

@@ -1,84 +1,89 @@
-# Eden Portfolio Site
+# Eden — Portfolio
 
-这是 Eden 的个人展示站，当前核心是「主页 + 项目归档 + Jiju.pet 构建叙事」的单页路由结构。
-
----
-
-## 1) 当前项目定位
-
-- 这是一个 React + Vite 前端作品站。
-- 主要目标是：对外展示经历、项目脉络、以及可复用的构建方法。
-- 已包含中英切换（EN / 中文）与多个独立页面路由。
+Eden 的个人站：单页式 React 应用，多路由、中英双语，用于展示经历、项目归档、Jiju.pet 与构建叙事。**当前这版**已包含 SEO（meta、sitemap、JSON-LD、OG 图）、Google Analytics、GitHub Pages 部署，以及活动推广用的独立静态 HTML 页面。
 
 ---
 
-## 2) 技术栈
+## 线上地址
 
-- `React 19`
-- `Vite 6`
-- `TypeScript`
-- `Framer Motion`
-- `Lucide React`
-- `Tailwind CSS v4 (@tailwindcss/vite)`
+| 环境 | URL |
+|------|-----|
+| 自定义域（主） | <https://edentan.site> |
+| GitHub Pages 默认 | <https://edent95.github.io/Eden/> |
+
+`vite` 生产构建在子路径下会自动把 `base` 设为 `/<仓库名>/`，因此默认 Pages 地址带 `/Eden/`。使用自定义域时，按 GitHub Pages 约定站点挂在域名根路径。
 
 ---
 
-## 3) 本地开发
+## 项目定位
 
-前置条件：`Node.js 18+`
+- 对外展示：主页、时间线、品牌指南、图库、Life 视频区、项目归档与详情页。
+- 技术叙事：`/jiju-pet` 等长文区块说明 0→1 构建方法。
+- 运营侧静态页：根目录的 `mnm11.html`、`Promotion Page.html` 由主站链出（路径见 `App.tsx`），不参与 React 路由，部署时与 `index.html` 一同落在站点根下。
+
+---
+
+## 技术栈
+
+- React 19、Vite 6、TypeScript  
+- Framer Motion、Lucide、Tailwind CSS v4（`@tailwindcss/vite`）  
+- 可选 3D：`@react-three/fiber` / `drei` / `three`  
+
+---
+
+## 本地开发
+
+需要 **Node.js 18+**。
 
 ```bash
 npm install
 npm run dev
 ```
 
-开发服务器固定为：
-
-- `http://localhost:4180`
-
-原因：`vite.config.ts` 已配置 `strictPort: true`，避免端口漂移导致“改了但看不到”。
-
----
-
-## 4) 构建与预览
+开发服务器固定 **<http://localhost:4180>**（`vite.config.ts` 中 `strictPort: true`），避免端口变化导致“改了但看不到”。
 
 ```bash
 npm run build
 npm run preview
 ```
 
----
-
-## 5) 页面路由（当前）
-
-- `/`：主页（个人信息、经历、里程碑、兴趣）
-- `/jiju-pet`：Jiju.pet 从 0 到 1 构建页面
-- `/previous-projects`：完整项目记录
-- `/analog-tech`：Analog Tech 图库页
-- `/life`：Life 视频页
-- `/brand-guide`：品牌指南（视觉、语气、组件与动效约定）
-- `/archive/:slug`：归档项目详情页
+生产构建时若设置 `VITE_SITE_URL`（如 `https://edentan.site`），会用于站点地图、robots 与 `index.html` 内 OG 绝对地址，与线上域名一致时预览分享卡更准。
 
 ---
 
-## 6) 内容与维护规则（给后续 agent）
+## 路由（当前）
 
-开始改动前，先读这三份文件：
-
-1. `AGENTS.md`（执行规则）
-2. `soul.md`（协作偏好与减少返工规则）
-3. `log.md`（改动流水）
-
-每次完成真实改动后：
-
-1. 先更新代码 / 文档
-2. 跑最小验证（至少 `npm run build`）
-3. 追加一条 `log.md` 记录（改动 / 原因 / 影响 / 后续）
+- `/` — 主页  
+- `/jiju-pet` — Jiju.pet 构建叙事  
+- `/previous-projects` — 项目列表  
+- `/analog-tech` — 胶片图库  
+- `/life` — Life 视频页  
+- `/brand-guide` — 品牌与组件约定  
+- `/archive/:slug` — 归档项目详情  
 
 ---
 
-## 7) GitHub Pages 说明
+## 部署与基础设施
 
-- 生产环境 `base` 会依据 `GITHUB_REPOSITORY` 自动设置为 `/<repo>/`。
-- 站内链接使用 base-aware 组合，避免在子路径部署时路由失效。
+- **发布：** `main` 推送触发 `.github/workflows/deploy-pages.yml`（建 `dist` 并发布到 **GitHub Pages**）。  
+- **SPA 子路径：** `public/404.html` 与 `index.html` 内脚本解决 GitHub Pages 对深链/刷新的 404 问题。  
+- **分析：** `index.html` 内已嵌入 GA4（`gtag.js`），Measurement ID 在仓库中维护。  
+- **SEO 代码：** 见 `seo.ts`；构建产物含 `sitemap.xml`、`robots.txt`（在配置了站点 URL 时生成）。
 
+---
+
+## 维护约定（给后续协作者与 agent）
+
+动手前先读：
+
+1. `AGENTS.md`  
+2. `soul.md`（若存在，协作习惯）  
+3. `log.md`（最近改动）  
+
+有真实代码或文档变更时：更新实现 → 至少执行 `npm run build` 通过 → 在 `log.md` 追一条（改动 / 原因 / 影响 / 后续）。
+
+---
+
+## 仓库说明
+
+- 本仓库在概念上也承载 **LLM Wiki** 相关约定，详见 `AGENTS.md` 中「项目身份」与标准操作。 portfolio 与 wiki 规划共用同一套日志与执行规则，避免行为漂移。
