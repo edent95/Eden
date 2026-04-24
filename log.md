@@ -16,6 +16,73 @@
 
 ## Entries
 
+### 2026-04-24 (主页 Poker Power Card 链接更新)
+
+- 类型：链接修正
+- 改动：`App.tsx` 中 Poker Power Card 外链从 `https://poker.edentan.site/` 更新为 `https://poker-power-card-3abea.web.app/`。
+
+### 2026-04-24 (mnm11：文案强调「同批 + 合规 + 1+1 用满」)
+
+- 类型：静态页面 / 文案
+- 改动：`public/mnm11.html` 页眉副标题与「给代理」两段说明改为：同一波递单/同批、在条款与空位下合规、最大化 1+1 Bonus Key 优惠与可挂供应商数，并点出隐藏不合规/不配位选项的目的。
+
+### 2026-04-24 (mnm11：页眉 +「给代理」叙事块)
+
+- 类型：静态页面 / 文案
+- 改动：`public/mnm11.html` 页眉副标题改为代理场景一句；`header` 与主内容之间新增 `agent-blurb`（中英 `i18n` 两段 + eyebrow「For agents / 给代理」），说明：递单前排清 key 与排名位、整组可落位、在名额内尽量多商、与槽位不匹配的名单先隐藏。配套样式与品牌字体一致。
+
+### 2026-04-24 (mnm11：移除底栏「前往申请」)
+
+- 类型：静态页面
+- 改动：`public/mnm11.html` 删除固定底栏 CTA 与 `selCount` 引用；`main.wrap` 底部内边距改回与顶栏无额外为底栏留位。
+
+### 2026-04-24 (mnm11：删两句说明 + 收短页眉/已用空状态)
+
+- 类型：静态页面 / 文案
+- 改动：`public/mnm11.html` 移除「My picks」下整段 `combo-hint` 与动态 `selNote`（及对应 JS/CSS）。页眉副标题与「已申请过」空状态改为更短、少比喻句；`renderChips` 不再写入选中说明。
+
+### 2026-04-24 (mnm11：品牌字体与全页文案、字号)
+
+- 类型：静态页面 / 品牌与可访问性
+- 改动：`public/mnm11.html` 接入与主站 `brand-guide` 一致的 **Inter**（正文 + 中文用 **Noto Sans SC** 降级）、**Space Grotesk**（标题与主要标签）；增加 `--font-sans` / `--font-display`、正文字号阶梯（`~15px` 手机 / `16px` 桌面）、`antialiased`、胶囊与说明文字对比微调。全页中英双语文案重写成“帮用户用满 key/权益、步骤更短、少行话”：页眉、我的选择/提示、可选项/全部供应商/已申请过/底栏 CTA、空状态与 `renderCaps`（中英）、`selNote`、已用/芯片按钮说明与「移回」等。`i18n` 时同步 `document.title` 与 `html[lang]`。
+- 原因：用户要求更易懂、以收益为中心，并按品牌指南统一字体与尺寸层级。
+
+### 2026-04-24 (mnm11：Provider pool 手机一排 6 个)
+
+- 类型：静态页面 / 响应式 UI
+- 改动：`#grid` 增加 `grid--pool`；`max-width:1023px` 时 `grid-template-columns: repeat(6, minmax(0,1fr))`、窄间距；手机端卡片收 padding、藏 `.tnc`、缩小 emoji/名称/角标/按钮；`Mark used` 在窄屏改为短字「Use / 用」并 `title`/`aria-label` 保留全句。`min-width:1024px` 仍 `auto-fill` 较大卡片。`resize` 防抖 `renderAll` 以横竖屏切换时刷新按钮文案。`card:hover` 动效在窄屏对 pool 关闭。
+- 原因：用户要求手机端 Provider pool 再缩小，一排显示 6 个供应商。
+
+### 2026-04-24 (mnm11：单屏搭配 + 去 sticky 顶栏 + Current picks 横滑)
+
+- 类型：静态页面 / 布局与交互
+- 改动：`public/mnm11.html` 顶栏改为非 `sticky`、压缩高度（标题+副标题+语言）；主区首块为 `workspace-hero`：**左**手机槽位预览、**右**「Current picks」工具条（额度 `pill` 移入此处）+ 横向滚动已选 pill + 空状态提示 + 说明；其下紧接供应商池与已用区，单页完成「看槽位 / 看已选 / 点供应商」。移除原 `aside` 双列 sticky 结构；`renderChips` 使用 `chip--rail` 与 `chipsEmpty` 显隐。
+- 原因：用户要求同屏可见可点、去掉吸顶顶栏占高、重做 Your Campaign Combo。
+- 影响：仅 MNM 页布局与 DOM；逻辑不变。
+
+### 2026-04-24 (mnm11：小屏更紧凑、预览区缩小)
+
+- 类型：静态页面 / 响应式 UI
+- 改动：`public/mnm11.html` 在 `max-width:1023px` 下将「Phone & combo」列限制为 `min(19.5rem, 92vw)` 居中，缩小手机框圆角/内边距/刘海；`.screen` 降高（约 `max-height: min(36vh,260px)`，可轻滚动），槽位与 banner 用更小尺寸与间距；`Your Campaign` 的 chips/按钮在侧栏内收紧；全页略减顶栏字级与副标题行数、供应卡片区在极窄（≤380px）单列、底栏 CTA 在窄屏略收；`1024px+` 仍恢复大屏预览与卡片区原尺度。
+- 原因：用户反馈需更强响应式，并缩小「Phone layout & your combo」占用。
+- 影响：仅样式与块级间距；业务逻辑未改。
+
+### 2026-04-24 (mnm11 布局：移动端友好 + 留白与分区)
+
+- 类型：静态页面 / UI
+- 改动：`public/mnm11.html` 重构版式与样式：粘性顶栏、`clamp` 间距与响应式字号；`lg+` 双栏（预览/组合 + 供应与已用）且预览侧 `sticky`；各区增加 eyebrow、标题、说明文案；供应网格窄屏两列、卡片与 CTA 加大可点区域；底栏 CTA 加 `safe-area`；站内链接统一相对 `index.html`；语言按钮 `aria-pressed`。
+- 原因：用户要求更移动友好、更多留白与层次。
+- 影响：仅 MNM 页；逻辑未变。
+- 后续：可再为「Provider pool」加折叠长列表（可选）。
+
+### 2026-04-24 (MNM mnm11：无资格供应商隐藏)
+
+- 类型：静态页面 / 交互
+- 改动：`public/mnm11.html` 将 `HIDE_INELIGIBLE` 设为 `true`。当前选择组合下无可用排名位置的供应商不再以灰态+整卡不可选展示，而是不出现在 Provider Grid；已选中的仍显示以便取消。
+- 原因：用户期望「无资格」即隐藏，而非显示为无法点击。
+- 影响：仅网格列表；`Mark used` 仅对仍显示的卡片可用。若需对当前被隐藏的商家标记已使用，需先调整已选或另做入口（见后续）。
+- 后续：如需在隐藏模式下仍能标记已使用，可加小型搜索或「显示全部（仅标已用）」折叠区。
+
 ### 2026-04-24 (Promotion Page：浮动「本月最佳游戏」与返回主页、Check now 去 localhost化)
 
 - 类型：内容 / 链接

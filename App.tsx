@@ -2244,7 +2244,7 @@ const App: React.FC = () => {
                     <FlatEmoji emoji="🃏" size="sm" bob delayMs={80} />
                     Poker Power Card
                     <a
-                      href="https://poker.edentan.site/"
+                      href="https://poker-power-card-3abea.web.app/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-stone-400 hover:text-stone-900 transition-colors"
