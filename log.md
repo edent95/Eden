@@ -16,6 +16,14 @@
 
 ## Entries
 
+### 2026-05-01 15:43
+
+- 类型：链接修正
+- 改动：将 `App.tsx` 中主页 `Poker Power Card` 外链从 `https://poker-power-card-3abea.web.app/` 更新为 `https://pokerpowercard--poker-power-card-3abea.asia-southeast1.hosted.app/`。
+- 原因：用户提供了新的正式访问地址，需要替换旧的 Firebase Hosting 链接。
+- 影响：主页点击 `Poker Power Card` 外链时会跳转到新地址。
+- 后续：如站内还有其他旧分享物料或文档引用同一旧域名，后续可一并清查替换。
+
 ### 2026-04-24 (主页 Poker Power Card 链接更新)
 
 - 类型：链接修正
