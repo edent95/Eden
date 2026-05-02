@@ -16,6 +16,24 @@
 
 ## Entries
 
+### 2026-05-02 (里程碑：Jiju 创始人日期格式)
+
+- 类型：内容 / 作品集
+- 改动：`App.tsx`「Founder, Jiju.pet」副标题由 `2025–present` / `2025–至今` 改为与 HarvardX / PADI 同源格式 **`Jiju.pet · January 2026`**（英）/ **`Jiju.pet · 2026年1月`**（中）。
+
+### 2026-05-02 (主页：移除 Jam 里程碑；Poker Power Card → Friday Poker Club)
+
+- 类型：内容 / 作品集
+- 改动：`App.tsx` 移除「Jam 2026」里程碑条目；Active Build 中 **Poker Power Card** 更名为 **Friday Poker Club**，重写中英简介（Realtime 德州大厅、邀请、可选语音等，不再描述 Hero/Magic/Trap 力量牌）；`activeBuildSkillSets.poker` 技能标签改为与当前产品更贴近（Hold’em lobby、语音信令等）。
+- 原因：用户要求去掉 Jam 条目、统一产品对外名称并更新叙事。
+
+### 2026-05-01 (主页里程碑：Jam 2026 + Jiju 创始人)
+
+- 类型：内容 / 作品集
+- 改动：`App.tsx`「Milestones that still matter」时间线顶部新增 **Jam 2026** 与 **Founder, Jiju.pet / Jiju.pet 创始人**（中英说明，Jiju 外链 `https://jiju.pet`）。
+- 原因：用户要求在里程碑区体现 Jiju  founder 身份与 2026 Jam 参与/产出。
+- 影响：主页向下滚动至此区块即可看到两段新条目；若 Jam 的官方名称或具体月份需写死，可再替换副标题一行。
+
 ### 2026-05-01 15:43
 
 - 类型：链接修正

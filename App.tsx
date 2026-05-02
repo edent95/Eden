@@ -1968,20 +1968,20 @@ const activeBuildSkillSets = {
     en: [
       { label: 'React / TypeScript', kind: 'hard' },
       { label: 'Realtime rooms', kind: 'hard' },
-      { label: 'Game rules design', kind: 'hard' },
+      { label: 'Hold’em lobby & stakes', kind: 'hard' },
+      { label: 'Voice & RTDB signaling', kind: 'hard' },
       { label: 'i18n', kind: 'hard' },
       { label: 'Host UX', kind: 'hard' },
-      { label: 'Asset pipeline', kind: 'hard' },
       { label: 'Facilitation', kind: 'soft' },
       { label: 'Clear communication', kind: 'soft' },
     ],
     zh: [
       { label: 'React / TypeScript', kind: 'hard' },
       { label: '实时房间', kind: 'hard' },
-      { label: '规则与机制设计', kind: 'hard' },
+      { label: '德州大厅与盲注', kind: 'hard' },
+      { label: '语音与 RTDB 信令', kind: 'hard' },
       { label: '国际化', kind: 'hard' },
       { label: '主持人体验', kind: 'hard' },
-      { label: '素材流程', kind: 'hard' },
       { label: '引导能力', kind: 'soft' },
       { label: '清晰沟通', kind: 'soft' },
     ],
@@ -2242,7 +2242,7 @@ const App: React.FC = () => {
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="flex items-center gap-2 text-xl font-bold text-stone-900">
                     <FlatEmoji emoji="🃏" size="sm" bob delayMs={80} />
-                    Poker Power Card
+                    Friday Poker Club
                     <a
                       href="https://pokerpowercard--poker-power-card-3abea.asia-southeast1.hosted.app/"
                       target="_blank"
@@ -2258,8 +2258,8 @@ const App: React.FC = () => {
                 </div>
                 <p className="text-stone-600 leading-relaxed">
                   {isZh
-                    ? '熟人局的快乐，一半在牌，一半在规矩怎么好玩又不吵翻。Poker Power Card 是给实桌加的一层「力量牌」：房间口令进场，Hero / Magic / Trap / Control 四类效果叠在真实发牌节奏上；法力、轮次、图库和素材下载，都是为了让主持人少费口舌、玩家多留在当下。'
-                    : 'Half the fun of a home game is the cards; the other half is house rules that stay playful without turning into arguments. Poker Power Card adds a hosted layer of themed power cards—Hero, Magic, Trap, Control—on top of live play, with room codes, pacing, a searchable gallery, and assets so hosts spend less energy explaining and players stay in the moment.'}
+                    ? '熟人桌常常需要一个「兼发牌、兼规则、兼气氛」的人。Friday Poker Club 是跑在浏览器里的同桌主机：房间口令与邀请链、按盲注与买入进桌的德州大厅、Firebase 实时同步让所有人看到同一套底池与街段，可选同桌语音；界面优先让人一眼看懂该谁动、该下多少——把解释成本从主持人身上挪开，把时间留在上牌。'
+                    : 'Home games need someone to be part dealer, part referee, and part host. Friday Poker Club is a browser-based table host: room codes and invite links, a Hold’em lobby with blinds and buy-ins, Firebase realtime sync so everyone shares the same pot and streets, optional voice between seats, and a UI that favors legible actions over ceremony—less overhead for the host, more time actually playing.'}
                 </p>
                 <ActiveBuildSkillRow isZh={isZh} skills={activeBuildSkillSets.poker[isZh ? 'zh' : 'en']} />
               </motion.div>
@@ -2308,6 +2308,29 @@ const App: React.FC = () => {
               </motion.div>
 
               <div className="space-y-8 border-l-2 border-stone-200 pl-6 ml-3 relative">
+                <motion.div variants={fadeIn} className="relative">
+                  <div className="absolute -left-[35px] top-1 w-4 h-4 rounded-full bg-stone-300 border-4 border-stone-50"></div>
+                  <h3 className="flex items-center gap-2 text-lg font-bold text-stone-900">
+                    <FlatEmoji emoji="🐾" size="sm" bob />
+                    {isZh ? 'Jiju.pet 创始人' : 'Founder, Jiju.pet'}
+                  </h3>
+                  <p className="text-stone-500 text-sm mb-1">{isZh ? 'Jiju.pet · 2026年1月' : 'Jiju.pet · January 2026'}</p>
+                  <p className="text-stone-600 text-sm leading-relaxed">
+                    {isZh
+                      ? '从产品与执行两端搭一条「宠物友好信息与回忆」可被反复走通的路径——先让一小块区域里的事情足够干净、可追溯，再往更大的地图扩。'
+                      : 'Driving Jiju end-to-end: a repeatable path toward trustworthy pet-friendly discovery and remembered outings—clear in a small geography first, expandable from there.'}
+                  </p>
+                  <a
+                    href="https://jiju.pet"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 inline-flex items-center gap-2 text-sm text-stone-600 transition-colors hover:text-stone-900"
+                  >
+                    jiju.pet
+                    <ExternalLink size={14} />
+                  </a>
+                </motion.div>
+
                 <motion.div variants={fadeIn} className="relative">
                   <div className="absolute -left-[35px] top-1 w-4 h-4 rounded-full bg-stone-300 border-4 border-stone-50"></div>
                   <h3 className="flex items-center gap-2 text-lg font-bold text-stone-900">
