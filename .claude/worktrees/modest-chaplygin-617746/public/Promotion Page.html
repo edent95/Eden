@@ -1,0 +1,2941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Casino Campaigns — Mobile 375px</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <style>
+    /* ====== THEME ====== */
+    :root{
+      --header-color:#90ee90; --row-dark:#23272f; --row-darker:#181a20; --body-bg:#111217;
+      --table-border:#23272f; --button-bg:#fff176; --button-hover-bg:#ffe54c; --button-text:#111217;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{background:var(--body-bg); color:#e0e0e0; font-family:Arial,Helvetica,sans-serif; margin:0; min-height:100vh;}
+    body{padding:20px}
+
+    /* ====== LANGUAGE TOGGLE ====== */
+    .lang-toggle{display:flex; justify-content:flex-end; gap:8px; margin-bottom:24px}
+    .lang-btn{background:var(--button-bg); color:var(--button-text); border:0; border-radius:8px; padding:10px 16px; min-width:100px; font-weight:700; cursor:pointer; transition:background .2s; box-shadow:0 1px 4px rgba(0,0,0,.18)}
+    .lang-btn:hover,.lang-btn.active{background:var(--button-hover-bg)}
+
+    /* ====== TITLES ====== */
+    h2{color:var(--header-color); margin:36px 0 12px; font-size:1.35rem; letter-spacing:.5px; text-align:center}
+    h2 [lang="zh"]{display:inline-block; min-width:100px}
+
+    /* ====== TABLES (Desktop) ====== */
+    .campaign-table{width:100%; border-collapse:collapse; border-spacing:0; background:var(--row-darker); border-radius:18px; overflow:hidden; margin-bottom:36px; box-shadow:0 2px 12px rgba(0,0,0,.25)}
+    .campaign-table th,.campaign-table td{padding:14px 8px; text-align:center; vertical-align:middle}
+    .campaign-table th{background:var(--row-dark); color:#90ee90; font-weight:700; font-size:1.05rem; border-bottom:2px solid var(--table-border); letter-spacing:.3px}
+    .campaign-table tr:nth-child(even) td{background:var(--row-dark)}
+    .campaign-table tr:nth-child(odd) td{background:var(--row-darker)}
+    .logo-cell img{display:block; margin:0 auto 4px; height:44px; max-width:120px; object-fit:contain; border-radius:8px}
+    .logo-cell span{display:block; margin-top:4px; font-size:.98em; color:#c8ffe1}
+    .play-btn{background:var(--button-bg); color:var(--button-text); border:0; border-radius:8px; padding:10px 16px; min-width:100px; font-weight:700; cursor:pointer; transition:background .2s; box-shadow:0 1px 4px rgba(0,0,0,.18)}
+    .play-btn:hover:not(:disabled){background:var(--button-hover-bg)}
+    .play-btn:disabled{opacity:.55; cursor:not-allowed}
+
+    /* ====== LANGUAGE VISIBILITY ====== */
+    [lang="zh"]{visibility:hidden; position:absolute; height:0; overflow:hidden; pointer-events:none; user-select:none}
+    body.zh [lang="en"]{visibility:hidden; position:absolute; height:0; overflow:hidden; pointer-events:none; user-select:none}
+    body.zh [lang="zh"]{visibility:visible; position:static; height:auto; overflow:visible; pointer-events:auto; user-select:auto}
+
+    /* ====== COLLAPSIBLES ====== */
+    .freept-collapse-wrapper,.api-collapse-wrapper{background:linear-gradient(133deg,#222c34,#22382a 96%); border-left:6px solid #84fa98; border-radius:16px; overflow:hidden; box-shadow:0 3px 15px rgba(0,0,0,.22); margin:38px auto 32px; max-width:880px; font-size:1.05rem}
+    .api-collapse-wrapper{background:linear-gradient(133deg,#1c2a33,#23352e)}
+    .freept-toggle,.collapse-toggle{padding:18px 20px; display:flex; align-items:center; justify-content:space-between; cursor:pointer; background:#252f27}
+    .collapse-toggle{background:#232a32}
+    .freept-arrow,.toggle-arrow{font-size:1.5em; transition:transform .3s cubic-bezier(.42,0,.58,1)}
+    .freept-content,.collapse-content{display:block; max-height:0; overflow:hidden; padding:0 22px; transition:all .4s cubic-bezier(.42,0,.58,1)}
+    .freept-content.open,.collapse-content.open{padding:22px; max-height:2200px}
+
+    .pt-steps,.step-cards{display:flex; flex-wrap:wrap; gap:14px}
+    .pt-step-card,.step-box{background:#232a33; border-radius:12px; padding:16px 14px; display:flex; gap:12px; align-items:flex-start; flex:1 1 220px; max-width:calc(33.3% - 10px); box-shadow:0 1px 6px rgba(0,0,0,.08)}
+    .pt-step-num,.step-num{flex-shrink:0; width:34px; height:34px; line-height:34px; border-radius:10px; text-align:center; font-weight:700; font-size:1.05em}
+
+    /* ====== PROVIDER POPUP ====== */
+    .provider-popup-fancy{position:absolute; top:80px; right:24px; display:flex; gap:16px; padding:16px 20px; border-radius:18px; backdrop-filter:blur(16px); background:rgba(36,45,42,.85); box-shadow:0 8px 24px rgba(0,0,0,.35); z-index:9999; border:1px solid rgba(255,255,255,.1); transition:opacity .3s ease, transform .3s ease}
+    .provider-card{display:flex; flex-direction:column; align-items:center; gap:8px; padding:12px 10px; border-radius:12px; background:linear-gradient(145deg,#1e2522,#29302c); box-shadow:inset 0 0 6px rgba(255,255,255,.05), 0 4px 16px rgba(0,0,0,.2); width:110px}
+    .provider-card img{width:64px; height:64px; object-fit:contain; border-radius:8px; background:transparent; padding:4px}
+    .rank-badge{background:#fff176; color:#111217; font-weight:700; font-size:.88rem; padding:4px 10px; border-radius:20px; white-space:nowrap; box-shadow:0 1px 4px rgba(0,0,0,.2)}
+
+    /* ====== RESPONSIVE ====== */
+    @media (max-width:900px){
+      .campaign-table th,.campaign-table td{padding:10px 4px; font-size:.95rem}
+      .logo-cell img{height:36px}
+      .pt-step-card,.step-box{max-width:calc(50% - 8px)}
+    }
+
+    /* Stack tables into cards on small screens */
+    @media (max-width:600px){
+      body{padding:16px}
+      .campaign-table, .campaign-table thead, .campaign-table tbody, .campaign-table tr, .campaign-table th, .campaign-table td{display:block; width:100%}
+      .campaign-table thead{position:absolute; left:-9999px; top:auto; height:0; overflow:hidden}
+      .campaign-table tr{margin-bottom:18px; border-radius:12px; box-shadow:0 1px 6px rgba(0,0,0,.12); border:1px solid var(--table-border)}
+      .campaign-table td{text-align:left; padding:12px 10px}
+      .campaign-table td::before{content:attr(data-label); display:block; color:var(--header-color); font-size:.85rem; margin-bottom:6px; letter-spacing:.3px}
+      .logo-cell{display:flex; align-items:center; gap:10px}
+      .logo-cell img{height:32px; margin:0}
+      .play-btn{width:100%}
+      .ggr-table .logo-cell img{height:32px}
+      .ggr-table td .text-container{width:100%}
+      .pt-step-card,.step-box{max-width:100%; flex-basis:100%}
+      .lang-toggle{position:sticky; top:0; z-index:1000; padding:8px 10px; margin:-8px -8px 16px; background:linear-gradient(180deg, rgba(17,18,23,.98), rgba(17,18,23,.85) 70%, rgba(17,18,23,0))}
+      .provider-popup-fancy{flex-direction:column; right:12px; top:72px; width:220px; padding:16px 14px}
+    }
+
+    /* Tighten specifically for 360–400px (iPhone SE/mini/Android small) */
+    @media (max-width:400px){
+      .lang-btn{min-width:88px; padding:8px 12px; font-size:.95rem}
+      .play-btn{padding:10px 12px}
+      h2{font-size:1.2rem}
+      .provider-popup-fancy{position:fixed; left:12px; right:12px; width:auto; top:66px}
+    }
+
+    @keyframes rgbOuterGlow {
+      0%   { box-shadow: 0 0 12px rgba(255, 0, 0, 0.6), 0 0 24px rgba(255, 0, 0, 0.4); }
+      33%  { box-shadow: 0 0 12px rgba(0, 255, 0, 0.6), 0 0 24px rgba(0, 255, 0, 0.4); }
+      66%  { box-shadow: 0 0 12px rgba(0, 0, 255, 0.6), 0 0 24px rgba(0, 0, 255, 0.4); }
+      100% { box-shadow: 0 0 12px rgba(255, 0, 0, 0.6), 0 0 24px rgba(255, 0, 0, 0.4); }
+    }
+    .floating-icon.rgb-glow {
+      animation: rgbOuterGlow 4s infinite ease-in-out;
+      background-color: #1f2922;
+      border: 2px solid #fff176;
+    }
+
+    .seasonal-banner img {
+      border-radius: 12px;
+      width: 100%;
+      height: auto;
+    }
+
+/* Align Key T&C Summary column to the left */
+.campaign-table td:nth-child(3),
+.campaign-table th:nth-child(3) {
+  text-align: left;
+  padding-left: 16px;
+  padding-right: 16px;
+  line-height: 1.5;
+}
+.campaign-table td:nth-child(3) .text-container {
+  text-align: left;
+}
+.campaign-table td:nth-child(3) details {
+  margin-top: 8px;
+}
+
+
+.campaign-table td:nth-child(3) .text-container {
+  text-align: left;
+}
+
+.campaign-table td:nth-child(3) details {
+  margin-top: 10px;
+  font-size: 0.95rem;
+}
+
+
+
+.campaign-table td:nth-child(3) strong,
+.campaign-table td:nth-child(3) b {
+  color: #fff176; /* yellow highlight */
+}
+
+/* Special labels inside details */
+.campaign-table td:nth-child(3) .text-container br + 📌,
+.campaign-table td:nth-child(3) .text-container br + 🎁,
+.campaign-table td:nth-child(3) .text-container br + ⚠️ {
+  font-weight: 700;
+  color: #90ee90;
+}
+
+/* Details summary */
+details summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: #90ee90;
+  margin-top: 8px;
+  font-size: 1rem;
+}
+details summary:hover {
+  text-decoration: underline;
+}
+
+.campaign-table td:nth-child(4),
+.campaign-table th:nth-child(4) {
+  text-align: left;
+  padding-left: 16px;
+  padding-right: 16px;
+  line-height: 1.4;
+  font-size: 0.92rem;
+  white-space: pre-line; /* allows line breaks */
+}
+
+/* ====== Supported Currency Column ====== */
+.currency-scroll {
+  display: block;
+  max-width: 180px;   /* fixed width for the box */
+  white-space: nowrap; /* keep in one line */
+  overflow-x: auto;    /* enable horizontal scroll */
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: rgba(35, 39, 47, 0.6);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  scrollbar-width: thin; /* Firefox slim scrollbar */
+}
+
+.currency-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+.currency-scroll::-webkit-scrollbar-thumb {
+  background: #90ee90;
+  border-radius: 4px;
+}
+.currency-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ====== Supported Currency Column ====== */
+.currency-scroll {
+  display: block;
+  max-width: 180px;    /* fixed width for the box */
+  white-space: nowrap; /* keep text in one line */
+  overflow-x: auto;    /* enable horizontal scroll */
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: rgba(35, 39, 47, 0.6);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  scrollbar-width: none; /* Firefox: hide scrollbar */
+}
+
+/* Auto-hide scrollbars (WebKit) */
+.currency-scroll::-webkit-scrollbar {
+  height: 6px;
+  background: transparent;
+}
+.currency-scroll::-webkit-scrollbar-thumb {
+  background: #90ee90;
+  border-radius: 4px;
+  visibility: hidden; /* hide by default */
+}
+.currency-scroll:hover::-webkit-scrollbar-thumb {
+  visibility: visible; /* show on hover */
+}
+
+</style>
+</head>
+<body>
+  <!-- ====== LANGUAGE TOGGLE ====== -->
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="enBtn">English</button>
+    <button class="lang-btn" id="zhBtn">中文</button>
+  </div>
+
+  <!-- ====== FREE PT INTRO CARD (kept from your draft) ====== -->
+  <div class="intro freept-intro" style="background:linear-gradient(135deg,#25323b 60%,#23372f 100%); border-left:6px solid #90ee90; border-radius:14px; padding:20px 24px 18px; margin:28px auto 16px; max-width:880px; box-shadow:0 3px 18px rgba(0,0,0,.2); font-size:1.02rem; line-height:1.75">
+    <strong style="display:block;margin-bottom:8px;font-size:1.14rem;color:#90ee90">
+      <span lang="en">🍀 What is a Free PT Campaign?</span>
+      <span lang="zh">🍀 什么是 Free PT 活动？</span>
+    </strong>
+    <div>
+      <span lang="en">“Free PT” stands for <b>Free Play Trial</b>. In this campaign, providers allow operators to run their games for <b>1 month with no royalty fees</b>. It’s like a free trial — operators can test performance before deciding whether to continue the game.<br><br>🎯 Think of it like a <b>free food sample</b>: if players like it, the operator may keep it.</span>
+      <span lang="zh">“Free PT” 指的是 <b>免费试玩活动</b>。在此活动中，游戏商允许运营商在 <b>第一个月免分成</b> 上架其游戏。就像是一个免费试用期，运营商可以先观察游戏表现，再决定是否继续合作。<br><br>🎯 想象成超市里的<b>试吃样品</b>，如果玩家喜欢，运营商就会决定继续上架。</span>
+    </div>
+  </div>
+
+  <!-- ====== FREE PT + GGR HOW-TO (Collapsible) ====== -->
+  <div class="freept-collapse-wrapper">
+    <div class="freept-toggle" onclick="toggleFreePT(this)">
+      <h2>
+        <span lang="en">🎫 How to Apply for Free PT &amp; GGR Discount Promotion</span>
+        <span lang="zh">🎫 如何申请 免费 PT 与 GGR 优惠活动</span>
+      </h2>
+      <span class="freept-arrow">▼</span>
+    </div>
+    <div class="freept-content">
+      <div style="font-weight:600; font-size:1.07em; margin-bottom:12px">
+        <span lang="en">Application Flow (Free PT / GGR Discount)</span>
+        <span lang="zh">申请流程（免费 PT / GGR 优惠）</span>
+      </div>
+      <div class="pt-steps">
+        <div class="pt-step-card"><div class="pt-step-num" style="background:#84fa98;color:#1b332b">1</div><div><span lang="en">Merchant applies at promotion group on Telegram</span><br><span lang="zh">商户在 Telegram 优惠群组内申请</span></div></div>
+        <div class="pt-step-card"><div class="pt-step-num" style="background:#fff176;color:#383700">2</div><div><span lang="en">Our team sends out T&amp;C and application format</span><br><span lang="zh">我方团队发送条款与申请格式</span></div></div>
+        <div class="pt-step-card"><div class="pt-step-num" style="background:#6be1f5;color:#012e39">3</div><div><span lang="en">Merchant fills up the application form</span><br><span lang="zh">商户填写申请表单</span></div></div>
+        <div class="pt-step-card"><div class="pt-step-num" style="background:#fac174;color:#653a05">4</div><div><span lang="en">We submit to provider group</span><br><span lang="zh">我们提交至供应商群组</span></div></div>
+        <div class="pt-step-card"><div class="pt-step-num" style="background:#b4bccc;color:#23262b">5</div><div><span lang="en">Provider reviews application and T&amp;C</span><br><span lang="zh">供应商审核申请及条款</span></div></div>
+        <div class="pt-step-card"><div class="pt-step-num" style="background:#84fa98;color:#098539">6</div><div><span lang="en">If approved, promotion goes live ✅</span><br><span lang="zh">审核通过后，优惠活动上线 ✅</span></div></div>
+      </div>
+      <div style="font-weight:600; font-size:1.07em; color:#fff176; margin:26px 4px 10px 0"><span lang="en">Important Notes</span><span lang="zh">注意事项</span></div>
+      <ul style="padding-left:20px; line-height:1.9">
+        <li><span lang="en">Free PT/GGR Discount may vary by provider.</span><span lang="zh">免费 PT/GGR 优惠依供应商而异。</span></li>
+        <li><span lang="en">Some providers require banner upload, test account, or game ranking.</span><span lang="zh">部分供应商需上传横幅、提供测试账号或游戏展示排名。</span></li>
+        <li><span lang="en">Start date is usually fixed by provider and may not be backdated.</span><span lang="zh">活动开始日期通常由供应商指定，不可追溯。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ====== MINI ANNOUNCEMENT CARD + MINI TABLE ====== -->
+  <div class="titan-annc" style="background:linear-gradient(135deg,#26372f,#1f2922); border-left:6px solid #fff176; border-radius:14px; padding:20px 24px 18px; margin:24px auto 16px; max-width:880px; box-shadow:0 3px 18px rgba(0,0,0,.2); font-size:1.02rem; line-height:1.75">
+    <strong style="display:block;margin-bottom:8px;font-size:1.14rem;color:#fff176"><span lang="en">🎉 Good News!</span><span lang="zh">🎉 好消息！</span></strong>
+    <div>
+      <span lang="en">All <b>Titan registered agents</b> are automatically enrolled in the <b>Apollo</b> Free PT Event.<br><br>📅 <b>Start Date:</b> The event begins with your first transaction on your account.<br>🔒 <b>Eligibility:</b> Only available for Titan agents.<br><br>⚠️ <b>Please note:</b></span>
+      <span lang="zh">所有 <b>Titan 注册代理</b> 将自动参与 <b>Apollo 免费 PT 活动</b>。<br><br>📅 <b>开始日期：</b> 首笔交易后开始。<br>🔒 <b>资格限制：</b> 仅限 Titan 代理。<br><br>⚠️ <b>请注意：</b></span>
+      <ul style="padding-left:20px; margin-top:6px">
+        <li><span lang="en">Agents must fulfill the T&amp;C to remain eligible.</span><span lang="zh">代理需满足条款与条件。</span></li>
+        <li><span lang="en">To postpone start date, inform your Account Manager in advance.</span><span lang="zh">如需延后开始日期，请提前通知客户经理。</span></li>
+      </ul>
+    </div>
+    <div style="margin-top:28px; overflow:auto">
+      <table class="campaign-table mini-table">
+      
+      
+      
+      
+      
+      
+        <thead>
+          <tr>
+            <th><span lang="en">Provider</span><span lang="zh">游戏商</span></th>
+            <th><span lang="en">Duration</span><span lang="zh">周期</span></th>
+            <th><span lang="en">T&amp;C Summary</span><span lang="zh">条款</span></th>
+            <th><span lang="en">Demo</span><span lang="zh">试玩</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/lobby-logo-2.png" alt="Apollo"><span>Apollo</span></td>
+            <td><span lang="en">1 month</span><span lang="zh">1个月</span></td>
+            <td><div class="text-container"><span lang="en">Top 3 Placement + Banner Upload</span><span lang="zh">排名前3 + 上传横幅</span></div></td>
+            <td><a href="https://cr.apollogames.co/lobby/demo" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ====== FREE PT CAMPAIGNS ====== -->
+  <h2><span lang="en">Free PT Campaigns</span><span lang="zh">免费 PT 活动</span></h2>
+  <table class="campaign-table" id="free-pt">
+
+<thead>
+  <tr>
+    <th><span lang="en">Provider</span><span lang="zh">游戏商</span></th>
+    <th><span lang="en">Duration</span><span lang="zh">周期</span></th>
+    <th><span lang="en">Key T&C Summary</span><span lang="zh">条规</span></th>
+    <th><span lang="en">Supported Currency</span><span lang="zh">支持货币</span></th>
+    <th><span lang="en">Demo Link</span><span lang="zh">试玩链接</span></th>
+  </tr>
+</thead>
+        
+    <tbody>
+    <!-- ====== V-POWER ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/vpower.png" alt="V-Power">
+    <span>V-Power</span>
+  </td>
+  <td><span lang="en">1 Month</span><span lang="zh">一个月</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 2 Placement + 4 Promotions</span>
+      <span lang="zh">前二 + 四个促销活动</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          VPower – 1+1 Promotion (Kiosk 1 only acceptable) 🎯<br><br>
+          📌 Details:<br>
+          🔹 Vpower Kiosk 1:<br>
+          🔹 Vpower Kiosk 2 (if applicable):<br>
+          🔹 Start Date:<br>
+          🔹 Domain:<br><br>
+          🎁 Reward:<br>
+          🔹 Vpower Kiosk 2 Free Loyalty Fee (30 days)<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Place Vpower Kiosk 1 & Kiosk 2 (if any) in front<br>
+          🔹 Upload all 3 types of banners:<br>
+          &nbsp;&nbsp;• Pop-out banner<br>
+          &nbsp;&nbsp;• Sliding banner<br>
+          &nbsp;&nbsp;• Movie banner<br>
+          🔹 Arrange 4 promotions for Vpower (must include Welcome Bonus + Daily Bonus)<br><br>
+          📄 Notes:<br>
+          • Only valid after all conditions completed<br>
+          • Any violation = disqualification<br>
+          • Data during violation = normal data
+        </span>
+        <hr>
+        <span lang="zh">
+          VPower – 1+1 活动（只参与 Kiosk 1 也可）🎯<br><br>
+          📌 详情：<br>
+          🔹 Vpower Kiosk 1：<br>
+          🔹 Vpower Kiosk 2（如适用）：<br>
+          🔹 开始日期：<br>
+          🔹 域名：<br><br>
+          🎁 奖励：<br>
+          🔹 Vpower Kiosk 2 免忠诚金（30 天）<br><br>
+          📌 必须执行：<br>
+          🔹 Vpower Kiosk 1 和 Kiosk 2（如适用）需放前排<br>
+          🔹 上传 3 种横幅：<br>
+          &nbsp;&nbsp;• 弹出式横幅<br>
+          &nbsp;&nbsp;• 滑动横幅<br>
+          &nbsp;&nbsp;• 影片横幅<br>
+          🔹 安排 4 个促销活动（必须包含欢迎奖金和每日奖金）<br><br>
+          📄 重要提醒：<br>
+          • 只有完成所有条件才算参与<br>
+          • 活动期间违规将被取消资格<br>
+          • 该期间数据按普通数据处理
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      MYR • THB • IDR • VND • MMK • AUD • USD • BND • PHP • CAD • BRL • INR • BDT • KRW • NPR • PGK
+    </div>
+  </td>
+  <td>
+    <a href="https://www.vpowermy.com/#/game" target="_blank">
+      <button class="play-btn">
+        <span lang="en">Play Now</span><span lang="zh">立即试玩</span>
+      </button>
+    </a>
+  </td>
+</tr>
+
+<!-- ====== AMIGO ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/Amigo.svg" alt="Amigo">
+    <span>Amigo</span>
+  </td>
+  <td>
+    <span lang="en">1 Month</span>
+    <span lang="zh">1个月</span>
+  </td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 1 Placement + 2 Banners + Promotion</span>
+      <span lang="zh">排名第1 + 2个横幅 + 促销</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          Amigo – 3-Month Waiver Campaign (New Merchant Only) 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 1st Month: 100% kiosk fee waiver (Top 1 placement required)<br>
+          🔹 2nd Month: 50% waiver (Top 3 placement required)<br>
+          🔹 3rd Month: 70% waiver (Top 2 placement required)<br>
+          🔹 Feature Amigo in Home Slider Banner<br>
+          🔹 Feature Amigo in Pop-up Banner<br>
+          🔹 Arrange a special promotion during the event period<br><br>
+          ⚠️ Strict T&C compliance is required.<br>
+          Any violation will result in disqualification from the waiver program.
+        </span>
+        <hr>
+        <span lang="zh">
+          Amigo – 三个月平台费减免活动（限新商户）🎯<br><br>
+          📌 必须执行：<br>
+          🔹 第 1 个月：100% 免平台费（需排在第 1 位）<br>
+          🔹 第 2 个月：50% 减免（需排在前 3 位）<br>
+          🔹 第 3 个月：70% 减免（需排在前 2 位）<br>
+          🔹 必须设置于首页轮播横幅<br>
+          🔹 必须设置于弹窗 Banner<br>
+          🔹 活动期间需安排专属促销活动<br><br>
+          ⚠️ 本活动需严格遵守条款，若有违反，将取消减免资格。
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      <span lang="en">
+        AFN • ALL • AMD • ANG • AOA • ARS • AWG • AZN • BAM • BBD • BDT • BGN • BHD • BIF • BMD • BND • BOB • BOV • BRL • BSD • BTN • BWP • BYN • BYR • BZD • CAD • CDF • CHE • CHF • CHW • CLF • CLP • CNH • CNY • COP • COU • CRC • CUC • CUP • CVE • CZK • DJF • DKK • DOP • DZD • EAC • EGP • EMC • ERN • ETB • EUR • FJD • FKP • GBP • GGP • GHS • GIP • GMD • GNF • GTQ • GYD • HKD • HNL • HRK • HTG • HUF • IDR • IDX • ILS • IMP • INR • IQD • IRR • IRT • ISK • JEP • JMD • JOD • JPY • KES • KGS • KHR • KMF • KPW • KRW • KWD • KYD • KZT • LAK • LBP • LBX • LKR • LRD • LSL • MAD • MDL • MGA • MKD • MMK • MNT • MOP • MRO • MRU • MUR • MVR • MWK • MXN • MXV • MYR • MZN • NAD • NGN • NIO • NOK • NPR • NVC • NXT • NZD • OMR • PAB • PEN • PGK • PHP • PKR • PLN • PLY • PPC • PRB • PTS • PYG • QAR • RON • RSD • RUB • RWF • SAR • SBD • SCR • SDG • SEK • SGD • SHP • SLL • SLZ • SOS • SRD • SSP • STD • STN • STR • SVC • SYP • SZL • THB • TJS • TMT • TND • TOP • TTC • TRY • TTD • TWD • TZS • UAH • UGX • USB • USD • UST • UYI • UYU • UZS • VEB • VEF • VES • VND • VNX • VTC • VUV • WST • XAF • XAG • XAU • XCD • XDG • XDR • XOF • XPD • XPF • XPM • XPT • XRP • XSG • XSU • XTS • XUA • XXX • YER • ZAR • ZMF • ZMK • ZMW • ZWL
+      </span>
+      <span lang="zh">
+        AFN • ALL • AMD • ANG • AOA • ARS • AWG • AZN • BAM • BBD • BDT • BGN • BHD • BIF • BMD • BND • BOB • BOV • BRL • BSD • BTN • BWP • BYN • BYR • BZD • CAD • CDF • CHE • CHF • CHW • CLF • CLP • CNH • CNY • COP • COU • CRC • CUC • CUP • CVE • CZK • DJF • DKK • DOP • DZD • EAC • EGP • EMC • ERN • ETB • EUR • FJD • FKP • GBP • GGP • GHS • GIP • GMD • GNF • GTQ • GYD • HKD • HNL • HRK • HTG • HUF • IDR • IDX • ILS • IMP • INR • IQD • IRR • IRT • ISK • JEP • JMD • JOD • JPY • KES • KGS • KHR • KMF • KPW • KRW • KWD • KYD • KZT • LAK • LBP • LBX • LKR • LRD • LSL • MAD • MDL • MGA • MKD • MMK • MNT • MOP • MRO • MRU • MUR • MVR • MWK • MXN • MXV • MYR • MZN • NAD • NGN • NIO • NOK • NPR • NVC • NXT • NZD • OMR • PAB • PEN • PGK • PHP • PKR • PLN • PLY • PPC • PRB • PTS • PYG • QAR • RON • RSD • RUB • RWF • SAR • SBD • SCR • SDG • SEK • SGD • SHP • SLL • SLZ • SOS • SRD • SSP • STD • STN • STR • SVC • SYP • SZL • THB • TJS • TMT • TND • TOP • TTC • TRY • TTD • TWD • TZS • UAH • UGX • USB • USD • UST • UYI • UYU • UZS • VEB • VEF • VES • VND • VNX • VTC • VUV • WST • XAF • XAG • XAU • XCD • XDG • XDR • XOF • XPD • XPF • XPM • XPT • XRP • XSG • XSU • XTS • XUA • XXX • YER • ZAR • ZMF • ZMK • ZMW • ZWL
+      </span>
+    </div>
+  </td>
+  <td>
+    <a href="https://amigogaming.com/games" target="_blank">
+      <button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button>
+    </a>
+  </td>
+</tr>
+<!-- ====== RICH GAMING ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/Rich-Gaming.png" alt="Rich Gaming">
+    <span>Rich Gaming</span>
+  </td>
+  <td>
+    <span lang="en">1 Month</span>
+    <span lang="zh">1个月</span>
+  </td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 3 Placement + Popup + Crossover Banner</span>
+      <span lang="zh">排名前3 + 弹窗 + 跨区横幅</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          Rich Gaming – FREE 1-Month Kiosk Fee 🎉<br><br>
+          📌 What You Need to Do:<br>
+          🔹 For new agents only – applies to the first billing month<br>
+          &emsp;• Based on the first month with backend data<br>
+          🔹 Must provide go-live date<br>
+          🔹 Rich Gaming must be placed in the Top 3 positions under Hot Providers or Slot section<br>
+          🔹 Website must display all Rich Gaming games<br>
+          🔹 Must use the official Rich Gaming logo<br>
+          🔹 Must complete this campaign before joining a new one<br><br>
+          📸 After completing all the above, please submit screenshots for provider approval.<br>
+          Campaign is only valid after approval is granted.<br><br>
+          📅 Free period will begin based on the provider's approval date.<br><br>
+          ⚠️ If any condition is not met during the campaign, the agent will lose eligibility for this offer.
+        </span>
+        <hr>
+        <span lang="zh">
+          Rich Gaming – 首月免平台费 🎉<br><br>
+          📌 必须执行：<br>
+          🔹 仅限新代理参与，适用于首月账单<br>
+          &emsp;• 以后台首次有数据的月份为准<br>
+          🔹 需提供正式上线日期<br>
+          🔹 Rich Gaming 排名需放在热门游戏商或老虎机区的第 1~3 位<br>
+          🔹 网站需更新完整 Rich Gaming 所有游戏<br>
+          🔹 必须使用 Rich Gaming 官方 Logo<br>
+          🔹 完成本次活动后，才可报名参加新活动<br><br>
+          📸 完成以上要求后，请截图提交给供应商审核，审核通过后活动才可生效。<br><br>
+          📅 免费周期将从供应商批准日期开始计算。<br><br>
+          ⚠️ 活动期间如未满足任一条件，将失去本次优惠资格。
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+        CNY • THB • MYR • MYR2 • SGD • VNK • IDK • VND • IDR • PHP • MMK • BDT • INR • BRL • AUD • PKR • KHR • USD • BND • MXN • NPR • NGN • KES • TWD • HKD • TRY • RUB • PYG • LAK • CLP • CAD • AED • KRW • KRW2 • JPY • EUR • DKK • COP • UBTC • UETH • TRX • USDT • BYC
+    </div>
+  </td>
+  <td>
+    <a href="#" target="_blank">
+      <button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button>
+    </a>
+  </td>
+</tr>
+
+<!-- ====== APOLLO ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/lobby-logo-2.png" alt="Apollo">
+    <span>Apollo</span>
+  </td>
+  <td>
+    <span lang="en">1 Month</span>
+    <span lang="zh">1个月</span>
+  </td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 3 Placement + Banner Upload</span>
+      <span lang="zh">排名前3 + 上传横幅</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          Apollo Games – FREE PT for 30 Days (New Merchant Only) 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Provider: Apollo Games<br>
+          🔹 Must be placed in the Top 3 positions<br>
+          🔹 Must upload the banner provided by the provider<br><br>
+          📸 After fulfilling the above, please submit screenshots to the provider for approval.<br>
+          Promotion can only start after approval.<br><br>
+          📅 FREE PT duration will be based on the provider’s approval date.<br>
+          (Free PT will follow the platform’s currency)
+        </span>
+        <hr>
+        <span lang="zh">
+          Apollo Games – FREE PT 30 天活动（新商户限定）🎯<br><br>
+          📌 必须执行：<br>
+          🔹 游戏商：Apollo Games<br>
+          🔹 必须排在前三位置<br>
+          🔹 必须上传供应商提供的 Banner<br><br>
+          📸 完成以上要求后，需截图提交给供应商审核，审核通过后促销方可开始。<br><br>
+          📅 FREE PT 期限将以游戏商审核通过日期为准。<br>
+          （FREE PT 将依照平台币别进行申请）
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      <span lang="en">Support all currency</span>
+      <span lang="zh">支持所有货币</span>
+    </div>
+  </td>
+  <td>
+    <a href="#" target="_blank">
+      <button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button>
+    </a>
+  </td>
+</tr>
+
+<!-- ====== YELLOW BAT ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/Yellow-Bat.webp" alt="Yellow Bat">
+    <span>Yellow Bat</span>
+  </td>
+  <td>
+    <span lang="en">1 Month</span>
+    <span lang="zh">1个月</span>
+  </td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 2 Placement</span>
+      <span lang="zh">排名前2</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          Yellow Bat – Placement Requirement 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Yellow Bat must be placed in the Top 2 positions<br>
+          🔹 Must notify the provider by sending information in the designated group
+        </span>
+        <hr>
+        <span lang="zh">
+          Yellow Bat – 排名要求 🎯<br><br>
+          📌 必须执行：<br>
+          🔹 必须将 Yellow Bat 排在前二名<br>
+          🔹 需在指定群组发送信息通知供应商
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+        AED • ARS • AUD • BDT • BHD • BND • BOB • BRL • CAD • CHF • CLP • CNY • COP • CRC • DZD • ETB • EUR • FKP • FRF • GBP • GEL • GHS • GYD • HKD • IDR • IDRO • INR • IRR • JPY • KES • KRW • KWD • LAK • LBP • LKR • MAD • MMH • MMK • MMKO • MNT • MXN • MYR • MYRC • NGN • NPR • NZD • OMR • PEN • PGK • PHP • PKR • PLN • PYG • RUB • SAR • SGD • SRD • TND • TRY • UAH • UGX • USD • UYU • UZS • VES • VND • VNDO • ZAR • ZMW
+    </div>
+  </td>
+  <td>
+    <a href="#" target="_blank">
+      <button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button>
+    </a>
+  </td>
+</tr>
+
+<!-- ====== WF GAMING ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/Wf-Gaming.png" alt="WF Gaming">
+    <span>WF Gaming</span>
+  </td>
+  <td>
+    <span lang="en">1 Month</span>
+    <span lang="zh">1个月</span>
+  </td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 2 Placement + Banner</span>
+      <span lang="zh">排名前2 + 横幅</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          Wf Gaming – 30-Day Free Royalty Campaign 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Only for new merchants (not applicable for transferred merchants)<br>
+          🔹 Wf Gaming must be placed in the Top 2 positions during the FREE PT period<br>
+          🔹 Must submit screenshots to provider for approval before campaign starts<br>
+          🔹 FREE PT will be applied based on the platform’s currency<br><br>
+          📅 FREE PT period will start from the provider’s approval date<br><br>
+          📄 Additional Notes:<br>
+          🔹 Must inform provider at least 2 days before launching FREE PT<br>
+          🔹 Must fill out the application form<br>
+          🔹 Banner placement and game ranking must follow all T&Cs before submission<br>
+          🔹 Campaign can only start after provider approval<br>
+          🔹 If not approved, kiosk fee will be charged<br><br>
+          ⚠️ Do NOT launch the FREE PT without provider approval – provider will not be responsible for any issues
+        </span>
+        <hr>
+        <span lang="zh">
+          Wf Gaming – 30 天免平台费活动 🎯<br><br>
+          📌 必须执行：<br>
+          🔹 仅限新商户参与（不适用于转线商户）<br>
+          🔹 FREE PT 期间 Wf Gaming 排名必须排在前二<br>
+          🔹 活动开始前必须提交截图供供应商审核<br>
+          🔹 FREE PT 将以平台币别申请<br><br>
+          📅 FREE PT 期限以供应商审核通过日期为准<br><br>
+          📄 附加说明：<br>
+          🔹 FREE PT 启动前需至少提前 2 天通知供应商<br>
+          🔹 必须填写申请表单<br>
+          🔹 必须安排好 Banner 与游戏排位，并确保符合所有条款才可提交<br>
+          🔹 活动仅在审核通过后方可进行<br>
+          🔹 若未通过审核将正常收取平台费<br><br>
+          ⚠️ 未经审核擅自开启 FREE PT 的商户，供应商将不负任何责任
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+        MYR • SGD • USD • THB • HKD • BDT • RMB • IDR • IDK • INR • MMK • MK1 • MKK • PKR • VND • VNK • AUD • KRW • KRK • LAK • LKK • NPR • PHP • TWD • KHR • KHK • CAD • BRL • NGN • BND • EUR • JPY • GBP • SEK • NOK • DKK • AED • CHF • LKR • NZD • RUB • TRY • ZAR • MXN • MNT • FUN • USDT • MBT • CLP • CZK • UZS • XOF • AZN • XAF • IRR • ARS • GHS • ZMW • PEN • UGX • AMD • CDF • COP • TJS • TZS • PYG • SLL • SOS • SDG • UYU • TMT
+      </span>
+    </div>
+  </td>
+  <td>
+    <a href="#" target="_blank">
+      <button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button>
+    </a>
+  </td>
+</tr>
+<!-- ====== BNG ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/1754463908411-scaled.webp" alt="BNG">
+    <span>BNG</span>
+  </td>
+  <td><span lang="en">1 Month</span><span lang="zh">1个月</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 3 Placement + 40 Days of Banner Exposure</span>
+      <span lang="zh">排名前3 + 40天横幅展示</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          BNG – FREE PT for 1 Month (New Merchants Only) 🎯<br><br>
+          📌 Offer Details:<br>
+          🔹 1 month of FREE PT for all BNG games<br>
+          🔹 Not applicable for transferred merchants<br>
+          🔹 Must submit website for approval before starting<br><br>
+          📅 How it Works:<br>
+          • If you launch in April, FREE PT starts in May<br><br>
+          📌 During FREE PT Period:<br>
+          🔹 BNG must be placed in TOP 3 under the SLOT section<br>
+          🔹 BNG must also be placed in the TOP 3 section BEFORE the SLOT category<br>
+          🔹 A BNG banner must be displayed in TOP 1 position in the Main Lobby<br>
+          &emsp;• BNG can provide custom artwork/promo materials<br><br>
+          📌 After the Free Month:<br>
+          🔹 BNG must remain in TOP 3 under SLOT for at least 3 more months<br>
+          🔹 BNG must remain in TOP 3 section before SLOT for at least 3 more months<br><br>
+          ⚠️ T&Cs:<br>
+          • 1st violation: Warning<br>
+          • 2nd violation: Free month will be charged in the next invoice
+        </span>
+        <hr>
+        <span lang="zh">
+          BNG – 新商户首月免平台费活动 🎯<br><br>
+          📌 活动说明：<br>
+          🔹 新商户可享有 BNG 所有游戏免平台费 1 个月<br>
+          🔹 不适用于转线商户<br>
+          🔹 上线前请提交网站供审核<br><br>
+          📅 活动机制：<br>
+          • 若您在 4 月上线，则 5 月为免平台费月<br><br>
+          📌 免平台费期间要求：<br>
+          🔹 BNG 必须排在 SLOT 分类中的前 3 名<br>
+          🔹 BNG 还必须排在 SLOT 分类前的前 3 区块<br>
+          🔹 需在大厅首页 TOP 1 位置展示 BNG Banner<br>
+          &emsp;• 可由 BNG 提供素材或协助设计<br><br>
+          📌 免月结束后要求：<br>
+          🔹 BNG 仍需在 SLOT 分类中维持前 3 排名至少 3 个月<br>
+          🔹 BNG 仍需在 SLOT 前区块中维持前 3 排名至少 3 个月<br><br>
+          ⚠️ 条款与惩罚机制：<br>
+          • 第一次违规：口头警告<br>
+          • 第二次违规：下一期账单将补收该免平台费月份费用
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      KRW • TWD • MYR • PHP • THB • VND • kVND • IDR • kIDR • INR • CNY • SGD • MMK • JPY • BDT • HKD • KHR • LAK • NPR • MOP • BND • USD • PGK • LKR • SBD • BTN • MNT • PKR • UGX
+    </div>
+  </td>
+  <td><a href="#"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+<!-- ====== EPICWIN ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/EpicWin_horizontalLOGO-1-scaled.png" alt="EpicWin">
+    <span>EpicWin</span>
+  </td>
+  <td><span lang="en">1 Month</span><span lang="zh">1个月</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 3 Placement + Banner</span>
+      <span lang="zh">排名前3 + 横幅</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          EpicWin – Promotion Terms 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Website must place EpicWin in the Top 3 positions<br>
+          🔹 EpicWin must remain active during the campaign and for 3 months after it ends<br>
+          &emsp;• If closed early, PT for the full 3-month campaign period will be charged
+        </span>
+        <hr>
+        <span lang="zh">
+          EpicWin – 活動條款 🎯<br><br>
+          📌 必須執行：<br>
+          🔹 網站需將 EpicWin 排在前三名位置<br>
+          🔹 活動期間及結束後 3 個月內不得關閉 EpicWin<br>
+          &emsp;• 若提前關閉，將補收活動期間 3 個月的 PT 費用
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      AED • AMD • AOA • ARS • AUD • AZN • BDT • BND • BOB • BRL • CAD • CDF • CFA • CHF • CLP • COP • CZK • DKK • DZD • EGP • ETB • EUR • FUN • GBP • GEL • GHS • GNF • GTQ • HKD • HNL • IDK • IDR • INR • IRK • IRR • JPY • KES • KHK • KHR • KRK • KRW • LAK • LKK • LKR • LTC • MAD • MBT • MK1 • MKK • MMK • MMK2 • MMK3 • MNT • MXN • MYR • NGN • NOK • NPR • NZD • PEN • PGK • PHP • PKR • PYG • RMB • RUB • SDG • SEK • SGD • SLL • SOS • THB • TJS • TMT • TND • TRY • TWD • TZS • UGX • USD • USDT • UYU • UZS • VND • VNK • XAF • XOF • ZAR • ZMW • LK2 • SAR • OMR • KZT • UAH • PLN • KWD • TWD1 • HUF
+    </div>
+  </td>
+  <td><a href="#"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+<!-- ====== BOOMING GAMES ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://strapi-dev.booming-games.com/15/logo_36bdb913dd.svg" alt="Booming Games">
+    <span>Booming Games</span>
+  </td>
+  <td><span lang="en">3 Months</span><span lang="zh">3个月</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 5 Placement + Banner + Promotion</span>
+      <span lang="zh">前5排名 + 横幅 + 促销</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          Booming Games – 3-Month Promotion Proposal<br><br>
+          📌 Offer Structure:<br>
+          1️⃣ Month 1: Free – 100% royalty waived<br>
+          2️⃣ Month 2: 50% royalty discount<br>
+          3️⃣ Month 3: 30% royalty discount<br><br>
+          📋 Promotion Requirements:<br>
+          1. Must be placed in the Top 5 positions<br>
+          2. A dedicated promotion must be set<br>
+          3. Popup crossover banner must be displayed
+        </span>
+        <hr>
+        <span lang="zh">
+          Booming Games – 三个月优惠活动提案<br><br>
+          📌 优惠结构：<br>
+          1️⃣ 第 1 个月：免交收 – 100% 免平台费<br>
+          2️⃣ 第 2 个月：交收折扣 50%<br>
+          3️⃣ 第 3 个月：交收折扣 30%<br><br>
+          📋 活动要求：<br>
+          1. 排名需列入前 5 名<br>
+          2. 需设置一个专属促销活动<br>
+          3. 必须上架 popup crossover banner
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      AED • ADA • AFN • ALL • AMD • ANG • AOA • ARC • ARS • AUD • AWG • AZN • BAM • BBD • BCH • BDT • BGN • BHD • BIF • BMD • BNB • BND • BOB • BRL • BSD • BTC • BTN • BWP • BYN • BZD • CAD • CDF • CHF • CLP • CNY • COP • CRC • CREDITS • CUP • CVE • CZK • DJF • DKK • DOGE • DOP • DZD • EGP • ETB • ETH • EUR • FJD • FKP • GBP • GEL • GHS • GIP • GMD • GNF • GTQ • GYD • HJPY • HKD • HNL • HRK • HTG • HUF • IDR • ILS • INR • IOT • IQD • IRR • ISK • JMD • JOD • JPY • KES • KGS • KHR • KIDR • KMF • KPW • KRW • KVND • KWD • KYD • KZT • LAK • LBP • LKR • LRD • LSL • LTC • LYD • MAD • MBCH • MBNB • MBTC • MDL • METH • MGA • MKD • MLTC • MMK • MNT • MOP • MRO • MUR • MVR • MWK • MXN • MYR • MZN • NAD • NGN • NIO • NOK • NPR • NZD • OMR • PAB • PEN • PGK • PHP • PJPY • PKR • PLN • PYG • QAR • RON • RSD • RUB • RWF • SAR • SBD • SCR • SDG • SEK • SGD • SHP • SLL • SOS • SRD • STD • SVC • SYP • SZL • TEUR • THB • TJS • TMT • TND • TOP • TRX • TRY • TTD • TWD • TZS • UAH • UBCH • UBTC • UETH • UGX • ULTC • USD • USDT • UYU • UZS • VCD • VEF • VND • VUV • WST • XAF • XCD • XOF • XPF • XRP • YER • ZAR • ZMW
+    </div>
+  </td>
+  <td><a href="#"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+<!-- ====== MICROGAMING (LIVE) ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/imgi_1_microgaming-22011102164191044265737.webp" alt="Microgaming (Live)">
+    <span>Microgaming (Live)</span>
+  </td>
+  <td><span lang="en">1 Month</span><span lang="zh">1个月</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 3 Placement</span>
+      <span lang="zh">前三名排位</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          Microgaming (Live) – Free PT Event 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Microgaming must be placed in the Top 3 positions<br>
+          🔹 Notify the provider by sending the information in the designated group
+        </span>
+        <hr>
+        <span lang="zh">
+          Microgaming (Live) – 免交收活动 🎯<br><br>
+          📌 必须执行：<br>
+          🔹 必须将 Microgaming 排在前三名位置<br>
+          🔹 需在指定群组发送信息通知供应商
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      HKD • IDR • INR • JPY • KRW • MYR • THB • USD • VND
+    </div>
+  </td>
+  <td><a href="#"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+<!-- ====== RICH GAME ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/Rich-Game.webp" alt="Rich Game">
+    <span>Rich Game</span>
+  </td>
+  <td><span lang="en">3 Months</span><span lang="zh">3个月</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 3 Placement + Banner</span>
+      <span lang="zh">前三名排位 + 横幅</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          Rich Game – FREE PT for 90 Days 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Must be placed in Top 3 provider positions<br>
+          🔹 Upload a homepage banner<br><br>
+          📸 Submit screenshots for provider approval.<br>
+          Promotion starts only after approval.<br><br>
+          📅 Period starts from provider’s approval date.<br><br>
+          ⚠️ If any condition is not met, eligibility will be lost.
+        </span>
+        <hr>
+        <span lang="zh">
+          Rich Game – FREE PT 90 天 🎯<br><br>
+          📌 必须执行：<br>
+          🔹 游戏商必须排在前三名位置<br>
+          🔹 使用供应商提供的 Banner 上传主页横幅图<br><br>
+          📸 完成后请截图提交供应商审核，审核通过后活动启动。<br><br>
+          📅 FREE PT 期限以游戏商审核通过日期为准。<br><br>
+          ⚠️ 未满足条件将失去资格。
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      TWD • TWD130 • TWD100 • RMB • KVND • PHP • THB • THB130 • MYR • JPY • USD • KIDR • KRW • TND • TRY • USDT • HKD • BRL • NGN • PKR • INR • AUD • MMK • ARS • CLP • MXN • PEN • BOB • COP • PYG • BDT • EGP • ETB • GHS • KES • NGN • TZS • UGX • ZAR • KIRR • HNL • SGD • KHR • NPR • BND • EUR
+    </div>
+  </td>
+  <td><a href="#"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+<!-- ====== JOKER ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/imgi_1_117-1178651_joker123-gaming-offer-a-wide-range-of-exciting.webp" alt="Joker">
+    <span>Joker</span>
+  </td>
+  <td><span lang="en">1 Month</span><span lang="zh">1个月</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 3 Placement + Banner + Promotion</span>
+      <span lang="zh">前三名 + 横幅 + 促销</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          Joker – Free PT Promotion Requirements 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Joker must be placed in the Top 3 positions under the SLOT category<br>
+          🔹 Must upload Joker banner and promotion on the homepage<br>
+          🔹 Joker logo must include the “HOT” icon<br>
+          🔹 Must update platform with complete Joker game list and rank hot games properly<br>
+          🔹 Must use the latest official Joker logo on your platform
+        </span>
+        <hr>
+        <span lang="zh">
+          Joker – 免费平台费条件 🎯<br><br>
+          📌 必须执行：<br>
+          🔹 Joker 必须在 SLOT 分类中排名前三<br>
+          🔹 首页需上传 Joker 横幅 + 优惠活动<br>
+          🔹 Joker 的图标上必须添加 “HOT” 标志<br>
+          🔹 平台需更新完整 Joker 游戏列表 + 热门游戏排序<br>
+          🔹 平台上需使用最新版 Joker 官方 Logo
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      MYR • SGD • HKD • IDR • RP • MMK • THB • USD • CNY • BDT • INR • EUR • KRW • BRL • MXN • JPY • PHP • AUD • PKR • NPR • CLP • NGN • COP • TRY • PEN • LAK
+    </div>
+  </td>
+  <td><a href="#"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+<!-- ====== YGR ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/YGR.webp" alt="YGR">
+    <span>YGR</span>
+  </td>
+  <td><span lang="en">1 Month</span><span lang="zh">1个月</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Selected Games only</span>
+      <span lang="zh">仅限部分游戏</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          YGR – Free Royalty Promotion 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Only 3–5 selected games are eligible for royalty-free status<br>
+          🔹 Selected games must be placed in the Hot or Recommended section<br>
+          🔹 Games must remain in those positions for at least 1 month
+        </span>
+        <hr>
+        <span lang="zh">
+          YGR – 免交收活动 🎯<br><br>
+          📌 必须执行：<br>
+          🔹 仅限 3～5 款指定游戏可享免交收优惠<br>
+          🔹 所选游戏必须上架至热门或推荐版位<br>
+          🔹 游戏需维持至少 1 个月
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      AED • AMD • ARS • AZN • BGN • BND • BOB • BYN • BZD • CAD • CHF • CLP • COP • CUP • CZK • DKK • DOP • DZD • EGP • ETB • GBP • GEL • GHS • HRK • AUD • BDT • BRL • CNY • EUR • HKD • IDR • ID2 • INR • JPY • KHR • KRW • MMK • MXN • MYR • PHP • SGD • THB • USD • USDT • VND • VN2 • HUF • ILS • IRR • ISK • KES • KZT • LAK • LKR • LRD • MAD • MNT • MOP • NGN • NIO • NOK • NPR • NZD • PEN • PKR • PLN • PYG • RON • RSD • RUB • SAR • SEK • SLL • SLE • TND • TRY • TZS • UAH • UGX • UYU • VEF • VES • XAF • XOF • ZAR • ZMW
+    </div>
+  </td>
+  <td><a href="https://www.ygrgames.com/en/games/105" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+<!-- ====== PEGASUS ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/09/PEGASUS-Horizontal-Logo-PNG-scaled.png" alt="PEGASUS">
+    <span>PEGASUS</span>
+  </td>
+  <td><span lang="en">1 Month</span><span lang="zh">1个月</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 1 Placement + 1 Banner + 2 Promotions</span>
+      <span lang="zh">首位 + 横幅 + 2个促销</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          PEGASUS – Exclusive Free Platform Promotion 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Must be placed 1st on homepage<br>
+          🔹 Promotion must be first slot<br>
+          🔹 Set 2+ exclusive promotions<br>
+          🔹 Submit application form<br><br>
+          📄 Notes:<br>
+          • Campaign starts only after approval<br>
+          • Any violation cancels eligibility<br><br>
+          🎁 Rewards:<br>
+          • 500k turnover = 5 free hot games next month<br>
+          • 1M turnover = 10 free hot games next month<br><br>
+          • 2nd month rewards continue if turnover maintained
+        </span>
+        <hr>
+        <span lang="zh">
+          PEGASUS – 独家免费平台优惠 🎯<br><br>
+          📌 必须执行：<br>
+          🔹 必须排在首页首位<br>
+          🔹 推广活动设为首位<br>
+          🔹 设置2个以上独家促销并提交申请<br><br>
+          📄 注意事项：<br>
+          • 仅在审核后开始<br>
+          • 违规即取消资格<br><br>
+          🎁 奖励：<br>
+          • 达50万流水 = 下月送5款免费热门游戏<br>
+          • 达100万流水 = 下月送10款免费热门游戏<br>
+          • 次月维持流水仍可享奖励
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      
+         <span lang="en">Support all currency except TWD, RMB</span>
+         <span lang="zh">支持所有货币 除了 TWD, RMB</span>
+    </div>
+  </td>
+  <td><a href="https://demo.pegasus11.com/" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+<!-- ====== ENDORPHINA ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/logo-endorphina.svg" alt="Endorphina">
+    <span>Endorphina</span>
+  </td>
+  <td><span lang="en">3 Months</span><span lang="zh">3个月</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 5 Placement + Banner + Popup</span>
+      <span lang="zh">前5 + 横幅 + 弹窗</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          Endorphina – 3-Month Free PT Campaign 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Must be placed Top 5<br>
+          🔹 Upload banner<br>
+          🔹 Display popup<br><br>
+          📅 Duration: 3 months
+        </span>
+        <hr>
+        <span lang="zh">
+          Endorphina – 3 个月免费平台费活动 🎯<br><br>
+          📌 必须执行：<br>
+          🔹 游戏商需排在前5<br>
+          🔹 上传横幅<br>
+          🔹 展示弹窗横幅<br><br>
+          📅 活动时间：3个月
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      ADA • AED • AFN • ALL • AMD • ANG • AOA • ARS • AWG • AZN • BAM • BBD • BCH • BSV • BDT • BGN • BHD • BIT • BIF • BMD • BNB • BND • BOB • BRL • BSD • BTC • BTT • BTN • BWP • BYN • BZD • CAD • CDF • CFA • CHF • CLF • CLP • CNY • COP • CRC • CUP • CVE • CZK • DASH • DJF • DKK • DOP • DZD • ETH • EEK • EGP • EOS • ERN • ETB • EUR • FJD • FKP • FUN • GBP • GEL • GGP • GHS • GIP • GMD • GNF • GTQ • GYD • HKD • HNL • HRK • HTG • HUF • IDR • IDX • ILS • IMP • INR • ISK • JEP • JMD • JOD • JPY • KES • KGS • KHR • KMF • KPW • KRW • KWD • KYD • KZT • LAK • LBP • LTC • LKR • LRD • LSL • LTL • LVL • LYD • MAD • MDL • MGA • MKD • MMK • MNT • MOP • MRO • MTL • MUR • MVR • MWK • MXN • MYR • MZN • NAD • NGN • NIO • NOK • NPR • NZD • OMR • PAB • PEN • PGK • PHP • PKR • PLN • PLY • PYG • QAR • RON • RSD • RUB • RWF • SAR • SBD • SCR • SDG • SEK • SGD • SHIB • SHP • SLL • SOS • SRD • SSP • STD • SVC • SZL • THB • TJS • TMT • TND • TOP • TOM • TRX • TRY • TTD • TWD • TZS • UAH • UGX • USD • USDT • UYU • UZS • VND • VUV • WST • XAF • XAG • XAU • XCD • XDR • XOF • XPF • XRP • XDG • XMR • YER • ZAR • ZMK • ZMW • ZWL
+    </div>
+  </td>
+  <td><a href="https://esasia.games/games" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+<!-- ====== FACAI ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/imgi_1_image-321.webp" alt="Facai">
+    <span>Facai</span>
+  </td>
+  <td><span lang="en">3 Months</span><span lang="zh">3个月</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 5 Placement + Popup + Promotion + Hot Game</span>
+      <span lang="zh">前5 + 弹窗 + 促销 + 热门游戏</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          Facai – 3-Month Promotion Campaign 🎰<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Month 1 – Waived fee, Top 1 placement<br>
+          🔹 Month 2 – 50% discount, Top 2 placement<br>
+          🔹 Month 3 – 30% discount, Top 3 placement<br>
+          🔹 Dedicated promotion<br>
+          🔹 Homepage popup<br>
+          🔹 Place 5 games in Recommendation Section
+        </span>
+        <hr>
+        <span lang="zh">
+          Facai – 三个月促销活动 🎰<br><br>
+          📌 必须执行：<br>
+          🔹 第1个月：免交收，排第1位<br>
+          🔹 第2个月：折扣50%，排第2位<br>
+          🔹 第3个月：折扣30%，排第3位<br>
+          🔹 安排专属促销活动<br>
+          🔹 设置首页弹窗<br>
+          🔹 推荐区放置5款游戏
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      CNY • THB • USD • IDR • VND • INR • MMK • MMKK • MMKO • MYR • CAD • SGD • HKD • JPY • KRW • VNDO • AED • AUD • NZD • TRY • BRL • IRR • EUR • USDT • BDT • PHP • RUB • MYRR • THBB • NPR • LKR • MXN • GHS • NGN • PKR • BND • IDRN • ZAR • ARS • KHR • AMD • CLP • PTE • LAKK • KES • CHF • GBP • PEN • TND • MOP • NOK • SEK • ZMW • UAH • KZT • ZWD • COP • MNT • TZS • LAK • ETB • EGP • UGX • BOB • PYG • LBP • UZS • MAD • PK5 • XAF • XOF • AZN • KGS • DOP • SSP • HTG • IQD • PLN • GEL • TMT • BYN • CDF • VES • UYU • CZK • MDL • NAD • CUP • IN5 • HUF • CRC • BGN • DKK • GTQ • HRK • HNL • JOD • NIO • RON • KRWN • MVR • ALL • AOA • BAM • BHD • BZD • ILS • ISK • KWD • MKD • MZN • OMR • QAR • RSD • SAR • SDG • PGK • LYD • BMD • SLE • GNF • MGA • MRU • SOS • BWP • SCR • LSL • ZMK • ZWG
+    </div>
+  </td>
+  <td><a href="https://fachaigaming.com/en/games" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+<!-- ====== META GAMING ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/09/MetaGaming_logo_HORIZON-scaled.webp" alt="Meta Gaming">
+    <span>Meta Gaming</span>
+  </td>
+  <td><span lang="en">1 Month</span><span lang="zh">1个月</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 10 Placement + Banner</span>
+      <span lang="zh">前10 + 横幅</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          Meta Gaming – Free PT Promotion 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Normal Key and Free Key games must be placed in the Top 10<br>
+          🔹 Must display New Game Banner
+        </span>
+        <hr>
+        <span lang="zh">
+          Meta Gaming – Free PT 注意事项 🎯<br><br>
+          📌 必须执行：<br>
+          🔹 Normal Key 和 Free Key 游戏必须排在前十<br>
+          🔹 必须展示 New Game Banner
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      MYR • SGD • THB • IDR • MMK • VND • LAK • PHP • KHR • BND • HKD • CNY • KRW • TWD • JPY • MNT • BDT • INR • PKR • NPR • LKR • UZS • AZN • TJS • TMT • AMD • AED • IRR
+    </div>
+  </td>
+  <td><a href="https://mg.btech4896.com/" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+<!-- ====== LUCKY ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/Lucky_logo.png" alt="Lucky">
+    <span>Lucky</span>
+  </td>
+  <td><span lang="en">1 Month</span><span lang="zh">1个月</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 3 Placement + Banner + CRM campaign</span>
+      <span lang="zh">前三名 + 横幅 + CRM 活动</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          Lucky – 100% GGR Discount 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Place in Top 3<br>
+          🔹 Upload homepage banner<br>
+          🔹 Run CRM campaign (email, SMS, social)<br><br>
+          📅 Reward: 100% GGR discount (1st month)<br><br>
+          ⚠️ Notes:<br>
+          • Only valid if all conditions met<br>
+          • CRM must run during campaign<br>
+          • Provider may cancel anytime
+        </span>
+        <hr>
+        <span lang="zh">
+          Lucky – 首月 100% GGR 折扣活动 🎯<br><br>
+          📌 必须执行：<br>
+          🔹 排名前三<br>
+          🔹 上传并展示 Banner<br>
+          🔹 执行 CRM 推广（邮件、短信、社交媒体）<br><br>
+          📅 回馈：首月 100% GGR 折扣<br><br>
+          ⚠️ 注意：<br>
+          • 仅完全符合条件才有效<br>
+          • CRM 必须在活动期间执行<br>
+          • 供应商可随时取消
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      USD • EUR • GBP • ZAR • TRY • RON • CHF • CAD • MXN • MYR • RSD • PYG • CLP • KES • XAF • AUD • BRL • SEK • VEF • SGD • COP • ARS • THB • NOK • GEL • CNY • UAH • JPY • RUB • MBTC • PLN • DOG • FSP • PEN • AMD • ALL • EEK • LTL • LVL • TND • NZD • NGN • UYU • IDR • KZT • DKK • HUF • CZK • LTC • PPC • MAD • BGN • DOP • TWD • HKD • INR • HRK • BOB • KRW • BAM • LKR • AED • MVR • NPR • BSD • GHS • MDL • PRB • TMT • TTD • RWF • ISK • KGS • AZN • BDT • BYR • TJS • MUR • MGA • IRR • IQD • VND • UGX • TZS • TEUR • PHP • MKD • TUSD • IRT • SAR • QAR • ILS • METH • BND • MBCH • TGBP • OMR • TCAD • TRON • KWD • BHD • JOD • SCR • CDF • AOA • DASH • XMR • ETH • MXMR • MZEC • ZEC • MDASH • BCH • MLTC • UBTC • GTQ • BYN • XOF • LSL • CRC • EGP • USDT • DZD • NAD • ZMW • BWP • ACE • SZL • KHR • ZMK • UZS • VES • MZN • KPW • ETB • PKR • MOON • HTG • MNT • LAK • HNL • RMB • TRX • MMK • MWK • JMD • COINS • PAB • TMXN • CUP • CUC • XRP • MEOS • EOS • KIDR • MOP • BTT • SLL • GNF • NIO • SVC • LBP • SDG • AWG • NUTS • UETH • BIF • GMD • PK5 • KVND • XCD • IN5 • USDTE • XBTC
+    </div>
+  </td>
+  <td><a href="https://gameart.net/games/" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+</table>
+
+<!-- Maximize Free PT Providers -->
+<h2>
+  <span lang="en">🎯 Maximize Your Free PT Opportunities</span>
+  <span lang="zh">🎯 解锁本月最多可领取的 Free PT 游戏商</span>
+</h2>
+
+<!-- Banner + One Active Language Button -->
+<div class="mm-banner" style="text-align: center; margin-bottom: 16px; position: relative;">
+<div class="mm-banner">
+  <a href="mnm11.html" target="_blank">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/09/Titan-Mix-Match2-2.jpg" alt="mm Promo Banner" style="width: 100%; max-width: 100%; height: auto; border-radius: 12px;" />
+  </a>
+</div>
+  <!-- EN Button (only shown in EN mode) -->
+  <span lang="en" style="display: inline-block;">
+    <a href="mnm11.html" target="_blank">
+      <button class="play-btn" style="padding: 12px 24px; font-size: 16px; border-radius: 8px; background-color: #7bdcb5; color: #000; font-weight: bold; margin-bottom: 12px;">
+        Check Now
+      </button>
+    </a>
+  </span>
+
+  <!-- ZH Button (only shown in ZH mode) -->
+  <span lang="zh" style="display: inline-block;">
+    <a href="mnm11.html" target="_blank">
+      <button class="play-btn" style="padding: 12px 24px; font-size: 16px; border-radius: 8px; background-color: #fcb900; color: #000; font-weight: bold; margin-bottom: 12px;">
+        立即查看
+      </button>
+    </a>
+  </span>
+</div>
+
+<!-- Summary Text -->
+<p style="text-align: center; font-size: 16px; line-height: 1.6; max-width: 800px; margin: 0 auto 24px;">
+  <span lang="en">Want to know how many different Free PT providers you can claim this month? 🎁 Use our quick checker tool to find out your maximum potential in one go!</span>
+  <span lang="zh">想知道本月你最多可以领取多少家 Free PT 游戏商的活动吗？🎁 点击按钮快速查询，一次搞定！</span>
+</p>
+
+
+
+  <!-- ====== API 1+1 EXPLAINER ====== -->
+  <div class="api-intro" style="background:linear-gradient(135deg,#1f2b32 60%,#21382e 100%); border-left:6px solid #90ee90; border-radius:14px; padding:20px 24px 18px; margin:32px auto 16px; max-width:880px; box-shadow:0 3px 18px rgba(0,0,0,.22); font-size:1.03rem; line-height:1.75">
+    <strong style="display:block;margin-bottom:8px;font-size:1.15rem;color:#90ee90"><span lang="en">🔁 What is API 1+1?</span><span lang="zh">🔁 什么是 API 1+1？</span></strong>
+    <div>
+      <span lang="en">API 1+1 means the provider gives two access lines: <b>Normal Line</b> (pay royalty) and <b>Free Line</b> (no royalty). The free line is used for <b>marketing campaigns</b> to let players try games <b>risk‑free</b>.</span>
+      <span lang="zh">API 1+1 意味着供应商提供两条线路：<b>正常线</b>（需分成）与<b>免费线</b>（免分成）。免费线常用于<b>市场活动</b>，让玩家<b>无风险试玩</b>。</span>
+    </div>
+  </div>
+
+  <!-- ====== API 1+1 HOW-TO (Collapsible) ====== -->
+  <div class="api-collapse-wrapper">
+    <div class="collapse-toggle" onclick="toggleCollapse(this)">
+      <h2><span lang="en">📄 How to Apply for 1+1 API Key Promotion</span><span lang="zh">📄 如何申请 1+1 API Key 优惠</span></h2>
+      <span class="toggle-arrow">▼</span>
+    </div>
+    <div class="collapse-content">
+      <div style="font-weight:600; font-size:1.07em; margin-bottom:12px"><span lang="en">1+1 API Key Application Flow</span><span lang="zh">1+1 API Key 申请流程</span></div>
+      <div class="step-cards">
+        <div class="step-box"><div class="step-num" style="background:#84fa98;color:#1b332b">1</div><div><span lang="en">Apply in the <b style="color:#fff176">Telegram promotion group</b></span><br><span lang="zh">商户在 <b style="color:#fff176">Telegram 优惠群组</b> 申请</span></div></div>
+        <div class="step-box"><div class="step-num" style="background:#90ee90;color:#214933">2</div><div><span lang="en">Fulfill <b style="color:#fff176">part of T&amp;C</b></span><br><span lang="zh">先完成 <b style="color:#fff176">部分条款</b></span></div></div>
+        <div class="step-box"><div class="step-num" style="background:#fff176;color:#373922">3</div><div><span lang="en">Fill in the <b style="color:#90ee90">application form</b></span><br><span lang="zh">填写 <b style="color:#90ee90">申请表单</b></span></div></div>
+        <div class="step-box"><div class="step-num" style="background:#6be1f5;color:#052e49">4</div><div><span lang="en">Provider sends API Free Key</span><br><span lang="zh">供应商发放 API 免费密钥</span></div></div>
+        <div class="step-box"><div class="step-num" style="background:#fac174;color:#653a05">5</div><div><span lang="en">Complete remaining T&amp;C</span><br><span lang="zh">完成剩余条款</span></div></div>
+        <div class="step-box"><div class="step-num" style="background:#b4bccc;color:#23262b">6</div><div><span lang="en">Provider reviews setup</span><br><span lang="zh">供应商审核设置</span></div></div>
+        <div class="step-box"><div class="step-num" style="background:#84fa98;color:#084734">7</div><div><span lang="en">Approved → <b style="color:#34ec6b">Go live</b></span><br><span lang="zh">审核通过 → <b style="color:#34ec6b">上线</b></span></div></div>
+      </div>
+      <div style="font-weight:600; font-size:1.07em; color:#fff176; margin:26px 0 10px"><span lang="en">Important Notes</span><span lang="zh">注意事项</span></div>
+      <ul style="padding-left:20px; line-height:1.9">
+        <li><span lang="en">Ensure banners and placements meet required positions.</span><span lang="zh">请确保横幅与展示位符合要求。</span></li>
+        <li><span lang="en">Provide a valid test account with <b style="color:#90ee90">≥ 20 credits</b>.</span><span lang="zh">提供<b style="color:#90ee90">≥ 20 积分</b>测试账号。</span></li>
+        <li><span lang="en">Starts after review and T&amp;C completion.</span><span lang="zh">审核完成后开始。</span></li>
+        <li><span lang="en">Violation may cause <b style="color:#fa7474">disqualification</b>.</span><span lang="zh">违规可能<b style="color:#fa7474">取消资格</b>。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ====== API 1+1 CAMPAIGNS (sample) ====== -->
+  <h2><span lang="en">API 1+1 Campaigns</span><span lang="zh">API 1+1 活动</span></h2>
+  <table class="campaign-table" id="api-11">
+    <thead>
+      <tr>
+        <th><span lang="en">Provider</span><span lang="zh">游戏商</span></th>
+        <th><span lang="en">Duration</span><span lang="zh">周期</span></th>
+        <th><span lang="en">Key T&amp;C Summary</span><span lang="zh">条规</span></th>
+        <th><span lang="en">Supported Currency</span><span lang="zh">支持货币</span></th>
+        <th><span lang="en">Demo Link</span><span lang="zh">试玩链接</span></th>
+      </tr>
+    </thead>
+ 
+<tbody>
+ <!-- ====== RICH GAMING ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/Rich-Gaming.png" alt="Rich Gaming">
+    <span>Rich Gaming</span>
+  </td>
+  <td><span lang="en">Long run</span><span lang="zh">长期</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 3 Placement + Popup Banner + Crossover Banner</span>
+      <span lang="zh">前三 + 弹窗 + 跨界横幅</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          RichGaming – FREE 1+1 (Bonus Key) 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Place RichGaming in Top 2<br>
+          🔹 Create dedicated promotion<br>
+          🔹 Display popup crossover banner (poster provided)<br>
+          🔹 Event account is fee-exempt<br><br>
+          👥 Each agent:<br>
+          🔹 1 Production account<br>
+          🔹 1 Event account<br><br>
+          ⚠️ Violation:<br>
+          ➡ 1st: Reminder<br>
+          ➡ 2nd: 50% fee<br>
+          ➡ 3rd: 100% fee
+        </span>
+        <hr>
+        <span lang="zh">
+          RichGaming – 免费申请 1+1 🎯<br><br>
+          📌 必须执行：<br>
+          🔹 排名前二<br>
+          🔹 设置专属促销<br>
+          🔹 设置弹窗横幅（由 RichGaming 提供）<br>
+          🔹 活动账号免平台费<br><br>
+          👥 每位代理：<br>
+          🔹 1 个正式账号<br>
+          🔹 1 个活动账号<br><br>
+          ⚠️ 违规机制：<br>
+          ➡ 第一次：提醒<br>
+          ➡ 第二次：收取50%费用<br>
+          ➡ 第三次：收取100%费用
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      CNY • THB • MYR • MYR2 • SGD • VNK • IDK • VND • IDR • PHP • MMK • BDT • INR • BRL • AUD • PKR • KHR • USD • BND • MXN • NPR • NGN • KES • TWD • HKD • TRY • RUB • PYG • LAK • CLP • CAD • AED • KRW • KRW2 • JPY • EUR • DKK • COP • UBTC • UETH • TRX • USDT • BYC
+    </div>
+  </td>
+  <td><a href="https://www.richgaming.com/slot-games/" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+<!-- ====== EVO888H5 ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/logo.webp" alt="EVO888H5">
+    <span>EVO888H5</span>
+  </td>
+  <td><span lang="en">Long run</span><span lang="zh">长期</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 3 Placement + Banner</span>
+      <span lang="zh">前三 + 横幅</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          EVO888H5 – Placement Requirement 🎯<br><br>
+          🔹 Place in Top 3<br>
+          🔹 Upload banner<br>
+          🔹 Notify provider in group
+        </span>
+        <hr>
+        <span lang="zh">
+          EVO888H5 – 排名要求 🎯<br><br>
+          🔹 排名前三<br>
+          🔹 活动期间上传横幅<br>
+          🔹 群内通知供应商
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      MYR • SGD • AUD • THB • USD • MMK • HKD • IDR • BDT • INR • CNY
+    </div>
+  </td>
+  <td><a href="https://official.evo888h5.com/products" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+<!-- ====== MEGAH5 ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/imgi_1_b6f07a2c57f76391b2b94.webp" alt="MegaH5">
+    <span>MegaH5</span>
+  </td>
+  <td><span lang="en">Long run</span><span lang="zh">长期</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 2 Placement + Popup Banner</span>
+      <span lang="zh">前二 + 弹窗横幅</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          MegaH5 – 1+1 Promotion 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Rank 1st + 2nd (Free account first)<br>
+          🔹 Setup dedicated promotion<br>
+          🔹 Display popup + new game banner<br>
+          Posters will be provided<br><br>
+          ⚠️ If rules broken:<br>
+          🔸 1st time: Reminder<br>
+          🔸 2nd time: 50% platform fee penalty
+        </span>
+        <hr>
+        <span lang="zh">
+          MegaH5 – 1+1 推广 🎯<br><br>
+          📌 必须执行：<br>
+          🔹 排第 1 和第 2 位（Free账号需在前）<br>
+          🔹 设置专属活动<br>
+          🔹 展示弹窗 + 新游戏横幅（提供海报）<br><br>
+          ⚠️ 若违规：<br>
+          🔸 第一次提醒<br>
+          🔸 第二次收取50%平台费
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      MYR • SGD • USD • THB • HKD • BDT • BDT • RMB • IDR • IDK • INR • MMK • MK1 • MKK • MMK • MMK • PKR • VND • VND • VNK • AUD • KRW • KRK • LAK • LKK • NPR • PHP • TWD • KHR • KHK • CAD • BRL • NGN • BND • EUR • JPY • GBP • SEK • NOK • DKK • AED • CHF • LKR • NZD • RUB • TRY • ZAR • MXN • MNT • FUN • USDT • MBT • CLP • CZK • UZS • UZSK • XOF • AZN • XAF • IRR • ARS • GHS • ZMW • PEN • UGX • AMD • CDF • COP • TJS • TZS • PYG • SLL • SOS • SDG • UYU • TMT • KES • GTQ • PGK • AOA • BOB • CFA • DZD • EGP • ETB • GNF • HNL • IRK • LTC • MAD • TND • GEL • LAK • SAR • OMR • KZT • UAH • PLN • KWD • TWD • HUF • MVR • KGS • AFN • BGN • BHD • BWP • BYN • BZD • CRC • CUP • CYP • LBP • LYD • MDL • MGA • MUR • NAD • DOP • EEK • ILS • IQD • JMD • SKK • SYP • QAR • RON • μETH • mBTC • TRX • FRF • TWD • MYR • HKD • HKD • AUD • PGK
+    </div>
+  </td>
+  <td><a href="https://mgh5.megah5.com/?lang=en" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+<!-- ====== WF GAMING ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/Wf-Gaming.png" alt="WF Gaming">
+    <span>WF Gaming</span>
+  </td>
+  <td><span lang="en">Long run</span><span lang="zh">长期</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 2 Placement + Popup Banner</span>
+      <span lang="zh">前二 + 弹窗横幅</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          WF Gaming – 1+1 (Bonus Key) 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Launch Normal Key + Dual Key<br>
+          🔹 Both logos in Top 3<br>
+          🔹 Free Key must have “Event” label<br>
+          🔹 Upload WF Banner
+        </span>
+        <hr>
+        <span lang="zh">
+          WF Gaming – 1+1 条规 🎯<br><br>
+          📌 必须执行：<br>
+          🔹 同时上架 Normal Key + Dual Key<br>
+          🔹 两个账号 Logo 排前三<br>
+          🔹 Free Key 必须注明 “Event”<br>
+          🔹 上传 WF 横幅
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      MYR • SGD • USD • THB • HKD • BDT • RMB • IDR • IDK • INR • MMK • MK1 • MKK • PKR • VND • VNK • AUD • KRW • KRK • LAK • LKK • NPR • PHP • TWD • KHR • KHK • CAD • BRL • NGN • BND • EUR • JPY • GBP • SEK • NOK • DKK • AED • CHF • LKR • NZD • RUB • TRY • ZAR • MXN • MNT • FUN • USDT • MBT • CLP • CZK • UZS • XOF • AZN • XAF • IRR • ARS • GHS • ZMW • PEN • UGX • AMD • CDF • COP • TJS • TZS • PYG • SLL • SOS • SDG • UYU • TMT
+    </div>
+  </td>
+  <td><a href="https://wg.btech4896.com/game-lobby?v=1747129147&mode=funplay" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+<!-- ====== EPICWIN ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/EpicWin_horizontalLOGO-1-scaled.png" alt="EpicWin">
+    <span>EpicWin</span>
+  </td>
+  <td><span lang="en">Long run</span><span lang="zh">长期</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 3 Placement + Sliding Banner</span>
+      <span lang="zh">前三 + 滑动横幅</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          EpicWin – 1+1 Promotion 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Place in Top 3<br>
+          🔹 Must display:<br>
+          – Popup banner<br>
+          – Sliding banner<br>
+          – Movie banner
+        </span>
+        <hr>
+        <span lang="zh">
+          EpicWin – 1+1 推广 🎯<br><br>
+          📌 必须执行：<br>
+          🔹 游戏排前三<br>
+          🔹 必须展示：<br>
+          – 弹窗横幅<br>
+          – 滑动横幅<br>
+          – 影片横幅
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      AED • AMD • AOA • ARS • AUD • AZN • BDT • BND • BOB • BRL • CAD • CDF • CFA • CHF • CLP • COP • CZK • DKK • DZD • EGP • ETB • EUR • FUN • GBP • GEL • GHS • GNF • GTQ • HKD • HNL • IDK • IDR • INR • IRK • IRR • JPY • KES • KHK • KHR • KRK • KRW • LAK • LKK • LKR • LTC • MAD • MBT • MK1 • MKK • MMK • MMK2 • MMK3 • MNT • MXN • MYR • NGN • NOK • NPR • NZD • PEN • PGK • PHP • PKR • PYG • RMB • RUB • SDG • SEK • SGD • SLL • SOS • THB • TJS • TMT • TND • TRY • TWD • TZS • UGX • USD • USDT • UYU • UZS • VND • VNK • XAF • XOF • ZAR • ZMW • LK2 • SAR • OMR • KZT • UAH • PLN • KWD • TWD1 • HUF
+    </div>
+  </td>
+  <td><a href="https://www.epicwingame.com/epicwin-slots/" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+
+<!-- ====== UU SLOTS ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/UU-Slot.png" alt="UU Slots">
+    <span>UU Slots</span>
+  </td>
+  <td><span lang="en">Long run</span><span lang="zh">长期</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 3 Placement + Popup Banner + Hot Game List</span>
+      <span lang="zh">前三 + 弹窗横幅 + 热门游戏榜</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          UU Slots – Display Requirements 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Place in Top 3 slot positions (≥3 months)<br>
+          🔹 If Hot Game List exists, we provide tailored titles<br>
+          🔹 Must display Free Credit banner (materials provided)
+        </span>
+        <hr>
+        <span lang="zh">
+          UU Slots – 展示要求 🎯<br><br>
+          📌 必须执行：<br>
+          🔹 前三名展示老虎机（建议≥3个月）<br>
+          🔹 若有热门游戏区块，我们可提供推荐<br>
+          🔹 必须展示免费彩金活动横幅
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      AED • AMD • AOA • ARS • AUD • AZN • BDT • BND • BOB • BRL • CAD • CDF • CFA • CHF • CLP • COP • CNY • CZK • DKK • DZD • EGP • ETB • EUR • GBP • GHS • GTQ • HKD • HNL • IDR • INR • IRR • JPY • KES • KHR • KRW • LAK • LKR • LTC • MAD • MBT • MMK • MNT • MXN • MYR • NGN • NOK • NPR • NZD • PGK • PHP • PKR • PYG • RMB • RUB • SDG • SEK • SGD • SLL • SOS • THB • TJS • TMT • TND • TRY • TWD • TZS • UGX • USD • USDT • UYU • UZS • XAF • XOF • ZAR • ZMW
+    </div>
+  </td>
+  <td><a href="https://uulobby.3338launcher.com/game-lobby?v=1747130643&mode=funplay" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+<!-- ====== AFB ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/logo-f658d6b8.png" alt="AFB">
+    <span>AFB</span>
+  </td>
+  <td><span lang="en">Long run</span><span lang="zh">长期</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 2 Placement + Popup Banner</span>
+      <span lang="zh">前二 + 弹窗横幅</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          AFB – 1+1 Bonus Key Promotion 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Rank 1st and 2nd (Free account must be first)<br>
+          🔹 Display dedicated AFB promotion<br>
+          🔹 Upload banner during campaign
+        </span>
+        <hr>
+        <span lang="zh">
+          AFB – 1+1 活动条款 🎯<br><br>
+          📌 必须执行：<br>
+          🔹 游戏排在第1和第2位（Free账号在前）<br>
+          🔹 设置专属AFB促销活动<br>
+          🔹 上传横幅并在活动期间展示
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      AED • ARS • AUD • BDT • BND • BRL • BT4 • BT5 • CAD • CLP • COP • COP2 • DEMO • DZD • EGP • EUR • FRF • GBP • HKD • IDR • IDR2 • INR • IQD • JPY • KHR • KHR2 • KRW • KZT • LAK • LAK2 • LTC • MAD • MMK • MMK2 • MXN • MYR • NGN • NPR • PEN • PGK • PHP • PKR • POINT • RUB • SEK • TEST • THB • TND • TRY • TWD • TWD130 • USD • UZS • VND • VND2 • ZAR
+    </div>
+  </td>
+  <td><a href="https://demo.afbgaming.net/" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+<!-- ====== ADVANT PLAY ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/knkaf-ap.png" alt="AdvantPlay">
+    <span>AdvantPlay</span>
+  </td>
+  <td><span lang="en">Long run</span><span lang="zh">长期</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 5 Placement</span>
+      <span lang="zh">前五</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          AdvantPlay – Placement Requirements 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Rank Top 5<br>
+          🔹 Upload game banner in Top 3 slots<br>
+          🔹 Feature in “Featured Game” section<br>
+          🔹 Arrange demo account with 20 credits
+        </span>
+        <hr>
+        <span lang="zh">
+          AdvantPlay – 排名要求 🎯<br><br>
+          📌 必须执行：<br>
+          🔹 排名前五<br>
+          🔹 横幅上传至前三<br>
+          🔹 精选游戏区块主推<br>
+          🔹 提供20点数的Demo账号
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      IDR • KHR • LAK • MMK • VND • ARS • AUD • BDT • BND • BRL • CHF • CLP • CNY • EUR • GBP • GHS • HKD • INR • JPY • KES • KRW • MXN • MYR • PEN • PHP • PLN • RUB • THB • USD • USDT • AED • CAD • NOK • NPR • NZD • SEK • ZAR • TRY • COP • mBTC • ETH • NGN • PKR • SZL • LSL • MZN • AOA • ZMW • TZS • MWK • NAD • PGK • KZT • AMD • AZN • GEL • UAH • UYU • CZK • UZS • SAR • KWD • UGX • RWF • ISK • HRK • HUF
+    </div>
+  </td>
+  <td><a href="https://advantplay.com/#/products" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+<!-- ====== 888KING H5 ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/888KING-LOGO-HORIZON.png" alt="888KingH5">
+    <span>888KingH5</span>
+  </td>
+  <td><span lang="en">Long run</span><span lang="zh">长期</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 1 Placement + Banner + Promotion</span>
+      <span lang="zh">第1名 + 横幅 + 推广</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          888King – 1+1 Bonus Key Campaign 🎆<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Place Normal Account in 1st with HOT logo<br>
+          🔹 Display official banner<br>
+          🔹 Run promotion with Promotional Account<br>
+          e.g. signup bonus, daily free credit<br><br>
+          ⚠️ Violation:<br>
+          🔸 1st: 3-day grace<br>
+          🔸 2nd: Full PT% charged
+        </span>
+        <hr>
+        <span lang="zh">
+          888King – 1+1 优惠活动通告 🎆<br><br>
+          📌 必须执行：<br>
+          🔹 普通账号排第1并添加HOT logo<br>
+          🔹 网站需展示官方横幅<br>
+          🔹 使用Promotional账号举办指定活动<br>
+          例如新注册奖励、每日彩金<br><br>
+          ⚠️ 违规：<br>
+          🔸 第一次：3天宽限<br>
+          🔸 第二次：收取完整PT%
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+        <span lang="en">Support all currency</span>
+         <span lang="zh">支持所有货币</span>
+    </div>
+  </td>
+  <td><a href="https://www.888king.com/games/" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+<!-- ====== BT GAMING ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/1754463881788.webp" alt="BT Gaming">
+    <span>BT Gaming</span>
+  </td>
+  <td><span lang="en">3 Months</span><span lang="zh">三个月</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 3 Placement + Banner</span>
+      <span lang="zh">前三 + 横幅</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          BT Gaming – 1+1 Bonus Key Promotion 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Place in Top 3 provider positions<br>
+          🔹 Must display Slide Banner or Popup Banner<br>
+          🔹 If Hot Game list exists, include BT Gaming<br><br>
+          📅 Free API bonus key valid for 3 months
+        </span>
+        <hr>
+        <span lang="zh">
+          BT Gaming – 1+1 活动条款 🎯<br><br>
+          📌 必须执行：<br>
+          🔹 排名前三<br>
+          🔹 必须设置 Slide Banner 或弹窗横幅<br>
+          🔹 若有热门游戏分类，需将 BT Gaming 加入其中<br><br>
+          📅 免费账号有效期为三个月
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      CNY • TWD • MYR • KVND • THB • KIDR • JPY • USDT • GC • SGD • PHP • KHR • MMK • UGX • VND • IDR • HKD • AUD • USD • INR • KRW • BRL • BDT • NPR • PKR • TTD • TRY • EGP • NGN • HUGX • ETB • TZS • ZAR • HNL • ARS • CLP • MXN • PEN • BOB • COP • PYG • CAD • EUR • HMMK • IRR • KIRR • KES • KZT • KGS • TJS • TMT • UZS • LAK • BND • UGX2 • TON • NOT • XOF • LKR • PLN • RUB • PGK • MNT
+    </div>
+  </td>
+  <td><a href="https://btgaming.com/games" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+<!-- ====== CREATIVE GAMING ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/Creative-gaming.png" alt="Creative Gaming">
+    <span>Creative Gaming</span>
+  </td>
+  <td><span lang="en">1 Month</span><span lang="zh">一个月</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 5 Placement + Promotion</span>
+      <span lang="zh">前五 + 推广</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          Creative Gaming – 1+1 Bonus Key Promotion 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Place Creative Gaming in Top 5<br>
+          🔹 Must set up a Creative Gaming promotion
+        </span>
+        <hr>
+        <span lang="zh">
+          Creative Gaming – 1+1 活动条款 🎯<br><br>
+          📌 必须执行：<br>
+          🔹 游戏排在前五名<br>
+          🔹 必须设置专属促销活动
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      CNY • JPY • KRW • KHR • MMK • THB • MYR • SGD • PHP • INR • SAR • AED • GBP • EUR • RUB • USD • CAD • MXN • BRL • AUD • NZD • KVND • KIDR • HKD • SEK • NOK • TRY • BIT • TRX • BND • COP • PEN • UAH • KES • MNT • ALL • AMD • ARS • AZN • BAM • BGN • BMD • BYN • CDF • CLP • CZK • GEL • GHS • HRK • ILS • IQD • IRR • ISK • KGS • KWD • KZT • MDL • MKD • NAD • NGN • PYG • RON • TMT • TND • TZS • UGX • UYU • UZS • XAF • XOF • ZMW • DOG • USDT • KMMK • KKRW • BDT • CHF • DKK • HUF • IDR • KKHR • KLAK • LAK • LKR • PLN • TWD • VND • ZAR
+    </div>
+  </td>
+  <td><a href="https://demo.cg11pro.com/index_p.php?lang=en" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+<!-- ====== BNG ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/1754463908411-scaled.webp" alt="BNG">
+    <span>BNG</span>
+  </td>
+  <td><span lang="en">1 Month</span><span lang="zh">一个月</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 5 Placement + Banner (MYR only)</span>
+      <span lang="zh">前五 + 横幅（仅限MYR）</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          BNG – 1+1 Bonus Key Promotion 🎯<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Place in Top 3<br>
+          🔹 Upload BNG banner<br>
+          🔹 Applies only to MYR currency
+        </span>
+        <hr>
+        <span lang="zh">
+          BNG – 1+1 活动条款 🎯<br><br>
+          📌 必须执行：<br>
+          🔹 排在前三名<br>
+          🔹 上传横幅<br>
+          🔹 仅限MYR币别
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      KRW • TWD • MYR • PHP • THB • VND • kVND • IDR • kIDR • INR • CNY • SGD • MMK • JPY • BDT • HKD • KHR • LAK • NPR • MOP • BND • USD • PGK • LKR • SBD • BTN • MNT • PKR • UGX
+    </div>
+  </td>
+  <td><a href="https://servicebooongo.com/lobby/getlobbylink?projects=bngpromo-stage&currency=MYR&username=Tgamingtest&accountmode=test&platform=mobile&lang=en&token=97cef9a020d311f0ba1f42010a940007" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+<!-- ====== JOKER ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/08/imgi_1_117-1178651_joker123-gaming-offer-a-wide-range-of-exciting.webp" alt="Joker">
+    <span>Joker</span>
+  </td>
+  <td><span lang="en">1 Month</span><span lang="zh">一个月</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 5 Placement + Hot Tag + Banner (New Agent only)</span>
+      <span lang="zh">前五 + 热门标签 + 横幅（新代理限定）</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          Joker – MYR 1+1 Free Credit 7+7 Days 🎯<br><br>
+          📅 Campaign Period: Start after approval, lasts 7+7 days<br>
+          📌 What You Need to Do:<br>
+          🔹 MY IP only (MYR currency via Malaysia IP)<br>
+          🔹 Upload all new Joker games<br>
+          🔹 Upload homepage banner<br>
+          🔹 Place Joker Top 5 with Hot Tags<br><br>
+          ⚠️ Notes:<br>
+          • No existing/line-switch accounts<br>
+          • Joker reserves right to amend or cancel anytime
+        </span>
+        <hr>
+        <span lang="zh">
+          Joker – MYR 1+1 免费彩金 7+7 天 🎯<br><br>
+          📅 活动时间：批准后开始，持续7+7天<br>
+          📌 必须执行：<br>
+          🔹 仅限马来西亚IP访问<br>
+          🔹 上架所有新游戏<br>
+          🔹 上传首页横幅<br>
+          🔹 Joker 排名前五并标注 Hot Tags<br><br>
+          ⚠️ 注意事项：<br>
+          • 不接受旧账号或转线账号<br>
+          • Joker 保留随时修改或取消的权利
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      MYR • SGD • HKD • IDR • RP • MMK • THB • USD • CNY • BDT • INR • EUR • KRW • BRL • MXN • JPY • PHP • AUD • PKR • NPR • CLP • NGN • COP • TRY • PEN • LAK
+    </div>
+  </td>
+  <td><a href="#" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+
+<!-- ====== META GAMING ====== -->
+<tr>
+  <td class="logo-cell">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/09/MetaGaming_logo_HORIZON-scaled.webp" alt="Meta Gaming">
+    <span>Meta Gaming</span>
+  </td>
+  <td><span lang="en">Long run</span><span lang="zh">长期</span></td>
+  <td>
+    <div class="text-container">
+      <span lang="en">Top 10 Placement + Banner</span>
+      <span lang="zh">前十 + 横幅</span>
+    </div>
+    <details>
+      <summary><span lang="en">View Details</span><span lang="zh">查看详情</span></summary>
+      <div class="text-container">
+        <span lang="en">
+          Meta Gaming – 1+1 Free Promotion 🎯<br>(Deposit must meet T&C)<br><br>
+          📌 What You Need to Do:<br>
+          🔹 Normal Key & Free Key games in Top 10<br>
+          🔹 Must display New Game Banner
+        </span>
+        <hr>
+        <span lang="zh">
+          Meta Gaming – 1+1 Free 注意事项 🎯<br>（充值需符合条规）<br><br>
+          📌 必须执行：<br>
+          🔹 Normal Key 和 Free Key 排前十<br>
+          🔹 必须展示新游戏横幅
+        </span>
+      </div>
+    </details>
+  </td>
+  <td>
+    <div class="currency-scroll">
+      MYR • SGD • THB • IDR • MMK • VND • LAK • PHP • KHR • BND • HKD • CNY • KRW • TWD • JPY • MNT • BDT • INR • PKR • NPR • LKR • UZS • AZN • TJS • TMT • AMD • AED • IRR
+    </div>
+  </td>
+  <td><a href="https://mg.btech4896.com/" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+</tr>
+</table>
+
+<!-- Maximize 1+1 Providers -->
+<h2>
+  <span lang="en">🎯 Maximize Your 1+1 Opportunities</span>
+  <span lang="zh">🎯 解锁本月最多可领取的 1+1 游戏商</span>
+</h2>
+
+<!-- Banner + One Active Language Button -->
+<div class="mm-banner" style="text-align: center; margin-bottom: 16px; position: relative;">
+<div class="mm-banner">
+  <a href="https://titangroup.tech/tools/mnm11" target="_blank">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/09/Titan-Mix-Match-11.jpg" alt="mm Promo Banner" style="width: 100%; max-width: 100%; height: auto; border-radius: 12px;" />
+  </a>
+</div>
+
+
+
+  <!-- EN Button (only shown in EN mode) -->
+  <span lang="en" style="display: inline-block;">
+    <a href="https://titangroup.tech/tools/mnm11" target="_blank">
+      <button class="play-btn" style="padding: 12px 24px; font-size: 16px; border-radius: 8px; background-color: #7bdcb5; color: #000; font-weight: bold; margin-bottom: 12px;">
+        Check Now
+      </button>
+    </a>
+  </span>
+
+  <!-- ZH Button (only shown in ZH mode) -->
+  <span lang="zh" style="display: inline-block;">
+    <a href="https://titangroup.tech/tools/mnm11" target="_blank">
+      <button class="play-btn" style="padding: 12px 24px; font-size: 16px; border-radius: 8px; background-color: #fcb900; color: #000; font-weight: bold; margin-bottom: 12px;">
+        立即查看
+      </button>
+    </a>
+  </span>
+</div>
+
+<!-- Summary Text -->
+<p style="text-align: center; font-size: 16px; line-height: 1.6; max-width: 800px; margin: 0 auto 24px;">
+  <span lang="en">Want to know how many different 1+1 Bonus Key you can claim this month? 🎁 Use our quick checker tool to find out your maximum potential in one go!</span>
+  <span lang="zh">想知道本月你最多可以领取多少家 1+1 Bonus Key 游戏商的活动吗？🎁 点击按钮快速查询，一次搞定！</span>
+</p>
+
+<!-- Seasonal Campaigns -->
+<h2>
+  <span lang="en">🌸 Seasonal Campaigns</span>
+  <span lang="zh">季节促销</span>
+</h2>
+
+<!-- Banner above table -->
+<div class="seasonal-banner">
+  <a href="https://titangroup.tech/wp-content/uploads/2025/09/Screenshot-2025-09-12-at-2.56.06-PM-scaled.webp" target="_blank">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/09/Screenshot-2025-09-12-at-2.56.06-PM-scaled.webp" alt="Seasonal Promo Banner" style="width: 100%; max-width: 100%; height: auto; border-radius: 12px;" />
+  </a>
+</div>
+
+<table class="campaign-table seasonal-table">
+  <thead>
+    <tr>
+      <th><span lang="en">Provider</span><span lang="zh">游戏商</span></th>
+      <th><span lang="en">Promotion Name</span><span lang="zh">促销名称</span></th>
+      <th><span lang="en">📅 Promo Time</span><span lang="zh">活动时间</span></th>
+      <th><span lang="en">Key T&amp;C Summary</span><span lang="zh">条规</span></th>
+      <th><span lang="en">Demo Link</span><span lang="zh">试玩链接</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="logo-cell">
+        <img src="https://titangroup.tech/wp-content/uploads/2025/08/1754463908411-scaled.webp" alt="BNG Logo" />
+        <span>BNG</span>
+      </td>
+      <td>
+        <span lang="en">BNG $40,000 Tournament</span><br />
+        <span lang="zh">BNG ￥40,000 网络锦标赛</span>
+      </td>
+      <td>
+        <span lang="en">01-Oct-2025 to 08-Oct-2025</span><br />
+        <span lang="zh">2025年10月1日 – 10月8日</span>
+      </td>
+      <td>
+        <span lang="en">All BNG games • $0.01 min bet • $1 = 1 point • Top 400 players share $40,000 prize pool</span><br />
+        <span lang="zh">所有 BNG 游戏 • 最低投注 $0.01 • 每 $1 = 1 分 • 前 400 名玩家平分奖金池</span>
+      </td>
+      <td>
+        <a href="https://servicebooongo.com/lobby/getlobbylink?projects=bngpromo-stage&currency=MYR&username=Tgamingtest&accountmode=test&platform=mobile&lang=en&token=97cef9a020d311f0ba1f42010a940007" target="_blank">
+          <button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button>
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="logo-cell">
+        <img src="https://titangroup.tech/wp-content/uploads/2025/08/download-4.svg" alt="Mancala Gaming Logo" />
+        <span>Mancala Gaming</span>
+      </td>
+      <td>
+        <span lang="en">Money Heist Network Promo</span><br />
+        <span lang="zh">纸钞屋网络活动</span>
+      </td>
+      <td>
+        <span lang="en">10-Oct-2025 to 19-Oct-2025</span><br />
+        <span lang="zh">2025年10月10日 – 10月19日</span>
+      </td>
+      <td>
+        <span lang="en">€40,000 Main Tournament (Top 1,000) + €5,000 Multiplier Challenge (Top 10) + €1 bet = 100 points</span><br />
+        <span lang="zh">€40,000主赛（前1000名）+ €5,000倍数挑战赛（前10名）+ 每€1投注 = 100积分</span>
+      </td>
+      <td>
+        <a href="https://mancalagaming.com/games" target="_blank">
+          <button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button>
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="logo-cell">
+        <img src="https://titangroup.tech/wp-content/uploads/2025/08/voltent_white_and_blue.svg" alt="Voltent Logo" />
+        <span>Voltent</span>
+      </td>
+      <td>
+        <span lang="en">Mystery Booster</span><br />
+        <span lang="zh">神秘加倍促销</span>
+      </td>
+      <td>
+        <span lang="en">24-Oct-2025 to 02-Nov-2025</span><br />
+        <span lang="zh">2025年10月24日 – 11月2日</span>
+      </td>
+      <td>
+        <span lang="en">Mystery Booster – Random Prizes (No Min Bet) + All Halloween Games</span><br />
+        <span lang="zh">神秘奖励（无最低投注）+ 所有万圣节游戏</span>
+      </td>
+      <td>
+        <a href="https://voltent.com/#sectionGames" target="_blank">
+          <button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button>
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="logo-cell">
+        <img src="https://titangroup.tech/wp-content/uploads/2025/08/voltent_white_and_blue.svg" alt="Voltent Logo" />
+        <span>Voltent</span>
+      </td>
+      <td>
+        <span lang="en">VOLT BOOST</span><br />
+        <span lang="zh">电压加倍促销</span>
+      </td>
+      <td>
+        <span lang="en">13-Nov-2025 to 23-Nov-2025</span><br />
+        <span lang="zh">2025年11月13日 – 11月23日</span>
+      </td>
+      <td>
+        <span lang="en">Volt Boost – Random Prizes (No Min Bet) + Mighty Wild Gorilla (New Game)</span><br />
+        <span lang="zh">电压奖励（无最低投注）+ 新游戏《Mighty Wild Gorilla》</span>
+      </td>
+      <td>
+        <a href="https://voltent.com/#sectionGames" target="_blank">
+          <button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button>
+        </a>
+      </td>
+    </tr>
+
+    <tr>
+      <td class="logo-cell">
+        <img src="https://titangroup.tech/wp-content/uploads/2025/08/voltent_white_and_blue.svg" alt="Voltent Logo" />
+        <span>Voltent</span>
+      </td>
+      <td>
+        <span lang="en">Win Booster</span><br />
+        <span lang="zh">胜利加倍促销</span>
+      </td>
+      <td>
+        <span lang="en">28-Nov-2025 to 31-Dec-2025</span><br />
+        <span lang="zh">2025年11月28日 – 12月31日</span>
+      </td>
+      <td>
+        <span lang="en">Win Booster – Random Multiplier Prizes (No Min Bet) + All Games</span><br />
+        <span lang="zh">胜利加倍 – 随机倍数奖励（无最低投注）+ 所有游戏</span>
+      </td>
+      <td>
+        <a href="https://voltent.com/#sectionGames" target="_blank">
+          <button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+
+<!-- GGR Discount Campaigns -->
+<h2>
+  <span lang="en">GGR Discount Campaigns</span>
+  <span lang="zh">GGR 折扣活动</span>
+</h2>
+<table class="campaign-table">
+  <thead>
+    <tr>
+      <th><span lang="en">Provider</span><span lang="zh">游戏商</span></th>
+      <th><span lang="en">Promotion Name</span><span lang="zh">促销名称</span></th>
+      <th><span lang="en">Duration</span><span lang="zh">周期</span></th>
+      <th><span lang="en">Key T&amp;C Summary</span><span lang="zh">条规</span></th>
+      <th><span lang="en">Demo Link</span><span lang="zh">试玩链接</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/clot_logo.webp" alt="ClotPlay" /><span>ClotPlay</span></td>
+      <td><span lang="en">Turnover Discount Up to 50%</span><span lang="zh">最高50%流水折扣</span></td>
+      <td><span lang="en">1 month</span><span lang="zh">1个月</span></td>
+      <td><div class="text-container"><span lang="en">Banner Placement + Promotion</span><span lang="zh">横幅位置 + 优惠</span></div></td>
+      <td><a href="https://clotplay178.com/" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/download-1.svg" alt="Genesis" /><span>Genesis</span></td>
+      <td><span lang="en">70% GGR Discount (6 Months)</span><span lang="zh">70% GGR 折扣（6个月）</span></td>
+      <td><span lang="en">6 months</span><span lang="zh">6个月</span></td>
+      <td><div class="text-container"><span lang="en">Homepage Banner + Top 2 Game Positions</span><span lang="zh">首页横幅 + 排名前2游戏展示位</span></div></td>
+      <td><a href="https://www.genesis-games.com/" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/imgi_1_image-321.webp" alt="Facai" /><span>Facai</span></td>
+      <td><span lang="en">3-Month Royalty Discount</span><span lang="zh">3个月版税折扣</span></td>
+      <td><span lang="en">3 months</span><span lang="zh">3个月</span></td>
+      <td><div class="text-container"><span lang="en">Month 1: Free + Month 2: 50% Off + Month 3: 30% Off</span><span lang="zh">第1月：免费 + 第2月：五折 + 第3月：七折</span></div></td>
+      <td><a href="https://fachaigaming.com/en/games" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/Amigo.svg" alt="Amigo" /><span>Amigo</span></td>
+      <td><span lang="en">50% GGR Discount</span><span lang="zh">50% GGR 折扣</span></td>
+      <td><span lang="en">1 month</span><span lang="zh">1个月</span></td>
+      <td><div class="text-container"><span lang="en">Top 1 Placement Required</span><span lang="zh">需排名第1</span></div></td>
+      <td><a href="https://amigogaming.com/games" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/09/logo-removebg-preview.png" alt="Novomatic" /><span>Novomatic</span></td>
+      <td><span lang="en">3-Month Royalty Discount</span><span lang="zh">3个月版税折扣</span></td>
+      <td><span lang="en">3 months</span><span lang="zh">3个月</span></td>
+      <td><div class="text-container"><span lang="en">Month 1: Free + Month 2: 50% Off + Month 3: 30% Off</span><span lang="zh">第1月：免费 + 第2月：五折 + 第3月：七折</span></div></td>
+      <td><a href="https://www.novomatic.com/en/products/gaming/games/slot-games" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/63f4c9689497e0d7c32f4a31_BGaming_logo.svg" alt="B Gaming" /><span>B Gaming</span></td>
+      <td><span lang="en">3-Month Royalty Discount</span><span lang="zh">3个月版税折扣</span></td>
+      <td><span lang="en">3 months</span><span lang="zh">3个月</span></td>
+      <td><div class="text-container"><span lang="en">Month 1: Free + Month 2: 50% Off + Month 3: 30% Off</span><span lang="zh">第1月：免费 + 第2月：五折 + 第3月：七折</span></div></td>
+      <td><a href="https://demo.bgaming-network.com/games/LokiLoot/FUN?play_token=78cc3d20-fdca-4b9a-8648-6aab07917f43" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/voltent_white_and_blue.svg" alt="Voltent" /><span>Voltent</span></td>
+      <td><span lang="en">up to 70% GGR Discount</span><span lang="zh">最高70% GGR 折扣</span></td>
+      <td><span lang="en">3 months</span><span lang="zh">3个月</span></td>
+      <td><div class="text-container"><span lang="en">2 Games place at lobby + Placement</span><span lang="zh">大厅展示2个游戏位 + 客制位置</span></div></td>
+      <td><a href="https://voltent.com/#sectionGames" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://static.slotegrator.pro/uploads/BIGPOT_gaming_90026a5708.svg" alt="Bigpot Gaming" /><span>Bigpot Gaming</span></td>
+      <td><span lang="en">50% GGR Discount</span><span lang="zh">50% GGR 折扣</span></td>
+      <td><span lang="en">1 month</span><span lang="zh">1个月</span></td>
+      <td><div class="text-container"><span lang="en">Bigpot Next to Slot Game Icon + Top Row + List as Newest</span><span lang="zh">Bigpot紧挨老虎机图标 + 顶部行 + 列为最新</span></div></td>
+      <td><a href="https://www.bigpotgaming.com/" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/logo-endorphina.svg" alt="Endorphina" /><span>Endorphina</span></td>
+      <td><span lang="en">50% GGR Discount Selected Games</span><span lang="zh">50% GGR 折扣（指定游戏）</span></td>
+      <td><span lang="en">1 month</span><span lang="zh">1个月</span></td>
+      <td><div class="text-container"><span lang="en">Top 3 Placement for Selected Games</span><span lang="zh">指定游戏排名前3</span></div></td>
+      <td><a href="https://esasia.games/games" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/imgi_1_microgaming-22011102164191044265737.webp" alt="Microgaming" /><span>Microgaming</span></td>
+      <td><span lang="en">50% GGR Discount Selected Games</span><span lang="zh">50% GGR 折扣（指定游戏）</span></td>
+      <td><span lang="en">1 month</span><span lang="zh">1个月</span></td>
+      <td><div class="text-container"><span lang="en">Top 3 Placement for Selected Games + Free Spin</span><span lang="zh">指定游戏排名前3 + 免费旋转</span></div></td>
+      <td><a href="https://www.mgasia.com/#/en-US/games/Microgaming/All%20Games" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/knkaf-ap.png" alt="Advant Play" /><span>Advant Play</span></td>
+      <td><span lang="en">Up to 30% GGR Discount + 50% GGR Discount Selected Games</span><span lang="zh">最高30% GGR 折扣 + 50% GGR 折扣（指定游戏）</span></td>
+      <td><span lang="en">1,2,3 months</span><span lang="zh">1、2、3个月</span></td>
+      <td><div class="text-container"><span lang="en">Top 2 Placement</span><span lang="zh">排名前2</span></div></td>
+      <td><a href="https://advantplay.com/#/products" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/imgi_1_KA_Gaming_Logo.webp" alt="KA Gaming" /><span>KA Gaming</span></td>
+      <td><span lang="en">Up to 60% GGR Discount</span><span lang="zh">最高60% GGR 折扣</span></td>
+      <td><span lang="en">1 month</span><span lang="zh">1个月</span></td>
+      <td><div class="text-container"><span lang="en">Top 1 Placement</span><span lang="zh">排名第1</span></div></td>
+      <td><a href="https://www.kaga88.com/#our-games-id" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/download-4.svg" alt="Mancala Gaming" /><span>Mancala Gaming</span></td>
+      <td><span lang="en">15% GGR Discount</span><span lang="zh">15% GGR 折扣</span></td>
+      <td><span lang="en">Long run</span><span lang="zh">长期</span></td>
+      <td><div class="text-container"><span lang="en">Top positions + Banner + Hot Game</span><span lang="zh">顶级位置 + 横幅 + 热门游戏</span></div></td>
+      <td><a href="https://mancalagaming.com/games" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+   
+  </tbody>
+</table>
+
+<!-- Promotion Tools -->
+<h2>
+  <span lang="en">Promotion Tools</span>
+  <span lang="zh">优惠工具</span>
+</h2>
+<table class="campaign-table">
+  <thead>
+    <tr>
+      <th><span lang="en">Provider</span><span lang="zh">游戏商</span></th>
+      <th><span lang="en">Promotion Tools</span><span lang="zh">优惠工具</span></th>
+      <th><span lang="en">Demo Link</span><span lang="zh">试玩链接</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="logo-cell"><img src="https://framerusercontent.com/images/Es3ZfCDSUlSF55zvyMiwmRnknM.png?scale-down-to=512" alt="Aviatrix" /><span>Aviatrix</span></td>
+      <td><span lang="en">Promo Code + Free Bets</span><span lang="zh">优惠码 + 免费投注</span></td>
+      <td><a href="https://game.aviatrix.bet/?cid=demolanding" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/imgi_1_logo_jili_us-en.webp" alt="Jili" /><span>Jili</span></td>
+      <td><span lang="en">Free Spin</span><span lang="zh">免费旋转</span></td>
+      <td><a href="https://jiligames.com/games" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/download-4.svg" alt="Mancala Gaming" /><span>Mancala Gaming</span></td>
+      <td><span lang="en">Leaderboard Tournament</span><span lang="zh">排行榜锦标赛</span></td>
+      <td><a href="https://mancalagaming.com/games" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/Turbo-Games.png" alt="Turbo Games" /><span>Turbo Games</span></td>
+      <td><span lang="en">Leaderboard Tournament</span><span lang="zh">排行榜锦标赛</span></td>
+      <td><a href="https://turbogames.io/games" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/logo-aviator.svg" alt="Aviator" /><span>Aviator</span></td>
+      <td><span lang="en">Rain Campaign</span><span lang="zh">红包雨活动</span></td>
+      <td><a href="https://aviator-demo.spribegaming.com/?currency=USD&operator=demo&jurisdiction=CW&lang=EN&return_url=https%3A%2F%2Fspribe.co%2Fgames&user=39785&token=NzPeayEWkL7vPs8MaeUoQg0O8Z4P8MpH" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/1754463881788.webp" alt="BT Gaming" /><span>BT Gaming</span></td>
+      <td><span lang="en">Bonus Challenge Campaign</span><span lang="zh">奖励挑战活动</span></td>
+      <td><a href="https://btgaming.com/games" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/imgi_1_funkyLogo.sKcuhn1X.webp" alt="Funky Games" /><span>Funky Games</span></td>
+      <td><span lang="en">Leaderboard Tournament + Drops &amp; Wins</span><span lang="zh">排行榜锦标赛 + 奖励掉落</span></td>
+      <td><a href="https://funkygames.io/gamelist/popular" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/download-1.svg" alt="Genesis" /><span>Genesis</span></td>
+      <td><span lang="en">Prize Draw Campaign</span><span lang="zh">抽奖活动</span></td>
+      <td><a href="https://www.genesis-games.com/" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/imgi_1_habanero_white-scaled.webp" alt="Habanero" /><span>Habanero</span></td>
+      <td><span lang="en">Jackpot + Leaderboard Tournament + Free Spin Coupon Promotions</span><span lang="zh">奖池 + 排行榜锦标赛 + 免费旋转优惠券</span></td>
+      <td><a href="https://habanerosystems.com/games" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://www.jdbgaming.com/assets/logo-white-0a68c06a.svg" alt="JDB" /><span>JDB</span></td>
+      <td><span lang="en">Leaderboard Tournament</span><span lang="zh">排行榜锦标赛</span></td>
+      <td><a href="https://www.jdbgaming.com/en/games/list" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/imgi_1_117-1178651_joker123-gaming-offer-a-wide-range-of-exciting.webp" alt="Joker" /><span>Joker</span></td>
+      <td><span lang="en">Leaderboard Tournament + Red Packet Promotion</span><span lang="zh">排行榜锦标赛 + 红包优惠</span></td>
+      <td><!-- No link provided --></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/imgi_1_KA_Gaming_Logo.webp" alt="KA Gaming" /><span>KA Gaming</span></td>
+      <td><span lang="en">Free Spin</span><span lang="zh">免费旋转</span></td>
+      <td><a href="https://www.kaga88.com/#our-games-id" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/imgi_1_live22-logo.webp" alt="Live22" /><span>Live22</span></td>
+      <td><span lang="en">Free Spins</span><span lang="zh">免费旋转</span></td>
+      <td><a href="https://live22.com/game-slots/" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/download-3.svg" alt="NextSpin" /><span>NextSpin</span></td>
+      <td><span lang="en">Leaderboard Tournament</span><span lang="zh">排行榜锦标赛</span></td>
+      <td><a href="https://nextspin.com/game?language=en_US" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/09/PEGASUS-Horizontal-Logo-PNG-scaled.png" alt="Pegasus" /><span>Pegasus</span></td>
+      <td><span lang="en">Red Packet Promotion</span><span lang="zh">红包优惠</span></td>
+      <td><a href="https://demo.pegasus11.com/" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/Playstar.png" alt="PlayStar" /><span>PlayStar</span></td>
+      <td><span lang="en">Free Spin + Red Packet Promotion</span><span lang="zh">免费旋转 + 红包优惠</span></td>
+      <td><a href="https://www.playstar.net/" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/Rich88.png" alt="Rich88" /><span>Rich88</span></td>
+      <td><span lang="en">Free Spin + Leaderboard Tournament + Spinning Wheel</span><span lang="zh">免费旋转 + 排行榜锦标赛 + 幸运转盘</span></td>
+      <td><a href="https://demo.r88games.com/" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/Spade-gaming.svg" alt="Spadegaming" /><span>Spadegaming</span></td>
+      <td><span lang="en">Fortune Wheel + Red Packet Promotion + Free Spin + God of Wealth + Leaderboard Tournament + Leaderboard Tournament (Fishing Tournament) + Royal Rewards</span><span lang="zh">幸运轮盘 + 红包优惠 + 免费旋转 + 财神活动 + 排行榜锦标赛 + 捕鱼赛排行榜 + 皇家奖励</span></td>
+      <td><a href="https://www.spadegaming.com/games" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/UU-Slot.png" alt="UU Slots" /><span>UU Slots</span></td>
+      <td><span lang="en">Free Rounds + Leaderboard Tournament</span><span lang="zh">免费游戏 + 排行榜锦标赛</span></td>
+      <td><a href="https://uulobby.3338launcher.com/game-lobby?v=1747130643&mode=funplay" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/Wf-Gaming.png" alt="WF gaming" /><span>WF gaming</span></td>
+      <td><span lang="en">Free Rounds + Leaderboard Tournament</span><span lang="zh">免费游戏 + 排行榜锦标赛</span></td>
+      <td><a href="https://wg.btech4896.com/game-lobby?v=1747129147&mode=funplay" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/Yellow-Bat.webp" alt="Yellow Bat" /><span>Yellow Bat</span></td>
+      <td><span lang="en">Leaderboard Tournament + Spinning Wheel</span><span lang="zh">排行榜锦标赛 + 幸运转盘</span></td>
+      <td><a href="https://gh.yellowbat.com/demo" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/voltent_white_and_blue.svg" alt="Wazdan" /><span>Voltent</span></td>
+      <td><span lang="en">Cash Drop + Prize Drop + Mystery Drop + Network Promo</span><span lang="zh">现金掉落 + 奖品掉落 + 神秘掉落 + 联网优惠</span></td>
+      <td><a href="https://voltent.com/#sectionGames" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/EpicWin_horizontalLOGO-1-scaled.png" alt="Epic Win" /><span>Epic Win</span></td>
+      <td><span lang="en">Free Game</span><span lang="zh">免费游戏</span></td>
+      <td><a href="https://www.epicwingame.com/epicwin-slots/" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/Hotdog.png" alt="Hot Dog Gaming" /><span>Hot Dog Gaming</span></td>
+      <td><span lang="en">Free Spin</span><span lang="zh">免费旋转</span></td>
+      <td><a href="https://hotdog-gaming.com/games.html" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+    <tr>
+      <td class="logo-cell"><img src="https://titangroup.tech/wp-content/uploads/2025/08/logo-endorphina.svg" alt="Endorphina" /><span>Endorphina</span></td>
+      <td><span lang="en">Free Spins + Bonus Money</span><span lang="zh">免费旋转 + 红利</span></td>
+      <td><a href="https://esasia.games/games" target="_blank"><button class="play-btn"><span lang="en">Play Now</span><span lang="zh">立即试玩</span></button></a></td>
+    </tr>
+  </tbody>
+</table>
+
+
+  <!-- ====== OPTIONAL FLOATING PROVIDER POPUP (kept) ====== -->
+  <div class="provider-popup-fancy" aria-hidden="true" id="providerPopup" style="display:none">
+    <div class="provider-card">
+      <img src="https://titangroup.tech/wp-content/uploads/2025/08/lobby-logo-2.png" alt="Apollo">
+      <div class="rank-badge"><span lang="en">Top 1–3</span><span lang="zh">前1–3</span></div>
+    </div>
+    <div class="provider-card">
+      <img src="https://titangroup.tech/wp-content/uploads/2025/08/EpicWin_horizontalLOGO-1-scaled.png" alt="EpicWin">
+      <div class="rank-badge"><span lang="en">Top 1–3</span><span lang="zh">前1–3</span></div>
+    </div>
+  </div>
+
+  <style>
+  .floating-icon {
+    position: fixed; width: 58px; height: 58px; border-radius: 50%;
+    background:#1f2922; border:2px solid #fff176;
+    box-shadow:0 0 10px rgba(255,241,118,.4);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; z-index:1000; transition:.3s;
+  }
+  .floating-icon:hover { transform:scale(1.1); }
+  .floating-icon img { width:34px; height:34px; pointer-events:none; }
+  .floating-icon.game { bottom:110px; right:24px; }
+  .floating-icon.providers { bottom:34px; right:24px; }
+
+  .floating-label { position:fixed; background:#1f2922; color:#fff176;
+    padding:6px 12px; border-radius:6px; font-size:.85rem;
+    box-shadow:0 2px 10px rgba(0,0,0,.3); z-index:999;
+  }
+  .floating-label.game { bottom:126px; right:90px; }
+  .floating-label.providers { bottom:50px; right:90px; }
+
+  /* Popup */
+  #provider-popup {
+    position:fixed; bottom:110px; right:100px; background:#1f2922;
+    padding:14px; border-radius:10px; border:2px solid #fff176;
+    box-shadow:0 6px 20px rgba(0,0,0,.4);
+    display:none; z-index:1001;
+  }
+  .provider-card { text-align:center; margin-bottom:10px; }
+  .provider-card img { width:64px; height:64px; }
+  .rank-badge { background:#fff176; color:#111; font-weight:bold; border-radius:20px; padding:4px 10px; font-size:.85rem; }
+  .rank-badge span[lang="zh"]{display:none;}
+  body.zh .rank-badge span[lang="en"]{display:none;}
+  body.zh .rank-badge span[lang="zh"]{display:inline;}
+
+  /* Iframe modal */
+  #iframe-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);
+    display:none;align-items:center;justify-content:center;z-index:1002;}
+  #iframe-modal iframe{width:90vw;height:90vh;border:0;border-radius:12px;}
+  #iframe-close{position:fixed;top:24px;right:24px;background:#fff176;
+    padding:6px 12px;border-radius:6px;cursor:pointer;z-index:1003;}
+</style>
+</head>
+<body>
+  <!-- Best Game -->
+  <div class="floating-icon rgb-glow game" onclick="openIframe('https://www.vplus.games/#/game')">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/09/VPlus-Logo-White-FA.svg" alt="Best Game">
+  </div>
+  <div class="floating-label game">
+    <span lang="en">Best Game of the Month</span>
+    <span lang="zh">本月最佳游戏</span>
+  </div>
+
+  <!-- Providers -->
+  <div class="floating-icon providers" onclick="togglePopup()">
+    <img src="https://titangroup.tech/wp-content/uploads/2025/09/Copper-Crown-Shaped-Pendant.I02.2k.png" alt="Top Providers">
+  </div>
+  <div class="floating-label providers">
+    <span lang="en">Top 3 Providers of the Month</span>
+    <span lang="zh">本月前三游戏商</span>
+  </div>
+
+  <!-- Popup -->
+  <div id="provider-popup">
+    <div class="provider-card">
+      <img src="https://titangroup.tech/wp-content/uploads/2025/08/vpower.png" alt="V-Power">
+      <div class="rank-badge"><span lang="en">TOP 1</span><span lang="zh">第1名</span></div>
+    </div>
+    <div class="provider-card">
+      <img src="https://titangroup.tech/wp-content/uploads/2025/08/Amigo.svg" alt="Amigo">
+      <div class="rank-badge"><span lang="en">TOP 2</span><span lang="zh">第2名</span></div>
+    </div>
+    <div class="provider-card">
+      <img src="https://titangroup.tech/wp-content/uploads/2025/08/logo-endorphina.svg" alt="Endorphina">
+      <div class="rank-badge"><span lang="en">TOP 3</span><span lang="zh">第3名</span></div>
+    </div>
+  </div>
+
+  <!-- Iframe Modal -->
+  <div id="iframe-modal">
+    <iframe id="demo-iframe"></iframe>
+    <div id="iframe-close" onclick="closeIframe()">Close</div>
+  </div>
+
+
+<script>
+  // Language toggle functionality
+  const enBtn = document.getElementById('enBtn');
+  const zhBtn = document.getElementById('zhBtn');
+  const body = document.body;
+
+  enBtn.addEventListener('click', () => {
+    body.classList.remove('zh');
+    enBtn.classList.add('active');
+    zhBtn.classList.remove('active');
+  });
+
+  zhBtn.addEventListener('click', () => {
+    body.classList.add('zh');
+    zhBtn.classList.add('active');
+    enBtn.classList.remove('active');
+  });
+
+  // Collapsible Free PT / GGR Discount section
+  function toggleFreePT(element) {
+    const content = element.nextElementSibling; // This gets the .freept-content div
+    const arrow = element.querySelector('.freept-arrow');
+
+    if (content.classList.contains('open')) {
+      content.classList.remove('open');
+      arrow.style.transform = 'rotate(0deg)';
+    } else {
+      content.classList.add('open');
+      arrow.style.transform = 'rotate(180deg)';
+    }
+  }
+
+  // Collapsible API 1+1 section
+  function toggleCollapse(element) {
+    const content = element.nextElementSibling; // This gets the .collapse-content div
+    const arrow = element.querySelector('.toggle-arrow');
+
+    if (content.classList.contains('open')) {
+      content.classList.remove('open');
+      arrow.style.transform = 'rotate(0deg)';
+    } else {
+      content.classList.add('open');
+      arrow.style.transform = 'rotate(180deg)';
+    }
+  }
+
+  // Floating popup toggle
+  function togglePopup(){
+    const p=document.getElementById('provider-popup');
+    p.style.display=p.style.display==='block'?'none':'block';
+  }
+
+  // Iframe modal functions
+  function openIframe(url){
+    document.getElementById('demo-iframe').src=url;
+    document.getElementById('iframe-modal').style.display='flex';
+  }
+
+  function closeIframe(){
+    document.getElementById('demo-iframe').src='';
+    document.getElementById('iframe-modal').style.display='none';
+  }
+</script>
+
+
+<!-- EDEN_BRAND_EMOJI_PATCH -->
+<style>
+  :root{
+    --eden-mint:#7bdcb5;
+    --eden-amber:#ffa340ed;
+    --eden-stone-50:#fafaf9;
+    --eden-stone-100:#f5f5f4;
+    --eden-stone-200:#e7e5e4;
+    --eden-stone-600:#57534e;
+    --eden-stone-900:#1c1917;
+  }
+  html,body{background:var(--eden-stone-50)!important;color:var(--eden-stone-900)!important;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif!important;}
+  h2{color:var(--eden-stone-900)!important;font-weight:800!important;}
+  .lang-btn{background:#fff!important;color:var(--eden-stone-900)!important;border:1px solid var(--eden-stone-200)!important;box-shadow:none!important;}
+  .lang-btn:hover,.lang-btn.active{background:var(--eden-mint)!important;color:var(--eden-stone-900)!important;}
+
+  .campaign-table{background:#fff!important;border:1px solid var(--eden-stone-200)!important;box-shadow:0 8px 24px rgba(28,25,23,.06)!important;}
+  .campaign-table th{background:var(--eden-stone-100)!important;color:var(--eden-stone-900)!important;border-bottom:1px solid var(--eden-stone-200)!important;}
+  .campaign-table tr:nth-child(even) td,.campaign-table tr:nth-child(odd) td{background:#fff!important;color:var(--eden-stone-900)!important;border-top:1px solid var(--eden-stone-100)!important;}
+  .text-container, .campaign-table td, .campaign-table span{color:var(--eden-stone-600)!important;}
+
+  .freept-collapse-wrapper,.api-collapse-wrapper,.intro,.titan-annc,.api-intro{
+    background:#fff!important;
+    border:1px solid var(--eden-stone-200)!important;
+    border-left:6px solid var(--eden-mint)!important;
+    box-shadow:0 8px 24px rgba(28,25,23,.06)!important;
+  }
+  .freept-toggle,.collapse-toggle{background:var(--eden-stone-100)!important;}
+
+  .play-btn{background:var(--eden-mint)!important;color:var(--eden-stone-900)!important;border:1px solid #6fcaa4!important;box-shadow:none!important;}
+  .play-btn:hover:not(:disabled){background:var(--eden-amber)!important;}
+
+  .floating-icon{background:#fff!important;border:1px solid var(--eden-stone-200)!important;box-shadow:0 6px 18px rgba(28,25,23,.08)!important;}
+  .floating-icon.rgb-glow{animation:none!important;border:2px solid var(--eden-mint)!important;}
+  .floating-label{background:#fff!important;color:var(--eden-stone-900)!important;border:1px solid var(--eden-stone-200)!important;}
+  #provider-popup{background:#fff!important;border:1px solid var(--eden-stone-200)!important;}
+  .provider-card{background:var(--eden-stone-100)!important;box-shadow:none!important;border:1px solid var(--eden-stone-200)!important;}
+  .rank-badge{background:var(--eden-amber)!important;color:var(--eden-stone-900)!important;box-shadow:none!important;}
+
+  .logo-cell img,.provider-card img{display:none!important;}
+  .logo-cell span{color:var(--eden-stone-900)!important;}
+  .logo-emoji-badge{
+    display:inline-grid;place-items:center;
+    width:44px;height:44px;border-radius:12px;
+    border:1px solid var(--eden-stone-200);
+    background:var(--eden-stone-100);
+    font-size:26px;line-height:1;
+    margin:0 auto 6px;
+  }
+</style>
+<script>
+(function(){
+  const EMOJIS=['🎰','⚽','🚀','🔥','💎','🎯','🧩','🏆','🪙','✨','🎮','🛡️','🕹️','🎲','📈','🧠'];
+  function emojiFor(name){
+    const n=(name||'Provider').trim();
+    let h=0;
+    for(let i=0;i<n.length;i++) h=(h+n.charCodeAt(i)*(i+7))%5003;
+    return EMOJIS[h%EMOJIS.length];
+  }
+  function inject(){
+    document.querySelectorAll('.logo-cell').forEach(cell=>{
+      const nameEl=cell.querySelector('span');
+      const name=nameEl?nameEl.textContent:'Provider';
+      if(!cell.querySelector('.logo-emoji-badge')){
+        const b=document.createElement('span');
+        b.className='logo-emoji-badge';
+        b.setAttribute('aria-hidden','true');
+        b.textContent=emojiFor(name);
+        cell.insertBefore(b,nameEl||cell.firstChild);
+      }
+    });
+    document.querySelectorAll('.provider-card').forEach(card=>{
+      const img=card.querySelector('img');
+      const name=(img&&img.getAttribute('alt'))||card.textContent||'Provider';
+      if(!card.querySelector('.logo-emoji-badge')){
+        const b=document.createElement('span');
+        b.className='logo-emoji-badge';
+        b.style.margin='0 auto 8px';
+        b.textContent=emojiFor(name);
+        card.insertBefore(b,card.firstChild);
+      }
+    });
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',inject);
+  else inject();
+})();
+</script>
+
+
+<!-- EDEN_BRAND_EMOJI_REFINEMENT -->
+<style>
+  .logo-cell{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:6px!important;}
+  .logo-cell .logo-emoji-badge{margin:0 auto 6px!important;}
+
+  /* Neutralize legacy yellow/green headline accents to brand-stone */
+  strong[style*="#fff176"], strong[style*="#90ee90"],
+  b[style*="#fff176"], b[style*="#90ee90"],
+  .campaign-table td:nth-child(3) strong, .campaign-table td:nth-child(3) b,
+  details summary, .campaign-table td::before {
+    color: var(--eden-stone-900)!important;
+  }
+
+  .freept-arrow, .toggle-arrow { color: var(--eden-stone-600)!important; }
+  .currency-scroll::-webkit-scrollbar-thumb { background: var(--eden-mint)!important; }
+</style>
+<script>
+(function(){
+  // If old MM promo wrappers remain, keep layout clean without empty media block spacing
+  document.querySelectorAll('.seasonal-banner video').forEach(v => v.remove());
+})();
+</script>
+
+
+<!-- EDEN_PROMO_FINAL_PATCH -->
+<style>
+  :root{
+    --eden-mint:#7bdcb5;
+    --eden-amber:#ffa340ed;
+    --eden-stone-50:#fafaf9;
+    --eden-stone-100:#f5f5f4;
+    --eden-stone-200:#e7e5e4;
+    --eden-stone-600:#57534e;
+    --eden-stone-900:#1c1917;
+  }
+
+  html,body{background:var(--eden-stone-50)!important;color:var(--eden-stone-900)!important;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif!important;}
+
+  /* Brand-guide palette reset */
+  h2,
+  .campaign-table th,
+  .campaign-table td::before,
+  details summary,
+  .freept-toggle h2,
+  .collapse-toggle h2,
+  .intro strong,
+  .api-intro strong,
+  .titan-annc strong,
+  .campaign-table td:nth-child(3) strong,
+  .campaign-table td:nth-child(3) b,
+  .campaign-table td:nth-child(3) .text-container,
+  .campaign-table td:nth-child(4),
+  .campaign-table td:nth-child(4) .text-container{
+    color:var(--eden-stone-900)!important;
+  }
+
+  .campaign-table,
+  .freept-collapse-wrapper,
+  .api-collapse-wrapper,
+  .intro,
+  .titan-annc,
+  .api-intro{
+    background:#fff!important;
+    border:1px solid var(--eden-stone-200)!important;
+    box-shadow:0 8px 24px rgba(28,25,23,.06)!important;
+  }
+
+  .freept-collapse-wrapper,
+  .api-collapse-wrapper,
+  .intro,
+  .titan-annc,
+  .api-intro{
+    border-left:6px solid var(--eden-mint)!important;
+  }
+
+  .freept-toggle,.collapse-toggle{background:var(--eden-stone-100)!important;}
+  .freept-arrow,.toggle-arrow{color:var(--eden-stone-600)!important;}
+
+  .campaign-table tr:nth-child(even) td,
+  .campaign-table tr:nth-child(odd) td{background:#fff!important;color:var(--eden-stone-600)!important;border-top:1px solid var(--eden-stone-100)!important;}
+
+  .play-btn,
+  .lang-btn{background:#fff!important;color:var(--eden-stone-900)!important;border:1px solid var(--eden-stone-200)!important;box-shadow:none!important;}
+  .play-btn:hover:not(:disabled),
+  .lang-btn:hover,
+  .lang-btn.active{background:var(--eden-mint)!important;color:var(--eden-stone-900)!important;border-color:#6fcaa4!important;}
+
+  /* Emoji provider badge centering + one spacer line above */
+  .logo-cell{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:6px!important;}
+  .logo-emoji-badge{
+    display:inline-grid!important;
+    place-items:center!important;
+    width:44px;height:44px;
+    margin:8px auto 6px!important; /* one line space above */
+    border-radius:12px;
+    border:1px solid var(--eden-stone-200);
+    background:var(--eden-stone-100);
+    font-size:26px;line-height:1;
+  }
+
+  /* Floating widgets follow brand */
+  .floating-icon,
+  .floating-label,
+  #provider-popup,
+  .provider-card{
+    background:#fff!important;
+    color:var(--eden-stone-900)!important;
+    border:1px solid var(--eden-stone-200)!important;
+    box-shadow:0 8px 20px rgba(28,25,23,.08)!important;
+  }
+  .floating-icon.rgb-glow{animation:none!important;border-color:var(--eden-mint)!important;}
+  .rank-badge{background:var(--eden-amber)!important;color:var(--eden-stone-900)!important;}
+
+  .currency-scroll::-webkit-scrollbar-thumb{background:var(--eden-mint)!important;}
+
+  /* Remove dark + colorful flow cards in Free PT / API apply sections */
+  .freept-collapse-wrapper .pt-step-card,
+  .api-collapse-wrapper .step-box{
+    background:var(--eden-stone-50)!important;
+    border:1px solid var(--eden-stone-200)!important;
+    box-shadow:none!important;
+  }
+  .freept-collapse-wrapper .pt-step-num,
+  .api-collapse-wrapper .step-num,
+  .freept-collapse-wrapper .pt-step-card .pt-step-num[style],
+  .api-collapse-wrapper .step-box .step-num[style]{
+    background:var(--eden-stone-100)!important;
+    color:var(--eden-stone-900)!important;
+  }
+  .freept-collapse-wrapper [style*="color:#fff176"],
+  .freept-collapse-wrapper [style*="color:#90ee90"],
+  .freept-collapse-wrapper [style*="color:#34ec6b"],
+  .api-collapse-wrapper [style*="color:#fff176"],
+  .api-collapse-wrapper [style*="color:#90ee90"],
+  .api-collapse-wrapper [style*="color:#34ec6b"]{
+    color:var(--eden-stone-900)!important;
+  }
+</style>
+<script>
+(function(){
+  const EMOJIS=['🎰','⚽','🚀','🔥','💎','🎯','🧩','🏆','🪙','✨','🎮','🛡️','🕹️','🎲','📈','🧠'];
+  function emojiFor(name){
+    const n=(name||'Provider').trim();
+    let h=0;
+    for(let i=0;i<n.length;i++) h=(h+n.charCodeAt(i)*(i+7))%5003;
+    return EMOJIS[h%EMOJIS.length];
+  }
+
+  function ensureProviderEmoji(){
+    document.querySelectorAll('.logo-cell').forEach(cell=>{
+      const nameEl=cell.querySelector('span');
+      const name=nameEl?nameEl.textContent:'Provider';
+      const img=cell.querySelector('img');
+      if(img) img.style.display='none';
+      if(!cell.querySelector('.logo-emoji-badge')){
+        const b=document.createElement('span');
+        b.className='logo-emoji-badge';
+        b.setAttribute('aria-hidden','true');
+        b.textContent=emojiFor(name);
+        cell.insertBefore(b,nameEl||cell.firstChild);
+      }
+    });
+
+    document.querySelectorAll('.provider-card').forEach(card=>{
+      const img=card.querySelector('img');
+      const name=(img&&img.getAttribute('alt'))||card.textContent||'Provider';
+      if(img) img.style.display='none';
+      if(!card.querySelector('.logo-emoji-badge')){
+        const b=document.createElement('span');
+        b.className='logo-emoji-badge';
+        b.style.margin='8px auto 8px';
+        b.textContent=emojiFor(name);
+        card.insertBefore(b,card.firstChild);
+      }
+    });
+  }
+
+  function removeMmPromoBannerSection(){
+    // Remove old video blocks if any
+    document.querySelectorAll('.seasonal-banner video').forEach(v=>v.remove());
+
+    // Remove the MM promo heading + banner + explanatory paragraph block
+    const h2s=[...document.querySelectorAll('h2')];
+    h2s.forEach(h=>{
+      const t=(h.innerText||'').toLowerCase();
+      if(t.includes('maximize your free pt opportunities') || t.includes('解锁本月最多可领取')){
+        let n=h.nextElementSibling;
+        const toRemove=[h];
+        while(n){
+          const next=n.nextElementSibling;
+          const stopTag = n.tagName==='H2' && !((n.innerText||'').toLowerCase().includes('maximize your free pt opportunities'));
+          if(stopTag) break;
+          toRemove.push(n);
+          // stop after first explanatory paragraph block removed
+          if(n.tagName==='P') break;
+          n=next;
+        }
+        toRemove.forEach(el=>el.remove());
+      }
+    });
+  }
+
+  function replaceFloatingIcons(){
+    const best=document.querySelector('.floating-icon.game');
+    const top3=document.querySelector('.floating-icon.providers');
+    if(best){
+      const img=best.querySelector('img');
+      if(img) img.remove();
+      best.setAttribute('onclick',"window.location.href='index.html'");
+      if(!best.querySelector('.logo-emoji-badge')){
+        const b=document.createElement('span');
+        b.className='logo-emoji-badge';
+        b.style.margin='0';
+        b.style.width='36px';
+        b.style.height='36px';
+        b.style.fontSize='22px';
+        b.textContent='🎮';
+        best.appendChild(b);
+      }
+    }
+    if(top3){
+      const img=top3.querySelector('img');
+      if(img) img.remove();
+      if(!top3.querySelector('.logo-emoji-badge')){
+        const b=document.createElement('span');
+        b.className='logo-emoji-badge';
+        b.style.margin='0';
+        b.style.width='36px';
+        b.style.height='36px';
+        b.style.fontSize='22px';
+        b.textContent='👑';
+        top3.appendChild(b);
+      }
+    }
+  }
+
+  function retargetCheckNow(){
+    document.querySelectorAll('a[href*="/tools/mnm"], a[href*="/tools/mnm_zh"], a[href="mnm11.html"]').forEach(a=>{
+      a.setAttribute('href','mnm11.html');
+    });
+  }
+
+  function run(){
+    removeMmPromoBannerSection();
+    retargetCheckNow();
+    ensureProviderEmoji();
+    replaceFloatingIcons();
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run);
+  else run();
+})();
+</script>
+
+
+<style>
+  .back-home-wrap{display:flex;justify-content:center;margin:28px 0 40px;}
+  .back-home-btn{display:inline-flex;align-items:center;gap:8px;border:1px solid #e7e5e4;background:#fff;color:#1c1917;border-radius:999px;padding:10px 16px;font-weight:700;text-decoration:none;box-shadow:0 4px 12px rgba(28,25,23,.06);}
+  .back-home-btn:hover{background:#7bdcb5;border-color:#6fcaa4;}
+</style>
+<div class="back-home-wrap">
+  <a id="back-home-promo" class="back-home-btn" href="index.html">
+    <span aria-hidden>←</span>
+    <span lang="en">Back to Home</span>
+    <span lang="zh">返回主页</span>
+  </a>
+</div>
+
+</body>
+</html>

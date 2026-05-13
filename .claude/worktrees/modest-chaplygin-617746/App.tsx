@@ -11,13 +11,10 @@ import {
   ExternalLink,
   Download,
   MapPin,
-  ArrowLeft,
-  MoonStar,
-  SunMedium
+  ArrowLeft
 } from 'lucide-react';
 
 type Language = 'en' | 'zh';
-type Theme = 'light' | 'dark';
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -971,7 +968,6 @@ const resolveAssetPath = (base: string, value: string) => {
 };
 
 const LANGUAGE_STORAGE_KEY = 'eden-portfolio-language';
-const THEME_STORAGE_KEY = 'eden-portfolio-theme';
 
 const readStoredLanguage = (): Language | null => {
   if (typeof window === 'undefined') return null;
@@ -982,17 +978,6 @@ const readStoredLanguage = (): Language | null => {
     // ignore (private mode, storage disabled, etc.)
   }
   return null;
-};
-
-const readStoredTheme = (): Theme => {
-  if (typeof window === 'undefined') return 'light';
-  try {
-    const raw = window.localStorage.getItem(THEME_STORAGE_KEY);
-    if (raw === 'light' || raw === 'dark') return raw;
-  } catch {
-    // ignore (private mode, storage disabled, etc.)
-  }
-  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 };
 
 const LanguageToggle: React.FC<{
@@ -1021,59 +1006,15 @@ const LanguageToggle: React.FC<{
   </div>
 );
 
-const ThemeToggle: React.FC<{
-  language: Language;
-  theme: Theme;
-  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
-}> = ({ language, theme, setTheme }) => {
-  const isDark = theme === 'dark';
-  const label = language === 'zh' ? (isDark ? '深色' : '浅色') : isDark ? 'Dark' : 'Light';
-  const actionLabel = language === 'zh'
-    ? isDark
-      ? '切换到浅色模式'
-      : '切换到深色模式'
-    : isDark
-      ? 'Switch to light mode'
-      : 'Switch to dark mode';
-
-  return (
-    <button
-      type="button"
-      onClick={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
-      className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-3 py-2 text-xs font-semibold text-stone-700 transition-colors hover:border-stone-900 hover:text-stone-900"
-      aria-label={actionLabel}
-      aria-pressed={isDark}
-      title={actionLabel}
-    >
-      {isDark ? <MoonStar size={14} /> : <SunMedium size={14} />}
-      <span>{label}</span>
-    </button>
-  );
-};
-
-const HeaderControls: React.FC<{
-  language: Language;
-  setLanguage: React.Dispatch<React.SetStateAction<Language>>;
-  theme: Theme;
-  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
-}> = ({ language, setLanguage, theme, setTheme }) => (
-  <div className="flex items-center gap-3">
-    <ThemeToggle language={language} theme={theme} setTheme={setTheme} />
-    <LanguageToggle language={language} setLanguage={setLanguage} />
-  </div>
-);
-
 const AnalogTechFullPage: React.FC<{
   homeHref: string;
   baseUrl: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
-  theme: Theme;
-  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
-}> = ({ homeHref, baseUrl, language, setLanguage, theme, setTheme }) => {
+}> = ({ homeHref, baseUrl, language, setLanguage }) => {
   const isZh = language === 'zh';
   return (
-    <div className="page-shell min-h-screen text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
+    <div className="min-h-screen bg-stone-50 text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
       <main className="px-6 py-12 md:py-16">
         <div className="mx-auto max-w-4xl">
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -1084,10 +1025,10 @@ const AnalogTechFullPage: React.FC<{
               <ArrowLeft size={16} />
               {isZh ? '返回主页' : 'Back to Home'}
             </a>
-            <HeaderControls language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />
+            <LanguageToggle language={language} setLanguage={setLanguage} />
           </div>
 
-          <section className="motion-card mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
+          <section className="mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
             <p className="text-xs font-semibold uppercase tracking-wider text-stone-500">
               {isZh ? '模拟科技' : 'Analog Tech'}
             </p>
@@ -1108,7 +1049,7 @@ const AnalogTechFullPage: React.FC<{
 
           <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
             {analogTechGalleryPhotos.map((photo) => (
-              <figure key={photo.src} className="motion-card overflow-hidden rounded-xl border border-stone-200 bg-white shadow-sm">
+              <figure key={photo.src} className="overflow-hidden rounded-xl border border-stone-200 bg-white shadow-sm">
                 <img
                   src={resolveAssetPath(baseUrl, photo.src)}
                   alt={photo.alt[language]}
@@ -1129,12 +1070,10 @@ const LifeFullPage: React.FC<{
   homeHref: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
-  theme: Theme;
-  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
-}> = ({ homeHref, language, setLanguage, theme, setTheme }) => {
+}> = ({ homeHref, language, setLanguage }) => {
   const isZh = language === 'zh';
   return (
-    <div className="page-shell min-h-screen text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
+    <div className="min-h-screen bg-stone-50 text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
       <main className="px-6 py-12 md:py-16">
         <div className="mx-auto max-w-4xl">
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -1145,10 +1084,10 @@ const LifeFullPage: React.FC<{
               <ArrowLeft size={16} />
               {isZh ? '返回主页' : 'Back to Home'}
             </a>
-            <HeaderControls language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />
+            <LanguageToggle language={language} setLanguage={setLanguage} />
           </div>
 
-          <section className="motion-card mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
+          <section className="mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
             <p className="text-xs font-semibold uppercase tracking-wider text-stone-500">{isZh ? '生活' : 'Life'}</p>
             <h1 className="mt-2 font-display text-4xl font-bold tracking-tight text-stone-900 md:text-5xl">
               {isZh ? '探索视频档案' : 'Adventure Video Archive'}
@@ -1160,7 +1099,7 @@ const LifeFullPage: React.FC<{
 
           <div className="mt-6 space-y-5">
             {lifeVideos.map((video) => (
-              <section key={video.href} className="motion-card rounded-2xl border border-stone-200 bg-white p-5 md:p-6 shadow-sm">
+              <section key={video.href} className="rounded-2xl border border-stone-200 bg-white p-5 md:p-6 shadow-sm">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <h2 className="font-display text-2xl font-bold text-stone-900">{video.title[language]}</h2>
                   <a
@@ -1231,20 +1170,20 @@ const brandGuideAccent = [
     bg: 'bg-eden-mint',
     border: 'border-teal-700/25',
     text: 'text-stone-900',
-    hex: { light: '#7bdcb5', dark: '#dc6f82' },
+    hex: '#7bdcb5',
     usage: {
-      en: 'Accent mint / dark-mode red complement · selection, language toggle, quote rail, accent glow',
-      zh: '薄荷强调 / 暗色红系补色 · 文本划选、语言切换、引用竖线、强调 glow',
+      en: 'Accent mint · selection, language toggle, quote rail, emoji tile rim, footer hovers',
+      zh: '薄荷强调 · 文本划选、语言切换、引用竖线、emoji 细边、页脚链接悬停',
     },
   },
   {
     bg: 'bg-eden-amber',
     border: 'border-amber-700/30',
     text: 'text-stone-900',
-    hex: { light: '#ffa340ed', dark: '#6fa4f0e6' },
+    hex: '#ffa340ed',
     usage: {
-      en: 'Accent amber / dark-mode blue complement · “Present” chips, emoji rims, CTA focus rings',
-      zh: '琥珀强调 / 暗色蓝系补色 ·「进行中」标签、emoji 描边、主按钮焦点环',
+      en: 'Accent amber (with alpha) · “Present” chips, flat-emoji hover rim, primary CTA focus ring',
+      zh: '琥珀强调（含透明度）·「进行中」标签、emoji 悬停描边、主按钮焦点环',
     },
   },
 ] as const;
@@ -1254,14 +1193,12 @@ const BrandGuideFullPage: React.FC<{
   baseUrl: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
-  theme: Theme;
-  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
-}> = ({ homeHref, baseUrl, language, setLanguage, theme, setTheme }) => {
+}> = ({ homeHref, baseUrl, language, setLanguage }) => {
   const isZh = language === 'zh';
   const faviconSrc = joinBasePath(baseUrl, 'favicon.svg');
 
   return (
-    <div className="page-shell min-h-screen text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
+    <div className="min-h-screen bg-stone-50 text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
       <main className="px-6 py-12 md:py-16">
         <div className="mx-auto max-w-4xl">
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -1272,10 +1209,10 @@ const BrandGuideFullPage: React.FC<{
               <ArrowLeft size={16} />
               {isZh ? '返回主页' : 'Back to Home'}
             </a>
-            <HeaderControls language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />
+            <LanguageToggle language={language} setLanguage={setLanguage} />
           </div>
 
-          <header className="motion-card mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
+          <header className="mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
             <div className="flex flex-wrap items-start gap-4">
               <FlatEmoji emoji="🎨" size="lg" bob />
               <div className="min-w-0 flex-1">
@@ -1294,7 +1231,7 @@ const BrandGuideFullPage: React.FC<{
             </div>
           </header>
 
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
             <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
               <FlatEmoji emoji="✨" size="md" tilt />
               {isZh ? '品牌内核' : 'Brand essence'}
@@ -1322,20 +1259,20 @@ const BrandGuideFullPage: React.FC<{
             </ul>
           </section>
 
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
             <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
               <FlatEmoji emoji="🧱" size="md" bob />
               {isZh ? '色彩' : 'Color'}
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-stone-600">
               {isZh
-                ? '全站以 Tailwind `stone` 阶为主轴；另有两枚品牌强调色（薄荷 / 琥珀，含透明度）用于状态、划选与轻点缀，不抢 stone 的编辑基调。到了暗色模式，这两枚强调色会切到补色变体：mint 转红系，amber 转蓝系。'
-                : 'Stone remains the spine. Two accent swatches—mint and amber (with alpha)—signal status, selection, and light highlights without breaking the editorial calm. In dark mode, those accents switch to complementary variants: mint moves red, amber moves blue.'}
+                ? '全站以 Tailwind `stone` 阶为主轴；另有两枚品牌强调色（薄荷 / 琥珀，含透明度）用于状态、划选与轻点缀，不抢 stone 的编辑基调。'
+                : 'Stone remains the spine. Two accent swatches—mint and amber (with alpha)—signal status, selection, and light highlights without breaking the editorial calm.'}
             </p>
             <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-stone-500">
               {isZh ? '中性阶（stone）' : 'Neutral ramp (stone)'}
             </p>
-            <div className="theme-preview-neutral mt-3 grid gap-3 sm:grid-cols-2">
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
               {brandGuidePalette.map((row) => (
                 <div
                   key={row.hex}
@@ -1354,11 +1291,11 @@ const BrandGuideFullPage: React.FC<{
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
               {brandGuideAccent.map((row) => (
                 <div
-                  key={row.hex.light}
+                  key={row.hex}
                   className={`flex gap-3 rounded-xl border ${row.border} p-4 ${row.bg}`}
                 >
                   <div className={`min-w-0 flex-1 text-sm ${row.text}`}>
-                    <p className="font-mono text-xs opacity-90">{row.hex[theme]}</p>
+                    <p className="font-mono text-xs opacity-90">{row.hex}</p>
                     <p className="mt-1 font-medium leading-snug">{row.usage[language]}</p>
                   </div>
                 </div>
@@ -1366,7 +1303,7 @@ const BrandGuideFullPage: React.FC<{
             </div>
           </section>
 
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
             <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
               <FlatEmoji emoji="🔤" size="md" tilt />
               {isZh ? '字体' : 'Typography'}
@@ -1395,7 +1332,7 @@ const BrandGuideFullPage: React.FC<{
             </div>
           </section>
 
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
             <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
               <FlatEmoji emoji="🔖" size="md" bob />
               {isZh ? '标志与图标' : 'Logo & mark'}
@@ -1417,7 +1354,7 @@ const BrandGuideFullPage: React.FC<{
             </div>
           </section>
 
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
             <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
               <FlatEmoji emoji="📐" size="md" tilt />
               {isZh ? '版式与形状' : 'Layout & shape'}
@@ -1445,36 +1382,7 @@ const BrandGuideFullPage: React.FC<{
             </ul>
           </section>
 
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
-            <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
-              <FlatEmoji emoji="💡" size="md" tilt />
-              {isZh ? '背景系统' : 'Background system'}
-            </h2>
-            <div className="mt-4 grid gap-4 md:grid-cols-2">
-              <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-stone-500">
-                  {isZh ? '底纸层' : 'Paper layer'}
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-stone-700">
-                  {isZh
-                    ? '全站用 `page-shell::before` 承接底纸纹理：细网格、淡线和轻高光。它负责材质感，不负责戏剧性。'
-                    : 'Use `page-shell::before` for the paper texture: fine grid, hairlines, and a soft highlight. It carries materiality, not drama.'}
-                </p>
-              </div>
-              <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-stone-500">
-                  {isZh ? '灯光层' : 'Light layer'}
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-stone-700">
-                  {isZh
-                    ? '`page-shell::after` 负责会动的 radial light。暗色模式下走补色逻辑：mint 对应红灯，amber 对应蓝灯。'
-                    : '`page-shell::after` owns the moving radial lights. In dark mode, those lights follow the complementary system: mint becomes red, amber becomes blue.'}
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
             <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
               <FlatEmoji emoji="🧩" size="md" bob />
               {isZh ? '组件习惯' : 'Component habits'}
@@ -1489,13 +1397,8 @@ const BrandGuideFullPage: React.FC<{
               </div>
               <p className="text-sm text-stone-600">
                 {isZh
-                  ? '强调色 Token：`eden-mint` 与 `eden-amber` 在 `index.css` 的 `@theme` 注册；dark mode 下会自动切到补色版本（mint -> red，amber -> blue），可直接用 `bg-eden-mint`、`border-eden-amber` 等工具类。'
-                  : 'Accent tokens `eden-mint` and `eden-amber` are registered in `@theme` inside `index.css`; in dark mode they automatically switch to complementary variants (mint -> red, amber -> blue), so utilities like `bg-eden-mint` and `border-eden-amber` keep working directly.'}
-              </p>
-              <p className="text-sm text-stone-600">
-                {isZh
-                  ? '可复用动效类：页面根容器用 `page-shell`，主要卡片用 `motion-card`，轻强调可挂 `motion-accent`。'
-                  : 'Reusable motion classes: use `page-shell` on page roots, `motion-card` on major cards, and `motion-accent` for restrained emphasis.'}
+                  ? '强调色 Token：`eden-mint`（#7bdcb5）、`eden-amber`（#ffa340ed）—在 `index.css` 的 `@theme` 注册，可用 `bg-eden-mint`、`border-eden-amber` 等工具类。'
+                  : 'Accent tokens: `eden-mint` (#7bdcb5) and `eden-amber` (#ffa340ed) are registered in `@theme` inside `index.css`—use utilities like `bg-eden-mint` and `border-eden-amber`.'}
               </p>
               <div className="flex flex-wrap gap-2">
                 <span className="rounded-full border border-stone-200 bg-stone-50 px-3 py-1 text-xs font-medium text-stone-700">
@@ -1514,7 +1417,7 @@ const BrandGuideFullPage: React.FC<{
             </div>
           </section>
 
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
             <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
               <FlatEmoji emoji="💬" size="md" tilt />
               {isZh ? '语气与写作' : 'Voice & writing'}
@@ -1549,7 +1452,7 @@ const BrandGuideFullPage: React.FC<{
             </div>
           </section>
 
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
             <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
               <FlatEmoji emoji="🌀" size="md" bob />
               {isZh ? '动效与无障碍' : 'Motion & accessibility'}
@@ -1557,15 +1460,13 @@ const BrandGuideFullPage: React.FC<{
             <ul className="mt-4 space-y-2 text-sm text-stone-700">
               {(isZh
                 ? [
-                    '动效分三层：页面进入（`page-enter`）、卡片反馈（`motion-card`）、背景灯光（`light-orbit` / `light-pulse`）。',
-                    '即使要动，也优先慢速、低频、长缓动；不要让正文区连续抖动。',
-                    '尊重 `prefers-reduced-motion`：背景灯、入场、hover 浮起、emoji 动画都会关闭。',
+                    '动效宜轻：`emoji-bob`、`chapter-voice-enter` 级别即可。',
+                    '尊重 `prefers-reduced-motion`：动画与 hover 缩放会关闭。',
                     '装饰性 emoji 使用 `aria-hidden`，避免屏幕阅读器重复读表情。',
                   ]
                 : [
-                    'Motion works in three layers: page entry (`page-enter`), card feedback (`motion-card`), and ambient background lights (`light-orbit` / `light-pulse`).',
-                    'Even when animated, keep it slow, low-frequency, and eased; never let body copy feel shaky.',
-                    'Honor `prefers-reduced-motion`: lights, entry, hover lift, and emoji animations all disable automatically.',
+                    'Keep motion subtle: `emoji-bob`, `chapter-voice-enter` scale is enough.',
+                    'Honor `prefers-reduced-motion`: animations and hover scaling disable automatically.',
                     'Decorative emojis use `aria-hidden` so assistive tech is not flooded with glyph names.',
                   ]
               ).map((line) => (
@@ -1592,12 +1493,10 @@ const ArchivedWorkPage: React.FC<{
   work: (typeof archivedWorks)[number];
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
-  theme: Theme;
-  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
-}> = ({ homeHref, baseUrl, work, language, setLanguage, theme, setTheme }) => {
+}> = ({ homeHref, baseUrl, work, language, setLanguage }) => {
   const isZh = language === 'zh';
   return (
-    <div className="page-shell min-h-screen text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
+    <div className="min-h-screen bg-stone-50 text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
       <main className="px-6 py-12 md:py-16">
         <div className="mx-auto max-w-4xl">
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -1608,10 +1507,10 @@ const ArchivedWorkPage: React.FC<{
               <ArrowLeft size={16} />
               {isZh ? '返回主页' : 'Back to Home'}
             </a>
-            <HeaderControls language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />
+            <LanguageToggle language={language} setLanguage={setLanguage} />
           </div>
 
-          <section className="motion-card mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
+          <section className="mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
             <p className="text-xs font-semibold uppercase tracking-wider text-stone-500">
               {isZh ? '归档项目' : 'Archived Work'}
             </p>
@@ -1669,7 +1568,7 @@ const ArchivedWorkPage: React.FC<{
 
           <div className="mt-6 space-y-5">
             {work.sections.map((section) => (
-              <section key={section.heading.en} className="motion-card rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+              <section key={section.heading.en} className="rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
                 <h2 className="font-display text-2xl font-bold text-stone-900">{section.heading[language]}</h2>
                 <ul className="mt-4 space-y-2 text-stone-700">
                   {section.points[language].map((point, pointIndex) => (
@@ -1682,7 +1581,7 @@ const ArchivedWorkPage: React.FC<{
               </section>
             ))}
             {work.references && work.references.length > 0 && (
-              <section className="motion-card rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+              <section className="rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
                 <h2 className="font-display text-2xl font-bold text-stone-900">
                   {isZh ? '来源参考' : 'Source References'}
                 </h2>
@@ -1714,12 +1613,10 @@ const PreviousProjectsFullPage: React.FC<{
   baseUrl: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
-  theme: Theme;
-  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
-}> = ({ homeHref, baseUrl, language, setLanguage, theme, setTheme }) => {
+}> = ({ homeHref, baseUrl, language, setLanguage }) => {
   const isZh = language === 'zh';
   return (
-    <div className="page-shell min-h-screen text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
+    <div className="min-h-screen bg-stone-50 text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
       <main className="px-6 py-12 md:py-16">
         <div className="mx-auto max-w-4xl">
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -1730,10 +1627,10 @@ const PreviousProjectsFullPage: React.FC<{
               <ArrowLeft size={16} />
               {isZh ? '返回主页' : 'Back to Home'}
             </a>
-            <HeaderControls language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />
+            <LanguageToggle language={language} setLanguage={setLanguage} />
           </div>
 
-          <div className="motion-card mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
+          <div className="mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
             <p className="text-xs font-semibold uppercase tracking-wider text-stone-500">
               {isZh ? '历史项目档案' : 'Previous Project Archive'}
             </p>
@@ -1749,7 +1646,7 @@ const PreviousProjectsFullPage: React.FC<{
 
           <div className="mt-8 space-y-5">
             {previousProjectsData.map((project, index) => (
-              <section key={project.title.en} className="motion-card rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+              <section key={project.title.en} className="rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
                 <div className="flex items-center justify-between gap-3">
                   <h2 className="font-display text-2xl font-bold text-stone-900 md:text-3xl">
                     {project.title[language]}
@@ -1804,13 +1701,11 @@ const JijuPetFullPage: React.FC<{
   homeHref: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
-  theme: Theme;
-  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
-}> = ({ homeHref, language, setLanguage, theme, setTheme }) => {
+}> = ({ homeHref, language, setLanguage }) => {
   const isZh = language === 'zh';
 
   return (
-    <div className="page-shell min-h-screen text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
+    <div className="min-h-screen bg-stone-50 text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
       <main className="px-6 py-12 md:py-16">
         <div className="mx-auto max-w-4xl">
           <div className="flex flex-wrap items-center justify-between gap-3">
@@ -1821,10 +1716,10 @@ const JijuPetFullPage: React.FC<{
               <ArrowLeft size={16} />
               {isZh ? '返回主页' : 'Back to Home'}
             </a>
-            <HeaderControls language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />
+            <LanguageToggle language={language} setLanguage={setLanguage} />
           </div>
 
-          <div className="motion-card mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
+          <div className="mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wider text-stone-500">
@@ -1858,7 +1753,7 @@ const JijuPetFullPage: React.FC<{
             </p>
           </div>
 
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
             <p className="text-sm font-semibold uppercase tracking-wide text-stone-500">
               {isZh ? '决策 DNA' : 'Decision DNA'}
             </p>
@@ -1882,7 +1777,7 @@ const JijuPetFullPage: React.FC<{
             </div>
           </section>
 
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
+          <section className="mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
             <p className="text-sm font-semibold uppercase tracking-wide text-stone-500">
               {isZh ? '知识摘要' : 'Knowledge Summary'}
             </p>
@@ -1940,7 +1835,7 @@ const JijuPetFullPage: React.FC<{
             {jijuBuildFromZeroToOne.map((item, index) => (
                 <section
                   key={item.phase.en}
-                  className="motion-card min-w-[88%] snap-start rounded-2xl border border-stone-200 bg-gradient-to-b from-stone-50/70 to-white p-6 shadow-sm outline outline-1 -outline-offset-1 outline-stone-200/80 ring-1 ring-stone-900/[0.04] transition-shadow duration-300 hover:shadow-md md:min-w-[560px] md:p-7 lg:min-w-[620px]"
+                  className="min-w-[88%] snap-start rounded-2xl border border-stone-200 bg-gradient-to-b from-stone-50/70 to-white p-6 shadow-sm outline outline-1 -outline-offset-1 outline-stone-200/80 ring-1 ring-stone-900/[0.04] transition-shadow duration-300 hover:shadow-md md:min-w-[560px] md:p-7 lg:min-w-[620px]"
                 >
                 <div className="flex items-start justify-between gap-3 border-b border-dashed border-stone-200/90 pb-4">
                   <div className="flex min-w-0 flex-1 items-start gap-3">
@@ -2138,7 +2033,6 @@ const ActiveBuildSkillRow: React.FC<{ isZh: boolean; skills: readonly ActiveBuil
 
 const App: React.FC = () => {
   const [language, setLanguage] = React.useState<Language>(() => readStoredLanguage() ?? 'en');
-  const [theme, setTheme] = React.useState<Theme>(() => readStoredTheme());
 
   React.useEffect(() => {
     try {
@@ -2147,17 +2041,6 @@ const App: React.FC = () => {
       // ignore
     }
   }, [language]);
-
-  React.useEffect(() => {
-    const root = window.document.documentElement;
-    root.dataset.theme = theme;
-    root.style.colorScheme = theme;
-    try {
-      window.localStorage.setItem(THEME_STORAGE_KEY, theme);
-    } catch {
-      // ignore
-    }
-  }, [theme]);
 
   const isZh = language === 'zh';
   const baseUrl = import.meta.env.BASE_URL || '/';
@@ -2188,7 +2071,7 @@ const App: React.FC = () => {
   }, [pathWithoutBase, language, activeArchivedWork]);
 
   if (isJijuPetFullPage) {
-    return <JijuPetFullPage homeHref={homeHref} language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />;
+    return <JijuPetFullPage homeHref={homeHref} language={language} setLanguage={setLanguage} />;
   }
 
   if (isPreviousProjectsFullPage) {
@@ -2198,18 +2081,16 @@ const App: React.FC = () => {
         baseUrl={baseUrl}
         language={language}
         setLanguage={setLanguage}
-        theme={theme}
-        setTheme={setTheme}
       />
     );
   }
 
   if (isAnalogTechFullPage) {
-    return <AnalogTechFullPage homeHref={homeHref} baseUrl={baseUrl} language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />;
+    return <AnalogTechFullPage homeHref={homeHref} baseUrl={baseUrl} language={language} setLanguage={setLanguage} />;
   }
 
   if (isLifeFullPage) {
-    return <LifeFullPage homeHref={homeHref} language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />;
+    return <LifeFullPage homeHref={homeHref} language={language} setLanguage={setLanguage} />;
   }
 
   if (isBrandGuideFullPage) {
@@ -2219,8 +2100,6 @@ const App: React.FC = () => {
         baseUrl={baseUrl}
         language={language}
         setLanguage={setLanguage}
-        theme={theme}
-        setTheme={setTheme}
       />
     );
   }
@@ -2233,21 +2112,19 @@ const App: React.FC = () => {
         work={activeArchivedWork}
         language={language}
         setLanguage={setLanguage}
-        theme={theme}
-        setTheme={setTheme}
       />
     );
   }
 
   return (
-    <div className="page-shell min-h-screen text-stone-800 font-sans selection:bg-eden-mint/30 selection:text-stone-900">
+    <div className="min-h-screen bg-stone-50 text-stone-800 font-sans selection:bg-eden-mint/30 selection:text-stone-900">
       
       {/* Navigation / Header */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-eden-mint/35 bg-stone-50/80 backdrop-blur-md">
         <div className="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="font-display font-bold text-xl tracking-tight">Eden Tan</div>
           <div className="flex items-center gap-3">
-            <HeaderControls language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />
+            <LanguageToggle language={language} setLanguage={setLanguage} />
             <a href="https://drive.google.com/uc?export=download&id=1bidz8DdSkgYu2KrsKUXnfR04J8EUo3IZ" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-full bg-stone-900 px-4 py-2 text-sm font-medium text-white ring-2 ring-transparent transition-all hover:bg-stone-800 hover:ring-eden-amber/55 focus-visible:outline-none focus-visible:ring-eden-amber/60">
               <Download size={16} />
               <span>{isZh ? '简历' : 'Resume'}</span>
@@ -2265,7 +2142,7 @@ const App: React.FC = () => {
           animate="animate"
           variants={staggerContainer}
         >
-          <motion.div variants={fadeIn} className="motion-accent mb-6 inline-flex items-center gap-2 rounded-full border border-eden-mint/45 bg-eden-mint/30 px-3 py-1 text-xs font-bold uppercase tracking-widest text-stone-800">
+          <motion.div variants={fadeIn} className="mb-6 inline-flex items-center gap-2 rounded-full border border-eden-mint/45 bg-eden-mint/30 px-3 py-1 text-xs font-bold uppercase tracking-widest text-stone-800">
             <MapPin size={14} className="text-stone-700" /> {isZh ? '马来西亚' : 'Malaysia Based'}
           </motion.div>
 
@@ -2539,7 +2416,7 @@ const App: React.FC = () => {
               whileInView="animate"
               viewport={{ once: true }}
               variants={staggerContainer}
-              className="motion-card bg-white p-8 rounded-2xl border border-stone-200 shadow-sm"
+              className="bg-white p-8 rounded-2xl border border-stone-200 shadow-sm"
             >
               <h2 className="mb-6 flex items-center gap-3 font-display text-2xl font-bold text-stone-900">
                 <FlatEmoji emoji="🧭" size="md" tilt />
@@ -2611,7 +2488,7 @@ const App: React.FC = () => {
               whileInView="animate"
               viewport={{ once: true }}
               variants={staggerContainer}
-              className="motion-card rounded-2xl border border-eden-mint/25 bg-stone-900 p-8 text-stone-50 shadow-sm ring-1 ring-eden-mint/15"
+              className="rounded-2xl border border-eden-mint/25 bg-stone-900 p-8 text-stone-50 shadow-sm ring-1 ring-eden-mint/15"
             >
               <h2 className="mb-6 font-display text-xl font-bold">{isZh ? '联系我' : 'Connect'}</h2>
               <div className="space-y-4">
