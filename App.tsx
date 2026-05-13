@@ -12,12 +12,14 @@ import {
   Download,
   MapPin,
   ArrowLeft,
+  Clock3,
   MoonStar,
   SunMedium
 } from 'lucide-react';
 
 type Language = 'en' | 'zh';
 type Theme = 'light' | 'dark';
+type ThemePreference = Theme | 'auto';
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -972,6 +974,8 @@ const resolveAssetPath = (base: string, value: string) => {
 
 const LANGUAGE_STORAGE_KEY = 'eden-portfolio-language';
 const THEME_STORAGE_KEY = 'eden-portfolio-theme';
+const AUTO_THEME_DAY_START_HOUR = 7;
+const AUTO_THEME_NIGHT_START_HOUR = 19;
 
 const readStoredLanguage = (): Language | null => {
   if (typeof window === 'undefined') return null;
@@ -984,15 +988,20 @@ const readStoredLanguage = (): Language | null => {
   return null;
 };
 
-const readStoredTheme = (): Theme => {
-  if (typeof window === 'undefined') return 'light';
+const resolveThemeFromLocalTime = (date = new Date()): Theme => {
+  const hour = date.getHours();
+  return hour >= AUTO_THEME_DAY_START_HOUR && hour < AUTO_THEME_NIGHT_START_HOUR ? 'light' : 'dark';
+};
+
+const readStoredThemePreference = (): ThemePreference => {
+  if (typeof window === 'undefined') return 'auto';
   try {
     const raw = window.localStorage.getItem(THEME_STORAGE_KEY);
-    if (raw === 'light' || raw === 'dark') return raw;
+    if (raw === 'auto' || raw === 'light' || raw === 'dark') return raw;
   } catch {
     // ignore (private mode, storage disabled, etc.)
   }
-  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  return 'auto';
 };
 
 const LanguageToggle: React.FC<{
@@ -1023,42 +1032,86 @@ const LanguageToggle: React.FC<{
 
 const ThemeToggle: React.FC<{
   language: Language;
+  themePreference: ThemePreference;
   theme: Theme;
-  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
-}> = ({ language, theme, setTheme }) => {
-  const isDark = theme === 'dark';
-  const label = language === 'zh' ? (isDark ? '深色' : '浅色') : isDark ? 'Dark' : 'Light';
-  const actionLabel = language === 'zh'
-    ? isDark
-      ? '切换到浅色模式'
-      : '切换到深色模式'
-    : isDark
-      ? 'Switch to light mode'
-      : 'Switch to dark mode';
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ language, themePreference, theme, setThemePreference }) => {
+  const options = [
+    {
+      value: 'auto' as const,
+      label: language === 'zh' ? '自动' : 'Auto',
+      icon: Clock3,
+      activeClass: 'bg-eden-mint text-stone-900 shadow-sm',
+    },
+    {
+      value: 'light' as const,
+      label: language === 'zh' ? '浅色' : 'Light',
+      icon: SunMedium,
+      activeClass: 'bg-stone-200 text-stone-900 shadow-sm',
+    },
+    {
+      value: 'dark' as const,
+      label: language === 'zh' ? '深色' : 'Dark',
+      icon: MoonStar,
+      activeClass: 'bg-stone-900 text-white shadow-sm',
+    },
+  ] as const;
+
+  const autoStatus =
+    themePreference === 'auto'
+      ? language === 'zh'
+        ? `按本地时间自动切换，目前为${theme === 'dark' ? '深色' : '浅色'}`
+        : `Automatically switches by local time, currently ${theme}`
+      : undefined;
 
   return (
-    <button
-      type="button"
-      onClick={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
-      className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-3 py-2 text-xs font-semibold text-stone-700 transition-colors hover:border-stone-900 hover:text-stone-900"
-      aria-label={actionLabel}
-      aria-pressed={isDark}
-      title={actionLabel}
+    <div
+      className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white p-1"
+      title={autoStatus}
     >
-      {isDark ? <MoonStar size={14} /> : <SunMedium size={14} />}
-      <span>{label}</span>
-    </button>
+      {options.map((option) => {
+        const Icon = option.icon;
+        const isActive = themePreference === option.value;
+        return (
+          <button
+            key={option.value}
+            type="button"
+            onClick={() => setThemePreference(option.value)}
+            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
+              isActive ? option.activeClass : 'text-stone-600 hover:text-stone-900'
+            }`}
+            aria-pressed={isActive}
+            title={
+              option.value === 'auto'
+                ? autoStatus
+                : language === 'zh'
+                  ? `切换到${option.label}`
+                  : `Switch to ${option.label}`
+            }
+          >
+            <Icon size={13} />
+            <span>{option.label}</span>
+          </button>
+        );
+      })}
+    </div>
   );
 };
 
 const HeaderControls: React.FC<{
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
   theme: Theme;
-  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
-}> = ({ language, setLanguage, theme, setTheme }) => (
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ language, setLanguage, themePreference, theme, setThemePreference }) => (
   <div className="flex items-center gap-3">
-    <ThemeToggle language={language} theme={theme} setTheme={setTheme} />
+    <ThemeToggle
+      language={language}
+      themePreference={themePreference}
+      theme={theme}
+      setThemePreference={setThemePreference}
+    />
     <LanguageToggle language={language} setLanguage={setLanguage} />
   </div>
 );
@@ -1068,9 +1121,10 @@ const AnalogTechFullPage: React.FC<{
   baseUrl: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
   theme: Theme;
-  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
-}> = ({ homeHref, baseUrl, language, setLanguage, theme, setTheme }) => {
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ homeHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
   return (
     <div className="page-shell min-h-screen text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
@@ -1084,7 +1138,13 @@ const AnalogTechFullPage: React.FC<{
               <ArrowLeft size={16} />
               {isZh ? '返回主页' : 'Back to Home'}
             </a>
-            <HeaderControls language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
           </div>
 
           <section className="motion-card mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
@@ -1129,9 +1189,10 @@ const LifeFullPage: React.FC<{
   homeHref: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
   theme: Theme;
-  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
-}> = ({ homeHref, language, setLanguage, theme, setTheme }) => {
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ homeHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
   return (
     <div className="page-shell min-h-screen text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
@@ -1145,7 +1206,13 @@ const LifeFullPage: React.FC<{
               <ArrowLeft size={16} />
               {isZh ? '返回主页' : 'Back to Home'}
             </a>
-            <HeaderControls language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
           </div>
 
           <section className="motion-card mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
@@ -1254,9 +1321,10 @@ const BrandGuideFullPage: React.FC<{
   baseUrl: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
   theme: Theme;
-  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
-}> = ({ homeHref, baseUrl, language, setLanguage, theme, setTheme }) => {
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ homeHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
   const faviconSrc = joinBasePath(baseUrl, 'favicon.svg');
 
@@ -1272,7 +1340,13 @@ const BrandGuideFullPage: React.FC<{
               <ArrowLeft size={16} />
               {isZh ? '返回主页' : 'Back to Home'}
             </a>
-            <HeaderControls language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
           </div>
 
           <header className="motion-card mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
@@ -1329,8 +1403,8 @@ const BrandGuideFullPage: React.FC<{
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-stone-600">
               {isZh
-                ? '全站以 Tailwind `stone` 阶为主轴；另有两枚品牌强调色（薄荷 / 琥珀，含透明度）用于状态、划选与轻点缀，不抢 stone 的编辑基调。到了暗色模式，这两枚强调色会切到补色变体：mint 转红系，amber 转蓝系。'
-                : 'Stone remains the spine. Two accent swatches—mint and amber (with alpha)—signal status, selection, and light highlights without breaking the editorial calm. In dark mode, those accents switch to complementary variants: mint moves red, amber moves blue.'}
+                ? '全站以 Tailwind `stone` 阶为主轴；另有两枚品牌强调色（薄荷 / 琥珀，含透明度）用于状态、划选与轻点缀，不抢 stone 的编辑基调。主题默认按用户本地时间自动切换：07:00–18:59 为浅色，19:00–06:59 为深色。到了暗色模式，这两枚强调色会切到补色变体：mint 转红系，amber 转蓝系。'
+                : 'Stone remains the spine. Two accent swatches—mint and amber (with alpha)—signal status, selection, and light highlights without breaking the editorial calm. Theme defaults to local-time auto switching: 7:00 AM-6:59 PM stays light, 7:00 PM-6:59 AM turns dark. In dark mode, those accents switch to complementary variants: mint moves red, amber moves blue.'}
             </p>
             <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-stone-500">
               {isZh ? '中性阶（stone）' : 'Neutral ramp (stone)'}
@@ -1489,8 +1563,8 @@ const BrandGuideFullPage: React.FC<{
               </div>
               <p className="text-sm text-stone-600">
                 {isZh
-                  ? '强调色 Token：`eden-mint` 与 `eden-amber` 在 `index.css` 的 `@theme` 注册；dark mode 下会自动切到补色版本（mint -> red，amber -> blue），可直接用 `bg-eden-mint`、`border-eden-amber` 等工具类。'
-                  : 'Accent tokens `eden-mint` and `eden-amber` are registered in `@theme` inside `index.css`; in dark mode they automatically switch to complementary variants (mint -> red, amber -> blue), so utilities like `bg-eden-mint` and `border-eden-amber` keep working directly.'}
+                  ? '强调色 Token：`eden-mint` 与 `eden-amber` 在 `index.css` 的 `@theme` 注册；主题默认是 `自动 / 浅色 / 深色` 三态，其中自动模式按用户本地时间切换，dark mode 下补色版本会自动生效（mint -> red，amber -> blue）。'
+                  : 'Accent tokens `eden-mint` and `eden-amber` are registered in `@theme` inside `index.css`; theme now supports Auto / Light / Dark, with Auto following the user’s local time. When dark mode is active, complementary variants apply automatically (mint -> red, amber -> blue).'}
               </p>
               <p className="text-sm text-stone-600">
                 {isZh
@@ -1592,9 +1666,10 @@ const ArchivedWorkPage: React.FC<{
   work: (typeof archivedWorks)[number];
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
   theme: Theme;
-  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
-}> = ({ homeHref, baseUrl, work, language, setLanguage, theme, setTheme }) => {
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ homeHref, baseUrl, work, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
   return (
     <div className="page-shell min-h-screen text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
@@ -1608,7 +1683,13 @@ const ArchivedWorkPage: React.FC<{
               <ArrowLeft size={16} />
               {isZh ? '返回主页' : 'Back to Home'}
             </a>
-            <HeaderControls language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
           </div>
 
           <section className="motion-card mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
@@ -1714,9 +1795,10 @@ const PreviousProjectsFullPage: React.FC<{
   baseUrl: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
   theme: Theme;
-  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
-}> = ({ homeHref, baseUrl, language, setLanguage, theme, setTheme }) => {
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ homeHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
   return (
     <div className="page-shell min-h-screen text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
@@ -1730,7 +1812,13 @@ const PreviousProjectsFullPage: React.FC<{
               <ArrowLeft size={16} />
               {isZh ? '返回主页' : 'Back to Home'}
             </a>
-            <HeaderControls language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
           </div>
 
           <div className="motion-card mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
@@ -1804,9 +1892,10 @@ const JijuPetFullPage: React.FC<{
   homeHref: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
   theme: Theme;
-  setTheme: React.Dispatch<React.SetStateAction<Theme>>;
-}> = ({ homeHref, language, setLanguage, theme, setTheme }) => {
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ homeHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
 
   return (
@@ -1821,7 +1910,13 @@ const JijuPetFullPage: React.FC<{
               <ArrowLeft size={16} />
               {isZh ? '返回主页' : 'Back to Home'}
             </a>
-            <HeaderControls language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
           </div>
 
           <div className="motion-card mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
@@ -2138,7 +2233,8 @@ const ActiveBuildSkillRow: React.FC<{ isZh: boolean; skills: readonly ActiveBuil
 
 const App: React.FC = () => {
   const [language, setLanguage] = React.useState<Language>(() => readStoredLanguage() ?? 'en');
-  const [theme, setTheme] = React.useState<Theme>(() => readStoredTheme());
+  const [themePreference, setThemePreference] = React.useState<ThemePreference>(() => readStoredThemePreference());
+  const [autoTheme, setAutoTheme] = React.useState<Theme>(() => resolveThemeFromLocalTime());
 
   React.useEffect(() => {
     try {
@@ -2149,15 +2245,32 @@ const App: React.FC = () => {
   }, [language]);
 
   React.useEffect(() => {
+    if (themePreference !== 'auto') return;
+    const updateAutoTheme = () => setAutoTheme(resolveThemeFromLocalTime());
+    updateAutoTheme();
+    const intervalId = window.setInterval(updateAutoTheme, 60_000);
+    const handleVisibilityChange = () => {
+      if (!document.hidden) updateAutoTheme();
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      window.clearInterval(intervalId);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [themePreference]);
+
+  const theme = themePreference === 'auto' ? autoTheme : themePreference;
+
+  React.useEffect(() => {
     const root = window.document.documentElement;
     root.dataset.theme = theme;
     root.style.colorScheme = theme;
     try {
-      window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+      window.localStorage.setItem(THEME_STORAGE_KEY, themePreference);
     } catch {
       // ignore
     }
-  }, [theme]);
+  }, [theme, themePreference]);
 
   const isZh = language === 'zh';
   const baseUrl = import.meta.env.BASE_URL || '/';
@@ -2188,7 +2301,16 @@ const App: React.FC = () => {
   }, [pathWithoutBase, language, activeArchivedWork]);
 
   if (isJijuPetFullPage) {
-    return <JijuPetFullPage homeHref={homeHref} language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />;
+    return (
+      <JijuPetFullPage
+        homeHref={homeHref}
+        language={language}
+        setLanguage={setLanguage}
+        themePreference={themePreference}
+        theme={theme}
+        setThemePreference={setThemePreference}
+      />
+    );
   }
 
   if (isPreviousProjectsFullPage) {
@@ -2198,18 +2320,38 @@ const App: React.FC = () => {
         baseUrl={baseUrl}
         language={language}
         setLanguage={setLanguage}
+        themePreference={themePreference}
         theme={theme}
-        setTheme={setTheme}
+        setThemePreference={setThemePreference}
       />
     );
   }
 
   if (isAnalogTechFullPage) {
-    return <AnalogTechFullPage homeHref={homeHref} baseUrl={baseUrl} language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />;
+    return (
+      <AnalogTechFullPage
+        homeHref={homeHref}
+        baseUrl={baseUrl}
+        language={language}
+        setLanguage={setLanguage}
+        themePreference={themePreference}
+        theme={theme}
+        setThemePreference={setThemePreference}
+      />
+    );
   }
 
   if (isLifeFullPage) {
-    return <LifeFullPage homeHref={homeHref} language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />;
+    return (
+      <LifeFullPage
+        homeHref={homeHref}
+        language={language}
+        setLanguage={setLanguage}
+        themePreference={themePreference}
+        theme={theme}
+        setThemePreference={setThemePreference}
+      />
+    );
   }
 
   if (isBrandGuideFullPage) {
@@ -2219,8 +2361,9 @@ const App: React.FC = () => {
         baseUrl={baseUrl}
         language={language}
         setLanguage={setLanguage}
+        themePreference={themePreference}
         theme={theme}
-        setTheme={setTheme}
+        setThemePreference={setThemePreference}
       />
     );
   }
@@ -2233,8 +2376,9 @@ const App: React.FC = () => {
         work={activeArchivedWork}
         language={language}
         setLanguage={setLanguage}
+        themePreference={themePreference}
         theme={theme}
-        setTheme={setTheme}
+        setThemePreference={setThemePreference}
       />
     );
   }
@@ -2247,7 +2391,13 @@ const App: React.FC = () => {
         <div className="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="font-display font-bold text-xl tracking-tight">Eden Tan</div>
           <div className="flex items-center gap-3">
-            <HeaderControls language={language} setLanguage={setLanguage} theme={theme} setTheme={setTheme} />
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
             <a href="https://drive.google.com/uc?export=download&id=1bidz8DdSkgYu2KrsKUXnfR04J8EUo3IZ" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-full bg-stone-900 px-4 py-2 text-sm font-medium text-white ring-2 ring-transparent transition-all hover:bg-stone-800 hover:ring-eden-amber/55 focus-visible:outline-none focus-visible:ring-eden-amber/60">
               <Download size={16} />
               <span>{isZh ? '简历' : 'Resume'}</span>
