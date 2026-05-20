@@ -1568,8 +1568,8 @@ const BrandGuideFullPage: React.FC<{
               </p>
               <p className="text-sm text-stone-600">
                 {isZh
-                  ? '可复用动效类：页面根容器用 `page-shell`，主要卡片用 `motion-card`，轻强调可挂 `motion-accent`。'
-                  : 'Reusable motion classes: use `page-shell` on page roots, `motion-card` on major cards, and `motion-accent` for restrained emphasis.'}
+                  ? '可复用动效类：页面根容器用 `page-shell`，主要卡片用 `motion-card`，轻强调可挂 `motion-accent`。当前 `motion-card` 自带顶边扫光和底部 bloom。'
+                  : 'Reusable motion classes: use `page-shell` on page roots, `motion-card` on major cards, and `motion-accent` for restrained emphasis. The current `motion-card` also carries a top-edge flare and a low bloom.'}
               </p>
               <div className="flex flex-wrap gap-2">
                 <span className="rounded-full border border-stone-200 bg-stone-50 px-3 py-1 text-xs font-medium text-stone-700">
@@ -1632,13 +1632,15 @@ const BrandGuideFullPage: React.FC<{
               {(isZh
                 ? [
                     '动效分三层：页面进入（`page-enter`）、卡片反馈（`motion-card`）、背景灯光（`light-orbit` / `light-pulse`）。',
-                    '即使要动，也优先慢速、低频、长缓动；不要让正文区连续抖动。',
+                    '当前节奏：背景灯约 `38s` 漂移、`11s` 呼吸；主题切换 `320ms`；卡片 hover `420ms`；底部 bloom `520ms`；页面淡入 `480ms`。',
+                    '卡片顶边扫光使用 `background-size: 300%`，亮带从右往左走，再慢慢漂回去；它应该像远处的光，不像贴在卡片上的高亮条。',
                     '尊重 `prefers-reduced-motion`：背景灯、入场、hover 浮起、emoji 动画都会关闭。',
                     '装饰性 emoji 使用 `aria-hidden`，避免屏幕阅读器重复读表情。',
                   ]
                 : [
                     'Motion works in three layers: page entry (`page-enter`), card feedback (`motion-card`), and ambient background lights (`light-orbit` / `light-pulse`).',
-                    'Even when animated, keep it slow, low-frequency, and eased; never let body copy feel shaky.',
+                    'Current pacing: ambient lights drift at about `38s` with an `11s` breath; theme transitions run at `320ms`; card hover at `420ms`; bottom bloom at `520ms`; page entry at `480ms`.',
+                    'The card-edge flare uses `background-size: 300%`, drifting from right to left and then back again. It should feel like distant light passing by, not a pasted-on highlight.',
                     'Honor `prefers-reduced-motion`: lights, entry, hover lift, and emoji animations all disable automatically.',
                     'Decorative emojis use `aria-hidden` so assistive tech is not flooded with glyph names.',
                   ]
@@ -2279,6 +2281,7 @@ const App: React.FC = () => {
   const analogTechHref = joinBasePath(baseUrl, 'analog-tech');
   const lifeHref = joinBasePath(baseUrl, 'life');
   const brandGuideHref = joinBasePath(baseUrl, 'brand-guide');
+  const resumeHref = 'https://drive.google.com/file/d/1d6ZezQahB921ayMbVBhdAeUXNxSqc9ja/view?usp=drive_link';
   const homeHref = baseUrl;
   const currentPath = typeof window !== 'undefined' ? normalizePath(window.location.pathname) : '/';
   const normalizedBase = normalizePath(baseUrl);
@@ -2398,7 +2401,7 @@ const App: React.FC = () => {
               theme={theme}
               setThemePreference={setThemePreference}
             />
-            <a href="https://drive.google.com/uc?export=download&id=1bidz8DdSkgYu2KrsKUXnfR04J8EUo3IZ" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-full bg-stone-900 px-4 py-2 text-sm font-medium text-white ring-2 ring-transparent transition-all hover:bg-stone-800 hover:ring-eden-amber/55 focus-visible:outline-none focus-visible:ring-eden-amber/60">
+            <a href={resumeHref} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-full bg-stone-900 px-4 py-2 text-sm font-medium text-white ring-2 ring-transparent transition-all hover:bg-stone-800 hover:ring-eden-amber/55 focus-visible:outline-none focus-visible:ring-eden-amber/60">
               <Download size={16} />
               <span>{isZh ? '简历' : 'Resume'}</span>
             </a>
