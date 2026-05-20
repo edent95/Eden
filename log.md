@@ -40,6 +40,14 @@
 - 影响：点击 Resume/简历会直接触发新版 CV 下载，而不是先打开 Drive 预览页。
 - 后续：无。
 
+### 2026-05-20 20:42
+
+- 类型：代码 / 链接
+- 改动：将 Resume/简历按钮更新为 Google Drive 文件 `1PRXj4BwpeAX_7F9H2PJumG0slIEZmLZ0` 的 `uc?export=download` 直下载链接。
+- 原因：用户提供新的 CV Drive 链接，并要求保持一键下载。
+- 影响：点击 Resume/简历会直接下载最新 CV 文件。
+- 后续：确认 Drive 文件权限为「Anyone with the link can view」，避免访客遇到权限页。
+
 ### 2026-05-02 (里程碑：Jiju 创始人日期格式)
 
 - 类型：内容 / 作品集

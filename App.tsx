@@ -2281,7 +2281,7 @@ const App: React.FC = () => {
   const analogTechHref = joinBasePath(baseUrl, 'analog-tech');
   const lifeHref = joinBasePath(baseUrl, 'life');
   const brandGuideHref = joinBasePath(baseUrl, 'brand-guide');
-  const resumeHref = 'https://drive.google.com/uc?export=download&id=1d6ZezQahB921ayMbVBhdAeUXNxSqc9ja';
+  const resumeHref = 'https://drive.google.com/uc?export=download&id=1PRXj4BwpeAX_7F9H2PJumG0slIEZmLZ0';
   const homeHref = baseUrl;
   const currentPath = typeof window !== 'undefined' ? normalizePath(window.location.pathname) : '/';
   const normalizedBase = normalizePath(baseUrl);
