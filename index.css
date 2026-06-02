@@ -264,6 +264,13 @@ button,
   background-color: var(--theme-surface-muted) !important;
 }
 
+:root[data-theme="dark"] .bg-rose-50,
+:root[data-theme="dark"] .bg-red-50,
+:root[data-theme="dark"] .bg-orange-50,
+:root[data-theme="dark"] .bg-amber-50 {
+  background-color: rgb(43 37 34 / 0.92) !important;
+}
+
 :root[data-theme="dark"] .bg-stone-300,
 :root[data-theme="dark"] .bg-stone-400,
 :root[data-theme="dark"] .bg-stone-600,

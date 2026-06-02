@@ -142,6 +142,16 @@ const PAGE_COPY: Record<
       zh: 'Life 相关短片与个人向记录，by Eden Tan。',
     },
   },
+  '/life-os': {
+    title: {
+      en: 'Life OS RPG Character System | Eden Tan',
+      zh: '人生 RPG 能力系统 | Eden Tan',
+    },
+    desc: {
+      en: 'A mystic-tech RPG character card, ability map, debuff system, and growth route for reading personality, experience, desire, shadow, and next upgrade moves.',
+      zh: '一个神秘科技风 RPG 角色卡、能力地图、Debuff 系统与成长路线，把人格、经历、欲望、阴影和下一步升级方式转成可读面板。',
+    },
+  },
   '/brand-guide': {
     title: {
       en: 'Brand guide | Eden Tan portfolio',

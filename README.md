@@ -57,6 +57,7 @@ npm run preview
 - `/jiju-pet` — Jiju.pet 构建叙事  
 - `/previous-projects` — 项目列表  
 - `/analog-tech` — 胶片图库  
+- `/life-os` — 人生 RPG 能力系统 / Life OS 角色档案页  
 - `/life` — Life 视频页  
 - `/brand-guide` — 品牌与组件约定  
 - `/archive/:slug` — 归档项目详情  

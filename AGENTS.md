@@ -253,6 +253,7 @@ After substantive edits:
 - run at least `npm run build`
 - provide concrete local verification URL(s) to the user
 - explicitly state what the user should see
+- do not use screenshot verification unless the user explicitly asks for it; prefer build output, keyword checks, code checks, and local URL instructions
 
 ### 4) Logging is mandatory
 

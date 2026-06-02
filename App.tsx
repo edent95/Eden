@@ -633,6 +633,434 @@ const lifeVideos = [
   },
 ];
 
+const lifeOsIcons = {
+  windInfiltration: '/life-os-icons/wind-infiltration.png',
+  abstractionEngine: '/life-os-icons/abstraction-engine.png',
+  humanPatternScan: '/life-os-icons/human-pattern-scan.png',
+  environmentalRewrite: '/life-os-icons/environmental-rewrite.png',
+  narrativeAlchemy: '/life-os-icons/narrative-alchemy.png',
+  controlledChaos: '/life-os-icons/controlled-chaos.png',
+  wandererInstinct: '/life-os-icons/wanderer-instinct.png',
+  antiRoutineSystem: '/life-os-icons/anti-routine-system.png',
+  socialMirror: '/life-os-icons/social-mirror.png',
+  patternMemory: '/life-os-icons/pattern-memory.png',
+  boredomDecay: '/life-os-icons/boredom-decay.png',
+  overInsight: '/life-os-icons/over-insight.png',
+  unfinishedQuestLoop: '/life-os-icons/unfinished-quest-loop.png',
+  authorityResistance: '/life-os-icons/authority-resistance.png',
+  systemDesign: '/life-os-icons/system-design.png',
+  ruleSetterPhase: '/life-os-icons/rule-setter-phase.png',
+} as const;
+
+const lifeOsActiveSkillIcons = {
+  galeclawSigil: '/life-os-icons/active-galeclaw-sigil.png',
+  moonCodexLoom: '/life-os-icons/active-moon-codex-loom.png',
+  catsEyeScan: '/life-os-icons/active-cats-eye-scan.png',
+  territoryRuneRewrite: '/life-os-icons/active-territory-rune-rewrite.png',
+  storyCauldronAlchemy: '/life-os-icons/active-story-cauldron-alchemy.png',
+  nineLivesChaosStep: '/life-os-icons/active-nine-lives-chaos-step.png',
+} as const;
+
+const lifeOsModuleIcons = {
+  softInfiltrationStyle: '/life-os-module-icons/soft-infiltration-style.png',
+  ruleSetterPhase: '/life-os-module-icons/rule-setter-phase.png',
+  explorerDrive: '/life-os-module-icons/explorer-drive.png',
+  lightBladeBuild: '/life-os-module-icons/light-blade-build.png',
+  bodyResponseEngine: '/life-os-module-icons/body-response-engine.png',
+  chaosCompressionEngine: '/life-os-module-icons/chaos-compression-engine.png',
+  wandererInstinct: '/life-os-module-icons/wanderer-instinct.png',
+  antiRoutineSystem: '/life-os-module-icons/anti-routine-system.png',
+  socialMirror: '/life-os-module-icons/social-mirror.png',
+  patternMemory: '/life-os-module-icons/pattern-memory.png',
+  boredomDecay: '/life-os-module-icons/boredom-decay.png',
+  overInsight: '/life-os-module-icons/over-insight.png',
+  unfinishedQuestLoop: '/life-os-module-icons/unfinished-quest-loop.png',
+  authorityResistance: '/life-os-module-icons/authority-resistance.png',
+} as const;
+
+const lifeOsBanners = {
+  passiveSkills: '/life-os-banners/passive-skills-cat-magic.png',
+  debuffs: '/life-os-banners/debuff-cat-magic.png',
+} as const;
+
+const lifeOsActiveSkillBanners = {
+  galeclawSigil: '/life-os-banners/active-galeclaw-sigil.png',
+  moonCodexLoom: '/life-os-banners/active-moon-codex-loom.png',
+  catsEyeScan: '/life-os-banners/active-cats-eye-scan.png',
+  territoryRuneRewrite: '/life-os-banners/active-territory-rune-rewrite.png',
+  storyCauldronAlchemy: '/life-os-banners/active-story-cauldron-alchemy.png',
+  nineLivesChaosStep: '/life-os-banners/active-nine-lives-chaos-step.png',
+} as const;
+
+const lifeOsSignalBanners = {
+  softInfiltrationStyle: '/life-os-signal-banners/soft-infiltration-style.png',
+  ruleSetterPhase: '/life-os-signal-banners/rule-setter-phase.png',
+  explorerDrive: '/life-os-signal-banners/explorer-drive.png',
+  lightBladeBuild: '/life-os-signal-banners/light-blade-build.png',
+  bodyResponseEngine: '/life-os-signal-banners/body-response-engine.png',
+  chaosCompressionEngine: '/life-os-signal-banners/chaos-compression-engine.png',
+} as const;
+
+const lifeOsGrowthRouteBanners = {
+  strategist: '/life-os-growth-routes/strategist-route.png',
+  creator: '/life-os-growth-routes/creator-route.png',
+  wanderer: '/life-os-growth-routes/wanderer-route.png',
+  architect: '/life-os-growth-routes/architect-route.png',
+} as const;
+
+const lifeOsCharacterPortrait = '/life-os-character/life-rpg-character.png';
+const lifeOsLoadoutBanner = '/life-os-character/wind-pattern-analyst-loadout-banner.png';
+
+const lifeRpgAttributes = [
+  { key: 'INS', label: { en: 'Insight', zh: '洞察力' }, value: 92, note: { en: 'Reads motives, lies, defenses, and relationship structure.', zh: '看穿动机、谎言、防御机制与关系结构。' } },
+  { key: 'STR', label: { en: 'Strategy', zh: '策略力' }, value: 90, note: { en: 'Changes the field through small moves and delayed positioning.', zh: '用小动作、小迭代与延迟布局改变局势。' } },
+  { key: 'EXP', label: { en: 'Expression', zh: '表达力' }, value: 87, note: { en: 'Turns complex thought into story, content, language, and brand.', zh: '把复杂思想转成故事、内容、语言和品牌。' } },
+  { key: 'FRE', label: { en: 'Freedom', zh: '自由欲' }, value: 95, note: { en: 'Needs movement, optionality, and non-traditional life routes.', zh: '强烈需要变化、选择权与非传统人生路线。' } },
+  { key: 'ADP', label: { en: 'Adaptability', zh: '适应力' }, value: 88, note: { en: 'Switches across new places, industries, systems, and people.', zh: '能快速切换新场景、新行业、新系统与新人群。' } },
+  { key: 'EXE', label: { en: 'Execution', zh: '启动力' }, value: 82, note: { en: 'Moves fast once the body and instinct give a response.', zh: '身体有回应时，能快速启动行动。' } },
+  { key: 'STA', label: { en: 'Stability', zh: '稳定度' }, value: 64, note: { en: 'Long maintenance and emotional balance require deliberate systems.', zh: '长期维护与情绪平衡需要刻意设计系统。' } },
+  { key: 'TRU', label: { en: 'Trust', zh: '社交信任' }, value: 52, note: { en: 'Trust grows slowly when too much hidden motive is visible.', zh: '看见太多隐藏动机时，信任建立会变慢。' } },
+] as const;
+
+const lifeRpgActiveSkills = [
+  {
+    icon: lifeOsActiveSkillIcons.galeclawSigil,
+    banner: lifeOsActiveSkillBanners.galeclawSigil,
+    name: { en: 'Galeclaw Sigil', zh: '风爪密印' },
+    level: 'S+',
+    type: { en: 'Veiled field-control spell', zh: '隐形场域控制法术' },
+    cost: { en: 'Patience + repeated paw-steps', zh: '耐心 + 反复轻爪步' },
+    effect: { en: 'Leaves quiet wind marks across a field until the room starts following a new route.', zh: '在场域里留下细小风印，直到环境开始按新的路线运行。' },
+    scene: { en: 'Long-term positioning, brand seeding, strategic relationships, product adoption.', zh: '长期布局、品牌渗透、策略关系、产品采用。' },
+    sideEffect: { en: 'Without a main quest, the cat keeps marking every corridor instead of finishing one path.', zh: '没有主线时，会一直标记新走廊，却没有走完其中一条路。' },
+    bannerCaption: { en: 'A wind-cat sigil for slow infiltration. The spell wins by changing the room before anyone notices.', zh: '风猫留下的渗透密印。不是硬碰，而是在别人察觉前改写场域。' },
+  },
+  {
+    icon: lifeOsActiveSkillIcons.moonCodexLoom,
+    banner: lifeOsActiveSkillBanners.moonCodexLoom,
+    name: { en: 'Moon-Codex Loom', zh: '月影法典织机' },
+    level: 'S',
+    type: { en: 'Arcane compression spell', zh: '奥术压缩法术' },
+    cost: { en: 'Confusion + quiet reading time', zh: '混乱资料 + 安静回看时间' },
+    effect: { en: 'Threads scattered signals, memories, and messy notes into one usable spell pattern.', zh: '把分散信号、记忆和混乱笔记织成一个可使用的法术图案。' },
+    scene: { en: 'Life OS, strategy writing, product systems, personal knowledge maps.', zh: 'Life OS、策略写作、产品系统、个人知识地图。' },
+    sideEffect: { en: 'The loom can keep weaving forever if no artifact is shipped.', zh: '如果没有交付物，织机会一直织下去，产出会被延迟。' },
+    bannerCaption: { en: 'The archive spell that turns loose fragments into a usable model.', zh: '把碎片织成模型的档案法术。混乱越多，越需要收束成一张图。' },
+  },
+  {
+    icon: lifeOsActiveSkillIcons.catsEyeScan,
+    banner: lifeOsActiveSkillBanners.catsEyeScan,
+    name: { en: "Cat's Eye Scan", zh: '猫眼动机扫描' },
+    level: 'S',
+    type: { en: 'Motive-reading spell', zh: '动机读取法术' },
+    cost: { en: 'Mental focus', zh: '精神专注' },
+    effect: { en: 'Reads motive, desire, defense, and hidden emotion through tiny behavioral tells.', zh: '从微小行为线索读取动机、欲望、防御和隐藏情绪。' },
+    scene: { en: 'Negotiation, people reading, relationship judgment, market analysis, content creation.', zh: '谈判、识人、关系判断、市场分析、内容创作。' },
+    sideEffect: { en: 'The eye can turn cold when it sees too many hidden motives.', zh: '看见太多隐藏动机时，猫眼会变冷，耐心下降。' },
+    bannerCaption: { en: 'A motive scan spell. It reads the room through posture, silence, desire, and defense.', zh: '读取动机的猫眼法术。它看姿态、沉默、欲望和防御。' },
+  },
+  {
+    icon: lifeOsActiveSkillIcons.territoryRuneRewrite,
+    banner: lifeOsActiveSkillBanners.territoryRuneRewrite,
+    name: { en: 'Territory Rune Rewrite', zh: '领地符文改写' },
+    level: 'S',
+    type: { en: 'Room-rule alteration spell', zh: '场域规则改写法术' },
+    cost: { en: 'Time and positioning', zh: '时间 + 布局' },
+    effect: { en: 'Changes the room by moving runes, routes, and incentives instead of forcing a collision.', zh: '通过移动符文、路线和诱因改变场域，而不是强行正面碰撞。' },
+    scene: { en: 'Workplace, brand promotion, business cooperation, community building, content seeding.', zh: '职场、品牌推广、商业合作、社群经营、内容渗透。' },
+    sideEffect: { en: 'With no win condition, the spell becomes endless map editing.', zh: '没有胜利条件时，会变成无止境改地图。' },
+    bannerCaption: { en: 'A tactical rune spell. Change the path, and the behavior follows.', zh: '战术符文法术。路线被改写后，行为也会跟着改变。' },
+  },
+  {
+    icon: lifeOsActiveSkillIcons.storyCauldronAlchemy,
+    banner: lifeOsActiveSkillBanners.storyCauldronAlchemy,
+    name: { en: 'Story Cauldron Alchemy', zh: '故事坩埚炼金' },
+    level: 'A+',
+    type: { en: 'Memory transmutation spell', zh: '记忆转化法术' },
+    cost: { en: 'Experience and emotion', zh: '经历 + 情绪' },
+    effect: { en: 'Boils pain, relationships, life events, and business observation into stories people can carry.', zh: '把痛苦、关系、人生事件和商业观察熬成别人能带走的故事。' },
+    scene: { en: 'Build notes, YouTube, personal site, brand content, philosophical writing.', zh: 'Blog、YouTube、个人网站、品牌内容、哲学表达。' },
+    sideEffect: { en: 'Too much heat makes the potion dramatic instead of useful.', zh: '火候太满时，内容会变戏剧化，而不是变有用。' },
+    bannerCaption: { en: 'A cauldron spell for turning lived experience into transmissible stories.', zh: '把真实经历熬成可传播故事的坩埚法术。' },
+  },
+  {
+    icon: lifeOsActiveSkillIcons.nineLivesChaosStep,
+    banner: lifeOsActiveSkillBanners.nineLivesChaosStep,
+    name: { en: 'Nine-Lives Chaos Step', zh: '九命混沌步' },
+    level: 'A',
+    type: { en: 'Risk-channeling movement spell', zh: '风险导流移动法术' },
+    cost: { en: 'Risk tolerance', zh: '风险承受力' },
+    effect: { en: 'Steps into unclear fields and turns danger, novelty, and speed into temporary power.', zh: '踏入不清楚的场域，把危险、新鲜感和速度转成短时间爆发力。' },
+    scene: { en: 'Travel, startup, new markets, new industries, gray-zone observation.', zh: '旅行、创业、开荒、新行业、新市场、灰区观察。' },
+    sideEffect: { en: 'The character may mistake danger for freedom when the storm feels alive.', zh: '当风暴让人觉得活着时，角色容易把危险误认成自由。' },
+    bannerCaption: { en: 'A movement spell for uncertain fields. Useful only when risk has a route.', zh: '进入不确定场域的移动法术。风险有路线时才有用。' },
+  },
+] as const;
+
+const lifeRpgPassiveSkills = [
+  {
+    icon: lifeOsModuleIcons.wandererInstinct,
+    name: { en: 'Wanderer Instinct', zh: '流浪者本能' },
+    trigger: { en: 'Entering a new place, crowd, or system.', zh: '进入新地方、新人群或新系统。' },
+    effect: { en: 'Adaptation speed rises. Exploration instinct activates.', zh: '适应速度提升，对陌生环境有天然探索欲。' },
+    risk: { en: 'Stable life can become boring too quickly.', zh: '稳定生活容易很快变得无聊。' },
+  },
+  {
+    icon: lifeOsModuleIcons.antiRoutineSystem,
+    name: { en: 'Anti-Routine System', zh: '反重复系统' },
+    trigger: { en: 'Fixed rules, repeated tasks, and low-meaning maintenance.', zh: '固定规则、重复任务与低意义维护。' },
+    effect: { en: 'Creativity rises when the character looks for a workaround.', zh: '寻找绕路方案时，创造力会上升。' },
+    risk: { en: 'Patience and long-term maintenance drop.', zh: '耐心与长期维护力下降。' },
+  },
+  {
+    icon: lifeOsModuleIcons.socialMirror,
+    name: { en: 'Social Mirror', zh: '社交镜像' },
+    trigger: { en: 'Different rooms, roles, cultures, or emotional tones.', zh: '不同场域、身份、文化或情绪气氛。' },
+    effect: { en: 'Expression shifts quickly. People often feel understood.', zh: '表达方式快速切换，容易让别人觉得被理解。' },
+    risk: { en: 'Too much switching can blur the self.', zh: '过度切换会导致自我感模糊。' },
+  },
+  {
+    icon: lifeOsModuleIcons.patternMemory,
+    name: { en: 'Pattern Memory', zh: '模式记忆' },
+    trigger: { en: 'Repeated relationship, business, or human behavior patterns.', zh: '重复出现的关系、商业或人性模式。' },
+    effect: { en: 'Next similar situation is judged faster.', zh: '下一次遇到相似场景时，判断速度提升。' },
+    risk: { en: 'May over-suspect people before they prove intent.', zh: '容易在对方证明意图前就过度怀疑。' },
+  },
+] as const;
+
+const lifeRpgDebuffs = [
+  {
+    icon: lifeOsModuleIcons.boredomDecay,
+    name: { en: 'Boredom Decay', zh: '无聊衰减' },
+    trigger: { en: 'Life repeats, work stops growing, or the project loses meaning.', zh: '生活太重复、工作没有成长、项目没有意义。' },
+    negative: { en: 'Action -40%. Emotional stability -30%. Escape impulse +50%.', zh: '行动力 -40%，情绪稳定 -30%，逃离冲动 +50%。' },
+    release: { en: 'Add a new challenge, environment, target, or stage upgrade.', zh: '加入新挑战、新环境、新目标或阶段性升级。' },
+    upgrade: { en: 'Long-term exploration power.', zh: '长期探索力。' },
+  },
+  {
+    icon: lifeOsModuleIcons.overInsight,
+    name: { en: 'Over Insight', zh: '过度洞察' },
+    trigger: { en: 'Too much is seen, but cannot be said directly.', zh: '看穿别人太多，但不能说出口。' },
+    negative: { en: 'Trust decreases. Social fatigue rises. The character cools down or pulls away.', zh: '信任感下降，社交疲劳增加，容易冷掉或疏离。' },
+    release: { en: 'Convert the insight into content, systems, consulting, or creation.', zh: '把洞察转成内容、系统、咨询或创作，而不是压在心里。' },
+    upgrade: { en: 'Human analysis power.', zh: '人性分析力。' },
+  },
+  {
+    icon: lifeOsModuleIcons.unfinishedQuestLoop,
+    name: { en: 'Unfinished Quest Loop', zh: '未完成任务循环' },
+    trigger: { en: 'Too many new plans open at the same time.', zh: '同时开启太多新计划。' },
+    negative: { en: 'Main quest progress drops. New-project excitement rises. Old-project maintenance drops.', zh: '主线任务进度下降，新项目兴奋度上升，旧项目维护力下降。' },
+    release: { en: 'Keep one main quest per stage. Move everything else into side quests.', zh: '每个阶段只保留一个主线任务，其他全部归类为支线。' },
+    upgrade: { en: 'Multi-line project management power.', zh: '多线项目管理力。' },
+  },
+  {
+    icon: lifeOsModuleIcons.authorityResistance,
+    name: { en: 'Authority Resistance', zh: '权威抗拒' },
+    trigger: { en: 'Being managed by low-competence authority or trapped in irrational rules.', zh: '被没能力的人管理，或被不合理制度控制。' },
+    negative: { en: 'Obedience drops. Rebellion rises. Creativity rises. Stable cooperation drops.', zh: '服从度下降，反骨值上升，创造力上升，稳定合作下降。' },
+    release: { en: 'Choose high-freedom environments or become a rule designer.', zh: '选择高自由度环境，或让自己成为规则制定者。' },
+    upgrade: { en: 'System reform power.', zh: '系统改革力。' },
+  },
+] as const;
+
+const lifeRpgSkillTrees = [
+  {
+    banner: lifeOsGrowthRouteBanners.strategist,
+    title: { en: 'The Strategist', zh: '策略师路线' },
+    path: { en: 'Insight -> positioning -> resource alignment -> rule design', zh: '洞察力 → 策略布局 → 资源整合 → 规则制定' },
+    directions: { en: 'Marketing strategy, brand consulting, business analysis, product planning, iGaming consulting.', zh: '营销策略、品牌顾问、商业分析、产品策划、iGaming 顾问。' },
+    risk: { en: 'Can over-read the field and delay direct action.', zh: '容易过度读局，延迟直接行动。' },
+  },
+  {
+    banner: lifeOsGrowthRouteBanners.creator,
+    title: { en: 'The Creator', zh: '创作者路线' },
+    path: { en: 'Experience -> point of view -> content system -> personal brand', zh: '个人经历 → 观点表达 → 内容系统 → 个人品牌' },
+    directions: { en: 'Build notes, YouTube, personal site, AI short video, philosophical essays.', zh: 'Blog、YouTube、个人网站、AI 短视频、哲学文章。' },
+    risk: { en: 'Emotion can make the story louder than the system.', zh: '情绪太满时，故事会盖过系统。' },
+  },
+  {
+    banner: lifeOsGrowthRouteBanners.wanderer,
+    title: { en: 'The Wanderer', zh: '流浪者路线' },
+    path: { en: 'Travel -> human observation -> cultural understanding -> worldview rebuild', zh: '旅行体验 → 人性观察 → 文化理解 → 世界观重构' },
+    directions: { en: 'Digital nomad life, long-term travel, cross-border living, experience-based content.', zh: '数字游民、长期旅行、跨国生活、体验型内容。' },
+    risk: { en: 'Freedom can become escape when the main quest is weak.', zh: '主线不清时，自由会变成逃离。' },
+  },
+  {
+    banner: lifeOsGrowthRouteBanners.architect,
+    title: { en: 'The Architect', zh: '系统架构者路线' },
+    path: { en: 'Messy data -> structure -> model -> product', zh: '混乱资料 → 结构化 → 模型化 → 产品化' },
+    directions: { en: 'Personality systems, RPG life maps, upgrade tools, personal operating systems.', zh: '人格系统、RPG 人生地图、升级工具、个人操作系统。' },
+    risk: { en: 'The model can keep expanding before the first usable version ships.', zh: '模型会不断扩张，拖慢第一个可用版本。' },
+  },
+] as const;
+
+const lifeRpgSources = [
+  { en: 'Player logs: repeated choices, environments, reactions, and unfinished quests.', zh: '玩家日志：重复选择、环境反应、行动惯性与未完成任务。' },
+  { en: 'Behavior loops: pressure triggers, boredom decay, trust patterns, and energy cost.', zh: '行为循环：压力触发、无聊衰减、信任模式与能量消耗。' },
+  { en: 'Energy pattern: what creates momentum, drains focus, or causes system overheating.', zh: '能量模式：什么会带来动能、消耗专注，或造成系统过热。' },
+  { en: 'Social pattern: how the character reads rooms, mirrors people, and protects trust.', zh: '社交模式：角色如何读懂场域、镜像人群，并保护信任。' },
+  { en: 'Money pattern: how concepts become offers, products, leverage, and value.', zh: '赚钱模式：概念如何转成报价、产品、杠杆和价值。' },
+  { en: 'Relationship pattern: attraction, distance, loyalty, fatigue, and boundary signals.', zh: '关系模式：吸引、距离、忠诚、疲劳和边界信号。' },
+  { en: 'Reality calibration: travel, work history, projects, relationships, and creator output.', zh: '现实校准：旅行、工作经历、项目、关系和创作输出。' },
+] as const;
+
+const lifeRpgDecodeSignals = [
+  {
+    icon: lifeOsModuleIcons.softInfiltrationStyle,
+    banner: lifeOsSignalBanners.softInfiltrationStyle,
+    emoji: '🌬️',
+    code: 'WIND-57',
+    title: { en: 'Soft Infiltration Style', zh: '轻量渗透型风格' },
+    signal: { en: 'Gentle infiltration, repeated small moves, environmental rewriting.', zh: '渗透、反复小动作、环境权重改写。' },
+    output: { en: 'Unlocks Wind Infiltration and strategic patience.', zh: '解锁风之渗透与策略耐心。' },
+  },
+  {
+    icon: lifeOsModuleIcons.ruleSetterPhase,
+    banner: lifeOsSignalBanners.ruleSetterPhase,
+    emoji: '👑',
+    code: 'PHASE-RULE',
+    title: { en: 'Rule-Setter Phase', zh: '规则制定阶段' },
+    signal: { en: 'The influence stage. Set rules, hold the main quest, move resources toward the core target.', zh: '影响力最强阶段。适合定规则、抓主线、把资源推向核心目标。' },
+    output: { en: 'Upgrades from wanderer mode to rule-designer mode.', zh: '从流浪者模式升级成规则制定者模式。' },
+  },
+  {
+    icon: lifeOsModuleIcons.explorerDrive,
+    banner: lifeOsSignalBanners.explorerDrive,
+    emoji: '5',
+    code: 'EXPLORE-05',
+    title: { en: 'Explorer Drive', zh: '探索驱动' },
+    signal: { en: 'Freedom, movement, experience, and high boredom sensitivity.', zh: '自由、变化、体验，以及很高的无聊敏感度。' },
+    output: { en: 'Boosts Freedom and Controlled Chaos. Lowers routine tolerance.', zh: '强化自由欲与可控混乱，降低重复耐受。' },
+  },
+  {
+    icon: lifeOsModuleIcons.lightBladeBuild,
+    banner: lifeOsSignalBanners.lightBladeBuild,
+    emoji: '🗡️',
+    code: 'BLADE-LIGHT',
+    title: { en: 'Light Blade Build', zh: '轻刃型配置' },
+    signal: { en: 'Pressure can sharpen the blade, but the character needs structure. Too much heat causes burnout.', zh: '压力能磨出锋利度，但角色需要结构承托。过热会导致系统烧干。' },
+    output: { en: 'Adds Rule Sense, pressure awareness, and the Overheat Pressure debuff.', zh: '加入规则嗅觉、压力感知与过热压力 Debuff。' },
+  },
+  {
+    icon: lifeOsModuleIcons.bodyResponseEngine,
+    banner: lifeOsSignalBanners.bodyResponseEngine,
+    emoji: '⚡',
+    code: 'BODY-YES',
+    title: { en: 'Body Response Engine', zh: '身体回应引擎' },
+    signal: { en: 'Energy works best after response. Forcing without a body yes drains the system.', zh: '等身体回应后行动最好。没有身体的 yes，硬做会消耗系统。' },
+    output: { en: 'Unlocks Response Mode. Execution activates after a real body yes.', zh: '解锁回应模式。真正有身体 yes 后，启动力才会启动。' },
+  },
+  {
+    icon: lifeOsModuleIcons.chaosCompressionEngine,
+    banner: lifeOsSignalBanners.chaosCompressionEngine,
+    emoji: '64-47',
+    code: 'ABSTRACT',
+    title: { en: 'Chaos Compression Engine', zh: '混乱压缩引擎' },
+    signal: { en: 'Confusion becomes insight after compression, reflection, and naming.', zh: '混乱经过压缩、回看和命名后，变成洞察。' },
+    output: { en: 'Unlocks Abstraction Engine and Narrative Alchemy.', zh: '解锁抽象整合引擎与故事炼金。' },
+  },
+] as const;
+
+const lifeRpgHiddenParameters = [
+  { key: 'BIZ', label: { en: 'Business Sense', zh: '商业嗅觉' }, value: 85, note: { en: 'Turns concepts into value, offers, products, and leverage.', zh: '把概念转成价值、报价、产品和杠杆。' } },
+  { key: 'CRT', label: { en: 'Creativity', zh: '创造力' }, value: 89, note: { en: 'Rebuilds messy experience into new content, systems, and expression.', zh: '把混乱经验重组为新内容、新系统和新表达。' } },
+  { key: 'RUT', label: { en: 'Routine Tolerance', zh: '重复耐受' }, value: 32, note: { en: 'Low tolerance for fixed loops without meaning or upgrade.', zh: '对没有意义或升级感的固定循环耐受低。' } },
+  { key: 'OBY', label: { en: 'System Obedience', zh: '制度服从' }, value: 38, note: { en: 'Obeys systems only when the logic, competence, and stakes make sense.', zh: '只有规则逻辑、能力和代价合理时，才愿意服从系统。' } },
+] as const;
+
+const lifeRpgQuestDirectives = [
+  { en: 'Primary command: turn scattered ability into one transmissible life system.', zh: '主指令：把分散能力收束成一个可传播的人生系统。' },
+  { en: 'Stage tactic: act like a background process that quietly changes the field.', zh: '阶段战术：像后台进程一样，持续且隐蔽地修改环境参数。' },
+  { en: 'Win condition: the target environment is reset and the strategy becomes visible.', zh: '胜利条件：目标环境参数被重置，策略可见性被迫提升。' },
+  { en: 'Risk warning: too many side quests will drain the main quest.', zh: '风险警告：支线任务太多，会削弱主线进度。' },
+] as const;
+
+const lifeRpgWorldPrinciples = [
+  {
+    emoji: '🌫️',
+    title: { en: 'Born from noise', zh: '从噪音中成形' },
+    body: {
+      en: 'This character did not begin in clean order. The early field was made of unclear signals, shifting rooms, desire, pressure, and unfinished patterns.',
+      zh: '这个角色不是从干净秩序里开始。早期场域里有模糊信号、变化的人群、欲望、压力，以及反复出现的未完成模式。',
+    },
+  },
+  {
+    emoji: '👁️',
+    title: { en: 'Weapon: pattern sight', zh: '武器：模式视野' },
+    body: {
+      en: 'The first weapon is not force. It is the ability to notice hidden motives, repeated behavior, weak structures, and the story underneath the surface.',
+      zh: '第一件武器不是蛮力，而是看见隐藏动机、重复行为、脆弱结构，以及表面之下的故事。',
+    },
+  },
+  {
+    emoji: '🜁',
+    title: { en: 'Element: Wind + Metal', zh: '元素：风 + 金' },
+    body: {
+      en: 'Wind opens the door into different worlds. Metal cuts chaos into shape. One moves. One structures. The build only works when both are active.',
+      zh: '风负责进入不同世界。金负责把混乱切成结构。一个负责流动，一个负责成形。两者同时启动时，角色才真正可用。',
+    },
+  },
+  {
+    emoji: '🧭',
+    title: { en: 'Main quest: usable maps', zh: '主线：做出可用地图' },
+    body: {
+      en: 'The mission is to turn human insight, business strategy, AI workflows, and lived chaos into systems other people can understand and use.',
+      zh: '主线任务是把人性洞察、商业策略、AI 工作流和真实混乱，转成别人也能理解和使用的系统。',
+    },
+  },
+] as const;
+
+const lifeRpgFormulaExamples = [
+  {
+    title: { en: 'Freedom Drive', zh: '自由探索欲' },
+    score: 95,
+    lines: {
+      en: [
+        'Explorer drive +15',
+        'Adventure hunger +15',
+        'Soft infiltration style +15',
+        'Creator playfield +10',
+        'Mutation loop +10',
+        'Real calibration: travel, job changes, risk appetite +20',
+        'Conflict correction: real-world constraints -5',
+      ],
+      zh: [
+        '探索驱动 +15',
+        '冒险饥饿感 +15',
+        '轻量渗透型风格 +15',
+        '创作者游乐场 +10',
+        '突变循环 +10',
+        '现实校准：旅行、换工作、冒险倾向 +20',
+        '冲突修正：现实约束 -5',
+      ],
+    },
+  },
+  {
+    title: { en: 'Stable Execution', zh: '稳定执行' },
+    score: 64,
+    lines: {
+      en: [
+        'Response engine +15',
+        'High-stakes discipline +15',
+        'Pressure buffer +10',
+        'Slow-build mode +10',
+        'Impatience shadow -15',
+        'Low routine tolerance -20',
+        'Real calibration: unfinished loops -10',
+      ],
+      zh: [
+        '回应引擎 +15',
+        '高压纪律 +15',
+        '压力缓冲 +10',
+        '慢速建造模式 +10',
+        '急躁阴影 -15',
+        '重复耐受低 -20',
+        '现实校准：三分钟热度 / 未完成循环 -10',
+      ],
+    },
+  },
+] as const;
+
 const previousProjectsData = [
   {
     title: {
@@ -1258,6 +1686,1071 @@ const LifeFullPage: React.FC<{
           </div>
         </div>
       </main>
+    </div>
+  );
+};
+
+const LifeOsIcon: React.FC<{ src: string; alt: string; size?: 'sm' | 'md' | 'lg' }> = ({ src, alt, size = 'md' }) => {
+  const sizeClass = size === 'lg' ? 'h-16 w-16' : size === 'sm' ? 'h-10 w-10' : 'h-12 w-12';
+
+  return (
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      className={`${sizeClass} flex-none rounded-xl border border-stone-200 bg-stone-900 object-cover shadow-sm ring-1 ring-eden-mint/15`}
+    />
+  );
+};
+
+const LifeOsBanner: React.FC<{
+  src: string;
+  alt: string;
+  label: string;
+  caption: string;
+  className?: string;
+}> = ({ src, alt, label, caption, className = '' }) => (
+  <figure className={`relative mt-5 overflow-hidden rounded-xl border border-stone-200 bg-stone-900 shadow-sm ${className}`}>
+    <div className="aspect-[16/9] w-full sm:aspect-[8/3]">
+      <img src={src} alt={alt} loading="lazy" className="h-full w-full object-cover" />
+    </div>
+    <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-stone-950/90 via-stone-950/55 to-transparent px-3 pb-3 pt-12 text-white sm:px-4 sm:pb-4 sm:pt-16">
+      <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-eden-amber sm:text-[10px] sm:tracking-[0.28em]">{label}</p>
+      <p className="mt-1 text-xs leading-relaxed text-stone-100 sm:text-sm">{caption}</p>
+    </figcaption>
+  </figure>
+);
+
+const LifeOsHudShapes: React.FC<{ variant?: 'hero' | 'panel' }> = ({ variant = 'panel' }) => (
+  <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
+    <span className="absolute left-4 top-4 h-8 w-8 border-l border-t border-eden-mint/35" />
+    <span className="absolute right-4 top-4 h-8 w-8 border-r border-t border-eden-amber/35" />
+    <span className="absolute bottom-4 left-4 h-8 w-8 border-b border-l border-eden-amber/25" />
+    <span className="absolute bottom-4 right-4 h-8 w-8 border-b border-r border-eden-mint/25" />
+    <span className="absolute left-8 bottom-8 h-px w-24 bg-gradient-to-r from-eden-mint/40 to-transparent" />
+    <span className="absolute right-10 top-10 h-14 w-px bg-gradient-to-b from-eden-amber/35 to-transparent" />
+    {variant === 'hero' && (
+      <>
+        <span className="absolute left-1/2 top-6 h-px w-40 -translate-x-1/2 bg-gradient-to-r from-transparent via-eden-mint/35 to-transparent" />
+        <span className="absolute bottom-8 right-28 hidden h-12 w-12 rotate-45 border border-eden-amber/20 lg:block" />
+        <span className="absolute left-10 top-1/2 grid -translate-y-1/2 grid-cols-1 gap-2">
+          <span className="h-1 w-6 bg-eden-mint/30" />
+          <span className="h-1 w-4 bg-eden-amber/30" />
+          <span className="h-1 w-8 bg-stone-300/50" />
+        </span>
+      </>
+    )}
+  </div>
+);
+
+const LifeOsDropDown: React.FC<{
+  id?: string;
+  index: string;
+  eyebrow: string;
+  title: string;
+  body: string;
+  children: React.ReactNode;
+}> = ({ id, index, eyebrow, title, body, children }) => (
+  <details id={id} className="group motion-card relative mt-4 scroll-mt-5 overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm backdrop-blur sm:mt-6">
+    <LifeOsHudShapes variant="hero" />
+    <summary className="relative z-10 flex cursor-pointer list-none items-start justify-between gap-3 p-4 transition-colors hover:bg-eden-mint/10 sm:gap-4 md:p-6 [&::-webkit-details-marker]:hidden">
+      <div className="min-w-0">
+        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-stone-500 sm:text-[10px] sm:tracking-[0.28em]">
+          CHAPTER-{index} · {eyebrow}
+        </p>
+        <h2 className="mt-2 font-display text-xl font-bold text-stone-900 sm:text-2xl md:text-3xl">{title}</h2>
+        <p className="mt-2 max-w-3xl text-xs leading-relaxed text-stone-600 sm:text-sm">{body}</p>
+      </div>
+      <span className="mt-1 flex h-9 w-12 flex-none items-center justify-center rounded-xl border border-eden-amber/30 bg-eden-amber/10 font-mono text-[10px] font-bold uppercase tracking-wider text-stone-800 transition-colors group-open:border-stone-700 group-open:bg-stone-900 group-open:text-stone-50 sm:h-10 sm:w-14">
+        {`Open`}
+      </span>
+    </summary>
+    <div className="relative z-10 border-t border-stone-200 px-3 pb-4 sm:px-4 sm:pb-5 md:px-5 md:pb-6">
+      {children}
+    </div>
+  </details>
+);
+
+const LifeOsRadarPanel: React.FC<{
+  stats: ReadonlyArray<{ key: string; value: number }>;
+  ariaLabel: string;
+  centerPrimary: string;
+  centerSecondary: string;
+  tone?: 'mint' | 'amber';
+  compact?: boolean;
+  className?: string;
+}> = ({ stats, ariaLabel, centerPrimary, centerSecondary, tone = 'mint', compact = false, className = '' }) => {
+  const center = 110;
+  const radius = 76;
+  const accent = tone === 'mint' ? 'rgb(123,220,181)' : 'rgb(255,163,64)';
+  const accentSoft = tone === 'mint' ? 'rgba(123,220,181,0.34)' : 'rgba(255,163,64,0.28)';
+  const point = (index: number, value: number) => {
+    const angle = -Math.PI / 2 + (Math.PI * 2 * index) / stats.length;
+    const scaledRadius = (radius * value) / 100;
+    return `${center + Math.cos(angle) * scaledRadius},${center + Math.sin(angle) * scaledRadius}`;
+  };
+  const gridPoint = (index: number, scale: number) => point(index, scale);
+  const shapePoints = stats.map((stat, index) => point(index, stat.value)).join(' ');
+  const gradientId = `life-os-radar-${tone}-${stats.map((stat) => stat.key).join('-').toLowerCase()}`;
+
+  return (
+    <div className={`relative mx-auto w-full ${compact ? 'max-w-[220px]' : 'max-w-[310px]'} overflow-hidden rounded-2xl border border-stone-800/70 bg-stone-950 p-2 text-white shadow-inner sm:p-3 ${className}`}>
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:18px_18px] opacity-35" />
+      <svg viewBox="0 0 220 220" role="img" aria-label={ariaLabel} className="relative h-auto w-full">
+        <defs>
+          <radialGradient id={gradientId} cx="50%" cy="50%" r="55%">
+            <stop offset="0%" stopColor={accentSoft} />
+            <stop offset="100%" stopColor="rgba(209,171,91,0.04)" />
+          </radialGradient>
+        </defs>
+        {[25, 50, 75, 100].map((scale) => (
+          <polygon
+            key={scale}
+            points={stats.map((_, index) => gridPoint(index, scale)).join(' ')}
+            fill={scale === 100 ? 'rgba(255,255,255,0.025)' : 'none'}
+            stroke="rgba(214,211,209,0.22)"
+            strokeWidth="1"
+          />
+        ))}
+        {stats.map((_, index) => (
+          <line
+            key={index}
+            x1={center}
+            y1={center}
+            x2={gridPoint(index, 100).split(',')[0]}
+            y2={gridPoint(index, 100).split(',')[1]}
+            stroke="rgba(214,211,209,0.18)"
+            strokeWidth="1"
+          />
+        ))}
+        <polygon points={shapePoints} fill={`url(#${gradientId})`} stroke={accent} strokeWidth="2" />
+        {stats.map((stat, index) => {
+          const [x, y] = point(index, stat.value).split(',');
+          const [labelX, labelY] = gridPoint(index, 117).split(',');
+
+          return (
+            <g key={stat.key}>
+              <circle cx={x} cy={y} r="3.5" fill="rgb(209,171,91)" stroke="rgb(255,255,255)" strokeWidth="1" />
+              <text
+                x={labelX}
+                y={labelY}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fill="rgb(245,245,244)"
+              fontSize={compact ? '7' : '8'}
+                fontWeight="800"
+              >
+                {stat.key}
+              </text>
+            </g>
+          );
+        })}
+        <circle cx={center} cy={center} r={compact ? '21' : '24'} fill="rgba(28,25,23,0.86)" stroke="rgba(209,171,91,0.62)" />
+        <text x={center} y={center - 2} textAnchor="middle" fill="rgb(255,255,255)" fontSize={compact ? '15' : '17'} fontWeight="800">
+          {centerPrimary}
+        </text>
+        <text x={center} y={center + 13} textAnchor="middle" fill="rgb(214,211,209)" fontSize="7" letterSpacing="1.5">
+          {centerSecondary}
+        </text>
+      </svg>
+    </div>
+  );
+};
+
+const LifeOsFullPage: React.FC<{
+  homeHref: string;
+  language: Language;
+  setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
+  theme: Theme;
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ homeHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
+  const isZh = language === 'zh';
+  const powerScore = 86;
+  const birthDate = new Date(1995, 11, 5);
+  const maxLevel = 80;
+  const endDate = new Date(birthDate.getFullYear() + maxLevel, birthDate.getMonth(), birthDate.getDate());
+  const today = new Date();
+  const currentLevel =
+    today.getFullYear() -
+    birthDate.getFullYear() -
+    (today.getMonth() < birthDate.getMonth() ||
+    (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate())
+      ? 1
+      : 0);
+  const lifeProgress = Math.min(
+    100,
+    Math.max(0, ((today.getTime() - birthDate.getTime()) / (endDate.getTime() - birthDate.getTime())) * 100)
+  );
+  const heroRadarStats = [
+    { key: 'INS', label: { en: 'Insight', zh: '洞察' }, value: 92 },
+    { key: 'STR', label: { en: 'Strategy', zh: '策略' }, value: 90 },
+    { key: 'EXP', label: { en: 'Expression', zh: '表达' }, value: 87 },
+    { key: 'FRE', label: { en: 'Freedom', zh: '自由' }, value: 95 },
+    { key: 'ADP', label: { en: 'Adapt', zh: '适应' }, value: 88 },
+    { key: 'STA', label: { en: 'Stability', zh: '稳定' }, value: 64 },
+  ] as const;
+  const radarCenter = 110;
+  const radarRadius = 76;
+  const radarPoint = (index: number, value: number) => {
+    const angle = -Math.PI / 2 + (Math.PI * 2 * index) / heroRadarStats.length;
+    const radius = (radarRadius * value) / 100;
+    return `${radarCenter + Math.cos(angle) * radius},${radarCenter + Math.sin(angle) * radius}`;
+  };
+  const radarGridPoint = (index: number, scale: number) => radarPoint(index, scale);
+  const radarShapePoints = heroRadarStats.map((stat, index) => radarPoint(index, stat.value)).join(' ');
+  const lifeOsGameMenu = [
+    {
+      href: '#life-os-character-file',
+      icon: '🃏',
+      code: '01',
+      title: isZh ? '角色档案' : 'Character File',
+      body: isZh ? '先看背景、身份和这套角色面板应该怎么阅读。' : 'Start with origin, identity, and how this character panel should be read.',
+      action: isZh ? '进入档案' : 'Enter file',
+      tone: 'amber',
+    },
+    {
+      href: '#life-os-stats-console',
+      icon: '📊',
+      code: '02',
+      title: isZh ? '数值控制台' : 'Stats Console',
+      body: isZh ? '再看核心属性、隐藏参数、玩家信号和主线任务。' : 'Then read core stats, hidden parameters, player signals, and the main quest.',
+      action: isZh ? '查看数值' : 'View stats',
+      tone: 'mint',
+    },
+    {
+      href: '#life-os-skill-codex',
+      icon: '🛠️',
+      code: '03',
+      title: isZh ? '技能图鉴' : 'Skill Codex',
+      body: isZh ? '主动技能、被动天赋和 Debuff 都在这里展开。' : 'Active spells, passive auras, and debuffs open here.',
+      action: isZh ? '打开技能' : 'Open skills',
+      tone: 'amber',
+    },
+    {
+      href: '#life-os-upgrade-path',
+      icon: '🌿',
+      code: '04',
+      title: isZh ? '升级路线' : 'Upgrade Path',
+      body: isZh ? '最后看成长路线、分数逻辑和这套系统的边界。' : 'Finish with growth routes, score logic, and the system boundary.',
+      action: isZh ? '查看路线' : 'View route',
+      tone: 'mint',
+    },
+  ];
+
+  return (
+    <div className="page-shell min-h-screen text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
+      <main className="px-3 pb-28 pt-8 sm:px-5 sm:pb-16 md:px-6 md:py-16">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <a
+              href={homeHref}
+              className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-medium text-stone-700 shadow-sm backdrop-blur transition-colors hover:border-eden-mint/60 hover:text-stone-900"
+            >
+              <ArrowLeft size={16} />
+              {isZh ? '返回主页' : 'Back to Home'}
+            </a>
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
+          </div>
+
+          <header className="motion-card relative mt-5 overflow-hidden rounded-2xl border border-stone-200 bg-white p-3 shadow-sm backdrop-blur sm:mt-8 sm:p-5 md:p-8">
+            <LifeOsHudShapes variant="hero" />
+            <div className="relative z-10 grid gap-4 sm:gap-6 lg:grid-cols-[0.85fr_1.15fr_0.85fr]">
+              <section className="relative order-1 overflow-hidden rounded-2xl border border-stone-200 bg-stone-50 p-4 sm:p-5">
+                <LifeOsHudShapes />
+                <div className="mx-auto max-w-[280px] overflow-hidden rounded-2xl border border-eden-mint/35 bg-stone-900 shadow-[0_0_44px_rgba(123,220,181,0.18)] lg:max-w-none">
+                  <img
+                    src={lifeOsCharacterPortrait}
+                    alt={isZh ? 'RPG 角色照片' : 'RPG character portrait'}
+                    loading="eager"
+                    className="aspect-square w-full object-cover"
+                  />
+                </div>
+                <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-stone-500 sm:mt-5 sm:text-xs sm:tracking-[0.28em]">
+                  🃏 {isZh ? 'RPG 角色档案' : 'RPG Character Profile'}
+                </p>
+                <h1 className="mt-2 font-display text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl md:text-5xl">
+                  {isZh ? '风之解析者' : 'Wind Pattern Analyst'}
+                </h1>
+                <p className="mt-1 font-display text-lg text-stone-700 sm:text-xl">
+                  🌬️ {isZh ? '流浪策略师' : 'Wandering Strategist'}
+                </p>
+                <div className="mt-4 space-y-2 text-sm text-stone-700 sm:mt-5">
+                  <p><span className="text-stone-500">⚔️ Class</span> · {isZh ? 'Wandering Strategist / 流浪策略师' : 'Wandering Strategist'}</p>
+                  <p><span className="text-stone-500">🧬 Sub Class</span> · {isZh ? '人性模式分析者' : 'Human Pattern Analyst'}</p>
+                  <p><span className="text-stone-500">🜁 Element</span> · Wind + Metal / 风 + 金</p>
+                  <p><span className="text-stone-500">🧭 Alignment</span> · Chaotic Insightful</p>
+                  <div className="rounded-xl border border-eden-amber/30 bg-white px-3 py-3">
+                    <div className="flex items-end justify-between gap-3">
+                      <div>
+                        <p className="font-mono text-[10px] uppercase tracking-wider text-stone-500">✦ Level</p>
+                        <p className="mt-1 font-semibold text-stone-900">
+                          LV {currentLevel} / {maxLevel}
+                        </p>
+                      </div>
+                      <p className="font-mono text-xs text-stone-500">{lifeProgress.toFixed(1)}%</p>
+                    </div>
+                    <div className="mt-3 h-2 overflow-hidden rounded-full bg-stone-200">
+                      <div
+                        className="h-full rounded-full bg-gradient-to-r from-eden-mint via-eden-amber to-stone-900"
+                        style={{ width: `${lifeProgress}%` }}
+                      />
+                    </div>
+                    <div className="mt-2 flex justify-between gap-3 font-mono text-[10px] uppercase tracking-wider text-stone-500">
+                      <span>{isZh ? '1995 出生' : 'Spawn 1995'}</span>
+                      <span>{isZh ? '80 年时间轴' : '80Y Timeline'}</span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section className="relative order-3 flex flex-col justify-between overflow-hidden rounded-2xl border border-eden-mint/25 bg-eden-mint/10 p-4 sm:p-5 lg:order-2">
+                <LifeOsHudShapes />
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-stone-500 sm:text-xs sm:tracking-[0.28em]">
+                    🌀 {isZh ? '背景故事' : 'Character Prologue'}
+                  </p>
+                  <h2 className="mt-2 font-display text-2xl font-bold text-stone-900 sm:text-3xl md:text-4xl">
+                    {isZh ? '风之解析者' : 'Wind Pattern Analyst'}
+                  </h2>
+                  <p className="mt-3 font-display text-lg leading-relaxed text-stone-900 sm:mt-4 sm:text-xl">
+                    {isZh
+                      ? '不是从稳定路线里走出来的角色，更像是在混乱现场醒来的观察者。'
+                      : 'Not a character born from a stable route. More like an observer waking inside noisy fields and unfinished systems.'}
+                  </p>
+                  <p className="mt-4 text-base leading-relaxed text-stone-700">
+                    {isZh
+                      ? '市场的噪音、关系的暗流、产品里还没成形的需求、生活中反复出现的模式，都会变成观察世界的线索。'
+                      : 'Market noise, social undercurrents, unformed product needs, and repeating life patterns become clues for reading the world.'}
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-stone-600">
+                    {isZh
+                      ? '武器不是硬碰，而是观察、拆解、命名和重组。风负责进入不同场域，金属负责把混乱切成结构。'
+                      : 'The weapon is not direct force. It is observation, decomposition, naming, and reconstruction. Wind enters different fields. Metal cuts chaos into structure.'}
+                  </p>
+                  <div className="mt-5 grid grid-cols-2 gap-2 text-xs">
+                    {(isZh
+                      ? [
+                          ['Role', '观察 / 拆解 / 重组'],
+                          ['Mode', '风入局，金成形'],
+                          ['Quest', '把混乱转成可用系统'],
+                          ['Risk', '分散、过热、抗拒无效规则'],
+                        ]
+                      : [
+                          ['Role', 'Observe / Decode / Rebuild'],
+                          ['Mode', 'Wind enters. Metal structures.'],
+                          ['Quest', 'Turn chaos into usable systems'],
+                          ['Risk', 'Scatter, overheat, resist weak rules'],
+                        ]
+                    ).map(([label, value]) => (
+                      <div key={label} className="rounded-xl border border-stone-300/40 bg-stone-950/10 px-3 py-2 shadow-inner backdrop-blur-sm">
+                        <p className="font-mono text-[9px] uppercase tracking-wider text-stone-500">{label}</p>
+                        <p className="mt-1 font-medium text-stone-700">{value}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <blockquote className="mt-5 border-l-2 border-eden-amber/60 pl-4 font-display text-lg leading-relaxed text-stone-900 sm:mt-6 sm:text-xl">
+                  {isZh
+                    ? '主线不是证明自己很特别，而是把混乱的人生经验，变成可以被别人使用的力量。'
+                    : 'The main quest is not to prove uniqueness. It is to turn chaotic lived experience into power other people can use.'}
+                </blockquote>
+              </section>
+
+              <section className="relative order-2 overflow-hidden rounded-2xl border border-eden-amber/30 bg-eden-amber/10 p-4 sm:p-5 lg:order-3">
+                <LifeOsHudShapes />
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-stone-500 sm:text-xs sm:tracking-[0.28em]">
+                  🔮 {isZh ? '能力雷达' : 'Ability Radar'}
+                </p>
+                <div className="relative mx-auto mt-4 max-w-[310px] rounded-2xl border border-stone-200 bg-stone-950 p-2 text-white shadow-inner sm:p-3 lg:max-w-none">
+                  <svg viewBox="0 0 220 220" role="img" aria-label={isZh ? '核心属性雷达图' : 'Core stats radar chart'} className="h-auto w-full">
+                    <defs>
+                      <radialGradient id="life-os-radar-glow" cx="50%" cy="50%" r="55%">
+                        <stop offset="0%" stopColor="rgba(123,220,181,0.35)" />
+                        <stop offset="100%" stopColor="rgba(209,171,91,0.04)" />
+                      </radialGradient>
+                    </defs>
+                    {[25, 50, 75, 100].map((scale) => (
+                      <polygon
+                        key={scale}
+                        points={heroRadarStats.map((_, index) => radarGridPoint(index, scale)).join(' ')}
+                        fill={scale === 100 ? 'rgba(255,255,255,0.02)' : 'none'}
+                        stroke="rgba(214,211,209,0.22)"
+                        strokeWidth="1"
+                      />
+                    ))}
+                    {heroRadarStats.map((_, index) => (
+                      <line
+                        key={index}
+                        x1={radarCenter}
+                        y1={radarCenter}
+                        x2={radarGridPoint(index, 100).split(',')[0]}
+                        y2={radarGridPoint(index, 100).split(',')[1]}
+                        stroke="rgba(214,211,209,0.18)"
+                        strokeWidth="1"
+                      />
+                    ))}
+                    <polygon points={radarShapePoints} fill="url(#life-os-radar-glow)" stroke="rgb(123,220,181)" strokeWidth="2" />
+                    {heroRadarStats.map((stat, index) => {
+                      const [x, y] = radarPoint(index, stat.value).split(',');
+                      const [labelX, labelY] = radarGridPoint(index, 116).split(',');
+
+                      return (
+                        <g key={stat.key}>
+                          <circle cx={x} cy={y} r="3.5" fill="rgb(209,171,91)" stroke="rgb(255,255,255)" strokeWidth="1" />
+                          <text
+                            x={labelX}
+                            y={labelY}
+                            textAnchor="middle"
+                            dominantBaseline="middle"
+                            fill="rgb(245,245,244)"
+                            fontSize="9"
+                            fontWeight="700"
+                          >
+                            {stat.label[language]}
+                          </text>
+                        </g>
+                      );
+                    })}
+                    <circle cx={radarCenter} cy={radarCenter} r="23" fill="rgba(28,25,23,0.82)" stroke="rgba(209,171,91,0.6)" />
+                    <text x={radarCenter} y={radarCenter - 2} textAnchor="middle" fill="rgb(255,255,255)" fontSize="18" fontWeight="800">
+                      {powerScore}
+                    </text>
+                    <text x={radarCenter} y={radarCenter + 13} textAnchor="middle" fill="rgb(214,211,209)" fontSize="7" letterSpacing="1.5">
+                      POWER
+                    </text>
+                  </svg>
+                </div>
+                <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
+                  {heroRadarStats.map((stat) => (
+                    <span key={stat.key} className="rounded-full border border-eden-amber/30 bg-white px-3 py-1 text-stone-700">
+                      {stat.key} · {stat.value}
+                    </span>
+                  ))}
+                </div>
+                <p className="mt-5 text-sm leading-relaxed text-stone-600">
+                  {isZh
+                    ? '雷达图只显示倾向、能量强度和维护难度，不代表好坏。'
+                    : 'The radar shows tendency, energy intensity, and maintenance difficulty. It does not judge good or bad.'}
+                </p>
+              </section>
+            </div>
+          </header>
+
+          <section className="motion-card relative mt-4 overflow-hidden rounded-2xl border border-stone-200 bg-stone-950 p-3 text-white shadow-sm sm:mt-6 sm:p-4">
+            <LifeOsHudShapes variant="hero" />
+            <div className="relative z-10 flex items-center justify-between gap-3 px-1">
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-eden-amber">
+                  {isZh ? 'Game Menu' : 'Game Menu'}
+                </p>
+                <h2 className="mt-1 font-display text-xl font-bold text-white">
+                  {isZh ? '选择阅读章节' : 'Choose a chapter'}
+                </h2>
+              </div>
+              <span className="rounded-full border border-eden-mint/30 bg-eden-mint/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-eden-mint">
+                4 Files
+              </span>
+            </div>
+            <div className="relative z-10 mt-4 flex snap-x gap-3 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] md:grid md:grid-cols-4 md:overflow-visible md:pb-0 [&::-webkit-scrollbar]:hidden">
+              {lifeOsGameMenu.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className={`min-w-[76%] snap-center rounded-2xl border p-4 transition-transform hover:-translate-y-0.5 md:min-w-0 ${
+                    item.tone === 'mint'
+                      ? 'border-eden-mint/30 bg-eden-mint/10'
+                      : 'border-eden-amber/30 bg-eden-amber/10'
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <span className="text-2xl">{item.icon}</span>
+                    <span className="rounded-lg border border-white/15 bg-white/10 px-2 py-1 font-mono text-[10px] text-stone-200">
+                      FILE-{item.code}
+                    </span>
+                  </div>
+                  <h3 className="mt-4 font-display text-lg font-bold text-white">{item.title}</h3>
+                  <p className="mt-2 min-h-[48px] text-xs leading-relaxed text-stone-300">{item.body}</p>
+                  <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-eden-amber">
+                    {item.action} →
+                  </p>
+                </a>
+              ))}
+            </div>
+          </section>
+
+          <LifeOsDropDown
+            id="life-os-character-file"
+            index="01"
+            eyebrow={isZh ? '角色档案' : 'Character File'}
+            title={isZh ? '先读角色来源，再进入系统' : 'Read the character file before opening the system'}
+            body={isZh ? '这一章负责回答：这个角色是谁、从什么场域成形、这套页面应该怎么读。' : 'This chapter answers who the character is, what field shaped it, and how to read the interface.'}
+          >
+          <section className="motion-card relative mt-4 overflow-hidden rounded-2xl border border-stone-200 bg-white p-4 shadow-sm backdrop-blur sm:mt-6 sm:p-6">
+            <LifeOsHudShapes variant="hero" />
+            <div className="relative z-10">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500">
+                🎴 {isZh ? '角色序章' : 'Character Brief'}
+              </p>
+              <div className="mt-3 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
+                <div>
+                  <h2 className="font-display text-2xl font-bold text-stone-900 md:text-3xl">
+                    {isZh ? '风之解析者，不是从安稳路线里诞生的角色' : 'The Wind Pattern Analyst was not born from a stable route.'}
+                  </h2>
+                  <p className="mt-3 text-sm leading-relaxed text-stone-700">
+                    {isZh
+                      ? '背景不是稳定工作、固定路线和标准答案，而是长时间穿过复杂场域：商业增长的噪音、关系里的暗流、产品尚未成形的需求、以及生活里一再重复的模式。'
+                      : 'The background is not stable work, fixed routes, and standard answers. It is a long walk through complex fields: growth noise, social undercurrents, unformed product needs, and patterns that keep repeating in life.'}
+                  </p>
+                  <p className="mt-3 rounded-xl border border-eden-amber/30 bg-eden-amber/10 px-4 py-3 text-sm leading-relaxed text-stone-800">
+                    {isZh
+                      ? '主线不是逃离混乱，而是把混乱翻译成地图：让洞察变成策略，让经历变成系统，让看不见的人性模式，变成可以被使用、测试和传播的力量。'
+                      : 'The main quest is not to escape chaos. It is to translate chaos into maps: turn insight into strategy, experience into systems, and invisible human patterns into power that can be used, tested, and shared.'}
+                  </p>
+                  <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
+                    {(isZh
+                      ? [
+                          ['Entry', '混乱现场'],
+                          ['Weapon', '观察、命名、重组'],
+                          ['Element', 'Wind + Metal'],
+                          ['Output', '系统、内容、策略'],
+                        ]
+                      : [
+                          ['Entry', 'Noisy fields'],
+                          ['Weapon', 'Observe, name, rebuild'],
+                          ['Element', 'Wind + Metal'],
+                          ['Output', 'Systems, content, strategy'],
+                        ]
+                    ).map(([label, value]) => (
+                      <div key={label} className="rounded-xl border border-stone-200 bg-stone-50 px-3 py-2">
+                        <p className="font-mono text-[9px] uppercase tracking-wider text-stone-500">{label}</p>
+                        <p className="mt-1 font-semibold text-stone-900">{value}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="grid gap-3 md:grid-cols-2">
+                  {lifeRpgWorldPrinciples.map((principle) => (
+                    <article key={principle.title.en} className="rounded-xl border border-stone-200 bg-stone-50 p-4">
+                      <h3 className="font-display text-lg font-bold text-stone-900">
+                        {principle.emoji} {principle.title[language]}
+                      </h3>
+                      <p className="mt-2 text-sm leading-relaxed text-stone-700">{principle.body[language]}</p>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+          </LifeOsDropDown>
+
+          <LifeOsDropDown
+            id="life-os-stats-console"
+            index="02"
+            eyebrow={isZh ? '数值控制台' : 'Stats Console'}
+            title={isZh ? '看懂角色如何运作' : 'Read how the character operates'}
+            body={isZh ? '这一章集中放 Loadout、玩家信号、隐藏参数、阶段指令、主线任务和 8 个核心属性。' : 'This chapter contains loadout, player signals, hidden parameters, stage directives, main quest, and eight core stats.'}
+          >
+          <section className="motion-card relative mt-4 overflow-hidden rounded-2xl border border-stone-200 bg-white p-4 shadow-sm backdrop-blur sm:mt-6 sm:p-6">
+            <LifeOsHudShapes variant="hero" />
+            <div className="relative z-10">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500">
+                🎮 {isZh ? '角色解码控制台' : 'Character Decode Console'}
+              </p>
+              <div className="mt-4 grid gap-4 sm:gap-5 lg:grid-cols-[0.9fr_1.25fr_0.85fr]">
+                <article className="rounded-2xl border border-eden-mint/25 bg-stone-50 p-4 sm:p-5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
+                    🧾 {isZh ? '角色 Loadout' : 'Character Loadout'}
+                  </p>
+                  <figure className="mx-auto mt-4 max-w-[260px] overflow-hidden rounded-2xl border border-eden-amber/30 bg-stone-950 shadow-sm lg:max-w-none">
+                    <img
+                      src={lifeOsLoadoutBanner}
+                      alt={isZh ? '风之解析者角色 Loadout 竖向横幅' : 'Wind Pattern Analyst character loadout vertical banner'}
+                      loading="lazy"
+                      className="aspect-[4/5] w-full object-cover lg:aspect-[1/2]"
+                    />
+                  </figure>
+                  <h2 className="mt-4 font-display text-2xl font-bold text-stone-900 sm:text-3xl">
+                    {isZh ? '风之解析者' : 'Wind Pattern Analyst'}
+                  </h2>
+                  <p className="mt-3 text-sm leading-relaxed text-stone-700">
+                    {isZh
+                      ? '不是“被定义成什么”，而是一个以风的方式进入世界，用金属般的结构感切割混乱，把经验转成系统、内容和策略的角色。'
+                      : 'Not a fixed identity label. A character who enters through wind, cuts chaos with metal-like structure, and converts experience into systems, content, and strategy.'}
+                  </p>
+                  <div className="mt-4 grid gap-2 text-xs">
+                    {(isZh
+                      ? [
+                          ['Class', 'Wandering Strategist / 流浪策略师'],
+                          ['Element', 'Wind + Metal / 风 + 金'],
+                          ['Alignment', 'Chaotic Insightful / 混沌洞察型'],
+                          ['Main Quest', '把玩家日志、商业策略和人性洞察转成可使用的人生系统'],
+                        ]
+                      : [
+                          ['Class', 'Wandering Strategist'],
+                          ['Element', 'Wind + Metal'],
+                          ['Alignment', 'Chaotic Insightful'],
+                          ['Main Quest', 'Turn player logs, business strategy, and human insight into a usable life system'],
+                        ]
+                    ).map(([label, value]) => (
+                      <div key={label} className="rounded-xl border border-stone-200 bg-white px-3 py-2">
+                        <p className="font-mono text-[10px] uppercase tracking-wider text-stone-500">{label}</p>
+                        <p className="mt-1 font-medium text-stone-800">{value}</p>
+                      </div>
+                    ))}
+                  </div>
+                </article>
+
+                <article className="rounded-2xl border border-eden-amber/30 bg-eden-amber/10 p-4 sm:p-5">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
+                    🧩 {isZh ? '玩家信号 → RPG 模组' : 'Player Signals -> RPG Modules'}
+                  </p>
+                  <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+                    {lifeRpgDecodeSignals.map((signal) => (
+                      <div key={signal.code} className="overflow-hidden rounded-xl border border-stone-200 bg-white p-3">
+                        <figure className="overflow-hidden rounded-lg border border-eden-amber/25 bg-stone-950">
+                          <img
+                            src={signal.banner}
+                            alt={isZh ? `${signal.title.zh} 信号横幅` : `${signal.title.en} signal banner`}
+                            loading="lazy"
+                            className="aspect-[16/9] w-full object-cover sm:aspect-[8/3]"
+                          />
+                        </figure>
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="mt-3 flex items-center gap-2">
+                            <LifeOsIcon src={signal.icon} alt={signal.title[language]} size="sm" />
+                            <div>
+                              <h3 className="font-display text-base font-bold text-stone-900">{signal.title[language]}</h3>
+                              <p className="font-mono text-[10px] uppercase tracking-wider text-stone-500">{signal.code}</p>
+                            </div>
+                          </div>
+                        </div>
+                        <p className="mt-3 text-xs leading-relaxed text-stone-600">📡 {signal.signal[language]}</p>
+                        <p className="mt-2 text-xs leading-relaxed text-stone-800">🔓 {signal.output[language]}</p>
+                      </div>
+                    ))}
+                  </div>
+                </article>
+
+                <article className="rounded-2xl border border-eden-mint/25 bg-eden-mint/10 p-3 sm:p-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
+                    🕹️ {isZh ? '隐藏参数' : 'Hidden Parameters'}
+                  </p>
+                  <div className="mt-3 grid gap-3">
+                    <LifeOsRadarPanel
+                      stats={lifeRpgHiddenParameters}
+                      ariaLabel={isZh ? '隐藏参数雷达图' : 'Hidden parameters radar chart'}
+                      centerPrimary="4"
+                      centerSecondary="PARAMS"
+                      tone="amber"
+                      compact
+                    />
+                    <div className="grid grid-cols-2 gap-2">
+                      {lifeRpgHiddenParameters.map((param) => (
+                        <div key={param.key} title={param.note[language]} className="rounded-xl border border-stone-200 bg-white px-2.5 py-2">
+                          <div className="flex items-center justify-between gap-2">
+                            <p className="font-mono text-[9px] uppercase tracking-wider text-stone-500">{param.key}</p>
+                            <p className="font-mono text-sm font-bold text-stone-900">{param.value}</p>
+                          </div>
+                          <p className="mt-1 truncate text-xs font-semibold text-stone-900">{param.label[language]}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              </div>
+
+              <div className="mt-4 rounded-2xl border border-stone-200 bg-stone-50 p-4 sm:mt-5 sm:p-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
+                  🗺️ {isZh ? '当前阶段指令 · 规则制定期' : 'Current Stage Directive · Rule-Setter Phase'}
+                </p>
+                <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                  {lifeRpgQuestDirectives.map((directive, index) => (
+                    <div key={directive.en} className="rounded-xl border border-stone-200 bg-white p-3">
+                      <p className="font-mono text-[10px] uppercase tracking-wider text-stone-500">
+                        QUEST-{String(index + 1).padStart(2, '0')}
+                      </p>
+                      <p className="mt-2 text-xs leading-relaxed text-stone-700">{directive[language]}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="mt-4 grid gap-4 sm:mt-6 sm:gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+            <div className="motion-card relative overflow-hidden rounded-2xl border border-stone-200 bg-white p-4 shadow-sm backdrop-blur sm:p-6">
+              <LifeOsHudShapes />
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500">
+                🗺️ {isZh ? '主线任务' : 'Main Quest'}
+              </p>
+              <h2 className="mt-2 font-display text-2xl font-bold text-stone-900">
+                {isZh ? '把分散能力收束成一个可传播系统' : 'Turn scattered ability into a transmissible system'}
+              </h2>
+              <p className="mt-4 text-sm leading-relaxed text-stone-700">
+                {isZh
+                  ? '真正的问题不是没有能力，而是能力太分散。主线任务是把看穿人性、经历混乱、追求自由、探索世界和研究商业系统的能力，转化成别人能理解、使用和传播的人生系统。'
+                  : 'The real problem is not lack of ability. It is scattered ability. The main quest is to turn human insight, chaos experience, freedom seeking, world exploration, and business systems into a life system other people can understand, use, and share.'}
+              </p>
+            </div>
+
+            <div className="motion-card relative overflow-hidden rounded-2xl border border-stone-200 bg-white p-3 shadow-sm backdrop-blur sm:p-4">
+              <LifeOsHudShapes />
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500">
+                📊 {isZh ? '核心属性' : 'Core Stats'}
+              </p>
+              <div className="mt-3 grid gap-3 xl:grid-cols-[0.7fr_1.3fr]">
+                <LifeOsRadarPanel
+                  stats={lifeRpgAttributes}
+                  ariaLabel={isZh ? '核心属性雷达图' : 'Core stats radar chart'}
+                  centerPrimary="8"
+                  centerSecondary="CORE"
+                  tone="mint"
+                  compact
+                />
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 xl:grid-cols-2">
+                  {lifeRpgAttributes.map((attr) => (
+                    <div key={attr.key} title={attr.note[language]} className="rounded-xl border border-stone-200 bg-stone-50 px-2.5 py-2">
+                      <div className="flex items-center justify-between gap-2">
+                        <p className="font-mono text-[9px] uppercase tracking-wider text-stone-500">{attr.key}</p>
+                        <p className="font-mono text-sm font-bold text-stone-900">{attr.value}</p>
+                      </div>
+                      <p className="mt-1 truncate text-xs font-semibold text-stone-900">{attr.label[language]}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+          </LifeOsDropDown>
+
+          <LifeOsDropDown
+            id="life-os-skill-codex"
+            index="03"
+            eyebrow={isZh ? '技能图鉴' : 'Skill Codex'}
+            title={isZh ? '打开技能、天赋和阴影档案' : 'Open spells, auras, and shadow files'}
+            body={isZh ? '这一章像手机游戏技能页：先看卡面，再点击展开完整技能说明。' : 'This chapter works like a mobile game skill page: card face first, full file on tap.'}
+          >
+          <section className="motion-card relative mt-4 overflow-hidden rounded-2xl border border-stone-200 bg-white p-4 shadow-sm backdrop-blur sm:mt-6 sm:p-6">
+            <LifeOsHudShapes />
+            <div className="relative z-10 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500">
+                  🛠️ {isZh ? '主动技能' : 'Active Skills'}
+                </p>
+                <p className="mt-2 max-w-3xl text-sm leading-relaxed text-stone-700">
+                  {isZh
+                    ? '主动发动的技能。卡面显示等级、类型和技能图，点开后查看完整战斗说明。'
+                    : 'Castable skills. The card face shows rank, type, and art. Open it for the full combat file.'}
+                </p>
+              </div>
+              <div className="flex rounded-2xl border border-stone-200 bg-stone-950 p-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-stone-300">
+                {['Active', 'Passive', 'Shadow'].map((tab, index) => (
+                  <span
+                    key={tab}
+                    className={`rounded-xl px-2.5 py-1.5 ${index === 0 ? 'bg-eden-amber text-stone-950' : ''}`}
+                  >
+                    {tab}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="relative z-10 mt-4 flex snap-x gap-3 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] md:grid md:grid-cols-2 md:overflow-visible md:pb-0 [&::-webkit-scrollbar]:hidden">
+              {lifeRpgActiveSkills.map((skill) => (
+                <details
+                  key={skill.name.en}
+                  className="group min-w-[82%] snap-center overflow-hidden rounded-2xl border border-eden-amber/30 bg-stone-950 shadow-sm md:min-w-0"
+                >
+                  <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                    <figure className="relative overflow-hidden">
+                      <img
+                        src={skill.banner}
+                        alt={isZh ? `${skill.name.zh} 技能横幅` : `${skill.name.en} skill banner`}
+                        loading="lazy"
+                        className="aspect-[16/9] w-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/30 to-transparent" />
+                      <div className="absolute left-3 top-3 flex items-center gap-2">
+                        <LifeOsIcon src={skill.icon} alt={skill.name[language]} size="sm" />
+                        <span className="rounded-lg border border-eden-amber/40 bg-eden-amber px-2 py-1 font-mono text-xs font-bold text-stone-950">
+                          {skill.level}
+                        </span>
+                      </div>
+                      <div className="absolute inset-x-0 bottom-0 p-3">
+                        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-eden-amber">
+                          {skill.level} ACTIVE SPELL
+                        </p>
+                        <h3 className="mt-1 font-display text-xl font-bold text-white">✦ {skill.name[language]}</h3>
+                        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-stone-200">{skill.bannerCaption[language]}</p>
+                      </div>
+                    </figure>
+                    <div className="flex items-center justify-between gap-3 border-t border-white/10 bg-stone-950 px-3 py-3 text-xs text-stone-300">
+                      <span className="uppercase tracking-wider">{skill.type[language]}</span>
+                      <span className="rounded-full border border-white/15 px-2 py-1 font-mono text-[10px] text-eden-mint group-open:border-stone-600 group-open:bg-stone-800 group-open:text-stone-100">
+                        {isZh ? '展开' : 'Open'}
+                      </span>
+                    </div>
+                  </summary>
+                  <dl className="grid gap-2 border-t border-white/10 bg-white p-3 text-sm sm:p-4">
+                    <div className="rounded-xl border border-stone-200 bg-stone-50 p-3"><dt className="text-stone-500">🔋 {isZh ? '消耗' : 'Cost'}</dt><dd className="mt-1 text-stone-800">{skill.cost[language]}</dd></div>
+                    <div className="rounded-xl border border-eden-mint/25 bg-eden-mint/10 p-3"><dt className="text-stone-500">✨ {isZh ? '效果' : 'Effect'}</dt><dd className="mt-1 text-stone-800">{skill.effect[language]}</dd></div>
+                    <div className="rounded-xl border border-stone-200 bg-stone-50 p-3"><dt className="text-stone-500">🎯 {isZh ? '适合场景' : 'Best used in'}</dt><dd className="mt-1 text-stone-700">{skill.scene[language]}</dd></div>
+                    <div className="rounded-xl border border-eden-amber/30 bg-eden-amber/10 p-3"><dt className="text-stone-500">⚠️ {isZh ? '副作用' : 'Side effect'}</dt><dd className="mt-1 text-stone-700">{skill.sideEffect[language]}</dd></div>
+                  </dl>
+                </details>
+              ))}
+            </div>
+          </section>
+
+          <section className="mt-4 grid gap-4 sm:mt-6 sm:gap-6 lg:grid-cols-2">
+            <div className="motion-card relative overflow-hidden rounded-2xl border border-stone-200 bg-white p-4 shadow-sm backdrop-blur sm:p-6">
+              <LifeOsHudShapes />
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500">
+                🌬️ {isZh ? '被动技能' : 'Passive Skills'}
+              </p>
+              <LifeOsBanner
+                src={lifeOsBanners.passiveSkills}
+                alt={isZh ? '猫主题复古魔法被动技能横幅' : 'Cat-themed vintage magic passive skills banner'}
+                label={isZh ? 'PASSIVE AURA FILE' : 'PASSIVE AURA FILE'}
+                caption={isZh ? '不需要刻意发动的能力。像熟睡的魔法猫，后台一直运行。' : 'Talents that do not need to be cast. Quiet background magic that keeps running.'}
+              />
+              <div className="mt-4 grid grid-cols-2 gap-3 sm:mt-5">
+                {lifeRpgPassiveSkills.map((skill) => (
+                  <details key={skill.name.en} className="group overflow-hidden rounded-2xl border border-eden-mint/25 bg-stone-950 shadow-sm">
+                    <summary className="cursor-pointer list-none p-3 text-center [&::-webkit-details-marker]:hidden">
+                      <div className="mx-auto w-fit rounded-2xl border border-eden-mint/25 bg-eden-mint/10 p-2">
+                        <LifeOsIcon src={skill.icon} alt={skill.name[language]} size="md" />
+                      </div>
+                      <h3 className="mt-3 font-display text-sm font-bold leading-tight text-white sm:text-base">🌬️ {skill.name[language]}</h3>
+                      <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.18em] text-eden-mint group-open:text-eden-amber">
+                        {isZh ? '被动常驻' : 'Passive Aura'}
+                      </p>
+                    </summary>
+                    <div className="border-t border-white/10 bg-white p-3 text-xs leading-relaxed">
+                      <p className="text-stone-500">{isZh ? '触发' : 'Trigger'} · {skill.trigger[language]}</p>
+                      <p className="mt-2 text-stone-800">✨ {skill.effect[language]}</p>
+                      <p className="mt-2 rounded-lg border border-eden-amber/25 bg-eden-amber/10 px-2 py-1.5 text-stone-700">
+                        ⚠️ {isZh ? '隐藏风险' : 'Hidden risk'} · {skill.risk[language]}
+                      </p>
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </div>
+
+            <div className="motion-card relative overflow-hidden rounded-2xl border border-stone-200 bg-white p-4 shadow-sm backdrop-blur sm:p-6">
+              <LifeOsHudShapes />
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500">
+                ⚠️ {isZh ? 'Debuff 阴影系统' : 'Debuff System'}
+              </p>
+              <LifeOsBanner
+                src={lifeOsBanners.debuffs}
+                alt={isZh ? '猫主题复古魔法 Debuff 阴影横幅' : 'Cat-themed vintage magic debuff shadow banner'}
+                label={isZh ? 'SHADOW CURSE FILE' : 'SHADOW CURSE FILE'}
+                caption={isZh ? '限制角色的阴影入口。不是失败，是等待解除和升级的诅咒。' : 'Shadow entries that limit the build. Not failure, but a curse waiting to be released and upgraded.'}
+              />
+              <div className="mt-4 grid gap-3 sm:mt-5">
+                {lifeRpgDebuffs.map((debuff) => (
+                  <details key={debuff.name.en} className="group overflow-hidden rounded-2xl border border-eden-amber/30 bg-stone-950 shadow-sm">
+                    <summary className="grid cursor-pointer grid-cols-[64px_1fr_auto] items-center gap-3 p-3 [&::-webkit-details-marker]:hidden">
+                      <LifeOsIcon src={debuff.icon} alt={debuff.name[language]} size="md" />
+                      <div className="min-w-0">
+                        <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-eden-amber">
+                          {isZh ? 'Shadow Debuff' : 'Shadow Debuff'}
+                        </p>
+                        <h3 className="mt-1 font-display text-base font-bold text-white">🕳️ {debuff.name[language]}</h3>
+                      </div>
+                      <span className="rounded-full border border-white/15 px-2 py-1 font-mono text-[10px] text-stone-300 group-open:border-stone-600 group-open:bg-stone-800 group-open:text-stone-100">
+                        !!
+                      </span>
+                    </summary>
+                    <div className="grid gap-2 border-t border-white/10 bg-white p-3 text-xs leading-relaxed text-stone-700">
+                      <p className="rounded-lg border border-stone-200 bg-stone-50 px-2 py-1.5">{isZh ? '触发条件' : 'Trigger'} · {debuff.trigger[language]}</p>
+                      <p className="rounded-lg border border-stone-200 bg-stone-50 px-2 py-1.5">⚠️ {isZh ? '负面效果' : 'Negative effect'} · {debuff.negative[language]}</p>
+                      <p className="rounded-lg border border-eden-mint/25 bg-eden-mint/10 px-2 py-1.5">🔧 {isZh ? '解除方式' : 'Release'} · {debuff.release[language]}</p>
+                      <p className="rounded-lg border border-eden-amber/25 bg-eden-amber/10 px-2 py-1.5 text-stone-800">⬆️ {isZh ? '升级后转化' : 'Upgraded into'} · {debuff.upgrade[language]}</p>
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </div>
+          </section>
+          </LifeOsDropDown>
+
+          <LifeOsDropDown
+            id="life-os-upgrade-path"
+            index="04"
+            eyebrow={isZh ? '升级路线' : 'Upgrade Path'}
+            title={isZh ? '决定下一步怎么升级' : 'Decide the next upgrade move'}
+            body={isZh ? '这一章放成长路线、数值逻辑和系统边界。重点不是贴标签，而是找到下一步。' : 'This chapter contains growth routes, score logic, and system boundaries. The point is not labels, but the next move.'}
+          >
+          <section className="motion-card relative mt-4 overflow-hidden rounded-2xl border border-stone-200 bg-white p-4 shadow-sm backdrop-blur sm:mt-6 sm:p-6">
+            <LifeOsHudShapes />
+            <div className="relative z-10 flex items-center justify-between gap-3">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500">
+                  🌿 {isZh ? '成长路线 Skill Tree' : 'Growth Routes Skill Tree'}
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-stone-700">
+                  {isZh ? '每条路线像手游升级线：上方是路线守护图，下方是可升级节点。' : 'Each route reads like a mobile RPG upgrade lane: guardian art first, upgrade nodes below.'}
+                </p>
+              </div>
+              <span className="hidden rounded-2xl border border-eden-mint/25 bg-stone-950 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-eden-mint sm:inline-flex">
+                4 Routes
+              </span>
+            </div>
+            <div className="relative z-10 mt-4 grid gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-4">
+              {lifeRpgSkillTrees.map((tree) => (
+                <article key={tree.title.en} className="overflow-hidden rounded-2xl border border-eden-mint/25 bg-stone-950 shadow-sm">
+                  <div className="relative aspect-square overflow-hidden border-b border-eden-mint/20 bg-stone-900">
+                    <img
+                      src={tree.banner}
+                      alt={`${tree.title[language]} ${isZh ? '成长路线方形视觉' : 'growth route square banner'}`}
+                      className="h-full w-full object-cover object-center"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-x-0 bottom-0 min-h-[72px] bg-gradient-to-t from-stone-950 via-stone-950/40 to-transparent p-3">
+                      <p className="font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-eden-amber">
+                        {isZh ? 'SKILL TREE ROUTE' : 'SKILL TREE ROUTE'}
+                      </p>
+                      <h3 className="mt-1 font-display text-xl font-bold text-white">🧭 {tree.title[language]}</h3>
+                    </div>
+                  </div>
+                  <div className="p-3 sm:p-4">
+                    <div className="relative ml-2 grid gap-3 border-l border-eden-mint/30 pl-4">
+                      {tree.path[language].split(isZh ? ' → ' : ' -> ').map((node, index, nodes) => (
+                        <div key={node} className="relative">
+                          <span
+                            className={`absolute -left-[23px] top-1.5 h-3 w-3 rounded-full border ${
+                              index === nodes.length - 1
+                                ? 'border-eden-amber bg-eden-amber shadow-[0_0_18px_rgba(255,163,64,0.6)]'
+                                : 'border-eden-mint bg-stone-950 shadow-[0_0_12px_rgba(123,220,181,0.35)]'
+                            }`}
+                          />
+                          <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-stone-400">
+                            NODE-{String(index + 1).padStart(2, '0')}
+                          </p>
+                          <p className="mt-1 text-sm font-semibold text-stone-100">{node}</p>
+                        </div>
+                      ))}
+                    </div>
+                    <p className="mt-4 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs leading-relaxed text-stone-300">
+                      {tree.directions[language]}
+                    </p>
+                    <p className="mt-2 rounded-xl border border-eden-amber/30 bg-eden-amber/10 px-3 py-2 text-xs leading-relaxed text-eden-amber">
+                      ⚠️ {isZh ? '主要风险' : 'Main risk'} · {tree.risk[language]}
+                    </p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="mt-4 grid gap-4 sm:mt-6 sm:gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="motion-card relative overflow-hidden rounded-2xl border border-stone-200 bg-white p-4 shadow-sm backdrop-blur sm:p-6">
+              <LifeOsHudShapes />
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500">
+                📜 {isZh ? '玩家信号与数值转换逻辑' : 'Player Signals and Score Logic'}
+              </p>
+              <div className="mt-4 rounded-xl border border-eden-mint/25 bg-eden-mint/10 p-3 sm:p-4">
+                <p className="font-mono text-xs leading-relaxed text-stone-800 sm:text-sm">
+                  {isZh
+                    ? '能力分数 = 基础倾向 + 重复信号加权 + 现实校准 - 冲突修正'
+                    : 'Ability score = base tendency + repeated-signal weight + real-life calibration - conflict correction'}
+                </p>
+              </div>
+              <ul className="mt-4 space-y-3 text-sm leading-relaxed text-stone-700">
+                {lifeRpgSources.map((source) => (
+                  <li key={source.en} className="flex gap-2">
+                    <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-eden-mint" />
+                    <span>{source[language]}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-4 text-sm leading-relaxed text-stone-600">
+                {isZh
+                  ? '现实经历权重最高。所有抽象系统都必须经过真实选择、关系模式、赚钱方式、行动惯性和阶段变化校准。'
+                  : 'Real experience carries the highest weight. Every abstract system must be calibrated against real choices, relationship patterns, earning style, action inertia, and life stages.'}
+              </p>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2 sm:gap-4">
+                {lifeRpgFormulaExamples.map((example) => (
+                  <article key={example.title.en} className="rounded-xl border border-eden-amber/30 bg-eden-amber/10 p-3 sm:p-4">
+                    <div className="flex items-center justify-between gap-3">
+                      <h3 className="font-display text-lg font-bold text-stone-900">🧮 {example.title[language]}</h3>
+                      <span className="font-mono text-lg font-bold text-stone-900">{example.score}/100</span>
+                    </div>
+                    <ul className="mt-3 space-y-1 text-xs leading-relaxed text-stone-600">
+                      {example.lines[language].map((line) => (
+                        <li key={line}>{line}</li>
+                      ))}
+                    </ul>
+                  </article>
+                ))}
+              </div>
+            </div>
+
+            <div className="motion-card relative overflow-hidden rounded-2xl border border-eden-amber/30 bg-white p-4 shadow-sm backdrop-blur sm:p-6">
+              <LifeOsHudShapes />
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500">
+                🔒 {isZh ? '免责声明' : 'Disclaimer'}
+              </p>
+              <h2 className="mt-2 font-display text-2xl font-bold text-stone-900">
+                {isZh ? '不是标签结论，是升级地图' : 'Not a label verdict. An upgrade map.'}
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-stone-700">
+                {isZh
+                  ? '这不是人格标签，也不是固定结论。它是一张帮助用户看懂自己如何运作的 RPG 地图。'
+                  : 'This is not a personality label or a fixed verdict. It is a RPG map for understanding how a character works.'}
+              </p>
+              <ul className="mt-4 space-y-2 text-sm leading-relaxed text-stone-700">
+                {(isZh
+                  ? [
+                      '不是为了证明任何结局。',
+                      '不是为了把人困在标签里。',
+                      '重点是看见初始属性、主线任务、隐藏 Debuff 和成长路线。',
+                      '最终问题不是“我是什么”，而是“下一步怎么升级”。',
+                    ]
+                  : [
+                      'It is not built to prove any fixed ending.',
+                      'It is not built to trap people inside a label.',
+                      'The focus is initial stats, main quests, hidden debuffs, and growth routes.',
+                      'The final question is not “what am I?” It is “what is the next upgrade move?”',
+                    ]
+                ).map((item) => (
+                  <li key={item} className="flex gap-2">
+                    <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-eden-amber" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+          </LifeOsDropDown>
+        </div>
+      </main>
+      <nav className="fixed inset-x-3 bottom-3 z-50 rounded-3xl border border-stone-700/80 bg-stone-950/94 p-2 shadow-2xl backdrop-blur md:hidden">
+        <div className="grid grid-cols-4 gap-1">
+          {lifeOsGameMenu.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="rounded-2xl px-2 py-2 text-center transition-colors hover:bg-white/10"
+              aria-label={item.title}
+            >
+              <span className="block text-lg leading-none">{item.icon}</span>
+              <span className="mt-1 block truncate font-mono text-[9px] uppercase tracking-[0.08em] text-stone-300">
+                {item.code}
+              </span>
+            </a>
+          ))}
+        </div>
+      </nav>
     </div>
   );
 };
@@ -2279,6 +3772,7 @@ const App: React.FC = () => {
   const fullPageHref = joinBasePath(baseUrl, 'jiju-pet');
   const previousProjectsHref = joinBasePath(baseUrl, 'previous-projects');
   const analogTechHref = joinBasePath(baseUrl, 'analog-tech');
+  const lifeOsHref = joinBasePath(baseUrl, 'life-os');
   const lifeHref = joinBasePath(baseUrl, 'life');
   const brandGuideHref = joinBasePath(baseUrl, 'brand-guide');
   const resumeHref = 'https://drive.google.com/uc?export=download&id=1PRXj4BwpeAX_7F9H2PJumG0slIEZmLZ0';
@@ -2292,6 +3786,7 @@ const App: React.FC = () => {
   const isJijuPetFullPage = pathWithoutBase === '/jiju-pet';
   const isPreviousProjectsFullPage = pathWithoutBase === '/previous-projects';
   const isAnalogTechFullPage = pathWithoutBase === '/analog-tech';
+  const isLifeOsFullPage = pathWithoutBase === '/life-os';
   const isLifeFullPage = pathWithoutBase === '/life';
   const isBrandGuideFullPage = pathWithoutBase === '/brand-guide';
   const archivedWorkSlug = pathWithoutBase.startsWith('/archive/')
@@ -2347,6 +3842,19 @@ const App: React.FC = () => {
   if (isLifeFullPage) {
     return (
       <LifeFullPage
+        homeHref={homeHref}
+        language={language}
+        setLanguage={setLanguage}
+        themePreference={themePreference}
+        theme={theme}
+        setThemePreference={setThemePreference}
+      />
+    );
+  }
+
+  if (isLifeOsFullPage) {
+    return (
+      <LifeOsFullPage
         homeHref={homeHref}
         language={language}
         setLanguage={setLanguage}
@@ -2702,21 +4210,21 @@ const App: React.FC = () => {
               <div className="space-y-6">
                 <motion.div variants={fadeIn}>
                   <div className="mb-2 flex items-center gap-2 font-bold text-stone-900">
-                    <FlatEmoji emoji="🔮" size="sm" bob />
+                    <FlatEmoji emoji="🧩" size="sm" bob />
                     <a
                       href="https://edent95.github.io/8g/"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 transition-colors hover:text-stone-600"
                     >
-                      <span>{isZh ? '玄学与命理' : 'Metaphysics'}</span>
+                      <span>{isZh ? 'Pattern Archive' : 'Pattern Archive'}</span>
                       <ExternalLink size={14} className="text-stone-400" />
                     </a>
                   </div>
                   <p className="text-sm text-stone-600 leading-relaxed">
                     {isZh
-                      ? '长期实践八字、紫微斗数与易经，并将其视作古代数据系统进行结构化研究。公开笔记见 8G。'
-                      : 'Applied study of Bazi, Zi Wei Dou Shu, and I Ching as ancient data systems. Public notes on 8G.'}
+                      ? '长期研究人类行为、选择模式、关系结构和旧系统如何被重新整理成现代框架。公开笔记见 8G。'
+                      : 'A long-running archive on human behavior, choice patterns, relationship structure, and how older frameworks can become modern systems.'}
                   </p>
                 </motion.div>
 
@@ -2735,6 +4243,24 @@ const App: React.FC = () => {
                     {isZh
                       ? '收藏 Rolleiflex 相机与机械留声机，长期关注模拟技术的工艺与质感。'
                       : 'Collector of Rolleiflex cameras and mechanical gramophones.'}
+                  </p>
+                </motion.div>
+
+                <motion.div variants={fadeIn}>
+                  <div className="mb-2 flex items-center gap-2 font-bold text-stone-900">
+                    <FlatEmoji emoji="🧬" size="sm" tilt />
+                    <a
+                      href={lifeOsHref}
+                      className="inline-flex items-center gap-2 transition-colors hover:text-stone-600"
+                    >
+                      <span>Life OS</span>
+                      <ExternalLink size={14} className="text-stone-400" />
+                    </a>
+                  </div>
+                  <p className="text-sm text-stone-600 leading-relaxed">
+                    {isZh
+                      ? '把人格、经历、欲望、阴影和能力转译成 RPG 角色卡、技能系统与成长路线。'
+                      : 'A life RPG character system that turns personality, experience, desire, shadow, and ability into skills, debuffs, and upgrade paths.'}
                   </p>
                 </motion.div>
 

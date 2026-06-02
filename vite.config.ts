@@ -10,6 +10,7 @@ const SITEMAP_PATHS: string[] = [
   '/jiju-pet',
   '/previous-projects',
   '/analog-tech',
+  '/life-os',
   '/life',
   '/brand-guide',
   '/archive/11-bonus-key-combo-builder',
