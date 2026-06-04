@@ -4,24 +4,12 @@ import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { OG_IMAGE_FILE, OG_IMAGE_HEIGHT, OG_IMAGE_WIDTH } from './seo';
-
-const SITEMAP_PATHS: string[] = [
-  '/',
-  '/jiju-pet',
-  '/previous-projects',
-  '/analog-tech',
-  '/life-os',
-  '/life',
-  '/brand-guide',
-  '/archive/11-bonus-key-combo-builder',
-  '/archive/atlantis-ui-ux-prototype',
-  '/archive/soccerking-project',
-];
+import { ROUTE_SEO } from './seo-routes';
 
 function generateSitemapAndRobots(outDir: string, siteBaseNoSlash: string) {
-  const lines = SITEMAP_PATHS.map((p) => {
+  const sitemapRoutes = ROUTE_SEO.filter((route) => route.sitemap !== false);
+  const lines = sitemapRoutes.map(({ path: p, priority }) => {
     const loc = p === '/' ? `${siteBaseNoSlash}/` : `${siteBaseNoSlash}${p}`;
-    const priority = p === '/' ? '1' : '0.8';
     return `  <url><loc>${loc}</loc><changefreq>monthly</changefreq><priority>${priority}</priority></url>`;
   });
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -151,9 +139,24 @@ export default defineConfig(({ mode }) => {
         },
       },
     ],
-    define: {
-      'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-      'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (!id.includes('node_modules')) return undefined;
+            if (id.includes('/react/') || id.includes('/react-dom/') || id.includes('/scheduler/')) {
+              return 'vendor-react';
+            }
+            if (id.includes('/framer-motion/') || id.includes('/motion-dom/') || id.includes('/motion-utils/')) {
+              return 'vendor-motion';
+            }
+            if (id.includes('/lucide-react/')) {
+              return 'vendor-icons';
+            }
+            return 'vendor';
+          },
+        },
+      },
     },
     resolve: {
       alias: {

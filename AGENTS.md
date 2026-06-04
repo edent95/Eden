@@ -98,6 +98,7 @@ Local copies of these skills live inside this repository and should be treated a
 - `skills/cai-kang-yong-conversation/SKILL.md`
 - `skills/hou-hei-strategy/SKILL.md`
 - `skills/sun-tzu-strategy/SKILL.md`
+- `skills/apple-editorial-layout/SKILL.md`
 
 If a future agent needs the detailed wording or reference files, read the local repo copies first instead of relying on anything under `~/.codex/skills`.
 
@@ -180,6 +181,24 @@ Simple rule:
 - Read the people with `Hou Hei`.
 - Say it well with `Cai Kang-Yong`.
 
+### 4. Apple Editorial Layout Skill
+
+Use `skills/apple-editorial-layout/SKILL.md` when the user asks for:
+
+- Apple-like layout logic
+- premium minimalist product pages
+- typography scale and font-size decisions
+- hero / section / card hierarchy
+- calmer, more spacious frontend UI
+- reducing boxes, borders, badges, and visual noise
+
+Operating rule:
+
+- Do not copy Apple branding, exact copy, assets, or proprietary design.
+- Use the high-level logic only: one idea per section, strong visual, short headline, restrained subtitle, clear CTA hierarchy, generous whitespace, and disciplined type scale.
+- Treat desktop horizontal whitespace as part of the brand. Do not let sections, grids, tables, or pricing blocks fill the whole available width by default; prefer centered content islands, usually `max-width: 900px` to `1100px`, with quiet left and right space.
+- Default Apple-like grids should usually use two columns on desktop and one on mobile unless the section is intentionally a compact catalog.
+
 ## Writing Rules For This User
 
 - Default to Chinese unless the user explicitly asks for English.
@@ -189,6 +208,19 @@ Simple rule:
 - Prefer short sentences and practical wording.
 - Preserve boundaries; do not optimize only for niceness.
 
+### Story Style (for any story log: poker table, life, everyday moments)
+
+Defined in `/brand-guide` section `06 / Story style`. Reference implementation: `/poker` Story log. Rules:
+
+- Log the moment, not the score. Record what is worth retelling, not wins/brags.
+- Only what really happened. Polish pacing and imagery, never invent events.
+- Use short nicknames in the narrative (团长、罩仔、太子 / Cap, Lucky, Prince), same in both languages. Full character titles stay on the avatar cards.
+- Short but cinematic: one beat per paragraph, let the key moment land, trim the rest.
+- People first, cards second. The crew is the story.
+- Not a hand history: no jargon, no solver review, no flexing. Read like a friend retelling the night.
+
+If this voice evolves, update both `/brand-guide` section 06 and this block.
+
 ## Rules For Front-End Changes In This Repo
 
 When editing the concept site or future UI:
@@ -196,6 +228,8 @@ When editing the concept site or future UI:
 - Keep the visual direction intentional and distinctive.
 - Do not revert to generic SaaS gradients or default startup aesthetics.
 - Preserve the knowledge-system feel: editorial, structured, durable, thoughtful.
+- Preserve the Apple-like horizontal whitespace now defined in `/brand-guide`: avoid full-width content blocks by default, keep desktop sections calm and centered, and let left/right space remain visibly open.
+- Preserve the current homepage CSS animation language at `http://localhost:4180/`: slow ambient background motion, subtle page entry, and the quiet Current Build / Jiju cat scene rhythm. Future animation changes may refine timing or performance, but should not remove this motion system or replace it with loud generic effects unless the user explicitly asks.
 - Favor content architecture that makes the core idea easier to grasp:
   - problem
   - architecture
@@ -203,6 +237,49 @@ When editing the concept site or future UI:
   - examples
   - tooling
   - workflow
+
+### CSS Art Maintenance Rules
+
+When adding or editing large CSS visuals, treat them as a maintainable asset system, not incidental page CSS:
+
+- Do not keep growing `index.css` with new CSS art blocks by default.
+- Put reusable or complex CSS visuals under `styles/css-art/`.
+- One visual family should have one file, for example `life-os-signals.css`, `projects-icons.css`, or `jiju-cat.css`.
+- Keep page layout CSS separate from CSS art. Page spacing, grids, cards, and typography stay in page/style files; illustrated objects, animation layers, and visual keyframes belong in the CSS art file.
+- Use namespaced class names. Existing project namespaces such as `.life-rpg-*`, `.projects-*`, `.jiju-*`, and `.conway-*` are acceptable. Do not introduce generic art classes like `.cloud`, `.card`, `.node`, or `.line`.
+- Each CSS art component should have a stable wrapper with a fixed aspect ratio or fixed icon size, then internal layers. Avoid layout shifts from animated children.
+- Totem, sigil, glyph, symbolic, or emblem-style CSS art should default to a transparent background, like a transparent PNG. Do not add a fixed app-icon background, visible frame, or heavy outer box unless the user explicitly asks for an app icon or framed badge.
+- Fixed backgrounds are appropriate for app icons and literal scenes. Card/banner visuals may use a background only when the background is part of the scene, not just a decorative container.
+- For animation, prefer `transform`, `translate`, `rotate`, `scale`, and `opacity`. Avoid animating `width`, `height`, `top`, `left`, large `box-shadow`, heavy `filter`, or large moving gradients unless the visual is isolated and tested.
+- Every animated CSS art family must support `prefers-reduced-motion`.
+- Every CSS art family used in public pages must work in both light and dark mode.
+- Keep complexity tiered:
+  - icon: roughly 5 to 12 DOM layers
+  - card/banner: roughly 12 to 35 DOM layers
+  - hero/feature visual: roughly 35 to 80 DOM layers
+  - pure CSS illustration experiments above that belong on a dedicated page or isolated component, not repeated inside grids.
+- Before adding a new CSS art family, check whether an existing one can be extended with variables or modifiers instead of starting from scratch.
+
+### Page CSS Maintenance Rules
+
+When page-level CSS grows beyond a small local patch, split it by route instead of continuing to expand `index.css`:
+
+- Put route/page layout CSS under `styles/pages/`.
+- One route or closely related page family should have one file, for example `home.css`, `projects.css`, `life-os.css`, or `etreporthub.css`.
+- Keep global base rules, theme tokens, Tailwind setup, and app-wide utility behavior in `index.css` until they are intentionally moved into `styles/base.css` or `styles/tokens.css`.
+- Page files should contain layout, typography scale, spacing, grids, panels, CTAs, page-specific dark mode, and responsive overrides.
+- CSS art files should remain under `styles/css-art/`; do not mix illustrated object layers or art keyframes into page files.
+- Keep imports at the top of `index.css` grouped in this order: Tailwind, CSS art, pages, then future base/tokens if added.
+- When extracting page CSS, preserve behavior first. Do not redesign while moving styles unless the user explicitly asks for visual changes.
+
+### Route / SEO Registry Rules
+
+When adding, hiding, renaming, or changing a route:
+
+- Treat `seo-routes.ts` as the route registry source of truth.
+- Keep client SEO copy, index/noindex status, sitemap inclusion, README route docs, and visible page entries consistent with that registry.
+- If a route should be reachable but hidden from discovery, keep the React route but set `index: false` and `sitemap: false` in `seo-routes.ts`, then remove visible navigation/card entry points as needed.
+- Do not maintain separate ad hoc route lists in `vite.config.ts`, `seo.ts`, README, or page components without checking the registry first.
 
 ## If The User Asks To Expand This Repo Into A Real Wiki
 

@@ -27,7 +27,6 @@ Eden 的个人站：单页式 React 应用，多路由、中英双语，用于�
 
 - React 19、Vite 6、TypeScript  
 - Framer Motion、Lucide、Tailwind CSS v4（`@tailwindcss/vite`）  
-- 可选 3D：`@react-three/fiber` / `drei` / `three`  
 
 ---
 
@@ -43,6 +42,8 @@ npm run dev
 开发服务器固定 **<http://localhost:4180>**（`vite.config.ts` 中 `strictPort: true`），避免端口变化导致“改了但看不到”。
 
 ```bash
+npm run typecheck
+npm run check
 npm run build
 npm run preview
 ```
@@ -53,14 +54,20 @@ npm run preview
 
 ## 路由（当前）
 
-- `/` — 主页  
-- `/jiju-pet` — Jiju.pet 构建叙事  
-- `/previous-projects` — 项目列表  
-- `/analog-tech` — 胶片图库  
-- `/life-os` — 人生 RPG 能力系统 / Life OS 角色档案页  
-- `/life` — Life 视频页  
-- `/brand-guide` — 品牌与组件约定  
-- `/archive/:slug` — 归档项目详情  
+- `/` — 主页
+- `/jiju-pet` — Jiju.pet 构建叙事
+- `/projects` — 当前 AI build systems 与产品系统
+- `/etreporthub` — ETReportHub 日报数据系统产品页
+- `/etreporthub-sales` — ETReportHub 售卖页与价格说明
+- `/poker` — Friday Poker Club 产品页与 story log
+- `/crm` — CRM Intelligence System 产品页
+- `/previous-projects` — 项目列表
+- `/analog-tech` — Film Gallery / 胶片图库
+- `/life-os` — 人生 RPG 能力系统 / Life OS 角色档案页
+- `/life` — Life 视频页（隐藏直达页；不在首页入口，不进 sitemap，客户端 SEO 设为 noindex）
+- `/brand-guide` — 品牌操作系统与 Apple-like editorial 设计规则
+- `/conways-game-of-life` — 256 elementary cellular automata rules explorer
+- `/archive/:slug` — 归档项目详情
 
 ---
 

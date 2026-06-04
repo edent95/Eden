@@ -16,6 +16,495 @@
 
 ## Entries
 
+### 2026-06-05 04:01
+
+- 类型：代码 / CSS art / Home Interests refinement
+- 改动：把首页 `Interests` 里的 `Pattern Archive` 进化图腾从装甲龙战士方向改成原创火龙/欧洲龙方向，并移除原本的 `home-archive-evolution-ring` 进化圆圈；更新 DOM 为 `home-archive-fire-dragon`、dragon wing/body/neck/head/horn/tail/flame/breath/claw 结构，CSS 改成更大的蝙蝠翼、长脖子、角、尾巴火焰和喷火动画；同步更新 `styles/css-art/README.md` 为 small-beast-to-fire-dragon。
+- 原因：用户要求“改成进化成喷火龙”，随后要求“欧洲龙那种形态，不要那个粉红圈圈”。
+- 影响：`Pattern Archive` card 现在是橙色小兽进化成欧洲火龙的透明底图腾，不再显示进化圆圈，也不再保留旧的 armored/warrior 命名。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.19s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/` 返回 200；关键词检查确认 `home-archive-evolution-ring`、`home-archive-warrior`、`home-archive-armor`、`home-archive-helmet`、`gauntlet`、`armored-warrior` 均无残留；`git diff --check` 通过。
+- 后续：如果还要更欧洲，可以加更细的翼膜骨架、背刺和更长的蛇形尾巴。
+
+### 2026-06-05 03:56
+
+- 类型：代码 / CSS art / Home Interests
+- 改动：给首页 `Interests` 里的 `Pattern Archive` 增加透明底“small orange reptile -> armored dragon warrior”进化 CSS 图腾；在 `App.tsx` 增加 `HomeArchiveEvolutionTotem` 组件和 `visual: 'archive-evolution'` 标记；在 `styles/css-art/home-interest-totems.css` 增加小型橙色爬行动物阶段、装甲龙战士阶段、翼甲、头盔、角、爪、进化环和 spark 动画；同步更新 `styles/css-art/README.md`。
+- 原因：用户询问 `Pattern Archive` 的 CSS 能否做到 Agumon -> WarGreymon 风格；实现时用原创中性造型表达“小兽进化成装甲龙战士”的感觉，不直接复刻受版权保护角色。
+- 影响：`Pattern Archive` card 现在有透明 PNG 感的进化图腾；橙色小兽会缩小淡出，银金装甲龙战士带翼甲和爪淡入，表达 pattern archive 的形态升级感。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.30s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/` 返回 200；关键词检查确认 `HomeArchiveEvolutionTotem`、`visual: 'archive-evolution'` 和 `.home-archive-*` 已接入；CSS 检查确认 `.home-archive-evolution-totem` 使用 `background: transparent`、`border: 0`、`box-shadow: none`；`git diff --check` 通过。
+- 后续：如要更强进化感，可以加中间白闪帧、数据方块重组或更明显的 armor assemble 过程。
+
+### 2026-06-05 03:53
+
+- 类型：代码 / CSS art / Home Interests
+- 改动：给首页 `Interests` 里的 `Conway's Game of Life` 增加透明底金字塔碰坏 CSS 图腾；在 `App.tsx` 增加 `HomePyramidBreakTotem` 组件和 `visual: 'pyramid-break'` 标记；在 `styles/css-art/home-interest-totems.css` 增加黑白像素金字塔、撞击点、冲击波、裂痕、碎裂像素和 block 位移/旋转动画；同步更新 `styles/css-art/README.md`。
+- 原因：用户要求 `Conway's Game of Life` 的 CSS 放“金字塔碰坏”效果。
+- 影响：`Conway's Game of Life` card 现在有透明 PNG 感的 broken pyramid 图腾；撞击球会从左侧撞入，金字塔 block 发光并错位散开，裂痕和像素碎片出现后复位。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.08s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/` 返回 200；关键词检查确认 `HomePyramidBreakTotem`、`visual: 'pyramid-break'` 和 `.home-pyramid-*` 已接入；CSS 检查确认 `.home-pyramid-totem` 使用 `background: transparent`、`border: 0`、`box-shadow: none`。
+- 后续：如果要更像 Conway 规则，可以把撞击后的碎块改成 cellular automata 细胞扩散纹理。
+
+### 2026-06-05 03:48
+
+- 类型：代码 / CSS art / Home Interests
+- 改动：给首页 `Interests` 里的 `Life OS` 增加透明底黑发到金发 power-up CSS 图腾；在 `App.tsx` 增加 `HomePowerUpTotem` 组件和 `visual: 'power-up'` 标记；在 `styles/css-art/home-interest-totems.css` 增加角色脸部、黑发层、金发尖刺层、橙蓝身体、金色 aura、spark 和变身/抖动动画；同步更新 `styles/css-art/README.md`。
+- 原因：用户要求 `Life OS` 做“悟空黑发变成超级赛亚人金发”的 CSS 效果。
+- 影响：`Life OS` card 现在有透明 PNG 感的 anime power-up 图腾；黑发阶段会淡出，金色尖发和金色能量 aura 会亮起，符合图腾透明底规则，不使用图片或固定背景。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.10s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/` 返回 200；关键词检查确认 `HomePowerUpTotem`、`visual: 'power-up'` 和 `.home-power-*` 已接入；CSS 检查确认 `.home-power-totem` 使用 `background: transparent`、`border: 0`、`box-shadow: none`。
+- 后续：如果需要更像爆气瞬间，可以加更明显的闪白帧、地面冲击线或更夸张的金色发束。
+
+### 2026-06-05 03:45
+
+- 类型：代码 / CSS art / Home Interests refinement
+- 改动：按用户参考图重做 `Analog Tech` 留声机 CSS 图腾的经典配色和造型：加入金铜色大喇叭、喇叭放射 ribs、木质底座、黄铜面板、黑胶唱片、唱臂和手摇柄；保留唱片旋转、唱臂/针头/喇叭轻震和声波扩散动画。
+- 原因：用户要求参考经典留声机配色和“大喇叭”的造型，而不是抽象小图标。
+- 影响：`Analog Tech` 图腾更接近传统 gramophone：铜金喇叭、深木底座、黑胶唱盘，仍然是透明底 CSS art，不使用图片或固定背景。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.12s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/` 返回 200；关键词检查确认 brass/wood/record 配色变量、horn ribs、base panel 和 crank DOM/CSS 已接入；`git diff --check` 通过。
+- 后续：如还要更像老物件，可以继续加底座雕花和喇叭内侧更多铜锈纹理。
+
+### 2026-06-05 03:43
+
+- 类型：代码 / CSS art / Home Interests
+- 改动：给首页 `Interests` 里的 `Analog Tech` 增加透明底留声机 CSS 图腾；在 `App.tsx` 增加 `HomeGramophoneTotem` 组件和 `visual: 'gramophone'` 标记；在 `styles/css-art/home-interest-totems.css` 增加留声机底座、唱盘、唱片、唱臂、喇叭和声波振动动画；同步更新 `styles/css-art/README.md`。
+- 原因：用户要求 `Analog Tech` 做“留声机那种用振动的 CSS”。
+- 影响：`Analog Tech` card 现在有透明 PNG 感的留声机图腾；唱片慢转，唱臂/针头/喇叭轻微振动，喇叭口有声波扩散；仍遵守图腾透明底规则。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.01s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/` 返回 200；关键词检查确认 `HomeGramophoneTotem`、`visual: 'gramophone'` 和 `.home-gramophone-*` 已接入；CSS 检查确认 `.home-gramophone-totem` 使用 `background: transparent`、`border: 0`、`box-shadow: none`。
+- 后续：如果留声机需要更复古，可以加手摇柄、木纹线和更明显的声波节奏。
+
+### 2026-06-05 03:37
+
+- 类型：代码 / CSS art / Home Interests
+- 改动：给首页 `Interests` 里的 `Life Notes` 增加透明底道教八卦镜 CSS 图腾；新增 `styles/css-art/home-interest-totems.css`，在 `App.tsx` 增加 `HomeBaguaMirrorTotem` 组件和 `visual: 'bagua-mirror'` 标记，并把 Interests 箭头改成 `.home-interest-arrow`，避免误伤图腾内部 span；同步更新 `styles/css-art/README.md`。
+- 原因：用户要求 `Life Notes` 用 CSS 做一个道教八卦镜，并遵守刚设定的“图腾透明底”规则。
+- 影响：`Life Notes` card 现在有透明 PNG 感的八卦镜图腾，没有固定 app-icon 背景、外框底板或重阴影；八卦镜包含圆镜、阴阳、八个卦位短线和慢速转光，支持 dark mode 与 reduced motion。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.04s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/` 返回 200；关键词检查确认 `home-bagua-totem`、`visual: 'bagua-mirror'`、`home-interest-totems.css` 已接入；CSS 检查确认 `.home-bagua-totem` 使用 `background: transparent`、`border: 0`、`box-shadow: none`。
+- 后续：若其他 Interests card 也要图腾，可继续放进 `home-interest-totems.css`，保持透明底规则。
+
+### 2026-06-05 03:32
+
+- 类型：文档 / 流程 / CSS art rules
+- 改动：新增 CSS art 图腾透明底规则：在 `AGENTS.md` 的 CSS Art Maintenance Rules、`soul.md` 的默认执行规则和防返工清单、`styles/css-art/README.md` 的 Rules 中写明，totem / sigil / glyph / symbolic / emblem 类型 CSS art 默认透明底，像 transparent PNG；只有 app icon、真实场景、framed badge 或背景本身有视觉含义时才使用固定背景。
+- 原因：用户明确偏好“图腾就透明底”，不要默认把 CSS 图腾做成固定底 app icon。
+- 影响：后续新增大量 CSS art 时，agent 会先判断视觉类型；图腾类默认融入页面背景，减少不必要的外框、底板和重阴影。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.03s；保留现有 >500 kB chunk warning）；关键词检查确认规则已写入 `AGENTS.md`、`soul.md` 和 `styles/css-art/README.md`；`git diff --check` 通过。
+- 后续：若现有 home 的 Life OS 魔法阵或 Projects blueprint 要改成透明底图腾，可以按这条规则继续执行视觉调整。
+
+### 2026-06-05 03:29
+
+- 类型：代码 / Home page cleanup correction
+- 改动：继续移除首页中漏掉的 `Current build` Jiju product feature section，包括左侧 `Jiju.pet` 文案、右侧 `System file / Pet-friendly map` panel，以及对应 `.home-feature` / `.home-product-panel` CSS；同步把 brand guide motion rule 中的 Jiju cat scene/current build 引用改成通用的 icon/object motion 规则。
+- 原因：用户截图指出首页仍然看得到 `Current build` section；上一轮只删掉了 hero 下方 cat scene visual，漏掉了后续 product feature section。
+- 影响：首页不再出现任何 `Current build` 区块；Jiju 入口仍保留在 hero CTA 和 Systems card，不影响导航。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.97s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/` 返回 200；关键词检查确认 `current build`、`home-feature`、`home-product-panel`、`Pet-friendly map, but smaller first`、`jiju cat scene` 不再出现在首页代码入口。
+- 后续：如浏览器仍显示旧内容，强刷 `http://localhost:4180/` 或确认 dev server 已加载最新 Vite bundle。
+
+### 2026-06-05 03:26
+
+- 类型：代码 / Home page cleanup
+- 改动：移除首页 hero 下方的 `Current Build` / Jiju cat scene visual block；移除 Interests section 里的两张 image preview card，把 `Life OS` 和 `Analog Tech` 改成与其他兴趣入口一致的文字 card；删除 home 中不再使用的 image src 常量、`home-hero-visual` / `home-image-card` / `home-link-stack` CSS，并从 `index.css` 移除 `home-jiju-scene.css` import；同步更新 brand guide motion 文案，不再引用已删除的 Current Build cat scene。
+- 原因：用户要求 home 移除 Current build section，并移除 Interests image preview。
+- 影响：首页更轻、更集中；Interests 变为纯文字入口 grid；Jiju cat scene CSS 文件保留为未挂载参考资产，但不再进入构建样式入口。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.81s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/` 返回 200；关键词检查确认 `Current Build`、`home-hero-visual`、`jiju-cat-scene`、`home-image-card`、`home-link-stack` 和相关图片常量不再出现在首页代码入口。
+- 后续：如果要继续减重，可以删除未挂载的 `styles/css-art/home-jiju-scene.css`，或迁到 archive/reference 目录。
+
+### 2026-06-05 03:18
+
+- 类型：代码 / CSS art / Home page
+- 改动：更新首页 `Systems, not claims` 的 system cards：`Jiju.pet Growth System` 改名为 `Jiju Growth System`，并复用 `/projects` 里的 Jiju CSS app icon；`Life OS RPG System` 新增 1:1 心跳变魔法阵 CSS icon，新增 `styles/css-art/home-life-magic.css` 并接入 `index.css`；三张 home system card 的 icon 尺寸和间距在 `styles/pages/home.css` 统一。
+- 原因：用户要求 Jiju Growth System 用回 Projects 页面那套 CSS icon，并把 Life OS RPG System 设计成爱心、心跳变魔法阵的 CSS 动画。
+- 影响：首页 system card 的三项入口都有一致的 1:1 CSS 视觉：Projects Hub 是设计图纸、Jiju 是原 Projects cat icon、Life OS 是心跳/魔法阵；新 Life OS icon 支持 light / dark mode 和 reduced motion。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.27s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/` 返回 200；关键词检查确认 `Jiju Growth System`、`visual: 'jiju'`、`visual: 'life-magic'` 和 `home-life-magic.css` 已接入。
+- 后续：如果首页三张卡片需要更工整，可以进一步把标题、icon 和 CTA 固定成同一 baseline grid。
+
+### 2026-06-05 03:13
+
+- 类型：代码 / CSS art / Home page
+- 改动：给首页 `Projects Hub` system card 新增 1:1 设计图纸 CSS icon；新增 `styles/css-art/home-projects-blueprint.css`，在 `App.tsx` 用 `visual: 'blueprint'` 只挂到 Projects Hub，并在 `styles/pages/home.css` 处理卡片间距；同步更新 CSS art README。
+- 原因：用户要求 home 的 Projects Hub 加一个 1:1、设计图纸方向的 CSS icon。
+- 影响：Projects Hub 在首页有了独立的 blueprint 视觉信号，支持 light / dark mode、慢速扫描和 reduced motion；CSS art 继续按独立文件维护，没有回灌到主 `index.css`。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.02s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/` 返回 200；关键词检查确认 icon component、CSS import、CSS art README 均已接入。
+- 后续：如需更强“图纸”感，可以继续加比例尺、折角纸张或蓝图批注，但建议保持 icon 层级在 5-12 DOM 层左右。
+
+### 2026-06-05 03:06
+
+- 类型：代码 / 结构 / Jiju.pet page CSS extraction
+- 改动：继续执行页面级 CSS 分层，把 `/jiju-pet` 的 route shell、product narrative layout、proof rows、system cards、DNA/note cards、chapter cards、CTA 和 mobile override 从 `index.css` 抽到 `styles/pages/jiju-pet.css`；在 `index.css` 顶部新增 import，并更新 `styles/pages/README.md`。
+- 原因：用户要求继续执行优化；这是继 `home.css`、`projects.css` 后的第三个 page CSS 抽离。
+- 影响：`index.css` 从 3152 行降到 2838 行，Jiju.pet 构建叙事页样式独立成 316 行 route CSS；后续修改 Jiju.pet 页面布局不需要继续扩张主 CSS。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.93s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/jiju-pet` 返回 200；代码检查确认 `.jiju-*` 页面样式集中在 `styles/pages/jiju-pet.css`，`index.css` 只保留 import。
+- 后续：下一步可继续抽 `styles/pages/etreporthub.css`，或先抽 shared theme/base 到 `styles/tokens.css` / `styles/base.css`。
+
+### 2026-06-05 03:04
+
+- 类型：代码 / 结构 / Projects page CSS extraction
+- 改动：继续执行页面级 CSS 分层，把 `/projects` 的 route shell、editorial layout、project cards、readout cards、CTA、mobile override 从 `index.css` 抽到 `styles/pages/projects.css`；在 `index.css` 顶部新增 import，并更新 `styles/pages/README.md`。Projects CSS app icons 仍保留在 `styles/css-art/projects-icons.css`。
+- 原因：用户要求继续执行优化；这是继 `styles/pages/home.css` 后的第二个 page CSS 抽离。
+- 影响：`index.css` 从 3480 行降到 3152 行，Projects 页面布局和 Projects icon visual 职责分离，后续改 card 排版或 icon 动画不需要在主 CSS 里混找。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.99s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/projects` 返回 200；代码检查确认 `.projects-*` 页面布局集中在 `styles/pages/projects.css`，icon visual 仍在 `styles/css-art/projects-icons.css`。
+- 后续：下一步可继续抽 `styles/pages/jiju-pet.css`，或优先抽 shared theme/base 到 `styles/tokens.css` / `styles/base.css`。
+
+### 2026-06-05 03:02
+
+- 类型：代码 / 文档 / 结构 / Page CSS rules and home extraction
+- 改动：新增页面级 CSS 分层规则：在 `AGENTS.md` 增加 `Page CSS Maintenance Rules`，在 `soul.md` 加入默认执行规则和防返工检查项，并新增 `styles/pages/README.md`。执行第一步优化：把首页 `.home-*` layout / typography / panels / CTA / footer / mobile override 从 `index.css` 抽到 `styles/pages/home.css`，并在 `index.css` 顶部新增 import；全局 `.page-shell` mobile padding 保留在 `index.css`。
+- 原因：用户要求“设立规则，执行优化”；目标是让 CSS art 抽离后，页面级 CSS 也按 route 分层维护，减少 `index.css` 继续膨胀。
+- 影响：`index.css` 从 3818 行降到 3480 行，首页 page CSS 独立为 343 行；首页 CSS art 仍在 `styles/css-art/home-jiju-scene.css`，页面布局在 `styles/pages/home.css`，职责更清楚。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.08s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/` 返回 200；代码检查确认 `.home-*` 样式集中在 `styles/pages/home.css`，`index.css` 只保留 import 和全局 `page-shell` 规则。
+- 后续：下一步可按同样模式抽 `styles/pages/projects.css`，然后再抽 `styles/pages/jiju-pet.css` 或 `styles/pages/etreporthub.css`。
+
+### 2026-06-05 02:56
+
+- 类型：代码 / 结构 / Home Jiju CSS art extraction
+- 改动：继续执行 CSS art 资产系统，把首页 Current Build / Jiju.pet 的 `jiju-cat-scene`、主猫、客串猫、云、草、蝴蝶、叶子、星星、dark mode、keyframes 和 reduced motion 从 `index.css` 抽到 `styles/css-art/home-jiju-scene.css`；在 `index.css` 顶部新增 import，并更新 `styles/css-art/README.md`。
+- 原因：用户要求继续执行大量 CSS 更好维护的方案；这是继 Life OS signals 和 Projects icons 后的第三个 CSS art family 抽离。
+- 影响：`index.css` 从 4368 行降到 3818 行，首页 Jiju cat scene 的复杂动画成为独立资产文件；首页 hero 容器、文案、section/card 布局仍留在 `index.css`。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.14s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/` 返回 200；代码检查确认 `jiju-cat-scene` 和 `@keyframes jiju-*` 已在 `styles/css-art/home-jiju-scene.css`，`index.css` 只保留 import 和页面布局。
+- 后续：下一步可按同样规则继续拆 Conway 或 ETReportHub 页面级 CSS，或者先把 CSS art import 顺序和命名整理成更明确的分组。
+
+### 2026-06-05 02:53
+
+- 类型：代码 / 结构 / Projects CSS art extraction
+- 改动：继续执行 CSS art 资产系统，把 `/projects` 的 Jiju、Friday Poker Club、ETReportHub、CRM Intelligence System 四组 CSS app icon 及其 keyframes / reduced motion 从 `index.css` 抽到 `styles/css-art/projects-icons.css`；在 `index.css` 顶部新增 import，并更新 `styles/css-art/README.md` 的 Current Files。Projects card 排版规则如 title、slot、summary、system line、actions 保留在 `index.css`。
+- 原因：用户要求继续执行大量 CSS 更好维护的结构化方案；这是继 Life OS signals 后的第二个 CSS art family 抽离。
+- 影响：`index.css` 从 5477 行降到 4368 行，Projects icon visual 形成独立资产文件，后续修改 Jiju / Poker / ETReportHub / CRM icon 不需要继续扩张主 CSS。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.19s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/projects` 返回 200；代码检查确认 projects icon class 和 `@keyframes projects-*` 只在 `styles/css-art/projects-icons.css`，布局类仍在 `index.css`。
+- 后续：下一步可抽首页 Jiju cat scene / landing animation 到独立 `styles/css-art/home-jiju-scene.css`，或继续拆 Conway / page-specific CSS。
+
+### 2026-06-05 02:49
+
+- 类型：代码 / 文档 / 结构 / CSS art maintenance rules
+- 改动：制定并落地大量 CSS visual 的维护规则：在 `AGENTS.md` 新增 `CSS Art Maintenance Rules`，在 `soul.md` 加入默认执行偏好和防返工检查项；新增 `styles/css-art/README.md` 作为 CSS art 资产系统说明；把 Life OS 的 signal card、WIND-57 云/海/岛 banner、PHASE-RULE 签合同 banner 和相关 keyframes 从 `index.css` 抽到 `styles/css-art/life-os-signals.css`，并在 `index.css` 顶部引入。
+- 原因：用户要求“制定规则然后执行”，目标是让后续大量 CSS art 更好维护、更容易优化，而不是继续把复杂视觉堆进主 CSS。
+- 影响：`index.css` 体积和职责下降，Life OS CSS art 形成可复制的资产文件模式；未来新增 Jiju / Projects / Life OS 等复杂 CSS visual 时应按 `styles/css-art/` 一个视觉家族一个文件的规则扩展。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.72s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/life-os` 返回 200；代码检查确认 `index.css` 已 import `./styles/css-art/life-os-signals.css`，规则文档已写入 `AGENTS.md` / `soul.md` / `styles/css-art/README.md`。
+- 后续：下一步可继续把 Projects 的 Jiju / Friday / ETReportHub / CRM CSS icons 抽成 `styles/css-art/projects-icons.css`，再逐步抽首页 Jiju cat scene。
+
+### 2026-06-05 02:45
+
+- 类型：代码 / 前台 / Life OS global card border transparency
+- 改动：为 `/life-os` 增加后置的 `.life-os-open-layout :where([class*="border"])` light/dark 覆盖规则，将所有带 Tailwind border class 的 Life OS 卡片与内层卡片边框统一压成 transparent，并同步 outline-color。
+- 原因：用户要求“把全部的card border变透明”；此前已有早期透明规则，但 dark mode 的全局 `.border-stone-*` 覆盖优先级更高，部分卡片仍可能露出边线。
+- 影响：Life OS 页面所有 card / nested card 在 light 与 dark mode 下都不再显示白色或石色外框；保留页面布局、背景、CSS visual 和内容结构。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.32s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/life-os` 返回 200；代码检查确认后置 light/dark border override 已接入。
+- 后续：本地访问 `http://localhost:4180/life-os`，检查 Life OS 各章节 card 外框应全部透明。
+
+### 2026-06-05 02:44
+
+- 类型：代码 / 前台 / Life OS signal card outline removal
+- 改动：把 `/life-os`「玩家信号 → RPG 模组」6 张 `life-rpg-signal-card` 的 light/dark 外框 `border-color` 都改为 `transparent`，保留卡片背景、阴影以及内部 CSS icon / 21:9 visual 自身边界。
+- 原因：用户要求移除 6 个 card 的白色 outline。
+- 影响：玩家信号卡片外缘更干净，不再出现浅色描边；WIND-57、PHASE-RULE 和其他 signal 的内部 CSS 动画不受影响。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.15s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/life-os` 返回 200；代码检查确认 `.life-os-open-layout .life-rpg-signal-card` light/dark border 均为 transparent。
+- 后续：本地访问 `http://localhost:4180/life-os`，进入「数值控制台」里的「玩家信号 → RPG 模组」，6 张 signal card 应不再有白色外框。
+
+### 2026-06-05 02:42
+
+- 类型：代码 / 前台 / Life OS WIND-57 pure CSS illustration pass
+- 改动：增强 `/life-os`「玩家信号 → RPG 模组」里 `WIND-57 / 轻量渗透型风格` 的 21:9 CSS scene：在原本拟人云、山、岛、海基础上新增山顶雪线、沙滩、棕榈、海浪喷雾、云脸高光、鼻子和腮红；新增 `life-rpg-palm-sway` 与 `life-rpg-wind-spray-drift` 慢动画，并纳入 reduced motion。
+- 原因：用户问纯 CSS Francine 那类复杂插画“会有难度吗”，并要求“试试看”；本次先用现有 banner 做一版更复杂但仍轻量的 CSS 插画试验。
+- 影响：WIND-57 visual 更接近可识别的纯 CSS 小插画：云更有人脸，背景有更明确的山岛海层次和风吹后的水花反馈；没有引入图片或新依赖，不影响 PHASE-RULE 和其他 signal card。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.27s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/life-os` 返回 200；代码检查确认新增 `life-rpg-wind-cloud-highlight`、`life-rpg-wind-cloud-cheek`、`life-rpg-wind-palm`、`life-rpg-wind-mountain-snow`、`life-rpg-wind-spray` 已接入。
+- 后续：本地访问 `http://localhost:4180/life-os`，进入「数值控制台」里的「玩家信号 → RPG 模组」，第一张 `轻量渗透型风格` 应看到更复杂的拟人云吹风、山岛海 CSS 插画。
+
+### 2026-06-05 02:32
+
+- 类型：代码 / 前台 / Life OS WIND-57 anthropomorphic cloud scene
+- 改动：重做 `/life-os`「玩家信号 → RPG 模组」里 `WIND-57 / 轻量渗透型风格` 的 21:9 CSS visual：DOM 从旧的 wind veil / infiltration nodes 改为 sea、waves、mountains、island、anthropomorphic cloud face、cloud eyes、mouth、puffs、breath；CSS 背景改成山、岛、海场景，新增 `life-rpg-cloud-breathe`、`life-rpg-cloud-blink`、`life-rpg-cloud-mouth`、`life-rpg-cloud-puff`、`life-rpg-cloud-breath`、`life-rpg-sea-wave` 动画，并更新 dark mode 与 reduced motion。
+- 原因：用户要求“轻量渗透型风格的 css 改为拟人的云吹风，背景是山岛海”。
+- 影响：WIND-57 的 visual 更像一个具象、柔和的 CSS 小场景：拟人云对着海岛吹风，远处有山和海浪；保留 21:9 横向比例，不影响 PHASE-RULE 签合同 visual 和其他 signal。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.85s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/life-os` 返回 200；代码检查确认旧 `life-rpg-wind-veil` / `life-rpg-infiltration*` 无残留，新 `life-rpg-wind-cloud-face`、`life-rpg-wind-mountain`、`life-rpg-wind-island`、`life-rpg-wind-sea`、`life-rpg-cloud-breath` 已接入。
+- 后续：本地访问 `http://localhost:4180/life-os`，进入「数值控制台」里的「玩家信号 → RPG 模组」，第一张 `轻量渗透型风格` 应看到拟人云吹风、山岛海背景。
+
+### 2026-06-05 02:28
+
+- 类型：代码 / 前台 / Life OS PHASE-RULE signature and chop timing
+- 改动：调整 `/life-os`「玩家信号 → RPG 模组」里 `PHASE-RULE / 规则制定阶段` 的签合同 CSS motion：签名从单一 `::before` 弧线改成 4 段 `life-rpg-contract-sign-stroke-*` 手写笔画，逐段 reveal；chop/印章从偏暗棕红改为更明确的红色方印（stamp base `#d7352a`、seal `rgb(215 42 34 / ...)`），并把印章时机从签名刚完成前后改为签名完成后再下落、压住、seal 显示。
+- 原因：用户反馈“签名复杂一点，chop 的时机跟颜色有问题”。
+- 影响：PHASE-RULE 的 21:9 contract visual 更像真实签署流程：先写复杂签名，再盖红色方印；印章不再抢在签名动作前发生，颜色也更接近正式 chop。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.22s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/life-os` 返回 200；代码检查确认旧 `life-rpg-contract-signature::before` / `life-rpg-contract-sign` 无残留，新 4 段签名、`life-rpg-contract-stamp-drop`、`life-rpg-contract-seal-show` 与红色 chop 色值已接入。
+- 后续：本地访问 `http://localhost:4180/life-os`，进入「数值控制台」里的「玩家信号 → RPG 模组」，第二张 `规则制定阶段` 应看到更复杂签名和延后盖章。
+
+### 2026-06-05 02:25
+
+- 类型：代码 / 前台 / Life OS PHASE-RULE contract visual
+- 改动：为 `/life-os`「玩家信号 → RPG 模组」里的 `PHASE-RULE / 规则制定阶段` 移除 small CSS app icon，并新增 `LifeRpgRuleContractStrip` 21:9 CSS visual。场景包含桌面、契约纸张、规则文本线、签名线、钢笔、印章和 seal；新增 `.life-rpg-contract-*` 样式与 `life-rpg-contract-paper-settle`、`life-rpg-contract-pen-write`、`life-rpg-contract-sign`、`life-rpg-contract-stamp-drop`、`life-rpg-contract-seal-show` 动效；支持 dark mode 与 reduced motion。
+- 原因：用户要求“规则制定阶段也是 remove small icon，然后 add 21/0 css with sign contract css motion”；按前后上下文将 `21/0` 处理为 `21:9`。
+- 影响：PHASE-RULE 卡片现在和 WIND-57 一样使用横向 CSS 场景，不显示 small icon；视觉语义从抽象规则 icon 变成“签署规则契约”，更贴合规则制定阶段。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.28s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/life-os` 返回 200；代码检查确认 `LifeRpgRuleContractStrip`、`.life-rpg-contract-strip`、签名/印章 keyframes 存在，并确认 `LifeRpgSignalCssIcon` 只在非 WIND-57 / PHASE-RULE 时渲染。
+- 后续：本地访问 `http://localhost:4180/life-os`，进入「数值控制台」里的「玩家信号 → RPG 模组」，第二张 `规则制定阶段` 应看到 21:9 签合同动画，没有 small icon。
+
+### 2026-06-05 02:22
+
+- 类型：代码 / 前台 / Life OS WIND-57 wind-cover visual refinement
+- 改动：继续调整 `/life-os`「玩家信号 → RPG 模组」里的 `WIND-57 / 轻量渗透型风格`：该卡片头部不再渲染 small CSS app icon；21:9 CSS visual 从线条/HUD 风格改成更接近 Jiju CSS 场景的“风幕盖过去”动画。DOM 改为 ground、wind veil、soft cloud、infiltration patch、infiltration node；CSS 移除旧 `wind-current` / `wind-particle` / `infiltration-field` 线条设计，改用柔软风团横向覆盖、右侧区域被风渗透后节点亮起。
+- 原因：用户要求“轻量渗透型风格 的 small icon remove；21/9 的 css 换成风盖过去，不要线条设计了，刚才 jiju css 就很好”。
+- 影响：WIND-57 卡片视觉更像一个柔和 CSS 小场景，不再像数据线框；标题区更干净，只显示 title/code；其他 5 个 signal 的大 CSS app icon 不受影响。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.82s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/life-os` 返回 200；代码检查确认旧线条/粒子 class 无残留，`LifeRpgSignalCssIcon` 只在 `signal.code !== 'WIND-57'` 时渲染。
+- 后续：本地访问 `http://localhost:4180/life-os`，进入「数值控制台」里的「玩家信号 → RPG 模组」，第一张 `轻量渗透型风格` 应只有 21:9 风幕覆盖动画，没有 small icon。
+
+### 2026-06-05 02:18
+
+- 类型：代码 / 前台 / Life OS WIND-57 21:9 CSS strip
+- 改动：为 `/life-os`「玩家信号 → RPG 模组」里的 `WIND-57 / 轻量渗透型风格` 单独新增 `LifeRpgWindInfiltrationStrip`，以 21:9 CSS 横向 visual 展示风吹与渗透过程；新增 `.life-rpg-wind-strip`、wind current、particle、infiltration field/node 样式，以及 `life-rpg-wind-blow`、`life-rpg-wind-particle`、`life-rpg-infiltrate` 动画。其他 5 个 signal 仍保持上一版的大 CSS app icon，不恢复大横幅。
+- 原因：用户要求“轻量渗透型风格的 css 21:9 ratio，然后用一个风吹然后渗透的动画”。
+- 影响：WIND-57 卡片现在有专属 21:9 CSS 动画：风线和粒子从左侧吹过，右侧结构节点延迟亮起，表达“风先经过，再渗透进系统”；支持 light/dark mode 与 reduced motion。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.30s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/life-os` 返回 200；代码检查确认 `LifeRpgWindInfiltrationStrip` 只在 `signal.code === 'WIND-57'` 时渲染，CSS 含 `aspect-ratio: 21 / 9`。
+- 后续：本地访问 `http://localhost:4180/life-os`，进入「数值控制台」里的「玩家信号 → RPG 模组」，第一张 `轻量渗透型风格` 应看到 21:9 风吹渗透动画。
+
+### 2026-06-05 02:14
+
+- 类型：代码 / 前台 / Life OS signal app icon refinement
+- 改动：按用户反馈调整 `/life-os`「玩家信号 → RPG 模组」卡片：移除上一版的大 CSS signal banner 与 `LifeRpgSignalCssBanner` 组件，只保留更大的 CSS app icon；把 grid、arc、vector、node、orbit 和 core breathe 动效全部集中进 `LifeRpgSignalCssIcon`。icon 从 2.5rem 放大到 4.75rem，卡片头部改为大 icon + title/code。
+- 原因：用户要求“把 app icon 变大然后加 css，现在大的 css 拿掉”，即不要顶部大横幅，改成更大的 CSS icon。
+- 影响：玩家信号卡片更紧凑，视觉重点回到 app icon；6 个 signal 仍保留不同颜色/几何特征和 light/dark mode，旧 PNG 和大横幅都不再渲染。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.03s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/life-os` 返回 200；代码检查确认 `LifeRpgSignalCssBanner`、`.life-rpg-signal-css-banner`、`signal.banner`、`signal.icon` 均无渲染残留。
+- 后续：本地访问 `http://localhost:4180/life-os`，进入「数值控制台」里的「玩家信号 → RPG 模组」，应看到每张卡只有一个更大的 CSS app icon，不再有顶部横幅。
+
+### 2026-06-05 02:10
+
+- 类型：代码 / 前台 / Life OS player signal CSS visuals
+- 改动：将 `/life-os`「玩家信号 → RPG 模组 / Player Signals -> RPG Modules」里的 6 组 signal banner 和 icon 从 PNG 渲染改成纯 CSS 设计。新增 `LifeRpgSignalCssBanner`、`LifeRpgSignalCssIcon`、`lifeRpgSignalVisualKeys`，每个 signal 使用同一套 CSS 几何结构但按 code 切换风 / 规则 / 探索 / 刃 / 身体回应 / 抽象压缩的色彩与图形重点；新增 `.life-rpg-signal-*` 样式、慢速 orbit / scan / pulse / float 动效、light/dark mode 配色和 `prefers-reduced-motion` 关停。
+- 原因：用户要求把 `/life-os` 中“玩家信号 → RPG 模组”的 banner and icon 都换成 CSS design。
+- 影响：该区块不再渲染 `signal.banner` 与 `signal.icon` PNG，视觉更统一为 Life OS 的系统化 signal board；其他 Life OS 区块的既有图片资产不受影响。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.12s；保留现有 >500 kB chunk warning）；`curl -I http://localhost:4180/life-os` 返回 200；代码检查确认 `LifeRpgSignalCssBanner`、`LifeRpgSignalCssIcon` 和 `.life-rpg-signal-*` 样式已接入，渲染处不再引用 `signal.banner` / `signal.icon`。
+- 后续：本地访问 `http://localhost:4180/life-os`，进入「数值控制台」里的「玩家信号 → RPG 模组」，应看到 6 张 CSS 信号横幅和对应 CSS 小 icon，支持 dark/light mode。
+
+### 2026-06-05 02:04
+
+- 类型：代码 / 前台 / Conway I Ching rule mapping
+- 改动：把 `/conways-game-of-life` 易经读数从“8-bit rule 中间六位”改为 `64 卦 × 4 phase = 256 rules`：低 6 位（`rule & 63`）决定六爻卦码，高 2 位（`rule >> 6`）决定静卦 / 下卦动 / 上卦动 / 通卦动；读数面板新增 Phase、卦码显示，并在六爻图上高亮 phase 对应变爻。
+- 原因：用户指出 Rule 000 和 Rule 001 的上下卦相同；原先丢弃首尾 bit 的映射会让相邻规则重复，不符合“256 rules 配合易经”的结构。
+- 影响：Rule 000 与 Rule 001 现在会读成不同卦；Rule 064 会回到同一卦码但进入第二个 phase，更清楚地表达 `64 × 4` 的关系。
+- 验证：`rg` 确认旧文案 `middle six / 中间六位` 已无命中，新 `I_CHING_RULE_PHASES`、`Phase {phaseBits}` 和 `.is-changing` 已接入；`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.09s；保留现有 >500 kB chunk warning）。
+- 后续：本地访问 `http://localhost:4180/conways-game-of-life`，点击 Rule 000 / 001 / 064，对比卦码、Phase 与变爻高亮。
+
+### 2026-06-05 01:05
+
+- 类型：代码 / 前台 / Projects card layout alignment
+- 改动：修正 `/projects` 项目卡排版：项目卡改为 flex column；title row 改为 `grid-template-columns: minmax(0, 1fr) icon`，icon 固定列，title 可 `overflow-wrap:anywhere`，避免 ETReportHub / CRM 长标题被 icon 遮住；给 title row、role、summary 设置统一高度节奏；System layer 改为 `margin-top:auto`，action 区新增 `projects-card-actions` class 并统一 gap / margin / min-height。
+- 原因：用户截图反馈项目卡不对称、action button 不在同一 line、System layer 和隔壁不对齐、title 不对齐，并且 ETReportHub title 被 icon hide 掉。
+- 影响：`http://localhost:4180/projects` 的四个项目卡标题、icon、System layer 和 action button 更规整；长标题会换行而不是被图标覆盖。
+- 验证：`rg` 确认 `projects-card-actions`、`overflow-wrap:anywhere`、`margin-top:auto` 等布局规则已接入；`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.96s；保留现有 >500 kB chunk warning）。
+- 后续：本地访问 `http://localhost:4180/projects`，检查四张卡 title 不被遮挡，System layer 与 action button 在同一排卡片中更接近同一水平线。
+
+### 2026-06-05 01:00
+
+- 类型：代码 / 前台 / Projects CRM magic circle geometry
+- 改动：增强 CRM Intelligence System CSS 魔法阵 icon 的几何复杂度：新增八边形外框、六边形内框、十字轴线、4 条斜向短刻度和 2 个小方形 glyph；新增对应 light/dark 颜色、慢速旋转/漂移/脉冲动画，并纳入 `prefers-reduced-motion` 关停规则。
+- 原因：用户要求魔法阵“多一点复杂的几何形”。
+- 影响：`http://localhost:4180/projects` 的 CRM icon 更像复杂魔法阵/智能系统符号，和其他三个项目 icon 的视觉差异更明显；无新增图片或依赖。
+- 验证：`rg` 确认 `projects-crm-polygon`、`projects-crm-axis`、`projects-crm-tick`、`projects-crm-glyph` 已接入；`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.89s；保留现有 >500 kB chunk warning）。
+- 后续：本地访问 `http://localhost:4180/projects`，CRM 卡片右侧应看到更复杂的多层几何魔法阵。
+
+### 2026-06-05 00:54
+
+- 类型：代码 / 前台 / Projects CRM magic circle icon
+- 改动：为 `/projects` 的 CRM Intelligence System 卡片新增 `ProjectsCrmCssIcon` 纯 CSS 魔法阵 app icon，包含 flat 背景、外/中/内三层圆环、双三角符号、四个节点、中心核心和 orbit 流光；新增 `projects-crm-*` 专用样式、light/dark 配色、慢速旋转、反向旋转、节点 pulse、核心呼吸和 `prefers-reduced-motion` 关停规则。
+- 原因：用户希望 CRM Intelligence System 使用“魔法阵 CSS 动画”的视觉方向，而不是普通 network/dashboard。
+- 影响：`http://localhost:4180/projects` 的四个项目卡现在都有对应 CSS app icon；CRM icon 语义偏“智能系统 / 关系召唤 / 下一步动作”，和 ETReportHub 的数据 bar、Friday Poker Club 的对 A、Jiju.pet 的猫场景区分开。
+- 验证：`rg` 确认 `ProjectsCrmCssIcon` 与 `projects-crm-*` 样式已接入；`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.94s；保留现有 >500 kB chunk warning）。
+- 后续：本地访问 `http://localhost:4180/projects`，CRM Intelligence System 卡片右侧应看到慢速旋转和脉冲的魔法阵 CSS icon，light/dark mode 都可用。
+
+### 2026-06-05 00:37
+
+- 类型：代码 / 前台 / Projects ETReportHub icon animation
+- 改动：放慢 ETReportHub CSS app icon 的数据动效：bar 动态从 3.4s 改为 5.8s，趋势线 pulse 从 3.8s 改为 6.2s，扫描线从 3.2s 改为 5.6s；同步拉开 4 根 bar 的 animation delay。
+- 原因：用户反馈 ETReportHub CSS 动画要“慢一点”。
+- 影响：`http://localhost:4180/projects` 的 ETReportHub icon 数据变化更稳、更不急促；动态仍可见。
+- 验证：`rg` 确认新周期值存在（5.8s / 6.2s / 5.6s）；`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.88s；保留现有 >500 kB chunk warning）。
+- 后续：本地访问 `http://localhost:4180/projects`，ETReportHub 卡片右侧 bar、趋势线和扫描线应比上一版慢。
+
+### 2026-06-05 00:35
+
+- 类型：代码 / 前台 / Projects ETReportHub icon
+- 改动：为 `/projects` 的 ETReportHub 卡片新增 `ProjectsEtReportCssIcon` 纯 CSS app icon，包含 flat dashboard 背景、顶部状态点、网格、4 根动态 bar、趋势线和扫描线；新增 `projects-etreport-*` 专用样式、light/dark 配色、bar 动态变化、趋势线 pulse、扫描线动画，以及 `prefers-reduced-motion` 关停规则。
+- 原因：用户要求“ETReportHub 也来一个，来个数据化的 CSS 动画，bar 动态”。
+- 影响：`http://localhost:4180/projects` 的 ETReportHub 卡片现在有数据化动态 CSS icon，和 Jiju.pet / Friday Poker Club 的图标体系对齐；无新增图片或依赖。
+- 验证：`rg` 确认 `ProjectsEtReportCssIcon` 与 `projects-etreport-*` 样式已接入；`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.74s；保留现有 >500 kB chunk warning）。
+- 后续：本地访问 `http://localhost:4180/projects`，ETReportHub 卡片右侧应看到 dashboard 风格 icon，bar 会动态升降，light/dark mode 都可用。
+
+### 2026-06-05 00:32
+
+- 类型：代码 / 前台 / Projects Friday Poker Club icon flat background
+- 改动：继续调整 Friday Poker Club CSS app icon：移除 dealer button 圆点 DOM 与 `.projects-poker-button` 样式；将 poker icon 的 light/dark 外层背景改为 flat solid color（light `#16211d`、dark `#11191b`），牌桌背景也改为 flat solid color（light `#1f7a58`、dark `#15543f`），不再使用 gradient。
+- 原因：用户要求“那个圆点也是拿掉”，并要求 dark mode / light mode 背景 flat 一点，不要 gradient。
+- 影响：`http://localhost:4180/projects` 的 Friday Poker Club icon 更干净，视觉更像简洁 app icon；Jiju.pet icon 未改。
+- 验证：`rg` 确认无 `projects-poker-button`；poker icon/table 对应样式已改为纯色背景；`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.85s；保留现有 >500 kB chunk warning）。
+- 后续：本地访问 `http://localhost:4180/projects`，Friday Poker Club 卡片右侧应只显示 flat 背景牌桌与一对 A，不再有圆点或渐变背景。
+
+### 2026-06-05 00:30
+
+- 类型：代码 / 前台 / Projects Friday Poker Club icon refinement
+- 改动：按用户反馈调整 Friday Poker Club CSS app icon：移除 3 个筹码 DOM 与全部 `projects-poker-chip*` 样式；两张手牌改成对 A（一张黑桃 A、一张红心 A，含角标 A 与中间花色）；动作放慢，牌桌呼吸从 3.2s 改为 5.6s，手牌浮动从 2.8s 改为 4.8s，保留可见的 8px 上抬幅度。
+- 原因：用户要求“把筹码拿掉，然后对A，动作慢一点”。
+- 影响：`http://localhost:4180/projects` 的 Friday Poker Club icon 更聚焦德州扑克手牌，不再有筹码跳动；动效更慢、更容易看清。
+- 验证：`rg` 确认无 `projects-poker-chip` 引用，两张牌含 `rank-top/rank-bottom` A 与 `suit-spade` / `suit-heart`；`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.80s；保留现有 >500 kB chunk warning）。
+- 后续：本地访问 `http://localhost:4180/projects`，Friday Poker Club 卡片右侧应显示一对 A，无筹码，手牌动作比上一版更慢。
+
+### 2026-06-05 00:28
+
+- 类型：代码 / 前台 / Projects Friday Poker Club icon animation
+- 改动：增强 Friday Poker Club CSS app icon 的动效幅度：牌桌呼吸从 1.5% 提到 6% 并缩短到 3.2s；两张手牌从轻微 2px 浮动改成 8px 上抬 + 旋转变化；筹码从 1px 微动改成 7px 跳动 + 1.14 scale，周期缩短到 2.4s。
+- 原因：用户反馈原动效幅度太小，“没有注意根本都看不出”。
+- 影响：`http://localhost:4180/projects` 的 Friday Poker Club icon 动画现在扫一眼可见，但仍限制在 app icon 内，不影响页面阅读；Jiju.pet icon 未改。
+- 验证：`rg` 确认新幅度存在（`scale(1.06)`、`translateY(-8px)`、`translateY(-7px)`）；`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.79s；保留现有 >500 kB chunk warning）。
+- 后续：本地访问 `http://localhost:4180/projects`，Friday Poker Club 卡片右侧应明显看到牌桌呼吸、手牌抬起和筹码跳动。
+
+### 2026-06-05 00:25
+
+- 类型：代码 / 前台 / Projects Friday Poker Club icon
+- 改动：为 `/projects` 的 Friday Poker Club 卡片新增 `ProjectsPokerCssIcon` 纯 CSS app icon，包含椭圆牌桌、两张手牌、筹码和 dealer button；新增 `projects-poker-*` 专用样式、light/dark 配色、低频桌面呼吸/手牌浮动/筹码微动，以及 `prefers-reduced-motion` 关停规则。
+- 原因：用户要求“帮 Friday Poker Club 也设计一组 CSS”，延续 Jiju.pet CSS app icon 的方向，为项目卡补一个不依赖图片的视觉标识。
+- 影响：`http://localhost:4180/projects` 的 Friday Poker Club 卡片现在有独立 CSS icon；视觉和 Jiju.pet icon 尺寸一致，但主题切到 poker table / cards / chips。
+- 验证：`rg` 确认 `ProjectsPokerCssIcon` 与 `projects-poker-*` 样式已接入；`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.79s；保留现有 >500 kB chunk warning）。
+- 后续：本地访问 `http://localhost:4180/projects`，Friday Poker Club 卡片右侧应看到扑克主题 CSS app icon，light/dark mode 都可用。
+
+### 2026-06-05 00:23
+
+- 类型：代码 / 前台 / Projects dark mode icon border
+- 改动：修正 `/projects` 中 Jiju.pet CSS app icon 在 dark mode 下边框过白的问题；为 `.projects-jiju-css-icon` 和 `.projects-jiju-css-icon::after` 增加 dark mode 专用 box-shadow，把白色 inset 描边改成低透明蓝灰描边，并加深底部内阴影。
+- 原因：用户截图反馈 dark mode 下 Jiju.pet icon 外框是明显白边，和暗色页面不融合。
+- 影响：dark mode 下 Jiju.pet icon 边框更安静，保留图标轮廓但不再发白；light mode 不受影响。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.77s；保留现有 >500 kB chunk warning）。
+- 后续：本地访问 `http://localhost:4180/projects` 并切到 dark mode，Jiju.pet CSS icon 外框应变成低对比蓝灰/暗边，不再是白色描边。
+
+### 2026-06-05 00:21
+
+- 类型：代码 / 前台 / Projects Jiju.pet icon
+- 改动：将 `/projects` 中 Jiju.pet 卡片的 PNG app icon 替换为 `ProjectsJijuCssIcon` 纯 CSS 小场景；新图标复用首页 CSS 猫动效语言，但只保留单只主猫版本，不包含第二只 cameo cat。新增 `projects-jiju-*` 专用样式、light/dark 配色和 `prefers-reduced-motion` 关停规则；移除 `jijuIconSrc` 引用。
+- 原因：用户要求把 `http://localhost:4180/projects` 里的 Jiju.pet app icon replace 成刚才那个 CSS、但不要另一只猫版本。
+- 影响：Jiju.pet 项目卡现在不依赖 `public/project-icons/jiju-app-icon.png`，视觉上更贴近首页 Current Build CSS 动画；无新增图片或依赖。
+- 验证：`rg` 确认 `jiju-app-icon` / `jijuIconSrc` 已无引用；`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.90s；保留现有 >500 kB chunk warning）。
+- 后续：本地访问 `http://localhost:4180/projects`，Jiju.pet 卡片右侧应看到单猫 CSS app icon；不会出现第二只 cameo cat。
+
+### 2026-06-05 00:17
+
+- 类型：代码 / 前台 / 首页 Jiju cat scene
+- 改动：在首页 Current Build CSS 动画场景中新增第二只不同颜色的 cameo cat：复用现有猫的 DOM 结构，新增 `.jiju-cat-cameo` 变体、`jiju-cameo` 与 `jiju-cameo-face` 时序；它会在 26s 动画周期尾段从左侧进场，靠近主猫短暂停留互动，再转身离开。同步补上缺失的 `@keyframes jiju-amble`，让主猫的慢速踱步动画与现有规则/日志描述对齐；reduced-motion 下 cameo cat 隐藏。
+- 原因：用户要求“最后的最后一只另一个颜色的猫会过来客串互动一下然后离开”。
+- 影响：首页动画更有小彩蛋，但仍保持 Brand Guide 里定义的慢速、克制、产品相关动效语言；无新增图片或依赖。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.93s；保留现有 >500 kB chunk warning）。
+- 后续：本地访问 `http://localhost:4180/`，看 Current Build banner，约一轮动画尾段会看到橘色 cameo cat 短暂出现、停一下再离开。
+
+### 2026-06-05 00:13
+
+- 类型：代码 / 内容 / Brand Guide
+- 改动：在 `/brand-guide` 的 Story style 后新增 `07 / Motion language` 区块，明确当前首页是品牌动效基准：慢速背景微动、轻量页面入场、Current Build / Jiju cat scene 的安静节奏；新增 4 条动效规则（慢速环境微动、安静入场、动效要属于产品、保留 reduced motion）。
+- 原因：用户要求把“喜欢当前 `http://localhost:4180/` 的 CSS 动画”加入前台 Brand Guide，不只写在 agent 规则里。
+- 影响：品牌指南现在把首页动画语言纳入公开设计系统；后续改首页、全局 CSS 或新页面动效时，应遵守慢速、克制、有生命感的动效方向。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.91s；保留现有 >500 kB chunk warning）。
+- 后续：本地访问 `http://localhost:4180/brand-guide`，滚到 `07 / Motion language`，应看到新增的双语动效规则。
+
+### 2026-06-05 00:11
+
+- 类型：文档 / 流程 / 前台动画偏好
+- 改动：在 `soul.md` 追加用户长期偏好：喜欢当前 `http://localhost:4180/` 首页 CSS 动画手感，未来改首页或全局 CSS 时默认保留慢速背景微动、页面入场与 Current Build / Jiju cat scene 的安静节奏；在 `AGENTS.md` 的前端规则中同步写入动画保留要求。
+- 原因：用户明确反馈喜欢当前本地首页的 CSS 动画，需要沉淀为后续 agent 可执行规则，避免未来改版误删或改成夸张动效。
+- 影响：后续涉及首页、全局 CSS 或动画系统的改动，必须把当前动效语言视为设计约束；本次仅改文档，无需运行构建。
+- 后续：若未来用户想强化或替换动效，应先说明新动效基准，并同步更新 `soul.md` 与 `AGENTS.md`。
+
+### 2026-06-04 22:20
+
+- 类型：内容 / 前台 / Friday Poker Club Story log
+- 改动：`pokerStories` 两条 body 去掉开头的日期前缀（EN 「On May 26, 2024, ...」/「May 28, 2026 — ...」以及 ZH「2024-05-26，...」/「2026-05-28，...」），避免与卡片顶部的日期 eyebrow 重复。
+- 原因：用户反馈 Story log 卡片顶部已经显示日期，body 里再写一次冗余。
+- 影响：故事段落直接从叙事开句进入，节奏更干净；`npm run build` 通过（570.24 kB / gzip 184.08 kB）。
+- 验证：本地 `npm run dev` 后访问 `http://localhost:4180/poker#story`，两条故事的正文不再以日期开头。
+
+### 2026-06-04 22:10
+
+- 类型：内容 / 前台 / Friday Poker Club Story log
+- 改动：`pokerStories` 两条故事改为只用角色代号，移除所有真名。EN 用代号本体（The Covered King / The Reluctant Prince / The Gambling King / The Shameless Drifter / The Probability Breaker / The Poker Professor / Blackbeard / The Silent Shield）；ZH 同步用中文代号（被罩住的王 / 不想继承的太子 / 赌博之王 / 不要脸浪人 / 小概率破坏者 / 扑克教授 / 黑胡子团长 / 静默之盾）。Story 1 也把 ZH body 里残留的英文代号换成中文代号。
+- 原因：用户要求故事中不要出现 jf / pat / patrick / ben / ed / zm / yt 等真名，全部用角色卡上的代号。
+- 影响：Story log 与 Avatar guide 现在角色命名完全对齐，作品集页对外也不再透露任何朋友真名。`npm run build` 通过（570.30 kB / gzip 184.11 kB）。
+- 验证：本地 `npm run dev` 后访问 `http://localhost:4180/poker#story`，两条故事中英文均无真名，仅出现代号。
+- 后续：未来补故事时，写在 `pokerStories` 里也只使用 `pokerAvatarGuide` 中定义的代号。
+
+### 2026-06-04 21:55
+
+- 类型：代码 / 内容 / 前台 / Friday Poker Club Story log
+- 改动：(1) `/poker` 在 FAQ 之前新增 `#story` 区块「Story log / 在这张桌上发生过的故事」，使用居中内容岛的双栏布局（左：kicker + 大标题 + 引言；右：日期 + 标题 + 叙事段落 list），桌面端遵循 max-width: 980px 的内容岛节奏；(2) 数据：新增 `pokerStoryIntro` 与 `pokerStories` 常量，目前记录两条：
+  - `2024-05-26` Blackbeard（zm）与 The Silent Shield（yt）结婚；
+  - `2026-05-28` jf 在 river 上反转两次（顺子 vs pat 葫芦），收场时 ben / jf / pat 三国鼎立；ed 拉 pat 进散钱平分局，5 块进 40 块出。
+  叙事风格按 brand-guide 居中内容岛语气：克制、电影感、不喊话；(3) `index.css` 新增 `.poker-story-panel/-head/-intro/-list/-item/-date/-title/-body` 玻璃面板样式与 mobile 单列 fallback；(4) Hero 区追加 `#story` 锚点 CTA「看桌上故事 / View story log」。
+- 原因：用户要求在 Questions 之前开一个 box 用来记录桌上故事，并请按提供的两段史料先填进去，之后他自己继续补。
+- 影响：`/poker` 多了一个可持续追加的「Story log」叙事面板，使作品集页同时承载产品系统与桌上故事；`npm run build` 通过（570.07 kB / gzip 184.08 kB），CSS 119.90 kB。
+- 验证：本地 `npm run dev` 后访问 `http://localhost:4180/poker`，Story log 区出现在 Avatar guide 之后、Questions 之前；中英文叙事都到位；Hero 顶部「看桌上故事」CTA 锚点 `#story` 可滚动到位。
+- 后续：未来追加故事时只需在 `pokerStories` 数组追加 `{ date, title, body }` 项，无需改样式或组件。
+
+### 2026-06-04 21:20
+
+- 类型：代码 / 内容 / 前台 / Friday Poker Club page tightening + Avatar Guide
+- 改动：(1) 收窄 `/poker` 左右空间：根容器从 `max-w-6xl` 改为 `max-w-5xl`，并在 `index.css` 新增 `.poker-page main` 与 `.poker-page .etreport-hero/-section/-console-panel/-topbar` 居中规则（`max-width: 980px; margin-inline: auto;`，`padding-inline: clamp(1.5rem, 7vw, 7rem)`），与 `etreport-sales-page` 的中央内容岛节奏一致，符合 `soul.md`「900–1100px 居中内容岛」品牌规则；(2) 从 `/Users/MacBookPro/Documents/GitHub/poker-power-card/avatarGuideData.ts` 抄入 9 个角色（jf / ph / zm / yt / ben / pat / jq / teik / ed）的双语 code name、phrase、tags、public intro 与 group intro，作为 `pokerAvatarGuide` 与 `pokerAvatarGroupIntro` 常量；(3) `/poker` 新增 Avatar guide 区块（2-col desktop / 1-col mobile，沿用 brand-guide grid 规则），每张卡片左侧头像方块右侧叙事；(4) 头像 PNG 拷贝到 `public/poker-avatars/` 并通过 `joinBasePath` 引用，build 后 `dist/poker-avatars/` 同步落地；(5) Hero 区新增 `#avatar-guide` 锚点 CTA。
+- 原因：用户反馈左右空间感要跟之前一样（指 brand-guide 推荐的居中内容岛节奏），并要求把 poker.edentan.site 的 avatar guide 内容与照片放进 `/poker` 独立页面。
+- 影响：`/poker` 中心区域更窄、左右留白更明显，桌面端 hero / section 居中收敛在 ~980px；新增 Avatar Guide 完整呈现 9 张角色卡（双语 code、phrase、tags、人物 intro），让作品集页能讲清楚牌桌不只是引擎，也包含玩家叙事。`npm run build` 通过（566.25 kB / gzip 182.64 kB），CSS 118.17 kB。
+- 验证：本地 `npm run dev` 后访问 `http://localhost:4180/poker`，左右留白明显收紧；Hero CTA「看角色卡 / View avatar guide」滚动到 `#avatar-guide`；9 张卡片头像由 `/poker-avatars/{id}.png` 加载；中英文切换正常。
+- 后续：若 poker 项目后续新增更多 preset（>9）或角色叙事调整，需要在 `pokerAvatarGuide` 与 `public/poker-avatars/` 同步追加。
+
+### 2026-06-04 20:45
+
+- 类型：代码 / 内容 / 前台 / Friday Poker Club product page
+- 改动：(1) 将 `App.tsx` `aiProjectSystems` 里 Friday Poker Club 的 external 从旧的 `https://pokerpowercard--poker-power-card-3abea.asia-southeast1.hosted.app/` 改为 `https://poker.edentan.site/`；(2) 新增 `/poker` 独立产品页 `PokerFullPage`，复用 `etreport-page` 视觉系统并叠加 `poker-page` hook；内容按 `/Users/MacBookPro/Documents/GitHub/poker-power-card/log.md` 的现况整理（hero、Engine/Tables/Stakes/Social console、value props、Modules: Classic Hold’em / Solo BOT / Public T / Stakes-aware buy-in / 8/9 mini game / Lobby+invites、Skill proof、Audience、FAQ、最终 CTA）；(3) Projects 页面 Friday Poker Club 卡片新增「看产品页」入口；(4) 同步 `seo.ts`、`seo-routes.ts`、`vite.config.ts` 加入 `/poker` 路由与 sitemap 项。
+- 原因：用户要求把旧 hosted.app 链接换成 poker.edentan.site，并按 poker-power-card 的 log + 本仓库 brand book 规则为它开一个独立页面。
+- 影响：portfolio 现在有 Friday Poker Club 的独立叙事页，能展示实时架构、隐私感数据模型、游戏 UX 与房主控制等能力，而不只是一个 external link；`npm run build` 通过（554.68 kB / gzip 177.68 kB）。
+- 验证：本地 `npm run dev` 后访问 `http://localhost:4180/poker`（中英文切换、CTA 跳向 `poker.edentan.site`、`/projects` 中 Friday Poker Club 卡片新增「看产品页」按钮）。
+- 后续：若 poker 项目后续上 invite link demo 或截图，可在 Modules 区追加 visual proof。
+
+### 2026-06-04 19:05
+
+- 类型：代码 / 前台 / ETReportHub Sales ROI cards
+- 改动：将 `/etreporthub-sales` ROI 区块 `.etreport-roi-card` 的金额字号从 `clamp(2rem, 4vw, 3.2rem)`（跟屏幕宽走）改为 `clamp(1.5rem, 16cqi, 4rem)`（跟自身 box 宽走）；同时为 `.etreport-roi-card` 加 `container-type: inline-size` 启用 container queries，并加 `-0.02em` 字距。
+- 原因：用户反馈 RM1,625 / RM2,725 等金额字号超出白色卡片框，导致视觉溢出；vw 单位无法响应 4 栏分配后单卡的实际宽度。
+- 影响：金额永远按卡片宽度的固定比例缩放，不再溢出；不同屏幕上「字 / box」比例一致；最后一张跨 2 栏的卡因 box 更宽自然显得更大，但仍受 4rem 上限约束。
+- 后续：若 hero 区 `etreport-sales-price-strip` 或 `etreport-sales-proof-card` 出现同类溢出，可用同样的 cqi 方案统一处理。
+
+### 2026-06-04 18:28
+
+- 类型：代码 / 内容 / 前台 / ETReportHub product page
+- 改动：新增 `/etreporthub` 独立产品页，定位为 iGaming Daily Report OS；页面包含产品承诺、输入/存储/视图/输出 console、价值卖点、模块说明、Eden skills proof、适合对象、FAQ 与回到 Projects/Home 的 CTA；Projects 页面里的 ETReportHub 卡片新增产品页入口；同步 `seo.ts`、`seo-routes.ts`、`vite.config.ts` 和 `README.md`。
+- 原因：用户要求为 ETReportHub 生成一个页面，重点是卖产品，并让别人知道 Eden 的 skills。
+- 影响：ETReportHub 从 `/projects` 中的项目卡升级为独立产品叙事页，能向潜在客户说明它解决什么运营问题，也能展示数据架构、产品思考、运营 UX 与性能工程能力。
+- 后续：若有真实 dashboard 截图、demo link 或定价/合作方式，可继续补成更完整的销售页。
+
+### 2026-06-04 18:19
+
+- 类型：代码 / 内容 / 前台 / Projects page
+- 改动：新增 `/projects` 页面，参考 Apple One 的页面结构逻辑设计为 AI Build Systems hub；展示 Jiju.pet、Friday Poker Club、ETReportHub、CRM Intelligence System；从 `/Users/MacBookPro/Documents/GitHub/Daily Report/log.md` 读取 ETReportHub 的真实构建内容并转译为项目说明；首页 Systems 区块新增 Projects Hub 入口；同步 `seo.ts`、`seo-routes.ts`、`vite.config.ts` sitemap 路径和 `README.md`。
+- 原因：用户要求新增 Projects 页面，展示 AI project、Jiju、Friday Poker Club、ETReportHub 与正在构建的 CRM，并询问是否能看出 ETReportHub 在构建什么。
+- 影响：站点新增当前项目总入口，legacy archive 继续保留在 `/previous-projects`；ETReportHub 被定位为 iGaming aggregator 的日报数据系统，而不是普通 dashboard UI。
+- 后续：如果 ETReportHub 或 CRM 有正式截图/链接，可补进 Projects 页面作为产品视觉证明。
+
+### 2026-06-04 18:10
+
+- 类型：代码 / 前台 / Film Gallery image sizing
+- 改动：调整 `/analog-tech` Film Gallery 图片显示方式，移除 hero 图与图库图的固定比例、`object-cover`、hover scale / filter；图库改为 column layout，让图片按原始比例缩放展示，不再裁切中间内容。
+- 原因：用户反馈 Film Gallery 里的图片被 CSS crop，要求跟随原本图片 size / ratio。
+- 影响：Film Gallery 现在保留每张图的原始构图比例，图片高度随原图变化，减少被裁掉主体的情况。
+- 后续：如果想控制排列节奏，应优先调整图片顺序，而不是用 CSS 裁切图片。
+
+### 2026-06-04 18:07
+
+- 类型：代码 / 内容 / 前台 / Home Interests and Film Gallery
+- 改动：从首页 Interests section 移除 Brand Guide 入口；将 `/analog-tech` 重设计为 Film Gallery editorial 页面，采用大标题、短说明、大图首屏与无说明图片网格；移除该页每张图片的前台描述文字；同步更新 `seo.ts`、`seo-routes.ts` 与 `README.md` 路由说明。
+- 原因：用户要求 Interests section 不再出现 Brand Guide，并要求 Film Gallery 去掉图片描述、按新的 Brand Guide 视觉逻辑重新设计。
+- 影响：主页 Interests 更聚焦个人兴趣入口；Film Gallery 更像安静的视觉档案页，图片自己承担阅读重心，减少说明文字干扰。
+- 后续：如果要进一步强化 Film Gallery，可按胶片色调或场景类型重新排序图片，而不是增加文字说明。
+
+### 2026-06-04 17:59
+
+- 类型：代码 / 内容 / 前台 / Home redesign
+- 改动：根据 Apple editorial layout 与 Eden brand crossover 重设计 `/` 首页：首屏改为 Eden Tan + `I build systems from chaos.` + 读者问题导向；新增混乱场景、可交付系统、Jiju.pet 当前构建、Systems not claims、Work with me、Interests 等产品页式章节；同步新增 `home-editorial-*` 专用 CSS。
+- 原因：用户要求试试看重新设计 Home，并延续 `/brand-guide` 中 Apple clarity × Eden system archive 的品牌方向。
+- 影响：首页从传统 CV / portfolio 叙事转成更像个人品牌操作系统的入口，读者更快知道 Eden 能帮什么忙、当前在构建什么、可以从哪些系统文件继续看。
+- 后续：如果要继续收紧，可再为 Home 增加真实 Jiju.pet 截图或独立 generated hero visual，强化当前构建的产品感。
+
+### 2026-06-04 17:44
+
+- 类型：代码 / 内容 / 前台 / Brand Guide
+- 改动：将 `/brand-guide` 从旧的品牌与组件说明页重写为「Eden Tan 品牌操作系统」：新增 Apple-like editorial hero、设计原则、视觉系统、字体节奏、文案语气与页面应用规则；同步新增 Brand Guide 专用 CSS、更新 `seo.ts`、`seo-routes.ts` 与 `README.md` 路由说明。
+- 原因：用户要求把 Apple design 的排版逻辑与现有 brand guide 合在一起，重新写一版更适合 Eden 个人品牌的 Brand Guide。
+- 影响：Brand Guide 现在更像可对外展示的品牌操作指南，不只是组件文档；页面以大标题、短说明、留白、少量 CTA 和清楚章节来表达品牌系统。
+- 后续：如果要继续强化，可为 `/brand-guide` 增加真实页面截图或组件实例，但需要避免变回密集组件库。
+
 ### 2026-06-03 00:58
 
 - 类型：资源 / 角色图
@@ -969,3 +1458,508 @@
 - 原因：用户根据截图反馈这组 chip 对比度太高。
 - 影响：dark mode 下这 4 个设定块不再像亮色按钮，和整体背景融合度更高。
 - 后续：如果还觉得明显，可进一步降低边框透明度或改成无边框 HUD 行。
+
+### 2026-06-03 03:07
+
+- 类型：代码 / 前台 / Life OS theme surface
+- 改动：将 `/life-os` 首屏角色设定 chip 从固定 `bg-stone-950/10` 改为 `life-os-identity-chip` 主题样式；light theme 使用柔和半透明浅底，dark theme 使用低透明暗面板。
+- 原因：用户反馈 light theme 不应出现 dark color block，dark mode 也不应出现亮色块。
+- 影响：同一组 chip 现在会跟随 light / dark theme 分别取色，避免为了压低 dark mode 对比度而污染 light theme。
+- 后续：如果其他组件也出现同类主题错配，继续抽成语义 class，不再直接复用单一明暗 utility。
+
+### 2026-06-03 03:12
+
+- 类型：代码 / 前台 / Life OS menu and radar theme surface
+- 改动：将 `/life-os` 的 Game Menu、首屏 Ability Radar、隐藏参数 Radar、核心属性 Radar 从固定深色背景改为主题自适应 surface；新增 `life-os-game-menu`、`life-os-game-menu-card`、`life-os-radar-frame`、`life-os-radar-grid` 样式，并让 radar SVG 的网格、文字和中心数值随 light / dark theme 切换。
+- 原因：用户指出 light theme 下 Game Menu 和 radar 背景仍是 dark color。
+- 影响：light theme 下这些区域不再出现黑色暗块，dark theme 下仍保留 RPG HUD 的深色质感。
+- 后续：如果后续发现其他固定 `bg-stone-950` 区块也需要跟随主题，可继续迁移成语义 surface class。
+
+### 2026-06-03 03:18
+
+- 类型：代码 / 前台 / Life OS skill and route theme surface
+- 改动：将 `/life-os` 的 Active Skills、Passive Skills、Debuff System、Growth Routes Skill Tree 从固定深色卡片改为主题自适应 surface；新增 `life-os-codex-card`、`life-os-skill-tabs`、`life-os-card-footer`、`life-os-route-card`、`life-os-route-badge`、`life-os-image-overlay`、`life-os-route-overlay` 等样式，并同步修正共用横幅、图标框、角色图框和 mobile bottom nav 的浅色主题黑底残留。
+- 原因：用户指出这些模块在 light theme 下仍有大量 dark color。
+- 影响：light theme 下技能卡、被动技能、Debuff、成长路线不再出现大面积黑色区块；dark theme 下仍保留深色 RPG HUD 质感。
+- 后续：其他非 `/life-os` 页面若也需要完全移除 light theme 深色按钮，可按同样方式继续迁移。
+
+### 2026-06-03 03:20
+
+- 类型：代码 / 前台 / Life OS airy layout
+- 改动：为 `/life-os` 根容器新增 `life-os-open-layout`，隐藏 HUD 角线、motion-card 扫光、radar 背景网格，并在页面范围内透明化大部分 border、box shadow、白底、浅灰底和 mint/amber 轻底；保留内容、图片和必要的文字渐层。
+- 原因：用户要求把线条设计和 box 感拿掉，让页面感觉更空。
+- 影响：Life OS 页面从密集 HUD 卡片感转为更开放的档案式排版，视觉负担降低，light / dark theme 都不再以大量线框和盒子区隔内容。
+- 后续：如果仍觉得某些模块太实，可以继续把 section padding 缩小或把 dropdown 外壳也改成纯标题锚点。
+
+### 2026-06-03 03:23
+
+- 类型：代码 / 前台 / Life OS mobile horizontal lock
+- 改动：移除 `/life-os` mobile 下 Game Menu 与 Active Skills 的横向 `overflow-x-auto` / `snap-x` / `min-w` 卡片布局，改成普通 grid；为 `life-os-open-layout` 增加 `overflow-x: hidden`、`overscroll-behavior-x: none`、`touch-action: pan-y` 与主要容器 `max-width: 100%` 限制。
+- 原因：用户要求 mobile view 不能左右移动。
+- 影响：Life OS 手机端现在只允许垂直滚动，不再出现横向拖动或页面左右晃动。
+- 后续：如果其他页面也需要同样锁定横向滚动，需要单独处理对应路由，避免影响原本需要横向浏览的内容区。
+
+### 2026-06-04 17:11
+
+- 类型：代码 / 前台 / Life OS line removal
+- 改动：继续清理 `/life-os` 的剩余线条，将 radar SVG 内的 line、polygon、circle 描边设为透明，并隐藏 Level 区域的横向进度条；保留文字、数值、图片和雷达填色。
+- 原因：用户要求 Life OS 把全部线条移除。
+- 影响：页面不再显示 radar 网格/轴线/描边和进度横线，整体更空、更少 UI 框架感。
+- 后续：如果仍有某些图片内部自带线条，那属于图像资产本身，需要重新生成或替换对应图片。
+
+### 2026-06-04 17:14
+
+- 类型：文档 / Skill / Apple editorial layout
+- 改动：新增 `skills/apple-editorial-layout/SKILL.md`，将 Apple.com 的高层页面排版、字体大小、行高、间距、CTA 和产品网格逻辑整理成可复用 skill；同步在 `AGENTS.md` 与 `soul.md` 登记该 skill 的使用场景和限制。
+- 原因：用户要求参考 Apple.com 的排版设计逻辑和字体大小使用逻辑，做成一个 skill。
+- 影响：后续在处理 Apple-like、premium minimalist、字体层级、hero 排版和高级感页面时，可以直接读取该本地 skill，避免重复解释。
+- 后续：如果要实际应用到 `/life-os` 或主页，需要再按该 skill 进行页面重排与字体 scale 调整。
+
+### 2026-06-04 17:20
+
+- 类型：代码 / 前台 / Life OS Apple editorial redesign
+- 改动：根据 `skills/apple-editorial-layout/SKILL.md` 重排 `/life-os`：首屏改成大标题、短副标题、两个文字 CTA 和大角色视觉；旧三栏 hero、Game Menu、首屏 radar 和 mobile bottom nav 移除；`LifeOsDropDown` 改为直接展开的 editorial section；新增 Life OS 专用 typography / spacing CSS，强化 hero、section、card 的字体层级与留白。
+- 原因：用户要求根据 Apple editorial layout skill 重新设计 Life OS 页面。
+- 影响：页面阅读逻辑从游戏 HUD/折叠面板转为更接近高级产品页：先说明是什么，再进入章节，减少 box、线条、按钮和视觉噪音，手机端也不再依赖横向滑动或底部游戏导航。
+- 后续：如果要继续更像产品页，可以把 Active Skills 的 details 展开方式也改成完整分段叙事，进一步减少交互式卡片感。
+
+### 2026-06-04 17:23
+
+- 类型：代码 / 前台 / Life OS dark mode light surfaces
+- 改动：为 `/life-os` 增加 dark mode 专用覆盖，让 `bg-white`、`bg-stone-50`、radar frame、skill cards、route cards、banner frame 等元素在 dark mode 下使用浅雾面 surface，并将这些浅色区域内的 stone 文本切回深色。
+- 原因：用户反馈 Life OS dark mode 里仍有深色 element，希望像 Choose a chapter、radar background 这类区域换成浅色。
+- 影响：Life OS 在 dark mode 下不再出现大块深色 UI 元素，整体更接近 Apple editorial 的浅色内容浮层。
+- 后续：如果图片本身或生成素材内部过暗，需要单独重新生成对应图片资产。
+
+### 2026-06-04 17:26
+
+- 类型：代码 / 前台 / Life OS dark mode title contrast
+- 改动：收窄 `/life-os` dark mode 的文字颜色覆盖范围：浅色浮层内继续使用深色文字；hero、chapter intro 和 editorial nav 这类透明深色背景上的标题与说明恢复浅色文字。
+- 原因：用户反馈 dark mode 的 title 变黑后和背景撞色。
+- 影响：dark mode 下主标题、章节标题和导航文字重新可读，同时浅色卡片里的文字仍保持深色对比。
+- 后续：如果还有个别标题撞色，优先按“是否在浅色浮层内”来分层修正，而不是全局覆盖。
+
+### 2026-06-04 17:28
+
+- 类型：代码 / 前台 / Life OS dark radar and image fade
+- 改动：在 `/life-os` dark mode 中将 radar frame 从浅雾面覆盖里排除，恢复深色背景；将 banner/image/route overlay 的 fade 恢复为黑色渐层，并补充这些黑色 fade 区域内的浅色文字规则。
+- 原因：用户希望 dark mode 的 radar 和 image shadow fade 可以用回黑色。
+- 影响：dark mode 保留 Apple editorial 的浅色内容浮层，同时 radar 与图片阴影恢复深色层次，视觉更有深度。
+- 后续：如果某些 banner 的黑色 fade 盖住主体，可以单独调对应 overlay 透明度。
+
+### 2026-06-04 17:30
+
+- 类型：代码 / 前台 / Life OS dark active skill title
+- 改动：为 Active Skills 图片底部标题区域新增 `life-os-active-skill-copy` class，并在 `/life-os` dark mode 下将该区域的技能名与说明文字设为浅色。
+- 原因：用户反馈 dark mode Active Skills 的 name title 也需要放亮色。
+- 影响：Active Skills 卡面在黑色 fade 上的技能名和说明重新可读，展开详情区域仍维持浅底深字。
+- 后续：若其他图片卡的标题也有同类问题，可复用同样的 copy wrapper 规则。
+
+### 2026-06-04 17:32
+
+- 类型：代码 / 前台 / Life OS light image fade
+- 改动：将 `/life-os` light mode 下的 banner caption、image overlay、route overlay 从浅色渐层改回黑色渐层，并补充 overlay / active skill copy 区域的浅色文字规则。
+- 原因：用户要求 light mode 的 banner / image / route shadow fade 也用回黑色渐层。
+- 影响：light 与 dark mode 的图片底部 fade 视觉统一为黑色，图片标题和说明在 fade 上保持可读。
+- 后续：如果某张图过暗，可单独降低 overlay opacity。
+
+### 2026-06-04 18:34
+
+- 类型：代码 / 前台 / Jiju.pet page redesign
+- 改动：将 `/jiju-pet` 从旧的项目介绍和横向章节卡片，重排为新品牌风格的 editorial product-build page；新增 hero、product system panel、What it becomes、Decision DNA、System notes 与垂直 Build log。
+- 原因：用户要求重新排版 `http://localhost:4180/jiju-pet`。
+- 影响：页面更像一个产品案例和系统构建叙事，阅读顺序更清楚，减少旧式卡片堆叠和横向滑动。
+- 后续：如果有真实 Jiju.pet 产品截图或界面资产，可以再加入 hero 或 feature section 作为视觉证明。
+
+### 2026-06-04 19:39
+
+- 类型：代码 / 前台 / Life OS surface color
+- 改动：将 `/life-os` 的白色与亮色 box surface 改为低透明暗雾面；同步调整 dark mode 下 motion card、skill card、route card、footer 和 banner frame 内文字为浅色。
+- 原因：用户反馈 Life OS 的背景 box 不要使用白色或亮色。
+- 影响：Life OS 不再出现大面积亮白浮层，整体更接近暗色 RPG 档案与低对比界面。
+- 后续：如果仍有图片素材本身太亮，需要单独替换对应图片资产。
+
+### 2026-06-04 19:44
+
+- 类型：代码 / 前台 / ETReportHub sales page
+- 改动：新增 `/etreporthub-sales` 售卖页，围绕客户为什么应该购买 ETReportHub 展开：日报人工成本、Excel 风险、CRM-ready 数据层、交付内容、购买结果、FAQ 与价格；价格设为 RM960/月或 RM19,888 买断。
+- 原因：用户要求为 ETReportHub 开多一个售卖页面，说明为什么 client 应该买这个系统，并加入指定价格。
+- 影响：ETReportHub 现在有产品说明页 `/etreporthub` 和销售落地页 `/etreporthub-sales`；`/projects` 与 `/etreporthub` 都加入售卖页入口，并同步 SEO、sitemap 路由与 README。
+- 后续：如果要公开销售，可以再补 demo 截图、真实部署范围、support SLA、hosting 责任和付款方式。
+
+### 2026-06-04 19:48
+
+- 类型：代码 / 前台 / ETReportHub sales content refinement
+- 改动：参考 `Daily Report/docs/sales/sales_daily_report_offer.html` 扩充 `/etreporthub-sales`：加入 2-4 小时/天 proof、ROI 估算、RM2,880 首期、7.3 个月买断回本估算、Savings map、Included stack 与 Demo flow。
+- 原因：用户要求参考本地 Daily Report sales offer 页面内容。
+- 影响：售卖页从基础价格说明升级为完整销售论证页，更清楚说明客户为什么买、买了省什么、系统包含什么，以及 demo 时应该展示什么 workflow。
+- 后续：如果需要更接近原 HTML，可以再加入互动 ROI calculator 输入框，但当前版本先用静态保守估算，减少复杂度。
+
+### 2026-06-04 20:13
+
+- 类型：代码 / 前台 / ETReportHub sales stack cleanup
+- 改动：移除 `/etreporthub-sales` 的 Demo flow section；扩充 Included stack，从 8 项增加到 16 项，加入 Trend Analysis、Brand Comparison、Segment Analysis、Wide Excel Export、Database Backup、User Permission、Audit Log、Private Deployment 与 Training & Handover。
+- 原因：用户要求移除“Demo 不要只展示 UI，要展示从 Excel 到行动”section，并让 Included stack 内容更多。
+- 影响：售卖页更聚焦系统交付内容和购买理由，不再出现 demo 展示建议；Included stack 更完整，客户能更清楚看到买到的 BO operating stack。
+- 后续：如果之后要加 demo 内容，建议放到内部销售话术或独立 demo guide，不放在公开售卖页主流程。
+
+### 2026-06-04 20:19
+
+- 类型：代码 / 前台 / ETReportHub sales spacing
+- 改动：调整 `/etreporthub-sales` 的 Apple-like 横向留白：页面主容器从 6xl 收窄到 5xl，section 标题居中收窄，sales card grid 改为 2-column 节奏，表格、ROI 和模块区设置更窄的居中 max-width。
+- 原因：用户指出 Apple 的左右空间感很空，希望售卖页不要铺得太满。
+- 影响：售卖页左右留白更明显，阅读节奏更像产品落地页，内容仍保留完整 Included stack 和价格论证。
+- 后续：如果还觉得密，可以继续减少卡片数量或把 Included stack 改成分组 accordion。
+
+### 2026-06-04 20:22
+
+- 类型：文档 / 品牌规则 / Apple-like horizontal whitespace
+- 改动：将 Apple-like 左右留白规则加入 `/brand-guide` 的 Type and rhythm；同步更新 `skills/apple-editorial-layout/SKILL.md`、`AGENTS.md` 和 `soul.md`，明确未来页面不要默认铺满桌面宽度，优先使用居中内容岛与两栏 grid。
+- 原因：用户要求把“左右空间感调得更 Apple-like”加入 brand guide，并让以后其他页面都跟随。
+- 影响：未来改首页、项目页、Life OS、ETReportHub 或其他页面时，默认要检查 desktop 横向留白、内容岛宽度、表格/价格/grid 是否过度铺满。
+- 后续：如要把现有所有页面一次性统一套用该规则，需要逐页检查并重排，避免破坏已有视觉结构。
+
+### 2026-06-04 21:30
+
+- 类型：文案 / 前台 / Friday Poker Club — Story log
+- 改动：在既有「江湖局」叙事风格下优化 `App.tsx` 的 `pokerStoryIntro` 与两则 `pokerStories`（2024-05-26 婚礼、2026-05-28 river 之夜），中英同步重写。强调这页只是记录值得记住的时刻，不是战绩榜；婚礼那则点明黑胡子团长与静默之盾结婚是整桌的中心、后续每场牌都绕此而转；river 那则改写成逐拍电影感：被罩住的王整夜在 river 接命运、做出顺子 all-in，对上不想继承的太子三条 A，本已赢的一手被 river 第四张配对翻成太子葫芦；收尾保留赌博之王/被罩住的王/太子三国鼎立，以及不要脸浪人 5 块进散钱平分局、转身赚 40 块的镜头。
+- 原因：用户说明这个 poker app 的本意是分享日常、记录好玩的时刻，要求按真实事件用页面既有居中内容岛的语气与风格优化故事剧情。
+- 影响：`/poker` 的 Story log 区可读性与电影感增强，全部真实关键信息（人物、牌型、金额、日期）保留未删；中英文案一致。
+- 验证：`npx vite build` 通过（2082 modules transformed，✓ built），并在产物 bundle 中确认新文案字串存在。默认 `npm run build` 因 dist/.DS_Store（macOS 挂载，沙箱无法 unlink）报 EPERM，与本次改动无关；本地验证用 `http://localhost:4180/poker`，看 Story log 两则故事。
+- 后续：若日后有新的牌局值得记录，按同一风格在 `pokerStories` 追加条目即可；沙箱遗留的 `dist_verify/` 验证目录可在本机手动删除（不影响部署，CI 仅构建 `dist`）。
+
+### 2026-06-04 22:10
+
+- 类型：文案 / 前台 / Friday Poker Club `/poker` 整页改写（去专业化）
+- 改动：把 `/poker` 从「SaaS 产品落地页」改成「自己人桌」的轻松风格。删除技术/作品集相关三节——Skill proof（实时构建能力）、Who it is for（受众）、Questions（FAQ），以及顶部 Product promise console 面板（Firebase RTDB 等技术行）；同步删掉对应数据 `pokerConsoleRows / pokerSkillProof / pokerAudience / pokerFaq`。Hero 改成「周五夜，还是那群人，现在装进一条链接里 / Friday night, same crew, now in a link.」，CTA 精简为 开一局 / 认识这群人 / 看桌上故事。保留并口语化两节：How it works（一条链接就能打 / 没人在线 Bot 陪你 / 开麦就是真桌）、What you can do（真德州 / Bot 随时 / 公开桌 / 8/9 边注），全部去掉代码细节（normalizePokerState、`max(200,BB×100)`、Firebase 规则等）。结尾改成「别光看了，开一局吧 / Stop reading. Open a hand.」，保留筹码非真钱的提示但写成人话。
+- Story log：人物改用小名（中英都改）——团长 / 阿盾、罩仔、太子、赌仔、浪子；EN：Cap、Shield、Lucky、Prince、Gambler、Drifter。避免全名过于「中二」。婚礼与 river 两则故事维持之前的精简电影感版本。Avatar guide 角色卡仍保留完整称号（那是人物档案，全名在此合理）。
+- 原因：用户说这个 poker app 本意是分享日常、记录好玩时刻，不要太专业，要有内容感但放松；并要求 story log 人名简化为小名（中英一致）。经确认：技术/作品集块全部砍掉，语气完全放松。
+- 影响：`/poker` 现为 Hero → 怎么玩 → 桌上能干嘛 → 认识这群人 → 桌上故事 → 开一局，整体轻松好读，无技术推销腔；`ETReportHubFullPage` 的 Skill proof 等为另一页，未受影响。
+- 验证：`npx vite build --outDir <tmp> --emptyOutDir` 通过（✓ built in 7.24s），bundle 中确认新文案存在、`normalizePokerState` 已移除。默认 `npm run build` 仍因 dist/.DS_Store（macOS 挂载，沙箱无法 unlink）报 EPERM，与改动无关。本地验证：`http://localhost:4180/poker`，中英各看一遍。
+- 后续：若希望 story log 小名与角色卡全名能对上，可在每张角色卡加一行小名标注；本机可手动删除沙箱遗留的 `dist_verify/`、`dist_check_*` 验证目录（不影响部署）。
+
+### 2026-06-04 22:40
+
+- 类型：文案 / 规则 / brand-guide 新增「06 / Story style」+ AGENTS.md 同步
+- 改动：在 `/brand-guide` 末尾（05 Application 之后）新增 `06 / Story style` 区，把 `/poker` Story log 用的语气固化成可复用规则。新增数据 `brandGuideStoryRules`（6 条：记录时刻不是战绩 / 只写真的 / 用小名别中二 / 短但有画面 / 先有人再有牌 / 不是 hand history）与一组 Avoid→Prefer 示例 `brandGuideStoryExample`（被罩住的王…→罩仔…）。section 标题「故事是用来记住好玩的，不是用来炫耀的 / Stories are for remembering the fun, not for flexing.」并指明 `/poker` 为样板。复用现有 `brand-guide-use-card` 与 `brand-guide-voice-row` 样式，保持两栏居中节奏。同步在 `AGENTS.md` 的 Writing Rules 下加「Story Style」小节，注明与 brand guide section 06 互为同步。
+- 原因：用户要求「写多一个 story style guideline 然后加在 brand guideline 上」。
+- 影响：以后任何 story log（牌桌 / 生活 / 日常）都有统一、可引用的语气标准；规则同时落在前台 `/brand-guide` 和 schema `AGENTS.md`，避免漂移。
+- 验证：`npx vite build --outDir <tmp> --emptyOutDir` 通过（✓ built in 8.24s），bundle 中确认 06/Story style 全部条目与 Avoid/Prefer 示例存在。默认 `npm run build` 仍因 dist/.DS_Store EPERM 报错（macOS 挂载，与改动无关）。本地验证：`http://localhost:4180/brand-guide` 拉到底看 06 区；样板对照 `http://localhost:4180/poker`。
+- 后续：若 story 语气再调整，需同时更新 `/brand-guide` 06 区与 `AGENTS.md` 的 Story Style 小节；本机可手动删 `dist_verify/`、`dist_chk*`、`dist_check_*` 验证目录。
+
+### 2026-06-04 23:05
+
+- 类型：文案 / 前台 / ETReportHub `/etreporthub-sales` 销售讲法口语化
+- 改动：只改「销售讲法 / Sales angle」相关文案，改成完全口语（中英）。1) ROI 区那段 `销售讲法：…` 改成「说白了，一天省 2-4 小时…那是把原本烂在 Excel 和拍脑袋决定里的钱捞回来」；2) Included stack 表格里 16 行的 `angle`（Sales angle 列）全部口语重写，例如 CRM Export「CRM 每天有现成名单可以打，不用靠感觉乱找人」、Audit Log「出事了能翻记录查，不用一个个问『是不是你动的』」、Database Backup「不会一夜回到解放前」。模块名、included 内容、价格、ROI 数字、buyer pain、outcomes、savings、FAQ 等全部未动。
+- 原因：用户要求把这页「里面的销售讲法内容用口语去解释」；经确认：语气完全放开（像 /poker），范围只改「销售讲法」那几处。
+- 影响：`/etreporthub-sales` 的销售话术更像真人在跟老板讲，更易转述；事实、数字、定价与其他区块保持不变，专业信息未受损。
+- 验证：`npx vite build --outDir <tmp> --emptyOutDir` 通过（✓ built in 6.99s），bundle 中确认新口语文案存在。默认 `npm run build` 仍因 dist/.DS_Store EPERM（macOS 挂载）报错，与改动无关。本地验证：`http://localhost:4180/etreporthub-sales`，看 ROI 区 sales note 与 Included stack 的 Sales angle 列，中英各切一遍。
+- 后续：若日后想把整页其余销售文案也口语化，可在确认语气后再做一轮；本机可删 `dist_verify/`、`dist_chk*` 等沙箱遗留验证目录。
+
+### 2026-06-04 23:25
+
+- 类型：文案 / 前台 / ETReportHub `/etreporthub` #skill-proof 放松语气
+- 改动：把产品页 Skill proof 区改得更随意（中英）。h2 从「这个产品也展示 Eden 的构建能力」改成「顺便说，这东西也证明 Eden 真的会 build」；section copy 与 4 张卡（数据架构 / 产品思考 / 运营 UX / 性能工程）全部口语重写，保留全部技术实质（SQLite、snapshot、derived-data cache、Docker/backend、reduced-motion 等），只把腔调从简历体改成像本人在讲：例如产品思考「Daily/Weekly/Overall 其实在干同一件事，干脆收成一个 Performance 页——旧导航还留着，免得有人找不到路」、性能工程「数据一多就加了 cache、只刷新有变动那块…不卡」。
+- 原因：用户要求 `/etreporthub#skill-proof` 里的内容也随意一些。
+- 影响：产品页 Skill proof 更像真人口吻、可读性更高，技术信息未删；与 `/etreporthub-sales` 销售讲法口语化方向一致。注意：该区为 `ETReportHubFullPage`，与 `/poker` 已删的 skill-proof 无关。
+- 验证：`npx vite build --outDir <tmp> --emptyOutDir` 通过（✓ 2082 modules transformed，✓ built in 8.99s），bundle 中确认新文案存在。默认 `npm run build` 仍因 dist/.DS_Store EPERM（macOS 挂载）报错，与改动无关。本地验证：`http://localhost:4180/etreporthub#skill-proof`，中英各切一遍。
+- 后续：沙箱遗留的 `verify_*`、`dist_chk*`、`dist_verify/` 验证目录可在本机手动删除（不影响部署）。
+
+### 2026-06-04 23:50
+
+- 类型：文案 / 前台 / `/previous-projects` 工作经历语气放松
+- 改动：把职业经历页的措辞从简历体改成平实口语（中英），保留全部事实——公司、职位、年份、relatedLinks 链接、做过的事都没动，只换腔调。页面 h1「完整职业项目记录」→「之前都做过些什么 / Stuff I’ve worked on」，intro 改成「把这些年做过的项目都摊在这里…不堆漂亮话 / …in plain terms, minus the résumé polish」。4 段经历（Titan Group / Job Social / Atlantis / Black Sire）的全部 bullet 重写为人话，如「帮合作伙伴把 API 对接、活动工具、上线培训搞定——出问题就去排查」「Soccerking：内容自己做、品牌策略自己规划、Facebook 数据自己看」。语气对齐 `/etreporthub#skill-proof` 的「放松但仍专业」档，未到 /poker 的玩闹程度（CV 仍是可信度页）。
+- 原因：用户要求 `/previous-projects` 的语法也放松一些，延续前几页的口语化方向。
+- 影响：经历页更像本人在讲，可读性更高；事实与可信度信息完整保留。
+- 验证：`npx vite build --outDir <tmp> --emptyOutDir` 通过（✓ 2082 modules transformed，✓ built in 10.97s），bundle 中确认新文案存在。默认 `npm run build` 仍因 dist/.DS_Store EPERM（macOS 挂载）报错，与改动无关。本地验证：`http://localhost:4180/previous-projects`，中英各切一遍。
+- 后续：若希望这页也到 /poker 那种完全放开的程度，可再做一轮；本机可删 `verify_*` 等沙箱验证目录。
+
+### 2026-06-04 00:10
+
+- 类型：文案 / 前台 / `/projects` 页语气放松
+- 改动：把 AI build systems 项目页的叙事文案改轻松（中英），事实、项目名、status、System layer、链接全部保留。Hero h1「All builds. One operating logic.」→「Different builds. Same stubborn habit.」，副标题改成「项目不一样，底下其实每次都是同一招：把一团乱的输入，变成真的能用的系统 / …take messy input and turn it into something you can actually use.」。Bundle 区 h2「不是项目列表，是构建系统的切面」→「与其说是项目列表，不如说是我一直在搭的几套系统」，并删掉「参考 Apple One 的页面逻辑」这种内部腔。Project stack h2「四个正在形成系统的项目」→「四个慢慢长成系统的东西」。4 个项目 summary（Jiju / Poker / ETReportHub / CRM）口语重写，如 Poker「想开语音就开」、ETReportHub「把 Excel 吃进去，理进 SQLite…把乱糟糟的一天运营变成…视图」。shared logic 三卡、ETReportHub readout copy、final panel（「旧的留在档案里，正在跑的系统放前台」）一并放松。
+- 原因：用户要求 `/projects` 页也轻松一点，延续整站口语化方向。语气取「放松但仍专业」档，与 `/etreporthub#skill-proof`、`/previous-projects` 一致。
+- 影响：项目页读起来更像本人在讲，技术信息与项目事实完整保留。
+- 验证：`npx vite build --outDir <tmp> --emptyOutDir` 通过（✓ 2082 modules transformed，✓ built in 11.04s），bundle 中确认新中英文案存在。默认 `npm run build` 仍因 dist/.DS_Store EPERM（macOS 挂载）报错，与改动无关。本地验证：`http://localhost:4180/projects`，中英各切一遍。
+- 后续：站内主要对外页（poker / etreporthub-sales 销售讲法 / etreporthub skill-proof / previous-projects / projects）已统一到口语调；若要把首页 `/` 和 jiju-pet、life-os 等也拉齐，可再做一轮。本机可删 `verify_*` 验证目录。
+
+### 2026-06-04 00:40
+
+- 类型：新页面 / 前台 / `/crm` CRM Intelligence System（疯狂语气）
+- 改动：新增 `/crm` 路由与 `CrmFullPage` 组件（App.tsx，插在 PokerFullPage 之后、AnalogTechFullPage 之前），内容取自用户上传的 CRM LOG.md，用 /poker 那种完全放开、夸张好玩的语气写（中英）。结构：Hero「本来只想要个表格。结果搭了个大脑 / We wanted a spreadsheet. We built a brain.」→ What it ate（console 面板：300+ 供应商、156 商户、约 3,900 加密账号、9 阶段迁移）→ 操作大脑三卡 → 「没人要它做但它就是有的功能」六卡（pgvector AI 供应商搜索 / 九阶段数据库标准化 / 区分大小写的国家解析器「in≠India」/ RBAC+加密+成本费率服务端保密 / 黄金比例设计系统+品牌手册 / 日夜互补换色）→ Build log 戏剧化三则故事（四层模糊匹配救回 400 账号 / 「in=印度」bug / Phase 9c 史上最讲排场的 DELETE）→ 结尾「没有公开链接，住在某台 localhost 上」。复用 etreport/poker 既有 CSS 类，无新样式。
+- 路由接线：App.tsx 加 `isCrmFullPage` + render 块、主组件与 ProjectsFullPage 各加 `crmHref`；Projects 页 CRM 卡片加 CTA「看这个疯东西 / See the wild one」（之前该卡无 CTA）。SEO：`seo.ts`、`seo-routes.ts` 各加 `/crm` 条目，`vite.config.ts` SITEMAP_PATHS 加 `/crm`。
+- 原因：用户要求给 CRM Intelligence System 也开一个 page，按上传的 log 内容写，语气要「疯一点」。
+- 影响：`/projects` 的 CRM 卡片现在可点进 `/crm` 实页；该页是全站第一个「完全放开」语气的产品页（poker 是个人页）。事实取自真实 LOG（数量、9 阶段、pgvector、RBAC、加密、Excel 导入），未编造技术。
+- 验证：`npx vite build --outDir <tmp> --emptyOutDir` 通过（✓ 2082 modules transformed，✓ built in 9.64s），bundle 中确认中英文案与 CTA 存在。sitemap.xml 仅在设了 VITE_SITE_URL 时生成（CI 会），本地未生成属正常。默认 `npm run build` 仍因 dist/.DS_Store EPERM（macOS 挂载）报错，与改动无关。本地验证：`http://localhost:4180/crm`（中英各切一遍）；以及 `http://localhost:4180/projects` 点 CRM 卡的新 CTA。
+- 后续：CRM 卡 status 仍是「设计中」，与页面「据说还在设计中」口径一致；若日后系统上线有公开/演示入口，可在结尾加真实链接。本机可删 `verify_*` 验证目录。
+
+### 2026-06-04 01:05
+
+- 类型：合规 / 数据脱敏 / `/crm` 移除真实业务数据
+- 改动：把 `/crm` 页和其 SEO 里所有真实运营数据脱敏。删除/泛化：实体数量（300+ 供应商、156 商户、约 3,900 账号、6,000 货币）、真实供应商名（AWC、SV388、JDB、SPRIBE）、导入恢复数字（1,157→799、约 400、192 供应商）。console 面板从「业务计数」改为「工程栈」（Postgres / pgvector / RBAC+加密 / 9 阶段迁移）。Hero、三则 build log 故事改为定性描述（「救回整场导入」「一大批行」「一堆自由文本」「几列旧字段」），保留工程趣味与「in=印度」这类纯工程轶事。SEO（`seo.ts`、`seo-routes.ts`）title 去掉「iGaming」，desc 去掉所有计数，改为泛化描述。
+- 原因：用户指出不要把 data 的 information 泄漏出去（页面与 meta 原本含真实供应商/商户/账号数量与真实供应商名）。
+- 影响：`/crm` 仍是那篇「疯」味产品页，但不再暴露任何可识别的真实业务规模或实体名称；只保留通用工程叙事。注意：站内其他页（services、projects legacy archive）既有的 "iGaming" 提及为 Eden 自己的从业领域、早已公开，未在本次范围内改动。
+- 验证：`npx vite build --outDir <tmp> --emptyOutDir` 通过（✓ built in 8.66s）；bundle 复查：AWC / SV388 / 300+ providers / 156 merchants / 3,900 / saved 400 accounts / 192 providers 全部已不存在；脱敏后文案（We wanted a spreadsheet…、saved the import、One normalized Postgres database 等）仍在。默认 `npm run build` 仍因 dist/.DS_Store EPERM（macOS 挂载）报错，与改动无关。本地验证：`http://localhost:4180/crm`，中英各切一遍。
+- 后续：如需更保守，可进一步把 “providers / merchants / accounts” 这类实体类别词也一并泛化为「记录」；当前判断这些是通用类别名、非敏感数据，故保留。本机可删 `verify_*` 验证目录。
+
+### 2026-06-04 22:46
+
+- 类型：前台 / CSS / 全站内容岛宽度统一
+- 改动：在 `index.css` 新增全站共享变量 `--editorial-island-width: 980px` 与 `--editorial-page-padding: clamp(1.5rem, 7vw, 7rem)`，并把 `page-shell` 下的主要 `main` wrapper、首页 sections/nav 统一限制到同一内容岛宽度。这样 `/projects`、`/jiju-pet`、`/etreporthub`、`/brand-guide`、`/analog-tech`、`/life-os` 等主要页面的左右留白会对齐 `/poker` 的宽度节奏；mobile 仍保持 1.25rem 边距。
+- 原因：用户要求让全部页面左右宽度像 `http://localhost:4180/poker` 一样，尤其是 `http://localhost:4180/projects` 不要铺得比 poker 更宽。
+- 影响：全站 desktop 页面更统一，主要内容从原本部分页面的 `max-w-6xl` 收回到 poker 同级的约 980px 内容岛；未改文案、路由、SEO 或组件结构。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.16s）；`curl -I http://localhost:4180/projects` 返回 200；构建产物 CSS 中确认包含新的全站宽度规则。Playwright 量宽未执行，因为当前本地 Node REPL 环境没有可用 `playwright` 包。
+- 后续：本地验证看 `http://localhost:4180/projects` 对比 `http://localhost:4180/poker`，两页主体内容应有一致的居中窄版宽度和左右留白。
+
+### 2026-06-04 22:52
+
+- 类型：前台 / CSS / 全站背景线条移除
+- 改动：在 `index.css` 删除全站背景 texture 里的两层 `repeating-linear-gradient` 横竖线，只保留顶部轻微明暗过渡与原有柔光背景；同步把 `.page-shell::before` 的 `background-size` 简化为单层 `100% 100%`。
+- 原因：用户要求把背景的线条设计全部移除。
+- 影响：所有使用 `page-shell` 的页面背景不再显示网格/线条纹理，整体更干净；内容宽度、路由、文案和组件结构不变。
+- 验证：`rg -n "repeating-linear-gradient" index.css` 已无全站背景 texture 结果；`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.71s）。
+- 后续：本地验证看 `http://localhost:4180/projects`、`http://localhost:4180/poker`，背景应只剩干净底色和柔光，不再有横竖线。
+
+### 2026-06-04 23:16
+
+- 类型：前台 / 视觉资产 / `/projects` Jiju.pet app icon 接入
+- 改动：把生成的 Jiju.pet 蓝猫 app icon 从 Codex 生成目录复制并压到 512×512，保存为 `public/project-icons/jiju-app-icon.png`；在 `/projects` 的 Project stack 里把该 icon 接到 Jiju.pet 卡片标题右侧；新增 `.projects-card-title-row` 与 `.projects-card-icon` 样式控制图标尺寸、圆角、阴影和响应式布局。
+- 原因：用户确认单张 app icon 方向后，要求加进 `http://localhost:4180/projects`。
+- 影响：`/projects` 页面中 Jiju.pet 卡片现在有正式视觉识别图标；其他项目卡片未新增未定稿 icon，避免造成四个项目都有完整 icon set 的误导。文案、路由和 SEO 未变。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.97s）；`curl -I http://localhost:4180/projects` 返回 200；`curl -I http://localhost:4180/project-icons/jiju-app-icon.png` 返回 200；生产产物确认 `dist/project-icons/jiju-app-icon.png` 为 512×512 PNG。
+- 后续：本地验证看 `http://localhost:4180/projects`，在 Project stack 的 Jiju.pet 卡片标题右侧应看到蓝猫 app icon。
+
+### 2026-06-05 01:56
+
+- 类型：前台 / `/conways-game-of-life` 易经读数层
+- 改动：在 256 rules explorer 的右侧 readout 中新增 I Ching layer。Rule 的 8-bit binary 保持原本 elementary CA 逻辑；取中间六位映射成六爻卦象，拆成上卦/下卦三位，映射到八卦（乾、兑、离、震、巽、坎、艮、坤）并显示卦符号、上下卦自然象、阳爻比例、变爻位提示。新增 `I_CHING_TRIGRAMS`、`getIChingTrigram`、`getRuleHexagramBits`、`IChingRuleReadout` 与 `.iching-*` 样式；readout 右栏加宽以容纳易经读数。
+- 原因：用户询问是否可以配合易经；采用“解释层 / 读数层”方式，避免把 256 CA rules 硬改成 64 卦。
+- 影响：页面现在同时保留科学规则生成和易经象义阅读：左侧是 rule 运行图案，右侧是二进制规则、neighborhood 输出和对应卦象读数。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.85s）；`curl -I http://localhost:4180/conways-game-of-life` 返回 200；代码检查确认 `I_CHING_TRIGRAMS`、`IChingRuleReadout` 与 `.iching-rule-*` 样式存在。
+- 后续：本地验证看 `http://localhost:4180/conways-game-of-life`，右侧 readout 下方应出现易经读数、六爻线、上卦/下卦和变爻位。
+
+### 2026-06-05 01:54
+
+- 类型：前台 / `/conways-game-of-life` brand guide 视觉对齐
+- 改动：将 256 rules explorer 的视觉系统对齐 `/brand-guide`：页面背景恢复 Eden ambient texture/light，Conway 页面使用 `--theme-*` token、Stone surface、Eden mint/amber active states；header 改为短 kicker + 大标题 + 一句说明，遵守“一屏一个想法”；主 rule 图保留黑白 pixel artifact，但外层改为浅/深色主题 surface card；readout、neighborhood、featured rules、256 rule index 都从硬黑表格改为品牌卡片、柔和边界、克制阴影和主题色选中态；mobile spacing 也同步收敛。
+- 原因：用户询问视觉和页面是否可以根据当前 brand guide。
+- 影响：`http://localhost:4180/conways-game-of-life` 现在更像 Eden 品牌系统里的实验工具页，而不是孤立的黑白 demo；仍保留 256 rules 的可运行与可浏览功能。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.93s）；`curl -I http://localhost:4180/conways-game-of-life` 返回 200；代码检查确认 `conway-rules-subtitle`、`conway-rules-copy`、theme token 和 `elementary-rule-index` 样式已更新。
+- 后续：本地验证看 `http://localhost:4180/conways-game-of-life`，页面应有 Eden 的 stone 背景、安静内容岛、品牌色选中态和黑白 rule artifact。
+
+### 2026-06-05 01:50
+
+- 类型：性能 / `/conways-game-of-life` 256 rules 渲染优化
+- 改动：把 elementary CA 主图和 256 个 rule thumbnail 从“每个像素一个 `<span>` DOM 节点”改为 SVG data URI 背景图。新增 `createElementaryRuleSvgDataUri(rule,width,height,offset)`，由规则生成 SVG rect，再作为 `backgroundImage` 放进单个 `.elementary-rule-grid` div；移除 `.elementary-rule-grid span` 相关 CSS。缩略图 DOM 从约 86,000+ pixel span 降到 256 个 button + 256 个 grid div，主图从 9,216 个 span 降到 1 个 div。
+- 原因：用户反馈 `/conways-game-of-life` 有点卡；主要瓶颈是 256 个缩略图同时渲染大量 DOM。
+- 影响：页面视觉保持黑白像素规则图，但滚动、切换 rule、Run/Pause 会明显轻很多；主图仍随 generation 运行，缩略图只生成轻量背景。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.69s）；`curl -I http://localhost:4180/conways-game-of-life` 返回 200；代码检查确认 `createElementaryRuleSvgDataUri` 存在，`.elementary-rule-grid span` 已无残留。
+- 后续：本地验证看 `http://localhost:4180/conways-game-of-life`，切换 rule 和滚动 256 index 应比上一版流畅；若还卡，下一步把主图更新频率从 720ms 调慢或只在 Run 时更新主图、不刷新 readout。
+
+### 2026-06-05 01:46
+
+- 类型：前台 / `/conways-game-of-life` 256 rules explorer
+- 改动：将 `/conways-game-of-life` 从单一黑白 pattern 改成 256 个 elementary cellular automata rules 浏览器。新增 `createElementaryRuleCells(rule,width,height,offset)`，按 Wolfram elementary CA 的 8-bit rule 生成一维元胞自动机图案；页面包含当前 rule 的大预览、Rule 编号、8-bit binary readout、8 个 neighborhood 输出格、Run/Pause、Reset、Rule 30/90/110/184 快捷按钮，以及 16×16 的 256 rule thumbnail index。同步首页 Interests 入口文案、`README.md`、`seo.ts`、`seo-routes.ts`，把页面定位改为 256 elementary cellular automata rules explorer。
+- 原因：用户要求根据 `playgameoflife.com` 的可运行体验和 Stanford Game of Life variations 页面里的 1D cellular automata / Rule 30 / Rule 90 / 256 rules 方向，重设 `/conways-game-of-life`。
+- 影响：页面现在是可浏览、可选择、可运行的 256 rules 规则索引；仍保持黑白、硬边、扁平像素视觉，不再是单一 Rule 90 图案。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.90s）；`curl -I http://localhost:4180/conways-game-of-life` 返回 200；代码检查确认 `ELEMENTARY_RULE_COUNT`、`ElementaryRuleViewer`、`ElementaryRuleThumb`、`.elementary-rule-index` 与 SEO/README 的 256 rules 描述存在。
+- 后续：本地验证看 `http://localhost:4180/conways-game-of-life`，应看到当前 Rule 大图、右侧 binary/rule readout、快捷规则按钮和 16×16 的 256 rules 缩略图索引。
+
+### 2026-06-05 01:40
+
+- 类型：前台 / `/projects` 项目卡工整对位重排
+- 改动：把 Project stack 四张卡统一成 `projects-card-identity` 结构：左侧固定为 title + role，右侧固定为 CSS icon slot；移除 Jiju 单独 role-row 的特殊结构，所有卡用同一套左右对立网格。整体项目标题字号收小，卡片左右 padding 从 `clamp(1.55rem, 3.4vw, 2.75rem)` 收到 `clamp(1.35rem, 2.6vw, 2.25rem)`，icon 尺寸由 identity 右列控制，mobile 同步收小。
+- 原因：用户截图反馈想要“工整、对立”，当前版本虽然 Jiju role 与 icon 对齐，但四张卡的 icon/title/role 结构不统一，空间感松散。
+- 影响：`http://localhost:4180/projects` 的四张项目卡现在以同一套左文右图结构排布，标题不再过大，卡内左右空间更紧，整体更像有网格秩序的产品矩阵。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.92s）；`curl -I http://localhost:4180/projects` 返回 200；代码检查确认 `projects-card-identity`、`projects-card-icon-slot` 与 `projectIcon` 渲染逻辑存在。
+- 后续：本地验证看 `http://localhost:4180/projects`，四张卡顶部应呈现统一的“左 title/role，右 CSS icon”对位关系。
+
+### 2026-06-05 01:36
+
+- 类型：前台 / `/projects` Jiju 命名与对齐修正
+- 改动：将 `/projects` 项目卡标题从 `Jiju.pet` 改为 `Jiju`；Projects hero、首页 Projects Hub 摘要、`/projects` SEO 描述同步使用 `Jiju`。Jiju 卡片新增 `projects-card-jiju` 与 `projects-card-role-row`，CSS icon 从 title block 移到 role 行右侧，使 `Pet-friendly discovery system / 宠物友好发现系统` 与 CSS icon 在同一行真实对齐；Jiju title block 高度单独收短，减少短标题下方空白。`/jiju-pet` 详情页和域名相关文案未改。
+- 原因：用户要求 Jiju.pet rename to Jiju，并指出 Pet-friendly discovery system 要和 CSS icon 对齐。
+- 影响：`http://localhost:4180/projects` 的第一张卡现在显示 `Jiju`，role 文案与猫 icon 对齐；其他项目卡排版不受影响。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.85s）；`curl -I http://localhost:4180/projects` 返回 200；代码检查确认 `title: 'Jiju'`、`projects-card-jiju`、`projects-card-role-row` 与 Projects SEO 的 `Jiju` 命名存在。
+- 后续：本地验证看 `http://localhost:4180/projects`，Jiju 卡应显示短标题 `Jiju`，下方 role 和 CSS 猫 icon 水平对齐。
+
+### 2026-06-05 01:32
+
+- 类型：前台 / Conway 页面清空 + `/projects` 标题溢出修正
+- 改动：`/conways-game-of-life` 页面移除可见标题、说明、控制台、暂停/重置按钮和 64 卦格，只保留黑白 cellular automata pattern 本体居中显示；`/projects` 内容岛扩到 1100px，并给项目卡标题增加分级 class。`ETReportHub` 改为 `ETReport / Hub` 两行排版，CRM 长标题取消窄 `max-width` 并单独收字号，避免 `ETReportHub` 和 `CRM Intelligence System` 冲出卡片。
+- 原因：用户要求清掉 Conway's Game of Life 页面内容，同时指出 `/projects` 项目页标题仍有溢出和排版问题。
+- 影响：Conway 页面现在是纯图案实验页；Projects 四张卡标题按项目长度排版，长标题不再横向覆盖邻卡或跑出卡片。项目 icon 和正文内容不变。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.63s）；`curl -I http://localhost:4180/conways-game-of-life` 和 `curl -I http://localhost:4180/projects` 均返回 200；代码检查确认 `.conway-pattern-only`、`.projects-card-title-compact`、`.projects-card-title-long` 与 ETReportHub 拆行逻辑存在。
+- 后续：本地验证看 `http://localhost:4180/conways-game-of-life` 应只见黑白 CA 图案；看 `http://localhost:4180/projects`，ETReportHub 应拆成两行且 CRM 不应再越界。
+
+### 2026-06-05 01:28
+
+- 类型：前台 / Conway's Game of Life 黑白 CA 纹样试作
+- 改动：在 `/conways-game-of-life` 新增 `Pattern study 01` 黑白 cellular automata panel：64 列 × 32 代，共 2048 个 CSS pixel span；规则使用三邻居 elementary CA（Rule 90）生成三角/斜线密纹，再叠六爻节奏做周期翻转。panel 随现有 generation 缓慢更新，视觉更接近用户参考图的黑白织物/规则图方向。
+- 原因：用户给出黑白 cellular automata reference，并要求“先来一个先”。
+- 影响：原本 64 个 hexagram cell 保留，页面上方多一个高对比黑白 pattern study，可作为后续扩展成多组规则纹样的第一版。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.79s）；`curl -I http://localhost:4180/conways-game-of-life` 返回 200；代码检查确认 `ConwayTextilePattern`、`createConwayTextileCells` 与 `.conway-textile-*` 样式存在。
+- 后续：本地验证看 `http://localhost:4180/conways-game-of-life`，在控制台下方应看到第一块黑白像素 CA 纹样；如果方向对，可以继续做多条 vertical strip 或不同 rule 组。
+
+### 2026-06-05 01:25
+
+- 类型：前台 / `/projects` 卡片排版修正
+- 改动：重排 Project stack 卡片标题区：标题现在独占整行宽度，CSS icon 改为标题区右下角绝对定位，不再参与文字列宽计算；放大卡片标题字级并改为自然按词换行，避免 `Jiju.pet`、`ETReportHub` 被硬切成碎片；同步 mobile title/icon 尺寸，并微调 role/summary 高度让 system layer 与 action line 继续对齐。
+- 原因：用户截图指出大字体没有达到应有效果，项目标题被 icon 列挤压后出现难看的断字。
+- 影响：`/projects` 四张主卡的大标题更有视觉重量，Jiju.pet 和 ETReportHub 可保持完整词形，Friday Poker Club 与 CRM Intelligence System 以更自然的单词行形成大字排版；项目 CSS icon 动画和内容不变。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.78s）；`curl -I http://localhost:4180/projects` 返回 200；代码检查确认 `.projects-card-title-row`、`.projects-card-icon`、mobile rules 均已更新。
+- 后续：本地验证看 `http://localhost:4180/projects`，Project stack 四张卡的大标题不应再被硬拆，icon 应浮在标题区右下角。
+
+### 2026-06-05 01:21
+
+- 类型：前台 / 新页面 / Conway's Game of Life CSS 易经自动机
+- 改动：新增 `/conways-game-of-life` full page，使用 8×8 共 64 个纯 CSS hexagram cell；每格由六条 CSS 爻线组成，阳爻为整条、阴爻为断条，变化爻会闪动。React state 每 1.6s 按 Conway-like 邻居压力演化：每一爻读取 8 个邻居同层阴阳数量，决定下一代阴阳状态。页面包含 generation、阳爻总数、规则状态、暂停/继续和重置控制；支持 light/dark mode，并覆盖全局光斑为更平的实验台背景。首页 Life Notes 区域新增入口。
+- 原因：用户要求开一个名为 Conway's Game of Life 的页面，并用 Conway's Game of Life 的方式按易经规则跑 64 个 CSS。
+- 影响：站点新增一个可直接访问的交互视觉实验页；SEO、静态 route 清单、sitemap path 和 README 当前路由同步更新。无新增依赖、无图片资产。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.97s）；`curl -I http://localhost:4180/conways-game-of-life` 返回 200；代码检查确认 `App.tsx`、`index.css`、`seo.ts`、`seo-routes.ts`、`vite.config.ts`、`README.md` 均包含新 route。
+- 后续：本地验证看 `http://localhost:4180/conways-game-of-life`，应看到 64 个六爻 CSS cell 缓慢演化，可暂停、继续、重置，并可切换浅色/深色。
+
+### 2026-06-04 23:21
+
+- 类型：前台 / 视觉资产 / Jiju.pet app icon 替换
+- 改动：用新生成的 App Store 方向蓝猫 icon 覆盖 `public/project-icons/jiju-app-icon.png`，仍保持 512×512 PNG 与原页面引用路径不变。
+- 原因：用户看过新版后要求 replace。
+- 影响：`/projects` 的 Jiju.pet 卡片自动显示新版大猫头 app icon；React/CSS/文案均未变。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.86s）；`curl -I http://localhost:4180/project-icons/jiju-app-icon.png` 返回 200；生产产物确认 `dist/project-icons/jiju-app-icon.png` 为 512×512 PNG。
+- 后续：本地验证看 `http://localhost:4180/projects`，Jiju.pet 卡片应显示新版 App Store 风格蓝猫 icon。
+
+### 2026-06-04 01:45
+
+- 类型：前台 / 首页 Current Build 大 banner 换成 CSS 跑猫动画
+- 改动：首页 hero 下方的 `home-hero-visual`（Current Build / Jiju.pet）原本是 `<img src={homeHeroImageSrc}>`（og-image.jpg）静态大图，替换成纯 CSS 动画场景：浅色天空+绿色地面、两朵飘动的云、一只来回奔跑的猫（身体/头/耳/眼/尾/四条腿全用 div+border-radius 拼）。猫用三层嵌套分离动画：`.jiju-cat` 跑动横移（jiju-cross，ease-in-out 来回）、`.jiju-cat-face` 到端点翻转朝向（jiju-face scaleX）、`.jiju-cat-bob` 上下颠（jiju-bob），四条腿两两交替跑动（jiju-leg-a/b），尾巴摆动。保留原本的底部深色渐变 `::after` 与左下角文案（Current Build / Jiju.pet / Pet-friendly discovery, starting from Penang.）。加了 `prefers-reduced-motion` 媒体查询：减少动态时全部停下、猫静止站立。删除不再使用的 `homeHeroImageSrc` 常量。CSS 全部加在 `index.css`（紧跟 .home-hero-visual 相关规则之后）。
+- 原因：用户希望首页 Current Build 的大 banner 从静态图换成「一只猫跑来跑去」的 CSS 动画，呼应 Jiju.pet 的宠物主题、也减少首页的扁平感。
+- 影响：首页主视觉更有生气、更贴合 Jiju.pet 品牌；纯 CSS 无新依赖、无图片请求（少一张 og-image 大图加载）；reduced-motion 用户看到静止画面。`scene` 容器标了 `aria-hidden`，文案仍可被读屏。
+- 验证：`npx vite build --outDir <tmp> --emptyOutDir` 通过（✓ 2082 modules transformed，✓ built in 9.16s）；产物 CSS 含 `jiju-cat-scene` 与 `@keyframes jiju-cross`，JS 含猫的 DOM 结构；`homeHeroImageSrc` 已无残留引用。默认 `npm run build` 仍因 dist/.DS_Store EPERM（macOS 挂载）报错，与改动无关。本地验证：`http://localhost:4180/` 首页第一屏 hero 下方的 Current Build banner，应看到一只猫在场景里来回跑、转身、尾巴摆、腿交替。
+- 后续：如要更精致，可加爪印拖尾、奔跑时的小尘土、或让猫偶尔停下舔毛；也可把猫颜色做成主题色变量。本机可删 `verify_*` 验证目录。
+
+### 2026-06-04 02:05
+
+- 类型：前台 / 首页跑猫场景 dark mode 配色 + 9 个小细节
+- 改动（dark mode）：给 `.jiju-cat-scene` 加 `:root[data-theme="dark"]` 夜间配色——天空深蓝渐变（#161d2e→#1e2740→#1b2a2a）、地面暗绿、云更暗、猫从深色 #4a4640 翻成奶白 #e8dec9（腿 #cdc1a6、眼改深色 #2a2620），保证夜间可读。
+- 改动（9 个细节，纯 CSS）：1) 奔跑小尘土（脚下 puff 上升淡出 jiju-dust）；2) 爪印拖尾（地面 4 个 paw 错峰淡入淡出 jiju-paw）；3) 偶尔停下舔毛（到右端转身时 head 微低头 jiju-groom-head + 粉色舌头闪现 jiju-lick，借 ease-in-out 转身near-zero 速度近似「停一下」）；4) 眨眼（jiju-blink scaleY）；5) 胡须（head 上两根 whisker，亮/暗模式反色）；6) 蝴蝶（上方飞过 jiju-fly + 翅膀拍动 jiju-flap）；7) 摇曳小草（地面 3 丛 jiju-sway）；8) 飘落叶子（jiju-leaf-fall 旋转下落）；9) 太阳/月亮（角落 jiju-sun，dark 模式变月亮 + 3 颗星 jiju-twinkle，light 模式星星隐藏）。全部加进 `prefers-reduced-motion` 关停列表。CSS 全在 `index.css` cat 区块后；JSX 在 `home-hero-visual` 场景里加对应 span/div（仍 `aria-hidden`，文案不受影响）。
+- 原因：用户要 dark mode 换色，并要加「小尘土 / 舔毛 / 爪印拖尾」外加 6 个不同小细节。
+- 影响：首页主视觉白天/夜间各一套配色，且有 9 处细节让场景更有生气；纯 CSS、无图片、无依赖；reduced-motion 用户看到静止画面。
+- 验证：`npx vite build --outDir <tmp> --emptyOutDir` 通过（✓ 2082 modules transformed，✓ built in 8.47s）；产物 CSS 含全部 9 类样式与 jiju-lick/jiju-blink 等关键帧及 `data-theme=dark` 配色，JS 含新 DOM（butterfly/tongue/paw/sun）。默认 `npm run build` 仍因 dist/.DS_Store EPERM（macOS 挂载）报错，与改动无关。本地验证：`http://localhost:4180/` 首页 Current Build banner；切 Day/Night 看两套配色，留意尘土、爪印、转身舔毛、眨眼、胡须、蝴蝶、小草、落叶、太阳/月亮+星星。
+- 后续：如某个细节太抢戏可单独调透明度/频率；本机可删 `verify_*` 验证目录。
+
+### 2026-06-04 02:20
+
+- 类型：前台 / 首页跑猫动画「性格」调淡（从活泼到悠闲）
+- 改动：放慢节奏、收小幅度，让猫从「冲来冲去」变成「慢悠悠散步」。横移 jiju-cross 7s→17s（同步把 jiju-face 朝向、jiju-groom-head 低头舔毛、jiju-lick 舌头、4 个 jiju-paw 爪印延迟都改到 17s 并重排时序）；腿 jiju-leg 0.28s→0.52s 且摆幅 30°→15°、改 ease-in-out；身体 bob 0.28s→0.55s、幅度 -3px→-1.5px；尾巴 0.6s→1.4s、摆幅 -12/20°→-6/10°；尘土更淡更慢（0.5s→0.95s、opacity 0.5→0.32、上升/缩放更小）；爪印关键帧收紧成短暂淡入淡出（每个约 4–5s 内消失）；环境也放缓——蝴蝶 13s→19s、落叶 9s→14s。眨眼、胡须、太阳/月亮+星星不变。reduced-motion 行为不变。
+- 原因：用户觉得猫太活泼，要性格更安静。
+- 影响：同一只猫、同样 9 个细节，但整体观感从「亢奋奔跑」变成「悠闲踱步、偶尔停下舔毛」，更耐看、更贴 Apple 那种克制的动效。
+- 验证：`npx vite build --outDir <tmp> --emptyOutDir` 通过（✓ 2082 modules transformed，✓ built in 8.42s）；产物 CSS 确认 17s 出现 8 次（cross/face/head/lick/4×paw）、腿 .52s、尾 1.4s、蝴蝶 19s 均在，旧的 7s/0.28s 已不存在（压缩器把 animation 简写重排为 `animation:17s … jiju-cross`，属正常）。默认 `npm run build` 仍因 dist/.DS_Store EPERM（macOS 挂载）报错，与改动无关。本地验证：`http://localhost:4180/` Current Build banner，应看到猫慢慢踱步、转身时停下舔一下毛，整体安静很多。
+- 后续：若还想更懒，可把横移再拉到 22–25s 或加一个中途坐下休息的停顿段；本机可删 `verify_*` 验证目录。
+
+### 2026-06-05 04:05
+
+- 类型：前台 / Home hero / 21:9 CSS art 恢复
+- 改动：恢复首页 hero CTA 下方的 21:9 Jiju cat scene 大型 CSS 横幅；新增/恢复 `HomeJijuCatScene` 渲染原有猫、客串猫、云、草、蝴蝶、叶子和星星层；重新在 `index.css` import `styles/css-art/home-jiju-scene.css`；在 `styles/pages/home.css` 加回 `.home-hero-visual` 21:9 容器与 mobile override；同步更新 CSS art README。
+- 原因：用户指出 Home page 本来的 21:9 大 CSS 不见了，要求还原。
+- 影响：首页恢复大型 CSS 动画横幅，但没有恢复旧的 `Current build` 产品文案 section；保留 Jiju cat scene 的慢速动效和 cameo cat。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.15s）；`curl -I http://localhost:4180/` 返回 200；关键词检查确认 `HomeJijuCatScene`、`home-hero-visual`、`home-jiju-scene.css` 已接入，并且 `Current build` / `home-product-panel` / `home-feature` 没有回到首页代码入口；`git diff --check -- App.tsx index.css styles/pages/home.css styles/css-art/README.md log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/`，hero CTA 下方应重新出现 21:9 的 Jiju CSS 动画横幅。
+
+### 2026-06-05 04:09
+
+- 类型：前台 / `/life` 页面重设计
+- 改动：把 `/life` 从三个同权重视频卡片重排为 Apple-like editorial video archive：顶部改成 `Life Notes / Video field` hero，第一支 `Pulau Tioman` 成为大 featured video stage，剩余两支进入 `Small archive` 两栏影像条目；新增结尾 editorial rule；新增 `styles/pages/life.css` 管理页面 typography、留白、featured stage、archive cards、dark mode 和 mobile override，并在 `index.css` import；同步 `styles/pages/README.md`。
+- 原因：用户要求 redesign `http://localhost:4180/life`，当前页面过于普通列表化，没有主次和生活影像栏目感。
+- 影响：页面保留三支 YouTube 内容与外链，但信息层级更清楚：先看主片段，再扫 archive；整体减少可见边框，使用品牌 token、居中内容岛和克制 CTA。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 1.86s）；`curl -I http://localhost:4180/life` 返回 200；关键词检查确认 `life-page`、`life-feature-grid`、`life-feature-stage`、`life-archive-grid`、`styles/pages/life.css` 均已接入；`git diff --check -- App.tsx index.css styles/pages/life.css styles/pages/README.md log.md` 通过。尝试用 Node/Playwright 做浏览器检查时发现 workspace 未安装 `playwright`，未新增依赖。
+- 后续：本地验证看 `http://localhost:4180/life`，应看到大标题、第一支大视频舞台、两张 archive 视频图卡和结尾短句。
+
+### 2026-06-05 04:12
+
+- 类型：前台 / Home Interests 图腾调整
+- 改动：把 Home Interests 里的 `Pattern Archive` visual 从 `archive-evolution` 改成 `bagua-mirror`，也就是使用原本 `Life Notes` 的道教八卦镜透明底 CSS 图腾；从 Home Interests 数组移除 `Life Notes` 卡片。`/life` 页面本身保留，未删除路由。
+- 原因：用户要求 `Life Notes` 的 CSS replace `Pattern Archive`，并把 `Life Notes` hide 起来。
+- 影响：首页 Interests 区不再显示 `Life Notes`；`Pattern Archive` 保持原链接与文案，但图腾变成八卦镜 CSS。旧喷火龙图腾代码仍保留为未挂载资产，避免无关大删改。
+- 验证：`npm run build` 通过（✓ 2082 modules transformed，✓ built in 2.08s）；`curl -I http://localhost:4180/` 返回 200；关键词检查确认 Home Interests 中 `Pattern Archive` 使用 `bagua-mirror`，`Life Notes` 已不在 Home Interests 数组；`git diff --check -- App.tsx log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/` 的 Interests 区，应看到 `Pattern Archive` 是八卦镜 CSS，且没有 `Life Notes` 卡片。
+
+### 2026-06-05 04:24
+
+- 类型：工程治理 / 安全 / SEO / 构建优化
+- 改动：执行网站隐患清单治理：移除 `vite.config.ts` 中会把 `GEMINI_API_KEY` 注入前端 bundle 的 define；让 `seo.ts` 复用 `seo-routes.ts` 的 route registry，删除重复 SEO copy；给 `RouteSeo` 增加 `index` / `sitemap` 状态；把 `/life` 标记为 `index: false`、`sitemap: false`，保留直达但不进 sitemap 且客户端 robots 设为 `noindex, follow`；让 sitemap 从 `ROUTE_SEO` 自动生成，补上 `/etreporthub-sales`、`/poker`、`/crm`；在 Rollup 中加入 `manualChunks`，拆出 `vendor-react`、`vendor-motion`、`vendor-icons`；移除未使用的 `@react-three/fiber`、`@react-three/drei`、`three` 依赖并更新 lockfile；新增 `typecheck`、`lint`、`check` scripts；补 `vite/client` 类型；修正 typecheck 暴露的项目卡 external union 与 Conway changing lines 类型问题；同步 README、soul.md、AGENTS.md 的 route registry/检查规则。
+- 原因：用户要求把网站隐患全部执行处理，包括安全、路由同步、隐藏 `/life` 发现入口、bundle 体积、检查脚本和维护规则。
+- 影响：前端 bundle 不再有 API key 注入路径；SEO/sitemap 单一来源更稳定；`/life` 保持可访问但隐藏于 discovery；主业务 JS 从约 612 kB 降到约 290 kB，Vite 大 chunk 警告消失；生产依赖和完整 audit 均为 0 vulnerabilities；项目新增可运行的静态检查入口。
+- 验证：`npm run lint` 通过；`npm run check` 通过；`npm audit` 和 `npm audit --omit=dev` 均为 0 vulnerabilities；`VITE_SITE_URL=https://edentan.site VITE_BASE=/ npm run build` 通过（生成 `vendor-react` 193.83 kB、`vendor-motion` 124.00 kB、`vendor-icons` 5.97 kB、主业务 JS 290.17 kB）；主要本地路由 `/`、`/projects`、`/life`、`/life-os`、`/jiju-pet`、`/brand-guide`、`/conways-game-of-life`、`/etreporthub`、`/etreporthub-sales`、`/previous-projects`、`/analog-tech`、`/poker`、`/crm` 均返回 200；发布 sitemap 包含 `/etreporthub-sales`、`/poker`、`/crm`，不包含 `/life`；关键词检查确认 `GEMINI_API_KEY` / `process.env.API_KEY` / `@react-three` / `three` / `drei` 无残留；`git diff --check` 通过。
+- 后续：如果继续优化性能，下一步是真正 route-level component extraction，把 `/life-os`、`/brand-guide`、`/conways-game-of-life` 等从 `App.tsx` 拆成 lazy route modules。
+
+### 2026-06-05 04:28
+
+- 类型：前台 / `/life-os` border/radar/CSS art 透明化
+- 改动：在 `index.css` 增加高优先级 `.page-shell.life-os-open-layout` override，压过 dark mode 的全局 `.border-*`、`.ring-*`、hover border 规则；统一把 `/life-os` 内 Tailwind border/ring、radar frame、icon/banner/portrait frame、signal CSS icon、signal arc/orbit/mark、wind/contract strip、contract seal、signature stroke 的 border/outline/ring 颜色设为 transparent；同步把 radar SVG 的 line/polygon/circle stroke 设为 transparent，并清掉相关 CSS art wrapper 的 inset/outer box-shadow。
+- 原因：用户要求 `/life-os` 全部 border line 透明，尤其 radar 和 CSS art 的线条不要再露出来。
+- 影响：`/life-os` 仍保留原有布局、背景、图片和 CSS motion，但可见的边框线、radar 网线/描边和 CSS icon 外框线会被压成透明；作用域限定在 `.page-shell.life-os-open-layout`，不影响其他页面。
+- 验证：`npm run build` 通过（✓ 2083 modules transformed，✓ built in 2.12s）；`curl -I http://localhost:4180/life-os` 返回 200；关键词检查确认新的 `.page-shell.life-os-open-layout`、radar SVG stroke transparent、`life-rpg-signal-css-icon` / `life-rpg-signal-arc` override 存在；`git diff --check -- index.css log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/life-os`，radar 与 CSS art 的边框线应变透明，只剩内容、色块和动效。
+
+### 2026-06-05 04:34
+
+- 类型：前台 / `/life-os` hero CSS art 替换
+- 改动：移除 `/life-os` hero 的 `lifeOsCharacterPortrait` 图片引用，把风之解析者主视觉替换成 `LifeOsWindStaffMagic` 纯 CSS 透明底动画；新增风魔法杖、晶体、魔法风带、吹风气流、符文、叶片和 spark 图层；CSS 放在 `styles/css-art/life-os-signals.css`，包含 light/dark mode 变量、慢速循环 keyframes 和 `prefers-reduced-motion` 静止态。Loadout banner 保留不动。
+- 原因：用户要求把风之解析者的图片 remove，并 replace with 风魔法杖用魔法吹风的 CSS。
+- 影响：`/life-os` 首屏不再加载角色 PNG 主图，改为透明底 CSS 动画视觉；页面内容、CTA、角色数值和后续 Loadout 区块不变。
+- 验证：`npm run lint` 通过；`npm run build` 通过（✓ 2083 modules transformed，✓ built in 1.96s）；`curl -I http://localhost:4180/life-os` 返回 200；关键词检查确认 `lifeOsCharacterPortrait` 无残留，`LifeOsWindStaffMagic` 和 `.life-os-wind-staff-magic` 已接入；`git diff --check -- App.tsx styles/css-art/life-os-signals.css log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/life-os` hero，风之解析者标题下方应显示风魔法杖吹风 CSS 动画，而不是原角色图片。
+
+### 2026-06-05 04:39
+
+- 类型：前台 / `/life-os` Loadout 图片残留清理
+- 改动：移除 `lifeOsLoadoutBanner` 常量和 `角色 Loadout` 区块里的 PNG `<img>`，改为复用 `LifeOsWindStaffMagic` 透明底 CSS 动画；新增 `.life-os-loadout-css-frame` 竖版比例规则，让风魔法杖 CSS 在 Loadout 栏位内保持 4:5 / desktop 1:2 的角色卡构图。
+- 原因：用户指出没有看到改动，并明确要求 `🧾 角色 Loadout` 的 image 也拿掉。
+- 影响：`/life-os` 首屏 hero 和 `角色 Loadout` 两处都不再显示风之解析者 PNG 图片，Loadout 也改成风魔法杖用魔法吹风的 CSS 视觉；其余技能 banner、模块内容和文案不变。
+- 验证：`npm run lint` 通过；`npm run build` 通过（✓ 2083 modules transformed，✓ built in 2.48s）；`curl -I http://localhost:4180/life-os` 返回 200；关键词检查确认 `lifeOsLoadoutBanner` / `wind-pattern-analyst-loadout-banner` 无残留，`life-os-loadout-css-frame` 已接入；`git diff --check -- App.tsx styles/css-art/life-os-signals.css log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/life-os` 的 `🧾 角色 Loadout`，原竖向图片应变成透明底风魔法杖 CSS 动画。
+
+### 2026-06-05 04:43
+
+- 类型：前台 / `/life-os` 渗透主题 CSS art 重设计
+- 改动：把被用户评价为“很丑”的风魔法杖 CSS art 整体替换为 `LifeOsInfiltrationField`；移除 `LifeOsWindStaffMagic`、`wind-staff`、晶体、叶片、spark 等拟物元素，改成透明底的轻量渗透场：风雾路径、半透明系统格栅、三层 membrane、渗透 breach、扩散 wave、逐步亮起的节点和小 glyph；hero 与 `🧾 角色 Loadout` 两处都使用同一套新 CSS。
+- 原因：用户希望改成“关于渗透”的 CSS，而不是法杖吹风。
+- 影响：`/life-os` 的主视觉从道具插画感转成“柔性信号穿过系统屏障”的抽象系统感，更贴合轻量渗透型风格；仍保持透明底、dark/light mode 变量、慢速动画和 `prefers-reduced-motion`。
+- 验证：`npm run lint` 通过；`npm run build` 通过（✓ 2083 modules transformed，✓ built in 2.40s）；`curl -I http://localhost:4180/life-os` 返回 200；关键词检查确认 `LifeOsWindStaffMagic` / `wind-staff` / `life-os-wind` / `风魔法杖` 无残留；`git diff --check -- App.tsx styles/css-art/life-os-signals.css log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/life-os` hero 和 `🧾 角色 Loadout`，应看到风雾穿透格栅、节点逐步亮起的渗透型 CSS 动画。
+
+### 2026-06-05 04:47
+
+- 类型：前台 / `/life-os` 绿色龙卷风 CSS art
+- 改动：把 `LifeOsInfiltrationField` 改成 `LifeOsGreenTornado`；删除渗透场的格栅、membrane、breach、node、glyph 结构，替换为透明底绿色龙卷风：上下 halo、旋风 column、四层旋转 ring、中心风柱、少量 debris 和 spark；同步把 hero 与 `🧾 角色 Loadout` 的 aria label 改成绿色龙卷风。CSS 尺寸收小：hero 使用居中图腾宽度，Loadout 固定为 12rem / desktop 14rem。
+- 原因：用户要求 CSS 缩小，并换成绿色龙卷风动态。
+- 影响：`/life-os` 主视觉和 Loadout 不再是渗透场，而是更明确的绿色风系角色图腾；透明底、light/dark 变量和 `prefers-reduced-motion` 仍保留。
+- 验证：`npm run lint` 通过；`npm run build` 通过（✓ 2083 modules transformed，✓ built in 2.58s）；`curl -I http://localhost:4180/life-os` 返回 200；关键词检查确认 `LifeOsInfiltrationField` / `life-os-infiltration` 无残留，`LifeOsGreenTornado` / `life-os-green-tornado` 已接入；`git diff --check -- App.tsx styles/css-art/life-os-signals.css log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/life-os` hero 和 `🧾 角色 Loadout`，应看到缩小后的绿色龙卷风 CSS 动态。
+
+### 2026-06-05 04:54
+
+- 类型：前台 / `/life-os` 绿色龙卷风美术增强
+- 改动：在 `LifeOsGreenTornado` 增加风眼、顶部/底部 mist、2 层内部 slice、3 条大 ribbon、6 条细 thread、底部吸入 base、额外 debris 和 spark；CSS 新增对应纹理层与 keyframes，并同步 `prefers-reduced-motion` 覆盖。保持透明底和缩小尺寸不变。
+- 原因：用户问能不能更加好看，希望现有绿色龙卷风视觉更精致。
+- 影响：`/life-os` hero 和 `🧾 角色 Loadout` 的绿色龙卷风从简单旋转风环升级为更完整的风系图腾：有风眼、锥形中心、外侧螺旋轨迹、细风纹和底部吸入感。
+- 验证：`npm run lint` 通过；`npm run build` 通过（✓ 2083 modules transformed，✓ built in 2.52s）；`curl -I http://localhost:4180/life-os` 返回 200；关键词检查确认 `life-os-tornado-eye` / `mist` / `ribbon` / `thread` / `base` 已接入；`git diff --check -- App.tsx styles/css-art/life-os-signals.css log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/life-os` hero 和 `🧾 角色 Loadout`，绿色龙卷风应更像完整的风系角色图腾，而不是单纯几层旋转线。
+
+### 2026-06-05 04:58
+
+- 类型：前台 / `/life-os` 风之眼图腾重设计
+- 改动：把页面实际挂载的 `LifeOsGreenTornado` 换成 `LifeOsWindEyeSigil`；主视觉从直白的绿色龙卷风改为透明底风之眼图腾：中央玉色眼核、双层 orbit、三片风刃、四条细风线、环绕光点和 mote。Hero 与 `🧾 角色 Loadout` 两处 aria label 同步改为风之眼图腾。
+- 原因：用户希望换个思路做更好看的版本，避免继续在龙卷风方向上微调。
+- 影响：`/life-os` 主视觉更像角色徽章 / 风系 sigil，不再像天气 icon；透明底、light/dark 变量、缩小尺寸和 `prefers-reduced-motion` 都保留。
+- 验证：`npm run lint` 通过；`npm run build` 通过（✓ 2083 modules transformed，✓ built in 2.81s）；`curl -I http://localhost:4180/life-os` 返回 200；关键词检查确认 `App.tsx` 页面入口只挂载 `LifeOsWindEyeSigil`，不再挂载 `LifeOsGreenTornado`；`git diff --check -- App.tsx styles/css-art/life-os-signals.css log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/life-os` hero 和 `🧾 角色 Loadout`，应看到风之眼图腾，而不是绿色龙卷风。
+
+### 2026-06-05 05:00
+
+- 类型：前台 / `/life-os` 风魔法几何细节
+- 改动：在 `LifeOsWindEyeSigil` 增加几何风魔法层：3 个透明底三角阵 `life-os-wind-eye-geometry`、4 个符文短线 `life-os-wind-eye-tick`、3 个菱形节点 `life-os-wind-eye-diamond`；使用 gradient/clip-path/drop-shadow 画线，不使用可见 border；新增对应 keyframes 和 `prefers-reduced-motion` 覆盖。
+- 原因：用户要求加一点几何图形，类似风魔法。
+- 影响：`/life-os` hero 和 `🧾 角色 Loadout` 的风之眼图腾更像风系魔法阵，保留透明底、缩小尺寸、light/dark 变量和原有风刃/风眼动效。
+- 验证：`npm run lint` 通过；`npm run build` 通过（✓ 2083 modules transformed，✓ built in 2.52s）；`curl -I http://localhost:4180/life-os` 返回 200；关键词检查确认 `life-os-wind-eye-geometry` / `tick` / `diamond` 已接入；`git diff --check -- App.tsx styles/css-art/life-os-signals.css log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/life-os` hero 和 `🧾 角色 Loadout`，风之眼周围应多出三角阵、菱形节点和符文短线。

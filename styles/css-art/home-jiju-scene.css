@@ -1,0 +1,552 @@
+/* Home CSS art: Jiju cat scene and ambient landing animation. */
+
+.jiju-cat-scene {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f7f4ec 0%, #eef5ef 48%, #d8e9da 100%);
+}
+
+.jiju-cloud {
+  position: absolute;
+  height: 14px;
+  background: rgb(255 255 255 / 0.82);
+  border-radius: 999px;
+}
+
+.jiju-cloud-a { top: 15%; width: 64px; animation: jiju-drift 20s linear infinite; }
+.jiju-cloud-b { top: 27%; width: 42px; opacity: 0.65; animation: jiju-drift 30s linear infinite; animation-delay: -10s; }
+
+.jiju-ground {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 44%;
+  background: linear-gradient(180deg, #cfe6d1 0%, #b9dabf 45%, #a3cbab 100%);
+}
+
+.jiju-cat {
+  position: absolute;
+  bottom: 44%;
+  left: 8%;
+  width: 74px;
+  height: 52px;
+  z-index: 1;
+  animation: jiju-amble 26s ease-in-out infinite;
+}
+
+.jiju-cat-cameo {
+  left: -18%;
+  z-index: 2;
+  opacity: 0;
+  transform: scale(0.86);
+  transform-origin: center bottom;
+  animation: jiju-cameo 26s ease-in-out infinite;
+}
+
+.jiju-cat-face,
+.jiju-cat-bob {
+  position: absolute;
+  inset: 0;
+  transform-origin: center bottom;
+}
+
+.jiju-cat-face { animation: jiju-face 26s linear infinite; }
+.jiju-cat-bob { animation: jiju-bob 4.8s ease-in-out infinite alternate; }
+
+.jiju-cat-body {
+  position: absolute;
+  left: 8px;
+  bottom: 11px;
+  width: 46px;
+  height: 25px;
+  background: #4a4640;
+  border-radius: 50% 50% 46% 46% / 62% 62% 40% 40%;
+}
+
+.jiju-cat-head {
+  position: absolute;
+  right: 2px;
+  bottom: 19px;
+  width: 25px;
+  height: 23px;
+  background: #4a4640;
+  border-radius: 50%;
+}
+
+.jiju-cat-ear {
+  position: absolute;
+  top: -6px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 10px solid #4a4640;
+}
+
+.jiju-cat-ear.left { left: 1px; transform: rotate(-20deg); }
+.jiju-cat-ear.right { right: 1px; transform: rotate(20deg); }
+
+.jiju-cat-eye {
+  position: absolute;
+  top: 8px;
+  right: 5px;
+  width: 4px;
+  height: 5px;
+  background: #f7f4ec;
+  border-radius: 50%;
+}
+
+.jiju-cat-tail {
+  position: absolute;
+  left: -7px;
+  bottom: 17px;
+  width: 24px;
+  height: 8px;
+  background: #4a4640;
+  border-radius: 8px;
+  transform-origin: right center;
+  animation: jiju-tail 1.4s ease-in-out infinite alternate;
+}
+
+.jiju-cat-leg {
+  position: absolute;
+  bottom: 0;
+  width: 6px;
+  height: 14px;
+  background: #3f3b35;
+  border-radius: 3px;
+  transform-origin: top center;
+}
+
+.jiju-cat-leg.leg1 { left: 13px; animation: jiju-leg-a 0.52s ease-in-out infinite; }
+.jiju-cat-leg.leg2 { left: 23px; animation: jiju-leg-b 0.52s ease-in-out infinite; }
+.jiju-cat-leg.leg3 { left: 35px; animation: jiju-leg-b 0.52s ease-in-out infinite; }
+.jiju-cat-leg.leg4 { left: 45px; animation: jiju-leg-a 0.52s ease-in-out infinite; }
+
+@keyframes jiju-amble {
+  0% { left: 8%; transform: translateY(0); }
+  34% { left: 74%; transform: translateY(0); }
+  43% { left: 74%; transform: translateY(0); }
+  70% { left: 30%; transform: translateY(0); }
+  86% { left: 14%; transform: translateY(0); }
+  100% { left: 8%; transform: translateY(0); }
+}
+
+@keyframes jiju-cameo {
+  0%, 78% {
+    left: -18%;
+    opacity: 0;
+    transform: scale(0.86) translateY(0);
+  }
+  84% {
+    left: 22%;
+    opacity: 1;
+    transform: scale(0.86) translateY(0);
+  }
+  89% {
+    left: 22%;
+    opacity: 1;
+    transform: scale(0.86) translateY(-2px);
+  }
+  94% {
+    left: 6%;
+    opacity: 1;
+    transform: scale(0.86) translateY(0);
+  }
+  100% {
+    left: -18%;
+    opacity: 0;
+    transform: scale(0.86) translateY(0);
+  }
+}
+
+@keyframes jiju-cross {
+  0% { left: 8%; }
+  50% { left: 74%; }
+  100% { left: 8%; }
+}
+
+@keyframes jiju-face {
+  0%, 48% { transform: scaleX(1); }
+  50%, 98% { transform: scaleX(-1); }
+  100% { transform: scaleX(1); }
+}
+
+@keyframes jiju-bob {
+  from { transform: translateY(0); }
+  to { transform: translateY(-1.5px); }
+}
+
+@keyframes jiju-tail {
+  from { transform: rotate(-6deg); }
+  to { transform: rotate(10deg); }
+}
+
+@keyframes jiju-leg-a {
+  0% { transform: rotate(15deg); }
+  50% { transform: rotate(-15deg); }
+  100% { transform: rotate(15deg); }
+}
+
+@keyframes jiju-leg-b {
+  0% { transform: rotate(-15deg); }
+  50% { transform: rotate(15deg); }
+  100% { transform: rotate(-15deg); }
+}
+
+@keyframes jiju-drift {
+  from { left: -22%; }
+  to { left: 122%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jiju-cat,
+  .jiju-cat-cameo,
+  .jiju-cat-face,
+  .jiju-cat-bob,
+  .jiju-cat-tail,
+  .jiju-cat-leg,
+  .jiju-cloud {
+    animation: none !important;
+  }
+  .jiju-cat { left: 14%; }
+  .jiju-cat-cameo { display: none; }
+}
+
+:root[data-theme="dark"] .jiju-cat-scene {
+  background: linear-gradient(180deg, #161d2e 0%, #1e2740 46%, #1b2a2a 100%);
+}
+
+:root[data-theme="dark"] .jiju-ground {
+  background: linear-gradient(180deg, #28392f 0%, #213029 45%, #18231e 100%);
+}
+
+:root[data-theme="dark"] .jiju-cloud {
+  background: rgb(214 222 240 / 0.14);
+}
+
+:root[data-theme="dark"] .jiju-cat-body,
+:root[data-theme="dark"] .jiju-cat-head,
+:root[data-theme="dark"] .jiju-cat-tail {
+  background: #e8dec9;
+}
+
+:root[data-theme="dark"] .jiju-cat-ear {
+  border-bottom-color: #e8dec9;
+}
+
+:root[data-theme="dark"] .jiju-cat-leg {
+  background: #cdc1a6;
+}
+
+:root[data-theme="dark"] .jiju-cat-eye {
+  background: #2a2620;
+}
+
+.jiju-cat-cameo .jiju-cat-body,
+.jiju-cat-cameo .jiju-cat-head,
+.jiju-cat-cameo .jiju-cat-tail {
+  background: #b87045;
+}
+
+.jiju-cat-cameo .jiju-cat-ear {
+  border-bottom-color: #b87045;
+}
+
+.jiju-cat-cameo .jiju-cat-leg {
+  background: #9f5f3a;
+}
+
+.jiju-cat-cameo .jiju-cat-eye {
+  background: #fff7ed;
+}
+
+.jiju-cat-cameo .jiju-cat-face {
+  animation: jiju-cameo-face 26s linear infinite;
+}
+
+.jiju-cat-cameo .jiju-cat-bob {
+  animation: jiju-bob 3.6s ease-in-out infinite alternate;
+}
+
+.jiju-cat-cameo .jiju-cat-tail {
+  animation-duration: 1.05s;
+}
+
+.jiju-cat-cameo .jiju-dust {
+  left: 18px;
+  background: rgb(150 92 55 / 0.16);
+}
+
+:root[data-theme="dark"] .jiju-cat-cameo .jiju-cat-body,
+:root[data-theme="dark"] .jiju-cat-cameo .jiju-cat-head,
+:root[data-theme="dark"] .jiju-cat-cameo .jiju-cat-tail {
+  background: #d08a5b;
+}
+
+:root[data-theme="dark"] .jiju-cat-cameo .jiju-cat-ear {
+  border-bottom-color: #d08a5b;
+}
+
+:root[data-theme="dark"] .jiju-cat-cameo .jiju-cat-leg {
+  background: #b7774d;
+}
+
+:root[data-theme="dark"] .jiju-cat-cameo .jiju-cat-eye {
+  background: #241a14;
+}
+
+:root[data-theme="dark"] .jiju-cat-cameo .jiju-cat-whisker {
+  background: rgb(36 26 20 / 0.5);
+}
+
+@keyframes jiju-cameo-face {
+  0%, 78% { transform: scaleX(1); }
+  84%, 92% { transform: scaleX(1); }
+  94%, 100% { transform: scaleX(-1); }
+}
+
+.jiju-cat-eye {
+  transform-origin: center;
+  animation: jiju-blink 4.6s ease-in-out infinite;
+}
+
+.jiju-cat-head {
+  animation: jiju-groom-head 17s ease-in-out infinite;
+}
+
+.jiju-cat-whisker {
+  position: absolute;
+  right: -7px;
+  width: 9px;
+  height: 1px;
+  background: rgb(247 244 236 / 0.6);
+}
+
+.jiju-cat-whisker.w1 { top: 10px; transform: rotate(7deg); }
+.jiju-cat-whisker.w2 { top: 14px; transform: rotate(-7deg); }
+
+:root[data-theme="dark"] .jiju-cat-whisker {
+  background: rgb(60 54 46 / 0.55);
+}
+
+.jiju-cat-tongue {
+  position: absolute;
+  top: 16px;
+  right: -3px;
+  width: 5px;
+  height: 6px;
+  background: #e58aa0;
+  border-radius: 0 0 5px 5px;
+  transform-origin: top center;
+  opacity: 0;
+  animation: jiju-lick 17s ease-in-out infinite;
+}
+
+.jiju-dust {
+  position: absolute;
+  bottom: 0;
+  left: 24px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: rgb(120 110 95 / 0.22);
+  opacity: 0;
+  animation: jiju-dust 0.95s ease-out infinite;
+}
+
+:root[data-theme="dark"] .jiju-dust {
+  background: rgb(210 220 235 / 0.16);
+}
+
+.jiju-paw {
+  position: absolute;
+  bottom: 41%;
+  width: 8px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgb(80 70 60 / 0.18);
+  opacity: 0;
+}
+
+.jiju-paw.p1 { left: 20%; animation: jiju-paw 17s ease-in-out infinite 1.5s; }
+.jiju-paw.p2 { left: 36%; animation: jiju-paw 17s ease-in-out infinite 3.6s; }
+.jiju-paw.p3 { left: 52%; animation: jiju-paw 17s ease-in-out infinite 5.7s; }
+.jiju-paw.p4 { left: 66%; animation: jiju-paw 17s ease-in-out infinite 7.6s; }
+
+:root[data-theme="dark"] .jiju-paw {
+  background: rgb(230 222 205 / 0.16);
+}
+
+.jiju-grass {
+  position: absolute;
+  bottom: 40%;
+  width: 3px;
+  height: 14px;
+  background: #7fae83;
+  border-radius: 3px;
+  transform-origin: bottom center;
+  animation: jiju-sway 2.4s ease-in-out infinite alternate;
+}
+
+.jiju-grass.g1 { left: 13%; }
+.jiju-grass.g2 { left: 30%; animation-delay: -0.8s; }
+.jiju-grass.g3 { left: 86%; animation-delay: -1.4s; }
+
+:root[data-theme="dark"] .jiju-grass { background: #4f7a59; }
+
+.jiju-butterfly {
+  position: absolute;
+  top: 24%;
+  left: -8%;
+  width: 12px;
+  height: 10px;
+  animation: jiju-fly 19s linear infinite;
+}
+
+.jiju-butterfly .wing {
+  position: absolute;
+  top: 0;
+  width: 6px;
+  height: 9px;
+  border-radius: 60% 60% 50% 50%;
+  background: #cf7d9b;
+  transform-origin: bottom center;
+  animation: jiju-flap 0.22s ease-in-out infinite alternate;
+}
+
+.jiju-butterfly .wing.left { left: 0; }
+.jiju-butterfly .wing.right { right: 0; }
+
+.jiju-leaf {
+  position: absolute;
+  top: -6%;
+  left: 70%;
+  width: 9px;
+  height: 7px;
+  background: #c98a3a;
+  border-radius: 0 70% 0 70%;
+  opacity: 0;
+  animation: jiju-leaf-fall 14s ease-in infinite 3s;
+}
+
+:root[data-theme="dark"] .jiju-leaf { background: #b88a52; }
+
+.jiju-sun {
+  position: absolute;
+  top: 14%;
+  right: 12%;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #f4d27a;
+  box-shadow: 0 0 0 8px rgb(244 210 122 / 0.22);
+}
+
+:root[data-theme="dark"] .jiju-sun {
+  background: #dfe4ee;
+  box-shadow: 0 0 0 6px rgb(223 228 238 / 0.1);
+}
+
+.jiju-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #ffffff;
+  opacity: 0;
+}
+
+.jiju-star.s1 { top: 17%; left: 18%; }
+.jiju-star.s2 { top: 31%; left: 31%; }
+.jiju-star.s3 { top: 12%; left: 58%; }
+
+:root[data-theme="dark"] .jiju-star {
+  animation: jiju-twinkle 3s ease-in-out infinite;
+}
+
+:root[data-theme="dark"] .jiju-star.s2 { animation-delay: -1s; }
+:root[data-theme="dark"] .jiju-star.s3 { animation-delay: -2s; }
+
+@keyframes jiju-blink {
+  0%, 90%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
+}
+
+@keyframes jiju-groom-head {
+  0%, 44% { transform: none; }
+  50% { transform: translateY(2px) rotate(8deg); }
+  57%, 100% { transform: none; }
+}
+
+@keyframes jiju-lick {
+  0%, 45% { opacity: 0; transform: translateY(0) scaleY(0.4); }
+  50% { opacity: 1; transform: translateY(2px) scaleY(1); }
+  55%, 100% { opacity: 0; transform: translateY(0) scaleY(0.4); }
+}
+
+@keyframes jiju-dust {
+  0% { opacity: 0; transform: translateY(0) scale(0.4); }
+  35% { opacity: 0.32; }
+  100% { opacity: 0; transform: translateY(-5px) scale(1.25); }
+}
+
+@keyframes jiju-paw {
+  0% { opacity: 0; }
+  4% { opacity: 0.48; }
+  18% { opacity: 0.26; }
+  28%, 100% { opacity: 0; }
+}
+
+@keyframes jiju-sway {
+  from { transform: rotate(-9deg); }
+  to { transform: rotate(9deg); }
+}
+
+@keyframes jiju-flap {
+  from { transform: scaleX(1) rotate(0deg); }
+  to { transform: scaleX(0.25) rotate(-6deg); }
+}
+
+@keyframes jiju-fly {
+  0% { left: -8%; top: 26%; }
+  25% { top: 16%; }
+  50% { left: 58%; top: 28%; }
+  75% { top: 18%; }
+  100% { left: 112%; top: 24%; }
+}
+
+@keyframes jiju-leaf-fall {
+  0% { opacity: 0; top: -6%; transform: rotate(0deg); }
+  10% { opacity: 1; }
+  50% { transform: translateX(-18px) rotate(180deg); }
+  90% { opacity: 0.9; }
+  100% { opacity: 0; top: 56%; transform: translateX(8px) rotate(360deg); }
+}
+
+@keyframes jiju-twinkle {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jiju-cat-eye,
+  .jiju-cat-head,
+  .jiju-cat-tongue,
+  .jiju-dust,
+  .jiju-paw,
+  .jiju-grass,
+  .jiju-butterfly,
+  .jiju-butterfly .wing,
+  .jiju-leaf,
+  .jiju-star {
+    animation: none !important;
+  }
+  .jiju-cat-tongue,
+  .jiju-leaf {
+    opacity: 0;
+  }
+}

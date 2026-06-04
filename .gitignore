@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local Claude config
+.claude/
+
+# Throwaway verification build dirs (sandbox could not delete)
+dist_verify/
+dist_check_*/
+dist_chk*/
+verify_*/

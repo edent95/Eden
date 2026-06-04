@@ -14,7 +14,10 @@ import {
   ArrowLeft,
   Clock3,
   MoonStar,
-  SunMedium
+  SunMedium,
+  Pause,
+  Play,
+  RotateCcw
 } from 'lucide-react';
 
 type Language = 'en' | 'zh';
@@ -612,6 +615,705 @@ const analogTechGalleryPhotos = [
   },
 ];
 
+type AiProjectSystem = {
+  eyebrow: Record<Language, string>;
+  title: string;
+  status: Record<Language, string>;
+  role: Record<Language, string>;
+  summary: Record<Language, string>;
+  system: Record<Language, string>;
+  href: string;
+  external?: string;
+};
+
+const aiProjectSystems: AiProjectSystem[] = [
+  {
+    eyebrow: { en: 'Main Build', zh: '主构建' },
+    title: 'Jiju',
+    status: { en: 'Building', zh: '构建中' },
+    role: { en: 'Pet-friendly discovery system', zh: '宠物友好发现系统' },
+    summary: {
+      en: 'A pet-friendly discovery platform starting in Penang. Get the place data, the “where we went” memories, and a small map you can actually trust right first — worry about expanding later.',
+      zh: '从槟城起步的宠物友好发现平台。先把地点资料、出门的记忆、还有一张靠得住的小地图做好——扩张的事以后再说。',
+    },
+    system: {
+      en: 'Discovery logic, place data, pet-parent memory loop, mobile UX, growth narrative.',
+      zh: '发现逻辑、地点资料、养宠出门记忆回路、移动端体验和增长叙事。',
+    },
+    href: 'jiju',
+    external: 'https://jiju.pet',
+  },
+  {
+    eyebrow: { en: 'Game System', zh: '游戏系统' },
+    title: 'Friday Poker Club',
+    status: { en: 'Prototype', zh: '原型中' },
+    role: { en: 'Browser table host', zh: '浏览器牌桌主机' },
+    summary: {
+      en: 'A browser Hold’em table for private games — room codes, invite links, blinds, buy-ins, a shared pot, and table voice if you want it.',
+      zh: '给熟人桌用的浏览器德州牌桌——房间口令、邀请链接、盲注、买入、共享底池，想开语音就开。',
+    },
+    system: {
+      en: 'Realtime sync, room state, clear action UI, host overhead reduction, game-flow structure.',
+      zh: '实时同步、房间状态、清楚行动 UI、降低主持人解释成本和游戏流程结构。',
+    },
+    href: 'poker',
+    external: 'https://poker.edentan.site/',
+  },
+  {
+    eyebrow: { en: 'AI Build System', zh: 'AI 构建系统' },
+    title: 'ETReportHub',
+    status: { en: 'Active build', zh: '构建中' },
+    role: { en: 'Daily report dashboard', zh: '日报数据仪表盘' },
+    summary: {
+      en: 'An iGaming aggregator dashboard that eats Transaction and Customer Excel files, tidies them into SQLite or IndexedDB, and turns a messy day of operations into KPI, member, channel, trend, and brand-comparison views.',
+      zh: '一个 iGaming aggregator 日报仪表盘：把 Transaction 和 Customer Excel 吃进去，理进 SQLite 或 IndexedDB，把乱糟糟的一天运营变成 KPI、会员、渠道、趋势和品牌对比的视图。',
+    },
+    system: {
+      en: 'Excel ingest, data normalization, SQLite layer, dashboard cache, multi-brand reports, CRM export, Docker/backend mode.',
+      zh: 'Excel 导入、数据标准化、SQLite 层、dashboard cache、多品牌报表、CRM export、Docker/backend 模式。',
+    },
+    href: 'etreporthub',
+  },
+  {
+    eyebrow: { en: 'AI Build System', zh: 'AI 构建系统' },
+    title: 'CRM Intelligence System',
+    status: { en: 'In design', zh: '设计中' },
+    role: { en: 'Retention and member workflow layer', zh: '留存与会员工作流层' },
+    summary: {
+      en: 'A CRM layer going on top of the reporting data: member segments, retention signals, follow-up queues, channel context, and AI helping the operator figure out the next move.',
+      zh: '正在往报表数据上面搭的 CRM 层：会员分群、留存信号、跟进队列、渠道语境，还有 AI 帮运营想下一步该干嘛。',
+    },
+    system: {
+      en: 'Member segmentation, risk signals, retention tasks, CRM export logic, operator next-action workflow.',
+      zh: '会员分群、风险信号、留存任务、CRM 导出逻辑和运营下一步行动工作流。',
+    },
+    href: 'crm',
+  },
+];
+
+const aiProjectSharedLogic = [
+  {
+    title: { en: 'Messy input', zh: '一团乱的输入' },
+    copy: {
+      en: 'Raw behavior, Excel dumps, place data, game rooms, user journeys, and whatever ops scribbled down.',
+      zh: '原始行为、Excel 导出、地点资料、游戏房间、用户路径，还有运营随手记的那些。',
+    },
+  },
+  {
+    title: { en: 'System layer', zh: '系统层' },
+    copy: {
+      en: 'Rules, data models, UI states, workflows, cache boundaries — the repeatable logic sitting underneath.',
+      zh: '规则、数据模型、UI 状态、工作流、缓存边界——底下那套能反复用的逻辑。',
+    },
+  },
+  {
+    title: { en: 'Useful output', zh: '能用的输出' },
+    copy: {
+      en: 'Dashboards, discovery maps, action queues, build notes, and decisions you can actually go back and review.',
+      zh: '仪表盘、发现地图、行动队列、构建记录，还有真的能回头复盘的判断。',
+    },
+  },
+] as const;
+
+const etReportHubValueProps = [
+  {
+    title: { en: 'Excel chaos becomes one source of truth', zh: 'Excel 混乱变成单一事实层' },
+    copy: {
+      en: 'Transaction and Customer exports are ingested, normalized, and kept under clear import rules instead of being copied across fragile spreadsheets.',
+      zh: 'Transaction 与 Customer 导出会被导入、标准化，并按清楚规则保存，不再靠脆弱的 Excel 来回复制。',
+    },
+  },
+  {
+    title: { en: 'Operators see what changed', zh: '运营看得出发生了什么' },
+    copy: {
+      en: 'Performance, members, channels, trends, and brand comparison views turn daily reporting into decisions instead of manual checking.',
+      zh: 'Performance、Members、Channels、Trends 和品牌对比，把日常报表从手动检查变成可判断的视图。',
+    },
+  },
+  {
+    title: { en: 'CRM becomes the next action layer', zh: 'CRM 变成下一步行动层' },
+    copy: {
+      en: 'Member segments, risk signals, retention buckets, and CRM export prepare the system for follow-up workflows.',
+      zh: '会员分群、风险信号、留存区间和 CRM export，让系统能继续接上后续跟进工作流。',
+    },
+  },
+] as const;
+
+const etReportHubModules = [
+  {
+    title: 'Data Ingest',
+    copy: {
+      en: 'Upload Transaction and Customer Excel files, detect import type, validate quirks, and preserve customer export history without double-counting lifetime totals.',
+      zh: '上传 Transaction 与 Customer Excel，识别导入类型，处理资料怪异点，并保留 Customer export 历史，避免 lifetime totals 被重复相加。',
+    },
+  },
+  {
+    title: 'Performance',
+    copy: {
+      en: 'Daily, weekly, and overall performance views with deposit, withdraw, net deposit, transaction count, and comparison mode.',
+      zh: '每日、每周、整体业绩视图，包含 deposit、withdraw、net deposit、交易次数和对比模式。',
+    },
+  },
+  {
+    title: 'Members',
+    copy: {
+      en: 'Member lifetime KPIs, recency buckets, retention thresholds, risk rules, segment analysis, and CRM-ready export.',
+      zh: '会员 lifetime KPI、活跃区间、留存阈值、风险规则、分群分析和可用于 CRM 的导出。',
+    },
+  },
+  {
+    title: 'Channels',
+    copy: {
+      en: 'Referrer-to-channel mapping, unknown referrer handling, channel comparison, and trend charts for acquisition quality.',
+      zh: 'Referrer 到渠道映射、未知 referrer 处理、渠道对比和 acquisition quality 趋势图。',
+    },
+  },
+  {
+    title: 'Trends',
+    copy: {
+      en: 'Trend buckets from transaction data and customer snapshots, including active members, net movement, and compact date labels.',
+      zh: '基于交易数据和 customer snapshots 的趋势区间，包含活跃会员、净变化和更清楚的日期标签。',
+    },
+  },
+  {
+    title: 'System Guide',
+    copy: {
+      en: 'A built-in operating manual explaining data flow, formulas, conversion logic, dashboard rules, and brand/product guide.',
+      zh: '内置系统说明，解释数据流、公式、转换逻辑、dashboard 规则和品牌 / 产品规范。',
+    },
+  },
+] as const;
+
+const etReportHubSkillProof = [
+  {
+    title: { en: 'Data architecture', zh: '数据架构' },
+    copy: {
+      en: 'The SQLite tables, import rules, brand scoping, and snapshot logic are all built around how messy the real exports actually are — not around some clean demo file.',
+      zh: 'SQLite 表、导入规则、品牌隔离、snapshot 逻辑，全是照着真实导出有多乱来设计的——不是对着一份干净的 demo 文件做的。',
+    },
+  },
+  {
+    title: { en: 'Product thinking', zh: '产品思考' },
+    copy: {
+      en: 'Daily / Weekly / Overall were three pages quietly doing the same job, so I folded them into one Performance page — and kept the old links alive so nobody got lost.',
+      zh: 'Daily / Weekly / Overall 三个页面其实在干同一件事，干脆收成一个 Performance 页——旧导航还留着能用，免得有人找不到路。',
+    },
+  },
+  {
+    title: { en: 'UX for operators', zh: '运营 UX' },
+    copy: {
+      en: 'Then all the stuff operators actually ask for: diagnostics, date filters, chart switches, sortable tables, and feedback that doesn’t flash at people who hate motion.',
+      zh: '然后是运营真正会要的那些东西：diagnostics、日期筛选、图表切换、可排序表格，还有照顾怕闪的人的 reduced-motion 反馈。',
+    },
+  },
+  {
+    title: { en: 'Performance engineering', zh: '性能工程' },
+    copy: {
+      en: 'When it got heavy I added a derived-data cache, made it refresh only the block that changed, and built a Docker/backend mode for the bigger workflows. Nothing grinds.',
+      zh: '数据一多就加了 derived-data cache、只刷新有变动的那一块，还有给大工作流用的 Docker/backend mode。不卡。',
+    },
+  },
+] as const;
+
+const etReportHubAudience = [
+  {
+    title: { en: 'Operators', zh: 'Operators' },
+    copy: { en: 'Need daily KPI clarity without rebuilding the same Excel report manually.', zh: '需要每天看清 KPI，但不想一直手动重做同一份 Excel。' },
+  },
+  {
+    title: { en: 'Aggregators', zh: 'Aggregators' },
+    copy: { en: 'Need multi-brand views, channel quality, member analysis, and exportable operating data.', zh: '需要多品牌视图、渠道质量、会员分析和可导出的运营数据。' },
+  },
+  {
+    title: { en: 'Growth teams', zh: 'Growth teams' },
+    copy: { en: 'Need to connect reporting, retention, CRM segmentation, and follow-up actions.', zh: '需要把报表、留存、CRM 分群和后续跟进行动接起来。' },
+  },
+] as const;
+
+const etReportHubFaq = [
+  {
+    q: { en: 'Is this only a dashboard?', zh: '这只是 dashboard 吗？' },
+    a: {
+      en: 'No. The dashboard is the visible layer. The product also includes import rules, normalized storage, cache strategy, diagnostics, export logic, and a system guide.',
+      zh: '不是。Dashboard 只是可见层。产品还包含导入规则、标准化存储、缓存策略、诊断、导出逻辑和系统说明。',
+    },
+  },
+  {
+    q: { en: 'Can it work without a heavy backend?', zh: '没有重 backend 可以跑吗？' },
+    a: {
+      en: 'Yes. The current system supports browser-side IndexedDB/sql.js and an optional local Python backend for Docker uploads, cache refresh, and wide Excel export.',
+      zh: '可以。当前系统支持浏览器端 IndexedDB/sql.js，也支持可选本地 Python backend，用于 Docker 上传、cache refresh 和宽表 Excel 导出。',
+    },
+  },
+  {
+    q: { en: 'Where does AI fit?', zh: 'AI 放在哪里？' },
+    a: {
+      en: 'AI fits best after the data layer is stable: report explanation, anomaly review, CRM next-action suggestions, and operator workflow assistance.',
+      zh: 'AI 最适合接在稳定数据层之后：报表解释、异常复盘、CRM 下一步建议和运营工作流辅助。',
+    },
+  },
+] as const;
+
+const etReportHubBuyerPain = [
+  {
+    title: { en: 'Daily reporting takes too many hands', zh: '日报太依赖人工' },
+    copy: {
+      en: 'Every day someone downloads files, checks formulas, compares brands, and explains the same numbers again. The work repeats, but the system does not improve.',
+      zh: '每天都有人下载文件、检查公式、对比品牌、解释同样的数字。工作一直重复，但系统没有变聪明。',
+    },
+  },
+  {
+    title: { en: 'Excel becomes the hidden risk', zh: 'Excel 变成隐藏风险' },
+    copy: {
+      en: 'One wrong paste, one missing filter, one duplicated customer total, and the team may make decisions from a broken report.',
+      zh: '一次贴错、一个筛选漏掉、一个会员总数重复，团队就可能根据错误报表做判断。',
+    },
+  },
+  {
+    title: { en: 'CRM cannot move without clean data', zh: 'CRM 没有干净数据就跑不动' },
+    copy: {
+      en: 'Retention, segmentation, risk review, and follow-up actions need a trusted data layer before AI or CRM workflows can help.',
+      zh: '留存、分群、风险复盘和跟进行动，都需要可信的数据层。没有这层，AI 或 CRM 只会放大混乱。',
+    },
+  },
+] as const;
+
+const etReportHubSalesOutcomes = [
+  {
+    label: { en: 'Decision speed', zh: '判断更快' },
+    metric: { en: 'Same-day clarity', zh: '当天看清楚' },
+    copy: {
+      en: 'Operators can see performance, members, channels, trends, and brand comparison without rebuilding the report from scratch.',
+      zh: '运营不需要从零重做报表，就能看 Performance、Members、Channels、Trends 和品牌对比。',
+    },
+  },
+  {
+    label: { en: 'Data trust', zh: '数据更可信' },
+    metric: { en: 'One operating layer', zh: '一层事实来源' },
+    copy: {
+      en: 'Transaction and Customer files are imported under rules, normalized, reviewed, and kept ready for export.',
+      zh: 'Transaction 与 Customer 文件按规则导入、标准化、复盘，并保持可导出状态。',
+    },
+  },
+  {
+    label: { en: 'CRM readiness', zh: '可接 CRM' },
+    metric: { en: 'Next action ready', zh: '下一步可行动' },
+    copy: {
+      en: 'The system prepares member segments, retention signals, risk buckets, and exports for follow-up workflows.',
+      zh: '系统准备会员分群、留存信号、风险区间和导出资料，让后续跟进有基础。',
+    },
+  },
+] as const;
+
+const etReportHubSalesDeliverables = [
+  {
+    title: { en: 'Data import system', zh: '数据导入系统' },
+    copy: {
+      en: 'Transaction and Customer Excel ingest with validation rules, import history, brand scope, and cleaner storage.',
+      zh: 'Transaction 与 Customer Excel 导入，包含验证规则、导入历史、品牌范围和更干净的储存层。',
+    },
+  },
+  {
+    title: { en: 'Operator dashboard', zh: '运营仪表盘' },
+    copy: {
+      en: 'Performance, Members, Channels, Trends, Compare Brands, diagnostics, and export-friendly report views.',
+      zh: 'Performance、Members、Channels、Trends、Compare Brands、诊断和可导出的报表视图。',
+    },
+  },
+  {
+    title: { en: 'CRM-ready export layer', zh: 'CRM-ready 导出层' },
+    copy: {
+      en: 'Member segments, activity buckets, retention signals, and export structures that can feed later CRM workflows.',
+      zh: '会员分群、活跃区间、留存信号和可接后续 CRM 工作流的导出结构。',
+    },
+  },
+  {
+    title: { en: 'System guide and handover', zh: '系统说明与交接' },
+    copy: {
+      en: 'A practical guide explaining data flow, formulas, conversion rules, dashboard logic, and operating limits.',
+      zh: '实用说明文件，解释数据流、公式、转换规则、dashboard 逻辑和系统边界。',
+    },
+  },
+] as const;
+
+const etReportHubSalesProofStats = [
+  {
+    value: { en: '2-4 hrs/day', zh: '2-4 小时/天' },
+    label: {
+      en: 'Typical manual Excel reporting time that can be compressed.',
+      zh: '常见 Excel 整理时间可被压缩。',
+    },
+  },
+  {
+    value: { en: '1 upload', zh: '1 次上传' },
+    label: {
+      en: 'Refresh daily, weekly, member, channel, and trend reports.',
+      zh: '自动更新日报、周报、会员、渠道与趋势。',
+    },
+  },
+  {
+    value: { en: 'Private deployment', zh: '私有部署' },
+    label: {
+      en: 'Customer data can stay in the customer environment.',
+      zh: '客户数据可保存在自己的系统环境。',
+    },
+  },
+] as const;
+
+const etReportHubSavingsRows = [
+  {
+    problem: { en: 'Manual daily handling of Transaction and Customer Excel', zh: '每天手工整理 Transaction 和 Customer Excel' },
+    solution: { en: 'Automatic normalization, deduplication, and daily/weekly/overall reporting', zh: '上传后自动标准化、去重、生成日报/周报/总报表' },
+    improvement: { en: 'Save 2-4 hours/day and reduce human errors', zh: '省 2-4 小时/天，减少人为错算' },
+  },
+  {
+    problem: { en: 'No clear list of registered members who have not deposited', zh: '不知道哪些会员注册了但还没存款' },
+    solution: { en: 'Non-conversion member filter + CRM export', zh: 'Non-conversion member filter + CRM export' },
+    improvement: { en: 'Give CRM a clear daily follow-up list', zh: '让 CRM 每天有明确跟进名单' },
+  },
+  {
+    problem: { en: 'Bonus is given, but over-giving is hard to spot', zh: 'Bonus 给出去，但不知道有没有过量' },
+    solution: { en: 'Track Bonus Total, Bonus Ratio, Margin, Win Loss, and withdrawal risk', zh: '看 Bonus Total、Bonus Ratio、Margin、Win Loss、提款风险' },
+    improvement: { en: 'Reduce promotion budget leakage', zh: '减少促销预算浪费' },
+  },
+  {
+    problem: { en: 'Channels are judged only by registration count', zh: '渠道只看注册数，不知道质量' },
+    solution: { en: 'Channel Analysis shows deposit, withdrawal, net, bonus, and conversion', zh: 'Channel Analysis 看存款、提款、净存款、Bonus、转化率' },
+    improvement: { en: 'Move budget toward higher-quality channels', zh: '把预算集中到有质量的渠道' },
+  },
+  {
+    problem: { en: 'Management asks for numbers and the team re-pulls Excel', zh: '老板临时问数据，团队要重新拉 Excel' },
+    solution: { en: 'Performance, Member, Trend, and Brand Comparison are in one dashboard', zh: 'Performance、Member、Trend、Brand Comparison 都在 Dashboard' },
+    improvement: { en: 'Faster review and less report waiting time', zh: '管理层复盘更快，少等报表' },
+  },
+  {
+    problem: { en: 'Browser cleanup or device changes can break reporting history', zh: '清浏览器或换电脑怕数据不见' },
+    solution: { en: 'Server daily_report.db, backup download, restore, and audit log', zh: '服务器 daily_report.db、备份下载、恢复、audit log' },
+    improvement: { en: 'Lower data loss and operation risk', zh: '降低数据丢失和操作风险' },
+  },
+] as const;
+
+const etReportHubIncludedRows = [
+  {
+    module: 'Data Ingest',
+    included: { en: 'Transaction Excel, Customer Excel, brand selection, and Customer snapshot date.', zh: 'Transaction Excel、Customer Excel、品牌选择、Customer 快照日期。' },
+    angle: { en: 'You just upload the file and you’re done. No more rebuilding a whole Excel from scratch every morning.', zh: '每天就上传一下，完事。不用再从头拼一整份 Excel。' },
+  },
+  {
+    module: 'Normalize & SQLite',
+    included: { en: 'Deduplication, field normalization, Bank Detail JSON conversion, daily_report.db.', zh: '去重、标准化字段、Bank Detail JSON 转换、daily_report.db。' },
+    angle: { en: 'All those messy Excel files turn into one database you can actually search whenever.', zh: '一堆乱七八糟的 Excel，变成一个想查就查的数据库。' },
+  },
+  {
+    module: 'Performance Report',
+    included: { en: 'Daily, Weekly, Overall, deposit, withdrawal, net deposit, and transaction details.', zh: 'Daily、Weekly、Overall、存款、提款、净存款、交易明细。' },
+    angle: { en: 'Boss asks for the numbers? They’re already there. Nobody scrambles to pull a spreadsheet.', zh: '老板临时问业绩，打开就有，不用让人手忙脚乱重拉数据。' },
+  },
+  {
+    module: 'Member Analysis',
+    included: { en: 'Lifetime deposit, withdrawal, bonus, LTV, last login, last deposit, and risk level.', zh: '累计存款、提款、Bonus、LTV、最近登录、最近存款、风险等级。' },
+    angle: { en: 'You can see where every member stands — who’s worth chasing and who to leave for now.', zh: '每个会员什么状态一目了然，谁该跟、谁先放着，清清楚楚。' },
+  },
+  {
+    module: 'CRM Export',
+    included: { en: 'Non-conversion members, filters, search, User ID, Name, and Phone export.', zh: 'Non-conversion member、筛选、搜索、User ID、Name、Phone 导出。' },
+    angle: { en: 'Your CRM team gets a ready-made list every day instead of guessing who to call.', zh: 'CRM 每天有现成名单可以打，不用靠感觉乱找人。' },
+  },
+  {
+    module: 'Bonus Control',
+    included: { en: 'Bonus Total, Bonus Ratio, Margin, Win Loss, and withdrawal risk.', zh: 'Bonus Total、Bonus Ratio、Margin、Win Loss、提款风险。' },
+    angle: { en: 'See at a glance if you’re handing out too much bonus — basically whether money’s leaking.', zh: '一眼看出 bonus 是不是发太多了，钱有没有白送出去。' },
+  },
+  {
+    module: 'Channel Analysis',
+    included: { en: 'Referrer / Channel conversion, deposit, withdrawal, bonus, and net result.', zh: 'Referrer / Channel 转化、存款、提款、Bonus、净结果。' },
+    angle: { en: 'Stop judging channels by sign-up count. See which ones actually bring real money in.', zh: '别只看注册多少，看出哪个渠道是真带钱进来的。' },
+  },
+  {
+    module: 'Trend Analysis',
+    included: { en: 'Daily, weekly, monthly trends, active members, amount movement, and retention signals.', zh: '日/周/月趋势、活跃会员、金额走势、留存观察。' },
+    angle: { en: 'You see where things are heading, not just today’s one-day number.', zh: '看的是走势往哪走，不是盯着今天这一天的数字瞎激动。' },
+  },
+  {
+    module: 'Brand Comparison',
+    included: { en: 'Multi-brand comparison, metric selection, and timeline trends.', zh: '多品牌对比、指标选择、时间线趋势。' },
+    angle: { en: 'Running a few brands or sites? Line them up side by side and spot which one’s dragging.', zh: '手上有好几个品牌/站点的话，摆一起一比，就知道哪个在拖后腿。' },
+  },
+  {
+    module: 'Segment Analysis',
+    included: { en: 'Member segments, behavior buckets, deposit/login recency, and action groups.', zh: '会员分群、行为 bucket、存款 / 登录 recency 和可行动人群。' },
+    angle: { en: 'Slices your members into groups you can actually act on — ops and CRM just grab and go.', zh: '把一堆会员拆成一组组能直接动手的人群，运营和 CRM 拿了就能用。' },
+  },
+  {
+    module: 'Wide Excel Export',
+    included: { en: 'Export familiar wide-format Excel reports for teams that still need spreadsheet handoff.', zh: '导出客户熟悉的宽表格式，方便继续用 Excel 交接。' },
+    angle: { en: 'Team still loves Excel? Fine — it exports the wide format they know, minus the manual assembly.', zh: '团队还想用 Excel？照样导给你，只是不用再手工拼了。' },
+  },
+  {
+    module: 'Database Backup',
+    included: { en: 'Download/restore daily_report.db, pre-restore backup, and cache refresh.', zh: '下载 / 恢复 daily_report.db、恢复前备份和缓存刷新。' },
+    angle: { en: 'Clear your browser or switch laptops — the data’s still there, nothing vanishes overnight.', zh: '清个浏览器、换台电脑，数据照样在，不会一夜回到解放前。' },
+  },
+  {
+    module: 'User Permission',
+    included: { en: 'Users, roles, permissions, upload/export/settings limits.', zh: '用户、角色、权限、上传 / 导出 / 设置限制。' },
+    angle: { en: 'You decide who can look, edit, upload, or export. No free-for-all.', zh: '谁能看、谁能改、谁能导出，老板说了算，不怕乱。' },
+  },
+  {
+    module: 'Audit Log',
+    included: { en: 'Login, upload, restore, and user action records.', zh: '登录、上传、恢复和用户操作记录。' },
+    angle: { en: 'Something breaks? Check the log — no more going around asking “did you touch this?”', zh: '出事了能翻记录查，不用一个个问「是不是你动的」。' },
+  },
+  {
+    module: 'Private Deployment',
+    included: { en: 'Customer server, Docker, domain, and license options.', zh: '客户自己的 server / Docker / domain / license 选项。' },
+    angle: { en: 'Your data sits on your own machine — not parked in some public SaaS.', zh: '数据放你自己机器上，不用交给什么公开 SaaS 保管。' },
+  },
+  {
+    module: 'Training & Handover',
+    included: { en: 'English/Chinese guides, FAQ, and handover checklist.', zh: '中英文操作文档、FAQ 和 handover checklist。' },
+    angle: { en: 'We don’t just hand it over and disappear — your team actually learns to run it daily.', zh: '交付完不是丢给你自己摸，是带到团队真的会每天用为止。' },
+  },
+] as const;
+
+const etReportHubRoiCards = [
+  { label: { en: 'Monthly labor cost saved', zh: '每月节省人工成本' }, value: 'RM1,625' },
+  { label: { en: 'Monthly estimated impact', zh: '每月可改善金额' }, value: 'RM2,725' },
+  { label: { en: 'After RM960/month fee', zh: '扣除 RM960/月后' }, value: 'RM1,765' },
+  { label: { en: '3-month net impact estimate', zh: '3 个月净影响估算' }, value: 'RM5,295' },
+  { label: { en: 'RM19,888 buyout estimated payback', zh: '买断 RM19,888 估算回本时间' }, value: { en: 'About 7.3 months', zh: '约 7.3 个月' } },
+] as const;
+
+const etReportHubPricing = [
+  {
+    name: { en: 'Monthly System Access', zh: '月费系统使用' },
+    price: 'RM960',
+    suffix: { en: '/ month', zh: ' / 月' },
+    bestFor: {
+      en: 'Minimum 3 months. First term RM2,880. Best for teams that want to validate impact with real data before long-term commitment.',
+      zh: '最少 3 个月，首期 RM2,880。适合想先用真实数据验证效果，再决定长期方案的团队。',
+    },
+    points: {
+      en: ['Private deployment, basic training, and daily reporting workflow', 'Can cover ongoing maintenance, updates, and support', 'Suitable for multi-brand or multi-channel operating teams'],
+      zh: ['包含私有部署、基础培训和日常报表流程', '可作为持续维护、更新和支持费用', '适合多品牌/多渠道持续运营团队'],
+    },
+  },
+  {
+    name: { en: 'Buyout Deployment', zh: '买断部署' },
+    price: 'RM19,888',
+    suffix: { en: ' one-time', zh: ' 一次性' },
+    bestFor: {
+      en: 'Best for BO teams confirmed to use it every day. Equal to about 20.7 months of monthly fee.',
+      zh: '适合已经确认每天都会使用的 BO 团队。大约等于 20.7 个月月费。',
+    },
+    points: {
+      en: ['One-time system usage buyout for stable long-term customers', 'Average cost drops the longer the customer uses it', 'Optional maintenance / upgrade / support retainer can be added'],
+      zh: ['一次买断系统使用权，适合长期稳定客户', '客户长期使用，平均成本逐月下降', '可另配维护 / 升级 / support retainer'],
+    },
+  },
+] as const;
+
+const etReportHubSalesFaq = [
+  {
+    q: { en: 'Why buy this instead of keeping Excel?', zh: '为什么不继续用 Excel？' },
+    a: {
+      en: 'Excel is fine for checking one file. It becomes expensive when the team needs repeatable imports, member logic, brand comparison, CRM export, and daily decision history.',
+      zh: 'Excel 适合看单个文件。但当团队需要重复导入、会员逻辑、品牌对比、CRM 导出和每日判断记录时，它的隐藏成本会越来越高。',
+    },
+  },
+  {
+    q: { en: 'Is RM960/month only for software access?', zh: 'RM960/月只是软件使用费吗？' },
+    a: {
+      en: 'It is positioned as system access plus practical workflow refinement. Exact support boundaries can be confirmed based on data volume, hosting, and team process.',
+      zh: '它的定位是系统使用加上实际流程微调。具体 support 边界可以根据数据量、hosting 和团队流程再确认。',
+    },
+  },
+  {
+    q: { en: 'Who should not buy it yet?', zh: '什么团队暂时不适合买？' },
+    a: {
+      en: 'If reporting is still casual, data exports are inconsistent, or the team does not review daily numbers, start by fixing the reporting habit first.',
+      zh: '如果报表还很随意、导出格式不稳定，或团队本身不看每日数字，应该先整理报表习惯，再上系统。',
+    },
+  },
+] as const;
+
+const pokerValueProps = [
+  {
+    title: { en: 'It lives in a link', zh: '一条链接就是一张桌' },
+    copy: {
+      en: 'Open a table in the browser, drop the link in the group chat, and we’re playing tonight. No app to install, no account to create, none of that.',
+      zh: '浏览器开桌，把链接丢进群里，今晚就开打。不用下载、不用注册，没有那一堆「先创建账号」的步骤。',
+    },
+  },
+  {
+    title: { en: 'Nobody online? The bots got you', zh: '没人在线？Bot 陪你' },
+    copy: {
+      en: 'A solo table starts full — three bots already sitting there, ready to lose to you. Or not. Great for killing time, or “practicing.”',
+      zh: '单人桌直接满座，三个 Bot 已经坐好，等着输给你。或者不输。打发时间，或者假装自己在「练牌」。',
+    },
+  },
+  {
+    title: { en: 'Mic on, it’s a real table', zh: '开麦，它就是张真桌' },
+    copy: {
+      en: 'Turn on table voice and it stops being a quiet web page. Same trash talk as sitting around the actual table — just without the drive home.',
+      zh: '打开同桌语音，它就不再是个安静的网页。还是那些垃圾话，跟真的围着桌子坐一样——只是不用开车回家。',
+    },
+  },
+] as const;
+
+const pokerModules = [
+  {
+    title: 'Real Hold’em',
+    copy: {
+      en: 'The whole hand: blinds, flop-turn-river, the pot, and a showdown that lights up your best five. It’s the actual game, not a toy.',
+      zh: '完整的一手：盲注、翻牌转牌河牌、底池，摊牌时帮你把最大的五张点亮。是真的牌，不是玩具。',
+    },
+  },
+  {
+    title: 'Bots on tap',
+    copy: {
+      en: 'Solo room, three bots already seated (Alpha, Dealer, Shark). One tap and you’re in a hand. No waiting around.',
+      zh: '单人房，三个 Bot 已经坐好（Alpha、Dealer、Shark）。一点就进局，不用干等。',
+    },
+  },
+  {
+    title: 'Open a public table',
+    copy: {
+      en: 'Spin up a room, share the link, and the host taps Start once the crew shows up. Then it’s just us.',
+      zh: '开个公开房，把链接发出去，人到齐了房主点「开始」。然后就是我们自己人。',
+    },
+  },
+  {
+    title: 'The 8/9 side game',
+    copy: {
+      en: 'A little side bet riding next to the main hand — two extra cards chasing 8 or 9. Pure chaos, pure fun.',
+      zh: '正局旁边挂着的小边注——多发两张牌，去凑 8 或 9。纯混乱，纯好玩。',
+    },
+  },
+] as const;
+
+const pokerAvatarGroupIntro = {
+  en: 'This is not just a poker table. It is a strange crew of gamblers, leaders, protectors, kings, drifters, and walking system bugs. Some bring calculation. Some bring chaos. Some bring loyalty. Some bring luck. Some bring trouble for no reason. Alone, they are just players. Together, they become a story.',
+  zh: '这不只是一张 poker table。这是一群很奇怪的人组成的江湖局。有赌徒，有老大，有守护者，有王者，有浪人，也有会走路的系统漏洞。有人带来计算，有人带来混乱，有人带来义气，有人带来好运，也有人什么都没做就带来麻烦。单独看，他们只是玩家。坐在一起，他们就变成一场故事。',
+} as const;
+
+const pokerAvatarGuide = [
+  {
+    id: 'jf',
+    code: { en: 'The Covered King', zh: '被罩住的王' },
+    phrase: { en: 'Backed by luck, protected by fate', zh: '输有靠山，命有后路' },
+    tags: { en: 'Protected Gambler / Risk Taker / Lucky Survivor / Confidence Player', zh: '受保护的赌徒 / 风险玩家 / 幸运生还者 / 自信型玩家' },
+    intro: {
+      en: 'He is not always the most dangerous player at the table, but he plays with a strange kind of confidence. Even when the game turns against him, he never looks completely defeated. There is always a feeling that someone, somewhere, somehow, will help him recover. He is the type who dares to move forward because deep inside, he believes he will not fall alone.',
+      zh: '他不一定是牌桌上最危险的人，但他身上有一种很奇怪的安全感。就算局势对他不利，他也不会真的像完全被打垮。你总会感觉，他背后好像还有一条路，还有一个机会，还有某种力量会把他拉回来。他是那种敢往前冲的人，因为他心里相信，自己不会真的一个人倒下。',
+    },
+  },
+  {
+    id: 'ph',
+    code: { en: 'Cover Bee', zh: '补锅蜂后' },
+    phrase: { en: 'Covers the loss, controls the game', zh: '补得了局，控得住场' },
+    tags: { en: 'Problem Solver / Silent Controller / Strategic Mind / Support Queen', zh: '问题解决者 / 静默控场者 / 策略型头脑 / 支援女王' },
+    intro: {
+      en: 'Cover Bee is not just a nickname. It is a whole personality. She is sharp, calm, and naturally good at handling problems. When others panic, she calculates. When others fall into chaos, she cleans up the mess. She does not need to be the loudest person in the room. Her power comes from control, timing, and knowing exactly when to step in.',
+      zh: 'Cover Bee 不只是一个外号，而是一种人格。她聪明、冷静，很会处理问题。别人慌的时候，她在算。别人乱的时候，她在收拾局面。她不需要成为房间里最大声的人，因为她的力量不在声音，而在控制力、时机感，以及知道什么时候该出手。',
+    },
+  },
+  {
+    id: 'zm',
+    code: { en: 'Blackbeard', zh: '黑胡子团长' },
+    phrase: { en: 'Loyal heart, iron table presence', zh: '义字当头，镇场如山' },
+    tags: { en: 'Group Leader / Loyal Captain / Table Authority / Justice Energy', zh: '团队领袖 / 义气船长 / 牌桌权威 / 正气能量' },
+    intro: {
+      en: 'Blackbeard is the kind of person who naturally becomes the center of the group. He does not need to force respect. His presence already carries weight. He has loyalty, justice, and the kind of old-school energy that makes people feel the table is under control. When he is around, the game feels less like a random poker night and more like a crew gathered under one captain.',
+      zh: 'Blackbeard 是那种很自然会变成团体中心的人。他不需要刻意让人尊重他，因为他的存在本身就有重量。他讲义气，也讲正气，身上有一种老派江湖的气场。只要他在，整个牌桌就不会太乱。那一刻，这不太像普通的 poker night，更像一群人聚在一个船长底下，准备开一场江湖局。',
+    },
+  },
+  {
+    id: 'yt',
+    code: { en: 'The Silent Shield', zh: '静默之盾' },
+    phrase: { en: 'Quiet strength, holding everything together', zh: '不争其名，撑起全局' },
+    tags: { en: 'Quiet Support / Family Core / Steady Heart / Hidden Strength', zh: '安静支援 / 家庭核心 / 稳定之心 / 隐藏力量' },
+    intro: {
+      en: 'The Silent Shield is not the type who fights for attention. But behind many stable things, there is usually someone like her. Calm, kind, responsible, and quietly strong. She does not need to stand in front to prove her value. Her strength is in holding things together when no one else notices the pressure.',
+      zh: 'The Silent Shield 不是那种会抢存在感的人。但很多稳定的东西背后，通常都会有一个像她这样的人。冷静、善良、有责任感，而且是安静地强。她不需要站在最前面证明自己的价值，因为她的力量在于，当别人没有注意到压力的时候，她已经默默把很多东西撑住了。',
+    },
+  },
+  {
+    id: 'ben',
+    code: { en: 'The Gambling King', zh: '赌博之王' },
+    phrase: { en: 'Born to bet, built to rise', zh: '赌性入骨，财气冲天' },
+    tags: { en: 'High Roller / Number Hunter / Risk Lover / Chaos Maker', zh: '高额玩家 / 数字猎人 / 风险爱好者 / 混乱制造者' },
+    intro: {
+      en: 'The Gambling King lives like every chance has a hidden number behind it. Cards, numbers, risk, timing, opportunity. If there is a game, he can smell it. If there is a possibility to multiply, he will look at it twice. He is not a safe player. He brings heat, risk, and sudden madness to the table. At his peak, he had the kind of cash power that made people remember the story.',
+      zh: 'The Gambling King 活得像每一个机会背后都有一个隐藏数字。牌、号码、风险、时机、机会，只要有一点概率味道，他就会闻到。只要有翻倍的可能，他就会多看两眼。他不是安全型玩家，他带来的是热度、风险和突然失控的疯狂。他巅峰的时候，有那种让人记得住故事的现金实力。',
+    },
+  },
+  {
+    id: 'pat',
+    code: { en: 'The Reluctant Prince', zh: '不想继承的太子' },
+    phrase: { en: 'Born with backup, choosing his own path', zh: '身有退路，心走己路' },
+    tags: { en: 'Humble Prince / Self-Made Spirit / Low-Key Wealth / Gentle Player', zh: '低调太子 / 自立精神 / 隐形富贵 / 温和玩家' },
+    intro: {
+      en: 'The Reluctant Prince has the background, but not the attitude. He could have lived like someone who was born with a safety net, but he does not carry himself like that. He is kind, shy, and surprisingly humble. There is something funny about him: if he does not work hard, he might still have something to inherit. But instead of acting like a spoiled prince, he moves more like someone trying to prove he can stand on his own.',
+      zh: 'The Reluctant Prince 有背景，但没有那种背景人的架子。他明明可以活得像一个天生有安全网的人，但他偏偏不是那种姿态。他善良、害羞，而且意外地谦虚。他最有趣的地方是，如果他不努力，可能真的要回去继承点什么。但他没有演成被宠坏的太子爷，反而更像一个想证明自己可以靠自己站起来的人。',
+    },
+  },
+  {
+    id: 'jq',
+    code: { en: 'The Probability Breaker', zh: '小概率破坏者' },
+    phrase: { en: 'Defies the odds, protects what matters', zh: '破开概率，护住所爱' },
+    tags: { en: 'System Bug / Rare Event Magnet / Loyal Protector / Unpredictable Luck', zh: '系统漏洞 / 小概率磁铁 / 忠诚守护者 / 不可预测运气' },
+    intro: {
+      en: 'The Probability Breaker feels like a walking system bug. Things that rarely happen seem to happen around him. Strange timing, weird outcomes, unlikely situations. Somehow, probability bends when he enters the story. But behind the comedy of strange luck, there is a loyal side too. He is protective, dependable, and the kind of person who will stand firmly for the people he cares about.',
+      zh: 'The Probability Breaker 像一个会走路的系统漏洞。很少发生的事情，好像总会在他附近发生。奇怪的时间点、离谱的结果、小概率的状况，只要他进入故事，概率好像就会开始弯掉。但在这些奇怪运气的喜剧感背后，他也有很忠诚的一面。他保护欲强，可靠，而且会为了自己在乎的人站稳。',
+    },
+  },
+  {
+    id: 'teik',
+    code: { en: 'The Poker Professor', zh: '扑克教授' },
+    phrase: { en: 'Long-term king, tested by downfall', zh: '长胜为王，败后见真' },
+    tags: { en: 'Poker Master / Calm Thinker / Long-Term Winner / Fallen King', zh: '扑克高手 / 冷静思考者 / 长期赢家 / 低谷王者' },
+    intro: {
+      en: 'The Poker Professor is not built on noise. He is calm, steady, and hard to read. His strength is not luck, but patience, calculation, and long-term control. At his peak, he had a legendary record of not losing for years. But even kings meet their low points. And that is what makes his story better. Because the real question is not whether he once ruled the table. The real question is whether he can rise again.',
+      zh: 'The Poker Professor 不是靠声音建立存在感的人。他冷静、沉稳，很难被看穿。他的强项不是运气，而是耐性、计算和长期控制。巅峰时期，他有过好几年没输钱的传奇记录。但再强的王，也会遇到低谷。而这反而让他的故事更好看。真正的问题不是他曾经有没有统治过牌桌，而是他跌下来之后，还能不能重新站起来。',
+    },
+  },
+  {
+    id: 'ed',
+    code: { en: 'The Shameless Drifter', zh: '不要脸浪人' },
+    phrase: { en: 'No job, no shame, full freedom', zh: '无业有道，骗酒成仙' },
+    tags: { en: 'Free Spirit / Shameless Genius / Drink Hustler / Table Clown', zh: '自由灵魂 / 不要脸天才 / 骗酒高手 / 牌桌小丑' },
+    intro: {
+      en: 'The Shameless Drifter does not live by normal rules. While others chase money, status, and structure, he somehow turns freedom into a lifestyle. He has no serious title, no heavy image, and almost no shame. But that is exactly his power. He can turn a table into a stage, a drink into an opportunity, and a joke into survival. He may not look like a winner on paper. But somehow, people still envy the way he lives.',
+      zh: 'The Shameless Drifter 不按普通规则生活。别人追钱、身份和稳定结构，他却 somehow 把自由活成了一种生活方式。他没有很正式的 title，没有沉重的人设，也几乎没有什么脸皮。但这正是他的力量。他可以把一张桌子变成舞台，把一杯酒变成机会，把一个笑话变成生存方式。他在纸面上看起来可能不像赢家，但偏偏有人会羡慕他那种活法。',
+    },
+  },
+] as const;
+
+const pokerStoryIntro = {
+  en: 'Not a scoreboard. Just the nights worth remembering — a wedding, a brutal river, and a $5 side-pot that ended like a movie.',
+  zh: '不是战绩榜，只是几个值得记住的夜晚——一场婚礼、一条狠 river，还有一局 5 块起手、像电影一样收尾的散钱平分。',
+} as const;
+
+const pokerStories = [
+  {
+    date: '2024-05-26',
+    title: { en: 'Cap married Shield', zh: '团长娶了阿盾' },
+    body: {
+      en: 'Before any of this was a poker night, it was a wedding. Cap married Shield — the loudest loyalty and the steadiest calm, same name on the same day. Ever since, the crew has had a married couple at its center, and every game is really just an excuse to get the same people back to the same table.',
+      zh: '在这群人变成牌局之前，先有了一场婚礼。团长娶了阿盾——最响的义气配最稳的安静，同一天签下同一个名字。从那以后，桌子正中央就坐着一对夫妻；说到底，后来每一场牌，都只是把同一群人重新喊回同一张桌的理由。',
+    },
+  },
+  {
+    date: '2026-05-28',
+    title: { en: 'The river that turned twice', zh: 'river 上反转两次的那夜' },
+    body: {
+      en: 'All night the river belonged to Lucky — the last card kept saving him. Then the board gave him a straight, and he shoved all-in against Prince’s three Aces. For one second Lucky had won. Then the river paired the board and turned those Aces into a full house — the hand was lifted right out of his hands. By the end, Gambler, Lucky, and Prince each sat on their own stack: three players, one quiet stand-off. Closing scene — Drifter wandered over with $5, pulled Prince into a side-pot split, and walked away $40 up.',
+      zh: '整晚的 river 都站在罩仔这边——最后一张牌总在救他。后来桌面给了他一个顺子，他直接 all-in 推向太子手里的三条 A。有那么一秒，罩仔已经赢了。然后 river 把桌面配成对子，把那三条 A 变成葫芦——到手的牌被生生抬走。到最后，赌仔、罩仔、太子各坐一摞筹码：三家鼎立，安静对峙。收尾一幕——浪子揣着 5 块钱晃过来，把太子拉进一局散钱平分，转身就多赚了 40 块。',
+    },
+  },
+] as const;
+
 const lifeVideos = [
   {
     title: { en: 'Pulau Tioman', zh: '刁曼岛' },
@@ -707,9 +1409,6 @@ const lifeOsGrowthRouteBanners = {
   wanderer: '/life-os-growth-routes/wanderer-route.png',
   architect: '/life-os-growth-routes/architect-route.png',
 } as const;
-
-const lifeOsCharacterPortrait = '/life-os-character/life-rpg-character.png';
-const lifeOsLoadoutBanner = '/life-os-character/wind-pattern-analyst-loadout-banner.png';
 
 const lifeRpgAttributes = [
   { key: 'INS', label: { en: 'Insight', zh: '洞察力' }, value: 92, note: { en: 'Reads motives, lies, defenses, and relationship structure.', zh: '看穿动机、谎言、防御机制与关系结构。' } },
@@ -1070,22 +1769,22 @@ const previousProjectsData = [
     period: { en: '2024 - 2026', zh: '2024 - 2026' },
     points: {
       en: [
-        'Partner and client coordination for API integrations, campaign tooling, onboarding, and troubleshooting.',
-        'Planned and executed campaign structures, including trial incentives and bonus mechanics.',
-        'Tracked applications and partner participation; prepared and distributed campaign assets and announcements.',
-        'Managed event logistics for SiGMA and related exhibitions, including travel, meetings, booth needs, and follow-up actions.',
-        'Maintained structured documentation for request tracking, promotion status, and test-account workflows.',
-        'Drafted group announcements, collected operational feedback, and escalated issues to relevant teams.',
-        'Worked across finance, design, and technical teams to improve campaign delivery quality and speed.',
+        'Helped partners and clients get API integrations, campaign tools, and onboarding sorted — and fixed things when they broke.',
+        'Planned and ran campaign structures, including the trial incentives and how the bonuses actually worked.',
+        'Kept track of who applied and which partners joined; put the campaign assets and announcements together and got them out.',
+        'Ran the logistics for SiGMA and other expos — travel, meetings, booth needs, and chasing all the follow-ups after.',
+        'Kept the paperwork tidy: request tracking, promo status, and the test-account workflow.',
+        'Wrote the group announcements, gathered feedback from ops, and pushed issues to whoever needed to fix them.',
+        'Worked with finance, design, and tech to ship campaigns faster and cleaner.',
       ],
       zh: [
-        '协调合作伙伴与客户，推进 API 对接、活动工具、上线培训与问题排查。',
-        '策划并落地活动结构，包含试用激励与奖金机制设计。',
-        '跟踪报名与合作方参与情况；制作并分发活动素材与公告。',
-        '统筹 SiGMA 及相关展会后勤，含行程、会议、展位需求与会后跟进。',
-        '维护请求跟踪、活动状态与测试账号流程的结构化文档。',
-        '撰写群组公告，收集运营反馈并升级至相关团队。',
-        '联动财务、设计与技术团队，提升活动交付质量与速度。',
+        '帮合作伙伴和客户把 API 对接、活动工具、上线培训搞定——出问题就去排查。',
+        '策划并落地活动结构，包含试用激励，还有奖金到底怎么玩。',
+        '盯着谁报名、哪些合作方参与；活动素材和公告做好、发出去。',
+        '统筹 SiGMA 和其他展会的后勤——行程、会议、展位需求，还有会后一个个跟进。',
+        '把文档理整齐：请求跟踪、活动状态、测试账号流程。',
+        '写群公告，收集运营反馈，有问题就升级给对应团队。',
+        '跟财务、设计、技术一起，把活动做得更快、更干净。',
       ],
     },
     relatedLinks: [
@@ -1107,17 +1806,17 @@ const previousProjectsData = [
     period: { en: '2023 - 2024', zh: '2023 - 2024' },
     points: {
       en: [
-        'Built an automated Excel brand report system for outsourced marketing analysis.',
-        'Improved promotion retention planning with clearer weekly and monthly visibility.',
-        'Built structured problem analysis workflows: discover, analyze, and solve.',
-        'Maintained operational reports including Facebook Ad ROI, Promotion & VIP report, overall monthly report, game analysis report, and abnormal list tracking.',
-        'Standardized reporting structure so decision-making could be faster and cleaner.',
+        'Built an automated Excel brand-report system for the outsourced marketing analysis.',
+        'Made promotion retention planning easier to see — week by week and month by month.',
+        'Set up a simple way to work through problems: spot it, dig into it, fix it.',
+        'Kept the operational reports running — Facebook Ad ROI, Promotion & VIP, the monthly overall, game analysis, and the abnormal-list tracking.',
+        'Standardized how reports were laid out so decisions could happen faster and cleaner.',
       ],
       zh: [
-        '搭建自动化 Excel 品牌报告体系，支撑外包营销分析。',
-        '以更清晰的周/月视图改进活动留存规划。',
-        '建立结构化问题分析流程：发现、分析、解决。',
-        '维护运营报表，含 Facebook 广告 ROI、活动与 VIP 报表、月度总览、游戏分析与异常名单跟踪。',
+        '搭了一套自动化 Excel 品牌报告系统，撑外包营销分析。',
+        '把活动留存规划做得更看得清——周和月都一目了然。',
+        '建了一套处理问题的简单流程：发现、分析、解决。',
+        '维护那些运营报表——Facebook 广告 ROI、活动与 VIP、月度总览、游戏分析、异常名单跟踪。',
         '统一报表结构，让决策更快、更干净。',
       ],
     },
@@ -1130,14 +1829,14 @@ const previousProjectsData = [
     period: { en: '2021 - 2023', zh: '2021 - 2023' },
     points: {
       en: [
-        'Led UI/UX direction and built a new website structure from scratch.',
-        'Aligned desktop and mobile experiences under one consistent brand system.',
-        'Created a practical handoff-ready prototype flow for implementation alignment.',
+        'Led the UI/UX direction and built a whole new website structure from scratch.',
+        'Got desktop and mobile to feel like the same brand, not two different sites.',
+        'Made a handoff-ready prototype so the build team and I were actually on the same page.',
       ],
       zh: [
-        '主导 UI/UX 方向，从零搭建新网站信息架构。',
-        '在统一品牌体系下对齐桌面端与移动端体验。',
-        '输出可交付的原型流程，便于研发对齐落地。',
+        '主导 UI/UX 方向，从零搭了一整个新网站结构。',
+        '把桌面端和移动端拉到同一个品牌感，而不是两个不一样的站。',
+        '做了能直接交接的原型，让研发和我真的在同一页上。',
       ],
     },
     relatedLinks: [
@@ -1155,18 +1854,18 @@ const previousProjectsData = [
     period: { en: '2018 - 2021', zh: '2018 - 2021' },
     points: {
       en: [
-        'Soccerking: content generation, brand strategy planning, and Facebook insight analysis.',
-        'Built post-type systems for traffic, highlight distribution, engagement, and shareable informative albums.',
-        'Executed Like / Share / Tag and campaign-style traffic loops to strengthen page growth.',
-        'Facebook Ads: lead collection, page-like growth, and traffic acquisition to landing pages.',
-        'Ran a gamified campaign landing concept to increase click-through and interaction depth.',
+        'Soccerking: made the content, planned the brand strategy, and read the Facebook insights.',
+        'Built post-type systems for traffic, highlights, engagement, and shareable info albums.',
+        'Ran the Like / Share / Tag and campaign-style traffic loops to grow the page.',
+        'Facebook Ads: collecting leads, growing page likes, and pulling traffic to landing pages.',
+        'Ran a gamified landing-page idea to get more clicks and deeper interaction.',
       ],
       zh: [
-        'Soccerking：内容生产、品牌策略规划与 Facebook 数据洞察分析。',
-        '搭建帖子类型体系，覆盖引流、高光分发、互动与可分享资讯相册。',
-        '执行点赞/分享/标注及活动式流量闭环，强化主页增长。',
-        'Facebook 广告：潜客收集、涨粉与落地页引流。',
-        '落地游戏化活动页概念，提升点击与互动深度。',
+        'Soccerking：内容自己做、品牌策略自己规划、Facebook 数据自己看。',
+        '搭帖子类型体系，覆盖引流、高光、互动和可分享的资讯相册。',
+        '跑点赞/分享/标注和活动式流量闭环，把主页做起来。',
+        'Facebook 广告：收潜客、涨粉、把流量拉到落地页。',
+        '落地了一个游戏化活动页的想法，提升点击和互动深度。',
       ],
     },
     relatedLinks: [
@@ -1544,6 +2243,1924 @@ const HeaderControls: React.FC<{
   </div>
 );
 
+const HomeProjectsBlueprintIcon: React.FC<{ label: string }> = ({ label }) => (
+  <div className="home-projects-blueprint-icon" role="img" aria-label={label}>
+    <span className="home-blueprint-grid" />
+    <span className="home-blueprint-sheet" />
+    <span className="home-blueprint-frame" />
+    <span className="home-blueprint-plan plan-a" />
+    <span className="home-blueprint-plan plan-b" />
+    <span className="home-blueprint-plan plan-c" />
+    <span className="home-blueprint-dimension dimension-x" />
+    <span className="home-blueprint-dimension dimension-y" />
+    <span className="home-blueprint-node node-a" />
+    <span className="home-blueprint-node node-b" />
+    <span className="home-blueprint-scan" />
+  </div>
+);
+
+const HomeJijuCatScene: React.FC = () => (
+  <div className="jiju-cat-scene" aria-hidden="true">
+    <span className="jiju-sun" />
+    <span className="jiju-star s1" />
+    <span className="jiju-star s2" />
+    <span className="jiju-star s3" />
+    <span className="jiju-cloud jiju-cloud-a" />
+    <span className="jiju-cloud jiju-cloud-b" />
+    <span className="jiju-butterfly">
+      <span className="wing left" />
+      <span className="wing right" />
+    </span>
+    <span className="jiju-leaf" />
+    <div className="jiju-ground" />
+    <span className="jiju-grass g1" />
+    <span className="jiju-grass g2" />
+    <span className="jiju-grass g3" />
+    <span className="jiju-paw p1" />
+    <span className="jiju-paw p2" />
+    <span className="jiju-paw p3" />
+    <span className="jiju-paw p4" />
+    <div className="jiju-cat">
+      <span className="jiju-dust" />
+      <div className="jiju-cat-face">
+        <div className="jiju-cat-bob">
+          <span className="jiju-cat-tail" />
+          <span className="jiju-cat-body" />
+          <span className="jiju-cat-head">
+            <span className="jiju-cat-ear left" />
+            <span className="jiju-cat-ear right" />
+            <span className="jiju-cat-eye" />
+            <span className="jiju-cat-whisker w1" />
+            <span className="jiju-cat-whisker w2" />
+            <span className="jiju-cat-tongue" />
+          </span>
+          <span className="jiju-cat-leg leg1" />
+          <span className="jiju-cat-leg leg2" />
+          <span className="jiju-cat-leg leg3" />
+          <span className="jiju-cat-leg leg4" />
+        </div>
+      </div>
+    </div>
+    <div className="jiju-cat jiju-cat-cameo">
+      <span className="jiju-dust" />
+      <div className="jiju-cat-face">
+        <div className="jiju-cat-bob">
+          <span className="jiju-cat-tail" />
+          <span className="jiju-cat-body" />
+          <span className="jiju-cat-head">
+            <span className="jiju-cat-ear left" />
+            <span className="jiju-cat-ear right" />
+            <span className="jiju-cat-eye" />
+            <span className="jiju-cat-whisker w1" />
+            <span className="jiju-cat-whisker w2" />
+          </span>
+          <span className="jiju-cat-leg leg1" />
+          <span className="jiju-cat-leg leg2" />
+          <span className="jiju-cat-leg leg3" />
+          <span className="jiju-cat-leg leg4" />
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const HomeLifeMagicIcon: React.FC<{ label: string }> = ({ label }) => (
+  <div className="home-life-magic-icon" role="img" aria-label={label}>
+    <span className="home-life-magic-aura" />
+    <span className="home-life-magic-heart" />
+    <span className="home-life-magic-ring ring-outer" />
+    <span className="home-life-magic-ring ring-inner" />
+    <span className="home-life-magic-geometry geometry-a" />
+    <span className="home-life-magic-geometry geometry-b" />
+    <span className="home-life-magic-axis axis-x" />
+    <span className="home-life-magic-axis axis-y" />
+    <span className="home-life-magic-node node-a" />
+    <span className="home-life-magic-node node-b" />
+    <span className="home-life-magic-node node-c" />
+    <span className="home-life-magic-spark spark-a" />
+    <span className="home-life-magic-spark spark-b" />
+  </div>
+);
+
+const HomeBaguaMirrorTotem: React.FC<{ label: string }> = ({ label }) => (
+  <div className="home-bagua-totem" role="img" aria-label={label}>
+    <span className="home-bagua-ring ring-outer" />
+    <span className="home-bagua-ring ring-inner" />
+    <span className="home-bagua-yinyang">
+      <span className="home-bagua-dot dot-light" />
+      <span className="home-bagua-dot dot-dark" />
+    </span>
+    {Array.from({ length: 8 }, (_, index) => (
+      <span key={index} className={`home-bagua-trigram trigram-${index + 1}`}>
+        <span />
+        <span />
+        <span />
+      </span>
+    ))}
+    <span className="home-bagua-glint" />
+  </div>
+);
+
+const HomeGramophoneTotem: React.FC<{ label: string }> = ({ label }) => (
+  <div className="home-gramophone-totem" role="img" aria-label={label}>
+    <span className="home-gramophone-wave wave-a" />
+    <span className="home-gramophone-wave wave-b" />
+    <span className="home-gramophone-horn-neck" />
+    <span className="home-gramophone-horn-bell" />
+    <span className="home-gramophone-horn-ribs" />
+    <span className="home-gramophone-horn-mouth" />
+    <span className="home-gramophone-base" />
+    <span className="home-gramophone-base-panel" />
+    <span className="home-gramophone-crank" />
+    <span className="home-gramophone-platter" />
+    <span className="home-gramophone-record" />
+    <span className="home-gramophone-label" />
+    <span className="home-gramophone-arm" />
+    <span className="home-gramophone-needle" />
+  </div>
+);
+
+const HomePowerUpTotem: React.FC<{ label: string }> = ({ label }) => (
+  <div className="home-power-totem" role="img" aria-label={label}>
+    <span className="home-power-aura aura-back" />
+    <span className="home-power-aura aura-front" />
+    <span className="home-power-body" />
+    <span className="home-power-belt" />
+    <span className="home-power-face" />
+    <span className="home-power-hair hair-dark">
+      <span className="lock lock-a" />
+      <span className="lock lock-b" />
+      <span className="lock lock-c" />
+      <span className="lock lock-d" />
+      <span className="lock lock-e" />
+    </span>
+    <span className="home-power-hair hair-gold">
+      <span className="lock lock-a" />
+      <span className="lock lock-b" />
+      <span className="lock lock-c" />
+      <span className="lock lock-d" />
+      <span className="lock lock-e" />
+    </span>
+    <span className="home-power-spark spark-a" />
+    <span className="home-power-spark spark-b" />
+  </div>
+);
+
+const HomePyramidBreakTotem: React.FC<{ label: string }> = ({ label }) => (
+  <div className="home-pyramid-totem" role="img" aria-label={label}>
+    <span className="home-pyramid-impact" />
+    <span className="home-pyramid-wave" />
+    <span className="home-pyramid-block block-a" />
+    <span className="home-pyramid-block block-b" />
+    <span className="home-pyramid-block block-c" />
+    <span className="home-pyramid-block block-d" />
+    <span className="home-pyramid-block block-e" />
+    <span className="home-pyramid-block block-f" />
+    <span className="home-pyramid-block block-g" />
+    <span className="home-pyramid-block block-h" />
+    <span className="home-pyramid-crack crack-a" />
+    <span className="home-pyramid-crack crack-b" />
+    <span className="home-pyramid-pixel pixel-a" />
+    <span className="home-pyramid-pixel pixel-b" />
+    <span className="home-pyramid-pixel pixel-c" />
+  </div>
+);
+
+const HomeArchiveEvolutionTotem: React.FC<{ label: string }> = ({ label }) => (
+  <div className="home-archive-evolution-totem" role="img" aria-label={label}>
+    <span className="home-archive-small-beast">
+      <span className="home-archive-small-tail" />
+      <span className="home-archive-small-body" />
+      <span className="home-archive-small-head" />
+      <span className="home-archive-small-eye" />
+      <span className="home-archive-small-claw claw-a" />
+      <span className="home-archive-small-claw claw-b" />
+    </span>
+    <span className="home-archive-fire-dragon">
+      <span className="home-archive-dragon-wing wing-a" />
+      <span className="home-archive-dragon-wing wing-b" />
+      <span className="home-archive-dragon-tail" />
+      <span className="home-archive-dragon-tail-flame" />
+      <span className="home-archive-dragon-body" />
+      <span className="home-archive-dragon-neck" />
+      <span className="home-archive-dragon-head" />
+      <span className="home-archive-dragon-horn horn-a" />
+      <span className="home-archive-dragon-horn horn-b" />
+      <span className="home-archive-dragon-eye" />
+      <span className="home-archive-dragon-claw claw-a" />
+      <span className="home-archive-dragon-claw claw-b" />
+      <span className="home-archive-dragon-breath" />
+    </span>
+    <span className="home-archive-evolution-spark spark-a" />
+    <span className="home-archive-evolution-spark spark-b" />
+  </div>
+);
+
+const ProjectsJijuCssIcon: React.FC<{ label: string }> = ({ label }) => (
+  <div className="projects-card-icon projects-jiju-css-icon" role="img" aria-label={label}>
+    <span className="projects-jiju-icon-sun" />
+    <span className="projects-jiju-icon-cloud cloud-a" />
+    <span className="projects-jiju-icon-cloud cloud-b" />
+    <span className="projects-jiju-icon-ground" />
+    <span className="projects-jiju-icon-grass grass-a" />
+    <span className="projects-jiju-icon-grass grass-b" />
+    <span className="projects-jiju-icon-cat">
+      <span className="projects-jiju-icon-tail" />
+      <span className="projects-jiju-icon-body" />
+      <span className="projects-jiju-icon-head">
+        <span className="projects-jiju-icon-ear left" />
+        <span className="projects-jiju-icon-ear right" />
+        <span className="projects-jiju-icon-eye" />
+        <span className="projects-jiju-icon-whisker w1" />
+        <span className="projects-jiju-icon-whisker w2" />
+      </span>
+      <span className="projects-jiju-icon-leg leg-a" />
+      <span className="projects-jiju-icon-leg leg-b" />
+      <span className="projects-jiju-icon-leg leg-c" />
+      <span className="projects-jiju-icon-leg leg-d" />
+    </span>
+  </div>
+);
+
+const ProjectsPokerCssIcon: React.FC<{ label: string }> = ({ label }) => (
+  <div className="projects-card-icon projects-poker-css-icon" role="img" aria-label={label}>
+    <span className="projects-poker-table" />
+    <span className="projects-poker-table-rim" />
+    <span className="projects-poker-card card-a">
+      <span className="projects-poker-rank rank-top">A</span>
+      <span className="projects-poker-suit suit-spade" />
+      <span className="projects-poker-rank rank-bottom">A</span>
+    </span>
+    <span className="projects-poker-card card-b">
+      <span className="projects-poker-rank rank-top">A</span>
+      <span className="projects-poker-suit suit-heart" />
+      <span className="projects-poker-rank rank-bottom">A</span>
+    </span>
+  </div>
+);
+
+const ProjectsEtReportCssIcon: React.FC<{ label: string }> = ({ label }) => (
+  <div className="projects-card-icon projects-etreport-css-icon" role="img" aria-label={label}>
+    <span className="projects-etreport-topbar" />
+    <span className="projects-etreport-dot dot-a" />
+    <span className="projects-etreport-dot dot-b" />
+    <span className="projects-etreport-dot dot-c" />
+    <span className="projects-etreport-grid" />
+    <span className="projects-etreport-bar bar-a" />
+    <span className="projects-etreport-bar bar-b" />
+    <span className="projects-etreport-bar bar-c" />
+    <span className="projects-etreport-bar bar-d" />
+    <span className="projects-etreport-line" />
+    <span className="projects-etreport-scan" />
+  </div>
+);
+
+const ProjectsCrmCssIcon: React.FC<{ label: string }> = ({ label }) => (
+  <div className="projects-card-icon projects-crm-css-icon" role="img" aria-label={label}>
+    <span className="projects-crm-ring ring-outer" />
+    <span className="projects-crm-ring ring-middle" />
+    <span className="projects-crm-ring ring-inner" />
+    <span className="projects-crm-polygon polygon-octagon" />
+    <span className="projects-crm-polygon polygon-hexagon" />
+    <span className="projects-crm-axis axis-x" />
+    <span className="projects-crm-axis axis-y" />
+    <span className="projects-crm-triangle triangle-a" />
+    <span className="projects-crm-triangle triangle-b" />
+    <span className="projects-crm-tick tick-a" />
+    <span className="projects-crm-tick tick-b" />
+    <span className="projects-crm-tick tick-c" />
+    <span className="projects-crm-tick tick-d" />
+    <span className="projects-crm-node node-a" />
+    <span className="projects-crm-node node-b" />
+    <span className="projects-crm-node node-c" />
+    <span className="projects-crm-node node-d" />
+    <span className="projects-crm-glyph glyph-a" />
+    <span className="projects-crm-glyph glyph-b" />
+    <span className="projects-crm-core" />
+    <span className="projects-crm-orbit" />
+  </div>
+);
+
+const ProjectsFullPage: React.FC<{
+  homeHref: string;
+  baseUrl: string;
+  language: Language;
+  setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
+  theme: Theme;
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ homeHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
+  const isZh = language === 'zh';
+  const jijuHref = joinBasePath(baseUrl, 'jiju-pet');
+  const etReportHubHref = joinBasePath(baseUrl, 'etreporthub');
+  const etReportHubSalesHref = joinBasePath(baseUrl, 'etreporthub-sales');
+  const pokerHref = joinBasePath(baseUrl, 'poker');
+  const crmHref = joinBasePath(baseUrl, 'crm');
+  const previousProjectsHref = joinBasePath(baseUrl, 'previous-projects');
+
+  return (
+    <div className="page-shell projects-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
+      <main className="px-5 py-8 md:px-8 md:py-10">
+        <div className="mx-auto max-w-6xl">
+          <div className="projects-topbar flex flex-wrap items-center justify-between gap-3">
+            <a href={homeHref} className="projects-back-link inline-flex items-center gap-2 text-sm font-medium">
+              <ArrowLeft size={16} />
+              {isZh ? '返回主页' : 'Back to Home'}
+            </a>
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
+          </div>
+
+          <header className="projects-hero py-16 text-center md:py-24">
+            <p className="projects-kicker mx-auto">{isZh ? 'Projects / AI Build Systems' : 'Projects / AI Build Systems'}</p>
+            <h1 className="projects-title mx-auto mt-5 font-display font-bold tracking-tight">
+              {isZh ? 'Different builds. Same stubborn habit.' : 'Different builds. Same stubborn habit.'}
+            </h1>
+            <p className="projects-subtitle mx-auto mt-5">
+              {isZh
+                ? 'Jiju、Friday Poker Club、ETReportHub 和 CRM。项目不一样，底下其实每次都是同一招：把一团乱的输入，变成真的能用的系统。'
+                : 'Jiju, Friday Poker Club, ETReportHub, and CRM. Different projects, but underneath it’s the same move every time: take messy input and turn it into something you can actually use.'}
+            </p>
+            <div className="mt-7 flex flex-wrap justify-center gap-5">
+              <a href="#project-stack" className="projects-text-cta">
+                {isZh ? '看项目合集' : 'View stack'} <span aria-hidden>›</span>
+              </a>
+              <a href="#etreporthub" className="projects-text-cta projects-text-cta-muted">
+                {isZh ? '看 ETReportHub' : 'View ETReportHub'} <span aria-hidden>›</span>
+              </a>
+            </div>
+          </header>
+
+          <section className="projects-bundle-panel">
+            <div className="projects-bundle-copy">
+              <p className="projects-kicker">{isZh ? 'Build operating system' : 'Build operating system'}</p>
+              <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
+                {isZh ? '与其说是项目列表，不如说是我一直在搭的几套系统。' : 'Not really a project list — more a few systems I keep building.'}
+              </h2>
+              <p>
+                {isZh
+                  ? '不想把作品平铺成一张清单，所以把几套系统放进同一个叙事里：发现、游戏房、报表、CRM。'
+                  : 'Instead of laying everything out flat as a list, this groups the different systems into one story: discovery, game rooms, reporting, and CRM.'}
+              </p>
+            </div>
+            <div className="projects-bundle-grid">
+              {aiProjectSharedLogic.map((item) => (
+                <article key={item.title.en} className="projects-logic-card">
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.title[language]}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section id="project-stack" className="projects-section py-16 md:py-24">
+            <div className="projects-section-head">
+              <p className="projects-kicker">{isZh ? 'Project stack' : 'Project stack'}</p>
+              <h2 className="projects-section-title font-display font-bold tracking-tight">
+                {isZh ? '四个慢慢长成系统的东西。' : 'Four things slowly turning into real systems.'}
+              </h2>
+            </div>
+            <div className="projects-grid mt-12">
+              {aiProjectSystems.map((project) => {
+                const isJiju = project.href === 'jiju';
+                const isETReportHub = project.title === 'ETReportHub';
+                const isPoker = project.title === 'Friday Poker Club';
+                const isCrm = project.title === 'CRM Intelligence System';
+                const cardClassName = ['projects-card', isJiju ? 'projects-card-jiju' : ''].filter(Boolean).join(' ');
+                const titleClassName = [
+                  'projects-card-title font-display font-bold tracking-tight',
+                  isETReportHub ? 'projects-card-title-compact' : '',
+                  isCrm ? 'projects-card-title-long' : '',
+                  isPoker ? 'projects-card-title-stacked' : '',
+                ].filter(Boolean).join(' ');
+                const projectIcon = isJiju ? (
+                  <ProjectsJijuCssIcon label={isZh ? 'Jiju CSS app 图标' : 'Jiju CSS app icon'} />
+                ) : isPoker ? (
+                  <ProjectsPokerCssIcon label={isZh ? 'Friday Poker Club CSS app 图标' : 'Friday Poker Club CSS app icon'} />
+                ) : isETReportHub ? (
+                  <ProjectsEtReportCssIcon label={isZh ? 'ETReportHub 数据 CSS app 图标' : 'ETReportHub data CSS app icon'} />
+                ) : isCrm ? (
+                  <ProjectsCrmCssIcon label={isZh ? 'CRM Intelligence System 魔法阵 CSS app 图标' : 'CRM Intelligence System magic circle CSS app icon'} />
+                ) : null;
+                return (
+                  <article key={project.title} id={project.href} className={cardClassName}>
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <p className="projects-card-eyebrow">{project.eyebrow[language]}</p>
+                      <span className="projects-status">{project.status[language]}</span>
+                    </div>
+                    <div className="projects-card-identity mt-5">
+                      <div>
+                        <div className="projects-card-title-row">
+                          <h3 className={titleClassName}>
+                            {isETReportHub ? (
+                              <>
+                                <span>ETReport</span>
+                                <span>Hub</span>
+                              </>
+                            ) : (
+                              project.title
+                            )}
+                          </h3>
+                        </div>
+                        <p className="projects-card-role">{project.role[language]}</p>
+                      </div>
+                      <div className="projects-card-icon-slot">{projectIcon}</div>
+                    </div>
+                    <p className="projects-card-summary">{project.summary[language]}</p>
+                    <div className="projects-system-line">
+                      <p className="projects-card-eyebrow">{isZh ? 'System layer' : 'System layer'}</p>
+                      <p>{project.system[language]}</p>
+                    </div>
+                    <div className="projects-card-actions">
+                      {isJiju && (
+                        <a href={jijuHref} className="projects-text-cta">
+                          {isZh ? '看构建记录' : 'View build log'} <span aria-hidden>›</span>
+                        </a>
+                      )}
+                      {isPoker && (
+                        <a href={pokerHref} className="projects-text-cta">
+                          {isZh ? '看产品页' : 'View product page'} <span aria-hidden>›</span>
+                        </a>
+                      )}
+                      {isETReportHub && (
+                        <a href={etReportHubHref} className="projects-text-cta">
+                          {isZh ? '看产品页' : 'View product page'} <span aria-hidden>›</span>
+                        </a>
+                      )}
+                      {isETReportHub && (
+                        <a href={etReportHubSalesHref} className="projects-text-cta projects-text-cta-muted">
+                          {isZh ? '看售卖页' : 'View sales page'} <span aria-hidden>›</span>
+                        </a>
+                      )}
+                      {isCrm && (
+                        <a href={crmHref} className="projects-text-cta">
+                          {isZh ? '看这个疯东西' : 'See the wild one'} <span aria-hidden>›</span>
+                        </a>
+                      )}
+                      {project.external && (
+                        <a
+                          href={project.external}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="projects-text-cta projects-text-cta-muted"
+                        >
+                          {isZh ? '打开项目' : 'Open project'} <ExternalLink size={15} />
+                        </a>
+                      )}
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+
+          <section id="etreporthub" className="projects-section py-16 md:py-24">
+            <div className="projects-section-head">
+              <p className="projects-kicker">{isZh ? 'ETReportHub readout' : 'ETReportHub readout'}</p>
+              <h2 className="projects-section-title font-display font-bold tracking-tight">
+                {isZh ? '我看得出你在做什么。' : 'Yes, I can see what you are building.'}
+              </h2>
+              <p className="projects-section-copy">
+                {isZh
+                  ? '看 `Daily Report/log.md` 就知道，ETReportHub 是个 iGaming aggregator 的日报系统，不只是个 dashboard。它已经能做数据导入、SQLite 规范化、多品牌、会员分析、渠道分析、趋势、Compare Brands、System Guide、CRM export、Docker/backend，还有前端性能优化。'
+                  : 'Going by `Daily Report/log.md`, ETReportHub is an iGaming aggregator daily-report system — not just a dashboard. It already does data ingest, SQLite normalization, multi-brand views, member and channel analysis, trends, Compare Brands, a System Guide, CRM export, Docker/backend mode, and frontend performance work.'}
+              </p>
+            </div>
+            <div className="projects-readout-grid mt-12">
+              {(isZh
+                ? [
+                    ['Input', 'Transaction + Customer Excel，每天从运营系统导出。'],
+                    ['Data Layer', 'SQLite / IndexedDB，把 raw Excel 转成可查询的数据层。'],
+                    ['Reports', 'Performance、Members、Channels、Trends、Compare Brands。'],
+                    ['CRM Bridge', '会员分群、风险、留存、CRM export，准备接下一步跟进系统。'],
+                  ]
+                : [
+                    ['Input', 'Transaction + Customer Excel exported from operations.'],
+                    ['Data Layer', 'SQLite / IndexedDB turns raw Excel into a queryable layer.'],
+                    ['Reports', 'Performance, Members, Channels, Trends, and Compare Brands.'],
+                    ['CRM Bridge', 'Segments, risk, retention, and CRM export for the next follow-up system.'],
+                  ]
+              ).map(([label, copy]) => (
+                <article key={label} className="projects-readout-card">
+                  <p className="projects-card-eyebrow">{label}</p>
+                  <p>{copy}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="projects-section py-16 md:py-24">
+            <div className="projects-final-panel">
+              <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
+                {isZh ? '旧的留在档案里，正在跑的系统放前台。' : 'Old stuff stays in the archive. The live systems get the front page.'}
+              </h2>
+              <p>
+                {isZh
+                  ? '以前那些 iGaming promotion、campaign、UI/UX 的活儿都放在 legacy archive。这个 `/projects` 页只放当前的 AI build systems 和产品。'
+                  : 'The older iGaming promotion, campaign, and UI/UX work lives in the legacy archive. This `/projects` page is just for the current AI build systems and products.'}
+              </p>
+              <a href={previousProjectsHref} className="projects-text-cta">
+                {isZh ? '看 legacy archive' : 'View legacy archive'} <span aria-hidden>›</span>
+              </a>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+const ETReportHubFullPage: React.FC<{
+  homeHref: string;
+  projectsHref: string;
+  salesHref: string;
+  language: Language;
+  setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
+  theme: Theme;
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ homeHref, projectsHref, salesHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
+  const isZh = language === 'zh';
+
+  return (
+    <div className="page-shell etreport-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
+      <main className="px-5 py-8 md:px-8 md:py-10">
+        <div className="mx-auto max-w-6xl">
+          <div className="etreport-topbar flex flex-wrap items-center justify-between gap-3">
+            <a href={projectsHref} className="etreport-back-link inline-flex items-center gap-2 text-sm font-medium">
+              <ArrowLeft size={16} />
+              {isZh ? '返回 Projects' : 'Back to Projects'}
+            </a>
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
+          </div>
+
+          <header className="etreport-hero py-16 text-center md:py-24">
+            <p className="etreport-kicker mx-auto">{isZh ? 'ETReportHub / Daily Report OS' : 'ETReportHub / Daily Report OS'}</p>
+            <h1 className="etreport-title mx-auto mt-5 font-display font-bold tracking-tight">
+              {isZh ? 'Turn messy gaming reports into operating clarity.' : 'Turn messy gaming reports into operating clarity.'}
+            </h1>
+            <p className="etreport-subtitle mx-auto mt-5">
+              {isZh
+                ? '给 iGaming operator / aggregator 的日报数据系统。把 Excel、会员、渠道、趋势、品牌对比和 CRM export 放进同一个可复盘的 dashboard。'
+                : 'A daily-report data system for iGaming operators and aggregators. It turns Excel, members, channels, trends, brand comparison, and CRM export into one reviewable dashboard.'}
+            </p>
+            <div className="mt-7 flex flex-wrap justify-center gap-5">
+              <a href="#modules" className="etreport-text-cta">
+                {isZh ? '看产品模块' : 'View modules'} <span aria-hidden>›</span>
+              </a>
+              <a href={salesHref} className="etreport-text-cta">
+                {isZh ? '看价格' : 'View pricing'} <span aria-hidden>›</span>
+              </a>
+              <a href="#skill-proof" className="etreport-text-cta etreport-text-cta-muted">
+                {isZh ? '看 Eden 的能力' : 'View skill proof'} <span aria-hidden>›</span>
+              </a>
+            </div>
+          </header>
+
+          <section className="etreport-console-panel">
+            <div className="etreport-console-copy">
+              <p className="etreport-kicker">{isZh ? 'Product promise' : 'Product promise'}</p>
+              <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
+                {isZh ? '少一点人工对表，多一点可判断的运营系统。' : 'Less manual checking. More operating judgment.'}
+              </h2>
+              <p>
+                {isZh
+                  ? 'ETReportHub 的价值不是把数字排漂亮，而是把每天最容易出错的资料流变成可追踪、可解释、可导出、可继续接 CRM 的系统。'
+                  : 'ETReportHub is not about making numbers look pretty. It turns a fragile daily data flow into something traceable, explainable, exportable, and ready for CRM workflows.'}
+              </p>
+            </div>
+            <div className="etreport-console-metrics">
+              {(isZh
+                ? [
+                    ['Input', 'Transaction + Customer Excel'],
+                    ['Storage', 'SQLite / IndexedDB'],
+                    ['Views', 'Performance / Members / Channels / Trends'],
+                    ['Output', 'CRM export / Wide Excel / System Guide'],
+                  ]
+                : [
+                    ['Input', 'Transaction + Customer Excel'],
+                    ['Storage', 'SQLite / IndexedDB'],
+                    ['Views', 'Performance / Members / Channels / Trends'],
+                    ['Output', 'CRM export / Wide Excel / System Guide'],
+                  ]
+              ).map(([label, value]) => (
+                <div key={label} className="etreport-console-row">
+                  <span>{label}</span>
+                  <strong>{value}</strong>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? 'What it sells' : 'What it sells'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '卖的不是 dashboard。卖的是运营清晰度。' : 'It does not sell a dashboard. It sells operating clarity.'}
+              </h2>
+            </div>
+            <div className="mt-12 grid gap-5 md:grid-cols-3">
+              {etReportHubValueProps.map((item) => (
+                <article key={item.title.en} className="etreport-value-card">
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.title[language]}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section id="modules" className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? 'Product modules' : 'Product modules'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '从导入，到分析，到下一步行动。' : 'From ingest, to analysis, to next action.'}
+              </h2>
+            </div>
+            <div className="etreport-module-grid mt-12">
+              {etReportHubModules.map((item) => (
+                <article key={item.title} className="etreport-module-card">
+                  <h3 className="font-display text-3xl font-bold tracking-tight">{item.title}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section id="skill-proof" className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? 'Skill proof' : 'Skill proof'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '顺便说，这东西也证明 Eden 真的会 build。' : 'Also — this thing is proof Eden can actually build.'}
+              </h2>
+              <p className="etreport-section-copy">
+                {isZh
+                  ? 'ETReportHub 的重点从来不是“会不会做个页面”。难的是看懂一堆乱七八糟的业务数据、把数据语义理对、做出运营真的肯用的界面，还顺手给以后的 CRM / AI 留了接口。'
+                  : 'ETReportHub was never about “can you make a page.” The hard part is reading a pile of messy business data, getting the data semantics right, building UI operators will actually use, and leaving room for CRM and AI later.'}
+              </p>
+            </div>
+            <div className="mt-12 grid gap-5 md:grid-cols-2">
+              {etReportHubSkillProof.map((item) => (
+                <article key={item.title.en} className="etreport-proof-card">
+                  <p className="etreport-card-eyebrow">{item.title[language]}</p>
+                  <p>{item.copy[language]}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? 'Who it is for' : 'Who it is for'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '适合还在用 Excel 扛运营复杂度的团队。' : 'For teams still using Excel to carry operational complexity.'}
+              </h2>
+            </div>
+            <div className="mt-12 grid gap-5 md:grid-cols-3">
+              {etReportHubAudience.map((item) => (
+                <article key={item.title.en} className="etreport-audience-card">
+                  <h3 className="font-display text-3xl font-bold tracking-tight">{item.title[language]}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="etreport-section py-16 md:py-24">
+            <div className="etreport-faq-panel">
+              <div>
+                <p className="etreport-kicker">{isZh ? 'Questions' : 'Questions'}</p>
+                <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
+                  {isZh ? '客户会问的问题，先回答。' : 'Answer the buyer questions first.'}
+                </h2>
+              </div>
+              <div className="etreport-faq-list">
+                {etReportHubFaq.map((item) => (
+                  <article key={item.q.en} className="etreport-faq-item">
+                    <h3 className="font-display text-2xl font-bold tracking-tight">{item.q[language]}</h3>
+                    <p>{item.a[language]}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="etreport-section pb-20 pt-10">
+            <div className="etreport-final-panel">
+              <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
+                {isZh ? '如果报表已经影响判断，就该系统化。' : 'If reporting affects decisions, it needs a system.'}
+              </h2>
+              <p>
+                {isZh
+                  ? 'ETReportHub 可以作为产品、顾问服务或内部工具设计案例来谈。重点是把团队每天重复做、容易错、难复盘的运营动作，变成可维护系统。'
+                  : 'ETReportHub can be discussed as a product, consulting direction, or internal-tool design case. The core is turning repeated, error-prone, hard-to-review operations into a maintainable system.'}
+              </p>
+              <div className="mt-7 flex flex-wrap gap-5">
+                <a href={salesHref} className="etreport-text-cta">
+                  {isZh ? '看售卖页' : 'View sales page'} <span aria-hidden>›</span>
+                </a>
+                <a href={projectsHref} className="etreport-text-cta">
+                  {isZh ? '回 Projects' : 'Back to Projects'} <span aria-hidden>›</span>
+                </a>
+                <a href={homeHref} className="etreport-text-cta etreport-text-cta-muted">
+                  {isZh ? '回主页' : 'Back home'} <span aria-hidden>›</span>
+                </a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+const ETReportHubSalesPage: React.FC<{
+  homeHref: string;
+  projectsHref: string;
+  productHref: string;
+  language: Language;
+  setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
+  theme: Theme;
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ homeHref, projectsHref, productHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
+  const isZh = language === 'zh';
+  const linkedinHref = 'https://www.linkedin.com/in/daniel-yi-tern-tan-461567199/';
+
+  return (
+    <div className="page-shell etreport-page etreport-sales-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
+      <main className="px-5 py-8 md:px-8 md:py-10">
+        <div className="mx-auto max-w-5xl">
+          <div className="etreport-topbar flex flex-wrap items-center justify-between gap-3">
+            <a href={productHref} className="etreport-back-link inline-flex items-center gap-2 text-sm font-medium">
+              <ArrowLeft size={16} />
+              {isZh ? '返回 ETReportHub' : 'Back to ETReportHub'}
+            </a>
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
+          </div>
+
+          <header className="etreport-hero py-16 text-center md:py-24">
+            <p className="etreport-kicker mx-auto">{isZh ? 'ETReportHub / Sales Page' : 'ETReportHub / Sales Page'}</p>
+            <h1 className="etreport-title mx-auto mt-5 font-display font-bold tracking-tight">
+              {isZh ? 'Stop paying people to rebuild the same report every day.' : 'Stop paying people to rebuild the same report every day.'}
+            </h1>
+            <p className="etreport-subtitle mx-auto mt-5">
+              {isZh
+                ? 'ETReportHub 是给 iGaming operator / aggregator 的日报数据系统。它把 Transaction、Customer、会员、渠道、趋势、品牌对比和 CRM export 变成一个可复盘的运营层。'
+                : 'ETReportHub is a daily-report data system for iGaming operators and aggregators. It turns Transaction, Customer, members, channels, trends, brand comparison, and CRM export into one reviewable operating layer.'}
+            </p>
+            <div className="mt-7 flex flex-wrap justify-center gap-5">
+              <a href="#pricing" className="etreport-text-cta">
+                {isZh ? '看价格' : 'View pricing'} <span aria-hidden>›</span>
+              </a>
+              <a href="#why-buy" className="etreport-text-cta etreport-text-cta-muted">
+                {isZh ? '为什么要买' : 'Why buy it'} <span aria-hidden>›</span>
+              </a>
+              <a href="#roi" className="etreport-text-cta etreport-text-cta-muted">
+                {isZh ? '算 ROI' : 'ROI logic'} <span aria-hidden>›</span>
+              </a>
+            </div>
+            <div className="etreport-sales-proof-grid mx-auto mt-10">
+              {etReportHubSalesProofStats.map((item) => (
+                <article key={item.value.en} className="etreport-sales-proof-card">
+                  <strong>{item.value[language]}</strong>
+                  <span>{item.label[language]}</span>
+                </article>
+              ))}
+            </div>
+          </header>
+
+          <section className="etreport-sales-hero-panel">
+            <div>
+              <p className="etreport-kicker">{isZh ? 'Buyer problem' : 'Buyer problem'}</p>
+              <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
+                {isZh ? '报表不是小事。它决定团队每天相信什么。' : 'Reporting is not a small task. It decides what the team believes every day.'}
+              </h2>
+            </div>
+            <div className="etreport-sales-price-strip">
+              <div>
+                <p>{isZh ? '月费' : 'Monthly'}</p>
+                <strong>RM960</strong>
+                <span>{isZh ? '/月' : '/month'}</span>
+              </div>
+              <div>
+                <p>{isZh ? '买断' : 'Buyout'}</p>
+                <strong>RM19,888</strong>
+                <span>{isZh ? '一次性' : 'one-time'}</span>
+              </div>
+            </div>
+          </section>
+
+          <section id="why-buy" className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? 'Why clients buy' : 'Why clients buy'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '客户买的不是页面，是少出错、少拖延、少靠人记。' : 'Clients are not buying a page. They are buying fewer errors, less delay, and less memory work.'}
+              </h2>
+            </div>
+            <div className="mt-12 grid gap-5 md:grid-cols-3">
+              {etReportHubBuyerPain.map((item) => (
+                <article key={item.title.en} className="etreport-value-card">
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.title[language]}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section id="roi" className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? 'ROI logic' : 'ROI logic'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '现场算给客户看：RM960/月是否划算？' : 'Show the customer if RM960/month makes sense.'}
+              </h2>
+              <p className="etreport-section-copy">
+                {isZh
+                  ? '下面是保守估算，不是保证收益。假设每天省 2.5 小时、人工成本 RM25/小时、每月 26 个工作日，再加上 Bonus 控制和 CRM 跟进价值。'
+                  : 'This is a conservative estimate, not a guaranteed return. It assumes 2.5 reporting hours saved per day, RM25/hour labor cost, 26 working days, plus bonus control and CRM follow-up value.'}
+              </p>
+            </div>
+            <div className="etreport-roi-grid mt-12">
+              {etReportHubRoiCards.map((item) => (
+                <article key={item.label.en} className="etreport-roi-card">
+                  <p className="etreport-card-eyebrow">{item.label[language]}</p>
+                  <strong>{typeof item.value === 'string' ? item.value : item.value[language]}</strong>
+                </article>
+              ))}
+            </div>
+            <p className="etreport-roi-note">
+              {isZh
+                ? '销售讲法：说白了，一天省 2-4 小时，CRM 跟得上、bonus 不乱发，RM960/月你别当软件费看——那是把原本烂在 Excel 和拍脑袋决定里的钱，捞回来。'
+                : 'Sales angle: real talk — save 2-4 hours a day, keep CRM on top of it, stop over-handing bonus, and RM960/month stops feeling like a software bill. It’s clawing back money that was quietly leaking into Excel and guesswork.'}
+            </p>
+          </section>
+
+          <section className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? 'What changes after buying' : 'What changes after buying'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '从每天整理数据，变成每天判断动作。' : 'Move from arranging data every day to deciding actions every day.'}
+              </h2>
+            </div>
+            <div className="mt-12 grid gap-5 md:grid-cols-3">
+              {etReportHubSalesOutcomes.map((item) => (
+                <article key={item.label.en} className="etreport-sales-outcome-card">
+                  <p className="etreport-card-eyebrow">{item.label[language]}</p>
+                  <h3 className="font-display text-3xl font-bold tracking-tight">{item.metric[language]}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? 'Savings map' : 'Savings map'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '把卖点讲成客户每天会遇到的问题。' : 'Frame the value around the customer’s daily operating pain.'}
+              </h2>
+            </div>
+            <div className="etreport-sales-table mt-12">
+              <table>
+                <thead>
+                  <tr>
+                    <th>{isZh ? '客户现在的问题' : 'Current customer problem'}</th>
+                    <th>{isZh ? '系统怎么解决' : 'How the system helps'}</th>
+                    <th>{isZh ? '可节省 / 改善' : 'Savings / improvement'}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {etReportHubSavingsRows.map((row) => (
+                    <tr key={row.problem.en}>
+                      <td>{row.problem[language]}</td>
+                      <td>{row.solution[language]}</td>
+                      <td>{row.improvement[language]}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? 'What you get' : 'What you get'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '一套把日报、会员和 CRM 前置数据接起来的系统。' : 'A system connecting daily reports, member data, and CRM-ready outputs.'}
+              </h2>
+            </div>
+            <div className="etreport-module-grid mt-12">
+              {etReportHubSalesDeliverables.map((item) => (
+                <article key={item.title.en} className="etreport-module-card">
+                  <h3 className="font-display text-3xl font-bold tracking-tight">{item.title[language]}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? 'Included stack' : 'Included stack'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '系统里面有什么？' : 'What is included?'}
+              </h2>
+              <p className="etreport-section-copy">
+                {isZh
+                  ? '把功能讲成一个完整 BO operating stack：从上传、清洗、报表、CRM 行动，到备份、权限和上线交付。'
+                  : 'Position it as a complete BO operating stack: upload, cleaning, reporting, CRM action, backup, access control, and handover.'}
+              </p>
+            </div>
+            <div className="etreport-sales-table mt-12">
+              <table>
+                <thead>
+                  <tr>
+                    <th>{isZh ? '模块' : 'Module'}</th>
+                    <th>{isZh ? '包含内容' : 'Included'}</th>
+                    <th>{isZh ? '销售讲法' : 'Sales angle'}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {etReportHubIncludedRows.map((row) => (
+                    <tr key={row.module}>
+                      <td>{row.module}</td>
+                      <td>{row.included[language]}</td>
+                      <td>{row.angle[language]}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="pricing" className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? 'Pricing' : 'Pricing'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '两种购买方式。先使用，或直接拥有。' : 'Two ways to buy. Start using it, or own it outright.'}
+              </h2>
+            </div>
+            <div className="mt-12 grid gap-5 md:grid-cols-2">
+              {etReportHubPricing.map((plan) => (
+                <article key={plan.name.en} className="etreport-pricing-card">
+                  <p className="etreport-card-eyebrow">{plan.name[language]}</p>
+                  <div className="mt-4 flex flex-wrap items-end gap-x-2 gap-y-1">
+                    <strong className="font-display text-5xl font-bold tracking-tight md:text-7xl">{plan.price}</strong>
+                    <span className="pb-2 text-lg font-semibold text-stone-500">{plan.suffix[language]}</span>
+                  </div>
+                  <p className="mt-5 text-lg font-semibold leading-snug text-stone-800">{plan.bestFor[language]}</p>
+                  <ul className="mt-6 grid gap-3 text-sm leading-relaxed text-stone-700">
+                    {plan.points[language].map((point) => (
+                      <li key={point} className="flex gap-2">
+                        <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-eden-mint" />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="etreport-section py-16 md:py-24">
+            <div className="etreport-faq-panel">
+              <div>
+                <p className="etreport-kicker">{isZh ? 'Before buying' : 'Before buying'}</p>
+                <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
+                  {isZh ? '适合买，也要买得清楚。' : 'Buy it only when the operating problem is real.'}
+                </h2>
+              </div>
+              <div className="etreport-faq-list">
+                {etReportHubSalesFaq.map((item) => (
+                  <article key={item.q.en} className="etreport-faq-item">
+                    <h3 className="font-display text-2xl font-bold tracking-tight">{item.q[language]}</h3>
+                    <p>{item.a[language]}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="etreport-section pb-20 pt-10">
+            <div className="etreport-final-panel">
+              <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
+                {isZh ? '如果日报已经影响收入判断，就不要继续靠手感。' : 'If daily reports affect revenue decisions, do not keep relying on feel.'}
+              </h2>
+              <p>
+                {isZh
+                  ? '适合已经有稳定 Transaction / Customer 导出、需要更清楚 KPI、会员、渠道和 CRM 前置数据的团队。先谈数据结构，再谈部署方式。'
+                  : 'Best for teams with stable Transaction / Customer exports that need clearer KPI, member, channel, and CRM-ready data. Start with data structure, then decide deployment.'}
+              </p>
+              <div className="mt-7 flex flex-wrap gap-5">
+                <a href={linkedinHref} target="_blank" rel="noreferrer" className="etreport-text-cta">
+                  {isZh ? '联系讨论' : 'Discuss on LinkedIn'} <span aria-hidden>›</span>
+                </a>
+                <a href={productHref} className="etreport-text-cta etreport-text-cta-muted">
+                  {isZh ? '看产品页' : 'View product page'} <span aria-hidden>›</span>
+                </a>
+                <a href={projectsHref} className="etreport-text-cta etreport-text-cta-muted">
+                  {isZh ? '回 Projects' : 'Back to Projects'} <span aria-hidden>›</span>
+                </a>
+                <a href={homeHref} className="etreport-text-cta etreport-text-cta-muted">
+                  {isZh ? '回主页' : 'Back home'} <span aria-hidden>›</span>
+                </a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+const PokerFullPage: React.FC<{
+  homeHref: string;
+  projectsHref: string;
+  baseUrl: string;
+  language: Language;
+  setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
+  theme: Theme;
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ homeHref, projectsHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
+  const isZh = language === 'zh';
+  const playUrl = 'https://poker.edentan.site/';
+
+  return (
+    <div className="page-shell etreport-page poker-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
+      <main className="px-5 py-8 md:px-8 md:py-10">
+        <div className="mx-auto max-w-5xl">
+          <div className="etreport-topbar flex flex-wrap items-center justify-between gap-3">
+            <a href={projectsHref} className="etreport-back-link inline-flex items-center gap-2 text-sm font-medium">
+              <ArrowLeft size={16} />
+              {isZh ? '返回 Projects' : 'Back to Projects'}
+            </a>
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
+          </div>
+
+          <header className="etreport-hero py-16 text-center md:py-24">
+            <p className="etreport-kicker mx-auto">{isZh ? 'Friday Poker Club' : 'Friday Poker Club'}</p>
+            <h1 className="etreport-title mx-auto mt-5 font-display font-bold tracking-tight">
+              {isZh ? '周五夜，还是那群人，现在装进一条链接里。' : 'Friday night, same crew, now in a link.'}
+            </h1>
+            <p className="etreport-subtitle mx-auto mt-5">
+              {isZh
+                ? '一张浏览器德州桌，做出来就是让我们这群人能一直打下去——没人需要当东道主、装软件，或者开车去谁家。筹码是假的，故事是真的。'
+                : 'A browser poker table built so our crew can keep playing — nobody has to host, install anything, or drive to anyone’s place. The chips are fake. The stories are not.'}
+            </p>
+            <div className="mt-7 flex flex-wrap justify-center gap-5">
+              <a href={playUrl} target="_blank" rel="noopener noreferrer" className="etreport-text-cta">
+                {isZh ? '开一局' : 'Open a table'} <ExternalLink size={15} />
+              </a>
+              <a href="#avatar-guide" className="etreport-text-cta etreport-text-cta-muted">
+                {isZh ? '认识这群人' : 'Meet the crew'} <span aria-hidden>›</span>
+              </a>
+              <a href="#story" className="etreport-text-cta etreport-text-cta-muted">
+                {isZh ? '看桌上故事' : 'Read the stories'} <span aria-hidden>›</span>
+              </a>
+            </div>
+          </header>
+
+          <section id="how" className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? '怎么玩' : 'How it works'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '开个链接就能打，没那么多规矩。' : 'Open a link and play. No fuss.'}
+              </h2>
+            </div>
+            <div className="mt-12 grid gap-5 md:grid-cols-3">
+              {pokerValueProps.map((item) => (
+                <article key={item.title.en} className="etreport-value-card">
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.title[language]}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section id="modules" className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? '桌上能干嘛' : 'What you can do' }</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '真的德州，加一点乱来。' : 'Real Hold’em, plus a little chaos.'}
+              </h2>
+            </div>
+            <div className="etreport-module-grid mt-12">
+              {pokerModules.map((item) => (
+                <article key={item.title} className="etreport-module-card">
+                  <h3 className="font-display text-3xl font-bold tracking-tight">{item.title}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section id="avatar-guide" className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? 'Avatar guide' : 'Avatar guide'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '坐在桌上的人，本身就是故事。' : 'The people at the table are the story.'}
+              </h2>
+              <p className="etreport-section-copy">{pokerAvatarGroupIntro[language]}</p>
+            </div>
+            <div className="mt-12 grid gap-5 md:grid-cols-2">
+              {pokerAvatarGuide.map((item) => (
+                <article key={item.id} className="poker-avatar-card">
+                  <div className="poker-avatar-portrait">
+                    <img
+                      src={joinBasePath(baseUrl, `poker-avatars/${item.id}.png`)}
+                      alt={`${item.code.en} — ${item.code.zh}`}
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="poker-avatar-body">
+                    <h3 className="poker-avatar-name">{item.code[language]}</h3>
+                    <p className="poker-avatar-phrase">“{item.phrase[language]}”</p>
+                    <p className="poker-avatar-tags">{item.tags[language]}</p>
+                    <p className="poker-avatar-intro">{item.intro[language]}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section id="story" className="etreport-section py-16 md:py-24">
+            <div className="poker-story-panel">
+              <div className="poker-story-head">
+                <p className="etreport-kicker">{isZh ? 'Story log' : 'Story log'}</p>
+                <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
+                  {isZh ? '在这张桌上发生过的故事。' : 'Stories that happened at this table.'}
+                </h2>
+                <p className="poker-story-intro">{pokerStoryIntro[language]}</p>
+              </div>
+              <div className="poker-story-list">
+                {pokerStories.map((item) => (
+                  <article key={item.date} className="poker-story-item">
+                    <p className="poker-story-date">{item.date}</p>
+                    <h3 className="poker-story-title font-display text-2xl font-bold tracking-tight md:text-3xl">
+                      {item.title[language]}
+                    </h3>
+                    <p className="poker-story-body">{item.body[language]}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="etreport-section pb-20 pt-10">
+            <div className="etreport-final-panel">
+              <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
+                {isZh ? '别光看了，开一局吧。' : 'Stop reading. Open a hand.'}
+              </h2>
+              <p>
+                {isZh
+                  ? 'poker.edentan.site 一点就进。单人桌秒开，公开桌等人到齐房主点开始。筹码是假的，赢了别太得意——故事才是真的。'
+                  : 'poker.edentan.site, one click and you’re in. Solo tables start instantly, public ones start when the crew shows up. The chips are fake — don’t get too smug. The stories are what stick.'}
+              </p>
+              <div className="mt-7 flex flex-wrap gap-5">
+                <a href={playUrl} target="_blank" rel="noopener noreferrer" className="etreport-text-cta">
+                  {isZh ? '打开 poker.edentan.site' : 'Open poker.edentan.site'} <ExternalLink size={15} />
+                </a>
+                <a href={projectsHref} className="etreport-text-cta etreport-text-cta-muted">
+                  {isZh ? '回 Projects' : 'Back to Projects'} <span aria-hidden>›</span>
+                </a>
+                <a href={homeHref} className="etreport-text-cta etreport-text-cta-muted">
+                  {isZh ? '回主页' : 'Back home'} <span aria-hidden>›</span>
+                </a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+const crmConsoleRows: ReadonlyArray<readonly [string, { en: string; zh: string }]> = [
+  ['Storage', { en: 'One normalized Postgres database', zh: '一个标准化 Postgres 数据库' }],
+  ['Search', { en: 'pgvector semantic index', zh: 'pgvector 语义索引' }],
+  ['Security', { en: 'RBAC + encrypted credentials', zh: 'RBAC + 加密凭证' }],
+  ['Migrations', { en: '9 phases just to retire old columns', zh: '9 个阶段，只为退役旧字段' }],
+];
+
+const crmValueProps = [
+  {
+    title: { en: 'One brain, not 40 spreadsheets', zh: '一个大脑，不是 40 张表' },
+    copy: {
+      en: 'Every game provider, merchant, vendor account, login, rate, and coverage rule lives in one place. The pile of Excel files that used to run the business? Gone. It all got eaten.',
+      zh: '每个游戏供应商、商户、供应商账号、登录、费率、地区规则，全塞进同一个地方。以前撑着整个生意的那堆 Excel？没了。全被吃掉了。',
+    },
+  },
+  {
+    title: { en: 'Everything is wired together', zh: '全都连在一起' },
+    copy: {
+      en: 'Providers link to vendors, vendors to merchants, merchants to accounts, accounts to products. Click one thing and the whole web lights up. Nothing floats alone anymore.',
+      zh: '供应商连供应商账号，账号连商户，商户连产品，一层扣一层。点一个，整张网都亮起来。没有东西再孤零零飘着。',
+    },
+  },
+  {
+    title: { en: 'It remembers (and it tells on you)', zh: '它记得住（还会打小报告）' },
+    copy: {
+      en: 'Audit logs, encrypted credentials, role locks. Sales literally cannot see the cost rate. Something breaks, you check the log instead of asking the room “who touched this?”',
+      zh: '审计日志、加密凭证、角色锁。销售根本看不到成本费率。出事了翻日志，而不是对着全屋问「谁动了这个？」',
+    },
+  },
+] as const;
+
+const crmWildFeatures = [
+  {
+    title: 'An AI that reads your providers',
+    copy: {
+      en: 'A pgvector embedding layer indexes every provider so you can search them by meaning, not exact spelling. Yes, the back-office tool has a semantic brain bolted on. No, nobody strictly needed it.',
+      zh: '一层 pgvector 向量索引把每个供应商都嵌进去，你可以按「意思」搜，而不是拼对名字。对，一个后台工具硬是装了个语义大脑。对，没人非要它不可。',
+    },
+  },
+  {
+    title: 'A database normalized into oblivion',
+    copy: {
+      en: 'Nine phases of migration — freeze the legacy writes, blank the columns, archive them forever, guard the drop, run a readiness report, THEN delete. All to retire a few old columns without losing a byte. Overkill is the whole personality.',
+      zh: '九个阶段的迁移——先冻结旧写入、清空列、永久归档、加删除护栏、跑就绪报告，然后才删。全是为了退役几列旧字段，还一个字节都不丢。过度工程就是它的人格。',
+    },
+  },
+  {
+    title: 'A country parser with trust issues',
+    copy: {
+      en: 'It reads messy “restricted countries” text and pulls out real ISO codes. The catch: two-letter matching is case-SENSITIVE, because otherwise “in” becomes India, “no” becomes Norway, and “at” becomes Austria. It has been burned before.',
+      zh: '它读乱糟糟的「限制国家」文字，抠出真正的 ISO 代码。关键是：两位字母匹配区分大小写，否则「in」变印度、「no」变挪威、「at」变奥地利。它被坑过，记仇了。',
+    },
+  },
+  {
+    title: 'Locks on everything',
+    copy: {
+      en: 'Role-based access, encrypted master and sub-agent logins that never travel in plaintext, and a cost-rate secrecy rule enforced on the server so the frontend can’t leak it even if it tried.',
+      zh: '基于角色的权限、永不明文传输的主账号与子账号加密登录，还有在服务器端强制的成本费率保密规则——前端就算想泄露也泄不出去。',
+    },
+  },
+  {
+    title: 'A golden-ratio design system nobody requested',
+    copy: {
+      en: 'φ ≈ 1.618 column splits, a φ-stepped spacing rhythm, a hash-to-color chip palette, and a live brandbook page that renders every design token as real components. An internal admin tool. With a brandbook. Sure.',
+      zh: 'φ ≈ 1.618 的分栏、按 φ 递进的间距节奏、用哈希生成颜色的标签盘，还有一个把每个设计 token 都渲染成真组件的「品牌手册」页。一个内部后台工具。还配品牌手册。行吧。',
+    },
+  },
+  {
+    title: 'Day / Night mode that swaps colors for fun',
+    copy: {
+      en: 'Flip to Night and the palette does a complementary swap — green becomes blue, yellow becomes purple — across every chip, KPI, and badge. Then a whole saga of fighting Chrome’s force-dark from inverting the light theme behind our backs.',
+      zh: '切到夜间，整个配色做互补翻转——绿变蓝、黄变紫——覆盖每个标签、KPI、徽章。然后还有一整段跟 Chrome 强制深色模式斗智斗勇、不让它偷偷把白天主题反色的血泪史。',
+    },
+  },
+] as const;
+
+const crmStoryIntro = {
+  en: 'This was supposed to be “a place to keep track of our providers.” Read the build log and it clearly lost the plot somewhere around phase three. A few scenes from the rampage.',
+  zh: '这本来只是「一个记录我们供应商的地方」。翻翻构建日志，大概在第三阶段就已经玩脱了。下面是这场暴走里的几个名场面。',
+} as const;
+
+const crmStories = [
+  {
+    date: 'Migration day',
+    title: { en: 'The night a fuzzy matcher saved the import', zh: '模糊匹配救回整场导入的那一夜' },
+    body: {
+      en: 'The Excel importer kept choking on provider names that were written half a dozen different ways and didn’t match anything cleanly. So a four-tier name matcher got built — exact, strip-the-code, strip-the-parens, then split-on-slash-and-match-every-piece. One re-run later, a big chunk of rows that were about to be dropped quietly walked back into the database. Nobody clapped. The matcher didn’t need applause.',
+      zh: '导入器一直被那些写法五花八门、怎么都对不上的供应商名字噎住。于是写了个四层匹配——精确、去代码、去括号、再按斜杠拆开逐段匹配。重跑一次，一大批本来要被悄悄丢掉的行，自己走回了数据库。没人鼓掌。匹配器也不需要掌声。',
+    },
+  },
+  {
+    date: 'The bug',
+    title: { en: '“in” means India now', zh: '从此「in」就是印度' },
+    body: {
+      en: 'The country parser matched two-letter ISO codes case-insensitively, which sounds fine until the word “in” inside a sentence quietly tags an entry as restricted in India. And “no” as Norway. And “at” as Austria. The fix: make two-letter matching case-SENSITIVE, UPPER-only. Long country names stay relaxed; the tiny codes now have to shout. A pile of free-text mush turned into clean, structured country tags.',
+      zh: '国家解析器原本不分大小写匹配两位 ISO 代码，听起来没事——直到句子里的「in」悄悄把某条记录标成「限制于印度」。还有「no」变挪威、「at」变奥地利。修法：两位匹配改成区分大小写、只认大写。长国名照样随意；小代码现在必须喊出来。一堆自由文本，就这样变成了干净、结构化的国家标签。',
+    },
+  },
+  {
+    date: 'Phase 9c',
+    title: { en: 'The most ceremonial DELETE in history', zh: '史上最讲排场的一次 DELETE' },
+    body: {
+      en: 'To drop a handful of legacy columns, the database first froze new writes to them, blanked the values, copied everything into a permanent archive table, added a guard script that refuses to run if anything still depends on them, demanded a readiness report come back green, AND a 24-hour window with zero legacy traffic — and only THEN ran the migration that said `DROP COLUMN`. Deleting a column has never been treated with more respect.',
+      zh: '为了删掉几列旧字段，数据库先冻结了对它们的新写入、清空数值、把一切复制进一张永久归档表、加了个「只要还有东西依赖就拒绝运行」的护栏脚本、要求就绪报告亮绿灯、还要 24 小时零旧流量——然后才跑那句 `DROP COLUMN`。删一列字段，从没被这么郑重对待过。',
+    },
+  },
+] as const;
+
+type ConwayHexCell = {
+  hexagram: number;
+  changedMask: number;
+  energy: number;
+};
+
+const CONWAY_GRID_SIZE = 8;
+const CONWAY_CELL_COUNT = CONWAY_GRID_SIZE * CONWAY_GRID_SIZE;
+
+const conwayNeighborMap = Array.from({ length: CONWAY_CELL_COUNT }, (_, index) => {
+  const row = Math.floor(index / CONWAY_GRID_SIZE);
+  const col = index % CONWAY_GRID_SIZE;
+  const neighbors: number[] = [];
+
+  for (let rowOffset = -1; rowOffset <= 1; rowOffset += 1) {
+    for (let colOffset = -1; colOffset <= 1; colOffset += 1) {
+      if (rowOffset === 0 && colOffset === 0) continue;
+      const nextRow = (row + rowOffset + CONWAY_GRID_SIZE) % CONWAY_GRID_SIZE;
+      const nextCol = (col + colOffset + CONWAY_GRID_SIZE) % CONWAY_GRID_SIZE;
+      neighbors.push(nextRow * CONWAY_GRID_SIZE + nextCol);
+    }
+  }
+
+  return neighbors;
+});
+
+const createConwayInitialCells = (): ConwayHexCell[] =>
+  Array.from({ length: CONWAY_CELL_COUNT }, (_, index) => {
+    const seed = ((index + 1) * 37 + (index % CONWAY_GRID_SIZE) * 11 + Math.floor(index / CONWAY_GRID_SIZE) * 17) & 63;
+    return {
+      hexagram: seed,
+      changedMask: 0,
+      energy: 0,
+    };
+  });
+
+const evolveConwayHexCells = (cells: ConwayHexCell[]): ConwayHexCell[] =>
+  cells.map((cell, index) => {
+    let nextHexagram = 0;
+    let changedMask = 0;
+    let energy = 0;
+
+    for (let lineIndex = 0; lineIndex < 6; lineIndex += 1) {
+      const lineMask = 1 << lineIndex;
+      const isYang = (cell.hexagram & lineMask) !== 0;
+      const neighborYangCount = conwayNeighborMap[index].reduce(
+        (count, neighborIndex) => count + ((cells[neighborIndex].hexagram & lineMask) !== 0 ? 1 : 0),
+        0,
+      );
+      const becomesYang = isYang
+        ? neighborYangCount === 2 || neighborYangCount === 3 || neighborYangCount === 5
+        : neighborYangCount === 3 || neighborYangCount === 6;
+
+      if (becomesYang) nextHexagram |= lineMask;
+      if (becomesYang !== isYang) changedMask |= lineMask;
+      energy += neighborYangCount;
+    }
+
+    return {
+      hexagram: nextHexagram,
+      changedMask,
+      energy,
+    };
+  });
+
+const ELEMENTARY_RULE_COUNT = 256;
+const ELEMENTARY_MAIN_WIDTH = 128;
+const ELEMENTARY_MAIN_HEIGHT = 72;
+const ELEMENTARY_THUMB_WIDTH = 24;
+const ELEMENTARY_THUMB_HEIGHT = 14;
+const FEATURED_ELEMENTARY_RULES = [30, 90, 110, 184] as const;
+const ELEMENTARY_NEIGHBORHOODS = ['111', '110', '101', '100', '011', '010', '001', '000'] as const;
+const I_CHING_TRIGRAMS = [
+  { bits: '111', name: { en: 'Qian', zh: '乾' }, symbol: '☰', nature: { en: 'Heaven', zh: '天' } },
+  { bits: '011', name: { en: 'Dui', zh: '兑' }, symbol: '☱', nature: { en: 'Lake', zh: '泽' } },
+  { bits: '101', name: { en: 'Li', zh: '离' }, symbol: '☲', nature: { en: 'Fire', zh: '火' } },
+  { bits: '001', name: { en: 'Zhen', zh: '震' }, symbol: '☳', nature: { en: 'Thunder', zh: '雷' } },
+  { bits: '110', name: { en: 'Xun', zh: '巽' }, symbol: '☴', nature: { en: 'Wind', zh: '风' } },
+  { bits: '010', name: { en: 'Kan', zh: '坎' }, symbol: '☵', nature: { en: 'Water', zh: '水' } },
+  { bits: '100', name: { en: 'Gen', zh: '艮' }, symbol: '☶', nature: { en: 'Mountain', zh: '山' } },
+  { bits: '000', name: { en: 'Kun', zh: '坤' }, symbol: '☷', nature: { en: 'Earth', zh: '地' } },
+] as const;
+
+const getIChingTrigram = (bits: string) => I_CHING_TRIGRAMS.find((item) => item.bits === bits) ?? I_CHING_TRIGRAMS[0];
+
+const I_CHING_RULE_PHASES = [
+  {
+    bits: '00',
+    name: { en: 'Still', zh: '静卦' },
+    note: { en: 'base hexagram', zh: '基础卦象' },
+    changingLines: [] as number[],
+  },
+  {
+    bits: '01',
+    name: { en: 'Lower moving', zh: '下卦动' },
+    note: { en: 'lines 1-3 are in motion', zh: '一至三爻进入变化' },
+    changingLines: [1, 2, 3],
+  },
+  {
+    bits: '10',
+    name: { en: 'Upper moving', zh: '上卦动' },
+    note: { en: 'lines 4-6 are in motion', zh: '四至六爻进入变化' },
+    changingLines: [4, 5, 6],
+  },
+  {
+    bits: '11',
+    name: { en: 'Full change', zh: '通卦动' },
+    note: { en: 'all six lines are in motion', zh: '六爻全部进入变化' },
+    changingLines: [1, 2, 3, 4, 5, 6],
+  },
+] as const;
+
+const getRuleHexagramBits = (rule: number) => (rule & 63).toString(2).padStart(6, '0');
+
+const getRuleIChingPhase = (rule: number) => I_CHING_RULE_PHASES[rule >> 6] ?? I_CHING_RULE_PHASES[0];
+
+const createElementaryRuleCells = (rule: number, width: number, height: number, offset = 0): boolean[] => {
+  let row = Array.from({ length: width }, (_, index) => index === Math.floor(width / 2));
+  const cells: boolean[] = [];
+
+  for (let y = 0; y < offset; y += 1) {
+    row = row.map((center, x) => {
+      const left = row[(x - 1 + width) % width];
+      const right = row[(x + 1) % width];
+      const neighborhood = (left ? 4 : 0) | (center ? 2 : 0) | (right ? 1 : 0);
+      return ((rule >> neighborhood) & 1) === 1;
+    });
+  }
+
+  for (let y = 0; y < height; y += 1) {
+    cells.push(...row);
+    row = row.map((center, x) => {
+      const left = row[(x - 1 + width) % width];
+      const right = row[(x + 1) % width];
+      const neighborhood = (left ? 4 : 0) | (center ? 2 : 0) | (right ? 1 : 0);
+      return ((rule >> neighborhood) & 1) === 1;
+    });
+  }
+
+  return cells;
+};
+
+const createElementaryRuleSvgDataUri = (rule: number, width: number, height: number, offset = 0): string => {
+  const cells = createElementaryRuleCells(rule, width, height, offset);
+  const rects: string[] = [];
+
+  cells.forEach((active, index) => {
+    if (!active) return;
+    const x = index % width;
+    const y = Math.floor(index / width);
+    rects.push(`<rect x="${x}" y="${y}" width="1" height="1"/>`);
+  });
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}" shape-rendering="crispEdges"><rect width="${width}" height="${height}" fill="white"/><g fill="black">${rects.join('')}</g></svg>`;
+  return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+};
+
+const ConwayHexagramGlyph: React.FC<{ cell: ConwayHexCell; index: number }> = ({ cell, index }) => (
+  <article
+    className="conway-cell"
+    style={
+      {
+        '--energy': cell.energy,
+        '--order': index,
+      } as React.CSSProperties
+    }
+    aria-label={`Hexagram cell ${index + 1}, state ${cell.hexagram + 1}`}
+  >
+    <div className="conway-cell-meta">
+      <span>{String(index + 1).padStart(2, '0')}</span>
+      <span>{String(cell.hexagram + 1).padStart(2, '0')}</span>
+    </div>
+    <div className="conway-hexagram" aria-hidden>
+      {Array.from({ length: 6 }, (_, visualIndex) => {
+        const lineIndex = 5 - visualIndex;
+        const lineMask = 1 << lineIndex;
+        const isYang = (cell.hexagram & lineMask) !== 0;
+        const changed = (cell.changedMask & lineMask) !== 0;
+        return (
+          <span
+            key={lineIndex}
+            className={`conway-line ${isYang ? 'conway-line-yang' : 'conway-line-yin'} ${
+              changed ? 'conway-line-changing' : ''
+            }`}
+          />
+        );
+      })}
+    </div>
+  </article>
+);
+
+const ElementaryRulePattern: React.FC<{
+  rule: number;
+  width: number;
+  height: number;
+  offset?: number;
+  className?: string;
+}> = ({ rule, width, height, offset = 0, className = '' }) => {
+  const backgroundImage = React.useMemo(
+    () => createElementaryRuleSvgDataUri(rule, width, height, offset),
+    [rule, width, height, offset],
+  );
+
+  return (
+    <div
+      className={`elementary-rule-grid ${className}`.trim()}
+      style={
+        {
+          '--rule-columns': width,
+          backgroundImage,
+        } as React.CSSProperties
+      }
+      aria-hidden
+    />
+  );
+};
+
+const ElementaryRuleThumb: React.FC<{
+  rule: number;
+  selected: boolean;
+  onSelect: (rule: number) => void;
+}> = ({ rule, selected, onSelect }) => (
+  <button
+    type="button"
+    className={`elementary-rule-thumb ${selected ? 'is-selected' : ''}`}
+    onClick={() => onSelect(rule)}
+    aria-pressed={selected}
+    aria-label={`Rule ${rule}`}
+  >
+    <ElementaryRulePattern rule={rule} width={ELEMENTARY_THUMB_WIDTH} height={ELEMENTARY_THUMB_HEIGHT} className="elementary-rule-thumb-grid" />
+    <span>{String(rule).padStart(3, '0')}</span>
+  </button>
+);
+
+const IChingRuleReadout: React.FC<{ rule: number; binary: string; language: Language }> = ({ rule, binary, language }) => {
+  const hexagramBits = getRuleHexagramBits(rule);
+  const phase = getRuleIChingPhase(rule);
+  const upperBits = hexagramBits.slice(0, 3);
+  const lowerBits = hexagramBits.slice(3, 6);
+  const lower = getIChingTrigram(lowerBits);
+  const upper = getIChingTrigram(upperBits);
+  const yangCount = [...hexagramBits].filter((bit) => bit === '1').length;
+  const phaseBits = binary.slice(0, 2);
+  const changingLines: readonly number[] = phase.changingLines;
+  const isZh = language === 'zh';
+
+  return (
+    <div className="iching-rule-readout">
+      <div className="iching-rule-head">
+        <p className="elementary-rule-label">{isZh ? '易经读数' : 'I Ching layer'}</p>
+        <strong>{upper.symbol}{lower.symbol}</strong>
+      </div>
+      <div className="iching-hexagram-lines" aria-label={isZh ? '六爻卦象' : 'Six-line hexagram'}>
+        {[...hexagramBits].map((bit, index) => {
+          const lineNumber = 6 - index;
+          const isChanging = changingLines.includes(lineNumber);
+          return (
+            <span
+              key={`${bit}-${index}`}
+              className={`${bit === '1' ? 'is-yang' : 'is-yin'} ${isChanging ? 'is-changing' : ''}`}
+            />
+          );
+        })}
+      </div>
+      <div className="iching-trigram-grid">
+        <div>
+          <span>{isZh ? '上卦' : 'Upper'}</span>
+          <b>{upper.name[language]} / {upper.nature[language]}</b>
+        </div>
+        <div>
+          <span>{isZh ? '下卦' : 'Lower'}</span>
+          <b>{lower.name[language]} / {lower.nature[language]}</b>
+        </div>
+        <div>
+          <span>Phase {phaseBits}</span>
+          <b>{phase.name[language]} / {phase.note[language]}</b>
+        </div>
+        <div>
+          <span>{isZh ? '卦码' : 'Hex bits'}</span>
+          <b>{hexagramBits}</b>
+        </div>
+      </div>
+      <p className="iching-rule-note">
+        {isZh
+          ? `阳爻 ${yangCount}/6。Rule 的低 6 位决定六爻；高 2 位决定 phase，所以 000 与 001 会读成不同卦。`
+          : `${yangCount}/6 yang lines. The low six rule bits form the hexagram; the high two bits set the phase, so 000 and 001 read differently.`}
+      </p>
+      <p className="iching-changing-lines">
+        {isZh ? '变爻位' : 'Changing lines'}: {changingLines.length ? changingLines.join(' / ') : '0'}
+      </p>
+    </div>
+  );
+};
+
+const ElementaryRuleViewer: React.FC<{
+  rule: number;
+  generation: number;
+  language: Language;
+}> = ({ rule, generation, language }) => {
+  const binary = rule.toString(2).padStart(8, '0');
+
+  return (
+    <section className="elementary-rule-viewer" aria-label={`Rule ${rule} preview`}>
+      <div
+        className="elementary-rule-stage"
+        aria-label={`Elementary cellular automata rule ${rule}`}
+      >
+        <ElementaryRulePattern
+          rule={rule}
+          width={ELEMENTARY_MAIN_WIDTH}
+          height={ELEMENTARY_MAIN_HEIGHT}
+          offset={generation}
+          className="elementary-rule-main-grid"
+        />
+      </div>
+
+      <aside className="elementary-rule-readout">
+        <div>
+          <p className="elementary-rule-label">Rule</p>
+          <strong>{String(rule).padStart(3, '0')}</strong>
+        </div>
+        <div>
+          <p className="elementary-rule-label">Binary</p>
+          <code>{binary}</code>
+        </div>
+        <div className="elementary-neighborhoods">
+          {ELEMENTARY_NEIGHBORHOODS.map((neighborhood, index) => (
+            <div key={neighborhood}>
+              <span>{neighborhood}</span>
+              <i className={binary[index] === '1' ? 'is-active' : undefined} />
+            </div>
+          ))}
+        </div>
+        <IChingRuleReadout rule={rule} binary={binary} language={language} />
+      </aside>
+    </section>
+  );
+};
+
+const ConwayGameOfLifeFullPage: React.FC<{
+  homeHref: string;
+  language: Language;
+  setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
+  theme: Theme;
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ homeHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
+  const isZh = language === 'zh';
+  const [selectedRule, setSelectedRule] = React.useState(30);
+  const [generation, setGeneration] = React.useState(0);
+  const [isRunning, setIsRunning] = React.useState(true);
+
+  React.useEffect(() => {
+    if (!isRunning) return undefined;
+    const intervalId = window.setInterval(() => {
+      setGeneration((currentGeneration) => currentGeneration + 1);
+    }, 720);
+
+    return () => window.clearInterval(intervalId);
+  }, [isRunning]);
+
+  const selectRule = (rule: number) => {
+    setSelectedRule(rule);
+    setGeneration(0);
+  };
+
+  return (
+    <div className="page-shell conway-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
+      <main className="conway-rules-page">
+        <div className="conway-rules-shell">
+          <div className="conway-rules-topbar">
+            <a href={homeHref} className="conway-back-link inline-flex items-center gap-2 text-sm font-medium">
+              <ArrowLeft size={16} />
+              {isZh ? '返回主页' : 'Back to Home'}
+            </a>
+          <HeaderControls
+            language={language}
+            setLanguage={setLanguage}
+            themePreference={themePreference}
+            theme={theme}
+            setThemePreference={setThemePreference}
+          />
+          </div>
+
+          <header className="conway-rules-header">
+            <div className="conway-rules-copy">
+              <p className="conway-kicker">Elementary cellular automata</p>
+              <h1 className="conway-rules-title font-display font-bold tracking-tight">
+                {isZh ? '256 个规则' : '256 rules'}
+              </h1>
+              <p className="conway-rules-subtitle">
+                {isZh
+                  ? '把 8-bit 规则转成黑白生长图案：一个规则，一种秩序。'
+                  : 'Turn each 8-bit rule into a black-and-white growth pattern: one rule, one order.'}
+              </p>
+            </div>
+            <div className="conway-rules-controls">
+              <button type="button" className="conway-control-button" onClick={() => setIsRunning((value) => !value)}>
+                {isRunning ? <Pause size={16} /> : <Play size={16} />}
+                <span>{isRunning ? (isZh ? '暂停' : 'Pause') : isZh ? '继续' : 'Run'}</span>
+              </button>
+              <button
+                type="button"
+                className="conway-control-button conway-control-button-muted"
+                onClick={() => setGeneration(0)}
+              >
+                <RotateCcw size={16} />
+                <span>{isZh ? '重置' : 'Reset'}</span>
+              </button>
+            </div>
+          </header>
+
+          <ElementaryRuleViewer rule={selectedRule} generation={generation} language={language} />
+
+          <div className="elementary-featured-rules" aria-label={isZh ? '常见规则' : 'Featured rules'}>
+            {FEATURED_ELEMENTARY_RULES.map((rule) => (
+              <button
+                key={rule}
+                type="button"
+                className={selectedRule === rule ? 'is-selected' : ''}
+                onClick={() => selectRule(rule)}
+              >
+                Rule {rule}
+              </button>
+            ))}
+          </div>
+
+          <section className="elementary-rule-index" aria-label={isZh ? '256 个 elementary cellular automata 规则' : '256 elementary cellular automata rules'}>
+            {Array.from({ length: ELEMENTARY_RULE_COUNT }, (_, rule) => (
+              <ElementaryRuleThumb key={rule} rule={rule} selected={selectedRule === rule} onSelect={selectRule} />
+            ))}
+          </section>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+const CrmFullPage: React.FC<{
+  homeHref: string;
+  projectsHref: string;
+  language: Language;
+  setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
+  theme: Theme;
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ homeHref, projectsHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
+  const isZh = language === 'zh';
+
+  return (
+    <div className="page-shell etreport-page poker-page crm-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
+      <main className="px-5 py-8 md:px-8 md:py-10">
+        <div className="mx-auto max-w-5xl">
+          <div className="etreport-topbar flex flex-wrap items-center justify-between gap-3">
+            <a href={projectsHref} className="etreport-back-link inline-flex items-center gap-2 text-sm font-medium">
+              <ArrowLeft size={16} />
+              {isZh ? '返回 Projects' : 'Back to Projects'}
+            </a>
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
+          </div>
+
+          <header className="etreport-hero py-16 text-center md:py-24">
+            <p className="etreport-kicker mx-auto">{isZh ? 'CRM Intelligence System' : 'CRM Intelligence System'}</p>
+            <h1 className="etreport-title mx-auto mt-5 font-display font-bold tracking-tight">
+              {isZh ? '本来只想要个表格。结果搭了个大脑。' : 'We wanted a spreadsheet. We built a brain.'}
+            </h1>
+            <p className="etreport-subtitle mx-auto mt-5">
+              {isZh
+                ? '一个后台 CRM：把一整门生意从一堆乱到犯法的 Excel 里捞出来——供应商、商户、账号、费率、地区规则——整理成一个连在一起的数据库，然后就一发不可收拾了。状态：据说还「在设计中」。'
+                : 'A back-office CRM that pulls a whole business out of a pile of criminally messy Excel — providers, merchants, accounts, rates, coverage rules — and wires it into one connected database. Then it kept going. Status: allegedly still “in design.”'}
+            </p>
+            <div className="mt-7 flex flex-wrap justify-center gap-5">
+              <a href="#crm-stack" className="etreport-text-cta">
+                {isZh ? '看它吃了什么' : 'See what it ate'} <span aria-hidden>›</span>
+              </a>
+              <a href="#crm-wild" className="etreport-text-cta etreport-text-cta-muted">
+                {isZh ? '没人要它做的功能' : 'Things nobody asked for'} <span aria-hidden>›</span>
+              </a>
+              <a href="#crm-story" className="etreport-text-cta etreport-text-cta-muted">
+                {isZh ? '几个名场面' : 'A few war stories'} <span aria-hidden>›</span>
+              </a>
+            </div>
+          </header>
+
+          <section id="crm-stack" className="etreport-console-panel">
+            <div className="etreport-console-copy">
+              <p className="etreport-kicker">{isZh ? 'What it ate' : 'What it ate'}</p>
+              <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
+                {isZh ? '它把整个生意从 Excel 里吃了进去。' : 'It ate the whole business out of Excel.'}
+              </h2>
+              <p>
+                {isZh
+                  ? '供应商、供应商账号、商户、产品、登录、费率、地区规则——以前散在几十张表里，现在全在一个标准化的 Postgres 数据库里，连着审计日志、加密和权限。'
+                  : 'Providers, vendors, merchants, products, logins, rates, coverage rules — once scattered across dozens of sheets, now in one normalized Postgres database with audit logs, encryption, and access control bolted on.'}
+              </p>
+            </div>
+            <div className="etreport-console-metrics">
+              {crmConsoleRows.map(([label, value]) => (
+                <div key={label} className="etreport-console-row">
+                  <span>{label}</span>
+                  <strong>{value[language]}</strong>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? 'What it actually is' : 'What it actually is'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '说白了，它是这门生意的操作大脑。' : 'Basically, it’s the operating brain for the whole business.'}
+              </h2>
+            </div>
+            <div className="mt-12 grid gap-5 md:grid-cols-3">
+              {crmValueProps.map((item) => (
+                <article key={item.title.en} className="etreport-value-card">
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.title[language]}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section id="crm-wild" className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? 'Built anyway' : 'Built anyway'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '没人要求，但它就是有的东西。' : 'Things nobody asked for, but it has anyway.'}
+              </h2>
+            </div>
+            <div className="etreport-module-grid mt-12">
+              {crmWildFeatures.map((item) => (
+                <article key={item.title} className="etreport-module-card">
+                  <h3 className="font-display text-3xl font-bold tracking-tight">{item.title}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section id="crm-story" className="etreport-section py-16 md:py-24">
+            <div className="poker-story-panel">
+              <div className="poker-story-head">
+                <p className="etreport-kicker">{isZh ? 'Build log, dramatized' : 'Build log, dramatized'}</p>
+                <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
+                  {isZh ? '从「记录供应商」到完全玩脱。' : 'From “track our providers” to total chaos.'}
+                </h2>
+                <p className="poker-story-intro">{crmStoryIntro[language]}</p>
+              </div>
+              <div className="poker-story-list">
+                {crmStories.map((item) => (
+                  <article key={item.title.en} className="poker-story-item">
+                    <p className="poker-story-date">{item.date}</p>
+                    <h3 className="poker-story-title font-display text-2xl font-bold tracking-tight md:text-3xl">
+                      {item.title[language]}
+                    </h3>
+                    <p className="poker-story-body">{item.body[language]}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="etreport-section pb-20 pt-10">
+            <div className="etreport-final-panel">
+              <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
+                {isZh ? '它没有公开链接。它住在某台机器的 localhost 上，过得很好。' : 'There’s no public link. It lives on a localhost somewhere, thriving.'}
+              </h2>
+              <p>
+                {isZh
+                  ? '这是内部后台工具——管的是真实的供应商、商户和账号，所以不对外开。它最能说明的不是「会不会做 CRM」，而是愿不愿意为了一个干净的数据库，把一件小事做到过度认真。'
+                  : 'It’s an internal back-office tool — it manages real providers, merchants, and accounts, so it stays private. What it really shows isn’t “can you build a CRM,” it’s the willingness to take one small thing way too seriously for the sake of a clean database.'}
+              </p>
+              <div className="mt-7 flex flex-wrap gap-5">
+                <a href={projectsHref} className="etreport-text-cta">
+                  {isZh ? '回 Projects' : 'Back to Projects'} <span aria-hidden>›</span>
+                </a>
+                <a href={homeHref} className="etreport-text-cta etreport-text-cta-muted">
+                  {isZh ? '回主页' : 'Back home'} <span aria-hidden>›</span>
+                </a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  );
+};
+
 const AnalogTechFullPage: React.FC<{
   homeHref: string;
   baseUrl: string;
@@ -1554,14 +4171,16 @@ const AnalogTechFullPage: React.FC<{
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
 }> = ({ homeHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
+  const heroPhoto = analogTechGalleryPhotos[0];
+  const secondaryPhotos = analogTechGalleryPhotos.slice(1);
   return (
-    <div className="page-shell min-h-screen text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
-      <main className="px-6 py-12 md:py-16">
-        <div className="mx-auto max-w-4xl">
-          <div className="flex flex-wrap items-center justify-between gap-3">
+    <div className="page-shell film-gallery-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
+      <main className="px-5 py-8 md:px-8 md:py-10">
+        <div className="mx-auto max-w-6xl">
+          <div className="film-gallery-topbar flex flex-wrap items-center justify-between gap-3">
             <a
               href={homeHref}
-              className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 transition-colors hover:border-stone-900 hover:text-stone-900"
+              className="film-gallery-back-link inline-flex items-center gap-2 text-sm font-medium"
             >
               <ArrowLeft size={16} />
               {isZh ? '返回主页' : 'Back to Home'}
@@ -1575,38 +4194,58 @@ const AnalogTechFullPage: React.FC<{
             />
           </div>
 
-          <section className="motion-card mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-wider text-stone-500">
-              {isZh ? '模拟科技' : 'Analog Tech'}
+          <header className="film-gallery-hero py-16 text-center md:py-24">
+            <p className="film-gallery-kicker mx-auto">
+              {isZh ? 'Analog Tech / Film Archive' : 'Analog Tech / Film Archive'}
             </p>
-            <h1 className="mt-2 font-display text-4xl font-bold tracking-tight text-stone-900 md:text-5xl">
-              {isZh ? '胶片图库' : 'Film Gallery'}
+            <h1 className="film-gallery-title mx-auto mt-5 font-display font-bold tracking-tight">
+              {isZh ? 'Film Gallery' : 'Film Gallery'}
             </h1>
-            <p className="mt-4 text-base leading-relaxed text-stone-700">
+            <p className="film-gallery-subtitle mx-auto mt-5">
               {isZh
-                ? '我仍用 35mm 与部分中画幅做日常练习。这一角是档案里的私人选集：街面、水岸、山海之间与零星建筑，不是为 brief 而铺陈；更像把「如何在场」用化学与曝光诚实写下来。'
-                : 'I still keep a 35mm and occasional medium-format practice. This is a private edit from that archive: streets, waterlines, the coast, and a few building studies—less a “portfolio deck,” more an honest log of how attention lands on a frame.'}
+                ? 'A quiet archive of light, grain, waterlines, buildings, and the way attention lands on a frame.'
+                : 'A quiet archive of light, grain, waterlines, buildings, and the way attention lands on a frame.'}
             </p>
-            <p className="mt-3 text-sm leading-relaxed text-stone-600">
+            <p className="film-gallery-copy mx-auto mt-5">
               {isZh
-                ? '乳剂带来的颗粒、漏光与软高光，我都当作可读的材质，不是必须修掉的杂讯。下面 11 张，按情绪与结构线索挑出来，不追求“唯一正确”的完整系列。'
-                : 'Soft highlights, uneven grain, and the occasional light leak are part of the material for me, not glitches to erase. The eleven images below are chosen for line and mood rather than a single, exhaustive “set.”'}
+                ? '这里不解释每张图。只保留画面、顺序和呼吸感。胶片里的颗粒、软高光和偶然漏光，是材料本身，不是需要被修掉的噪音。'
+                : 'No frame-by-frame explanation here. Only image, sequence, and breathing room. Grain, soft highlights, and occasional light leaks are treated as material, not noise to remove.'}
             </p>
+          </header>
+
+          <section className="film-gallery-feature">
+            {heroPhoto && (
+              <figure className="film-gallery-hero-frame">
+                <img
+                  src={resolveAssetPath(baseUrl, heroPhoto.src)}
+                  alt={heroPhoto.alt[language]}
+                />
+              </figure>
+            )}
           </section>
 
-          <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
-            {analogTechGalleryPhotos.map((photo) => (
-              <figure key={photo.src} className="motion-card overflow-hidden rounded-xl border border-stone-200 bg-white shadow-sm">
-                <img
-                  src={resolveAssetPath(baseUrl, photo.src)}
-                  alt={photo.alt[language]}
-                  className="h-80 w-full object-cover"
-                  loading="lazy"
-                />
-                <figcaption className="px-4 py-3 text-sm text-stone-600">{photo.caption[language]}</figcaption>
-              </figure>
-            ))}
-          </div>
+          <section className="film-gallery-section py-16 md:py-24">
+            <div className="film-gallery-section-head">
+              <p className="film-gallery-kicker">{isZh ? 'Selected frames' : 'Selected frames'}</p>
+              <h2 className="film-gallery-section-title font-display font-bold tracking-tight">
+                {isZh ? '少一点说明，多一点停留。' : 'Less explanation. More looking.'}
+              </h2>
+            </div>
+            <div className="film-gallery-grid mt-12">
+              {secondaryPhotos.map((photo, index) => (
+                <figure
+                  key={photo.src}
+                  className="film-gallery-frame"
+                >
+                  <img
+                    src={resolveAssetPath(baseUrl, photo.src)}
+                    alt={photo.alt[language]}
+                    loading="lazy"
+                  />
+                </figure>
+              ))}
+            </div>
+          </section>
         </div>
       </main>
     </div>
@@ -1622,14 +4261,16 @@ const LifeFullPage: React.FC<{
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
 }> = ({ homeHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
+  const [featuredVideo, ...archiveVideos] = lifeVideos;
+
   return (
-    <div className="page-shell min-h-screen text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
-      <main className="px-6 py-12 md:py-16">
-        <div className="mx-auto max-w-4xl">
-          <div className="flex flex-wrap items-center justify-between gap-3">
+    <div className="page-shell life-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
+      <main className="px-5 py-8 md:px-8 md:py-10">
+        <div className="life-shell mx-auto">
+          <div className="life-topbar flex flex-wrap items-center justify-between gap-3">
             <a
               href={homeHref}
-              className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 transition-colors hover:border-stone-900 hover:text-stone-900"
+              className="life-back-link inline-flex items-center gap-2 text-sm font-medium"
             >
               <ArrowLeft size={16} />
               {isZh ? '返回主页' : 'Back to Home'}
@@ -1643,47 +4284,92 @@ const LifeFullPage: React.FC<{
             />
           </div>
 
-          <section className="motion-card mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-wider text-stone-500">{isZh ? '生活' : 'Life'}</p>
-            <h1 className="mt-2 font-display text-4xl font-bold tracking-tight text-stone-900 md:text-5xl">
-              {isZh ? '探索视频档案' : 'Adventure Video Archive'}
+          <header className="life-hero py-16 text-center md:py-24">
+            <p className="life-kicker mx-auto">{isZh ? 'Life Notes / Video field' : 'Life Notes / Video field'}</p>
+            <h1 className="life-title mx-auto mt-5 font-display font-bold tracking-tight">
+              {isZh ? '出门的时候，系统先安静下来。' : 'When life leaves the desk.'}
             </h1>
-            <p className="mt-4 text-base leading-relaxed text-stone-700">
-              {isZh ? '记录旅行与水上活动片段的个人视频集合。' : 'A personal collection of travel and water activity moments.'}
+            <p className="life-subtitle mx-auto mt-5">
+              {isZh
+                ? '不是旅行广告，也不是打卡清单。只是把海、风、岛和路上的片段，收进一个可以回看的生活档案。'
+                : 'Not travel advertising. Not a checklist. A small archive of sea, wind, islands, and the parts of life worth replaying.'}
             </p>
+            <div className="life-hero-actions mt-7 flex flex-wrap justify-center gap-5">
+              <a href="#life-feature" className="life-text-cta">
+                {isZh ? '看主片段' : 'Watch feature'} <span aria-hidden>›</span>
+              </a>
+              <a href="#life-archive" className="life-text-cta life-text-cta-muted">
+                {isZh ? '看全部档案' : 'View archive'} <span aria-hidden>›</span>
+              </a>
+            </div>
+          </header>
+
+          <section id="life-feature" className="life-feature-grid">
+            <div className="life-feature-copy">
+              <p className="life-kicker">{isZh ? 'Featured field note' : 'Featured field note'}</p>
+              <h2 className="font-display font-bold tracking-tight">{featuredVideo.title[language]}</h2>
+              <p>
+                {isZh
+                  ? '先放最大的一段。让画面比说明更早出现，页面只负责给它一个安静的观看位置。'
+                  : 'The first clip gets the largest stage. Let the footage arrive before the explanation, with the page giving it a quiet place to breathe.'}
+              </p>
+              <a href={featuredVideo.href} target="_blank" rel="noopener noreferrer" className="life-text-cta">
+                {isZh ? '在 YouTube 打开' : 'Open on YouTube'} <ExternalLink size={15} />
+              </a>
+            </div>
+            <div className="life-feature-stage">
+              <iframe
+                src={featuredVideo.embedSrc}
+                title={`${featuredVideo.title[language]} YouTube player`}
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </div>
           </section>
 
-          <div className="mt-6 space-y-5">
-            {lifeVideos.map((video) => (
-              <section key={video.href} className="motion-card rounded-2xl border border-stone-200 bg-white p-5 md:p-6 shadow-sm">
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                  <h2 className="font-display text-2xl font-bold text-stone-900">{video.title[language]}</h2>
-                  <a
-                    href={video.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm font-medium text-stone-600 transition-colors hover:text-stone-900"
-                  >
-                    {isZh ? '在 YouTube 打开' : 'Open on YouTube'}
-                    <ExternalLink size={14} />
+          <section id="life-archive" className="life-section py-16 md:py-24">
+            <div className="life-section-head">
+              <p className="life-kicker">{isZh ? 'Small archive' : 'Small archive'}</p>
+              <h2 className="life-section-title font-display font-bold tracking-tight">
+                {isZh ? '留下来的，不一定是最完整的旅程。' : 'The saved parts are not always the whole trip.'}
+              </h2>
+              <p className="life-section-copy">
+                {isZh
+                  ? '这些片段更像生活里的样本：一个海岛、一段浪、一种离开日常之后身体重新醒来的节奏。'
+                  : 'These clips work like field samples: an island, a wave, a rhythm where the body wakes up outside the usual routine.'}
+              </p>
+            </div>
+            <div className="life-archive-grid mt-12">
+              {archiveVideos.map((video, index) => (
+                <article key={video.href} className="life-video-card">
+                  <a href={video.href} target="_blank" rel="noopener noreferrer" className="life-video-thumb" aria-label={`${isZh ? '在 YouTube 打开' : 'Open on YouTube'} ${video.title[language]}`}>
+                    <img src={video.thumbnailSrc} alt="" loading="lazy" />
+                    <span className="life-play-mark" aria-hidden>
+                      <span />
+                    </span>
                   </a>
-                </div>
-                <div className="mt-4 overflow-hidden rounded-xl border border-stone-200 bg-black">
-                  <div className="relative aspect-video w-full">
-                    <iframe
-                      src={video.embedSrc}
-                      title={`${video.title[language]} YouTube player`}
-                      className="h-full w-full"
-                      loading="lazy"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerPolicy="strict-origin-when-cross-origin"
-                      allowFullScreen
-                    />
+                  <div className="life-video-copy">
+                    <p className="life-video-index">{String(index + 2).padStart(2, '0')}</p>
+                    <h3 className="font-display font-bold tracking-tight">{video.title[language]}</h3>
+                    <a href={video.href} target="_blank" rel="noopener noreferrer" className="life-text-cta life-text-cta-muted">
+                      {isZh ? '在 YouTube 打开' : 'Open on YouTube'} <ExternalLink size={14} />
+                    </a>
                   </div>
-                </div>
-              </section>
-            ))}
-          </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="life-note">
+            <p className="life-kicker">{isZh ? 'Editorial rule' : 'Editorial rule'}</p>
+            <p>
+              {isZh
+                ? 'Life 页面不需要解释太多。画面负责记忆，文字只负责给它一个位置。'
+                : 'The Life page does not need to explain too much. Footage holds the memory. Words only give it a place.'}
+            </p>
+          </section>
         </div>
       </main>
     </div>
@@ -1698,7 +4384,7 @@ const LifeOsIcon: React.FC<{ src: string; alt: string; size?: 'sm' | 'md' | 'lg'
       src={src}
       alt={alt}
       loading="lazy"
-      className={`${sizeClass} flex-none rounded-xl border border-stone-200 bg-stone-900 object-cover shadow-sm ring-1 ring-eden-mint/15`}
+      className={`life-os-icon-frame ${sizeClass} flex-none rounded-xl object-cover shadow-sm ring-1 ring-eden-mint/15`}
     />
   );
 };
@@ -1710,19 +4396,145 @@ const LifeOsBanner: React.FC<{
   caption: string;
   className?: string;
 }> = ({ src, alt, label, caption, className = '' }) => (
-  <figure className={`relative mt-5 overflow-hidden rounded-xl border border-stone-200 bg-stone-900 shadow-sm ${className}`}>
+  <figure className={`life-os-banner-frame relative mt-5 overflow-hidden rounded-xl shadow-sm ${className}`}>
     <div className="aspect-[16/9] w-full sm:aspect-[8/3]">
       <img src={src} alt={alt} loading="lazy" className="h-full w-full object-cover" />
     </div>
-    <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-stone-950/90 via-stone-950/55 to-transparent px-3 pb-3 pt-12 text-white sm:px-4 sm:pb-4 sm:pt-16">
+    <figcaption className="life-os-banner-caption absolute inset-x-0 bottom-0 px-3 pb-3 pt-12 sm:px-4 sm:pb-4 sm:pt-16">
       <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-eden-amber sm:text-[10px] sm:tracking-[0.28em]">{label}</p>
-      <p className="mt-1 text-xs leading-relaxed text-stone-100 sm:text-sm">{caption}</p>
+      <p className="mt-1 text-xs leading-relaxed text-stone-800 sm:text-sm">{caption}</p>
     </figcaption>
   </figure>
 );
 
+const lifeRpgSignalVisualKeys = {
+  'WIND-57': 'wind',
+  'PHASE-RULE': 'rule',
+  'EXPLORE-05': 'explore',
+  'BLADE-LIGHT': 'blade',
+  'BODY-YES': 'body',
+  ABSTRACT: 'abstract',
+} as const;
+
+const getLifeRpgSignalVisualKey = (code: string) =>
+  lifeRpgSignalVisualKeys[code as keyof typeof lifeRpgSignalVisualKeys] ?? 'wind';
+
+const LifeRpgSignalCssIcon: React.FC<{
+  signal: (typeof lifeRpgDecodeSignals)[number];
+  label: string;
+}> = ({ signal, label }) => {
+  const visualKey = getLifeRpgSignalVisualKey(signal.code);
+
+  return (
+    <div className={`life-rpg-signal-css-icon life-rpg-signal-${visualKey}`} role="img" aria-label={label}>
+      <span className="life-rpg-signal-grid" />
+      <span className="life-rpg-signal-arc life-rpg-signal-arc-a" />
+      <span className="life-rpg-signal-arc life-rpg-signal-arc-b" />
+      <span className="life-rpg-signal-vector life-rpg-signal-vector-a" />
+      <span className="life-rpg-signal-vector life-rpg-signal-vector-b" />
+      <span className="life-rpg-signal-node life-rpg-signal-node-a" />
+      <span className="life-rpg-signal-node life-rpg-signal-node-b" />
+      <span className="life-rpg-signal-node life-rpg-signal-node-c" />
+      <span className="life-rpg-signal-icon-orbit" />
+      <span className="life-rpg-signal-icon-mark" />
+      <span className="life-rpg-signal-icon-core">{signal.emoji}</span>
+    </div>
+  );
+};
+
+const LifeRpgWindInfiltrationStrip: React.FC<{ label: string }> = ({ label }) => (
+  <div className="life-rpg-wind-strip" role="img" aria-label={label}>
+    <span className="life-rpg-wind-sea" />
+    <span className="life-rpg-wind-wave life-rpg-wind-wave-a" />
+    <span className="life-rpg-wind-wave life-rpg-wind-wave-b" />
+    <span className="life-rpg-wind-mountain life-rpg-wind-mountain-a" />
+    <span className="life-rpg-wind-mountain life-rpg-wind-mountain-b" />
+    <span className="life-rpg-wind-mountain-snow life-rpg-wind-mountain-snow-a" />
+    <span className="life-rpg-wind-mountain-snow life-rpg-wind-mountain-snow-b" />
+    <span className="life-rpg-wind-island" />
+    <span className="life-rpg-wind-beach" />
+    <span className="life-rpg-wind-palm life-rpg-wind-palm-a" />
+    <span className="life-rpg-wind-palm life-rpg-wind-palm-b" />
+    <span className="life-rpg-wind-cloud-face">
+      <span className="life-rpg-wind-cloud-highlight" />
+      <span className="life-rpg-wind-cloud-eye life-rpg-wind-cloud-eye-a" />
+      <span className="life-rpg-wind-cloud-eye life-rpg-wind-cloud-eye-b" />
+      <span className="life-rpg-wind-cloud-nose" />
+      <span className="life-rpg-wind-cloud-cheek life-rpg-wind-cloud-cheek-a" />
+      <span className="life-rpg-wind-cloud-cheek life-rpg-wind-cloud-cheek-b" />
+      <span className="life-rpg-wind-cloud-mouth" />
+    </span>
+    <span className="life-rpg-wind-cloud-puff life-rpg-wind-cloud-puff-a" />
+    <span className="life-rpg-wind-cloud-puff life-rpg-wind-cloud-puff-b" />
+    <span className="life-rpg-wind-cloud-puff life-rpg-wind-cloud-puff-c" />
+    <span className="life-rpg-wind-cloud-breath life-rpg-wind-cloud-breath-a" />
+    <span className="life-rpg-wind-cloud-breath life-rpg-wind-cloud-breath-b" />
+    <span className="life-rpg-wind-cloud-breath life-rpg-wind-cloud-breath-c" />
+    <span className="life-rpg-wind-spray life-rpg-wind-spray-a" />
+    <span className="life-rpg-wind-spray life-rpg-wind-spray-b" />
+  </div>
+);
+
+const LifeRpgRuleContractStrip: React.FC<{ label: string }> = ({ label }) => (
+  <div className="life-rpg-contract-strip" role="img" aria-label={label}>
+    <span className="life-rpg-contract-desk" />
+    <span className="life-rpg-contract-paper">
+      <span className="life-rpg-contract-line life-rpg-contract-line-a" />
+      <span className="life-rpg-contract-line life-rpg-contract-line-b" />
+      <span className="life-rpg-contract-line life-rpg-contract-line-c" />
+      <span className="life-rpg-contract-signature">
+        <span className="life-rpg-contract-sign-stroke life-rpg-contract-sign-stroke-a" />
+        <span className="life-rpg-contract-sign-stroke life-rpg-contract-sign-stroke-b" />
+        <span className="life-rpg-contract-sign-stroke life-rpg-contract-sign-stroke-c" />
+        <span className="life-rpg-contract-sign-stroke life-rpg-contract-sign-stroke-d" />
+      </span>
+    </span>
+    <span className="life-rpg-contract-pen" />
+    <span className="life-rpg-contract-stamp">
+      <span />
+    </span>
+    <span className="life-rpg-contract-seal" />
+  </div>
+);
+
+const LifeOsWindEyeSigil: React.FC<{ label: string }> = ({ label }) => (
+  <div className="life-os-wind-eye-sigil" role="img" aria-label={label}>
+    <span className="life-os-wind-eye-aura aura-a" />
+    <span className="life-os-wind-eye-aura aura-b" />
+    <span className="life-os-wind-eye-geometry geometry-a" />
+    <span className="life-os-wind-eye-geometry geometry-b" />
+    <span className="life-os-wind-eye-geometry geometry-c" />
+    <span className="life-os-wind-eye-orbit orbit-a" />
+    <span className="life-os-wind-eye-orbit orbit-b" />
+    <span className="life-os-wind-eye-tick tick-a" />
+    <span className="life-os-wind-eye-tick tick-b" />
+    <span className="life-os-wind-eye-tick tick-c" />
+    <span className="life-os-wind-eye-tick tick-d" />
+    <span className="life-os-wind-eye-blade blade-a" />
+    <span className="life-os-wind-eye-blade blade-b" />
+    <span className="life-os-wind-eye-blade blade-c" />
+    <span className="life-os-wind-eye-diamond diamond-a" />
+    <span className="life-os-wind-eye-diamond diamond-b" />
+    <span className="life-os-wind-eye-diamond diamond-c" />
+    <span className="life-os-wind-eye-thread thread-a" />
+    <span className="life-os-wind-eye-thread thread-b" />
+    <span className="life-os-wind-eye-thread thread-c" />
+    <span className="life-os-wind-eye-thread thread-d" />
+    <span className="life-os-wind-eye-core">
+      <span className="life-os-wind-eye-pupil" />
+    </span>
+    <span className="life-os-wind-eye-dot dot-a" />
+    <span className="life-os-wind-eye-dot dot-b" />
+    <span className="life-os-wind-eye-dot dot-c" />
+    <span className="life-os-wind-eye-dot dot-d" />
+    <span className="life-os-wind-eye-mote mote-a" />
+    <span className="life-os-wind-eye-mote mote-b" />
+    <span className="life-os-wind-eye-mote mote-c" />
+  </div>
+);
+
 const LifeOsHudShapes: React.FC<{ variant?: 'hero' | 'panel' }> = ({ variant = 'panel' }) => (
-  <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
+  <div aria-hidden="true" className="life-os-hud-shapes pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
     <span className="absolute left-4 top-4 h-8 w-8 border-l border-t border-eden-mint/35" />
     <span className="absolute right-4 top-4 h-8 w-8 border-r border-t border-eden-amber/35" />
     <span className="absolute bottom-4 left-4 h-8 w-8 border-b border-l border-eden-amber/25" />
@@ -1751,24 +4563,22 @@ const LifeOsDropDown: React.FC<{
   body: string;
   children: React.ReactNode;
 }> = ({ id, index, eyebrow, title, body, children }) => (
-  <details id={id} className="group motion-card relative mt-4 scroll-mt-5 overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm backdrop-blur sm:mt-6">
-    <LifeOsHudShapes variant="hero" />
-    <summary className="relative z-10 flex cursor-pointer list-none items-start justify-between gap-3 p-4 transition-colors hover:bg-eden-mint/10 sm:gap-4 md:p-6 [&::-webkit-details-marker]:hidden">
-      <div className="min-w-0">
-        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-stone-500 sm:text-[10px] sm:tracking-[0.28em]">
-          CHAPTER-{index} · {eyebrow}
-        </p>
-        <h2 className="mt-2 font-display text-xl font-bold text-stone-900 sm:text-2xl md:text-3xl">{title}</h2>
-        <p className="mt-2 max-w-3xl text-xs leading-relaxed text-stone-600 sm:text-sm">{body}</p>
-      </div>
-      <span className="mt-1 flex h-9 w-12 flex-none items-center justify-center rounded-xl border border-eden-amber/30 bg-eden-amber/10 font-mono text-[10px] font-bold uppercase tracking-wider text-stone-800 transition-colors group-open:border-stone-700 group-open:bg-stone-900 group-open:text-stone-50 sm:h-10 sm:w-14">
-        {`Open`}
-      </span>
-    </summary>
-    <div className="relative z-10 border-t border-stone-200 px-3 pb-4 sm:px-4 sm:pb-5 md:px-5 md:pb-6">
+  <section id={id} className="life-os-chapter scroll-mt-8 py-16 sm:py-20 md:py-24">
+    <div className="mx-auto max-w-4xl text-center">
+      <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-stone-500 sm:text-xs">
+        {String(index).padStart(2, '0')} · {eyebrow}
+      </p>
+      <h2 className="mt-3 font-display text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.06] tracking-tight text-stone-900">
+        {title}
+      </h2>
+      <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-stone-600 sm:text-lg">
+        {body}
+      </p>
+    </div>
+    <div className="mt-10 sm:mt-14">
       {children}
     </div>
-  </details>
+  </section>
 );
 
 const LifeOsRadarPanel: React.FC<{
@@ -1776,14 +4586,23 @@ const LifeOsRadarPanel: React.FC<{
   ariaLabel: string;
   centerPrimary: string;
   centerSecondary: string;
+  theme: Theme;
   tone?: 'mint' | 'amber';
   compact?: boolean;
   className?: string;
-}> = ({ stats, ariaLabel, centerPrimary, centerSecondary, tone = 'mint', compact = false, className = '' }) => {
+}> = ({ stats, ariaLabel, centerPrimary, centerSecondary, theme, tone = 'mint', compact = false, className = '' }) => {
+  const isDarkTheme = theme === 'dark';
   const center = 110;
   const radius = 76;
   const accent = tone === 'mint' ? 'rgb(123,220,181)' : 'rgb(255,163,64)';
   const accentSoft = tone === 'mint' ? 'rgba(123,220,181,0.34)' : 'rgba(255,163,64,0.28)';
+  const gridFill = isDarkTheme ? 'rgba(255,255,255,0.025)' : 'rgba(28,25,23,0.025)';
+  const gridStroke = isDarkTheme ? 'rgba(214,211,209,0.22)' : 'rgba(87,83,78,0.2)';
+  const axisStroke = isDarkTheme ? 'rgba(214,211,209,0.18)' : 'rgba(87,83,78,0.16)';
+  const labelFill = isDarkTheme ? 'rgb(245,245,244)' : 'rgb(68,64,60)';
+  const centerFill = isDarkTheme ? 'rgba(28,25,23,0.86)' : 'rgba(255,255,255,0.78)';
+  const centerTextFill = isDarkTheme ? 'rgb(255,255,255)' : 'rgb(28,25,23)';
+  const centerSubFill = isDarkTheme ? 'rgb(214,211,209)' : 'rgb(120,113,108)';
   const point = (index: number, value: number) => {
     const angle = -Math.PI / 2 + (Math.PI * 2 * index) / stats.length;
     const scaledRadius = (radius * value) / 100;
@@ -1794,8 +4613,8 @@ const LifeOsRadarPanel: React.FC<{
   const gradientId = `life-os-radar-${tone}-${stats.map((stat) => stat.key).join('-').toLowerCase()}`;
 
   return (
-    <div className={`relative mx-auto w-full ${compact ? 'max-w-[220px]' : 'max-w-[310px]'} overflow-hidden rounded-2xl border border-stone-800/70 bg-stone-950 p-2 text-white shadow-inner sm:p-3 ${className}`}>
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:18px_18px] opacity-35" />
+    <div className={`life-os-radar-frame relative mx-auto w-full ${compact ? 'max-w-[220px]' : 'max-w-[310px]'} overflow-hidden rounded-2xl p-2 shadow-inner sm:p-3 ${className}`}>
+      <div className="life-os-radar-grid absolute inset-0 bg-[size:18px_18px] opacity-45" />
       <svg viewBox="0 0 220 220" role="img" aria-label={ariaLabel} className="relative h-auto w-full">
         <defs>
           <radialGradient id={gradientId} cx="50%" cy="50%" r="55%">
@@ -1807,8 +4626,8 @@ const LifeOsRadarPanel: React.FC<{
           <polygon
             key={scale}
             points={stats.map((_, index) => gridPoint(index, scale)).join(' ')}
-            fill={scale === 100 ? 'rgba(255,255,255,0.025)' : 'none'}
-            stroke="rgba(214,211,209,0.22)"
+            fill={scale === 100 ? gridFill : 'none'}
+            stroke={gridStroke}
             strokeWidth="1"
           />
         ))}
@@ -1819,7 +4638,7 @@ const LifeOsRadarPanel: React.FC<{
             y1={center}
             x2={gridPoint(index, 100).split(',')[0]}
             y2={gridPoint(index, 100).split(',')[1]}
-            stroke="rgba(214,211,209,0.18)"
+            stroke={axisStroke}
             strokeWidth="1"
           />
         ))}
@@ -1836,8 +4655,8 @@ const LifeOsRadarPanel: React.FC<{
                 y={labelY}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                fill="rgb(245,245,244)"
-              fontSize={compact ? '7' : '8'}
+                fill={labelFill}
+                fontSize={compact ? '7' : '8'}
                 fontWeight="800"
               >
                 {stat.key}
@@ -1845,11 +4664,11 @@ const LifeOsRadarPanel: React.FC<{
             </g>
           );
         })}
-        <circle cx={center} cy={center} r={compact ? '21' : '24'} fill="rgba(28,25,23,0.86)" stroke="rgba(209,171,91,0.62)" />
-        <text x={center} y={center - 2} textAnchor="middle" fill="rgb(255,255,255)" fontSize={compact ? '15' : '17'} fontWeight="800">
+        <circle cx={center} cy={center} r={compact ? '21' : '24'} fill={centerFill} stroke="rgba(209,171,91,0.62)" />
+        <text x={center} y={center - 2} textAnchor="middle" fill={centerTextFill} fontSize={compact ? '15' : '17'} fontWeight="800">
           {centerPrimary}
         </text>
-        <text x={center} y={center + 13} textAnchor="middle" fill="rgb(214,211,209)" fontSize="7" letterSpacing="1.5">
+        <text x={center} y={center + 13} textAnchor="middle" fill={centerSubFill} fontSize="7" letterSpacing="1.5">
           {centerSecondary}
         </text>
       </svg>
@@ -1869,7 +4688,6 @@ const LifeOsFullPage: React.FC<{
   const powerScore = 86;
   const birthDate = new Date(1995, 11, 5);
   const maxLevel = 80;
-  const endDate = new Date(birthDate.getFullYear() + maxLevel, birthDate.getMonth(), birthDate.getDate());
   const today = new Date();
   const currentLevel =
     today.getFullYear() -
@@ -1878,27 +4696,6 @@ const LifeOsFullPage: React.FC<{
     (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate())
       ? 1
       : 0);
-  const lifeProgress = Math.min(
-    100,
-    Math.max(0, ((today.getTime() - birthDate.getTime()) / (endDate.getTime() - birthDate.getTime())) * 100)
-  );
-  const heroRadarStats = [
-    { key: 'INS', label: { en: 'Insight', zh: '洞察' }, value: 92 },
-    { key: 'STR', label: { en: 'Strategy', zh: '策略' }, value: 90 },
-    { key: 'EXP', label: { en: 'Expression', zh: '表达' }, value: 87 },
-    { key: 'FRE', label: { en: 'Freedom', zh: '自由' }, value: 95 },
-    { key: 'ADP', label: { en: 'Adapt', zh: '适应' }, value: 88 },
-    { key: 'STA', label: { en: 'Stability', zh: '稳定' }, value: 64 },
-  ] as const;
-  const radarCenter = 110;
-  const radarRadius = 76;
-  const radarPoint = (index: number, value: number) => {
-    const angle = -Math.PI / 2 + (Math.PI * 2 * index) / heroRadarStats.length;
-    const radius = (radarRadius * value) / 100;
-    return `${radarCenter + Math.cos(angle) * radius},${radarCenter + Math.sin(angle) * radius}`;
-  };
-  const radarGridPoint = (index: number, scale: number) => radarPoint(index, scale);
-  const radarShapePoints = heroRadarStats.map((stat, index) => radarPoint(index, stat.value)).join(' ');
   const lifeOsGameMenu = [
     {
       href: '#life-os-character-file',
@@ -1939,8 +4736,8 @@ const LifeOsFullPage: React.FC<{
   ];
 
   return (
-    <div className="page-shell min-h-screen text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
-      <main className="px-3 pb-28 pt-8 sm:px-5 sm:pb-16 md:px-6 md:py-16">
+    <div className="life-os-open-layout page-shell min-h-screen text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
+      <main className="px-4 pb-16 pt-8 sm:px-6 md:px-8 md:py-16">
         <div className="mx-auto max-w-6xl">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <a
@@ -1959,231 +4756,59 @@ const LifeOsFullPage: React.FC<{
             />
           </div>
 
-          <header className="motion-card relative mt-5 overflow-hidden rounded-2xl border border-stone-200 bg-white p-3 shadow-sm backdrop-blur sm:mt-8 sm:p-5 md:p-8">
-            <LifeOsHudShapes variant="hero" />
-            <div className="relative z-10 grid gap-4 sm:gap-6 lg:grid-cols-[0.85fr_1.15fr_0.85fr]">
-              <section className="relative order-1 overflow-hidden rounded-2xl border border-stone-200 bg-stone-50 p-4 sm:p-5">
-                <LifeOsHudShapes />
-                <div className="mx-auto max-w-[280px] overflow-hidden rounded-2xl border border-eden-mint/35 bg-stone-900 shadow-[0_0_44px_rgba(123,220,181,0.18)] lg:max-w-none">
-                  <img
-                    src={lifeOsCharacterPortrait}
-                    alt={isZh ? 'RPG 角色照片' : 'RPG character portrait'}
-                    loading="eager"
-                    className="aspect-square w-full object-cover"
-                  />
+          <header className="life-os-editorial-hero py-16 text-center sm:py-20 md:py-24">
+            <p className="text-xs font-medium uppercase tracking-[0.18em] text-stone-500">
+              {isZh ? 'Life RPG Ability System' : 'Life RPG Ability System'}
+            </p>
+            <h1 className="mx-auto mt-4 max-w-4xl font-display text-[clamp(2.75rem,8vw,5rem)] font-semibold leading-[1.04] tracking-tight text-stone-900">
+              {isZh ? '风之解析者' : 'Wind Pattern Analyst'}
+            </h1>
+            <p className="mx-auto mt-4 max-w-3xl font-display text-[clamp(1.25rem,3vw,2rem)] leading-[1.18] text-stone-700">
+              {isZh
+                ? '把混乱经验转成可使用系统的 RPG 人生地图。'
+                : 'A Life RPG map for turning chaos into usable systems.'}
+            </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-3 text-base font-medium sm:text-lg">
+              <a href="#life-os-skill-codex" className="text-eden-mint transition-colors hover:text-stone-900">
+                {isZh ? '查看技能' : 'View skills'} &gt;
+              </a>
+              <a href="#life-os-upgrade-path" className="text-eden-amber transition-colors hover:text-stone-900">
+                {isZh ? '查看路线' : 'View routes'} &gt;
+              </a>
+            </div>
+            <figure className="mx-auto mt-12 max-w-3xl overflow-hidden rounded-[2rem] sm:mt-14">
+              <LifeOsWindEyeSigil label={isZh ? '风之眼图腾透明底 CSS 动画' : 'Transparent CSS animation of a wind-eye sigil'} />
+            </figure>
+            <div className="mx-auto mt-8 grid max-w-3xl grid-cols-2 gap-y-5 text-center sm:grid-cols-4">
+              {(isZh
+                ? [
+                    ['Level', `LV ${currentLevel} / ${maxLevel}`],
+                    ['Power', `${powerScore} / 100`],
+                    ['Class', '流浪策略师'],
+                    ['Element', '风 + 金'],
+                  ]
+                : [
+                    ['Level', `LV ${currentLevel} / ${maxLevel}`],
+                    ['Power', `${powerScore} / 100`],
+                    ['Class', 'Wandering Strategist'],
+                    ['Element', 'Wind + Metal'],
+                  ]
+              ).map(([label, value]) => (
+                <div key={label}>
+                  <p className="text-xs font-medium uppercase tracking-[0.14em] text-stone-500">{label}</p>
+                  <p className="mt-1 text-base font-medium text-stone-900 sm:text-lg">{value}</p>
                 </div>
-                <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.2em] text-stone-500 sm:mt-5 sm:text-xs sm:tracking-[0.28em]">
-                  🃏 {isZh ? 'RPG 角色档案' : 'RPG Character Profile'}
-                </p>
-                <h1 className="mt-2 font-display text-3xl font-bold tracking-tight text-stone-900 sm:text-4xl md:text-5xl">
-                  {isZh ? '风之解析者' : 'Wind Pattern Analyst'}
-                </h1>
-                <p className="mt-1 font-display text-lg text-stone-700 sm:text-xl">
-                  🌬️ {isZh ? '流浪策略师' : 'Wandering Strategist'}
-                </p>
-                <div className="mt-4 space-y-2 text-sm text-stone-700 sm:mt-5">
-                  <p><span className="text-stone-500">⚔️ Class</span> · {isZh ? 'Wandering Strategist / 流浪策略师' : 'Wandering Strategist'}</p>
-                  <p><span className="text-stone-500">🧬 Sub Class</span> · {isZh ? '人性模式分析者' : 'Human Pattern Analyst'}</p>
-                  <p><span className="text-stone-500">🜁 Element</span> · Wind + Metal / 风 + 金</p>
-                  <p><span className="text-stone-500">🧭 Alignment</span> · Chaotic Insightful</p>
-                  <div className="rounded-xl border border-eden-amber/30 bg-white px-3 py-3">
-                    <div className="flex items-end justify-between gap-3">
-                      <div>
-                        <p className="font-mono text-[10px] uppercase tracking-wider text-stone-500">✦ Level</p>
-                        <p className="mt-1 font-semibold text-stone-900">
-                          LV {currentLevel} / {maxLevel}
-                        </p>
-                      </div>
-                      <p className="font-mono text-xs text-stone-500">{lifeProgress.toFixed(1)}%</p>
-                    </div>
-                    <div className="mt-3 h-2 overflow-hidden rounded-full bg-stone-200">
-                      <div
-                        className="h-full rounded-full bg-gradient-to-r from-eden-mint via-eden-amber to-stone-900"
-                        style={{ width: `${lifeProgress}%` }}
-                      />
-                    </div>
-                    <div className="mt-2 flex justify-between gap-3 font-mono text-[10px] uppercase tracking-wider text-stone-500">
-                      <span>{isZh ? '1995 出生' : 'Spawn 1995'}</span>
-                      <span>{isZh ? '80 年时间轴' : '80Y Timeline'}</span>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              <section className="relative order-3 flex flex-col justify-between overflow-hidden rounded-2xl border border-eden-mint/25 bg-eden-mint/10 p-4 sm:p-5 lg:order-2">
-                <LifeOsHudShapes />
-                <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-stone-500 sm:text-xs sm:tracking-[0.28em]">
-                    🌀 {isZh ? '背景故事' : 'Character Prologue'}
-                  </p>
-                  <h2 className="mt-2 font-display text-2xl font-bold text-stone-900 sm:text-3xl md:text-4xl">
-                    {isZh ? '风之解析者' : 'Wind Pattern Analyst'}
-                  </h2>
-                  <p className="mt-3 font-display text-lg leading-relaxed text-stone-900 sm:mt-4 sm:text-xl">
-                    {isZh
-                      ? '不是从稳定路线里走出来的角色，更像是在混乱现场醒来的观察者。'
-                      : 'Not a character born from a stable route. More like an observer waking inside noisy fields and unfinished systems.'}
-                  </p>
-                  <p className="mt-4 text-base leading-relaxed text-stone-700">
-                    {isZh
-                      ? '市场的噪音、关系的暗流、产品里还没成形的需求、生活中反复出现的模式，都会变成观察世界的线索。'
-                      : 'Market noise, social undercurrents, unformed product needs, and repeating life patterns become clues for reading the world.'}
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-stone-600">
-                    {isZh
-                      ? '武器不是硬碰，而是观察、拆解、命名和重组。风负责进入不同场域，金属负责把混乱切成结构。'
-                      : 'The weapon is not direct force. It is observation, decomposition, naming, and reconstruction. Wind enters different fields. Metal cuts chaos into structure.'}
-                  </p>
-                  <div className="mt-5 grid grid-cols-2 gap-2 text-xs">
-                    {(isZh
-                      ? [
-                          ['Role', '观察 / 拆解 / 重组'],
-                          ['Mode', '风入局，金成形'],
-                          ['Quest', '把混乱转成可用系统'],
-                          ['Risk', '分散、过热、抗拒无效规则'],
-                        ]
-                      : [
-                          ['Role', 'Observe / Decode / Rebuild'],
-                          ['Mode', 'Wind enters. Metal structures.'],
-                          ['Quest', 'Turn chaos into usable systems'],
-                          ['Risk', 'Scatter, overheat, resist weak rules'],
-                        ]
-                    ).map(([label, value]) => (
-                      <div key={label} className="rounded-xl border border-stone-300/40 bg-stone-950/10 px-3 py-2 shadow-inner backdrop-blur-sm">
-                        <p className="font-mono text-[9px] uppercase tracking-wider text-stone-500">{label}</p>
-                        <p className="mt-1 font-medium text-stone-700">{value}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <blockquote className="mt-5 border-l-2 border-eden-amber/60 pl-4 font-display text-lg leading-relaxed text-stone-900 sm:mt-6 sm:text-xl">
-                  {isZh
-                    ? '主线不是证明自己很特别，而是把混乱的人生经验，变成可以被别人使用的力量。'
-                    : 'The main quest is not to prove uniqueness. It is to turn chaotic lived experience into power other people can use.'}
-                </blockquote>
-              </section>
-
-              <section className="relative order-2 overflow-hidden rounded-2xl border border-eden-amber/30 bg-eden-amber/10 p-4 sm:p-5 lg:order-3">
-                <LifeOsHudShapes />
-                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-stone-500 sm:text-xs sm:tracking-[0.28em]">
-                  🔮 {isZh ? '能力雷达' : 'Ability Radar'}
-                </p>
-                <div className="relative mx-auto mt-4 max-w-[310px] rounded-2xl border border-stone-200 bg-stone-950 p-2 text-white shadow-inner sm:p-3 lg:max-w-none">
-                  <svg viewBox="0 0 220 220" role="img" aria-label={isZh ? '核心属性雷达图' : 'Core stats radar chart'} className="h-auto w-full">
-                    <defs>
-                      <radialGradient id="life-os-radar-glow" cx="50%" cy="50%" r="55%">
-                        <stop offset="0%" stopColor="rgba(123,220,181,0.35)" />
-                        <stop offset="100%" stopColor="rgba(209,171,91,0.04)" />
-                      </radialGradient>
-                    </defs>
-                    {[25, 50, 75, 100].map((scale) => (
-                      <polygon
-                        key={scale}
-                        points={heroRadarStats.map((_, index) => radarGridPoint(index, scale)).join(' ')}
-                        fill={scale === 100 ? 'rgba(255,255,255,0.02)' : 'none'}
-                        stroke="rgba(214,211,209,0.22)"
-                        strokeWidth="1"
-                      />
-                    ))}
-                    {heroRadarStats.map((_, index) => (
-                      <line
-                        key={index}
-                        x1={radarCenter}
-                        y1={radarCenter}
-                        x2={radarGridPoint(index, 100).split(',')[0]}
-                        y2={radarGridPoint(index, 100).split(',')[1]}
-                        stroke="rgba(214,211,209,0.18)"
-                        strokeWidth="1"
-                      />
-                    ))}
-                    <polygon points={radarShapePoints} fill="url(#life-os-radar-glow)" stroke="rgb(123,220,181)" strokeWidth="2" />
-                    {heroRadarStats.map((stat, index) => {
-                      const [x, y] = radarPoint(index, stat.value).split(',');
-                      const [labelX, labelY] = radarGridPoint(index, 116).split(',');
-
-                      return (
-                        <g key={stat.key}>
-                          <circle cx={x} cy={y} r="3.5" fill="rgb(209,171,91)" stroke="rgb(255,255,255)" strokeWidth="1" />
-                          <text
-                            x={labelX}
-                            y={labelY}
-                            textAnchor="middle"
-                            dominantBaseline="middle"
-                            fill="rgb(245,245,244)"
-                            fontSize="9"
-                            fontWeight="700"
-                          >
-                            {stat.label[language]}
-                          </text>
-                        </g>
-                      );
-                    })}
-                    <circle cx={radarCenter} cy={radarCenter} r="23" fill="rgba(28,25,23,0.82)" stroke="rgba(209,171,91,0.6)" />
-                    <text x={radarCenter} y={radarCenter - 2} textAnchor="middle" fill="rgb(255,255,255)" fontSize="18" fontWeight="800">
-                      {powerScore}
-                    </text>
-                    <text x={radarCenter} y={radarCenter + 13} textAnchor="middle" fill="rgb(214,211,209)" fontSize="7" letterSpacing="1.5">
-                      POWER
-                    </text>
-                  </svg>
-                </div>
-                <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
-                  {heroRadarStats.map((stat) => (
-                    <span key={stat.key} className="rounded-full border border-eden-amber/30 bg-white px-3 py-1 text-stone-700">
-                      {stat.key} · {stat.value}
-                    </span>
-                  ))}
-                </div>
-                <p className="mt-5 text-sm leading-relaxed text-stone-600">
-                  {isZh
-                    ? '雷达图只显示倾向、能量强度和维护难度，不代表好坏。'
-                    : 'The radar shows tendency, energy intensity, and maintenance difficulty. It does not judge good or bad.'}
-                </p>
-              </section>
+              ))}
             </div>
           </header>
 
-          <section className="motion-card relative mt-4 overflow-hidden rounded-2xl border border-stone-200 bg-stone-950 p-3 text-white shadow-sm sm:mt-6 sm:p-4">
-            <LifeOsHudShapes variant="hero" />
-            <div className="relative z-10 flex items-center justify-between gap-3 px-1">
-              <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.24em] text-eden-amber">
-                  {isZh ? 'Game Menu' : 'Game Menu'}
-                </p>
-                <h2 className="mt-1 font-display text-xl font-bold text-white">
-                  {isZh ? '选择阅读章节' : 'Choose a chapter'}
-                </h2>
-              </div>
-              <span className="rounded-full border border-eden-mint/30 bg-eden-mint/10 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-eden-mint">
-                4 Files
-              </span>
-            </div>
-            <div className="relative z-10 mt-4 flex snap-x gap-3 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] md:grid md:grid-cols-4 md:overflow-visible md:pb-0 [&::-webkit-scrollbar]:hidden">
-              {lifeOsGameMenu.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className={`min-w-[76%] snap-center rounded-2xl border p-4 transition-transform hover:-translate-y-0.5 md:min-w-0 ${
-                    item.tone === 'mint'
-                      ? 'border-eden-mint/30 bg-eden-mint/10'
-                      : 'border-eden-amber/30 bg-eden-amber/10'
-                  }`}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <span className="text-2xl">{item.icon}</span>
-                    <span className="rounded-lg border border-white/15 bg-white/10 px-2 py-1 font-mono text-[10px] text-stone-200">
-                      FILE-{item.code}
-                    </span>
-                  </div>
-                  <h3 className="mt-4 font-display text-lg font-bold text-white">{item.title}</h3>
-                  <p className="mt-2 min-h-[48px] text-xs leading-relaxed text-stone-300">{item.body}</p>
-                  <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-eden-amber">
-                    {item.action} →
-                  </p>
-                </a>
-              ))}
-            </div>
-          </section>
+          <nav className="life-os-editorial-nav mx-auto grid max-w-4xl grid-cols-2 gap-x-4 gap-y-3 py-8 text-center text-sm font-medium sm:grid-cols-4 sm:py-10">
+            {lifeOsGameMenu.map((item) => (
+              <a key={item.href} href={item.href} className="text-stone-600 transition-colors hover:text-stone-900">
+                {item.title} &gt;
+              </a>
+            ))}
+          </nav>
 
           <LifeOsDropDown
             id="life-os-character-file"
@@ -2268,12 +4893,13 @@ const LifeOsFullPage: React.FC<{
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
                     🧾 {isZh ? '角色 Loadout' : 'Character Loadout'}
                   </p>
-                  <figure className="mx-auto mt-4 max-w-[260px] overflow-hidden rounded-2xl border border-eden-amber/30 bg-stone-950 shadow-sm lg:max-w-none">
-                    <img
-                      src={lifeOsLoadoutBanner}
-                      alt={isZh ? '风之解析者角色 Loadout 竖向横幅' : 'Wind Pattern Analyst character loadout vertical banner'}
-                      loading="lazy"
-                      className="aspect-[4/5] w-full object-cover lg:aspect-[1/2]"
+                  <figure className="life-os-loadout-css-frame mx-auto mt-4 max-w-[260px] lg:max-w-none">
+                    <LifeOsWindEyeSigil
+                      label={
+                        isZh
+                          ? '风之解析者角色 Loadout：风之眼图腾透明底 CSS 动画'
+                          : 'Wind Pattern Analyst loadout: transparent CSS animation of a wind-eye sigil'
+                      }
                     />
                   </figure>
                   <h2 className="mt-4 font-display text-2xl font-bold text-stone-900 sm:text-3xl">
@@ -2313,23 +4939,25 @@ const LifeOsFullPage: React.FC<{
                   </p>
                   <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
                     {lifeRpgDecodeSignals.map((signal) => (
-                      <div key={signal.code} className="overflow-hidden rounded-xl border border-stone-200 bg-white p-3">
-                        <figure className="overflow-hidden rounded-lg border border-eden-amber/25 bg-stone-950">
-                          <img
-                            src={signal.banner}
-                            alt={isZh ? `${signal.title.zh} 信号横幅` : `${signal.title.en} signal banner`}
-                            loading="lazy"
-                            className="aspect-[16/9] w-full object-cover sm:aspect-[8/3]"
+                      <div key={signal.code} className="life-rpg-signal-card overflow-hidden rounded-xl border border-stone-200 bg-white p-4">
+                        {signal.code === 'WIND-57' && (
+                          <LifeRpgWindInfiltrationStrip
+                            label={isZh ? '轻量渗透型风格：风吹过后渗透进结构' : 'Soft Infiltration Style: wind passes through and infiltrates the structure'}
                           />
-                        </figure>
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="mt-3 flex items-center gap-2">
-                            <LifeOsIcon src={signal.icon} alt={signal.title[language]} size="sm" />
+                        )}
+                        {signal.code === 'PHASE-RULE' && (
+                          <LifeRpgRuleContractStrip
+                            label={isZh ? '规则制定阶段：签署规则契约' : 'Rule-Setter Phase: signing the rule contract'}
+                          />
+                        )}
+                        <div className="life-rpg-signal-card-head flex items-center gap-3">
+                          {signal.code !== 'WIND-57' && signal.code !== 'PHASE-RULE' && (
+                            <LifeRpgSignalCssIcon signal={signal} label={signal.title[language]} />
+                          )}
                             <div>
                               <h3 className="font-display text-base font-bold text-stone-900">{signal.title[language]}</h3>
                               <p className="font-mono text-[10px] uppercase tracking-wider text-stone-500">{signal.code}</p>
                             </div>
-                          </div>
                         </div>
                         <p className="mt-3 text-xs leading-relaxed text-stone-600">📡 {signal.signal[language]}</p>
                         <p className="mt-2 text-xs leading-relaxed text-stone-800">🔓 {signal.output[language]}</p>
@@ -2348,6 +4976,7 @@ const LifeOsFullPage: React.FC<{
                       ariaLabel={isZh ? '隐藏参数雷达图' : 'Hidden parameters radar chart'}
                       centerPrimary="4"
                       centerSecondary="PARAMS"
+                      theme={theme}
                       tone="amber"
                       compact
                     />
@@ -2411,6 +5040,7 @@ const LifeOsFullPage: React.FC<{
                   ariaLabel={isZh ? '核心属性雷达图' : 'Core stats radar chart'}
                   centerPrimary="8"
                   centerSecondary="CORE"
+                  theme={theme}
                   tone="mint"
                   compact
                 />
@@ -2450,7 +5080,7 @@ const LifeOsFullPage: React.FC<{
                     : 'Castable skills. The card face shows rank, type, and art. Open it for the full combat file.'}
                 </p>
               </div>
-              <div className="flex rounded-2xl border border-stone-200 bg-stone-950 p-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-stone-300">
+              <div className="life-os-skill-tabs flex rounded-2xl p-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-stone-600">
                 {['Active', 'Passive', 'Shadow'].map((tab, index) => (
                   <span
                     key={tab}
@@ -2461,11 +5091,11 @@ const LifeOsFullPage: React.FC<{
                 ))}
               </div>
             </div>
-            <div className="relative z-10 mt-4 flex snap-x gap-3 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] md:grid md:grid-cols-2 md:overflow-visible md:pb-0 [&::-webkit-scrollbar]:hidden">
+            <div className="relative z-10 mt-4 grid gap-3 md:grid-cols-2">
               {lifeRpgActiveSkills.map((skill) => (
                 <details
                   key={skill.name.en}
-                  className="group min-w-[82%] snap-center overflow-hidden rounded-2xl border border-eden-amber/30 bg-stone-950 shadow-sm md:min-w-0"
+                  className="life-os-codex-card group overflow-hidden rounded-2xl border border-eden-amber/30 shadow-sm"
                 >
                   <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
                     <figure className="relative overflow-hidden">
@@ -2475,29 +5105,29 @@ const LifeOsFullPage: React.FC<{
                         loading="lazy"
                         className="aspect-[16/9] w-full object-cover"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/30 to-transparent" />
+                      <div className="life-os-image-overlay absolute inset-0" />
                       <div className="absolute left-3 top-3 flex items-center gap-2">
                         <LifeOsIcon src={skill.icon} alt={skill.name[language]} size="sm" />
                         <span className="rounded-lg border border-eden-amber/40 bg-eden-amber px-2 py-1 font-mono text-xs font-bold text-stone-950">
                           {skill.level}
                         </span>
                       </div>
-                      <div className="absolute inset-x-0 bottom-0 p-3">
+                      <div className="life-os-active-skill-copy absolute inset-x-0 bottom-0 p-3">
                         <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-eden-amber">
                           {skill.level} ACTIVE SPELL
                         </p>
-                        <h3 className="mt-1 font-display text-xl font-bold text-white">✦ {skill.name[language]}</h3>
-                        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-stone-200">{skill.bannerCaption[language]}</p>
+                        <h3 className="mt-1 font-display text-xl font-bold text-stone-900">✦ {skill.name[language]}</h3>
+                        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-stone-600">{skill.bannerCaption[language]}</p>
                       </div>
                     </figure>
-                    <div className="flex items-center justify-between gap-3 border-t border-white/10 bg-stone-950 px-3 py-3 text-xs text-stone-300">
+                    <div className="life-os-card-footer flex items-center justify-between gap-3 px-3 py-3 text-xs text-stone-600">
                       <span className="uppercase tracking-wider">{skill.type[language]}</span>
-                      <span className="rounded-full border border-white/15 px-2 py-1 font-mono text-[10px] text-eden-mint group-open:border-stone-600 group-open:bg-stone-800 group-open:text-stone-100">
+                      <span className="rounded-full border border-stone-300/60 px-2 py-1 font-mono text-[10px] text-stone-700 group-open:border-stone-600 group-open:bg-stone-800 group-open:text-stone-100">
                         {isZh ? '展开' : 'Open'}
                       </span>
                     </div>
                   </summary>
-                  <dl className="grid gap-2 border-t border-white/10 bg-white p-3 text-sm sm:p-4">
+                  <dl className="grid gap-2 border-t border-stone-200 bg-white p-3 text-sm sm:p-4">
                     <div className="rounded-xl border border-stone-200 bg-stone-50 p-3"><dt className="text-stone-500">🔋 {isZh ? '消耗' : 'Cost'}</dt><dd className="mt-1 text-stone-800">{skill.cost[language]}</dd></div>
                     <div className="rounded-xl border border-eden-mint/25 bg-eden-mint/10 p-3"><dt className="text-stone-500">✨ {isZh ? '效果' : 'Effect'}</dt><dd className="mt-1 text-stone-800">{skill.effect[language]}</dd></div>
                     <div className="rounded-xl border border-stone-200 bg-stone-50 p-3"><dt className="text-stone-500">🎯 {isZh ? '适合场景' : 'Best used in'}</dt><dd className="mt-1 text-stone-700">{skill.scene[language]}</dd></div>
@@ -2522,17 +5152,17 @@ const LifeOsFullPage: React.FC<{
               />
               <div className="mt-4 grid grid-cols-2 gap-3 sm:mt-5">
                 {lifeRpgPassiveSkills.map((skill) => (
-                  <details key={skill.name.en} className="group overflow-hidden rounded-2xl border border-eden-mint/25 bg-stone-950 shadow-sm">
+                  <details key={skill.name.en} className="life-os-codex-card group overflow-hidden rounded-2xl border border-eden-mint/25 shadow-sm">
                     <summary className="cursor-pointer list-none p-3 text-center [&::-webkit-details-marker]:hidden">
                       <div className="mx-auto w-fit rounded-2xl border border-eden-mint/25 bg-eden-mint/10 p-2">
                         <LifeOsIcon src={skill.icon} alt={skill.name[language]} size="md" />
                       </div>
-                      <h3 className="mt-3 font-display text-sm font-bold leading-tight text-white sm:text-base">🌬️ {skill.name[language]}</h3>
+                      <h3 className="mt-3 font-display text-sm font-bold leading-tight text-stone-900 sm:text-base">🌬️ {skill.name[language]}</h3>
                       <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.18em] text-eden-mint group-open:text-eden-amber">
                         {isZh ? '被动常驻' : 'Passive Aura'}
                       </p>
                     </summary>
-                    <div className="border-t border-white/10 bg-white p-3 text-xs leading-relaxed">
+                    <div className="border-t border-stone-200 bg-white p-3 text-xs leading-relaxed">
                       <p className="text-stone-500">{isZh ? '触发' : 'Trigger'} · {skill.trigger[language]}</p>
                       <p className="mt-2 text-stone-800">✨ {skill.effect[language]}</p>
                       <p className="mt-2 rounded-lg border border-eden-amber/25 bg-eden-amber/10 px-2 py-1.5 text-stone-700">
@@ -2557,20 +5187,20 @@ const LifeOsFullPage: React.FC<{
               />
               <div className="mt-4 grid gap-3 sm:mt-5">
                 {lifeRpgDebuffs.map((debuff) => (
-                  <details key={debuff.name.en} className="group overflow-hidden rounded-2xl border border-eden-amber/30 bg-stone-950 shadow-sm">
+                  <details key={debuff.name.en} className="life-os-codex-card group overflow-hidden rounded-2xl border border-eden-amber/30 shadow-sm">
                     <summary className="grid cursor-pointer grid-cols-[64px_1fr_auto] items-center gap-3 p-3 [&::-webkit-details-marker]:hidden">
                       <LifeOsIcon src={debuff.icon} alt={debuff.name[language]} size="md" />
                       <div className="min-w-0">
                         <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-eden-amber">
                           {isZh ? 'Shadow Debuff' : 'Shadow Debuff'}
                         </p>
-                        <h3 className="mt-1 font-display text-base font-bold text-white">🕳️ {debuff.name[language]}</h3>
+                        <h3 className="mt-1 font-display text-base font-bold text-stone-900">🕳️ {debuff.name[language]}</h3>
                       </div>
-                      <span className="rounded-full border border-white/15 px-2 py-1 font-mono text-[10px] text-stone-300 group-open:border-stone-600 group-open:bg-stone-800 group-open:text-stone-100">
+                      <span className="rounded-full border border-stone-300/60 px-2 py-1 font-mono text-[10px] text-stone-600 group-open:border-stone-600 group-open:bg-stone-800 group-open:text-stone-100">
                         !!
                       </span>
                     </summary>
-                    <div className="grid gap-2 border-t border-white/10 bg-white p-3 text-xs leading-relaxed text-stone-700">
+                    <div className="grid gap-2 border-t border-stone-200 bg-white p-3 text-xs leading-relaxed text-stone-700">
                       <p className="rounded-lg border border-stone-200 bg-stone-50 px-2 py-1.5">{isZh ? '触发条件' : 'Trigger'} · {debuff.trigger[language]}</p>
                       <p className="rounded-lg border border-stone-200 bg-stone-50 px-2 py-1.5">⚠️ {isZh ? '负面效果' : 'Negative effect'} · {debuff.negative[language]}</p>
                       <p className="rounded-lg border border-eden-mint/25 bg-eden-mint/10 px-2 py-1.5">🔧 {isZh ? '解除方式' : 'Release'} · {debuff.release[language]}</p>
@@ -2601,25 +5231,25 @@ const LifeOsFullPage: React.FC<{
                   {isZh ? '每条路线像手游升级线：上方是路线守护图，下方是可升级节点。' : 'Each route reads like a mobile RPG upgrade lane: guardian art first, upgrade nodes below.'}
                 </p>
               </div>
-              <span className="hidden rounded-2xl border border-eden-mint/25 bg-stone-950 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-eden-mint sm:inline-flex">
+              <span className="life-os-route-badge hidden rounded-2xl px-3 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-stone-700 sm:inline-flex">
                 4 Routes
               </span>
             </div>
             <div className="relative z-10 mt-4 grid gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-4">
               {lifeRpgSkillTrees.map((tree) => (
-                <article key={tree.title.en} className="overflow-hidden rounded-2xl border border-eden-mint/25 bg-stone-950 shadow-sm">
-                  <div className="relative aspect-square overflow-hidden border-b border-eden-mint/20 bg-stone-900">
+                <article key={tree.title.en} className="life-os-route-card overflow-hidden rounded-2xl border border-eden-mint/25 shadow-sm">
+                  <div className="life-os-route-art relative aspect-square overflow-hidden border-b border-eden-mint/20">
                     <img
                       src={tree.banner}
                       alt={`${tree.title[language]} ${isZh ? '成长路线方形视觉' : 'growth route square banner'}`}
                       className="h-full w-full object-cover object-center"
                       loading="lazy"
                     />
-                    <div className="absolute inset-x-0 bottom-0 min-h-[72px] bg-gradient-to-t from-stone-950 via-stone-950/40 to-transparent p-3">
+                    <div className="life-os-route-overlay absolute inset-x-0 bottom-0 min-h-[72px] p-3">
                       <p className="font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-eden-amber">
                         {isZh ? 'SKILL TREE ROUTE' : 'SKILL TREE ROUTE'}
                       </p>
-                      <h3 className="mt-1 font-display text-xl font-bold text-white">🧭 {tree.title[language]}</h3>
+                      <h3 className="mt-1 font-display text-xl font-bold text-stone-900">🧭 {tree.title[language]}</h3>
                     </div>
                   </div>
                   <div className="p-3 sm:p-4">
@@ -2630,17 +5260,17 @@ const LifeOsFullPage: React.FC<{
                             className={`absolute -left-[23px] top-1.5 h-3 w-3 rounded-full border ${
                               index === nodes.length - 1
                                 ? 'border-eden-amber bg-eden-amber shadow-[0_0_18px_rgba(255,163,64,0.6)]'
-                                : 'border-eden-mint bg-stone-950 shadow-[0_0_12px_rgba(123,220,181,0.35)]'
+                                : 'border-eden-mint bg-white shadow-[0_0_12px_rgba(123,220,181,0.35)]'
                             }`}
                           />
-                          <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-stone-400">
+                          <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-stone-500">
                             NODE-{String(index + 1).padStart(2, '0')}
                           </p>
-                          <p className="mt-1 text-sm font-semibold text-stone-100">{node}</p>
+                          <p className="mt-1 text-sm font-semibold text-stone-800">{node}</p>
                         </div>
                       ))}
                     </div>
-                    <p className="mt-4 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs leading-relaxed text-stone-300">
+                    <p className="mt-4 rounded-xl border border-stone-200 bg-stone-50 px-3 py-2 text-xs leading-relaxed text-stone-700">
                       {tree.directions[language]}
                     </p>
                     <p className="mt-2 rounded-xl border border-eden-amber/30 bg-eden-amber/10 px-3 py-2 text-xs leading-relaxed text-eden-amber">
@@ -2734,77 +5364,263 @@ const LifeOsFullPage: React.FC<{
           </LifeOsDropDown>
         </div>
       </main>
-      <nav className="fixed inset-x-3 bottom-3 z-50 rounded-3xl border border-stone-700/80 bg-stone-950/94 p-2 shadow-2xl backdrop-blur md:hidden">
-        <div className="grid grid-cols-4 gap-1">
-          {lifeOsGameMenu.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="rounded-2xl px-2 py-2 text-center transition-colors hover:bg-white/10"
-              aria-label={item.title}
-            >
-              <span className="block text-lg leading-none">{item.icon}</span>
-              <span className="mt-1 block truncate font-mono text-[9px] uppercase tracking-[0.08em] text-stone-300">
-                {item.code}
-              </span>
-            </a>
-          ))}
-        </div>
-      </nav>
     </div>
   );
 };
 
+const brandGuidePrinciples = [
+  {
+    title: { en: 'Controlled attention', zh: '控制注意力' },
+    copy: {
+      en: 'Every screen should carry one clear message. If two ideas compete, split the section.',
+      zh: '每一屏只服务一个主信息。两个想法互相抢，就拆成两个区块。',
+    },
+  },
+  {
+    title: { en: 'Systems from chaos', zh: '从混乱到系统' },
+    copy: {
+      en: 'The brand should feel like a calm operating system for messy product, growth, AI, and life questions.',
+      zh: '品牌要像一个安静的操作系统，用来整理产品、增长、AI 和人生问题里的混乱。',
+    },
+  },
+  {
+    title: { en: 'Human before impressive', zh: '先让人看懂，再让人觉得厉害' },
+    copy: {
+      en: 'The reader should feel helped before they feel impressed. Capability appears through clarity.',
+      zh: '读者先感觉被帮到，再感觉专业。能力要通过清晰度出现。',
+    },
+  },
+] as const;
+
 const brandGuidePalette = [
   {
-    bg: 'bg-stone-50',
-    border: 'border-stone-200',
-    text: 'text-stone-900',
+    name: { en: 'Stone 50', zh: 'Stone 50' },
     hex: '#fafaf9',
-    usage: { en: 'Primary canvas · page background', zh: '主画布 · 页面背景' },
+    role: { en: 'Primary canvas', zh: '主画布' },
+    usage: { en: 'Use for page backgrounds and quiet editorial space.', zh: '用于页面背景和安静的编辑式留白。' },
   },
   {
-    bg: 'bg-stone-200',
-    border: 'border-stone-300',
-    text: 'text-stone-800',
+    name: { en: 'Stone 200', zh: 'Stone 200' },
     hex: '#e7e5e4',
-    usage: { en: 'Pills, emoji tiles, soft fills', zh: '胶囊标签、emoji 方底、柔和填充' },
+    role: { en: 'Soft structure', zh: '柔和结构' },
+    usage: { en: 'Use for subtle dividers, soft fills, and low-volume surfaces.', zh: '用于轻分隔、柔和填充和低存在感表面。' },
   },
   {
-    bg: 'bg-stone-600',
-    border: 'border-stone-500',
-    text: 'text-white',
+    name: { en: 'Stone 600', zh: 'Stone 600' },
     hex: '#57534e',
-    usage: { en: 'Secondary emphasis (sparingly)', zh: '次级强调（少用）' },
+    role: { en: 'Secondary voice', zh: '次级语气' },
+    usage: { en: 'Use for metadata, quiet labels, and supporting copy.', zh: '用于 metadata、安静标签和辅助说明。' },
   },
   {
-    bg: 'bg-stone-900',
-    border: 'border-stone-900',
-    text: 'text-stone-50',
+    name: { en: 'Stone 900', zh: 'Stone 900' },
     hex: '#1c1917',
-    usage: { en: 'Primary text, primary buttons, inverted panels', zh: '主文案、主按钮、反色块' },
+    role: { en: 'Primary text', zh: '主文字' },
+    usage: { en: 'Use for headlines, decisive copy, and rare inverted moments.', zh: '用于标题、决断型文案和少量反色时刻。' },
   },
 ] as const;
 
 const brandGuideAccent = [
   {
-    bg: 'bg-eden-mint',
-    border: 'border-teal-700/25',
-    text: 'text-stone-900',
+    name: { en: 'Eden Mint', zh: 'Eden Mint' },
     hex: { light: '#7bdcb5', dark: '#dc6f82' },
+    role: { en: 'Insight signal', zh: '洞察信号' },
     usage: {
-      en: 'Accent mint / dark-mode red complement · selection, language toggle, quote rail, accent glow',
-      zh: '薄荷强调 / 暗色红系补色 · 文本划选、语言切换、引用竖线、强调 glow',
+      en: 'Selection, quote rail, insight highlight, subtle glow.',
+      zh: '用于文本划选、引用竖线、洞察重点和轻微光感。',
     },
   },
   {
-    bg: 'bg-eden-amber',
-    border: 'border-amber-700/30',
-    text: 'text-stone-900',
+    name: { en: 'Eden Amber', zh: 'Eden Amber' },
     hex: { light: '#ffa340ed', dark: '#6fa4f0e6' },
+    role: { en: 'Action signal', zh: '行动信号' },
     usage: {
-      en: 'Accent amber / dark-mode blue complement · “Present” chips, emoji rims, CTA focus rings',
-      zh: '琥珀强调 / 暗色蓝系补色 ·「进行中」标签、emoji 描边、主按钮焦点环',
+      en: 'Current status, active states, CTA focus, small moments of energy.',
+      zh: '用于当前状态、激活状态、CTA 焦点和少量能量点。',
+    },
+  },
+] as const;
+
+const brandGuideTypography = [
+  {
+    name: 'Space Grotesk',
+    role: { en: 'Display voice', zh: '标题声线' },
+    sample: { en: 'I build systems from chaos.', zh: 'I build systems from chaos.' },
+    detail: { en: 'Use for hero headlines, section titles, and short high-signal statements.', zh: '用于首屏标题、章节标题和短而有力的判断句。' },
+  },
+  {
+    name: 'Inter',
+    role: { en: 'Reading voice', zh: '阅读声线' },
+    sample: {
+      en: 'Product growth, AI workflows, digital strategy, and long-form build narratives from Malaysia.',
+      zh: 'Product growth, AI workflows, digital strategy, and long-form build narratives from Malaysia.',
+    },
+    detail: { en: 'Use for body copy and interface text. Keep it direct, plain, and easy to scan.', zh: '用于正文和界面文字。保持直接、简单、容易扫描。' },
+  },
+  {
+    name: 'JetBrains Mono',
+    role: { en: 'System voice', zh: '系统声线' },
+    sample: { en: 'STATUS / CURRENTLY BUILDING / 2026', zh: 'STATUS / CURRENTLY BUILDING / 2026' },
+    detail: { en: 'Use for labels, routes, timestamps, and operating-system cues.', zh: '用于标签、路由、时间戳和操作系统感提示。' },
+  },
+] as const;
+
+const brandGuideRhythm = [
+  {
+    title: { en: 'Hero', zh: '首屏' },
+    copy: {
+      en: 'Name, one positioning line, one reader benefit, one large visual or signature statement.',
+      zh: '名字、一句定位、一句读者收益，一个大视觉或品牌核心句。',
+    },
+  },
+  {
+    title: { en: 'Sections', zh: '章节' },
+    copy: {
+      en: 'One idea per section. Big title first, then one short paragraph, then proof or example.',
+      zh: '一个章节只讲一个想法。先大标题，再短段落，最后给证据或例子。',
+    },
+  },
+  {
+    title: { en: 'Grids', zh: '网格' },
+    copy: {
+      en: 'Use grids only after the story is clear. Two columns on desktop, one column on mobile.',
+      zh: '先把故事讲清楚，再用网格。桌面两栏，手机一栏。',
+    },
+  },
+  {
+    title: { en: 'Horizontal whitespace', zh: '左右留白' },
+    copy: {
+      en: 'Do not let content fill the whole desktop width by default. Use a narrow content island, center it, and let the sides stay quiet.',
+      zh: '桌面端不要默认把内容铺满。用较窄的内容岛居中，让左右保持安静留白。',
+    },
+  },
+] as const;
+
+const brandGuideVoicePairs = [
+  {
+    avoid: { en: 'I am good at marketing and AI.', zh: '我很擅长营销和 AI。' },
+    prefer: {
+      en: 'For teams with messy product ideas or scattered workflows, Eden turns the signals into a usable system.',
+      zh: '当产品想法很散、流程很乱时，Eden 把线索整理成能使用的系统。',
+    },
+  },
+  {
+    avoid: { en: 'A visionary personal brand.', zh: '一个有远见的个人品牌。' },
+    prefer: {
+      en: 'A builder archive for product growth, AI workflows, digital strategy, and long-form build notes.',
+      zh: '一个记录产品增长、AI 工作流、数字策略和长期构建笔记的 builder archive。',
+    },
+  },
+  {
+    avoid: { en: 'Empowering people to transform their future.', zh: '赋能每个人改变未来。' },
+    prefer: {
+      en: 'Make the next move clearer. Then build the system around it.',
+      zh: '先让下一步变清楚，再围绕它建立系统。',
+    },
+  },
+] as const;
+
+const brandGuideUseCases = [
+  {
+    title: { en: 'Home', zh: 'Home' },
+    copy: { en: 'Start with the reader’s messy situation, then show what becomes clear.', zh: '从读者的混乱处境开始，再展示什么会变清楚。' },
+  },
+  {
+    title: { en: 'Projects', zh: 'Projects' },
+    copy: { en: 'Show the problem, system, decisions, and output. Do not only show screenshots.', zh: '展示问题、系统、判断和产出。不要只放截图。' },
+  },
+  {
+    title: { en: 'Life OS', zh: 'Life OS' },
+    copy: { en: 'Keep the game feeling, but let the content breathe like a premium product page.', zh: '保留游戏感，但让内容像高级产品页一样有呼吸。' },
+  },
+  {
+    title: { en: 'Build Notes', zh: 'Build Notes' },
+    copy: { en: 'Every note starts from a concrete chaos, then explains the build logic.', zh: '每篇从一个具体混乱开始，再解释构建逻辑。' },
+  },
+] as const;
+
+const brandGuideStoryRules = [
+  {
+    title: { en: 'Log the moment, not the score', zh: '记录时刻，不是战绩' },
+    copy: {
+      en: 'A story log exists to remember the fun, not to brag about wins. The pot size doesn’t matter — whether the night is worth retelling does.',
+      zh: '故事是为了记住好玩的瞬间，不是炫耀输赢。赢多少不重要，那一晚值不值得再讲一次，才重要。',
+    },
+  },
+  {
+    title: { en: 'Only what really happened', zh: '只写真的' },
+    copy: {
+      en: 'You can polish the pacing and the imagery, but the events, people, and outcomes stay true. Never invent drama for effect.',
+      zh: '可以润色节奏和画面，但事件、人物、结果必须是真的。不为戏剧效果编故事。',
+    },
+  },
+  {
+    title: { en: 'Nicknames, not epic titles', zh: '用小名，别中二' },
+    copy: {
+      en: 'In the narrative use short nicknames — Cap, Lucky, Prince / 团长、罩仔、太子 — the same in both languages. Save the full character titles for the avatar cards.',
+      zh: '正文里用短小名——团长、罩仔、太子 / Cap、Lucky、Prince，中英一致。完整称号留给角色卡，别在故事里堆「被罩住的王」这种。',
+    },
+  },
+  {
+    title: { en: 'Short, but cinematic', zh: '短，但有画面' },
+    copy: {
+      en: 'One beat per paragraph. Let the key moment land — a river card, an all-in — and cut everything else to the bone.',
+      zh: '一段讲清一件事。让关键的那一下（一张 river、一次 all-in）落地，其余删到不能再删。',
+    },
+  },
+  {
+    title: { en: 'People first, cards second', zh: '先有人，再有牌' },
+    copy: {
+      en: 'The people at the table are the story. Readers should know the crew first; the hand only matters because of who is holding it.',
+      zh: '桌上的人本身就是故事。先让读者认得这群人，那手牌才有意义。',
+    },
+  },
+  {
+    title: { en: 'Not a hand history', zh: '不是 hand history' },
+    copy: {
+      en: 'No jargon dumps, no solver review, no flexing. It should read like a friend retelling the night, not a textbook.',
+      zh: '不堆术语、不写成复盘、不自夸。读起来像朋友在讲那晚，而不是教科书。',
+    },
+  },
+] as const;
+
+const brandGuideStoryExample = {
+  avoid: {
+    en: 'The Covered King shoved his straight all-in against The Reluctant Prince’s three Aces.',
+    zh: '被罩住的王把顺子 all-in 推向不想继承的太子的三条 A。',
+  },
+  prefer: {
+    en: 'Lucky shoved his straight all-in against Prince’s three Aces.',
+    zh: '罩仔顺子直接 all-in，推向太子手里的三条 A。',
+  },
+} as const;
+
+const brandGuideMotionRules = [
+  {
+    title: { en: 'Slow ambient motion', zh: '慢速环境微动' },
+    copy: {
+      en: 'Use motion like the current homepage background: slow, atmospheric, and easy to ignore until the reader notices it. It should make the page feel alive without asking for attention.',
+      zh: '动效参考当前首页背景：慢、轻、有空气感。读者可以不注意它，但注意到时会觉得页面是活的，而不是被打断。',
+    },
+  },
+  {
+    title: { en: 'Quiet page entry', zh: '安静入场' },
+    copy: {
+      en: 'Page entry can soften the first moment, but it should stay brief and precise. Avoid dramatic reveals, bouncing panels, or motion that makes reading wait.',
+      zh: '页面入场可以让第一眼更柔和，但必须短、准、克制。不要夸张 reveal、弹跳面板，或让读者等动画播完才阅读。',
+    },
+  },
+  {
+    title: { en: 'Motion must belong to the build', zh: '动效要属于产品' },
+    copy: {
+      en: 'Character, object, or icon motion should carry product meaning, not act as loose decoration. Motion earns its place when it clarifies what the system is doing.',
+      zh: '角色、物件或 icon 动效要承载产品含义，不要只是松散装饰。只有当动效能说明系统正在做什么，它才值得留下。',
+    },
+  },
+  {
+    title: { en: 'Preserve reduced motion', zh: '保留 reduced motion' },
+    copy: {
+      en: 'Every ambient or character animation should still respect `prefers-reduced-motion`. The static state must remain composed, not broken.',
+      zh: '所有环境或角色动效都要尊重 `prefers-reduced-motion`。静止状态也必须是完整画面，而不是坏掉的动画中间帧。',
     },
   },
 ] as const;
@@ -2822,13 +5638,13 @@ const BrandGuideFullPage: React.FC<{
   const faviconSrc = joinBasePath(baseUrl, 'favicon.svg');
 
   return (
-    <div className="page-shell min-h-screen text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
-      <main className="px-6 py-12 md:py-16">
-        <div className="mx-auto max-w-4xl">
-          <div className="flex flex-wrap items-center justify-between gap-3">
+    <div className="page-shell brand-guide-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
+      <main className="px-5 py-8 md:px-8 md:py-10">
+        <div className="mx-auto max-w-6xl">
+          <div className="brand-guide-topbar flex flex-wrap items-center justify-between gap-3">
             <a
               href={homeHref}
-              className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 transition-colors hover:border-stone-900 hover:text-stone-900"
+              className="brand-guide-back-link inline-flex items-center gap-2 text-sm font-medium"
             >
               <ArrowLeft size={16} />
               {isZh ? '返回主页' : 'Back to Home'}
@@ -2842,312 +5658,252 @@ const BrandGuideFullPage: React.FC<{
             />
           </div>
 
-          <header className="motion-card mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
-            <div className="flex flex-wrap items-start gap-4">
-              <FlatEmoji emoji="🎨" size="lg" bob />
-              <div className="min-w-0 flex-1">
-                <p className="text-xs font-semibold uppercase tracking-wider text-stone-500">
-                  {isZh ? '站点识别' : 'Site identity'}
-                </p>
-                <h1 className="mt-2 font-display text-4xl font-bold tracking-tight text-stone-900 md:text-5xl">
-                  {isZh ? '品牌指南' : 'Brand guide'}
-                </h1>
-                <p className="mt-4 max-w-2xl text-base leading-relaxed text-stone-600">
-                  {isZh
-                    ? '这份页面把 Eden 作品集站的视觉与语气收成一份「对内对外都能用」的说明：偏编辑感、低饱和 stone、叙事先于口号。第三方若要引用样式，请以这里为准。'
-                    : 'A single reference for how this portfolio looks and sounds: editorial calm, low-saturation stone, narrative before slogans. Use this page as the source of truth when aligning visuals or copy.'}
+          <header className="brand-guide-hero py-16 text-center md:py-24">
+            <p className="brand-guide-kicker mx-auto">
+              {isZh ? 'Brand Operating Guide' : 'Brand Operating Guide'}
+            </p>
+            <h1 className="brand-guide-hero-title mx-auto mt-5 font-display font-bold tracking-tight">
+              {isZh ? 'Eden Tan 品牌操作系统' : 'Eden Tan Brand System'}
+            </h1>
+            <p className="brand-guide-hero-subtitle mx-auto mt-5">
+              {isZh
+                ? '用 Apple 式清晰度，承载 Eden 的系统思考。'
+                : 'Apple-level clarity. Eden-level systems thinking.'}
+            </p>
+            <p className="brand-guide-hero-copy mx-auto mt-5">
+              {isZh
+                ? '这个品牌不是普通履历，也不是炫技作品集。它要让读者在很短时间内知道：混乱在哪里，Eden 如何把它变成产品、策略、内容和可复用系统。'
+                : 'This is not a normal CV or a portfolio of proof. It helps a reader quickly understand where the chaos is, and how Eden turns it into products, strategy, content, and reusable systems.'}
+            </p>
+            <div className="mt-7 flex flex-wrap justify-center gap-5">
+              <a href="#brand-principles" className="brand-guide-cta">
+                {isZh ? '看设计原则' : 'View principles'} <span aria-hidden>›</span>
+              </a>
+              <a href="#brand-voice" className="brand-guide-cta brand-guide-cta-muted">
+                {isZh ? '看文案语气' : 'View voice'} <span aria-hidden>›</span>
+              </a>
+            </div>
+            <div className="brand-guide-signature mx-auto mt-12">
+              <div className="brand-guide-mark">
+                <img src={faviconSrc} alt="" width={72} height={72} />
+              </div>
+              <div>
+                <p className="brand-guide-signature-label">{isZh ? 'Core line' : 'Core line'}</p>
+                <p className="font-display text-3xl font-bold tracking-tight md:text-5xl">
+                  I build systems from chaos.
                 </p>
               </div>
             </div>
           </header>
 
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
-            <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
-              <FlatEmoji emoji="✨" size="md" tilt />
-              {isZh ? '品牌内核' : 'Brand essence'}
-            </h2>
-            <ul className="mt-4 space-y-2 text-stone-700">
-              {(isZh
-                ? [
-                    '知识系统感：像杂志排版，而不是典型 SaaS 营销站。',
-                    '真诚叙事：先场景与判断，再能力标签；少用空泛「赋能」。',
-                    '留白与层级：标题用 display 字体，正文保持可读行宽。',
-                    '轻趣味：扁平底 emoji + 轻动效点缀，不抢正文。',
-                  ]
-                : [
-                    'Knowledge-system feel: editorial layout, not generic SaaS marketing chrome.',
-                    'Honest narrative: context and judgment before capability labels; avoid empty “empowerment” language.',
-                    'Hierarchy and air: display type for headings, comfortable measure for body copy.',
-                    'Light play: flat emoji tiles and gentle motion as accents, never competing with the text.',
-                  ]
-              ).map((line) => (
-                <li key={line} className="flex gap-2">
-                  <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-stone-400" />
-                  <span>{line}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
-            <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
-              <FlatEmoji emoji="🧱" size="md" bob />
-              {isZh ? '色彩' : 'Color'}
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed text-stone-600">
-              {isZh
-                ? '全站以 Tailwind `stone` 阶为主轴；另有两枚品牌强调色（薄荷 / 琥珀，含透明度）用于状态、划选与轻点缀，不抢 stone 的编辑基调。主题默认按用户本地时间自动切换：07:00–18:59 为浅色，19:00–06:59 为深色。到了暗色模式，这两枚强调色会切到补色变体：mint 转红系，amber 转蓝系。'
-                : 'Stone remains the spine. Two accent swatches—mint and amber (with alpha)—signal status, selection, and light highlights without breaking the editorial calm. Theme defaults to local-time auto switching: 7:00 AM-6:59 PM stays light, 7:00 PM-6:59 AM turns dark. In dark mode, those accents switch to complementary variants: mint moves red, amber moves blue.'}
-            </p>
-            <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-stone-500">
-              {isZh ? '中性阶（stone）' : 'Neutral ramp (stone)'}
-            </p>
-            <div className="theme-preview-neutral mt-3 grid gap-3 sm:grid-cols-2">
-              {brandGuidePalette.map((row) => (
-                <div
-                  key={row.hex}
-                  className={`flex gap-3 rounded-xl border ${row.border} p-4 ${row.bg}`}
-                >
-                  <div className={`min-w-0 flex-1 text-sm ${row.text}`}>
-                    <p className="font-mono text-xs opacity-80">{row.hex}</p>
-                    <p className="mt-1 font-medium leading-snug">{row.usage[language]}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <p className="mt-6 text-xs font-semibold uppercase tracking-wide text-stone-500">
-              {isZh ? '品牌强调色' : 'Brand accents'}
-            </p>
-            <div className="mt-3 grid gap-3 sm:grid-cols-2">
-              {brandGuideAccent.map((row) => (
-                <div
-                  key={row.hex.light}
-                  className={`flex gap-3 rounded-xl border ${row.border} p-4 ${row.bg}`}
-                >
-                  <div className={`min-w-0 flex-1 text-sm ${row.text}`}>
-                    <p className="font-mono text-xs opacity-90">{row.hex[theme]}</p>
-                    <p className="mt-1 font-medium leading-snug">{row.usage[language]}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
-            <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
-              <FlatEmoji emoji="🔤" size="md" tilt />
-              {isZh ? '字体' : 'Typography'}
-            </h2>
-            <div className="mt-4 space-y-4 text-sm text-stone-700">
-              <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
-                <p className="font-mono text-xs uppercase tracking-wider text-stone-500">Space Grotesk · display</p>
-                <p className="font-display mt-2 text-2xl font-bold text-stone-900">
-                  {isZh ? '标题与引用：干净、略具编辑性格。' : 'Headlines & pull quotes: clean, slightly editorial.'}
-                </p>
-              </div>
-              <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
-                <p className="font-mono text-xs uppercase tracking-wider text-stone-500">Inter · sans</p>
-                <p className="mt-2 text-base leading-relaxed">
-                  {isZh
-                    ? '正文与 UI：中性、易读；避免过细字重导致灰度不足。'
-                    : 'Body and UI: neutral and readable; avoid ultra-light weights that lose contrast.'}
-                </p>
-              </div>
-              <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
-                <p className="font-mono text-xs uppercase tracking-wider text-stone-500">JetBrains Mono · mono</p>
-                <p className="mt-2 font-mono text-sm text-stone-700">
-                  {isZh ? '标签、时间、状态：小写宽、与 stone-500 标签搭配。' : 'Labels, dates, and status chips: wide, paired with stone-500 meta text.'}
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
-            <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
-              <FlatEmoji emoji="🔖" size="md" bob />
-              {isZh ? '标志与图标' : 'Logo & mark'}
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed text-stone-600">
-              {isZh
-                ? '站点字标为「Eden Tan」全名，使用 display 字重；图形标为圆角方底上的「E」字母标（见 favicon）。'
-                : 'Wordmark is the full name “Eden Tan” in display weight; the pictogram is a rounded-square “E” mark (see favicon).'}
-            </p>
-            <div className="mt-5 flex flex-wrap items-center gap-4">
-              <img
-                src={faviconSrc}
-                alt=""
-                width={64}
-                height={64}
-                className="rounded-2xl border border-stone-200 bg-white p-1 shadow-sm"
-              />
-              <div className="font-display text-3xl font-bold tracking-tight text-stone-900">Eden Tan</div>
-            </div>
-          </section>
-
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
-            <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
-              <FlatEmoji emoji="📐" size="md" tilt />
-              {isZh ? '版式与形状' : 'Layout & shape'}
-            </h2>
-            <ul className="mt-4 space-y-2 text-sm text-stone-700">
-              {(isZh
-                ? [
-                    '主内容宽约 `max-w-4xl`（内页）或 `max-w-5xl`（主页），两侧留白。',
-                    '卡片：`rounded-2xl` + `border-stone-200` + 轻阴影；避免重投影。',
-                    '分隔：细边线优于粗分割条；时间轴可用左侧竖线 + 圆点。',
-                    '顶栏可用极淡 `border-eden-mint` 作为品牌线，不抢内容。',
-                  ]
-                : [
-                    'Main column: about `max-w-4xl` on inner pages, `max-w-5xl` on home—keep generous margins.',
-                    'Cards: `rounded-2xl`, `border-stone-200`, subtle shadow—skip heavy drop shadows.',
-                    'Dividers: hairline borders over thick bands; timelines use a left rail with dots.',
-                    'The fixed nav can carry a whisper-thin `border-eden-mint` brand line—keep it subtle.',
-                  ]
-              ).map((line) => (
-                <li key={line} className="flex gap-2">
-                  <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-stone-400" />
-                  <span>{line}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
-            <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
-              <FlatEmoji emoji="💡" size="md" tilt />
-              {isZh ? '背景系统' : 'Background system'}
-            </h2>
-            <div className="mt-4 grid gap-4 md:grid-cols-2">
-              <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-stone-500">
-                  {isZh ? '底纸层' : 'Paper layer'}
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-stone-700">
-                  {isZh
-                    ? '全站用 `page-shell::before` 承接底纸纹理：细网格、淡线和轻高光。它负责材质感，不负责戏剧性。'
-                    : 'Use `page-shell::before` for the paper texture: fine grid, hairlines, and a soft highlight. It carries materiality, not drama.'}
-                </p>
-              </div>
-              <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-stone-500">
-                  {isZh ? '灯光层' : 'Light layer'}
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-stone-700">
-                  {isZh
-                    ? '`page-shell::after` 负责会动的 radial light。暗色模式下走补色逻辑：mint 对应红灯，amber 对应蓝灯。'
-                    : '`page-shell::after` owns the moving radial lights. In dark mode, those lights follow the complementary system: mint becomes red, amber becomes blue.'}
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
-            <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
-              <FlatEmoji emoji="🧩" size="md" bob />
-              {isZh ? '组件习惯' : 'Component habits'}
-            </h2>
-            <div className="mt-4 space-y-4">
-              <div className="flex flex-wrap items-center gap-2">
-                <FlatEmoji emoji="🗺️" delayMs={0} />
-                <FlatEmoji emoji="✨" delayMs={120} />
-                <span className="text-sm text-stone-600">
-                  {isZh ? '`.flat-emoji` + `emoji-bob` / `emoji-tilt`（见 `index.css`）' : '`.flat-emoji` + `emoji-bob` / `emoji-tilt` (see `index.css`)'}
-                </span>
-              </div>
-              <p className="text-sm text-stone-600">
+          <section id="brand-principles" className="brand-guide-section py-16 md:py-24">
+            <div className="brand-guide-section-head">
+              <p className="brand-guide-kicker">{isZh ? '01 / Design logic' : '01 / Design logic'}</p>
+              <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
+                {isZh ? 'Apple 的清晰度，Eden 的系统感。' : 'Apple clarity, Eden systems.'}
+              </h2>
+              <p className="brand-guide-section-copy">
                 {isZh
-                  ? '强调色 Token：`eden-mint` 与 `eden-amber` 在 `index.css` 的 `@theme` 注册；主题默认是 `自动 / 浅色 / 深色` 三态，其中自动模式按用户本地时间切换，dark mode 下补色版本会自动生效（mint -> red，amber -> blue）。'
-                  : 'Accent tokens `eden-mint` and `eden-amber` are registered in `@theme` inside `index.css`; theme now supports Auto / Light / Dark, with Auto following the user’s local time. When dark mode is active, complementary variants apply automatically (mint -> red, amber -> blue).'}
+                  ? '参考 Apple 的不是外观，而是注意力管理：少说一点，说准一点，让每个区块只负责一个任务。Eden 的部分，是把混乱、行为、策略和产品思考放进这个清晰框架里。'
+                  : 'The Apple reference is not the look. It is attention management: say less, say it clearly, and let each section do one job. The Eden layer is the systems lens for chaos, behavior, strategy, and product thinking.'}
               </p>
-              <p className="text-sm text-stone-600">
-                {isZh
-                  ? '可复用动效类：页面根容器用 `page-shell`，主要卡片用 `motion-card`，轻强调可挂 `motion-accent`。当前 `motion-card` 自带顶边扫光和底部 bloom。'
-                  : 'Reusable motion classes: use `page-shell` on page roots, `motion-card` on major cards, and `motion-accent` for restrained emphasis. The current `motion-card` also carries a top-edge flare and a low bloom.'}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <span className="rounded-full border border-stone-200 bg-stone-50 px-3 py-1 text-xs font-medium text-stone-700">
-                  {isZh ? '示例标签' : 'Sample chip'}
-                </span>
-                <span className="rounded-full bg-stone-900 px-3 py-1 text-xs font-semibold text-white">
-                  {isZh ? '主按钮语气' : 'Primary CTA tone'}
-                </span>
-              </div>
-              <div className="rounded-2xl bg-stone-900 p-5 text-stone-100">
-                <p className="font-display text-lg font-bold">{isZh ? '反色联系块' : 'Inverted connect panel'}</p>
-                <p className="mt-2 text-sm text-stone-400">
-                  {isZh ? '用于侧栏强调链接；文字层级用 stone-50 / stone-400。' : 'For sidebar emphasis; use stone-50 / stone-400 for hierarchy.'}
-                </p>
-              </div>
             </div>
-          </section>
-
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
-            <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
-              <FlatEmoji emoji="💬" size="md" tilt />
-              {isZh ? '语气与写作' : 'Voice & writing'}
-            </h2>
-            <div className="mt-4 grid gap-4 md:grid-cols-2">
-              <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-stone-500">
-                  {isZh ? '更贴近' : 'Prefer'}
-                </p>
-                <ul className="mt-2 space-y-1 text-sm text-stone-700">
-                  {(isZh
-                    ? ['具体场景与时间点', '短句 + 可接话的留白', '先承认再建议']
-                    : ['Concrete scenes and timestamps', 'Short lines with room to respond', 'Acknowledge, then advise']
-                  ).map((t) => (
-                    <li key={t}>· {t}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="rounded-xl border border-stone-200 bg-stone-50 p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-stone-500">
-                  {isZh ? '尽量避开' : 'Avoid'}
-                </p>
-                <ul className="mt-2 space-y-1 text-sm text-stone-700">
-                  {(isZh
-                    ? ['堆叠抽象大词', '成功学金句压场', '客服腔 / 主持稿腔']
-                    : ['Stacks of abstract buzzwords', 'Motivational poster quotes', 'Support-script or host-script tone']
-                  ).map((t) => (
-                    <li key={t}>· {t}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
-            <h2 className="flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900">
-              <FlatEmoji emoji="🌀" size="md" bob />
-              {isZh ? '动效与无障碍' : 'Motion & accessibility'}
-            </h2>
-            <ul className="mt-4 space-y-2 text-sm text-stone-700">
-              {(isZh
-                ? [
-                    '动效分三层：页面进入（`page-enter`）、卡片反馈（`motion-card`）、背景灯光（`light-orbit` / `light-pulse`）。',
-                    '当前节奏：背景灯约 `38s` 漂移、`11s` 呼吸；主题切换 `320ms`；卡片 hover `420ms`；底部 bloom `520ms`；页面淡入 `480ms`。',
-                    '卡片顶边扫光使用 `background-size: 300%`，亮带从右往左走，再慢慢漂回去；它应该像远处的光，不像贴在卡片上的高亮条。',
-                    '尊重 `prefers-reduced-motion`：背景灯、入场、hover 浮起、emoji 动画都会关闭。',
-                    '装饰性 emoji 使用 `aria-hidden`，避免屏幕阅读器重复读表情。',
-                  ]
-                : [
-                    'Motion works in three layers: page entry (`page-enter`), card feedback (`motion-card`), and ambient background lights (`light-orbit` / `light-pulse`).',
-                    'Current pacing: ambient lights drift at about `38s` with an `11s` breath; theme transitions run at `320ms`; card hover at `420ms`; bottom bloom at `520ms`; page entry at `480ms`.',
-                    'The card-edge flare uses `background-size: 300%`, drifting from right to left and then back again. It should feel like distant light passing by, not a pasted-on highlight.',
-                    'Honor `prefers-reduced-motion`: lights, entry, hover lift, and emoji animations all disable automatically.',
-                    'Decorative emojis use `aria-hidden` so assistive tech is not flooded with glyph names.',
-                  ]
-              ).map((line) => (
-                <li key={line} className="flex gap-2">
-                  <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-stone-400" />
-                  <span>{line}</span>
-                </li>
+            <div className="brand-guide-principle-grid mt-12 grid gap-4 md:grid-cols-3">
+              {brandGuidePrinciples.map((item, index) => (
+                <article key={item.title.en} className="brand-guide-principle-card">
+                  <p className="brand-guide-card-index">{String(index + 1).padStart(2, '0')}</p>
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.title[language]}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
               ))}
-            </ul>
+            </div>
           </section>
 
-          <p className="mt-8 text-center text-xs text-stone-500">
-            {isZh ? '最后更新以代码库与 log 为准。' : 'For the latest changes, follow the repo and `log.md`.'}
+          <section className="brand-guide-section py-16 md:py-24">
+            <div className="brand-guide-section-head">
+              <p className="brand-guide-kicker">{isZh ? '02 / Visual system' : '02 / Visual system'}</p>
+              <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
+                {isZh ? '中性为主，强调色只负责信号。' : 'Neutral first. Accent as signal.'}
+              </h2>
+              <p className="brand-guide-section-copy">
+                {isZh
+                  ? 'Stone 是品牌底盘。Mint 和 Amber 不是装饰色，而是系统里的状态灯。浅色模式保持薄荷和琥珀；深色模式自动切到红系和蓝系补色。'
+                  : 'Stone is the base system. Mint and amber are not decorative colors. They are signal lights. Light mode uses mint and amber; dark mode switches them into red and blue complements.'}
+              </p>
+            </div>
+            <div className="mt-12 grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
+              <div className="brand-guide-color-board">
+                {brandGuidePalette.map((row) => (
+                  <article key={row.hex} className="brand-guide-swatch">
+                    <span className="brand-guide-swatch-chip" style={{ backgroundColor: row.hex }} />
+                    <div>
+                      <p className="brand-guide-card-index">{row.hex}</p>
+                      <h3 className="font-display text-2xl font-bold tracking-tight">{row.role[language]}</h3>
+                      <p>{row.usage[language]}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+              <div className="brand-guide-color-board brand-guide-accent-board">
+                {brandGuideAccent.map((row) => (
+                  <article key={row.name.en} className="brand-guide-swatch">
+                    <span
+                      className="brand-guide-swatch-chip"
+                      style={{ backgroundColor: row.hex[theme] }}
+                    />
+                    <div>
+                      <p className="brand-guide-card-index">{row.hex[theme]}</p>
+                      <h3 className="font-display text-2xl font-bold tracking-tight">{row.role[language]}</h3>
+                      <p>{row.usage[language]}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="brand-guide-section py-16 md:py-24">
+            <div className="brand-guide-section-head">
+              <p className="brand-guide-kicker">{isZh ? '03 / Type and rhythm' : '03 / Type and rhythm'}</p>
+              <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
+                {isZh ? '字体少一点，层级清楚一点。' : 'Fewer type moves. Clearer hierarchy.'}
+              </h2>
+              <p className="brand-guide-section-copy">
+                {isZh
+                  ? 'Apple 式页面不靠很多字体大小制造高级感，而是靠稳定比例。Eden 的页面也应该少用字号，靠标题、正文、标签三层完成阅读秩序。'
+                  : 'Apple-style pages do not feel premium because of many font sizes. They feel premium because the scale is disciplined. Eden should use a clear display, body, and system-label stack.'}
+              </p>
+            </div>
+            <div className="mt-12 grid gap-5 md:grid-cols-3">
+              {brandGuideTypography.map((item) => (
+                <article key={item.name} className="brand-guide-type-card">
+                  <p className="brand-guide-card-index">{item.name}</p>
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.role[language]}</h3>
+                  <p className={item.name === 'JetBrains Mono' ? 'font-mono' : item.name === 'Space Grotesk' ? 'font-display text-2xl font-bold' : ''}>
+                    {item.sample[language]}
+                  </p>
+                  <p>{item.detail[language]}</p>
+                </article>
+              ))}
+            </div>
+            <div className="mt-8 grid gap-5 md:grid-cols-2">
+              {brandGuideRhythm.map((item) => (
+                <article key={item.title.en} className="brand-guide-rhythm-card">
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.title[language]}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section id="brand-voice" className="brand-guide-section py-16 md:py-24">
+            <div className="brand-guide-section-head">
+              <p className="brand-guide-kicker">{isZh ? '04 / Voice' : '04 / Voice'}</p>
+              <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
+                {isZh ? '不要让读者看你很厉害。让读者知道你能帮什么忙。' : 'Do not perform expertise. Make the help obvious.'}
+              </h2>
+              <p className="brand-guide-section-copy">
+                {isZh
+                  ? '文案先接住读者处境，再讲 Eden 的判断，最后给可行动入口。少用连续的 “I”。多用 “For founders...”, “When the work feels messy...”, “This is where...” 这类读者视角句式。'
+                  : 'Copy should receive the reader’s situation first, then show Eden’s judgment, then offer a clear next action. Avoid stacked “I” statements. Prefer reader-led lines like “For founders...”, “When the work feels messy...”, and “This is where...”.'}
+              </p>
+            </div>
+            <div className="mt-12 space-y-4">
+              {brandGuideVoicePairs.map((pair) => (
+                <article key={pair.avoid.en} className="brand-guide-voice-row">
+                  <div>
+                    <p className="brand-guide-card-index">{isZh ? 'Avoid' : 'Avoid'}</p>
+                    <p>{pair.avoid[language]}</p>
+                  </div>
+                  <div>
+                    <p className="brand-guide-card-index">{isZh ? 'Prefer' : 'Prefer'}</p>
+                    <p>{pair.prefer[language]}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="brand-guide-section py-16 md:py-24">
+            <div className="brand-guide-section-head">
+              <p className="brand-guide-kicker">{isZh ? '05 / Application' : '05 / Application'}</p>
+              <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
+                {isZh ? '每个页面都像一个清楚的产品说明。' : 'Every page behaves like a clear product story.'}
+              </h2>
+              <p className="brand-guide-section-copy">
+                {isZh
+                  ? '少一点框，多一点层级。少一点装饰，多一点判断。页面可以有神秘感，但信息路径必须清楚。'
+                  : 'Less framing, more hierarchy. Less decoration, more judgment. The site can feel mysterious, but the information path must stay clear.'}
+              </p>
+            </div>
+            <div className="mt-12 grid gap-5 md:grid-cols-2">
+              {brandGuideUseCases.map((item) => (
+                <article key={item.title.en} className="brand-guide-use-card">
+                  <h3 className="font-display text-3xl font-bold tracking-tight">{item.title[language]}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section id="brand-story" className="brand-guide-section py-16 md:py-24">
+            <div className="brand-guide-section-head">
+              <p className="brand-guide-kicker">{isZh ? '06 / Story style' : '06 / Story style'}</p>
+              <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
+                {isZh ? '故事是用来记住好玩的，不是用来炫耀的。' : 'Stories are for remembering the fun, not for flexing.'}
+              </h2>
+              <p className="brand-guide-section-copy">
+                {isZh
+                  ? '站上的 story log（牌桌、生活、日常时刻）都用这一套语气：真实的事，轻松地讲，用小名，留画面，删废话。看 /poker 的 Story log 当样板。'
+                  : 'Every story log on the site (the table, life, everyday moments) follows one voice: true events, told loosely, on a nickname basis, kept cinematic, trimmed to the bone. The /poker Story log is the reference.'}
+              </p>
+            </div>
+            <div className="mt-12 grid gap-5 md:grid-cols-2">
+              {brandGuideStoryRules.map((item) => (
+                <article key={item.title.en} className="brand-guide-use-card">
+                  <h3 className="font-display text-3xl font-bold tracking-tight">{item.title[language]}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
+              ))}
+            </div>
+            <article className="brand-guide-voice-row mt-5">
+              <div>
+                <p className="brand-guide-card-index">{isZh ? 'Avoid' : 'Avoid'}</p>
+                <p>{brandGuideStoryExample.avoid[language]}</p>
+              </div>
+              <div>
+                <p className="brand-guide-card-index">{isZh ? 'Prefer' : 'Prefer'}</p>
+                <p>{brandGuideStoryExample.prefer[language]}</p>
+              </div>
+            </article>
+          </section>
+
+          <section id="brand-motion" className="brand-guide-section py-16 md:py-24">
+            <div className="brand-guide-section-head">
+              <p className="brand-guide-kicker">{isZh ? '07 / Motion language' : '07 / Motion language'}</p>
+              <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
+                {isZh ? '动效要像呼吸，不要像表演。' : 'Motion should breathe, not perform.'}
+              </h2>
+              <p className="brand-guide-section-copy">
+                {isZh
+                  ? '当前首页是动效基准：背景慢慢漂、页面轻轻入场，CSS icon 用小幅度、慢节奏的微动传达系统感。未来可以优化 timing 和性能，但不要把这套慢速、克制、有生命感的动效语言删掉或换成通用炫技效果。'
+                  : 'The current homepage is the motion reference: the background drifts slowly, the page enters softly, and CSS icons use small, slow motion to carry the system feeling. Future work can refine timing and performance, but should not remove this slow, restrained, living motion language or replace it with generic show effects.'}
+              </p>
+            </div>
+            <div className="mt-12 grid gap-5 md:grid-cols-2">
+              {brandGuideMotionRules.map((item) => (
+                <article key={item.title.en} className="brand-guide-use-card">
+                  <h3 className="font-display text-3xl font-bold tracking-tight">{item.title[language]}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <p className="pb-10 text-center text-xs text-stone-500">
+            {isZh
+              ? '设计参考 Apple.com 的高层信息架构逻辑，但视觉、文案和品牌资产属于 Eden Tan 个人站。最后更新以代码库与 log 为准。'
+              : 'This guide references Apple.com at the level of information architecture only. Visuals, copy, and brand assets belong to the Eden Tan site. For the latest changes, follow the repo and `log.md`.'}
           </p>
         </div>
       </main>
@@ -3321,12 +6077,12 @@ const PreviousProjectsFullPage: React.FC<{
               {isZh ? '历史项目档案' : 'Previous Project Archive'}
             </p>
             <h1 className="mt-2 font-display text-4xl font-bold tracking-tight text-stone-900 md:text-5xl">
-              {isZh ? '完整职业项目记录' : 'Full Career Project Records'}
+              {isZh ? '之前都做过些什么' : 'Stuff I’ve worked on'}
             </h1>
             <p className="mt-6 text-base leading-relaxed text-stone-600">
               {isZh
-                ? '这个页面整理了我过往项目档案的完整结构，并保留每个阶段背后的执行语境。'
-                : 'This page clones the full content structure from my previous project archive and preserves the operational context behind each stage of work.'}
+                ? '把这些年做过的项目都摊在这里，每段在干嘛、解决了什么，尽量讲清楚，不堆漂亮话。'
+                : 'Everything I’ve worked on over the years, laid out here — what each role was actually about and what it fixed, in plain terms, minus the résumé polish.'}
             </p>
           </div>
 
@@ -3392,15 +6148,41 @@ const JijuPetFullPage: React.FC<{
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
 }> = ({ homeHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
+  const jijuSystemCards = isZh
+    ? [
+        { title: 'Discovery', copy: '把宠物友好地点从零散资讯整理成可探索的小地图。' },
+        { title: 'Trust', copy: '用地点政策、真实记录和后台安全机制建立信任层。' },
+        { title: 'Memory', copy: '让带宠出门不只是一次消费，而是能被记录和回看的经历。' },
+        { title: 'Community', copy: '让用户贡献、验证和 Sanctuary impact 逐步形成复利。' },
+      ]
+    : [
+        { title: 'Discovery', copy: 'Turn scattered pet-friendly information into a map people can actually explore.' },
+        { title: 'Trust', copy: 'Build trust through place policy, real records, and safer backoffice operations.' },
+        { title: 'Memory', copy: 'Make outings more than transactions by giving them a place to be remembered.' },
+        { title: 'Community', copy: 'Let contribution, verification, and sanctuary impact compound over time.' },
+      ];
+  const jijuProofPoints = isZh
+    ? [
+        ['Started', 'Penang first'],
+        ['Core loop', 'Discover -> Visit -> Record -> Contribute'],
+        ['Current focus', 'Trust, mobile UX, analytics, community'],
+        ['Build style', 'Log-driven, measurable, iterative'],
+      ]
+    : [
+        ['Started', 'Penang first'],
+        ['Core loop', 'Discover -> Visit -> Record -> Contribute'],
+        ['Current focus', 'Trust, mobile UX, analytics, community'],
+        ['Build style', 'Log-driven, measurable, iterative'],
+      ];
 
   return (
-    <div className="page-shell min-h-screen text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
-      <main className="px-6 py-12 md:py-16">
-        <div className="mx-auto max-w-4xl">
-          <div className="flex flex-wrap items-center justify-between gap-3">
+    <div className="page-shell jiju-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
+      <main className="px-5 py-8 md:px-8 md:py-10">
+        <div className="mx-auto max-w-6xl">
+          <div className="jiju-topbar flex flex-wrap items-center justify-between gap-3">
             <a
               href={homeHref}
-              className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 transition-colors hover:border-stone-900 hover:text-stone-900"
+              className="jiju-back-link inline-flex items-center gap-2 text-sm font-medium"
             >
               <ArrowLeft size={16} />
               {isZh ? '返回主页' : 'Back to Home'}
@@ -3414,217 +6196,166 @@ const JijuPetFullPage: React.FC<{
             />
           </div>
 
-          <div className="motion-card mt-8 rounded-2xl border border-stone-200 bg-white p-6 md:p-8 shadow-sm">
-            <div className="flex flex-wrap items-start justify-between gap-4">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-stone-500">
-                  {isZh ? '手上还在长的几件事' : 'What I am building now'}
-                </p>
-                <h1 className="mt-2 font-display text-4xl font-bold tracking-tight text-stone-900 md:text-5xl">
-                  {isZh ? 'Jiju.pet：从 0 到 1' : 'Jiju.pet: From 0 to 1'}
-                </h1>
-              </div>
-              <a
-                href="https://jiju.pet"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-stone-900 px-4 py-2 text-sm font-semibold text-white ring-2 ring-transparent transition-all hover:bg-stone-800 hover:ring-eden-amber/55 focus-visible:outline-none focus-visible:ring-eden-amber/60"
-              >
-                {isZh ? '打开 jiju.pet' : 'Open jiju.pet'}
-                <ExternalLink size={14} />
+          <header className="jiju-hero py-16 text-center md:py-24">
+            <p className="jiju-kicker mx-auto">{isZh ? 'Jiju.pet / Pet-friendly discovery system' : 'Jiju.pet / Pet-friendly discovery system'}</p>
+            <h1 className="jiju-title mx-auto mt-5 font-display font-bold tracking-tight">
+              {isZh ? 'A smaller map for going out with pets.' : 'A smaller map for going out with pets.'}
+            </h1>
+            <p className="jiju-subtitle mx-auto mt-5">
+              {isZh
+                ? '从槟城开始，把宠物友好地点、出门记忆、社区贡献和 Sanctuary impact 变成一条更清楚的产品路径。'
+                : 'Starting from Penang, Jiju.pet turns pet-friendly places, outing memories, community contribution, and sanctuary impact into one clearer product path.'}
+            </p>
+            <div className="mt-7 flex flex-wrap justify-center gap-5">
+              <a href="https://jiju.pet" target="_blank" rel="noopener noreferrer" className="jiju-text-cta">
+                {isZh ? '打开 jiju.pet' : 'Open jiju.pet'} <ExternalLink size={15} />
+              </a>
+              <a href="#build-log" className="jiju-text-cta jiju-text-cta-muted">
+                {isZh ? '看构建记录' : 'View build log'} <span aria-hidden>›</span>
               </a>
             </div>
+          </header>
 
-            <div className="mt-5 flex flex-wrap items-center gap-2">
-              <FlatEmoji emoji="🐾" delayMs={0} />
-              <FlatEmoji emoji="📖" delayMs={160} />
-              <FlatEmoji emoji="✨" delayMs={320} />
-            </div>
-
-            <p className="mt-6 text-base leading-relaxed text-stone-600">
-              {isZh
-                ? '这一页不是修好才拿出来展示的故事，而是我边做边记录的现场版本。你会先看到我反复使用的三条决策 DNA，再看知识摘要，最后进入九段连载：每段先一句旁白，再拆当时为什么这样判断、怎么落地、最后换来什么。'
-                : 'This page is not a polished retrospective. It is the live operating log: three decision habits I keep repeating, a distilled knowledge summary, then nine chapters in sequence. Each chapter opens with a short voice-over, followed by why I chose that path, how I executed, and what changed.'}
-            </p>
-          </div>
-
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
-            <p className="text-sm font-semibold uppercase tracking-wide text-stone-500">
-              {isZh ? '决策 DNA' : 'Decision DNA'}
-            </p>
-            <h2 className="mt-2 flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900 md:text-3xl">
-              <FlatEmoji emoji="🧬" size="lg" bob />
-              {isZh ? '我的思考、规划与执行方式' : 'How I think, plan, and execute'}
-            </h2>
-            <div className="mt-5 space-y-4">
-              {decisionDna.map((item, dnaIndex) => (
-                <div
-                  key={item.trait.en}
-                  className="flex gap-3 rounded-xl border border-stone-200 bg-stone-50 p-4 transition-shadow duration-300 hover:shadow-md"
-                >
-                  <FlatEmoji emoji={item.emoji} size="sm" bob delayMs={dnaIndex * 140} />
-                  <div className="min-w-0 flex-1">
-                    <p className="text-base font-semibold text-stone-900">{item.trait[language]}</p>
-                    <p className="mt-1 text-sm leading-relaxed text-stone-700">{item.detail[language]}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="motion-card mt-6 rounded-2xl border border-stone-200 bg-white p-6 md:p-7 shadow-sm">
-            <p className="text-sm font-semibold uppercase tracking-wide text-stone-500">
-              {isZh ? '知识摘要' : 'Knowledge Summary'}
-            </p>
-            <h2 className="mt-2 flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900 md:text-3xl">
-              <FlatEmoji emoji="📚" size="lg" tilt />
-              {isZh ? '来自 Jiju 知识库的核心要点' : 'Core points extracted from my Jiju knowledge base'}
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed text-stone-600">
-              {isZh
-                ? '这部分从 Jiju 当前全部笔记里抽出了“最常被反复验证”的要点，覆盖产品定位、执行体系、安全边界、增长分析、设计原则与社区方向。'
-                : 'This section distills the most repeatedly validated points from current Jiju notes: product positioning, execution system, safety boundaries, growth analytics, design principles, and community direction.'}
-            </p>
-            <div className="mt-5 space-y-4">
-              {jijuKnowledgeHighlights.map((section) => (
-                <section
-                  key={section.title.en}
-                  className="rounded-xl border border-stone-200 bg-stone-50 p-4 transition-shadow duration-300 hover:shadow-md"
-                >
-                  <h3 className="flex items-center gap-2 text-base font-semibold text-stone-900">
-                    <FlatEmoji emoji={section.emoji} size="sm" bob={false} tilt />
-                    {section.title[language]}
-                  </h3>
-                  <ul className="mt-2 space-y-2 text-sm text-stone-700">
-                    {section.points[language].map((point) => (
-                      <li key={point} className="flex gap-2">
-                        <span className="mt-1.5 h-1.5 w-1.5 flex-none rounded-full bg-stone-400" />
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              ))}
-            </div>
-          </section>
-
-          <div className="mt-8">
-            <div className="flex flex-wrap items-end justify-between gap-3">
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-wide text-stone-500">
-                  {isZh ? '九段连载' : 'Nine chapters'}
-                </p>
-                <h2 className="mt-1 flex flex-wrap items-center gap-3 font-display text-2xl font-bold text-stone-900 md:text-3xl">
-                  <FlatEmoji emoji="🎞️" size="lg" bob />
-                  {isZh ? '从地基，到今天的写法' : 'From foundation to how I build now'}
-                </h2>
-              </div>
-              <p className="max-w-xs text-xs font-medium leading-relaxed text-stone-500 md:text-right">
+          <section className="jiju-product-panel">
+            <div className="jiju-product-copy">
+              <p className="jiju-kicker">{isZh ? 'Product system' : 'Product system'}</p>
+              <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
+                {isZh ? '不是咖啡馆列表。是一套宠物出门系统。' : 'Not a cafe list. A system for pet outings.'}
+              </h2>
+              <p>
                 {isZh
-                  ? '左右滑动阅读。每张卡都是同一结构：旁白开场 -> 当时判断 -> 方案落地 -> 结果变化。'
-                  : 'Swipe horizontally. Every card follows the same rhythm: voice-over -> decision logic -> execution -> outcome.'}
+                  ? 'Jiju.pet 的核心不是把地点堆起来，而是让养宠的人更快判断：哪里能去、规则是否可信、这次出门值不值得留下记录，以及这个社区能不能一起变得更准。'
+                  : 'The point is not to pile up places. Jiju.pet helps pet parents decide where to go, whether the policy is trustworthy, whether the outing is worth remembering, and whether the community can make the map more accurate over time.'}
               </p>
             </div>
+            <div className="jiju-proof-grid">
+              {jijuProofPoints.map(([label, value]) => (
+                <div key={label} className="jiju-proof-row">
+                  <span>{label}</span>
+                  <strong>{value}</strong>
+                </div>
+              ))}
+            </div>
+          </section>
 
-            <div className="mt-4 -mx-1 flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-3">
-            {jijuBuildFromZeroToOne.map((item, index) => (
-                <section
-                  key={item.phase.en}
-                  className="motion-card min-w-[88%] snap-start rounded-2xl border border-stone-200 bg-gradient-to-b from-stone-50/70 to-white p-6 shadow-sm outline outline-1 -outline-offset-1 outline-stone-200/80 ring-1 ring-stone-900/[0.04] transition-shadow duration-300 hover:shadow-md md:min-w-[560px] md:p-7 lg:min-w-[620px]"
-                >
-                <div className="flex items-start justify-between gap-3 border-b border-dashed border-stone-200/90 pb-4">
-                  <div className="flex min-w-0 flex-1 items-start gap-3">
-                    <FlatEmoji emoji={item.emoji} bob delayMs={index * 120} />
-                    <h2 className="font-display text-2xl font-bold text-stone-900 md:text-3xl">
-                      {item.phase[language]}
-                    </h2>
+          <section className="jiju-section py-16 md:py-24">
+            <div className="jiju-section-head">
+              <p className="jiju-kicker">{isZh ? 'What it becomes' : 'What it becomes'}</p>
+              <h2 className="jiju-section-title font-display font-bold tracking-tight">
+                {isZh ? '地点、信任、记忆和社区，放进同一个产品循环。' : 'Places, trust, memory, and community in one product loop.'}
+              </h2>
+            </div>
+            <div className="mt-12 grid gap-5 md:grid-cols-4">
+              {jijuSystemCards.map((item) => (
+                <article key={item.title} className="jiju-system-card">
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.title}</h3>
+                  <p>{item.copy}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="jiju-section py-16 md:py-24">
+            <div className="jiju-section-head">
+              <p className="jiju-kicker">{isZh ? 'Decision DNA' : 'Decision DNA'}</p>
+              <h2 className="jiju-section-title font-display font-bold tracking-tight">
+                {isZh ? '构建方式比功能清单更重要。' : 'The build method matters more than the feature list.'}
+              </h2>
+            </div>
+            <div className="mt-12 grid gap-5 md:grid-cols-3">
+              {decisionDna.map((item) => (
+                <article key={item.trait.en} className="jiju-dna-card">
+                  <p className="jiju-card-emoji">{item.emoji}</p>
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.trait[language]}</h3>
+                  <p>{item.detail[language]}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="jiju-section py-16 md:py-24">
+            <div className="jiju-section-head">
+              <p className="jiju-kicker">{isZh ? 'System notes' : 'System notes'}</p>
+              <h2 className="jiju-section-title font-display font-bold tracking-tight">
+                {isZh ? '从知识库抽出的核心系统。' : 'Core systems extracted from the build archive.'}
+              </h2>
+              <p className="jiju-section-copy">
+                {isZh
+                  ? '这部分保留原本知识摘要，但排版变成更容易扫描的系统文件。'
+                  : 'This keeps the original knowledge summary, but turns it into scannable system files.'}
+              </p>
+            </div>
+            <div className="mt-12 grid gap-5 md:grid-cols-2">
+              {jijuKnowledgeHighlights.map((section) => (
+                <article key={section.title.en} className="jiju-note-card">
+                  <div className="flex items-center gap-3">
+                    <span className="jiju-card-emoji">{section.emoji}</span>
+                    <h3 className="font-display text-2xl font-bold tracking-tight">{section.title[language]}</h3>
                   </div>
-                  <span className="shrink-0 rounded-lg border border-amber-700/20 bg-gradient-to-br from-eden-amber/40 to-amber-100/50 px-2.5 py-1 font-mono text-xs font-semibold text-amber-950 tabular-nums">
-                    0{index + 1}
-                  </span>
-                </div>
+                  <ul>
+                    {section.points[language].map((point) => (
+                      <li key={point}>{point}</li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </section>
 
-                <div className="mt-4 rounded-xl border border-eden-mint/30 bg-gradient-to-br from-eden-mint/25 via-stone-50/90 to-white p-4 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.6)] outline outline-1 -outline-offset-1 outline-eden-mint/20">
-                  <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-teal-900/80">
-                    <span aria-hidden>💬</span>
-                    {isZh ? '旁白' : 'Voice'}
-                  </p>
-                  <p className="chapter-voice-enter mt-2 border-l-[3px] border-eden-mint pl-3 text-base leading-relaxed text-stone-700">
-                    {item.chapterVoice[language]}
-                  </p>
-                </div>
-
-                <div className="mt-4 overflow-hidden rounded-xl border border-stone-200/90 bg-white outline outline-1 -outline-offset-1 outline-amber-700/10 ring-1 ring-amber-700/[0.06]">
-                  <p className="flex items-center gap-2 border-b border-amber-700/10 bg-gradient-to-r from-eden-amber/15 to-amber-50/40 px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-amber-950/90">
-                    <span aria-hidden>🧩</span>
-                    {isZh ? '背景与判断' : 'Context & judgment'}
-                  </p>
-                  <div className="divide-y divide-stone-200/80">
-                    <div className="px-3 py-3">
-                      <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-amber-900/70">
-                        <span aria-hidden>📅</span>
-                        {isZh ? '时间' : 'When'}
-                      </p>
-                      <p className="mt-1 text-base leading-relaxed text-stone-700">{item.when[language]}</p>
+          <section id="build-log" className="jiju-section py-16 md:py-24">
+            <div className="jiju-section-head">
+              <p className="jiju-kicker">{isZh ? 'Build log' : 'Build log'}</p>
+              <h2 className="jiju-section-title font-display font-bold tracking-tight">
+                {isZh ? '从地基，到今天的写法。' : 'From foundation to how the system compounds.'}
+              </h2>
+              <p className="jiju-section-copy">
+                {isZh
+                  ? '每一段都保留原本的判断结构：为什么做、怎么想、怎么落地、最后换来什么。'
+                  : 'Each chapter keeps the original decision structure: why it mattered, how I thought, how I executed, and what changed.'}
+              </p>
+            </div>
+            <div className="mt-12 space-y-5">
+              {jijuBuildFromZeroToOne.map((item, index) => (
+                <article key={item.phase.en} className="jiju-chapter-card">
+                  <div className="jiju-chapter-number">{String(index + 1).padStart(2, '0')}</div>
+                  <div className="jiju-chapter-main">
+                    <p className="jiju-chapter-phase">{item.phase[language]}</p>
+                    <h3 className="font-display text-3xl font-bold tracking-tight">{item.chapterVoice[language]}</h3>
+                    <div className="jiju-chapter-grid">
+                      <div>
+                        <span>{isZh ? 'When' : 'When'}</span>
+                        <p>{item.when[language]}</p>
+                      </div>
+                      <div>
+                        <span>{isZh ? 'Why' : 'Why'}</span>
+                        <p>{item.why[language]}</p>
+                      </div>
+                      <div>
+                        <span>{isZh ? 'Thinking' : 'Thinking'}</span>
+                        <p>{item.thinking[language]}</p>
+                      </div>
+                      <div>
+                        <span>{isZh ? 'Planning' : 'Planning'}</span>
+                        <p>{item.planning[language]}</p>
+                      </div>
                     </div>
-                    <div className="px-3 py-3">
-                      <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-amber-900/70">
-                        <span aria-hidden>🎯</span>
-                        {isZh ? '为什么做' : 'Why'}
-                      </p>
-                      <p className="mt-1 text-base leading-relaxed text-stone-700">{item.why[language]}</p>
-                    </div>
-                    <div className="px-3 py-3">
-                      <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-amber-900/70">
-                        <span aria-hidden>💭</span>
-                        {isZh ? '思考判断' : 'Thinking'}
-                      </p>
-                      <p className="mt-1 text-base leading-relaxed text-stone-700">{item.thinking[language]}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-3 overflow-hidden rounded-xl border border-stone-200/90 bg-white outline outline-1 -outline-offset-1 outline-teal-700/12 ring-1 ring-teal-800/[0.05]">
-                  <p className="flex items-center gap-2 border-b border-eden-mint/20 bg-gradient-to-r from-eden-mint/20 to-stone-50/80 px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-teal-950/80">
-                    <span aria-hidden>🛠️</span>
-                    {isZh ? '规划与执行' : 'Plan & execution'}
-                  </p>
-                  <div className="space-y-0 divide-y divide-stone-200/80">
-                    <div className="px-3 py-3">
-                      <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-teal-900/70">
-                        <span aria-hidden>🗺️</span>
-                        {isZh ? '规划方案' : 'Planning'}
-                      </p>
-                      <p className="mt-1 text-base leading-relaxed text-stone-700">{item.planning[language]}</p>
-                    </div>
-                    <div className="px-3 py-3">
-                      <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-teal-900/70">
-                        <span aria-hidden>✅</span>
-                        {isZh ? '问题解决' : 'Problem Solving'}
-                      </p>
-                      <ul className="mt-2 space-y-2 text-stone-700">
-                        {item.solving[language].map((step, stepIndex) => (
-                          <li key={`${item.phase.en}-${stepIndex}`} className="flex gap-2">
-                            <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-eden-mint shadow-[0_0_0_1px_rgba(15,23,20,0.08)]" />
-                            <span>{step}</span>
-                          </li>
+                    <div className="jiju-solving">
+                      <span>{isZh ? 'Problem solving' : 'Problem solving'}</span>
+                      <ul>
+                        {item.solving[language].map((step) => (
+                          <li key={step}>{step}</li>
                         ))}
                       </ul>
                     </div>
+                    <div className="jiju-outcome">
+                      <span>{isZh ? 'Outcome' : 'Outcome'}</span>
+                      <p>{item.outcome[language]}</p>
+                    </div>
                   </div>
-                </div>
-
-                <div className="mt-3 rounded-xl border border-eden-mint/40 bg-gradient-to-br from-eden-mint/15 via-stone-50/95 to-white px-3 py-3.5 text-sm text-stone-800 outline outline-1 -outline-offset-1 outline-eden-mint/30 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.55)]">
-                  <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-teal-900/85">
-                    <span aria-hidden>🌱</span>
-                    {isZh ? '结果' : 'Outcome'}
-                  </p>
-                  <p className="mt-1.5 leading-relaxed text-stone-800">{item.outcome[language]}</p>
-                </div>
-                </section>
-            ))}
+                </article>
+              ))}
             </div>
-          </div>
+          </section>
         </div>
       </main>
     </div>
@@ -3770,13 +6501,82 @@ const App: React.FC = () => {
   const isZh = language === 'zh';
   const baseUrl = import.meta.env.BASE_URL || '/';
   const fullPageHref = joinBasePath(baseUrl, 'jiju-pet');
+  const projectsHref = joinBasePath(baseUrl, 'projects');
+  const etReportHubHref = joinBasePath(baseUrl, 'etreporthub');
+  const etReportHubSalesHref = joinBasePath(baseUrl, 'etreporthub-sales');
+  const pokerHref = joinBasePath(baseUrl, 'poker');
+  const crmHref = joinBasePath(baseUrl, 'crm');
   const previousProjectsHref = joinBasePath(baseUrl, 'previous-projects');
   const analogTechHref = joinBasePath(baseUrl, 'analog-tech');
   const lifeOsHref = joinBasePath(baseUrl, 'life-os');
   const lifeHref = joinBasePath(baseUrl, 'life');
   const brandGuideHref = joinBasePath(baseUrl, 'brand-guide');
+  const conwayHref = joinBasePath(baseUrl, 'conways-game-of-life');
   const resumeHref = 'https://drive.google.com/uc?export=download&id=1PRXj4BwpeAX_7F9H2PJumG0slIEZmLZ0';
   const homeHref = baseUrl;
+  const homeChaosSignals = isZh
+    ? [
+        '产品方向很多，但主线不清楚。',
+        'AI 工具到处都是，却没有真正进入工作流。',
+        '增长压力很大，但活动、内容和用户路径各跑各的。',
+        '运营知道问题存在，却缺一个能复用的系统。',
+      ]
+    : [
+        'Product ideas are everywhere, but the main line is unclear.',
+        'AI tools are everywhere, but the workflow is still missing.',
+        'Growth pressure is real, but campaigns, content, and user paths run apart.',
+        'Operations can feel the problem, but the reusable system is not there yet.',
+      ];
+  const homeClearOutputs = isZh
+    ? [
+        { title: 'Product Logic', copy: '把想法整理成用户路径、验证顺序和可上线范围。' },
+        { title: 'Growth Structure', copy: '把增长从口号拆成渠道、机制、节奏和复盘。' },
+        { title: 'AI Workflow', copy: '把 AI 从工具清单变成小团队真正能使用的流程。' },
+        { title: 'Campaign System', copy: '把活动、provider、素材、规则和追踪变成同一张图。' },
+        { title: 'Content Engine', copy: '把长期构建过程整理成品牌叙事和可持续输出。' },
+      ]
+    : [
+        { title: 'Product Logic', copy: 'Turn ideas into user paths, validation order, and shippable scope.' },
+        { title: 'Growth Structure', copy: 'Break growth into channels, mechanics, rhythm, and review loops.' },
+        { title: 'AI Workflow', copy: 'Move AI from a tool list into a workflow a small team can actually use.' },
+        { title: 'Campaign System', copy: 'Map campaigns, providers, assets, rules, and tracking into one operating view.' },
+        { title: 'Content Engine', copy: 'Turn the build process into brand narrative and sustainable output.' },
+      ];
+  const homeSystemFiles: Array<{ title: string; copy: string; href: string; cta: string; visual?: 'blueprint' | 'jiju' | 'life-magic' }> = isZh
+    ? [
+        { title: 'Projects Hub', copy: 'Jiju、Friday Poker Club、ETReportHub 和 CRM 的 AI build systems。', href: projectsHref, cta: '看 Projects', visual: 'blueprint' },
+        { title: 'Jiju Growth System', copy: '从槟城开始的宠物友好发现平台，先把小地图做清楚。', href: fullPageHref, cta: '看案例', visual: 'jiju' },
+        { title: 'Life OS RPG System', copy: '把人格、经历、能力和阴影转成角色卡、技能与成长路线。', href: lifeOsHref, cta: '打开角色档案', visual: 'life-magic' },
+      ]
+    : [
+        { title: 'Projects Hub', copy: 'AI build systems for Jiju, Friday Poker Club, ETReportHub, and CRM.', href: projectsHref, cta: 'View Projects', visual: 'blueprint' },
+        { title: 'Jiju Growth System', copy: 'A pet-friendly discovery platform starting from Penang, built by making the small map clear first.', href: fullPageHref, cta: 'View case', visual: 'jiju' },
+        { title: 'Life OS RPG System', copy: 'A character-card system for turning personality, experience, ability, and shadow into upgrade routes.', href: lifeOsHref, cta: 'Open profile', visual: 'life-magic' },
+      ];
+  const homeCollaborationPaths = isZh
+    ? [
+        { title: 'Product & Growth Systems', copy: '适合早期创始人，需要产品方向、用户路径、增长逻辑和验证顺序。' },
+        { title: 'AI Workflow Design', copy: '适合小团队，需要减少手工、整理知识、建立内部工作流。' },
+        { title: 'iGaming Strategy', copy: '适合 operator、aggregator 或 provider，需要活动结构、留存机制和 promotion coordination。' },
+      ]
+    : [
+        { title: 'Product & Growth Systems', copy: 'For early-stage founders who need product direction, user flow, growth logic, and validation order.' },
+        { title: 'AI Workflow Design', copy: 'For small teams that need to reduce manual work, organize knowledge, and build internal workflows.' },
+        { title: 'iGaming Strategy', copy: 'For operators, aggregators, or providers that need campaign structure, retention mechanics, and promotion coordination.' },
+      ];
+  const homeInterestLinks: Array<{ title: string; copy: string; href: string; visual?: 'bagua-mirror' | 'gramophone' | 'power-up' | 'pyramid-break' | 'archive-evolution' }> = isZh
+    ? [
+        { title: 'Life OS', copy: '人生 RPG 能力系统与角色档案。', href: lifeOsHref, visual: 'power-up' },
+        { title: 'Analog Tech', copy: '机械、胶片和旧技术的手感。', href: analogTechHref, visual: 'gramophone' },
+        { title: 'Pattern Archive', copy: '人类行为、选择模式和旧系统的长期观察档案。', href: 'https://edent95.github.io/8g/', visual: 'bagua-mirror' },
+        { title: "Conway's Game of Life", copy: '黑白 256 rules 元胞自动机浏览器。', href: conwayHref, visual: 'pyramid-break' },
+      ]
+    : [
+        { title: 'Life OS', copy: 'A life RPG ability system and character profile.', href: lifeOsHref, visual: 'power-up' },
+        { title: 'Analog Tech', copy: 'Mechanical, film, and old-technology texture.', href: analogTechHref, visual: 'gramophone' },
+        { title: 'Pattern Archive', copy: 'A long-running archive on human behavior, choice patterns, and old systems.', href: 'https://edent95.github.io/8g/', visual: 'bagua-mirror' },
+        { title: "Conway's Game of Life", copy: 'A black-and-white browser for 256 cellular automata rules.', href: conwayHref, visual: 'pyramid-break' },
+      ];
   const currentPath = typeof window !== 'undefined' ? normalizePath(window.location.pathname) : '/';
   const normalizedBase = normalizePath(baseUrl);
   const pathWithoutBase =
@@ -3784,11 +6584,17 @@ const App: React.FC = () => {
       ? normalizePath(currentPath.slice(normalizedBase.length))
       : currentPath;
   const isJijuPetFullPage = pathWithoutBase === '/jiju-pet';
+  const isProjectsFullPage = pathWithoutBase === '/projects';
+  const isETReportHubFullPage = pathWithoutBase === '/etreporthub';
+  const isETReportHubSalesPage = pathWithoutBase === '/etreporthub-sales';
+  const isPokerFullPage = pathWithoutBase === '/poker';
+  const isCrmFullPage = pathWithoutBase === '/crm';
   const isPreviousProjectsFullPage = pathWithoutBase === '/previous-projects';
   const isAnalogTechFullPage = pathWithoutBase === '/analog-tech';
   const isLifeOsFullPage = pathWithoutBase === '/life-os';
   const isLifeFullPage = pathWithoutBase === '/life';
   const isBrandGuideFullPage = pathWithoutBase === '/brand-guide';
+  const isConwayGameOfLifeFullPage = pathWithoutBase === '/conways-game-of-life';
   const archivedWorkSlug = pathWithoutBase.startsWith('/archive/')
     ? pathWithoutBase.replace('/archive/', '')
     : '';
@@ -3802,6 +6608,79 @@ const App: React.FC = () => {
     return (
       <JijuPetFullPage
         homeHref={homeHref}
+        language={language}
+        setLanguage={setLanguage}
+        themePreference={themePreference}
+        theme={theme}
+        setThemePreference={setThemePreference}
+      />
+    );
+  }
+
+  if (isProjectsFullPage) {
+    return (
+      <ProjectsFullPage
+        homeHref={homeHref}
+        baseUrl={baseUrl}
+        language={language}
+        setLanguage={setLanguage}
+        themePreference={themePreference}
+        theme={theme}
+        setThemePreference={setThemePreference}
+      />
+    );
+  }
+
+  if (isETReportHubFullPage) {
+    return (
+      <ETReportHubFullPage
+        homeHref={homeHref}
+        projectsHref={projectsHref}
+        salesHref={etReportHubSalesHref}
+        language={language}
+        setLanguage={setLanguage}
+        themePreference={themePreference}
+        theme={theme}
+        setThemePreference={setThemePreference}
+      />
+    );
+  }
+
+  if (isETReportHubSalesPage) {
+    return (
+      <ETReportHubSalesPage
+        homeHref={homeHref}
+        projectsHref={projectsHref}
+        productHref={etReportHubHref}
+        language={language}
+        setLanguage={setLanguage}
+        themePreference={themePreference}
+        theme={theme}
+        setThemePreference={setThemePreference}
+      />
+    );
+  }
+
+  if (isPokerFullPage) {
+    return (
+      <PokerFullPage
+        homeHref={homeHref}
+        projectsHref={projectsHref}
+        baseUrl={baseUrl}
+        language={language}
+        setLanguage={setLanguage}
+        themePreference={themePreference}
+        theme={theme}
+        setThemePreference={setThemePreference}
+      />
+    );
+  }
+
+  if (isCrmFullPage) {
+    return (
+      <CrmFullPage
+        homeHref={homeHref}
+        projectsHref={projectsHref}
         language={language}
         setLanguage={setLanguage}
         themePreference={themePreference}
@@ -3879,6 +6758,19 @@ const App: React.FC = () => {
     );
   }
 
+  if (isConwayGameOfLifeFullPage) {
+    return (
+      <ConwayGameOfLifeFullPage
+        homeHref={homeHref}
+        language={language}
+        setLanguage={setLanguage}
+        themePreference={themePreference}
+        theme={theme}
+        setThemePreference={setThemePreference}
+      />
+    );
+  }
+
   if (activeArchivedWork) {
     return (
       <ArchivedWorkPage
@@ -3895,12 +6787,12 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="page-shell min-h-screen text-stone-800 font-sans selection:bg-eden-mint/30 selection:text-stone-900">
-      
-      {/* Navigation / Header */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-eden-mint/35 bg-stone-50/80 backdrop-blur-md">
-        <div className="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="font-display font-bold text-xl tracking-tight">Eden Tan</div>
+    <div className="page-shell home-editorial-page min-h-screen font-sans selection:bg-eden-mint/30 selection:text-stone-900">
+      <nav className="home-editorial-nav fixed left-0 right-0 top-0 z-50">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3 md:px-8">
+          <a href={homeHref} className="font-display text-lg font-bold tracking-tight">
+            Eden Tan
+          </a>
           <div className="flex items-center gap-3">
             <HeaderControls
               language={language}
@@ -3909,7 +6801,12 @@ const App: React.FC = () => {
               theme={theme}
               setThemePreference={setThemePreference}
             />
-            <a href={resumeHref} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 rounded-full bg-stone-900 px-4 py-2 text-sm font-medium text-white ring-2 ring-transparent transition-all hover:bg-stone-800 hover:ring-eden-amber/55 focus-visible:outline-none focus-visible:ring-eden-amber/60">
+            <a
+              href={resumeHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="home-editorial-resume hidden items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold sm:flex"
+            >
               <Download size={16} />
               <span>{isZh ? '简历' : 'Resume'}</span>
             </a>
@@ -3917,394 +6814,191 @@ const App: React.FC = () => {
         </div>
       </nav>
 
-      <main className="pt-32 pb-24 px-6 max-w-5xl mx-auto">
-        
-        {/* Hero Section */}
-        <motion.section 
-          className="mb-24"
+      <main className="px-5 pb-20 pt-24 md:px-8">
+        <motion.section
+          className="home-hero mx-auto max-w-6xl py-12 text-center md:py-20"
           initial="initial"
           animate="animate"
           variants={staggerContainer}
         >
-          <motion.div variants={fadeIn} className="motion-accent mb-6 inline-flex items-center gap-2 rounded-full border border-eden-mint/45 bg-eden-mint/30 px-3 py-1 text-xs font-bold uppercase tracking-widest text-stone-800">
-            <MapPin size={14} className="text-stone-700" /> {isZh ? '马来西亚' : 'Malaysia Based'}
-          </motion.div>
-
-          <motion.div variants={fadeIn} className="mb-6 flex flex-wrap gap-2">
-            <FlatEmoji emoji="🗺️" delayMs={0} />
-            <FlatEmoji emoji="🐾" delayMs={180} />
-            <FlatEmoji emoji="✨" delayMs={360} />
-          </motion.div>
-          
-          <motion.h1 variants={fadeIn} className="font-display text-5xl md:text-7xl font-bold tracking-tight text-stone-900 mb-6 leading-tight">
-            {isZh ? (
-              <>
-                系统架构设计者。<br />
-                数字战略执行者。<br />
-                <span className="text-stone-400">也爱把想法丢进真实场景里试试。</span>
-              </>
-            ) : (
-              <>
-                Systems Architect.<br />
-                Digital Strategist.<br />
-                <span className="text-stone-400">Still stress-testing ideas in the real world.</span>
-              </>
-            )}
-          </motion.h1>
-          
-          <motion.p variants={fadeIn} className="text-xl text-stone-600 max-w-2xl mb-10 leading-relaxed">
-            {isZh
-              ? '我大部分时间在做一件事：把「增长」从口号拆成能跑、能测、也敢复盘的一条链路。若你也带过从 0 到 1 的东西，你会懂那种——白天对齐预期、晚上改路由、还要说服自己「这一步值得」的感觉。下面是我还在写的故事；你可以挑感兴趣的往下翻。'
-              : 'Most weeks, I help teams turn growth from a slogan into something that ships, can be measured, and can be reviewed without shame. If you have ever owned a zero-to-one thread, you know the mix of aligning expectations, fixing routes at night, and convincing yourself the next step still matters. This page is a few stories I am still writing—read whatever pulls you in.'}
+          <motion.p variants={fadeIn} className="home-kicker mx-auto inline-flex items-center gap-2">
+            <MapPin size={14} />
+            {isZh ? 'Malaysia · Systems Architect & Digital Strategist' : 'Malaysia · Systems Architect & Digital Strategist'}
           </motion.p>
-          
-          <motion.div variants={fadeIn} className="flex flex-wrap gap-4 mb-12">
-            <a href="https://www.linkedin.com/in/daniel-yi-tern-tan-461567199/" target="_blank" rel="noopener noreferrer" className="rounded-full bg-stone-200 p-3 text-stone-700 transition-colors hover:bg-eden-mint hover:text-stone-900">
-              <Linkedin size={20} />
+          <motion.h1 variants={fadeIn} className="home-hero-title mx-auto mt-5 font-display font-bold tracking-tight">
+            Eden Tan
+          </motion.h1>
+          <motion.p variants={fadeIn} className="home-hero-subtitle mx-auto mt-4 font-display font-bold tracking-tight">
+            I build systems from chaos.
+          </motion.p>
+          <motion.p variants={fadeIn} className="home-hero-copy mx-auto mt-5">
+            {isZh
+              ? 'For founders, operators, and small teams dealing with messy product ideas, scattered workflows, growth pressure, or unclear digital direction.'
+              : 'For founders, operators, and small teams dealing with messy product ideas, scattered workflows, growth pressure, or unclear digital direction.'}
+          </motion.p>
+          <motion.p variants={fadeIn} className="home-hero-support mx-auto mt-3">
+            {isZh
+              ? 'Product growth, AI workflows, digital strategy, and long-form build narratives from Malaysia.'
+              : 'Product growth, AI workflows, digital strategy, and long-form build narratives from Malaysia.'}
+          </motion.p>
+          <motion.div variants={fadeIn} className="mt-7 flex flex-wrap justify-center gap-5">
+            <a href={fullPageHref} className="home-text-cta">
+              {isZh ? '看 Jiju.pet' : 'View Jiju.pet'} <span aria-hidden>›</span>
+            </a>
+            <a href="#work-with-me" className="home-text-cta home-text-cta-muted">
+              {isZh ? '合作方式' : 'Work with me'} <span aria-hidden>›</span>
             </a>
           </motion.div>
-
-          <motion.blockquote variants={fadeIn} className="border-l-4 border-stone-300 pl-6 py-2">
-            <p className="font-display text-xl text-stone-500 italic leading-relaxed">
-              {isZh
-                ? '"那些疯狂到认为自己可以改变世界的人，最后真的改变了世界。"'
-                : '"The people who are crazy enough to think they can change the world are the ones who do."'}
-            </p>
-          </motion.blockquote>
+          <motion.div
+            variants={fadeIn}
+            className="home-hero-visual mx-auto mt-12"
+            role="img"
+            aria-label={isZh ? 'Jiju 猫在草地上慢慢走动的 CSS 动画横幅' : 'CSS animated Jiju cat walking across a quiet field'}
+          >
+            <HomeJijuCatScene />
+          </motion.div>
         </motion.section>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
-          
-          {/* Left Column */}
-          <div className="md:col-span-2 space-y-24">
-            
-            {/* Active Build */}
-            <motion.section 
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true }}
-              variants={staggerContainer}
-            >
-              <motion.div variants={fadeIn} className="flex items-center gap-3 mb-8">
-                <FlatEmoji emoji="🧰" size="lg" tilt />
-                <h2 className="font-display text-3xl font-bold text-stone-900">
-                  {isZh ? '手上还在长的几件事' : 'What I am building now'}
-                </h2>
-              </motion.div>
-
-              <motion.div variants={fadeIn} className="mb-12 group">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="flex items-center gap-2 text-xl font-bold text-stone-900">
-                    <FlatEmoji emoji="🐾" size="sm" bob delayMs={0} />
-                    Jiju.pet 
-                    <a href="https://jiju.pet" target="_blank" rel="noopener noreferrer" className="text-stone-400 hover:text-stone-900 transition-colors">
-                      <ExternalLink size={16} />
-                    </a>
-                  </h3>
-                  <span className="rounded border border-eden-amber/45 bg-eden-amber/35 px-2 py-1 font-mono text-sm font-medium text-stone-900">
-                    {isZh ? '进行中' : 'Present'}
-                  </span>
-                </div>
-                <p className="text-stone-600 leading-relaxed">
-                  {isZh
-                    ? '养宠的人，常常不是不够爱，而是信息太散：这家店真的欢迎毛孩吗？那次出门值不值得记下来？Jiju.pet 是我在槟城、雪兰莪和新加坡之间，试着把「带牠出门」变小、变清楚的一条路径——像给回忆多一个放得稳的抽屉。'
-                    : 'Pet parents rarely run out of love—they run out of trustworthy, structured information: which places truly welcome pets, and which outings deserve to be remembered. Jiju.pet is my attempt to make pet-friendly discovery and memory-keeping smaller, clearer, and repeatable across Penang, Selangor, and Singapore.'}
-                </p>
-                <ActiveBuildSkillRow isZh={isZh} skills={activeBuildSkillSets.jiju[isZh ? 'zh' : 'en']} />
-
-                <a
-                  href={fullPageHref}
-                  className="mt-4 inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-700 transition-colors hover:border-stone-900 hover:text-stone-900"
-                >
-                  {isZh ? '看我怎么一路改到能上线' : 'View log'}
-                  <ExternalLink size={14} />
-                </a>
-
-              </motion.div>
-
-              <motion.div variants={fadeIn} className="mb-12 group">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="flex items-center gap-2 text-xl font-bold text-stone-900">
-                    <FlatEmoji emoji="🃏" size="sm" bob delayMs={80} />
-                    Friday Poker Club
-                    <a
-                      href="https://pokerpowercard--poker-power-card-3abea.asia-southeast1.hosted.app/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-stone-400 hover:text-stone-900 transition-colors"
-                    >
-                      <ExternalLink size={16} />
-                    </a>
-                  </h3>
-                  <span className="rounded border border-eden-amber/45 bg-eden-amber/35 px-2 py-1 font-mono text-sm font-medium text-stone-900">
-                    {isZh ? '进行中' : 'Present'}
-                  </span>
-                </div>
-                <p className="text-stone-600 leading-relaxed">
-                  {isZh
-                    ? '熟人桌常常需要一个「兼发牌、兼规则、兼气氛」的人。Friday Poker Club 是跑在浏览器里的同桌主机：房间口令与邀请链、按盲注与买入进桌的德州大厅、Firebase 实时同步让所有人看到同一套底池与街段，可选同桌语音；界面优先让人一眼看懂该谁动、该下多少——把解释成本从主持人身上挪开，把时间留在上牌。'
-                    : 'Home games need someone to be part dealer, part referee, and part host. Friday Poker Club is a browser-based table host: room codes and invite links, a Hold’em lobby with blinds and buy-ins, Firebase realtime sync so everyone shares the same pot and streets, optional voice between seats, and a UI that favors legible actions over ceremony—less overhead for the host, more time actually playing.'}
-                </p>
-                <ActiveBuildSkillRow isZh={isZh} skills={activeBuildSkillSets.poker[isZh ? 'zh' : 'en']} />
-              </motion.div>
-
-              <motion.div variants={fadeIn} className="group">
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="flex items-center gap-2 text-xl font-bold text-stone-900">
-                    <FlatEmoji emoji="📈" size="sm" bob delayMs={160} />
-                    {isZh ? '营销与增长负责人' : 'Marketing Executive'}
-                  </h3>
-                  <span className="rounded border border-eden-mint/45 bg-eden-mint/30 px-2 py-1 font-mono text-sm font-medium text-stone-900">
-                    {isZh ? '7+ 年' : '7+ Years'}
-                  </span>
-                </div>
-                <p className="text-stone-500 font-medium mb-3">
-                  {isZh ? '数字平台里的增长与交付' : 'Growth and delivery on digital platforms'}
-                </p>
-                <p className="text-stone-600 leading-relaxed">
-                  {isZh
-                    ? '增长最容易变成「报表很好看，现场很慌乱」。我那几年做的，多是先把漏斗哪一段在漏人看清楚，再谈投放、创意和运营能不能接得住。压力还在，但至少大家知道卡在哪一格。'
-                    : 'Growth work quietly turns into great dashboards and messy reality. For several years my focus was naming which stage leaked people first—then aligning acquisition, creative, and operations so the story on the slide matched what the team could actually deliver.'}
-                </p>
-                <ActiveBuildSkillRow isZh={isZh} skills={activeBuildSkillSets.marketing[isZh ? 'zh' : 'en']} />
-                <a
-                  href={previousProjectsHref}
-                  className="mt-4 inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-700 transition-colors hover:border-stone-900 hover:text-stone-900"
-                >
-                  {isZh ? '想看我以前完整接过的案子和时间线' : 'Older projects & timeline'}
-                  <ExternalLink size={14} />
-                </a>
-              </motion.div>
-            </motion.section>
-
-            {/* Education & Certifications */}
-            <motion.section 
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true }}
-              variants={staggerContainer}
-            >
-              <motion.div variants={fadeIn} className="flex items-center gap-3 mb-8">
-                <FlatEmoji emoji="🎓" size="lg" bob />
-                <h2 className="font-display text-3xl font-bold text-stone-900">
-                  {isZh ? '后来回头看，挺关键的节点' : 'Milestones that still matter'}
-                </h2>
-              </motion.div>
-
-              <div className="space-y-8 border-l-2 border-stone-200 pl-6 ml-3 relative">
-                <motion.div variants={fadeIn} className="relative">
-                  <div className="absolute -left-[35px] top-1 w-4 h-4 rounded-full bg-stone-300 border-4 border-stone-50"></div>
-                  <h3 className="flex items-center gap-2 text-lg font-bold text-stone-900">
-                    <FlatEmoji emoji="🐾" size="sm" bob />
-                    {isZh ? 'Jiju.pet 创始人' : 'Founder, Jiju.pet'}
-                  </h3>
-                  <p className="text-stone-500 text-sm mb-1">{isZh ? 'Jiju.pet · 2026年1月' : 'Jiju.pet · January 2026'}</p>
-                  <p className="text-stone-600 text-sm leading-relaxed">
-                    {isZh
-                      ? '从产品与执行两端搭一条「宠物友好信息与回忆」可被反复走通的路径——先让一小块区域里的事情足够干净、可追溯，再往更大的地图扩。'
-                      : 'Driving Jiju end-to-end: a repeatable path toward trustworthy pet-friendly discovery and remembered outings—clear in a small geography first, expandable from there.'}
-                  </p>
-                  <a
-                    href="https://jiju.pet"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-2 inline-flex items-center gap-2 text-sm text-stone-600 transition-colors hover:text-stone-900"
-                  >
-                    jiju.pet
-                    <ExternalLink size={14} />
-                  </a>
-                </motion.div>
-
-                <motion.div variants={fadeIn} className="relative">
-                  <div className="absolute -left-[35px] top-1 w-4 h-4 rounded-full bg-stone-300 border-4 border-stone-50"></div>
-                  <h3 className="flex items-center gap-2 text-lg font-bold text-stone-900">
-                    <FlatEmoji emoji="🧠" size="sm" bob={false} tilt />
-                    {isZh ? '门萨会员' : 'Mensa Membership'}
-                  </h3>
-                  <p className="text-stone-500 text-sm mb-1">August 2025</p>
-                  <p className="text-stone-600 text-sm leading-relaxed">
-                    {isZh
-                      ? '门萨（Mensa）是国际性非营利高智商社团，须在认可的标准化智商测验中达到规定分数方可入会。'
-                      : 'Mensa is a nonprofit high-IQ society—you qualify through supervised, standardized tests that place you in the top percentiles.'}
-                  </p>
-                  <a
-                    href="https://www.mensa.org/about-us/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-2 inline-flex items-center gap-2 text-sm text-stone-600 transition-colors hover:text-stone-900"
-                  >
-                    {isZh ? '了解门萨（官网）' : 'About Mensa (official)'}
-                    <ExternalLink size={14} />
-                  </a>
-                </motion.div>
-
-                <motion.div variants={fadeIn} className="relative">
-                  <div className="absolute -left-[35px] top-1 w-4 h-4 rounded-full bg-stone-300 border-4 border-stone-50"></div>
-                  <h3 className="flex items-center gap-2 text-lg font-bold text-stone-900">
-                    <FlatEmoji emoji="🤿" size="sm" bob />
-                    {isZh ? '进阶开放水域潜水证书' : 'Advanced Open Water Certification'}
-                  </h3>
-                  <p className="text-stone-500 text-sm mb-1">PADI · April 2024</p>
-                  <p className="text-stone-600 text-sm">
-                    {isZh ? '认证教练：Ong Wei Lun | Burger Dive Team Sdn Bhd' : 'Certified by Ong Wei Lun | Burger Dive Team Sdn Bhd'}
-                  </p>
-                </motion.div>
-
-                <motion.div variants={fadeIn} className="relative">
-                  <div className="absolute -left-[35px] top-1 w-4 h-4 rounded-full bg-stone-300 border-4 border-stone-50"></div>
-                  <h3 className="flex items-center gap-2 text-lg font-bold text-stone-900">
-                    <FlatEmoji emoji="🏛️" size="sm" tilt />
-                    {isZh ? '新兴经济体中的创业学' : 'Entrepreneurship in Emerging Economies'}
-                  </h3>
-                  <p className="text-stone-500 text-sm mb-1">HarvardX · May 2020</p>
-                  <a
-                    href="https://courses.edx.org/certificates/44fdae87f71e4844a7ebe3377dc3e86b"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm text-stone-600 transition-colors hover:text-stone-900"
-                  >
-                    {isZh ? '查看证书' : 'View Certificate'}
-                    <ExternalLink size={14} />
-                  </a>
-                </motion.div>
-
-                <motion.div variants={fadeIn} className="relative">
-                  <div className="absolute -left-[35px] top-1 w-4 h-4 rounded-full bg-stone-300 border-4 border-stone-50"></div>
-                  <h3 className="flex items-center gap-2 text-lg font-bold text-stone-900">
-                    <FlatEmoji emoji="🔎" size="sm" bob />
-                    {isZh ? '数字营销基础认证' : 'The Fundamental of Digital Marketing'}
-                  </h3>
-                  <p className="text-stone-500 text-sm mb-1">Google · Issued Dec 2019</p>
-                  <p className="text-stone-600 text-sm">Credential ID: DH9 XZ6 YTE</p>
-                </motion.div>
-
-                <motion.div variants={fadeIn} className="relative">
-                  <div className="absolute -left-[35px] top-1 w-4 h-4 rounded-full bg-stone-300 border-4 border-stone-50"></div>
-                  <h3 className="flex items-center gap-2 text-lg font-bold text-stone-900">
-                    <FlatEmoji emoji="📜" size="sm" tilt />
-                    {isZh ? '市场营销高级文凭' : 'Executive Diploma in Marketing'}
-                  </h3>
-                  <p className="text-stone-500 text-sm mb-1">London Examination Board · 2016 – 2018</p>
-                </motion.div>
-              </div>
-            </motion.section>
-
+        <section className="home-section mx-auto max-w-6xl py-14 md:py-24">
+          <div className="home-section-head">
+            <p className="home-kicker">{isZh ? 'When things feel messy' : 'When things feel messy'}</p>
+            <h2 className="home-section-title font-display font-bold tracking-tight">
+              {isZh ? '先接住混乱。再开始设计系统。' : 'Start with the mess. Then design the system.'}
+            </h2>
           </div>
-
-          {/* Right Column */}
-          <div className="space-y-12">
-            
-            {/* Interests */}
-            <motion.section 
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true }}
-              variants={staggerContainer}
-              className="motion-card bg-white p-8 rounded-2xl border border-stone-200 shadow-sm"
-            >
-              <h2 className="mb-6 flex items-center gap-3 font-display text-2xl font-bold text-stone-900">
-                <FlatEmoji emoji="🧭" size="md" tilt />
-                {isZh ? '兴趣方向' : 'Interests'}
-              </h2>
-              
-              <div className="space-y-6">
-                <motion.div variants={fadeIn}>
-                  <div className="mb-2 flex items-center gap-2 font-bold text-stone-900">
-                    <FlatEmoji emoji="🧩" size="sm" bob />
-                    <a
-                      href="https://edent95.github.io/8g/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 transition-colors hover:text-stone-600"
-                    >
-                      <span>{isZh ? 'Pattern Archive' : 'Pattern Archive'}</span>
-                      <ExternalLink size={14} className="text-stone-400" />
-                    </a>
-                  </div>
-                  <p className="text-sm text-stone-600 leading-relaxed">
-                    {isZh
-                      ? '长期研究人类行为、选择模式、关系结构和旧系统如何被重新整理成现代框架。公开笔记见 8G。'
-                      : 'A long-running archive on human behavior, choice patterns, relationship structure, and how older frameworks can become modern systems.'}
-                  </p>
-                </motion.div>
-
-                <motion.div variants={fadeIn}>
-                  <div className="mb-2 flex items-center gap-2 font-bold text-stone-900">
-                    <FlatEmoji emoji="📷" size="sm" bob delayMs={100} />
-                    <a
-                      href={analogTechHref}
-                      className="inline-flex items-center gap-2 transition-colors hover:text-stone-600"
-                    >
-                      <span>{isZh ? '模拟科技' : 'Analog Tech'}</span>
-                      <ExternalLink size={14} className="text-stone-400" />
-                    </a>
-                  </div>
-                  <p className="text-sm text-stone-600 leading-relaxed">
-                    {isZh
-                      ? '收藏 Rolleiflex 相机与机械留声机，长期关注模拟技术的工艺与质感。'
-                      : 'Collector of Rolleiflex cameras and mechanical gramophones.'}
-                  </p>
-                </motion.div>
-
-                <motion.div variants={fadeIn}>
-                  <div className="mb-2 flex items-center gap-2 font-bold text-stone-900">
-                    <FlatEmoji emoji="🧬" size="sm" tilt />
-                    <a
-                      href={lifeOsHref}
-                      className="inline-flex items-center gap-2 transition-colors hover:text-stone-600"
-                    >
-                      <span>Life OS</span>
-                      <ExternalLink size={14} className="text-stone-400" />
-                    </a>
-                  </div>
-                  <p className="text-sm text-stone-600 leading-relaxed">
-                    {isZh
-                      ? '把人格、经历、欲望、阴影和能力转译成 RPG 角色卡、技能系统与成长路线。'
-                      : 'A life RPG character system that turns personality, experience, desire, shadow, and ability into skills, debuffs, and upgrade paths.'}
-                  </p>
-                </motion.div>
-
-                <motion.div variants={fadeIn}>
-                  <div className="mb-2 flex items-center gap-2 font-bold text-stone-900">
-                    <FlatEmoji emoji="🌊" size="sm" tilt />
-                    <a
-                      href={lifeHref}
-                      className="inline-flex items-center gap-2 transition-colors hover:text-stone-600"
-                    >
-                      <span>{isZh ? '生活' : 'Life'}</span>
-                      <ExternalLink size={14} className="text-stone-400" />
-                    </a>
-                  </div>
-                  <p className="text-sm text-stone-600 leading-relaxed">
-                    {isZh
-                      ? '持证潜水员，同时热爱米酒酿造与生态缸搭建。'
-                      : 'Certified Scuba Diver, Homebrewer (Rice Wine), and Terrarium enthusiast.'}
-                  </p>
-                </motion.div>
+          <div className="mt-10 grid gap-4 md:grid-cols-2">
+            {homeChaosSignals.map((item) => (
+              <div key={item} className="home-quiet-row">
+                <span aria-hidden>✦</span>
+                <p>{item}</p>
               </div>
-            </motion.section>
-
-            {/* Quick Links */}
-            <motion.section 
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true }}
-              variants={staggerContainer}
-              className="motion-card rounded-2xl border border-eden-mint/25 bg-stone-900 p-8 text-stone-50 shadow-sm ring-1 ring-eden-mint/15"
-            >
-              <h2 className="mb-6 font-display text-xl font-bold">{isZh ? '联系我' : 'Connect'}</h2>
-              <div className="space-y-4">
-                <a href="https://www.linkedin.com/in/daniel-yi-tern-tan-461567199/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-stone-400 transition-colors hover:text-eden-mint">
-                  <Linkedin size={18} /> LinkedIn
-                </a>
-              </div>
-            </motion.section>
-
+            ))}
           </div>
-        </div>
+        </section>
+
+        <section className="home-section mx-auto max-w-6xl py-14 md:py-24">
+          <div className="home-section-head">
+            <p className="home-kicker">{isZh ? 'What becomes clear' : 'What becomes clear'}</p>
+            <h2 className="home-section-title font-display font-bold tracking-tight">
+              {isZh ? '从想法，到路径，到能复用的操作系统。' : 'From ideas, to paths, to reusable operating systems.'}
+            </h2>
+            <p className="home-section-copy">
+              {isZh
+                ? 'Eden 的工作不是把页面做漂亮而已，而是把判断、流程、内容和增长机制整理到同一条链路里。'
+                : 'Eden’s work is not just making pages look better. It is turning judgment, workflow, content, and growth mechanics into one usable chain.'}
+            </p>
+          </div>
+          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-5">
+            {homeClearOutputs.map((item) => (
+              <article key={item.title} className="home-output-card">
+                <h3 className="font-display text-2xl font-bold tracking-tight">{item.title}</h3>
+                <p>{item.copy}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="home-section mx-auto max-w-6xl py-14 md:py-24">
+          <div className="home-section-head">
+            <p className="home-kicker">{isZh ? 'Systems, not claims' : 'Systems, not claims'}</p>
+            <h2 className="home-section-title font-display font-bold tracking-tight">
+              {isZh ? '如果要了解 Eden，先看系统文件。' : 'To understand Eden, read the system files.'}
+            </h2>
+          </div>
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
+            {homeSystemFiles.map((item) => (
+              <article key={item.title} className="home-system-card">
+                {item.visual === 'blueprint' && (
+                  <HomeProjectsBlueprintIcon label={isZh ? 'Projects Hub 设计图纸 CSS 图标' : 'Projects Hub blueprint CSS icon'} />
+                )}
+                {item.visual === 'jiju' && (
+                  <div className="home-system-project-icon">
+                    <ProjectsJijuCssIcon label={isZh ? 'Jiju CSS 图标' : 'Jiju CSS icon'} />
+                  </div>
+                )}
+                {item.visual === 'life-magic' && (
+                  <HomeLifeMagicIcon label={isZh ? 'Life OS 心跳魔法阵 CSS 图标' : 'Life OS heartbeat magic circle CSS icon'} />
+                )}
+                <h3 className="font-display text-3xl font-bold tracking-tight">{item.title}</h3>
+                <p>{item.copy}</p>
+                <a href={item.href} className="home-text-cta">
+                  {item.cta} <span aria-hidden>›</span>
+                </a>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="work-with-me" className="home-section mx-auto max-w-6xl py-14 md:py-24">
+          <div className="home-section-head">
+            <p className="home-kicker">{isZh ? 'Work with me' : 'Work with me'}</p>
+            <h2 className="home-section-title font-display font-bold tracking-tight">
+              {isZh ? '适合需要把事情变清楚的人。' : 'For people who need the work to become clearer.'}
+            </h2>
+            <p className="home-section-copy">
+              {isZh
+                ? '合作入口不从职位开始，而从你现在面对的混乱开始。'
+                : 'The entry point is not a job title. It is the kind of mess you are trying to organize.'}
+            </p>
+          </div>
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
+            {homeCollaborationPaths.map((item) => (
+              <article key={item.title} className="home-collab-card">
+                <h3 className="font-display text-2xl font-bold tracking-tight">{item.title}</h3>
+                <p>{item.copy}</p>
+              </article>
+            ))}
+          </div>
+          <div className="mt-9 flex flex-wrap gap-5">
+            <a
+              href="https://www.linkedin.com/in/daniel-yi-tern-tan-461567199/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="home-text-cta"
+            >
+              <Linkedin size={17} /> LinkedIn
+            </a>
+            <a href={resumeHref} target="_blank" rel="noopener noreferrer" className="home-text-cta home-text-cta-muted">
+              <Download size={17} /> {isZh ? '下载简历' : 'Download resume'}
+            </a>
+          </div>
+        </section>
+
+        <section className="home-section mx-auto max-w-6xl py-14 md:py-24">
+          <div className="home-section-head">
+            <p className="home-kicker">{isZh ? 'Interests' : 'Interests'}</p>
+            <h2 className="home-section-title font-display font-bold tracking-tight">
+              {isZh ? '系统之外，也保留观察世界的入口。' : 'Outside the system, there are still ways to observe the world.'}
+            </h2>
+          </div>
+          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {homeInterestLinks.map((item) => (
+              <a key={item.title} href={item.href} className="home-interest-link">
+                {item.visual === 'power-up' && (
+                  <HomePowerUpTotem label={isZh ? 'Life OS 黑发变金发能量变身透明底 CSS 图腾' : 'Life OS black hair to golden power-up transparent CSS totem'} />
+                )}
+                {item.visual === 'gramophone' && (
+                  <HomeGramophoneTotem label={isZh ? 'Analog Tech 留声机振动透明底 CSS 图腾' : 'Analog Tech vibrating gramophone transparent CSS totem'} />
+                )}
+                {item.visual === 'archive-evolution' && (
+                  <HomeArchiveEvolutionTotem label={isZh ? 'Pattern Archive 小型爬行动物进化成喷火龙感火龙透明底 CSS 图腾' : 'Pattern Archive small reptile evolving into fire dragon transparent CSS totem'} />
+                )}
+                {item.visual === 'pyramid-break' && (
+                  <HomePyramidBreakTotem label={isZh ? "Conway's Game of Life 金字塔碰坏透明底 CSS 图腾" : "Conway's Game of Life broken pyramid transparent CSS totem"} />
+                )}
+                {item.visual === 'bagua-mirror' && (
+                  <HomeBaguaMirrorTotem label={isZh ? 'Pattern Archive 道教八卦镜透明底 CSS 图腾' : 'Pattern Archive transparent Bagua mirror CSS totem'} />
+                )}
+                <h3 className="font-display text-2xl font-bold tracking-tight">{item.title}</h3>
+                <p>{item.copy}</p>
+                <span className="home-interest-arrow" aria-hidden>›</span>
+              </a>
+            ))}
+          </div>
+        </section>
       </main>
 
-      <footer className="border-t border-stone-200 py-8 text-center text-stone-500 text-sm">
+      <footer className="home-footer py-10 text-center text-sm">
         <p>
           © {new Date().getFullYear()} Eden Tan. {isZh ? '保留所有权利。' : 'All rights reserved.'}
         </p>

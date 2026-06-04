@@ -1,0 +1,316 @@
+/* Jiju.pet route CSS: product narrative layout, proof rows, system cards, chapters, and responsive overrides. */
+
+.jiju-page {
+  color: var(--theme-text-primary);
+  overflow-x: hidden;
+}
+
+.jiju-page * {
+  max-width: 100%;
+}
+
+.jiju-topbar {
+  min-height: 44px;
+}
+
+.jiju-back-link {
+  color: var(--theme-text-secondary);
+}
+
+.jiju-back-link:hover {
+  color: var(--theme-text-primary);
+}
+
+.jiju-kicker {
+  width: fit-content;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--theme-text-soft);
+}
+
+.jiju-title {
+  max-width: 1060px;
+  font-size: clamp(3.05rem, 7.8vw, 7.6rem);
+  line-height: 0.96;
+  color: var(--theme-text-primary);
+}
+
+.jiju-subtitle {
+  max-width: 820px;
+  font-size: clamp(1.32rem, 2.55vw, 2.42rem);
+  font-weight: 650;
+  line-height: 1.15;
+  color: var(--theme-text-primary);
+}
+
+.jiju-text-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--theme-accent-teal);
+}
+
+.jiju-text-cta:hover {
+  color: var(--theme-text-primary);
+}
+
+.jiju-text-cta-muted {
+  color: var(--theme-accent-amber);
+}
+
+.jiju-product-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(1.25rem, 3vw, 2rem);
+  align-items: stretch;
+  padding: clamp(1.4rem, 4vw, 3rem);
+  border-radius: 2.4rem;
+  background:
+    radial-gradient(circle at 18% 20%, rgb(var(--theme-mint-glow) / 0.2), transparent 32%),
+    radial-gradient(circle at 88% 12%, rgb(var(--theme-amber-rim) / 0.16), transparent 28%),
+    color-mix(in srgb, var(--theme-surface) 88%, transparent);
+  box-shadow: 0 36px 110px rgb(28 25 23 / 0.11);
+}
+
+.jiju-product-copy {
+  display: grid;
+  align-content: end;
+  min-height: 420px;
+}
+
+.jiju-product-copy p:not(.jiju-kicker),
+.jiju-section-copy,
+.jiju-system-card p,
+.jiju-dna-card p,
+.jiju-note-card li,
+.jiju-chapter-grid p,
+.jiju-solving li,
+.jiju-outcome p {
+  line-height: 1.6;
+  color: var(--theme-text-secondary);
+}
+
+.jiju-product-copy p:not(.jiju-kicker) {
+  margin-top: 1.25rem;
+  max-width: 690px;
+  font-size: clamp(1rem, 1.35vw, 1.22rem);
+}
+
+.jiju-proof-grid {
+  display: grid;
+  gap: 0.85rem;
+  align-content: end;
+}
+
+.jiju-proof-row {
+  display: grid;
+  gap: 0.35rem;
+  padding: clamp(1rem, 2.2vw, 1.35rem);
+  border-radius: 1.35rem;
+  background: color-mix(in srgb, var(--theme-surface) 82%, transparent);
+  box-shadow: 0 16px 48px rgb(28 25 23 / 0.055);
+}
+
+.jiju-proof-row span,
+.jiju-chapter-phase,
+.jiju-chapter-grid span,
+.jiju-solving span,
+.jiju-outcome span {
+  width: fit-content;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--theme-text-soft) !important;
+}
+
+.jiju-proof-row strong {
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+  color: var(--theme-text-primary);
+}
+
+.jiju-section-head {
+  max-width: 860px;
+}
+
+.jiju-section-title {
+  margin-top: 1rem;
+  max-width: 980px;
+  font-size: clamp(2.35rem, 5vw, 5rem);
+  line-height: 1.02;
+  color: var(--theme-text-primary);
+}
+
+.jiju-section-copy {
+  margin-top: 1.25rem;
+  max-width: 780px;
+  font-size: clamp(1rem, 1.35vw, 1.22rem);
+}
+
+.jiju-system-card,
+.jiju-dna-card,
+.jiju-note-card,
+.jiju-chapter-card {
+  background: color-mix(in srgb, var(--theme-surface) 88%, transparent);
+  border-radius: 1.75rem;
+  box-shadow: 0 24px 76px rgb(28 25 23 / 0.06);
+}
+
+.jiju-system-card,
+.jiju-dna-card,
+.jiju-note-card {
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.jiju-system-card p,
+.jiju-dna-card p {
+  margin-top: 0.9rem;
+}
+
+.jiju-card-emoji {
+  display: inline-flex;
+  font-size: 1.65rem;
+  line-height: 1;
+}
+
+.jiju-dna-card .jiju-card-emoji {
+  margin-bottom: 1rem;
+}
+
+.jiju-note-card ul {
+  margin-top: 1.2rem;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.jiju-note-card li {
+  list-style: none;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.jiju-note-card li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 0.32rem;
+  height: 0.32rem;
+  border-radius: 999px;
+  background: var(--color-eden-mint);
+}
+
+.jiju-chapter-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: clamp(1rem, 2.2vw, 1.6rem);
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.jiju-chapter-number {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 4.8rem);
+  font-weight: 700;
+  line-height: 0.92;
+  color: color-mix(in srgb, var(--theme-text-primary) 22%, transparent);
+}
+
+.jiju-chapter-main h3 {
+  margin-top: 0.75rem;
+  max-width: 860px;
+  line-height: 1.12;
+  color: var(--theme-text-primary);
+}
+
+.jiju-chapter-grid {
+  margin-top: 1.4rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.jiju-chapter-grid div,
+.jiju-solving,
+.jiju-outcome {
+  border-radius: 1.25rem;
+  background: color-mix(in srgb, var(--theme-surface-muted) 72%, transparent);
+  padding: 1rem;
+}
+
+.jiju-chapter-grid p,
+.jiju-solving ul,
+.jiju-outcome p {
+  margin-top: 0.65rem;
+}
+
+.jiju-solving {
+  margin-top: 1rem;
+}
+
+.jiju-solving ul {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.jiju-solving li {
+  list-style: none;
+  position: relative;
+  padding-left: 1rem;
+}
+
+.jiju-solving li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 0.32rem;
+  height: 0.32rem;
+  border-radius: 999px;
+  background: var(--color-eden-amber);
+}
+
+.jiju-outcome {
+  margin-top: 1rem;
+  background:
+    linear-gradient(135deg, rgb(var(--theme-mint-glow) / 0.13), transparent 46%),
+    color-mix(in srgb, var(--theme-surface-muted) 72%, transparent);
+}
+
+@media (max-width: 767px) {
+  .jiju-hero {
+    text-align: left;
+  }
+
+  .jiju-hero .jiju-kicker,
+  .jiju-title,
+  .jiju-subtitle {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .jiju-title {
+    font-size: clamp(2.9rem, 15vw, 4.75rem);
+  }
+
+  .jiju-product-panel,
+  .jiju-chapter-card,
+  .jiju-chapter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .jiju-product-panel {
+    border-radius: 1.8rem;
+  }
+
+  .jiju-product-copy {
+    min-height: auto;
+  }
+}

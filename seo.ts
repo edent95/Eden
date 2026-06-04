@@ -7,6 +7,8 @@
  * a sensible no-JS fallback.
  */
 
+import { HOME_DESC, HOME_TITLE, PAGE_COPY, routeSeoForPath } from './seo-routes';
+
 export type SeoLanguage = 'en' | 'zh';
 
 type ArchivedWork = {
@@ -87,82 +89,6 @@ function joinPath(root: string, pathWithoutBase: string): string {
   const p = pathWithoutBase.replace(/^\/+/, '');
   return r + p;
 }
-
-const HOME_TITLE = {
-  en: 'Eden Tan | Systems Architect & Digital Strategist',
-  zh: 'Eden Tan | 系统架构与数字战略',
-} as const;
-
-const HOME_DESC = {
-  en: 'Eden Tan — systems architect and digital strategist based in Malaysia. Product growth, Jiju.pet, and long-form build narratives from zero to one.',
-  zh: 'Eden Tan，常驻马来西亚的系统架构与数字战略方向实践者。作品含 Jiju.pet 等从 0 到 1 的构建记录与可复盘的增长链路。',
-} as const;
-
-const PAGE_COPY: Record<
-  string,
-  { title: { en: string; zh: string }; desc: { en: string; zh: string } }
-> = {
-  '/jiju-pet': {
-    title: {
-      en: 'Jiju.pet build log | Eden Tan',
-      zh: 'Jiju.pet 构建记录 | Eden Tan',
-    },
-    desc: {
-      en: 'How Jiju.pet went from fragile to shippable: auth, routes, analytics, and mobile UX — a structured zero-to-one operating log by Eden Tan.',
-      zh: 'Jiju.pet 从易碎到可交付的过程：认证、路由、埋点与移动端体验加固——Eden Tan 的阶段性构建实录。',
-    },
-  },
-  '/previous-projects': {
-    title: {
-      en: 'Project archive | Eden Tan',
-      zh: '项目归档 | Eden Tan',
-    },
-    desc: {
-      en: 'Selected projects, roles, and long-form case notes from Eden Tan’s marketing and product work across regions.',
-      zh: 'Eden Tan 过往项目、角色与跨地区营销／产品向案例要点的归档页。',
-    },
-  },
-  '/analog-tech': {
-    title: {
-      en: 'Analog Tech gallery | Eden Tan',
-      zh: 'Analog Tech 图库 | Eden Tan',
-    },
-    desc: {
-      en: 'Analog film gallery—streets, coast, architecture: 11 frames from Eden Tan’s archive, written as an honest log of light and emulsion, not a polished deck.',
-      zh: 'Eden Tan 的胶片选集：街景、水岸、建筑与海岸；以颗粒、漏光与软高光为可读材质，共 11 张私人选片。',
-    },
-  },
-  '/life': {
-    title: {
-      en: 'Life | Eden Tan',
-      zh: 'Life | Eden Tan',
-    },
-    desc: {
-      en: 'Life — short video and personal notes collection by Eden Tan.',
-      zh: 'Life 相关短片与个人向记录，by Eden Tan。',
-    },
-  },
-  '/life-os': {
-    title: {
-      en: 'Life OS RPG Character System | Eden Tan',
-      zh: '人生 RPG 能力系统 | Eden Tan',
-    },
-    desc: {
-      en: 'A mystic-tech RPG character card, ability map, debuff system, and growth route for reading personality, experience, desire, shadow, and next upgrade moves.',
-      zh: '一个神秘科技风 RPG 角色卡、能力地图、Debuff 系统与成长路线，把人格、经历、欲望、阴影和下一步升级方式转成可读面板。',
-    },
-  },
-  '/brand-guide': {
-    title: {
-      en: 'Brand guide | Eden Tan portfolio',
-      zh: '品牌指南 | Eden Tan 个人站',
-    },
-    desc: {
-      en: 'Typography, color, voice, and motion rules for the Eden portfolio site: a practical brand guide for collaborators.',
-      zh: '个人作品站的品牌规范：字体、色板、语气与动效约定，供协作与延展使用。',
-    },
-  },
-};
 
 function homeJsonLd(siteRoot: string) {
   const z = (s: string) => s.replace(/\/$/, '');
@@ -251,6 +177,11 @@ export function applyPageSeo(
   const loc = language === 'zh' ? 'zh_CN' : 'en_US';
   const lang: SeoLanguage = language === 'zh' ? 'zh' : 'en';
   const ogImageAlt = OG_IMAGE_ALT[lang];
+  const routeSeo = activeArchived ? undefined : routeSeoForPath(pathWithoutBase);
+  const robots =
+    routeSeo?.index === false
+      ? 'noindex, follow'
+      : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
   const ogImage =
     siteRoot
       ? new URL(OG_IMAGE_FILE, siteRoot).href
@@ -260,7 +191,7 @@ export function applyPageSeo(
   document.documentElement.lang = language === 'zh' ? 'zh-Hans' : 'en';
 
   setMetaName('description', description);
-  setMetaName('robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
+  setMetaName('robots', robots);
   setMetaName('twitter:card', 'summary_large_image');
   setMetaName('twitter:title', title);
   setMetaName('twitter:description', description);

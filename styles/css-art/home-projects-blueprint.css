@@ -1,0 +1,273 @@
+/* Home CSS art: 1:1 Projects Hub blueprint icon. */
+
+.home-projects-blueprint-icon {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: clamp(4.75rem, 9vw, 6.25rem);
+  aspect-ratio: 1 / 1;
+  border-radius: 1.15rem;
+  background: #eaf3f5;
+  box-shadow:
+    0 18px 46px rgb(28 25 23 / 0.08),
+    inset 0 0 0 1px rgb(31 91 116 / 0.2);
+}
+
+.home-projects-blueprint-icon span {
+  position: absolute;
+  pointer-events: none;
+}
+
+.home-blueprint-grid {
+  inset: 0;
+  opacity: 0.62;
+  background-image:
+    linear-gradient(rgb(47 120 145 / 0.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(47 120 145 / 0.22) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+
+.home-blueprint-sheet {
+  inset: 10%;
+  border-radius: 0.75rem;
+  background: rgb(255 255 255 / 0.26);
+  box-shadow: inset 0 0 0 1px rgb(47 120 145 / 0.2);
+}
+
+.home-blueprint-frame {
+  inset: 19% 18% 20% 20%;
+  border: 2px solid #1d6f8a;
+  border-radius: 0.38rem;
+}
+
+.home-blueprint-frame::before,
+.home-blueprint-frame::after {
+  content: "";
+  position: absolute;
+  background: #1d6f8a;
+}
+
+.home-blueprint-frame::before {
+  left: 35%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+}
+
+.home-blueprint-frame::after {
+  left: 0;
+  right: 0;
+  top: 42%;
+  height: 2px;
+}
+
+.home-blueprint-plan {
+  border: 2px solid #2d96b8;
+  border-radius: 0.22rem;
+}
+
+.home-blueprint-plan.plan-a {
+  left: 27%;
+  top: 29%;
+  width: 18%;
+  height: 17%;
+}
+
+.home-blueprint-plan.plan-b {
+  left: 48%;
+  top: 31%;
+  width: 23%;
+  height: 26%;
+}
+
+.home-blueprint-plan.plan-c {
+  left: 30%;
+  top: 58%;
+  width: 39%;
+  height: 17%;
+}
+
+.home-blueprint-dimension {
+  background: #e05f78;
+  opacity: 0.88;
+}
+
+.home-blueprint-dimension::before,
+.home-blueprint-dimension::after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: #e05f78;
+}
+
+.home-blueprint-dimension.dimension-x {
+  left: 24%;
+  right: 24%;
+  bottom: 18%;
+  height: 2px;
+  transform-origin: left center;
+  animation: home-blueprint-draw-x 4.8s ease-in-out infinite;
+}
+
+.home-blueprint-dimension.dimension-x::before {
+  left: -2px;
+  top: -2px;
+}
+
+.home-blueprint-dimension.dimension-x::after {
+  right: -2px;
+  top: -2px;
+}
+
+.home-blueprint-dimension.dimension-y {
+  top: 24%;
+  bottom: 24%;
+  right: 17%;
+  width: 2px;
+  transform-origin: center bottom;
+  animation: home-blueprint-draw-y 4.8s ease-in-out infinite;
+}
+
+.home-blueprint-dimension.dimension-y::before {
+  top: -2px;
+  left: -2px;
+}
+
+.home-blueprint-dimension.dimension-y::after {
+  bottom: -2px;
+  left: -2px;
+}
+
+.home-blueprint-node {
+  width: 9px;
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: #f6c75c;
+  box-shadow: 0 0 0 5px rgb(246 199 92 / 0.18);
+  animation: home-blueprint-node 4.8s ease-in-out infinite;
+}
+
+.home-blueprint-node.node-a {
+  left: 23%;
+  top: 22%;
+}
+
+.home-blueprint-node.node-b {
+  right: 22%;
+  bottom: 23%;
+  animation-delay: -2.4s;
+}
+
+.home-blueprint-scan {
+  top: 0;
+  bottom: 0;
+  left: -28%;
+  width: 22%;
+  background: rgb(255 255 255 / 0.32);
+  transform: skewX(-14deg);
+  animation: home-blueprint-scan 6.4s ease-in-out infinite;
+}
+
+[data-theme="dark"] .home-projects-blueprint-icon {
+  background: #10283a;
+  box-shadow:
+    0 18px 46px rgb(0 0 0 / 0.24),
+    inset 0 0 0 1px rgb(127 199 229 / 0.24);
+}
+
+[data-theme="dark"] .home-blueprint-grid {
+  opacity: 0.48;
+  background-image:
+    linear-gradient(rgb(132 203 230 / 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(132 203 230 / 0.2) 1px, transparent 1px);
+}
+
+[data-theme="dark"] .home-blueprint-sheet {
+  background: rgb(255 255 255 / 0.04);
+  box-shadow: inset 0 0 0 1px rgb(132 203 230 / 0.17);
+}
+
+[data-theme="dark"] .home-blueprint-frame,
+[data-theme="dark"] .home-blueprint-frame::before,
+[data-theme="dark"] .home-blueprint-frame::after {
+  border-color: #7fcbe5;
+  background-color: #7fcbe5;
+}
+
+[data-theme="dark"] .home-blueprint-plan {
+  border-color: #9bdff0;
+}
+
+[data-theme="dark"] .home-blueprint-dimension,
+[data-theme="dark"] .home-blueprint-dimension::before,
+[data-theme="dark"] .home-blueprint-dimension::after {
+  background: #ff9aaa;
+}
+
+@keyframes home-blueprint-draw-x {
+  0%,
+  18% {
+    transform: scaleX(0.35);
+    opacity: 0.5;
+  }
+  46%,
+  100% {
+    transform: scaleX(1);
+    opacity: 0.92;
+  }
+}
+
+@keyframes home-blueprint-draw-y {
+  0%,
+  28% {
+    transform: scaleY(0.35);
+    opacity: 0.5;
+  }
+  56%,
+  100% {
+    transform: scaleY(1);
+    opacity: 0.92;
+  }
+}
+
+@keyframes home-blueprint-node {
+  0%,
+  100% {
+    transform: scale(0.78);
+    opacity: 0.72;
+  }
+  45% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes home-blueprint-scan {
+  0%,
+  35% {
+    transform: translateX(0) skewX(-14deg);
+    opacity: 0;
+  }
+  58% {
+    opacity: 1;
+  }
+  82%,
+  100% {
+    transform: translateX(620%) skewX(-14deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-blueprint-dimension,
+  .home-blueprint-node,
+  .home-blueprint-scan {
+    animation: none;
+  }
+
+  .home-blueprint-scan {
+    display: none;
+  }
+}
