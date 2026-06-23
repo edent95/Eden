@@ -6,6 +6,33 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { applyPageSeo } from './seo';
+import type { CssArtComponent } from './components/css-art/index';
+import {
+  elementalIconCssArtItems,
+  getProjectCssArtByProjectTitle,
+  homeInterestCssArtItems,
+  homeSystemCssArtItems,
+  mathMagicIconCssArtItems,
+  officeIconCssArtItems,
+  projectCssArtItems,
+} from './css-art.registry';
+import {
+  HomeArchiveEvolutionTotem,
+  HomeBaguaMirrorTotem,
+  HomeGramophoneTotem,
+  HomeJijuCatScene,
+  HomeLifeMagicIcon,
+  HomePowerUpTotem,
+  HomeProjectsBlueprintIcon,
+  HomePyramidBreakTotem,
+  ProjectsJijuCssIcon,
+  WikiBackgroundMusicCssIcon,
+  WikiButtonFeedbackCssIcon,
+  WikiFirebaseStorageCssIcon,
+  WikiRagFlowCssIcon,
+  WikiSkillsCssIcon,
+  WikiViteCssIcon,
+} from './components/css-art/index';
 import { 
   Linkedin, 
   ExternalLink,
@@ -521,6 +548,141 @@ const jijuKnowledgeHighlights = [
   },
 ];
 
+const jijuArchiveReviewTracks = [
+  {
+    label: { en: 'Phase 1', zh: '阶段 1' },
+    title: { en: 'From idea to operating system', zh: '从想法变成系统' },
+    copy: {
+      en: 'Jiju started by defining the core memory layer, user data boundaries, BO permissions, and the main user path. The early lesson was that Community, Profile, Passport, Quest, and Backoffice are not side modules; they are the platform structure.',
+      zh: 'Jiju 先把核心记忆库、用户数据边界、BO 权限和主路径搭起来。早期结论很清楚：Community、Profile、Passport、Quest、Backoffice 都不是附属功能，而是长期平台结构。',
+    },
+  },
+  {
+    label: { en: 'Phase 2', zh: '阶段 2' },
+    title: { en: 'From listing to trust layer', zh: '从地点列表进入信任层' },
+    copy: {
+      en: 'Cafe data stopped being only name, address, and pet policy. Visit reality, verification trust, editorial context, user submission, owner invite, and BO review became one information chain.',
+      zh: 'Cafe 不再只是名字、地址和 pet policy。visit reality、verification trust、editorial context、用户提交、owner invite、BO 审核开始形成同一条资料链。',
+    },
+  },
+  {
+    label: { en: 'Phase 3', zh: '阶段 3' },
+    title: { en: 'From SPA to routed public surface', zh: '从纯 SPA 进入公开路由结构' },
+    copy: {
+      en: 'As SEO and public pages grew, routing needed a clearer source of truth. Vike-owned routes, route registry, guide pages, best pages, answers, and cafe profiles turned search growth into architecture work.',
+      zh: 'SEO 和公开页面变多后，路由需要更清楚的事实源。Vike-owned routes、route registry、guides、best pages、answers、cafe profiles 让搜索增长变成架构工作。',
+    },
+  },
+  {
+    label: { en: 'Phase 4', zh: '阶段 4' },
+    title: { en: 'From memory to guardrails', zh: '从靠记忆变成机械护栏' },
+    copy: {
+      en: 'The project eventually turned repeated mistakes into scripts and gates: npm run verify, route checks, env boundary checks, no generic PWA service worker checks, CI, Docker smoke tests, and data-table standards.',
+      zh: '后期真正的升级，是把重复踩坑变成脚本和闸门：npm run verify、route checks、env boundary checks、no generic PWA service worker、CI、Docker smoke test、Data Table 标准。',
+    },
+  },
+];
+
+const jijuOperatingModel = [
+  {
+    title: { en: 'Raw truth', zh: '真实资料' },
+    lines: {
+      en: ['Cafe policy details', 'Owner-provided updates', 'User reports and corrections', 'Last verification context'],
+      zh: ['Cafe policy 细节', 'Owner-provided 更新', '用户回报与纠错', '最后验证时间与来源'],
+    },
+  },
+  {
+    title: { en: 'Trust workflow', zh: '信任工作流' },
+    lines: {
+      en: ['Add Cafe input', 'Owner invite link', 'BO review and edit', 'Public cafe profile output'],
+      zh: ['Add Cafe 输入', 'Owner invite link', 'BO 审核与编辑', '公开 Cafe Profile 输出'],
+    },
+  },
+  {
+    title: { en: 'Growth surface', zh: '增长表层' },
+    lines: {
+      en: ['City hubs', 'Pet-type best pages', 'Answer pages', 'Cafe profiles ready for AI/search citation'],
+      zh: ['City hubs', '宠物类型 best pages', 'Answer pages', '可被 AI/search 引用的 Cafe Profile'],
+    },
+  },
+];
+
+const jijuSkillCards = [
+  {
+    title: { en: 'Memory Bootstrap', zh: 'Memory Bootstrap' },
+    copy: {
+      en: 'Start with Home, Memory, Agent Knowledge Digest, soul.md, then log.md when timeline matters. Logs are history; Memory and Digest hold stable truth.',
+      zh: '启动顺序固定为 Home、Memory、Agent Knowledge Digest、soul.md；需要时间线时再读 log.md。log 记录历史，Memory / Digest 才放稳定事实。',
+    },
+  },
+  {
+    title: { en: 'Frontend + BO Linkage', zh: '前台 + BO 联动' },
+    copy: {
+      en: 'Every frontend change asks whether BO, shared types, services, rules, review state, and operations entry points also need to change.',
+      zh: '每次前台改动都要问：BO、shared types、services、rules、审核状态、运营入口是否也要同步。',
+    },
+  },
+  {
+    title: { en: 'Alignment Checklist', zh: 'Alignment Checklist' },
+    copy: {
+      en: 'For Cafe Profile, Add Cafe, and BO Edit, each field is checked for input, display, public/private status, BO-only logic, and owner-provided availability.',
+      zh: 'Cafe Profile、Add Cafe、BO Edit 三边字段逐项检查：能不能填、能不能展示、是否公开、是否 BO-only、owner 能不能提供。',
+    },
+  },
+  {
+    title: { en: 'Mechanical Verify Guardrails', zh: 'Mechanical Verify Guardrails' },
+    copy: {
+      en: 'The project does not trust agent memory alone. It converts boundaries into repeatable verify scripts and CI gates.',
+      zh: '项目不只相信 agent 记忆，而是把边界变成可重复执行的 verify scripts 和 CI gates。',
+    },
+  },
+  {
+    title: { en: 'Live Demo Reuse', zh: 'Live Demo Reuse' },
+    copy: {
+      en: 'Input and output demos reuse real AddCafePage and CafeDetailPage components, so demo problems expose real product problems.',
+      zh: 'input demo / output demo 直接复用真实 AddCafePage 和 CafeDetailPage，让 demo 暴露的问题就是真实页面的问题。',
+    },
+  },
+  {
+    title: { en: 'Graceful Degradation', zh: 'Graceful Degradation' },
+    copy: {
+      en: 'When an external API path becomes unavailable, the product removes false affordance, keeps manual operations, and returns clear unavailable states.',
+      zh: '外部 API 路径不可用时，不硬做假入口；下线错误按钮，保留手动运营，并返回清楚的 unavailable 状态。',
+    },
+  },
+];
+
+const jijuPhilosophyPoints = [
+  {
+    title: { en: 'Product philosophy', zh: '产品哲学' },
+    copy: {
+      en: 'Jiju helps pet owners make calmer decisions before going out. The asset is not quantity; it is policy detail, verification context, community correction, and operational maintainability.',
+      zh: 'Jiju 帮养宠的人在出门前做出更安心的判断。核心资产不是数量，而是规则细节、验证语境、社区纠错和可持续运营。',
+    },
+  },
+  {
+    title: { en: 'Design philosophy', zh: '设计哲学' },
+    copy: {
+      en: 'The product should feel like a gentle pet world entrance: aesthetic-first, low-noise, mobile-first, with micro-interactions that feel like touch rather than button decoration.',
+      zh: '产品应该像一个温柔的宠物世界入口：美感优先、低噪音、手机优先，微交互像触碰，不像按钮装饰。',
+    },
+  },
+  {
+    title: { en: 'Engineering philosophy', zh: '工程哲学' },
+    copy: {
+      en: 'A complex AI-built product cannot be maintained by memory. It needs route facts, env helpers, Firestore payload cleaning, BO rules, CI gates, and startup protocols.',
+      zh: '复杂 AI-built 产品不能靠记忆维护。它需要 route facts、env helpers、Firestore payload 清理、BO 规则、CI 闸门和启动协议。',
+    },
+  },
+  {
+    title: { en: 'Content philosophy', zh: '内容哲学' },
+    copy: {
+      en: 'Content should answer real questions with source-informed boundaries. It should be useful to users, Google, and AI answers without pretending every place was personally visited.',
+      zh: '内容要带着事实边界回答真实问题。它要同时对用户、Google、AI answer 有用，但不假装每个地点都亲访过。',
+    },
+  },
+];
+
 const analogTechGalleryPhotos = [
   {
     src: '/analog-tech/analog-tech-1.png',
@@ -663,14 +825,14 @@ const aiProjectSystems: AiProjectSystem[] = [
     eyebrow: { en: 'AI Build System', zh: 'AI 构建系统' },
     title: 'ETReportHub',
     status: { en: 'Active build', zh: '构建中' },
-    role: { en: 'Daily report dashboard', zh: '日报数据仪表盘' },
+    role: { en: 'Daily Report OS', zh: '日报数据系统' },
     summary: {
-      en: 'An iGaming aggregator dashboard that eats Transaction and Customer Excel files, tidies them into SQLite or IndexedDB, and turns a messy day of operations into KPI, member, channel, trend, and brand-comparison views.',
-      zh: '一个 iGaming aggregator 日报仪表盘：把 Transaction 和 Customer Excel 吃进去，理进 SQLite 或 IndexedDB，把乱糟糟的一天运营变成 KPI、会员、渠道、趋势和品牌对比的视图。',
+      en: 'A daily-report data system for iGaming operators and aggregators. It turns Excel, members, channels, trends, brand comparison, and CRM export into one reviewable dashboard.',
+      zh: '给 iGaming operator / aggregator 的日报数据系统。把 Excel、会员、渠道、趋势、品牌对比和 CRM export 放进同一个可复盘的 dashboard。',
     },
     system: {
-      en: 'Excel ingest, data normalization, SQLite layer, dashboard cache, multi-brand reports, CRM export, Docker/backend mode.',
-      zh: 'Excel 导入、数据标准化、SQLite 层、dashboard cache、多品牌报表、CRM export、Docker/backend 模式。',
+      en: 'Transaction + Customer Excel, SQLite / IndexedDB, Performance / Members / Channels / Trends, CRM export, Wide Excel, System Guide.',
+      zh: 'Transaction + Customer Excel、SQLite / IndexedDB、Performance / Members / Channels / Trends、CRM export、Wide Excel、System Guide。',
     },
     href: 'etreporthub',
   },
@@ -1311,6 +1473,464 @@ const pokerStories = [
       en: 'All night the river belonged to Lucky — the last card kept saving him. Then the board gave him a straight, and he shoved all-in against Prince’s three Aces. For one second Lucky had won. Then the river paired the board and turned those Aces into a full house — the hand was lifted right out of his hands. By the end, Gambler, Lucky, and Prince each sat on their own stack: three players, one quiet stand-off. Closing scene — Drifter wandered over with $5, pulled Prince into a side-pot split, and walked away $40 up.',
       zh: '整晚的 river 都站在罩仔这边——最后一张牌总在救他。后来桌面给了他一个顺子，他直接 all-in 推向太子手里的三条 A。有那么一秒，罩仔已经赢了。然后 river 把桌面配成对子，把那三条 A 变成葫芦——到手的牌被生生抬走。到最后，赌仔、罩仔、太子各坐一摞筹码：三家鼎立，安静对峙。收尾一幕——浪子揣着 5 块钱晃过来，把太子拉进一局散钱平分，转身就多赚了 40 块。',
     },
+  },
+] as const;
+
+const wikiEntries = [
+  {
+    slug: 'vite',
+    eyebrow: { en: 'Build skill', zh: '构建技能' },
+    title: { en: 'Vite as the vibe-coding engine', zh: 'Vite 作为 vibe coding 的引擎' },
+    summary: {
+      en: 'Vite is useful because it protects the build flow: fast dev server, fast HMR, simple config, and a production build that still forces reality checks.',
+      zh: 'Vite 好用的地方，不只是快，而是它保护了构建心流：dev server 快、HMR 快、配置轻，同时 production build 仍然会逼你面对真实问题。',
+    },
+    thesis: {
+      en: 'For full vibe coding, use Vite as the fast loop, but keep a separate gate for typecheck, build, route checks, and broken-asset checks.',
+      zh: '如果是 fully vibe coding，Vite 应该负责“快速循环”，但必须另外保留 typecheck、build、路由检查和资源检查这道门。',
+    },
+    sections: [
+      {
+        title: { en: 'Why I adopted it', zh: '为什么我会用 Vite' },
+        points: {
+          en: [
+            'Jiju became too large to keep iterating comfortably without a faster build loop.',
+            'The project needed clearer modular boundaries so UI, routes, assets, Firebase logic, and public pages could be changed without the whole app feeling tangled.',
+            'Vite helped turn a heavy project into smaller feedback zones: change one page, one component, one asset path, then verify quickly.',
+          ],
+          zh: [
+            '我会用 Vite，是因为 Jiju 项目变得太庞大，继续用慢反馈的方式迭代会一直出问题。',
+            '项目需要更清楚的区块边界，让 UI、routes、assets、Firebase logic 和 public pages 不要全部缠在一起。',
+            'Vite 帮我把一个很重的项目拆成更小的反馈区：改一个页面、一个组件、一个资源路径，然后快速验证。',
+          ],
+        },
+      },
+      {
+        title: { en: 'Why it feels good', zh: '为什么它适合 vibe coding' },
+        points: {
+          en: [
+            'Cold start is fast because dev does not bundle the whole app first.',
+            'HMR keeps visual iteration alive, especially when adjusting UI, motion, copy, and microfeedback with AI.',
+            'The config surface is small enough that AI can reason about the project without fighting a large custom bundler setup.',
+          ],
+          zh: [
+            '冷启动快，因为开发环境不需要先把整个 app 打包完。',
+            'HMR 让视觉迭代不中断，尤其适合和 AI 高频调整 UI、动效、文案和微反馈。',
+            '配置面足够小，AI 比较容易理解项目，不会先卡在一大套自定义 bundler 配置里。',
+          ],
+        },
+      },
+      {
+        title: { en: 'The traps', zh: '真正要小心的缺点' },
+        points: {
+          en: [
+            'Dev and production are not identical: dev uses native ESM plus esbuild behavior, while production uses Rollup.',
+            'Vite transpiles TypeScript quickly, but it does not typecheck by itself.',
+            'Large component trees can create a local network waterfall during dev because many modules are requested separately.',
+            'Dependency cache can create stale-behavior bugs; clearing `node_modules/.vite` or running with `--force` is sometimes necessary.',
+            'Old CommonJS packages or dynamic require patterns can still create compatibility work.',
+          ],
+          zh: [
+            '开发环境和生产环境不完全一样：dev 是 native ESM 加 esbuild 行为，production 是 Rollup 打包。',
+            'Vite 会快速转译 TypeScript，但它本身不负责 typecheck。',
+            '大型组件树在 dev 下可能形成本地 network waterfall，因为浏览器会分开请求很多模块。',
+            '依赖缓存会制造“看起来像幽灵”的旧行为；有时要清 `node_modules/.vite` 或用 `--force` 重跑。',
+            '老旧 CommonJS 包、动态 require、旧 SDK 仍然可能需要额外兼容处理。',
+          ],
+        },
+      },
+      {
+        title: { en: 'How to use it for full vibe coding', zh: 'fully vibe coding 时怎么用' },
+        points: {
+          en: [
+            'Let `npm run dev` stay non-blocking: it should show the UI quickly and keep HMR smooth.',
+            'Do not rely on the dev server as proof of correctness; run `npm run typecheck` and `npm run build` before treating a change as done.',
+            'Use TypeScript as AI context, not as a wall during exploration. Prefer fixing types later in a dedicated pass instead of scattering `@ts-ignore`.',
+            'Use stable imports and route helpers. Path aliases are useful, but only if the repo is structured around them consistently.',
+            'Keep Firebase or backend access in a small number of service files so AI can hold the data model in context.',
+            'Check real assets and public routes after changes. A passing UI can still hide broken images, wrong base paths, or missing public files.',
+          ],
+          zh: [
+            '让 `npm run dev` 保持不阻断：它的任务是快速显示 UI，并让 HMR 顺。',
+            '不要把 dev server 正常当成正确证明；完成前一定跑 `npm run typecheck` 和 `npm run build`。',
+            'TypeScript 应该作为 AI 理解代码库的地图，不是探索阶段的墙。不要到处撒 `@ts-ignore`，更好的做法是最后集中修类型。',
+            'import 和 route helper 要稳定。alias 很有用，但前提是整个 repo 真的按这个结构维护。',
+            'Firebase 或后端访问集中在少数 service 文件里，让 AI 能一次读懂数据模型。',
+            '改完要检查真实资源和公开路由。UI 能跑，不代表图片、base path、public files 都没断。',
+          ],
+        },
+      },
+      {
+        title: { en: 'Rule of thumb', zh: '我的使用原则' },
+        points: {
+          en: [
+            'Vite is excellent for speed, but speed must be paired with a release checklist.',
+            'During exploration, optimize for flow. Before handoff, optimize for truth.',
+            'The best Vite setup for AI work is boring: predictable dev server, explicit routes, clean services, and repeatable checks.',
+          ],
+          zh: [
+            'Vite 非常适合速度，但速度必须配一套发布检查。',
+            '探索时优化心流；交付前优化真实性。',
+            '最适合 AI 协作的 Vite 架构其实要无聊：dev server 可预测、路由明确、service 清楚、检查可重复。',
+          ],
+        },
+      },
+    ],
+  },
+  {
+    slug: 'background-music',
+    eyebrow: { en: 'Experience layer', zh: '体验层' },
+    title: { en: 'Background music changes the room', zh: 'Background music 会改变整张桌的气氛' },
+    summary: {
+      en: 'A poker table is not only rules and cards. Ambient sound makes the browser feel less empty and more like a shared room.',
+      zh: '一张 poker table 不只是规则和牌。背景音乐会让浏览器不那么空，像真的有一个共同空间。',
+    },
+    thesis: {
+      en: 'Music should support the table mood without stealing control from the player.',
+      zh: '音乐应该支撑牌桌气氛，但不能把控制权从玩家手里拿走。',
+    },
+    sections: [
+      {
+        title: { en: 'UX rules', zh: 'UX 规则' },
+        points: {
+          en: [
+            'Make sound optional and visibly controllable.',
+            'Remember the player preference instead of resetting the mood every visit.',
+            'Use background music as presence, not as decoration.',
+          ],
+          zh: [
+            '声音必须可选，而且控制入口要看得见。',
+            '记住玩家偏好，不要每次进来都重置气氛。',
+            '背景音乐的作用是制造存在感，不是单纯装饰。',
+          ],
+        },
+      },
+      {
+        title: { en: 'Why it matters here', zh: '为什么这项目需要它' },
+        points: {
+          en: [
+            'The game is social, so silence can make the table feel unfinished.',
+            'A calm loop helps solo BOT mode feel less like a test screen.',
+            'Sound gives the table rhythm while people wait for the next action.',
+          ],
+          zh: [
+            '这个游戏是社交场，完全安静会让桌子像还没做完。',
+            '轻一点的循环音乐，会让单人 BOT 模式不像测试页面。',
+            '声音能给等待下一步动作的空档一点节奏。',
+          ],
+        },
+      },
+    ],
+  },
+  {
+    slug: 'button-feedback',
+    eyebrow: { en: 'Interaction skill', zh: '交互技能' },
+    title: { en: 'Click button feedback is part of trust', zh: 'Click button feedback 是信任的一部分' },
+    summary: {
+      en: 'In a realtime card game, a button that does not answer back feels broken even when the code works.',
+      zh: '在实时牌局里，一个点了没反应的按钮，就算代码没坏，用户也会觉得坏了。',
+    },
+    thesis: {
+      en: 'Every important action needs an immediate signal: pressed, loading, accepted, blocked, or failed.',
+      zh: '每个重要操作都要马上给信号：已按下、处理中、已接受、被挡住、或失败。',
+    },
+    sections: [
+      {
+        title: { en: 'Signals to design', zh: '要设计的信号' },
+        points: {
+          en: [
+            'Pressed state: the button should physically respond.',
+            'Pending state: remote actions need loading or disabled feedback.',
+            'Result state: users should know whether the table accepted the action.',
+          ],
+          zh: [
+            '按下状态：按钮要有物理反馈感。',
+            '等待状态：远端动作需要 loading 或 disabled feedback。',
+            '结果状态：用户要知道牌桌有没有接收这个动作。',
+          ],
+        },
+      },
+      {
+        title: { en: 'Reusable lesson', zh: '可复用结论' },
+        points: {
+          en: [
+            'Feedback prevents double clicks and confused retries.',
+            'Small motion and sound can make the table feel alive.',
+            'The best microinteraction is the one that removes doubt.',
+          ],
+          zh: [
+            '反馈可以减少重复点击和乱重试。',
+            '小动效和声音能让桌子变得更有生命感。',
+            '最好的微交互，是把用户的怀疑拿掉。',
+          ],
+        },
+      },
+    ],
+  },
+  {
+    slug: 'firebase-lifetime-storage',
+    eyebrow: { en: 'Data memory', zh: '数据记忆' },
+    title: { en: 'Firebase lifetime storage as table memory', zh: 'Firebase lifetime storage 是牌桌记忆' },
+    summary: {
+      en: 'Firebase turns a browser game from temporary screen state into a table that can survive refreshes, reconnects, and shared links.',
+      zh: 'Firebase 让浏览器游戏不只是临时画面状态，而是一张能承受刷新、重连和分享链接的桌。',
+    },
+    thesis: {
+      en: 'Realtime storage is not just where data sits. It defines what the table remembers and what must be cleaned up.',
+      zh: 'Realtime storage 不只是放数据的地方。它决定牌桌记住什么，也决定什么必须被清掉。',
+    },
+    sections: [
+      {
+        title: { en: 'What it protects', zh: '它保护什么' },
+        points: {
+          en: [
+            'Room state can persist beyond one browser session.',
+            'Players can rejoin without the table losing the shared context.',
+            'Host-started public tables have a durable source of truth.',
+          ],
+          zh: [
+            '房间状态可以活过一次浏览器 session。',
+            '玩家重连时，牌桌不会丢掉共同上下文。',
+            '房主开的公开桌有一个稳定的 truth source。',
+          ],
+        },
+      },
+      {
+        title: { en: 'Design caution', zh: '设计提醒' },
+        points: {
+          en: [
+            'Lifetime storage still needs cleanup rules.',
+            'Game state should be shaped like a schema, not scattered flags.',
+            'Persistence is a product decision, not only a backend decision.',
+          ],
+          zh: [
+            'Lifetime storage 也需要 cleanup 规则。',
+            '游戏状态要像 schema，不要散成一堆 flag。',
+            '持久化是产品决策，不只是后端决策。',
+          ],
+        },
+      },
+    ],
+  },
+  {
+    slug: 'skills',
+    eyebrow: { en: 'Skills map', zh: '技能地图' },
+    title: { en: 'Reusable skills across projects', zh: '跨项目可复用 skills' },
+    summary: {
+      en: 'Every project should be able to produce reusable skills: build loops, UX decisions, data patterns, and product judgment that can move into the next project.',
+      zh: '每个项目都应该能产出可复用 skills：构建循环、UX 判断、数据模式、产品判断，都应该能迁移到下一个项目。',
+    },
+    thesis: {
+      en: 'The point of the knowledge base is to turn scattered build pain into reusable operating memory, then make that memory one click away from becoming a skill.',
+      zh: '知识库的重点，是把分散的构建痛点变成可复用的操作记忆，最后让这些记忆可以 one click 变成 skill。',
+    },
+    sections: [
+      {
+        title: { en: 'Hard skills', zh: '硬技能' },
+        points: {
+          en: [
+            'Vite release loop: dev speed, build checks, route/base-path discipline.',
+            'Firebase realtime memory: rooms, game state, reconnects, cleanup logic.',
+            'UX implementation: audio controls, button states, loading states, table feedback.',
+          ],
+          zh: [
+            'Vite 发布循环：开发速度、build 检查、route/base path 纪律。',
+            'Firebase 实时记忆：房间、牌局状态、重连、cleanup 逻辑。',
+            'UX 实作：声音控制、按钮状态、loading 状态、牌桌反馈。',
+          ],
+        },
+      },
+      {
+        title: { en: 'Product skills', zh: '产品技能' },
+        points: {
+          en: [
+            'Know which details make a browser game feel like a real room.',
+            'Use the crew story as product context, not just decorative copy.',
+            'Keep project learnings fileable so they compound into the next build.',
+          ],
+          zh: [
+            '判断哪些细节会让浏览器游戏像真的房间。',
+            '把这群人的故事当产品上下文，不只是装饰文案。',
+            '把项目经验沉淀成可归档内容，让下一次 build 变快。',
+          ],
+        },
+      },
+      {
+        title: { en: 'Basic requirements for a skill', zh: '一个 skill 的基本要求' },
+        points: {
+          en: [
+            'It must have a clear trigger situation: when should this skill be suggested or used?',
+            'It must contain a reusable rule: what judgment should transfer to another project?',
+            'It must include executable steps: what should the user or agent do next?',
+            'It must include checks: how do we know the skill was applied correctly?',
+            'It must name the source project: where did this skill come from?',
+            'It must name anti-patterns: what should this skill prevent people from doing?',
+            'It must have tags for classification, retrieval, and future auto-suggestion.',
+          ],
+          zh: [
+            '必须有清楚的触发场景：什么情况下应该推荐或使用这个 skill？',
+            '必须有可复用规则：这个判断如何迁移到另一个项目？',
+            '必须有可执行步骤：user 或 agent 下一步具体做什么？',
+            '必须有检查方式：怎么知道这个 skill 用对了？',
+            '必须写明来源项目：这个 skill 是从哪个真实项目里长出来的？',
+            '必须写明反模式：这个 skill 要防止别人犯什么错？',
+            '必须有 tags，用来分类、检索和未来自动推荐。',
+          ],
+        },
+      },
+      {
+        title: { en: 'What still needs to be added', zh: '我觉得还需要补的东西' },
+        points: {
+          en: [
+            'Each skill should record source project, trigger situation, reusable rule, anti-pattern, and proof from the build.',
+            'A skill is not a diary note. It needs a repeatable action pattern: when to use it, what to check, and what output it should create.',
+            'The wiki should separate raw observation, refined principle, and executable skill so future users do not confuse memory with instruction.',
+          ],
+          zh: [
+            '每个 skill 都应该记录来源项目、触发场景、可复用规则、反模式，以及来自真实 build 的证据。',
+            'skill 不是日记。它必须有可重复动作：什么时候用、检查什么、最后产出什么。',
+            'wiki 要分清 raw observation、refined principle 和 executable skill，不然后续 user 会把记忆和指令混在一起。',
+          ],
+        },
+      },
+      {
+        title: { en: 'One-click skillization flow', zh: 'one click 变成 skills 的流程' },
+        points: {
+          en: [
+            'Step 1: user highlights or selects a wiki note, build log, bug fix, or project decision.',
+            'Step 2: the system extracts the skill candidate: trigger, context, rule, steps, warnings, examples, source link, and confidence.',
+            'Step 3: the user sees a preview card before saving. One click should never silently publish a skill without review.',
+            'Step 4: after approval, save it as a Skill Card with tags like Vite, Firebase, UX feedback, routing, analytics, or deployment.',
+            'Step 5: future project pages can pull those Skill Cards back in when the same trigger appears.',
+          ],
+          zh: [
+            'Step 1：user 选中一段 wiki note、build log、bug fix 或项目决策。',
+            'Step 2：系统抽取 skill candidate：触发场景、上下文、原则、步骤、风险、例子、来源链接和信心分。',
+            'Step 3：保存前先给 preview card。one click 不应该无声发布 skill，必须让 user 过目。',
+            'Step 4：确认后存成 Skill Card，并打上 Vite、Firebase、UX feedback、routing、analytics、deployment 等标签。',
+            'Step 5：未来其他项目遇到同类触发场景时，可以把这些 Skill Card 自动拉回来。',
+          ],
+        },
+      },
+      {
+        title: { en: 'Minimum data shape', zh: '最小数据结构' },
+        points: {
+          en: [
+            'title: the skill name, written as an action, not a vague topic.',
+            'trigger: the situation where this skill should be suggested.',
+            'reusableRule: the principle or judgment that should transfer across projects.',
+            'procedure: the repeatable execution steps.',
+            'checks: how to verify the skill was applied correctly.',
+            'sourceProject: the project where this skill was learned.',
+            'antiPatterns: the mistakes this skill should prevent.',
+            'tags: categories for retrieval, filtering, and auto-suggestion.',
+            'sources: links back to the original project note or build log.',
+            'status: draft, reviewed, active, retired, or superseded.',
+          ],
+          zh: [
+            'title：skill 名称，要写成动作，不要只是模糊主题。',
+            'trigger：什么情况应该推荐这个 skill。',
+            'reusableRule：可以跨项目迁移的原则或判断。',
+            'procedure：可重复执行步骤。',
+            'checks：怎么验证这个 skill 用对了。',
+            'sourceProject：这个 skill 是从哪个项目里学到的。',
+            'antiPatterns：这个 skill 要防止的错误做法。',
+            'tags：用于检索、筛选和自动推荐的分类标签。',
+            'sources：回链到原始项目笔记或 build log。',
+            'status：draft、reviewed、active、retired 或 superseded。',
+          ],
+        },
+      },
+    ],
+  },
+  {
+    slug: 'rag-flow',
+    eyebrow: { en: 'Knowledge architecture', zh: '知识架构' },
+    title: { en: 'Tag Registry and RAG flow', zh: 'Tag Registry 与 RAG flow' },
+    summary: {
+      en: 'RAG is useful for retrieval and suggestion, but the source of truth should stay in structured wiki notes, Skill Cards, and a controlled tag registry.',
+      zh: 'RAG 适合做检索和推荐，但 source of truth 应该留在结构化 wiki notes、Skill Cards 和受控 tag registry 里。',
+    },
+    thesis: {
+      en: 'Do not dump everything into a vector database. Build a clean knowledge layer first, then use RAG as the retrieval layer on top.',
+      zh: '不要一开始就把所有东西丢进 vector database。先把知识层整理干净，再把 RAG 放在上面做检索层。',
+    },
+    sections: [
+      {
+        title: { en: 'The full flow', zh: '完整 flow' },
+        points: {
+          en: [
+            'Raw Sources / Build Logs: immutable input and ground truth.',
+            'Curated Wiki Notes: human-readable synthesis and reusable principles.',
+            'Skill Cards: executable knowledge with trigger, rule, steps, checks, source project, anti-patterns, and tags.',
+            'Tag Registry: controlled vocabulary for source project, tech, skill type, workflow stage, artifact type, status, and maturity.',
+            'Embedding Index / RAG: retrieval layer that uses text similarity plus tag metadata filters.',
+            'Query / Suggest / Auto Skill Recall: user asks a question or enters a project context, then the system recalls relevant Skill Cards.',
+          ],
+          zh: [
+            'Raw Sources / Build Logs：不可随意改动的输入和事实来源。',
+            'Curated Wiki Notes：人能读懂的整理、综合和可复用原则。',
+            'Skill Cards：可执行知识，包含触发场景、规则、步骤、检查、来源项目、反模式和 tags。',
+            'Tag Registry：受控标签表，管理 source project、tech、skill type、workflow stage、artifact type、status 和 maturity。',
+            'Embedding Index / RAG：检索层，用语义相似度加 tag metadata filters 找内容。',
+            'Query / Suggest / Auto Skill Recall：user 提问或进入项目上下文时，系统召回相关 Skill Cards。',
+          ],
+        },
+      },
+      {
+        title: { en: 'Tag Registry rules', zh: 'Tag Registry 规则' },
+        points: {
+          en: [
+            'Tags should have ids like `tech:vite`, `project:jiju`, `skill-type:ux-feedback`, not loose hashtags.',
+            'Each tag needs label, type, aliases, description, parent, status, and optional replacement.',
+            'Tags classify and filter. They should not replace the actual skill content.',
+            'Retire or merge duplicate tags instead of letting the registry drift.',
+          ],
+          zh: [
+            'Tags 应该有稳定 id，例如 `tech:vite`、`project:jiju`、`skill-type:ux-feedback`，不要变成随手写 hashtag。',
+            '每个 tag 需要 label、type、aliases、description、parent、status 和 optional replacement。',
+            'Tags 负责分类和过滤，不能替代 skill 正文。',
+            '重复 tags 要 retired 或 merge，不要让 registry 慢慢漂移。',
+          ],
+        },
+      },
+      {
+        title: { en: 'Why RAG fits', zh: '为什么适合 RAG' },
+        points: {
+          en: [
+            'RAG can answer questions like: have I solved a similar Vite build problem before?',
+            'RAG can recommend skills when a new project context matches old triggers.',
+            'RAG can help extract draft Skill Cards from build logs, bug fixes, and wiki notes.',
+            'The vector database should not be the source of truth. It should be regenerated from structured cards and notes.',
+          ],
+          zh: [
+            'RAG 可以回答：我以前有没有解决过类似的 Vite build 问题？',
+            '当新项目上下文匹配旧触发场景时，RAG 可以推荐相关 skills。',
+            'RAG 可以从 build logs、bug fixes 和 wiki notes 里辅助抽取 draft Skill Cards。',
+            'Vector database 不应该是 source of truth。它应该从结构化 cards 和 notes 重新生成。',
+          ],
+        },
+      },
+      {
+        title: { en: 'Implementation order', zh: '实现顺序' },
+        points: {
+          en: [
+            'Start with `/wiki`, `/wiki/skills`, `/tag-registry`, and `/skill-cards` as structured data.',
+            'Normalize tags before embedding content.',
+            'Embed Skill Card fields and use tags as metadata filters.',
+            'Return source links with every answer so the user can inspect the original note.',
+            'Keep every generated skill in draft until reviewed.',
+          ],
+          zh: [
+            '先把 `/wiki`、`/wiki/skills`、`/tag-registry` 和 `/skill-cards` 做成结构化数据。',
+            '先规范 tags，再做 embedding。',
+            '对 Skill Card 字段做 embedding，同时用 tags 做 metadata filters。',
+            '每次回答都带 source links，让 user 能回看原始 note。',
+            '所有生成的 skill 先进入 draft，review 后才 active。',
+          ],
+        },
+      },
+    ],
   },
 ] as const;
 
@@ -2243,303 +2863,258 @@ const HeaderControls: React.FC<{
   </div>
 );
 
-const HomeProjectsBlueprintIcon: React.FC<{ label: string }> = ({ label }) => (
-  <div className="home-projects-blueprint-icon" role="img" aria-label={label}>
-    <span className="home-blueprint-grid" />
-    <span className="home-blueprint-sheet" />
-    <span className="home-blueprint-frame" />
-    <span className="home-blueprint-plan plan-a" />
-    <span className="home-blueprint-plan plan-b" />
-    <span className="home-blueprint-plan plan-c" />
-    <span className="home-blueprint-dimension dimension-x" />
-    <span className="home-blueprint-dimension dimension-y" />
-    <span className="home-blueprint-node node-a" />
-    <span className="home-blueprint-node node-b" />
-    <span className="home-blueprint-scan" />
-  </div>
-);
+const ProjectCssGalleryPage: React.FC<{
+  homeHref: string;
+  projectsHref: string;
+  language: Language;
+  setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
+  theme: Theme;
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ homeHref, projectsHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
+  const isZh = language === 'zh';
 
-const HomeJijuCatScene: React.FC = () => (
-  <div className="jiju-cat-scene" aria-hidden="true">
-    <span className="jiju-sun" />
-    <span className="jiju-star s1" />
-    <span className="jiju-star s2" />
-    <span className="jiju-star s3" />
-    <span className="jiju-cloud jiju-cloud-a" />
-    <span className="jiju-cloud jiju-cloud-b" />
-    <span className="jiju-butterfly">
-      <span className="wing left" />
-      <span className="wing right" />
-    </span>
-    <span className="jiju-leaf" />
-    <div className="jiju-ground" />
-    <span className="jiju-grass g1" />
-    <span className="jiju-grass g2" />
-    <span className="jiju-grass g3" />
-    <span className="jiju-paw p1" />
-    <span className="jiju-paw p2" />
-    <span className="jiju-paw p3" />
-    <span className="jiju-paw p4" />
-    <div className="jiju-cat">
-      <span className="jiju-dust" />
-      <div className="jiju-cat-face">
-        <div className="jiju-cat-bob">
-          <span className="jiju-cat-tail" />
-          <span className="jiju-cat-body" />
-          <span className="jiju-cat-head">
-            <span className="jiju-cat-ear left" />
-            <span className="jiju-cat-ear right" />
-            <span className="jiju-cat-eye" />
-            <span className="jiju-cat-whisker w1" />
-            <span className="jiju-cat-whisker w2" />
-            <span className="jiju-cat-tongue" />
-          </span>
-          <span className="jiju-cat-leg leg1" />
-          <span className="jiju-cat-leg leg2" />
-          <span className="jiju-cat-leg leg3" />
-          <span className="jiju-cat-leg leg4" />
+  return (
+    <div className="page-shell projects-page project-css-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
+      <main className="px-5 py-8 md:px-8 md:py-10">
+        <div className="mx-auto max-w-6xl">
+          <div className="projects-topbar flex flex-wrap items-center justify-between gap-3">
+            <a href={projectsHref} className="projects-back-link inline-flex items-center gap-2 text-sm font-medium">
+              <ArrowLeft size={16} />
+              {isZh ? '返回 Projects' : 'Back to Projects'}
+            </a>
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
+          </div>
+
+          <header className="project-css-hero py-16 text-center md:py-24">
+            <p className="projects-kicker mx-auto">{isZh ? 'CSS art / Icon system' : 'CSS art / Icon system'}</p>
+            <h1 className="project-css-title mx-auto mt-5 font-display font-bold tracking-tight">
+              {isZh ? '把站内 CSS 图腾集中看。' : 'A review board for Eden CSS art.'}
+            </h1>
+            <p className="project-css-subtitle mx-auto mt-5">
+              {isZh
+                ? '这里放 `/projects` 的四个 app icon，也放 Home 的 System Files 和 Interests 图腾，方便一起看动效、比例、透明底、light / dark mode 和维护边界。'
+                : 'This page gathers the four `/projects` app icons plus Home System Files and Interests totems for reviewing motion, ratio, transparent backgrounds, light/dark mode, and maintenance boundaries.'}
+            </p>
+          </header>
+
+          <section className="project-css-section">
+            <div className="project-css-section-head">
+              <p className="projects-kicker">{isZh ? 'Projects page' : 'Projects page'}</p>
+              <h2 className="project-css-section-title font-display font-bold tracking-tight">
+                {isZh ? 'Projects 里的 4 个 app icon' : 'The 4 app icons from Projects'}
+              </h2>
+              <p className="project-css-section-copy">
+                {isZh ? '这些是 framed app icon，有固定底和 1:1 比例。' : 'These are framed app icons with a fixed background and a 1:1 ratio.'}
+              </p>
+            </div>
+          </section>
+
+          <section className="project-css-board">
+            {projectCssArtItems.map((item) => {
+              const Icon = item.Component;
+              const project = aiProjectSystems.find((candidate) => candidate.title === item.projectTitle);
+
+              return (
+                <article key={item.id} className="project-css-card">
+                  <div className="project-css-icon-stage">
+                    <Icon label={item.label[language]} />
+                  </div>
+                  <div className="project-css-card-copy">
+                    <p className="projects-card-eyebrow">
+                      {project ? project.eyebrow[language] : isZh ? 'Projects page' : 'Projects page'}
+                    </p>
+                    <h2 className="font-display text-3xl font-bold tracking-tight">{item.title}</h2>
+                    <p>{project ? project.role[language] : item.copy[language]}</p>
+                  </div>
+                </article>
+              );
+            })}
+          </section>
+
+          <section className="project-css-section">
+            <div className="project-css-section-head">
+              <p className="projects-kicker">{isZh ? 'Home / System Files' : 'Home / System Files'}</p>
+              <h2 className="project-css-section-title font-display font-bold tracking-tight">
+                {isZh ? '主页系统文件里的两个 CSS' : 'Two CSS pieces from Home System Files'}
+              </h2>
+              <p className="project-css-section-copy">
+                {isZh ? '这里补上你点名的 Projects Hub 和 Life OS RPG System。' : 'This adds the requested Projects Hub and Life OS RPG System visuals.'}
+              </p>
+            </div>
+            <div className="project-css-board project-css-home-board">
+              {homeSystemCssArtItems.map((item) => {
+                const Icon = item.Component;
+
+                return (
+                  <article key={item.id} className="project-css-card project-css-home-card">
+                    <div className="project-css-icon-stage project-css-home-icon-stage">
+                      <Icon label={item.label[language]} />
+                    </div>
+                    <div className="project-css-card-copy">
+                      <p className="projects-card-eyebrow">{isZh ? 'Home / System Files' : 'Home / System Files'}</p>
+                      <h2 className="font-display text-3xl font-bold tracking-tight">{item.title}</h2>
+                      <p>{item.copy[language]}</p>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+
+          <section className="project-css-section">
+            <div className="project-css-section-head">
+              <p className="projects-kicker">{isZh ? 'Home / Interests' : 'Home / Interests'}</p>
+              <h2 className="project-css-section-title font-display font-bold tracking-tight">
+                {isZh ? 'Interests 里的透明底图腾' : 'Transparent totems from Interests'}
+              </h2>
+              <p className="project-css-section-copy">
+                {isZh ? '这些按图腾规则展示：透明底，不强行套 app icon 外框。' : 'These follow the totem rule: transparent backgrounds, without forcing an app-icon frame.'}
+              </p>
+            </div>
+            <div className="project-css-totem-grid">
+              {homeInterestCssArtItems.map((item) => {
+                const Icon = item.Component;
+
+                return (
+                  <article key={item.id} className="project-css-totem-card">
+                    <div className="project-css-totem-stage">
+                      <Icon label={item.label[language]} />
+                    </div>
+                    <div className="project-css-card-copy">
+                      <p className="projects-card-eyebrow">{isZh ? 'Home / Interests' : 'Home / Interests'}</p>
+                      <h2 className="font-display text-2xl font-bold tracking-tight">{item.title}</h2>
+                      <p>{item.copy[language]}</p>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+
+          <section className="project-css-section">
+            <div className="project-css-section-head">
+              <p className="projects-kicker">{isZh ? 'Office / Framed app icons' : 'Office / Framed app icons'}</p>
+              <h2 className="project-css-section-title font-display font-bold tracking-tight">
+                {isZh ? '6 个办公系统 1:1 CSS icon' : '6 office-system 1:1 CSS icons'}
+              </h2>
+              <p className="project-css-section-copy">
+                {isZh
+                  ? '根据 System Files 的克制图标语言和 framed app icon 规则设计：平面底、轻微层次、慢速动效。'
+                  : 'Designed from the System Files visual language and framed app-icon rules: flat surface, quiet depth, and slow motion.'}
+              </p>
+            </div>
+            <div className="project-css-office-grid">
+              {officeIconCssArtItems.map((item) => {
+                const Icon = item.Component;
+
+                return (
+                  <article key={item.id} className="project-css-card project-css-office-card">
+                    <div className="project-css-icon-stage project-css-office-icon-stage">
+                      <Icon label={item.label[language]} />
+                    </div>
+                    <div className="project-css-card-copy">
+                      <p className="projects-card-eyebrow">{isZh ? 'Office icon' : 'Office icon'}</p>
+                      <h2 className="font-display text-2xl font-bold tracking-tight">{item.title}</h2>
+                      <p>{item.copy[language]}</p>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+
+          <section className="project-css-section">
+            <div className="project-css-section-head">
+              <p className="projects-kicker">{isZh ? 'Math magic / Framed app icons' : 'Math magic / Framed app icons'}</p>
+              <h2 className="project-css-section-title font-display font-bold tracking-tight">
+                {isZh ? '6 个数学魔法 1:1 CSS icon' : '6 math-magic 1:1 CSS icons'}
+              </h2>
+              <p className="project-css-section-copy">
+                {isZh
+                  ? '数学符号、几何门、积分咒式、π 球体、分形符文和矩阵传送门，全部按 framed app icon 规则做。'
+                  : 'Math symbols, geometric gates, calculus spells, pi orb, fractal rune, and matrix portal, all built as framed app icons.'}
+              </p>
+            </div>
+            <div className="project-css-office-grid project-css-math-grid">
+              {mathMagicIconCssArtItems.map((item) => {
+                const Icon = item.Component;
+
+                return (
+                  <article key={item.id} className="project-css-card project-css-office-card project-css-math-card">
+                    <div className="project-css-icon-stage project-css-office-icon-stage project-css-math-icon-stage">
+                      <Icon label={item.label[language]} />
+                    </div>
+                    <div className="project-css-card-copy">
+                      <p className="projects-card-eyebrow">{isZh ? 'Math magic icon' : 'Math magic icon'}</p>
+                      <h2 className="font-display text-2xl font-bold tracking-tight">{item.title}</h2>
+                      <p>{item.copy[language]}</p>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+
+          <section className="project-css-section">
+            <div className="project-css-section-head">
+              <p className="projects-kicker">{isZh ? 'Elemental / 1:1 CSS' : 'Elemental / 1:1 CSS'}</p>
+              <h2 className="project-css-section-title font-display font-bold tracking-tight">
+                {isZh ? '元素 1:1 CSS icons' : 'Elemental 1:1 CSS icons'}
+              </h2>
+              <p className="project-css-section-copy">
+                {isZh
+                  ? '一组更 flat 的 framed 元素图标：火是大块火焰，水是清楚水滴，风是柔和风带。'
+                  : 'A flatter framed elemental set: fire is a bold flame, water is a clear droplet, and wind is soft gust bands.'}
+              </p>
+            </div>
+            <div className="project-css-office-grid project-css-elemental-grid">
+              {elementalIconCssArtItems.map((item) => {
+                const Icon = item.Component;
+
+                return (
+                  <article key={item.id} className="project-css-card project-css-office-card project-css-elemental-card">
+                    <div className="project-css-icon-stage project-css-office-icon-stage project-css-elemental-icon-stage">
+                      <Icon label={item.label[language]} />
+                    </div>
+                    <div className="project-css-card-copy">
+                      <p className="projects-card-eyebrow">{isZh ? 'Elemental icon' : 'Elemental icon'}</p>
+                      <h2 className="font-display text-2xl font-bold tracking-tight">{item.title}</h2>
+                      <p>{item.copy[language]}</p>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+
+          <section className="project-css-impact">
+            <p className="projects-kicker">{isZh ? 'Impact' : 'Impact'}</p>
+            <p>
+              {isZh
+                ? '影响仍然很小：这页只复用现有 CSS 组件，不改 Home 或 `/projects` 的原页面结构。页面设置为 noindex / 不进 sitemap，默认只作为直达检查页。'
+                : 'Impact remains low: this page only reuses existing CSS components and does not change the original Home or `/projects` page structure. It is noindex / excluded from the sitemap by default, intended as a direct review page.'}
+            </p>
+            <div className="mt-6 flex flex-wrap gap-5">
+              <a href={projectsHref} className="projects-text-cta">
+                {isZh ? '回到 Projects' : 'Back to Projects'} <span aria-hidden>›</span>
+              </a>
+              <a href={homeHref} className="projects-text-cta projects-text-cta-muted">
+                {isZh ? '回到主页' : 'Back to Home'} <span aria-hidden>›</span>
+              </a>
+            </div>
+          </section>
         </div>
-      </div>
+      </main>
     </div>
-    <div className="jiju-cat jiju-cat-cameo">
-      <span className="jiju-dust" />
-      <div className="jiju-cat-face">
-        <div className="jiju-cat-bob">
-          <span className="jiju-cat-tail" />
-          <span className="jiju-cat-body" />
-          <span className="jiju-cat-head">
-            <span className="jiju-cat-ear left" />
-            <span className="jiju-cat-ear right" />
-            <span className="jiju-cat-eye" />
-            <span className="jiju-cat-whisker w1" />
-            <span className="jiju-cat-whisker w2" />
-          </span>
-          <span className="jiju-cat-leg leg1" />
-          <span className="jiju-cat-leg leg2" />
-          <span className="jiju-cat-leg leg3" />
-          <span className="jiju-cat-leg leg4" />
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-const HomeLifeMagicIcon: React.FC<{ label: string }> = ({ label }) => (
-  <div className="home-life-magic-icon" role="img" aria-label={label}>
-    <span className="home-life-magic-aura" />
-    <span className="home-life-magic-heart" />
-    <span className="home-life-magic-ring ring-outer" />
-    <span className="home-life-magic-ring ring-inner" />
-    <span className="home-life-magic-geometry geometry-a" />
-    <span className="home-life-magic-geometry geometry-b" />
-    <span className="home-life-magic-axis axis-x" />
-    <span className="home-life-magic-axis axis-y" />
-    <span className="home-life-magic-node node-a" />
-    <span className="home-life-magic-node node-b" />
-    <span className="home-life-magic-node node-c" />
-    <span className="home-life-magic-spark spark-a" />
-    <span className="home-life-magic-spark spark-b" />
-  </div>
-);
-
-const HomeBaguaMirrorTotem: React.FC<{ label: string }> = ({ label }) => (
-  <div className="home-bagua-totem" role="img" aria-label={label}>
-    <span className="home-bagua-ring ring-outer" />
-    <span className="home-bagua-ring ring-inner" />
-    <span className="home-bagua-yinyang">
-      <span className="home-bagua-dot dot-light" />
-      <span className="home-bagua-dot dot-dark" />
-    </span>
-    {Array.from({ length: 8 }, (_, index) => (
-      <span key={index} className={`home-bagua-trigram trigram-${index + 1}`}>
-        <span />
-        <span />
-        <span />
-      </span>
-    ))}
-    <span className="home-bagua-glint" />
-  </div>
-);
-
-const HomeGramophoneTotem: React.FC<{ label: string }> = ({ label }) => (
-  <div className="home-gramophone-totem" role="img" aria-label={label}>
-    <span className="home-gramophone-wave wave-a" />
-    <span className="home-gramophone-wave wave-b" />
-    <span className="home-gramophone-horn-neck" />
-    <span className="home-gramophone-horn-bell" />
-    <span className="home-gramophone-horn-ribs" />
-    <span className="home-gramophone-horn-mouth" />
-    <span className="home-gramophone-base" />
-    <span className="home-gramophone-base-panel" />
-    <span className="home-gramophone-crank" />
-    <span className="home-gramophone-platter" />
-    <span className="home-gramophone-record" />
-    <span className="home-gramophone-label" />
-    <span className="home-gramophone-arm" />
-    <span className="home-gramophone-needle" />
-  </div>
-);
-
-const HomePowerUpTotem: React.FC<{ label: string }> = ({ label }) => (
-  <div className="home-power-totem" role="img" aria-label={label}>
-    <span className="home-power-aura aura-back" />
-    <span className="home-power-aura aura-front" />
-    <span className="home-power-body" />
-    <span className="home-power-belt" />
-    <span className="home-power-face" />
-    <span className="home-power-hair hair-dark">
-      <span className="lock lock-a" />
-      <span className="lock lock-b" />
-      <span className="lock lock-c" />
-      <span className="lock lock-d" />
-      <span className="lock lock-e" />
-    </span>
-    <span className="home-power-hair hair-gold">
-      <span className="lock lock-a" />
-      <span className="lock lock-b" />
-      <span className="lock lock-c" />
-      <span className="lock lock-d" />
-      <span className="lock lock-e" />
-    </span>
-    <span className="home-power-spark spark-a" />
-    <span className="home-power-spark spark-b" />
-  </div>
-);
-
-const HomePyramidBreakTotem: React.FC<{ label: string }> = ({ label }) => (
-  <div className="home-pyramid-totem" role="img" aria-label={label}>
-    <span className="home-pyramid-impact" />
-    <span className="home-pyramid-wave" />
-    <span className="home-pyramid-block block-a" />
-    <span className="home-pyramid-block block-b" />
-    <span className="home-pyramid-block block-c" />
-    <span className="home-pyramid-block block-d" />
-    <span className="home-pyramid-block block-e" />
-    <span className="home-pyramid-block block-f" />
-    <span className="home-pyramid-block block-g" />
-    <span className="home-pyramid-block block-h" />
-    <span className="home-pyramid-crack crack-a" />
-    <span className="home-pyramid-crack crack-b" />
-    <span className="home-pyramid-pixel pixel-a" />
-    <span className="home-pyramid-pixel pixel-b" />
-    <span className="home-pyramid-pixel pixel-c" />
-  </div>
-);
-
-const HomeArchiveEvolutionTotem: React.FC<{ label: string }> = ({ label }) => (
-  <div className="home-archive-evolution-totem" role="img" aria-label={label}>
-    <span className="home-archive-small-beast">
-      <span className="home-archive-small-tail" />
-      <span className="home-archive-small-body" />
-      <span className="home-archive-small-head" />
-      <span className="home-archive-small-eye" />
-      <span className="home-archive-small-claw claw-a" />
-      <span className="home-archive-small-claw claw-b" />
-    </span>
-    <span className="home-archive-fire-dragon">
-      <span className="home-archive-dragon-wing wing-a" />
-      <span className="home-archive-dragon-wing wing-b" />
-      <span className="home-archive-dragon-tail" />
-      <span className="home-archive-dragon-tail-flame" />
-      <span className="home-archive-dragon-body" />
-      <span className="home-archive-dragon-neck" />
-      <span className="home-archive-dragon-head" />
-      <span className="home-archive-dragon-horn horn-a" />
-      <span className="home-archive-dragon-horn horn-b" />
-      <span className="home-archive-dragon-eye" />
-      <span className="home-archive-dragon-claw claw-a" />
-      <span className="home-archive-dragon-claw claw-b" />
-      <span className="home-archive-dragon-breath" />
-    </span>
-    <span className="home-archive-evolution-spark spark-a" />
-    <span className="home-archive-evolution-spark spark-b" />
-  </div>
-);
-
-const ProjectsJijuCssIcon: React.FC<{ label: string }> = ({ label }) => (
-  <div className="projects-card-icon projects-jiju-css-icon" role="img" aria-label={label}>
-    <span className="projects-jiju-icon-sun" />
-    <span className="projects-jiju-icon-cloud cloud-a" />
-    <span className="projects-jiju-icon-cloud cloud-b" />
-    <span className="projects-jiju-icon-ground" />
-    <span className="projects-jiju-icon-grass grass-a" />
-    <span className="projects-jiju-icon-grass grass-b" />
-    <span className="projects-jiju-icon-cat">
-      <span className="projects-jiju-icon-tail" />
-      <span className="projects-jiju-icon-body" />
-      <span className="projects-jiju-icon-head">
-        <span className="projects-jiju-icon-ear left" />
-        <span className="projects-jiju-icon-ear right" />
-        <span className="projects-jiju-icon-eye" />
-        <span className="projects-jiju-icon-whisker w1" />
-        <span className="projects-jiju-icon-whisker w2" />
-      </span>
-      <span className="projects-jiju-icon-leg leg-a" />
-      <span className="projects-jiju-icon-leg leg-b" />
-      <span className="projects-jiju-icon-leg leg-c" />
-      <span className="projects-jiju-icon-leg leg-d" />
-    </span>
-  </div>
-);
-
-const ProjectsPokerCssIcon: React.FC<{ label: string }> = ({ label }) => (
-  <div className="projects-card-icon projects-poker-css-icon" role="img" aria-label={label}>
-    <span className="projects-poker-table" />
-    <span className="projects-poker-table-rim" />
-    <span className="projects-poker-card card-a">
-      <span className="projects-poker-rank rank-top">A</span>
-      <span className="projects-poker-suit suit-spade" />
-      <span className="projects-poker-rank rank-bottom">A</span>
-    </span>
-    <span className="projects-poker-card card-b">
-      <span className="projects-poker-rank rank-top">A</span>
-      <span className="projects-poker-suit suit-heart" />
-      <span className="projects-poker-rank rank-bottom">A</span>
-    </span>
-  </div>
-);
-
-const ProjectsEtReportCssIcon: React.FC<{ label: string }> = ({ label }) => (
-  <div className="projects-card-icon projects-etreport-css-icon" role="img" aria-label={label}>
-    <span className="projects-etreport-topbar" />
-    <span className="projects-etreport-dot dot-a" />
-    <span className="projects-etreport-dot dot-b" />
-    <span className="projects-etreport-dot dot-c" />
-    <span className="projects-etreport-grid" />
-    <span className="projects-etreport-bar bar-a" />
-    <span className="projects-etreport-bar bar-b" />
-    <span className="projects-etreport-bar bar-c" />
-    <span className="projects-etreport-bar bar-d" />
-    <span className="projects-etreport-line" />
-    <span className="projects-etreport-scan" />
-  </div>
-);
-
-const ProjectsCrmCssIcon: React.FC<{ label: string }> = ({ label }) => (
-  <div className="projects-card-icon projects-crm-css-icon" role="img" aria-label={label}>
-    <span className="projects-crm-ring ring-outer" />
-    <span className="projects-crm-ring ring-middle" />
-    <span className="projects-crm-ring ring-inner" />
-    <span className="projects-crm-polygon polygon-octagon" />
-    <span className="projects-crm-polygon polygon-hexagon" />
-    <span className="projects-crm-axis axis-x" />
-    <span className="projects-crm-axis axis-y" />
-    <span className="projects-crm-triangle triangle-a" />
-    <span className="projects-crm-triangle triangle-b" />
-    <span className="projects-crm-tick tick-a" />
-    <span className="projects-crm-tick tick-b" />
-    <span className="projects-crm-tick tick-c" />
-    <span className="projects-crm-tick tick-d" />
-    <span className="projects-crm-node node-a" />
-    <span className="projects-crm-node node-b" />
-    <span className="projects-crm-node node-c" />
-    <span className="projects-crm-node node-d" />
-    <span className="projects-crm-glyph glyph-a" />
-    <span className="projects-crm-glyph glyph-b" />
-    <span className="projects-crm-core" />
-    <span className="projects-crm-orbit" />
-  </div>
-);
+  );
+};
 
 const ProjectsFullPage: React.FC<{
   homeHref: string;
@@ -2556,6 +3131,7 @@ const ProjectsFullPage: React.FC<{
   const etReportHubSalesHref = joinBasePath(baseUrl, 'etreporthub-sales');
   const pokerHref = joinBasePath(baseUrl, 'poker');
   const crmHref = joinBasePath(baseUrl, 'crm');
+  const projectCssHref = joinBasePath(baseUrl, 'project-css');
   const previousProjectsHref = joinBasePath(baseUrl, 'previous-projects');
 
   return (
@@ -2592,6 +3168,9 @@ const ProjectsFullPage: React.FC<{
               </a>
               <a href="#etreporthub" className="projects-text-cta projects-text-cta-muted">
                 {isZh ? '看 ETReportHub' : 'View ETReportHub'} <span aria-hidden>›</span>
+              </a>
+              <a href={projectCssHref} className="projects-text-cta projects-text-cta-muted">
+                {isZh ? '看 CSS 图标' : 'View CSS icons'} <span aria-hidden>›</span>
               </a>
             </div>
           </header>
@@ -2638,15 +3217,9 @@ const ProjectsFullPage: React.FC<{
                   isCrm ? 'projects-card-title-long' : '',
                   isPoker ? 'projects-card-title-stacked' : '',
                 ].filter(Boolean).join(' ');
-                const projectIcon = isJiju ? (
-                  <ProjectsJijuCssIcon label={isZh ? 'Jiju CSS app 图标' : 'Jiju CSS app icon'} />
-                ) : isPoker ? (
-                  <ProjectsPokerCssIcon label={isZh ? 'Friday Poker Club CSS app 图标' : 'Friday Poker Club CSS app icon'} />
-                ) : isETReportHub ? (
-                  <ProjectsEtReportCssIcon label={isZh ? 'ETReportHub 数据 CSS app 图标' : 'ETReportHub data CSS app icon'} />
-                ) : isCrm ? (
-                  <ProjectsCrmCssIcon label={isZh ? 'CRM Intelligence System 魔法阵 CSS app 图标' : 'CRM Intelligence System magic circle CSS app icon'} />
-                ) : null;
+                const projectCssArt = getProjectCssArtByProjectTitle(project.title);
+                const ProjectIcon = projectCssArt?.Component;
+                const projectIcon = ProjectIcon ? <ProjectIcon label={projectCssArt.label[language]} /> : null;
                 return (
                   <article key={project.title} id={project.href} className={cardClassName}>
                     <div className="flex flex-wrap items-center justify-between gap-3">
@@ -2723,27 +3296,27 @@ const ProjectsFullPage: React.FC<{
             <div className="projects-section-head">
               <p className="projects-kicker">{isZh ? 'ETReportHub readout' : 'ETReportHub readout'}</p>
               <h2 className="projects-section-title font-display font-bold tracking-tight">
-                {isZh ? '我看得出你在做什么。' : 'Yes, I can see what you are building.'}
+                {isZh ? '从导入，到分析，到下一步行动。' : 'From ingest, to analysis, to next action.'}
               </h2>
               <p className="projects-section-copy">
                 {isZh
-                  ? '看 `Daily Report/log.md` 就知道，ETReportHub 是个 iGaming aggregator 的日报系统，不只是个 dashboard。它已经能做数据导入、SQLite 规范化、多品牌、会员分析、渠道分析、趋势、Compare Brands、System Guide、CRM export、Docker/backend，还有前端性能优化。'
-                  : 'Going by `Daily Report/log.md`, ETReportHub is an iGaming aggregator daily-report system — not just a dashboard. It already does data ingest, SQLite normalization, multi-brand views, member and channel analysis, trends, Compare Brands, a System Guide, CRM export, Docker/backend mode, and frontend performance work.'}
+                  ? 'ETReportHub 的价值不是把数字排漂亮，而是把每天最容易出错的资料流变成可追踪、可解释、可导出、可继续接 CRM 的系统。'
+                  : 'ETReportHub is not about making numbers look pretty. It turns a fragile daily data flow into something traceable, explainable, exportable, and ready for CRM workflows.'}
               </p>
             </div>
             <div className="projects-readout-grid mt-12">
               {(isZh
                 ? [
-                    ['Input', 'Transaction + Customer Excel，每天从运营系统导出。'],
-                    ['Data Layer', 'SQLite / IndexedDB，把 raw Excel 转成可查询的数据层。'],
-                    ['Reports', 'Performance、Members、Channels、Trends、Compare Brands。'],
-                    ['CRM Bridge', '会员分群、风险、留存、CRM export，准备接下一步跟进系统。'],
+                    ['Product Promise', '少一点人工对表，多一点可判断的运营系统。'],
+                    ['Data Trust', 'Transaction 与 Customer Excel 按规则导入、标准化，并保留可复盘的资料层。'],
+                    ['Operating Views', 'Performance、Members、Channels、Trends 和品牌对比，把日报变成判断。'],
+                    ['Next Action', '会员分群、风险信号、留存区间和 CRM export，准备接后续跟进工作流。'],
                   ]
                 : [
-                    ['Input', 'Transaction + Customer Excel exported from operations.'],
-                    ['Data Layer', 'SQLite / IndexedDB turns raw Excel into a queryable layer.'],
-                    ['Reports', 'Performance, Members, Channels, Trends, and Compare Brands.'],
-                    ['CRM Bridge', 'Segments, risk, retention, and CRM export for the next follow-up system.'],
+                    ['Product Promise', 'Less manual checking. More operating judgment.'],
+                    ['Data Trust', 'Transaction and Customer Excel files are imported under rules, normalized, and kept reviewable.'],
+                    ['Operating Views', 'Performance, Members, Channels, Trends, and brand comparison turn daily reporting into decisions.'],
+                    ['Next Action', 'Member segments, risk signals, retention buckets, and CRM export prepare the next follow-up workflow.'],
                   ]
               ).map(([label, copy]) => (
                 <article key={label} className="projects-readout-card">
@@ -2786,6 +3359,242 @@ const ETReportHubFullPage: React.FC<{
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
 }> = ({ homeHref, projectsHref, salesHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
+  const tour = isZh
+    ? [
+        ['📋', '① 老板给你 Excel', '每天两份表：交易明细 + 会员名单'],
+        ['📥', '② 拖进系统', '系统自动看懂、对账、去重'],
+        ['🗄️', '③ 存进保险箱', 'SQLite 数据库保存当前状态和月度趋势快照'],
+        ['📊', '④ 自动出报表', '业绩、会员、趋势全自动算'],
+        ['📤', '⑤ 一键发老板', '导出熟悉格式的 Excel'],
+        ['🧹', '⑥ 每月扫一次', '半年前的旧数据贴 warm 标签，不删，为上云预热'],
+      ]
+    : [
+        ['📋', '① Boss hands you Excel', 'Two daily files: transactions + members'],
+        ['📥', '② Drop into system', 'Auto-parsed, reconciled, deduped'],
+        ['🗄️', '③ Locked in vault', 'SQLite stores current state and monthly trend snapshots'],
+        ['📊', '④ Auto reports', 'Performance, members, trends — all computed'],
+        ['📤', '⑤ Send to boss', 'Export back to familiar Excel'],
+        ['🧹', '⑥ Monthly sweep', 'Old rows tagged as warm, not deleted, just prepped for the cloud'],
+      ];
+  const featureMap = isZh
+    ? [
+        ['数据导入', 'Excel 拖放上传、Customer 类型选择、SQLite 手动加载、后端上传、导入诊断、宽表 Excel 导出。', '后端可用时直接写 daily_report.db 并刷新 dashboard_cache.json；没有后端时写浏览器缓存 SQLite。'],
+        ['业绩报表', 'Daily / Weekly / Overall 合并在同一页；交易明细可搜索、排序、导出；支持对比模式和会员存款 recency bucket。', '交易明细严格按交易日期；存款 recency bucket 是会员行为 cohort，点击打开会员明细弹窗。'],
+        ['会员分析', '会员累计数据、风险分布、登录/存款 recency、留存、No Conversion 筛选、分页会员列表、CRM 导出。', 'Recency / retention 用全部当前非排除会员；No Conversion = Last Deposit Date 为空。'],
+        ['分群分析', '按风险、层级、登录 recency、存款 recency、渠道、推荐人切分会员；支持分群明细弹窗。', '明细弹窗支持搜索、排序和导出，导出跟随当前弹窗搜索/排序。'],
+        ['渠道分析', 'ReferrerID 归类、Unknown Referrers、渠道配置、渠道对比、ROI、注册转化、渠道明细弹窗。', '渠道配置在 Unknown Referrers 下方；新增渠道显示在最上方；默认只显示前 3 个渠道。'],
+        ['趋势分析', '按日/周/月查看存款、提款、净存款、活跃会员和会员行为 bucket。', '活跃会员走势来自交易活动，并通过 user_id、phone+name、unique phone fallback 解析会员。'],
+        ['品牌对比', '跨 brand 查看会员数、存款、提款、净存款、平均值和 bonus 等指标。', '所有 SQLite join 和导出都必须带 brand_id，避免跨品牌重复行。'],
+        ['系统设置', '主题、语言、表格字段、图表指标、风险阈值、留存基准、recency bucket、排除会员、渠道设置。', '大部分设置按 brand 存储；会影响派生缓存并触发相关区块重算。'],
+        ['系统管理', '用户、角色、权限、审计日志；审计 Metadata 显示白话文，中英文同步。', '审计日志 append-only；银行资料查看、渠道编辑、上传、导出、登录失败、改密等关键动作会记录。'],
+      ]
+    : [
+        ['Data Ingest', 'Excel drag/drop upload, Customer type selection, manual SQLite load, backend upload, import diagnostics, and wide Excel export.', 'When backend is available, writes daily_report.db and refreshes dashboard_cache.json; otherwise writes browser-cached SQLite.'],
+        ['Performance', 'Daily / Weekly / Overall live in one page; transaction details are searchable, sortable, and exportable; comparison mode and deposit-recency buckets are supported.', 'Transaction details are transaction-date based; deposit-recency buckets are member behavior cohorts and open member detail modals.'],
+        ['Member Analysis', 'Member lifetime metrics, risk distribution, login/deposit recency, retention, No Conversion filter, paged member table, and CRM export.', 'Recency / retention use all current non-excluded members; No Conversion = blank Last Deposit Date.'],
+        ['Segment Analysis', 'Segments members by risk, tier, login recency, deposit recency, channel, and referrer; segment detail modals are supported.', 'Detail modals support search, sorting, and export that follows the modal state.'],
+        ['Channel Analysis', 'ReferrerID mapping, Unknown Referrers, Channel Setup, channel comparison, ROI, deposit conversion, and channel detail modals.', 'Channel Setup sits below Unknown Referrers; new channels appear at the top; only the first 3 channels show by default.'],
+        ['Trend Analysis', 'Daily/weekly/monthly trends for deposits, withdrawals, net deposit, active members, and member behavior buckets.', 'Active-member trend comes from transaction activity and resolves members by user_id, phone+name, and unique phone fallback.'],
+        ['Brand Comparison', 'Compares member counts, deposits, withdrawals, net deposit, averages, and bonus across brands.', 'All SQLite joins and exports must remain brand-scoped to prevent cross-brand duplication.'],
+        ['System Settings', 'Theme, language, table fields, chart metrics, risk thresholds, retention basis, recency buckets, exclusions, and channel setup.', 'Most settings are brand-scoped and invalidate derived caches where needed.'],
+        ['System Management', 'Users, roles, permissions, and audit logs; audit metadata is shown as human-readable text in both languages.', 'Audit log is append-only; bank views, channel edits, uploads, exports, login failures, password resets, and other key actions are recorded.'],
+      ];
+  const businessRules = isZh
+    ? [
+        ['Today / 日期锚点', '优先使用后端 /api/health 的 GMT+8 日期；没有后端时才 fallback 到最新交易日期，再 fallback 到浏览器 GMT+8。'],
+        ['Customer 是 Lifetime 当前状态', 'Customer Excel 覆盖当前会员状态；绝对不能把多个 Customer 批次相加。Lifetime + date_to 只用于批次记录和月度趋势快照。'],
+        ['Transaction 可叠加', 'Transaction 用 brand_id + transaction_id 去重，重复上传同一笔不会重复计算。'],
+        ['提款是负数', '净存款和 Company Win Loss 都使用 Deposit Total + Withdaw Total；看起来一样不是 bug。'],
+        ['行为 cohort 不等于交易明细', '会员/业绩中的登录或存款 recency bucket 是会员行为分析，不代表当前交易表应该有同样行数。'],
+        ['弹窗表格规则', '所有明细弹窗 table 都应有搜索、排序，并且导出必须跟随当前弹窗搜索/排序。'],
+      ]
+    : [
+        ['Today / date anchor', 'Prefer backend /api/health GMT+8 date; fallback to latest transaction date, then browser GMT+8.'],
+        ['Customer is latest Lifetime state', 'Customer Excel overwrites current member state; never add Customer batches together. Lifetime + date_to is used for import history and monthly trend snapshots.'],
+        ['Transaction append/upsert', 'Transactions dedupe by brand_id + transaction_id, so re-uploading the same transaction does not double count.'],
+        ['Withdraw is negative', 'Net Deposit and Company Win Loss both use Deposit Total + Withdaw Total; matching values are not a bug.'],
+        ['Behavior cohort is not transaction detail', 'Login/deposit recency buckets are member behavior analysis and do not imply the transaction table has the same number of rows.'],
+        ['Modal table rule', 'Every detail modal table should have search, sorting, and export that follows the current modal search/sort.'],
+      ];
+  const dailyUpload = isZh
+    ? [
+        ['Transaction', '按 brand_id + transaction_id append/upsert；重复上传同一笔交易不会重复计算。', '趋势、业绩和交易明细永远按真实交易日期回看。'],
+        ['Current Members', 'Customer Lifetime 文件更新 customers / customer_metrics 当前状态。', 'Dashboard 默认看到的是最新会员状态，不把历史批次金额相加。'],
+        ['Monthly Trend Snapshot', 'Lifetime + date_to 会写入 customer_metrics_monthly，用于趋势和批次追踪；日常会员分析只看最新当前状态。', '保留 Customer 批次边界，同时让日常页面保持简单稳定。'],
+      ]
+    : [
+        ['Transaction', 'Append/upsert by brand_id + transaction_id; re-uploading the same transaction does not double count.', 'Trends, Performance, and transaction details remain tied to true transaction dates.'],
+        ['Current Members', 'The Customer Lifetime file updates current customers / customer_metrics state.', 'The Dashboard default view uses the latest member state and never adds Customer batches together.'],
+        ['Monthly Trend Snapshot', 'Lifetime + date_to writes customer_metrics_monthly for trends and batch tracking; daily Member Analysis uses the latest current state.', 'Keeps Customer batch boundaries while keeping daily pages simple and stable.'],
+      ];
+  const operatingLoop = isZh
+    ? [
+        ['01', '上传 Transaction / Customer Excel。', '后端写 DB、刷新 cache、显示导入诊断；Transaction 去重叠加，Customer 更新当前状态并记录批次。', '如果有 unmatched / bank JSON error，先修数据再重传。'],
+        ['02', '进入 Performance 检查 Today / Weekly / Overall。', '日期使用 GMT+8 anchor；交易明细按交易日期；recency bucket 可打开会员明细。', '用明细弹窗搜索、排序、导出需要跟进的会员。'],
+        ['03', '进入 Member Analysis 选 No Conversion / 风险 / recency。', '会员列表分页显示，但导出读取完整筛选结果。', '下载 CRM 或筛选会员 CSV 做 conversion / retention campaign。'],
+        ['04', '进入 Channel Analysis 修 Unknown Referrers。', 'Channel Setup 就在 Unknown Referrers 下方；新增渠道在最上方，默认只显示 3 个。', '保存规则后刷新渠道表现、转化率和 ROI。'],
+        ['05', '使用 System Management 审计后台动作。', 'Metadata 显示白话文；原始 JSON 保留在 tooltip / CSV。', '需要调查时按 Action / User / Brand / 时间过滤并导出 CSV。'],
+      ]
+    : [
+        ['01', 'Upload Transaction / Customer Excel.', 'Backend writes DB, refreshes cache, and shows diagnostics; Transaction dedupes/appends, while Customer updates current state and records the batch.', 'If unmatched rows or bank JSON errors exist, repair data and re-upload.'],
+        ['02', 'Review Today / Weekly / Overall in Performance.', 'Dates use the GMT+8 anchor; transaction details follow transaction date; recency buckets open member details.', 'Use modal search/sort/export for members that need follow-up.'],
+        ['03', 'Use Member Analysis filters such as No Conversion, risk, and recency.', 'The table is paged, but exports read the full filtered result set.', 'Download CRM or filtered member CSV for conversion / retention campaigns.'],
+        ['04', 'Use Channel Analysis to resolve Unknown Referrers.', 'Channel Setup sits below Unknown Referrers; new channels appear first and only 3 show by default.', 'Save rules to refresh channel performance, conversion, and ROI.'],
+        ['05', 'Audit operations in System Management.', 'Metadata is shown in plain language; raw JSON remains available in tooltip / CSV.', 'Filter by Action / User / Brand / time and export CSV when investigating.'],
+      ];
+  const flowBranches = isZh
+    ? [
+        ['Admin 上传 Excel', '每天上传 Transaction Excel；有 Customer Excel 时也一起上传。本地后端可直接接收原始 Excel 文件。'],
+        ['Transaction Excel', '读取每一笔交易明细，标准化日期、金额、状态、Type，并用 User Name + Mobile / Phone fallback 匹配 user_id。'],
+        ['Transaction Append / Upsert', '用 brand_id + transaction_id 去重；重复上传不会重复计算，transactions 表可持续叠加。'],
+        ['Customer Excel', '代表 BO 导出的当前会员状态，不直接累加。Bank Detail JSON 会拆成 bank_details。'],
+        ['Customer 类型', 'Unknown / Date Range / Lifetime。只有 Lifetime + date_to 会写入 customer_metrics_monthly。'],
+        ['daily_report.db', 'SQLite 存储干净数据、最新会员指标、交易明细和月度快照；后端写入后同步刷新 dashboard_cache.json。'],
+        ['Dashboard / Export', 'Dashboard 读取 SQLite 显示 Daily / Weekly / Overall / Members / Channels / Trends；export_wide.py 导出老板熟悉的 Excel 宽表。'],
+      ]
+    : [
+        ['Admin uploads Excel', 'Transaction Excel can be uploaded daily; Customer Excel is uploaded when available. The local backend can receive the original Excel files directly.'],
+        ['Transaction Excel', 'Reads each transaction record, normalizes dates, amounts, status, and type, and resolves user_id by User Name + Mobile with phone fallback.'],
+        ['Transaction Append / Upsert', 'Deduplicates by brand_id + transaction_id so repeated uploads do not double count; the transactions table keeps accumulating records.'],
+        ['Customer Excel', 'Represents the current BO member state and is not blindly accumulated. Bank Detail JSON is split into bank_details.'],
+        ['Customer type', 'Unknown / Date Range / Lifetime. Only Lifetime + date_to writes into customer_metrics_monthly.'],
+        ['daily_report.db', 'SQLite stores clean data, latest member metrics, transactions, and monthly snapshots; backend writes also refresh dashboard_cache.json.'],
+        ['Dashboard / Export', 'Dashboard reads SQLite for Daily / Weekly / Overall / Members / Channels / Trends; export_wide.py creates the familiar wide Excel report.'],
+      ];
+  const completeNodeMap = isZh
+    ? [
+        {
+          label: 'INPUT',
+          title: '输入与接收',
+          tone: 'brand',
+          nodes: [
+            ['01', 'Admin 上传', '每天上传 Transaction Excel；有 Customer Excel 时也一起上传。'],
+            ['02', '后端 API / fallback', '优先走 /api/upload 写本地数据库；后端不可用时才使用浏览器 SQLite fallback。'],
+          ],
+        },
+        {
+          label: 'TRANSACTION PIPELINE',
+          title: '交易流水链路',
+          tone: 'success',
+          nodes: [
+            ['03', 'Transaction Excel', '交易明细是可叠加流水，负责真实交易日期、金额、状态和用户资料。'],
+            ['04', 'Convert / Normalize', '标准化日期、金额、Type、status，并用 User Name + Mobile / Phone fallback 匹配 user_id。'],
+            ['05', 'Append / Upsert', '用 brand_id + transaction_id 去重；重复上传同一笔不会重复计算。'],
+            ['06', 'transactions', '写入 SQLite transactions 表，后续报表、趋势、明细和导出都从这里取交易事实。'],
+          ],
+        },
+        {
+          label: 'CUSTOMER PIPELINE',
+          title: '会员当前状态链路',
+          tone: 'warning',
+          nodes: [
+            ['07', 'Customer Excel', 'Customer 代表 BO 当前会员状态，不把多个批次金额相加。'],
+            ['08', 'Convert / Normalize', '标准化会员字段；Bank Detail JSON 拆成 bank_details，坏 JSON 进入错误文件。'],
+            ['09', 'Classify Export', 'Customer 类型为 Unknown / Date Range / Lifetime；只有 Lifetime + date_to 进入月度快照。'],
+            ['10', 'Overwrite Current', '覆盖 customers + customer_metrics 的当前会员状态，让 Dashboard 默认看最新状态。'],
+            ['11', 'Monthly Snapshot', '写入 customer_metrics_monthly，保留 Lifetime 批次边界和月度趋势。'],
+          ],
+        },
+        {
+          label: 'UNIFIED OUTPUT',
+          title: '统一输出与维护',
+          tone: 'neutral',
+          nodes: [
+            ['12', 'daily_report.db', 'SQLite 保存干净数据、当前会员指标、交易明细、银行资料和月度快照，并刷新 dashboard_cache.json。'],
+            ['13', 'Dashboard', '读取 SQLite / cache，输出 Performance、Members、Channels、Trends、Brand Comparison。'],
+            ['14', 'Excel Export', 'export_wide.py 或 /api/export/wide 输出老板熟悉的 Excel 宽表；CRM / Audit 也可导出。'],
+            ['15', 'Tier Maintenance', 'tier_data.py 每月把 6 个月以上旧行标记为 warm；查询和导出仍默认看全表，为上云分区预留。'],
+          ],
+        },
+      ]
+    : [
+        {
+          label: 'INPUT',
+          title: 'Input and receiving',
+          tone: 'brand',
+          nodes: [
+            ['01', 'Admin Upload', 'Admins upload Transaction Excel daily; Customer Excel is uploaded when available.'],
+            ['02', 'Backend API / fallback', 'Prefer /api/upload into the local database; use browser SQLite fallback only when backend is unavailable.'],
+          ],
+        },
+        {
+          label: 'TRANSACTION PIPELINE',
+          title: 'Transaction pipeline',
+          tone: 'success',
+          nodes: [
+            ['03', 'Transaction Excel', 'Transaction is the appendable ledger for true transaction date, amount, status, and user profile fields.'],
+            ['04', 'Convert / Normalize', 'Normalize dates, amounts, Type, status, and resolve user_id through User Name + Mobile / Phone fallback.'],
+            ['05', 'Append / Upsert', 'Dedupe by brand_id + transaction_id so repeated uploads do not double count.'],
+            ['06', 'transactions', 'Write into SQLite transactions; reports, trends, details, and exports read transaction facts from here.'],
+          ],
+        },
+        {
+          label: 'CUSTOMER PIPELINE',
+          title: 'Current member-state pipeline',
+          tone: 'warning',
+          nodes: [
+            ['07', 'Customer Excel', 'Customer represents the current BO member state and must not be summed across batches.'],
+            ['08', 'Convert / Normalize', 'Normalize member fields; split Bank Detail JSON into bank_details and send bad JSON to an error file.'],
+            ['09', 'Classify Export', 'Customer type is Unknown / Date Range / Lifetime; only Lifetime + date_to writes monthly snapshots.'],
+            ['10', 'Overwrite Current', 'Overwrite customers + customer_metrics so Dashboard defaults to the latest member state.'],
+            ['11', 'Monthly Snapshot', 'Write customer_metrics_monthly to preserve Lifetime batch boundaries and monthly trends.'],
+          ],
+        },
+        {
+          label: 'UNIFIED OUTPUT',
+          title: 'Unified output and maintenance',
+          tone: 'neutral',
+          nodes: [
+            ['12', 'daily_report.db', 'SQLite stores clean data, current member metrics, transactions, bank details, and monthly snapshots, then refreshes dashboard_cache.json.'],
+            ['13', 'Dashboard', 'Reads SQLite / cache and renders Performance, Members, Channels, Trends, and Brand Comparison.'],
+            ['14', 'Excel Export', 'export_wide.py or /api/export/wide outputs the familiar wide Excel; CRM / Audit can also export.'],
+            ['15', 'Tier Maintenance', 'tier_data.py marks rows older than 6 months as warm; queries and exports still read all data while preparing cloud partitioning.'],
+          ],
+        },
+      ];
+  const convertRows = isZh
+    ? [
+        ['Bank Detail JSON → bank_details', 'scripts/build_db.py · insert_bank_details()', '后台 ETL 把 Customer Excel 的 Bank Detail JSON 拆成独立银行账户表；坏 JSON 会写入 bank_details_errors.csv。'],
+        ['API upload → SQLite', 'scripts/backend.py · /api/upload', '本地后端接收原始 Excel，调用 import_customer_export.py / import_transactions.py 写入 daily_report.db，再刷新 dashboard_cache.json。'],
+        ['Browser upload → bank_details', 'assets/sqlite_loader.js · writeBrand()', 'Dashboard 内上传 Excel 时，也会把 Bank Detail 拆进 SQLite 的 bank_details。'],
+        ['Customer row normalize', 'assets/app.js · normalizeCustomer()', '前端 fallback 模式会标准化 Customer 字段，并用 Deposit Total + Withdaw Total 计算 Win Loss。'],
+        ['Transaction row normalize', 'assets/app.js · normalizeTransaction()', '前端 fallback 模式会标准化交易 ID、金额、日期、状态和用户资料。'],
+      ]
+    : [
+        ['Bank Detail JSON → bank_details', 'scripts/build_db.py · insert_bank_details()', 'Backend ETL splits Customer Excel Bank Detail JSON into a separate bank account table; bad JSON goes to bank_details_errors.csv.'],
+        ['API upload → SQLite', 'scripts/backend.py · /api/upload', 'The local backend receives raw Excel files, calls import_customer_export.py / import_transactions.py, writes daily_report.db, then refreshes dashboard_cache.json.'],
+        ['Browser upload → bank_details', 'assets/sqlite_loader.js · writeBrand()', 'When Excel is uploaded inside the dashboard, Bank Detail is also split into SQLite bank_details.'],
+        ['Customer row normalize', 'assets/app.js · normalizeCustomer()', 'Frontend fallback mode normalizes Customer fields and derives Win Loss as Deposit Total + Withdaw Total.'],
+        ['Transaction row normalize', 'assets/app.js · normalizeTransaction()', 'Frontend fallback mode normalizes transaction ID, amount, dates, status, and user profile fields.'],
+      ];
+  const sqliteTables = isZh
+    ? [
+        ['customers', '会员基本资料'],
+        ['bank_details', '银行资料，拆自 Bank Detail JSON'],
+        ['transactions', '交易明细，带 tier 列：hot / warm'],
+        ['customer_exports', 'Customer 上传批次'],
+        ['customer_export_metrics', '每个批次的会员统计，带 tier 列'],
+        ['customer_metrics_monthly', 'Lifetime 月度快照'],
+      ]
+    : [
+        ['customers', 'Member attributes'],
+        ['bank_details', 'Bank accounts parsed from Bank Detail JSON'],
+        ['transactions', 'Transaction records with tier column: hot / warm'],
+        ['customer_exports', 'Customer upload batches'],
+        ['customer_export_metrics', 'Member metrics per batch with tier column'],
+        ['customer_metrics_monthly', 'Lifetime monthly snapshots'],
+      ];
+  const optimization = isZh
+    ? [
+        ['当前瓶颈', 'Classic-script 全局协作仍存在加载顺序风险；会员分析的 risk、retention、bucket 仍重；Customer 最新状态、批次记录和 lifetime snapshot 的边界不能被优化破坏。'],
+        ['已做优化', 'derivedMetricsCache、dashboard_cache.json、SQLite 规范化、分页窗口、局部刷新、页面拆分、reduced-motion 反馈已经落地。'],
+        ['后续优先级', '继续把更重的聚合推进 SQLite / backend；补轻量 browser smoke test；系统性验证 390px / tablet / desktop 下的上传、报表、会员、渠道、趋势和 System Flow。'],
+      ]
+    : [
+        ['Current bottlenecks', 'Classic-script globals still carry load-order risk; risk, retention, and bucket calculations remain heavy; Customer current state, import batches, and lifetime snapshots cannot be merged for speed.'],
+        ['Completed optimizations', 'derivedMetricsCache, dashboard_cache.json, normalized SQLite, paged table windows, local refreshes, page splitting, and reduced-motion feedback are already in place.'],
+        ['Live next priorities', 'Push heavier aggregation into SQLite/backend, add lightweight browser smoke tests, and verify Upload, Performance, Members, Channels, Trends, and System Flow at 390px / tablet / desktop.'],
+      ];
 
   return (
     <div className="page-shell etreport-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
@@ -2806,55 +3615,47 @@ const ETReportHubFullPage: React.FC<{
           </div>
 
           <header className="etreport-hero py-16 text-center md:py-24">
-            <p className="etreport-kicker mx-auto">{isZh ? 'ETReportHub / Daily Report OS' : 'ETReportHub / Daily Report OS'}</p>
+            <p className="etreport-kicker mx-auto">{isZh ? 'ETReportHub / System Flow' : 'ETReportHub / System Flow'}</p>
             <h1 className="etreport-title mx-auto mt-5 font-display font-bold tracking-tight">
-              {isZh ? 'Turn messy gaming reports into operating clarity.' : 'Turn messy gaming reports into operating clarity.'}
+              {isZh ? 'Daily Report data system, rebuilt in Eden’s language.' : 'Daily Report data system, rebuilt in Eden’s language.'}
             </h1>
             <p className="etreport-subtitle mx-auto mt-5">
               {isZh
-                ? '给 iGaming operator / aggregator 的日报数据系统。把 Excel、会员、渠道、趋势、品牌对比和 CRM export 放进同一个可复盘的 dashboard。'
-                : 'A daily-report data system for iGaming operators and aggregators. It turns Excel, members, channels, trends, brand comparison, and CRM export into one reviewable dashboard.'}
+                ? '一份面向运营和交付的系统地图：从每日 Excel 上传，到 SQLite 写入、Customer / Transaction 规则、Dashboard 报表、Excel / CRM / Audit 导出，再到优化路线和上云预留。'
+                : 'An operator-facing system map: from daily Excel upload to SQLite writes, Customer / Transaction rules, Dashboard reporting, Excel / CRM / Audit exports, optimization priorities, and cloud-readiness groundwork.'}
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-5">
-              <a href="#modules" className="etreport-text-cta">
-                {isZh ? '看产品模块' : 'View modules'} <span aria-hidden>›</span>
+              <a href="#flow-map" className="etreport-text-cta">
+                {isZh ? '看系统流程' : 'View system flow'} <span aria-hidden>›</span>
               </a>
-              <a href={salesHref} className="etreport-text-cta">
-                {isZh ? '看价格' : 'View pricing'} <span aria-hidden>›</span>
+              <a href="#rules" className="etreport-text-cta etreport-text-cta-muted">
+                {isZh ? '看业务规则' : 'View rules'} <span aria-hidden>›</span>
               </a>
-              <a href="#skill-proof" className="etreport-text-cta etreport-text-cta-muted">
-                {isZh ? '看 Eden 的能力' : 'View skill proof'} <span aria-hidden>›</span>
+              <a href={salesHref} className="etreport-text-cta etreport-text-cta-muted">
+                {isZh ? '看售卖页' : 'View sales page'} <span aria-hidden>›</span>
               </a>
             </div>
           </header>
 
           <section className="etreport-console-panel">
             <div className="etreport-console-copy">
-              <p className="etreport-kicker">{isZh ? 'Product promise' : 'Product promise'}</p>
+              <p className="etreport-kicker">{isZh ? '60 秒看懂这个系统' : '60-second tour'}</p>
               <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
-                {isZh ? '少一点人工对表，多一点可判断的运营系统。' : 'Less manual checking. More operating judgment.'}
+                {isZh ? '把每天两份 Excel，变成可复盘的运营层。' : 'Two daily Excel files become a reviewable operating layer.'}
               </h2>
               <p>
                 {isZh
-                  ? 'ETReportHub 的价值不是把数字排漂亮，而是把每天最容易出错的资料流变成可追踪、可解释、可导出、可继续接 CRM 的系统。'
-                  : 'ETReportHub is not about making numbers look pretty. It turns a fragile daily data flow into something traceable, explainable, exportable, and ready for CRM workflows.'}
+                  ? 'Transaction 负责真实交易流水，Customer 负责当前会员状态。系统把它们写进 SQLite，生成 Dashboard、趋势、会员分析、渠道分析和老板熟悉的 Excel 导出。'
+                  : 'Transaction carries the real ledger. Customer carries current member state. The system writes both into SQLite, then generates dashboards, trends, member analysis, channel analysis, and familiar Excel exports.'}
               </p>
             </div>
             <div className="etreport-console-metrics">
-              {(isZh
-                ? [
-                    ['Input', 'Transaction + Customer Excel'],
-                    ['Storage', 'SQLite / IndexedDB'],
-                    ['Views', 'Performance / Members / Channels / Trends'],
-                    ['Output', 'CRM export / Wide Excel / System Guide'],
-                  ]
-                : [
-                    ['Input', 'Transaction + Customer Excel'],
-                    ['Storage', 'SQLite / IndexedDB'],
-                    ['Views', 'Performance / Members / Channels / Trends'],
-                    ['Output', 'CRM export / Wide Excel / System Guide'],
-                  ]
-              ).map(([label, value]) => (
+              {[
+                ['Input', 'Transaction + Customer Excel'],
+                ['Storage', 'daily_report.db + dashboard_cache.json'],
+                ['Reports', 'Performance / Members / Channels / Trends'],
+                ['Export', 'CRM CSV / Wide Excel / Audit CSV'],
+              ].map(([label, value]) => (
                 <div key={label} className="etreport-console-row">
                   <span>{label}</span>
                   <strong>{value}</strong>
@@ -2863,57 +3664,78 @@ const ETReportHubFullPage: React.FC<{
             </div>
           </section>
 
+          <section id="flow-map" className="etreport-section py-16 md:py-24">
+            <div className="etreport-tour-grid">
+              {tour.map(([emoji, title, body]) => (
+                <article key={title} className="etreport-value-card etreport-tour-card">
+                  <div className="etreport-tour-emoji">{emoji}</div>
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{title}</h3>
+                  <p>{body}</p>
+                </article>
+              ))}
+            </div>
+            <div className="etreport-callout mt-8">
+              {isZh
+                ? '一句话总结：把 Excel 变成报表，数据存自己电脑；每天上传 Customer 会更新当前会员状态，Transaction 继续按交易 ID 去重叠加。'
+                : 'In one line: Excel becomes reports and data stays on your computer; daily Customer uploads update current member state while Transactions keep append/upsert semantics.'}
+            </div>
+          </section>
+
           <section className="etreport-section py-16 md:py-24">
             <div className="etreport-section-head">
-              <p className="etreport-kicker">{isZh ? 'What it sells' : 'What it sells'}</p>
+              <p className="etreport-kicker">{isZh ? '1. 系统目的' : '1. System Purpose'}</p>
               <h2 className="etreport-section-title font-display font-bold tracking-tight">
-                {isZh ? '卖的不是 dashboard。卖的是运营清晰度。' : 'It does not sell a dashboard. It sells operating clarity.'}
-              </h2>
-            </div>
-            <div className="mt-12 grid gap-5 md:grid-cols-3">
-              {etReportHubValueProps.map((item) => (
-                <article key={item.title.en} className="etreport-value-card">
-                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.title[language]}</h3>
-                  <p>{item.copy[language]}</p>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section id="modules" className="etreport-section py-16 md:py-24">
-            <div className="etreport-section-head">
-              <p className="etreport-kicker">{isZh ? 'Product modules' : 'Product modules'}</p>
-              <h2 className="etreport-section-title font-display font-bold tracking-tight">
-                {isZh ? '从导入，到分析，到下一步行动。' : 'From ingest, to analysis, to next action.'}
-              </h2>
-            </div>
-            <div className="etreport-module-grid mt-12">
-              {etReportHubModules.map((item) => (
-                <article key={item.title} className="etreport-module-card">
-                  <h3 className="font-display text-3xl font-bold tracking-tight">{item.title}</h3>
-                  <p>{item.copy[language]}</p>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section id="skill-proof" className="etreport-section py-16 md:py-24">
-            <div className="etreport-section-head">
-              <p className="etreport-kicker">{isZh ? 'Skill proof' : 'Skill proof'}</p>
-              <h2 className="etreport-section-title font-display font-bold tracking-tight">
-                {isZh ? '顺便说，这东西也证明 Eden 真的会 build。' : 'Also — this thing is proof Eden can actually build.'}
+                {isZh ? 'Excel 进来，SQLite 接住，Dashboard 输出判断。' : 'Excel comes in, SQLite holds it, Dashboard turns it into judgment.'}
               </h2>
               <p className="etreport-section-copy">
                 {isZh
-                  ? 'ETReportHub 的重点从来不是“会不会做个页面”。难的是看懂一堆乱七八糟的业务数据、把数据语义理对、做出运营真的肯用的界面，还顺手给以后的 CRM / AI 留了接口。'
-                  : 'ETReportHub was never about “can you make a page.” The hard part is reading a pile of messy business data, getting the data semantics right, building UI operators will actually use, and leaving room for CRM and AI later.'}
+                  ? '这个系统把 Admin 每天上传的 Excel 数据转换成结构化 SQLite 数据库，然后 Dashboard 从数据库读取数据，生成 Daily Report、Weekly Report、Overall Report、Member Analysis 和导出报表。'
+                  : 'This system converts the daily Excel files uploaded by admins into a structured SQLite database. The dashboard then reads from that database to generate Daily, Weekly, Overall, Member Analysis, and export reports.'}
               </p>
             </div>
+          </section>
+
+          <section className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? '当前功能地图' : 'Current Feature Map'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '每个页面都有明确的数据责任。' : 'Every page owns a clear data responsibility.'}
+              </h2>
+            </div>
+            <div className="etreport-table-wrap mt-12">
+              <table className="etreport-system-table">
+                <thead>
+                  <tr>
+                    <th>{isZh ? '模块' : 'Module'}</th>
+                    <th>{isZh ? '核心功能' : 'Core features'}</th>
+                    <th>{isZh ? '关键规则 / 输出' : 'Rules / outputs'}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {featureMap.map(([module, features, rules]) => (
+                    <tr key={module}>
+                      <td><strong>{module}</strong></td>
+                      <td>{features}</td>
+                      <td>{rules}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="rules" className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? '当前业务规则' : 'Current Business Rules'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '这些规则比 UI 表象更重要，不能随意改。' : 'These rules matter more than the UI surface and must not drift.'}
+              </h2>
+            </div>
             <div className="mt-12 grid gap-5 md:grid-cols-2">
-              {etReportHubSkillProof.map((item) => (
-                <article key={item.title.en} className="etreport-proof-card">
-                  <p className="etreport-card-eyebrow">{item.title[language]}</p>
-                  <p>{item.copy[language]}</p>
+              {businessRules.map(([title, body]) => (
+                <article key={title} className="etreport-proof-card">
+                  <p className="etreport-card-eyebrow">{title}</p>
+                  <p>{body}</p>
                 </article>
               ))}
             </div>
@@ -2921,49 +3743,223 @@ const ETReportHubFullPage: React.FC<{
 
           <section className="etreport-section py-16 md:py-24">
             <div className="etreport-section-head">
-              <p className="etreport-kicker">{isZh ? 'Who it is for' : 'Who it is for'}</p>
+              <p className="etreport-kicker">{isZh ? 'Daily Upload Flow' : 'Daily Upload Flow'}</p>
               <h2 className="etreport-section-title font-display font-bold tracking-tight">
-                {isZh ? '适合还在用 Excel 扛运营复杂度的团队。' : 'For teams still using Excel to carry operational complexity.'}
+                {isZh ? '日常导入只守住两个边界。' : 'Daily import keeps two boundaries clean.'}
               </h2>
             </div>
-            <div className="mt-12 grid gap-5 md:grid-cols-3">
-              {etReportHubAudience.map((item) => (
-                <article key={item.title.en} className="etreport-audience-card">
-                  <h3 className="font-display text-3xl font-bold tracking-tight">{item.title[language]}</h3>
-                  <p>{item.copy[language]}</p>
+            <div className="etreport-table-wrap mt-12">
+              <table className="etreport-system-table">
+                <thead>
+                  <tr>
+                    <th>{isZh ? '层' : 'Layer'}</th>
+                    <th>{isZh ? '每天上传时发生什么' : 'What happens on daily upload'}</th>
+                    <th>{isZh ? '为什么需要' : 'Why it matters'}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {dailyUpload.map(([layer, action, why]) => (
+                    <tr key={layer}>
+                      <td><strong>{layer}</strong></td>
+                      <td>{action}</td>
+                      <td>{why}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? '运营闭环' : 'Operating Loop'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '从每日上传到 campaign 下载。' : 'From daily upload to campaign-ready exports.'}
+              </h2>
+            </div>
+            <div className="etreport-table-wrap mt-12">
+              <table className="etreport-system-table">
+                <thead>
+                  <tr>
+                    <th>{isZh ? '步骤' : 'Step'}</th>
+                    <th>{isZh ? '操作' : 'Action'}</th>
+                    <th>{isZh ? '系统反馈' : 'System response'}</th>
+                    <th>{isZh ? '下一步' : 'Next action'}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {operatingLoop.map(([step, action, response, next]) => (
+                    <tr key={step}>
+                      <td><strong>{step}</strong></td>
+                      <td>{action}</td>
+                      <td>{response}</td>
+                      <td>{next}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? '系统架构总览图' : 'System Architecture Flow'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '上传、存储、报表和导出的完整数据流。' : 'Full data flow across upload, storage, reporting, and export.'}
+              </h2>
+            </div>
+            <div className="etreport-flow-board mt-12">
+              {[
+                ['01', isZh ? '输入' : 'Input', isZh ? 'Admin 上传 Excel，系统优先走本地 API；没有后端时才落到浏览器 fallback。' : 'Admins upload Excel files. The system prefers the local API and uses browser fallback only when needed.'],
+                ['02', 'Transaction', isZh ? '按 brand_id + transaction_id 叠加 / 更新，重复上传不会重复计算。' : 'Append/upsert by brand_id + transaction_id so repeated uploads do not double count.'],
+                ['03', 'Customer', isZh ? 'Customer 是 Lifetime；更新当前会员状态，并按 date_to 保留月度趋势快照。' : 'Customer is Lifetime; update current member state and keep monthly trend snapshots by date_to.'],
+                ['04', isZh ? '输出' : 'Output', isZh ? 'SQLite 与 dashboard_cache 汇总后，供 Dashboard、分析页和 Excel 导出使用。' : 'SQLite plus dashboard_cache feed the Dashboard, analysis pages, and Excel export.'],
+                ['05', isZh ? '维护' : 'Maintenance', isZh ? '每月跑 tier_data.py，把 6 个月以上旧行标记为 warm；查询与导出仍看全表。' : 'Run tier_data.py monthly to mark rows older than 6 months as warm; queries and exports still see the full table.'],
+              ].map(([step, title, body]) => (
+                <article key={step} className="etreport-flow-node">
+                  <span>{step}</span>
+                  <h3>{title}</h3>
+                  <p>{body}</p>
                 </article>
               ))}
+            </div>
+          </section>
+
+          <section className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? '完整节点图' : 'Complete Node Map'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '把原始 System Flow 的节点完整放回页面。' : 'The original System Flow nodes, kept intact in Eden’s layout.'}
+              </h2>
+              <p className="etreport-section-copy">
+                {isZh
+                  ? '这张 map 不是 UI 装饰，而是系统边界：哪些数据可以叠加、哪些数据只能覆盖、哪些地方做转换、哪些输出必须可审计。'
+                  : 'This map is not decoration. It defines the system boundary: what can append, what must overwrite, where conversion happens, and which outputs must remain auditable.'}
+              </p>
+            </div>
+            <div className="etreport-node-map mt-12">
+              {completeNodeMap.map((group) => (
+                <article key={group.label} className={`etreport-node-column etreport-node-column-${group.tone}`}>
+                  <div className="etreport-node-column-head">
+                    <span>{group.label}</span>
+                    <h3>{group.title}</h3>
+                  </div>
+                  <div className="etreport-node-list">
+                    {group.nodes.map(([step, title, body]) => (
+                      <div key={`${group.label}-${step}`} className="etreport-node-item">
+                        <span className="etreport-node-step">{step}</span>
+                        <div>
+                          <h4>{title}</h4>
+                          <p>{body}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? '流程细节' : 'Flow Details'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '每个分支的实际处理规则。' : 'Processing rules for each branch.'}
+              </h2>
+            </div>
+            <div className="etreport-module-grid mt-12">
+              {flowBranches.map(([title, body]) => (
+                <article key={title} className="etreport-module-card">
+                  <h3 className="font-display text-3xl font-bold tracking-tight">{title}</h3>
+                  <p>{body}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? 'Convert 发生在哪里' : 'Where Convert Happens'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? 'Excel 原始字段进入 SQLite 前会先被标准化。' : 'Raw Excel fields are normalized before entering SQLite.'}
+              </h2>
+            </div>
+            <div className="etreport-table-wrap mt-12">
+              <table className="etreport-system-table">
+                <thead>
+                  <tr>
+                    <th>{isZh ? '转换内容' : 'Conversion'}</th>
+                    <th>{isZh ? '位置' : 'Location'}</th>
+                    <th>{isZh ? '说明' : 'Notes'}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {convertRows.map(([conversion, location, notes]) => (
+                    <tr key={conversion}>
+                      <td><strong>{conversion}</strong></td>
+                      <td><code>{location}</code></td>
+                      <td>{notes}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </section>
 
           <section className="etreport-section py-16 md:py-24">
             <div className="etreport-faq-panel">
               <div>
-                <p className="etreport-kicker">{isZh ? 'Questions' : 'Questions'}</p>
+                <p className="etreport-kicker">{isZh ? 'SQLite + Win Loss' : 'SQLite + Win Loss'}</p>
                 <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
-                  {isZh ? '客户会问的问题，先回答。' : 'Answer the buyer questions first.'}
+                  {isZh ? '主表、分层存储和核心公式。' : 'Main tables, tiered storage, and the core formula.'}
                 </h2>
+                <p>
+                  {isZh
+                    ? '默认 tier=hot；scripts/tier_data.py 把 6 个月以上旧数据标记为 warm。所有查询/导出默认看全表，行为不变，为将来上云的分区/压缩预留。'
+                    : 'Default tier=hot; scripts/tier_data.py marks rows older than 6 months as warm. All queries/exports read the full table by default, preserving behavior while preparing for future cloud partitioning/compression.'}
+                </p>
               </div>
               <div className="etreport-faq-list">
-                {etReportHubFaq.map((item) => (
-                  <article key={item.q.en} className="etreport-faq-item">
-                    <h3 className="font-display text-2xl font-bold tracking-tight">{item.q[language]}</h3>
-                    <p>{item.a[language]}</p>
+                {sqliteTables.map(([table, meaning]) => (
+                  <article key={table} className="etreport-faq-item">
+                    <h3 className="font-display text-2xl font-bold tracking-tight"><code>{table}</code></h3>
+                    <p>{meaning}</p>
                   </article>
                 ))}
+                <article className="etreport-faq-item">
+                  <h3 className="font-display text-2xl font-bold tracking-tight">Company Win Loss = Deposit Total + Withdaw Total</h3>
+                  <p>{isZh ? 'Withdraw 在数据里是负数，所以这里使用加法。Excel 的 Win Loss 只作为后台校验参考。' : 'Withdraw is stored as a negative value, so the formula uses addition. Excel Win Loss is only a backend validation reference.'}</p>
+                </article>
               </div>
+            </div>
+          </section>
+
+          <section className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? '系统优化路线图' : 'System Optimization Roadmap'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '当前瓶颈、已完成优化和仍待处理的真实优先级。' : 'Current bottlenecks, completed work, and live priorities.'}
+              </h2>
+            </div>
+            <div className="mt-12 grid gap-5 md:grid-cols-3">
+              {optimization.map(([title, body]) => (
+                <article key={title} className="etreport-audience-card">
+                  <h3 className="font-display text-3xl font-bold tracking-tight">{title}</h3>
+                  <p>{body}</p>
+                </article>
+              ))}
             </div>
           </section>
 
           <section className="etreport-section pb-20 pt-10">
             <div className="etreport-final-panel">
               <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
-                {isZh ? '如果报表已经影响判断，就该系统化。' : 'If reporting affects decisions, it needs a system.'}
+                {isZh ? '这不是单页说明。它是系统边界。' : 'This is not a one-page explainer. It is the system boundary.'}
               </h2>
               <p>
                 {isZh
-                  ? 'ETReportHub 可以作为产品、顾问服务或内部工具设计案例来谈。重点是把团队每天重复做、容易错、难复盘的运营动作，变成可维护系统。'
-                  : 'ETReportHub can be discussed as a product, consulting direction, or internal-tool design case. The core is turning repeated, error-prone, hard-to-review operations into a maintainable system.'}
+                  ? 'System Flow 的价值是把数据语义、导入规则、报表边界、导出逻辑和未来优化路径写清楚。Eden 站这里只负责把它讲得更清楚、更像一个可对外展示的产品系统。'
+                  : 'The value of System Flow is making data semantics, import rules, report boundaries, export logic, and future optimization paths explicit. This Eden page keeps that logic, but presents it as a public product system.'}
               </p>
               <div className="mt-7 flex flex-wrap gap-5">
                 <a href={salesHref} className="etreport-text-cta">
@@ -3301,6 +4297,7 @@ const PokerFullPage: React.FC<{
 }> = ({ homeHref, projectsHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
   const playUrl = 'https://poker.edentan.site/';
+  const wikiHref = joinBasePath(baseUrl, 'wiki');
 
   return (
     <div className="page-shell etreport-page poker-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
@@ -3340,6 +4337,9 @@ const PokerFullPage: React.FC<{
               <a href="#story" className="etreport-text-cta etreport-text-cta-muted">
                 {isZh ? '看桌上故事' : 'Read the stories'} <span aria-hidden>›</span>
               </a>
+              <a href="#knowledge" className="etreport-text-cta etreport-text-cta-muted">
+                {isZh ? '看知识库' : 'Open the knowledge base'} <span aria-hidden>›</span>
+              </a>
             </div>
           </header>
 
@@ -3374,6 +4374,36 @@ const PokerFullPage: React.FC<{
                   <p>{item.copy[language]}</p>
                 </article>
               ))}
+            </div>
+          </section>
+
+          <section id="knowledge" className="etreport-section py-16 md:py-24">
+            <div className="etreport-section-head">
+              <p className="etreport-kicker">{isZh ? 'Knowledge base' : 'Knowledge base'}</p>
+              <h2 className="etreport-section-title font-display font-bold tracking-tight">
+                {isZh ? '这张牌桌，也是一组可复用 skills。' : 'This table is also a reusable skill archive.'}
+              </h2>
+              <p className="etreport-section-copy">
+                {isZh
+                  ? 'Friday Poker Club 不只是一条游戏链接。它把 Vite、背景音乐、按钮反馈、Firebase lifetime storage 和产品判断，沉淀成以后能继续复用的 skills。'
+                  : 'Friday Poker Club is not only a game link. It turns Vite, background music, button feedback, Firebase lifetime storage, and product judgment into reusable skills for the wider knowledge base.'}
+              </p>
+            </div>
+            <div className="poker-wiki-grid mt-12">
+              {wikiEntries.map((entry) => (
+                <a key={entry.slug} href={joinBasePath(baseUrl, `wiki/${entry.slug}`)} className={`poker-wiki-card ${getWikiToneClassName(entry.slug)}`}>
+                  <WikiEntryVisual entry={entry} language={language} />
+                  <span className="poker-wiki-eyebrow">{entry.eyebrow[language]}</span>
+                  <h3 className="poker-wiki-card-title">{entry.title[language]}</h3>
+                  <p>{entry.summary[language]}</p>
+                  <span className="poker-wiki-link">{isZh ? '打开笔记' : 'Open note'} <span aria-hidden>›</span></span>
+                </a>
+              ))}
+            </div>
+            <div className="mt-8 flex flex-wrap gap-5">
+              <a href={wikiHref} className="etreport-text-cta">
+                {isZh ? '打开知识库总览' : 'Open knowledge index'} <span aria-hidden>›</span>
+              </a>
             </div>
           </section>
 
@@ -3452,6 +4482,469 @@ const PokerFullPage: React.FC<{
               </div>
             </div>
           </section>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+type WikiEntry = (typeof wikiEntries)[number];
+
+const getWikiToneClassName = (slug: WikiEntry['slug']) => `wiki-tone wiki-tone-${slug}`;
+
+const wikiCssIconBySlug: Record<WikiEntry['slug'], CssArtComponent> = {
+  vite: WikiViteCssIcon,
+  'background-music': WikiBackgroundMusicCssIcon,
+  'button-feedback': WikiButtonFeedbackCssIcon,
+  'firebase-lifetime-storage': WikiFirebaseStorageCssIcon,
+  skills: WikiSkillsCssIcon,
+  'rag-flow': WikiRagFlowCssIcon,
+};
+
+const WikiEntryVisual: React.FC<{
+  entry: WikiEntry;
+  language: Language;
+  variant?: 'card' | 'note';
+}> = ({ entry, language, variant = 'card' }) => {
+  const Icon = wikiCssIconBySlug[entry.slug];
+  const baseClassName = variant === 'note' ? 'poker-wiki-note-visual' : 'poker-wiki-visual';
+
+  return (
+    <span className={`${baseClassName} poker-wiki-css-icon`}>
+      <Icon label={entry.title[language]} />
+    </span>
+  );
+};
+
+type SkillDraft = {
+  id: string;
+  sourceSlug: string;
+  title: string;
+  trigger: string;
+  reusableRule: string;
+  procedure: string[];
+  checks: string[];
+  sourceProject: string;
+  antiPatterns: string[];
+  sources: string[];
+  tags: string[];
+  status: 'draft' | 'reviewed' | 'active' | 'retired' | 'superseded';
+  createdAt: string;
+};
+
+const SKILL_DRAFTS_STORAGE_KEY = 'eden-wiki-skill-drafts';
+
+const readStoredSkillDrafts = (): SkillDraft[] => {
+  if (typeof window === 'undefined') return [];
+  try {
+    const raw = window.localStorage.getItem(SKILL_DRAFTS_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+};
+
+const writeStoredSkillDrafts = (drafts: SkillDraft[]) => {
+  if (typeof window === 'undefined') return;
+  try {
+    window.localStorage.setItem(SKILL_DRAFTS_STORAGE_KEY, JSON.stringify(drafts));
+  } catch {
+    // ignore local persistence failures
+  }
+};
+
+const wikiSkillTagsBySlug: Record<string, string[]> = {
+  vite: ['Vite', 'React', 'TypeScript', 'Build loop', 'AI workflow'],
+  'background-music': ['UX', 'Audio', 'Presence', 'Game feel'],
+  'button-feedback': ['UX feedback', 'Microinteraction', 'Realtime UI'],
+  'firebase-lifetime-storage': ['Firebase', 'Realtime state', 'Storage', 'Schema'],
+  skills: ['Knowledge base', 'Skill design', 'Workflow'],
+  'rag-flow': ['RAG', 'Tag registry', 'Knowledge architecture', 'Metadata'],
+};
+
+const wikiSourceProjectBySlug: Record<string, string> = {
+  vite: 'Jiju / Friday Poker Club / Eden Vite apps',
+  'background-music': 'Friday Poker Club',
+  'button-feedback': 'Friday Poker Club',
+  'firebase-lifetime-storage': 'Friday Poker Club',
+  skills: 'Eden Knowledge Base',
+  'rag-flow': 'Eden Knowledge Base',
+};
+
+const wikiAntiPatternsBySlug: Record<string, Record<Language, string[]>> = {
+  vite: {
+    en: [
+      'Treating Vite dev server success as production proof.',
+      'Skipping typecheck because the page appears to work.',
+      'Ignoring broken assets or route/base-path issues until deployment.',
+    ],
+    zh: [
+      '把 Vite dev server 正常当成 production 正确证明。',
+      '因为页面能跑就跳过 typecheck。',
+      '等到部署时才处理 broken assets、route 或 base path 问题。',
+    ],
+  },
+  'background-music': {
+    en: [
+      'Autoplaying sound without visible control.',
+      'Using music as decoration instead of mood support.',
+      'Forgetting to remember the user sound preference.',
+    ],
+    zh: [
+      '没有明显控制入口就自动播放声音。',
+      '把音乐当装饰，而不是支撑场景气氛。',
+      '不记住用户的声音偏好。',
+    ],
+  },
+  'button-feedback': {
+    en: [
+      'Letting a click feel silent after a realtime action.',
+      'Allowing repeated clicks while a remote action is pending.',
+      'Showing no accepted, blocked, or failed state after the action.',
+    ],
+    zh: [
+      '实时动作点了之后没有任何反馈。',
+      '远端动作 pending 时仍允许用户重复点击。',
+      '动作后不显示已接受、被挡住或失败状态。',
+    ],
+  },
+  'firebase-lifetime-storage': {
+    en: [
+      'Persisting everything without cleanup rules.',
+      'Letting game state become scattered flags instead of a schema.',
+      'Treating persistence as only a backend concern.',
+    ],
+    zh: [
+      '什么都持久化，但没有 cleanup 规则。',
+      '让游戏状态散成一堆 flags，而不是形成 schema。',
+      '把持久化只当后端问题，不当产品决策。',
+    ],
+  },
+  skills: {
+    en: [
+      'Saving notes as skills without trigger, procedure, checks, or source.',
+      'Publishing generated skills without user review.',
+      'Mixing raw memory with executable instruction.',
+    ],
+    zh: [
+      '把普通笔记直接当 skill 存，缺少触发场景、步骤、检查和来源。',
+      'AI 生成后不经 user review 就发布 skill。',
+      '把 raw memory 和 executable instruction 混在一起。',
+    ],
+  },
+  'rag-flow': {
+    en: [
+      'Using a vector database as the source of truth.',
+      'Letting tags become uncontrolled hashtags.',
+      'Returning RAG answers without source links or metadata filters.',
+    ],
+    zh: [
+      '把 vector database 当成 source of truth。',
+      '让 tags 变成不受控的 hashtags。',
+      'RAG 回答不带 source links，也不使用 metadata filters。',
+    ],
+  },
+};
+
+const createSkillDraftFromWikiEntry = (entry: WikiEntry, language: Language, sourceHref: string): SkillDraft => {
+  const firstSection = entry.sections[0];
+  const secondSection = entry.sections[1];
+  const procedure = firstSection?.points[language].slice(0, 4) ?? [entry.thesis[language]];
+  const checks = secondSection?.points[language].slice(0, 4) ?? [entry.summary[language]];
+
+  return {
+    id: `${entry.slug}-${Date.now()}`,
+    sourceSlug: entry.slug,
+    title: entry.title[language],
+    trigger: entry.summary[language],
+    reusableRule: entry.thesis[language],
+    procedure,
+    checks,
+    sourceProject: wikiSourceProjectBySlug[entry.slug] ?? 'Eden Knowledge Base',
+    antiPatterns: wikiAntiPatternsBySlug[entry.slug]?.[language] ?? [entry.summary[language]],
+    sources: [sourceHref],
+    tags: wikiSkillTagsBySlug[entry.slug] ?? ['Wiki', 'Reusable skill'],
+    status: 'draft',
+    createdAt: new Date().toISOString(),
+  };
+};
+
+const WikiPage: React.FC<{
+  entry?: WikiEntry;
+  homeHref: string;
+  projectsHref: string;
+  pokerHref: string;
+  baseUrl: string;
+  language: Language;
+  setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
+  theme: Theme;
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ entry, homeHref, projectsHref, pokerHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
+  const isZh = language === 'zh';
+  const wikiHref = joinBasePath(baseUrl, 'wiki');
+  const [skillDrafts, setSkillDrafts] = React.useState<SkillDraft[]>(() => readStoredSkillDrafts());
+  const latestDraft = entry ? skillDrafts.find((draft) => draft.sourceSlug === entry.slug) : undefined;
+  const isSkillsIndex = !entry || entry.slug === 'skills';
+  const highlightSections = entry
+    ? entry.sections.slice(0, 3).map((section) => ({
+        title: section.title[language],
+        point: section.points[language][0],
+      }))
+    : [];
+
+  const handleTurnIntoSkill = () => {
+    if (!entry) return;
+    const sourceHref = joinBasePath(baseUrl, `wiki/${entry.slug}`);
+    const nextDraft = createSkillDraftFromWikiEntry(entry, language, sourceHref);
+    const nextDrafts = [nextDraft, ...skillDrafts.filter((draft) => draft.sourceSlug !== entry.slug)];
+    setSkillDrafts(nextDrafts);
+    writeStoredSkillDrafts(nextDrafts);
+  };
+
+  return (
+    <div className="page-shell etreport-page poker-page wiki-page poker-wiki-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
+      <main className="px-5 py-8 md:px-8 md:py-10">
+        <div className="mx-auto max-w-5xl">
+          <div className="etreport-topbar flex flex-wrap items-center justify-between gap-3">
+            <a href={pokerHref} className="etreport-back-link inline-flex items-center gap-2 text-sm font-medium">
+              <ArrowLeft size={16} />
+              {isZh ? '返回 Poker page' : 'Back to Poker page'}
+            </a>
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
+          </div>
+
+          <header className="etreport-hero poker-wiki-hero py-16 text-center md:py-24">
+            <p className="etreport-kicker mx-auto">
+              {entry ? entry.eyebrow[language] : isZh ? 'Eden Knowledge Base' : 'Eden Knowledge Base'}
+            </p>
+            <h1 className="etreport-title mx-auto mt-5 font-display font-bold tracking-tight">
+              {entry ? entry.title[language] : isZh ? '把项目经验做成可复用知识库。' : 'Turning project experience into reusable knowledge.'}
+            </h1>
+            <p className="etreport-subtitle mx-auto mt-5">
+              {entry
+                ? entry.summary[language]
+                : isZh
+                  ? '这里记录多个项目里真正可复用的东西：Vite 构建经验、声音体验、按钮反馈、Firebase lifetime storage，以及这些东西如何变成 skills。'
+                  : 'A place for reusable knowledge across projects: Vite build practice, sound experience, button feedback, Firebase lifetime storage, and the skills behind them.'}
+            </p>
+            <div className="mt-7 flex flex-wrap justify-center gap-5">
+              <a href={wikiHref} className="etreport-text-cta">
+                {isZh ? '知识库总览' : 'Knowledge index'} <span aria-hidden>›</span>
+              </a>
+              <a href={projectsHref} className="etreport-text-cta etreport-text-cta-muted">
+                {isZh ? '回 Projects' : 'Back to Projects'} <span aria-hidden>›</span>
+              </a>
+              <a href={homeHref} className="etreport-text-cta etreport-text-cta-muted">
+                {isZh ? '回主页' : 'Back home'} <span aria-hidden>›</span>
+              </a>
+            </div>
+          </header>
+
+          {entry ? (
+            <article className={`poker-wiki-note ${getWikiToneClassName(entry.slug)}`}>
+              <div className="poker-wiki-note-lead">
+                <WikiEntryVisual entry={entry} language={language} variant="note" />
+                <div>
+                  <p className="etreport-kicker">{isZh ? 'Core thesis' : 'Core thesis'}</p>
+                  <blockquote className="wiki-quote-bar">
+                    <p>{entry.thesis[language]}</p>
+                  </blockquote>
+                </div>
+              </div>
+              <div className="wiki-skill-action">
+                <div>
+                  <p className="etreport-kicker">{isZh ? 'Skill candidate' : 'Skill candidate'}</p>
+                  <h3 className="font-display text-2xl font-bold tracking-tight">
+                    {isZh ? '把这篇 note 变成 Skill Card' : 'Turn this note into a Skill Card'}
+                  </h3>
+                  <p>
+                    {isZh
+                      ? '生成 draft，先看重点字段，再决定要不要保留。'
+                      : 'Create a draft. Review the key fields before keeping it.'}
+                  </p>
+                </div>
+                <button type="button" className="wiki-skill-button" onClick={handleTurnIntoSkill}>
+                  {latestDraft ? (isZh ? '重新生成 Skill' : 'Regenerate skill') : isZh ? 'Turn into Skill' : 'Turn into Skill'}
+                </button>
+              </div>
+              {latestDraft && (
+                <div className="wiki-skill-preview">
+                  <div className="wiki-skill-preview-head">
+                    <p className="etreport-kicker">{isZh ? 'Draft Skill Card' : 'Draft Skill Card'}</p>
+                    <span>{latestDraft.status}</span>
+                  </div>
+                  <h3 className="font-display text-3xl font-bold tracking-tight">{latestDraft.title}</h3>
+                  <div className="wiki-skill-summary-grid">
+                    <p className="wiki-skill-trigger">
+                      <strong>{isZh ? '触发场景' : 'Trigger'}</strong>
+                      {latestDraft.trigger}
+                    </p>
+                    <p className="wiki-skill-trigger">
+                      <strong>{isZh ? '可复用规则' : 'Reusable rule'}</strong>
+                      {latestDraft.reusableRule ?? entry.thesis[language]}
+                    </p>
+                    <p className="wiki-skill-trigger">
+                      <strong>{isZh ? '来源项目' : 'Source project'}</strong>
+                      {latestDraft.sourceProject ?? wikiSourceProjectBySlug[entry.slug] ?? 'Eden Knowledge Base'}
+                    </p>
+                  </div>
+                  <div className="wiki-skill-preview-grid">
+                    <div>
+                      <h4>{isZh ? '执行步骤' : 'Procedure'}</h4>
+                      <ul>
+                        {latestDraft.procedure.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <h4>{isZh ? '检查方式' : 'Checks'}</h4>
+                      <ul>
+                        {latestDraft.checks.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <h4>{isZh ? '反模式' : 'Anti-patterns'}</h4>
+                      <ul>
+                        {(latestDraft.antiPatterns ?? wikiAntiPatternsBySlug[entry.slug]?.[language] ?? []).map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <h4>{isZh ? '来源链接' : 'Sources'}</h4>
+                      <ul>
+                        {latestDraft.sources.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="wiki-skill-tags">
+                    {latestDraft.tags.map((tag) => (
+                      <span key={tag}>{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              <div className="wiki-key-points">
+                <p className="etreport-kicker">{isZh ? 'Key points' : 'Key points'}</p>
+                <div className="wiki-key-point-grid">
+                  {highlightSections.map((section) => (
+                    <section key={section.title} className="wiki-key-point-card">
+                      <h3 className="font-display text-2xl font-bold tracking-tight">{section.title}</h3>
+                      <p>{section.point}</p>
+                    </section>
+                  ))}
+                </div>
+              </div>
+              <details className="wiki-detail-drawer">
+                <summary>{isZh ? '展开完整笔记' : 'Show full note'}</summary>
+                <div className="poker-wiki-note-sections">
+                  {entry.sections.map((section) => (
+                    <section key={section.title.en} className="poker-wiki-note-section">
+                      <h3 className="font-display text-2xl font-bold tracking-tight">{section.title[language]}</h3>
+                      <ul>
+                        {section.points[language].map((point) => (
+                          <li key={point}>{point}</li>
+                        ))}
+                      </ul>
+                    </section>
+                  ))}
+                </div>
+              </details>
+              {isSkillsIndex && skillDrafts.length > 0 && (
+                <div className="wiki-skill-library">
+                  <p className="etreport-kicker">{isZh ? 'Local skill drafts' : 'Local skill drafts'}</p>
+                  <h2 className="font-display text-4xl font-bold tracking-tight md:text-5xl">
+                    {isZh ? '你已经生成的 Skill Cards。' : 'Skill Cards generated from the wiki.'}
+                  </h2>
+                  <div className="wiki-skill-library-grid">
+                    {skillDrafts.map((draft) => (
+                      <article key={draft.id} className="wiki-skill-library-card">
+                        <div className="wiki-skill-preview-head">
+                          <p>{draft.sourceSlug}</p>
+                          <span>{draft.status}</span>
+                        </div>
+                        <h3 className="font-display text-2xl font-bold tracking-tight">{draft.title}</h3>
+                        <p><strong>{isZh ? '触发场景：' : 'Trigger: '}</strong>{draft.trigger}</p>
+                        <p><strong>{isZh ? '来源项目：' : 'Source project: '}</strong>{draft.sourceProject ?? wikiSourceProjectBySlug[draft.sourceSlug] ?? 'Eden Knowledge Base'}</p>
+                        <div className="wiki-skill-tags">
+                          {draft.tags.map((tag) => (
+                            <span key={tag}>{tag}</span>
+                          ))}
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </article>
+          ) : (
+            <section className="etreport-section pb-20">
+              <div className="poker-wiki-index-panel">
+                <div>
+                  <p className="etreport-kicker">{isZh ? 'Wiki operating model' : 'Wiki operating model'}</p>
+                  <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
+                    {isZh ? '从一次 build，变成长期记忆。' : 'From one build into long-term memory.'}
+                  </h2>
+                </div>
+                <p>
+                  {isZh
+                    ? '这不是把项目写成展示页，而是把“学到什么、为什么重要、下次怎么复用”存成可回看的页面。以后每个项目都可以这样变成自己的知识库。'
+                    : 'This is not just a project showcase. It stores what was learned, why it matters, and how to reuse it next time. Every future project can become part of the same personal knowledge base.'}
+                </p>
+              </div>
+              <div className="poker-wiki-grid mt-12">
+                {wikiEntries.map((item) => (
+                  <a key={item.slug} href={joinBasePath(baseUrl, `wiki/${item.slug}`)} className={`poker-wiki-card ${getWikiToneClassName(item.slug)}`}>
+                    <WikiEntryVisual entry={item} language={language} />
+                    <span className="poker-wiki-eyebrow">{item.eyebrow[language]}</span>
+                    <h3 className="poker-wiki-card-title">{item.title[language]}</h3>
+                    <p>{item.summary[language]}</p>
+                    <span className="poker-wiki-link">{isZh ? '打开笔记' : 'Open note'} <span aria-hidden>›</span></span>
+                  </a>
+                ))}
+              </div>
+              {isSkillsIndex && skillDrafts.length > 0 && (
+                <div className="wiki-skill-library">
+                  <p className="etreport-kicker">{isZh ? 'Local skill drafts' : 'Local skill drafts'}</p>
+                  <h2 className="font-display text-4xl font-bold tracking-tight md:text-5xl">
+                    {isZh ? '你已经生成的 Skill Cards。' : 'Skill Cards generated from the wiki.'}
+                  </h2>
+                  <div className="wiki-skill-library-grid">
+                    {skillDrafts.map((draft) => (
+                      <article key={draft.id} className="wiki-skill-library-card">
+                        <div className="wiki-skill-preview-head">
+                          <p>{draft.sourceSlug}</p>
+                          <span>{draft.status}</span>
+                        </div>
+                        <h3 className="font-display text-2xl font-bold tracking-tight">{draft.title}</h3>
+                        <p><strong>{isZh ? '触发场景：' : 'Trigger: '}</strong>{draft.trigger}</p>
+                        <p><strong>{isZh ? '来源项目：' : 'Source project: '}</strong>{draft.sourceProject ?? wikiSourceProjectBySlug[draft.sourceSlug] ?? 'Eden Knowledge Base'}</p>
+                        <div className="wiki-skill-tags">
+                          {draft.tags.map((tag) => (
+                            <span key={tag}>{tag}</span>
+                          ))}
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </section>
+          )}
         </div>
       </main>
     </div>
@@ -5421,7 +6914,7 @@ const brandGuidePalette = [
 
 const brandGuideAccent = [
   {
-    name: { en: 'Eden Mint', zh: 'Eden Mint' },
+    name: { en: 'Signal Mint', zh: 'Signal Mint' },
     hex: { light: '#7bdcb5', dark: '#dc6f82' },
     role: { en: 'Insight signal', zh: '洞察信号' },
     usage: {
@@ -5430,7 +6923,7 @@ const brandGuideAccent = [
     },
   },
   {
-    name: { en: 'Eden Amber', zh: 'Eden Amber' },
+    name: { en: 'Signal Amber', zh: 'Signal Amber' },
     hex: { light: '#ffa340ed', dark: '#6fa4f0e6' },
     role: { en: 'Action signal', zh: '行动信号' },
     usage: {
@@ -5444,15 +6937,15 @@ const brandGuideTypography = [
   {
     name: 'Space Grotesk',
     role: { en: 'Display voice', zh: '标题声线' },
-    sample: { en: 'I build systems from chaos.', zh: 'I build systems from chaos.' },
+    sample: { en: 'Build order from complexity.', zh: 'Build order from complexity.' },
     detail: { en: 'Use for hero headlines, section titles, and short high-signal statements.', zh: '用于首屏标题、章节标题和短而有力的判断句。' },
   },
   {
     name: 'Inter',
     role: { en: 'Reading voice', zh: '阅读声线' },
     sample: {
-      en: 'Product growth, AI workflows, digital strategy, and long-form build narratives from Malaysia.',
-      zh: 'Product growth, AI workflows, digital strategy, and long-form build narratives from Malaysia.',
+      en: 'Product growth, AI workflows, digital strategy, and long-form build narratives.',
+      zh: 'Product growth, AI workflows, digital strategy, and long-form build narratives.',
     },
     detail: { en: 'Use for body copy and interface text. Keep it direct, plain, and easy to scan.', zh: '用于正文和界面文字。保持直接、简单、容易扫描。' },
   },
@@ -5499,12 +6992,12 @@ const brandGuideVoicePairs = [
   {
     avoid: { en: 'I am good at marketing and AI.', zh: '我很擅长营销和 AI。' },
     prefer: {
-      en: 'For teams with messy product ideas or scattered workflows, Eden turns the signals into a usable system.',
-      zh: '当产品想法很散、流程很乱时，Eden 把线索整理成能使用的系统。',
+      en: 'For teams with messy product ideas or scattered workflows, turn the signals into a usable system.',
+      zh: '当产品想法很散、流程很乱时，把线索整理成能使用的系统。',
     },
   },
   {
-    avoid: { en: 'A visionary personal brand.', zh: '一个有远见的个人品牌。' },
+    avoid: { en: 'A visionary brand.', zh: '一个有远见的品牌。' },
     prefer: {
       en: 'A builder archive for product growth, AI workflows, digital strategy, and long-form build notes.',
       zh: '一个记录产品增长、AI 工作流、数字策略和长期构建笔记的 builder archive。',
@@ -5529,8 +7022,8 @@ const brandGuideUseCases = [
     copy: { en: 'Show the problem, system, decisions, and output. Do not only show screenshots.', zh: '展示问题、系统、判断和产出。不要只放截图。' },
   },
   {
-    title: { en: 'Life OS', zh: 'Life OS' },
-    copy: { en: 'Keep the game feeling, but let the content breathe like a premium product page.', zh: '保留游戏感，但让内容像高级产品页一样有呼吸。' },
+    title: { en: 'System Pages', zh: 'System Pages' },
+    copy: { en: 'Keep the concept clear, but let the content breathe like a focused product page.', zh: '保留概念清晰度，但让内容像聚焦的产品页一样有呼吸。' },
   },
   {
     title: { en: 'Build Notes', zh: 'Build Notes' },
@@ -5538,12 +7031,39 @@ const brandGuideUseCases = [
   },
 ] as const;
 
+const brandGuideCategories = [
+  {
+    name: { en: 'Global brand system', zh: '全站品牌系统' },
+    scope: { en: 'Use across the site', zh: '全站可用' },
+    items: {
+      en: ['Design principles', 'Color system', 'Typography', 'Layout rhythm', 'Motion language'],
+      zh: ['设计原则', '颜色系统', '字体层级', '版面节奏', '动效语言'],
+    },
+  },
+  {
+    name: { en: 'Content voice', zh: '内容语气' },
+    scope: { en: 'Essays, projects, wiki notes', zh: '文章、项目、知识库适用' },
+    items: {
+      en: ['Reader-first copy', 'Proof through builds', 'Clear next action'],
+      zh: ['读者视角文案', '用 build 当证据', '清楚的下一步'],
+    },
+  },
+  {
+    name: { en: 'Story content', zh: '故事内容' },
+    scope: { en: 'Use for story logs', zh: '用于故事记录' },
+    items: {
+      en: ['True moments', 'Short names', 'People-first narration'],
+      zh: ['真实时刻', '短称呼', '先写人再写事'],
+    },
+  },
+] as const;
+
 const brandGuideStoryRules = [
   {
     title: { en: 'Log the moment, not the score', zh: '记录时刻，不是战绩' },
     copy: {
-      en: 'A story log exists to remember the fun, not to brag about wins. The pot size doesn’t matter — whether the night is worth retelling does.',
-      zh: '故事是为了记住好玩的瞬间，不是炫耀输赢。赢多少不重要，那一晚值不值得再讲一次，才重要。',
+      en: 'A story log exists to remember what is worth retelling, not to prove a result. The human moment matters more than the outcome.',
+      zh: '故事是为了记住值得再讲的瞬间，不是证明结果。人的那一刻，比结果更重要。',
     },
   },
   {
@@ -5556,50 +7076,50 @@ const brandGuideStoryRules = [
   {
     title: { en: 'Nicknames, not epic titles', zh: '用小名，别中二' },
     copy: {
-      en: 'In the narrative use short nicknames — Cap, Lucky, Prince / 团长、罩仔、太子 — the same in both languages. Save the full character titles for the avatar cards.',
-      zh: '正文里用短小名——团长、罩仔、太子 / Cap、Lucky、Prince，中英一致。完整称号留给角色卡，别在故事里堆「被罩住的王」这种。',
+      en: 'Use short, natural names in the narrative. Save longer character labels or formal titles for profile cards.',
+      zh: '正文里用自然短称呼。较长的人物标签或正式称号，留给 profile card。',
     },
   },
   {
     title: { en: 'Short, but cinematic', zh: '短，但有画面' },
     copy: {
-      en: 'One beat per paragraph. Let the key moment land — a river card, an all-in — and cut everything else to the bone.',
-      zh: '一段讲清一件事。让关键的那一下（一张 river、一次 all-in）落地，其余删到不能再删。',
+      en: 'One beat per paragraph. Let the key moment land, then cut everything else to the bone.',
+      zh: '一段讲清一件事。让关键那一下落地，其余删到不能再删。',
     },
   },
   {
-    title: { en: 'People first, cards second', zh: '先有人，再有牌' },
+    title: { en: 'People first, details second', zh: '先有人，再有细节' },
     copy: {
-      en: 'The people at the table are the story. Readers should know the crew first; the hand only matters because of who is holding it.',
-      zh: '桌上的人本身就是故事。先让读者认得这群人，那手牌才有意义。',
+      en: 'People carry the story. The detail only matters when the reader understands who it happened to.',
+      zh: '人本身才撑起故事。读者先理解是谁遇到这件事，细节才有意义。',
     },
   },
   {
-    title: { en: 'Not a hand history', zh: '不是 hand history' },
+    title: { en: 'Not a technical report', zh: '不是技术报告' },
     copy: {
-      en: 'No jargon dumps, no solver review, no flexing. It should read like a friend retelling the night, not a textbook.',
-      zh: '不堆术语、不写成复盘、不自夸。读起来像朋友在讲那晚，而不是教科书。',
+      en: 'No jargon dumps, no over-explaining, no flexing. It should read like a real moment being retold, not a textbook.',
+      zh: '不堆术语、不解释过头、不自夸。读起来像真实时刻被重新讲出来，而不是教科书。',
     },
   },
 ] as const;
 
 const brandGuideStoryExample = {
   avoid: {
-    en: 'The Covered King shoved his straight all-in against The Reluctant Prince’s three Aces.',
-    zh: '被罩住的王把顺子 all-in 推向不想继承的太子的三条 A。',
+    en: 'The protagonist entered a dramatic conflict with the opposing archetype.',
+    zh: '主角与对立原型进入戏剧性冲突。',
   },
   prefer: {
-    en: 'Lucky shoved his straight all-in against Prince’s three Aces.',
-    zh: '罩仔顺子直接 all-in，推向太子手里的三条 A。',
+    en: 'He made the move. Everyone at the table went quiet.',
+    zh: '他做了那个决定。桌边突然安静下来。',
   },
 } as const;
 
 const brandGuideMotionRules = [
   {
-    title: { en: 'Slow ambient motion', zh: '慢速环境微动' },
+    title: { en: 'Object motion first', zh: '先动实体物件' },
     copy: {
-      en: 'Use motion like the current homepage background: slow, atmospheric, and easy to ignore until the reader notices it. It should make the page feel alive without asking for attention.',
-      zh: '动效参考当前首页背景：慢、轻、有空气感。读者可以不注意它，但注意到时会觉得页面是活的，而不是被打断。',
+      en: 'Use visible object motion: clouds drift, small objects bob, and the user can see what is moving. Avoid background fade, ambient glow, scan lines, and card-level color fades.',
+      zh: '动效使用可见物件运动：云会飘，小物件会晃，用户一眼看得出是什么在动。避免 background fade、ambient glow、扫描线和 card 内彩色 fade。',
     },
   },
   {
@@ -5619,8 +7139,39 @@ const brandGuideMotionRules = [
   {
     title: { en: 'Preserve reduced motion', zh: '保留 reduced motion' },
     copy: {
-      en: 'Every ambient or character animation should still respect `prefers-reduced-motion`. The static state must remain composed, not broken.',
-      zh: '所有环境或角色动效都要尊重 `prefers-reduced-motion`。静止状态也必须是完整画面，而不是坏掉的动画中间帧。',
+      en: 'Every object, character, or icon animation should still respect `prefers-reduced-motion`. The static state must remain composed, not broken.',
+      zh: '所有物件、角色或 icon 动效都要尊重 `prefers-reduced-motion`。静止状态也必须是完整画面，而不是坏掉的动画中间帧。',
+    },
+  },
+] as const;
+
+const brandGuideCssRules = [
+  {
+    title: { en: 'No background or card fade', zh: '不要 background / card fade' },
+    copy: {
+      en: 'Page backgrounds and cards stay solid. Do not use ambient glow, scanning lines, background fade, or colored gradient fades inside cards.',
+      zh: '页面背景和 card 保持纯色。不要用 ambient glow、扫描线、background fade，或 card 内彩色渐层 fade。',
+    },
+  },
+  {
+    title: { en: 'Solid category language', zh: '分类用实色系统' },
+    copy: {
+      en: 'Use solid rails, dots, chips, borders, and CSS title icons for categorization. Color should classify, not decorate.',
+      zh: '分类用 solid 色条、色点、chip、border 和 CSS title icon。颜色负责分类，不负责装饰。',
+    },
+  },
+  {
+    title: { en: 'Rails belong on outlines', zh: '线条放在 box outline' },
+    copy: {
+      en: 'Category rails should sit on the box outline. Keep the middle solid; fade only the head and tail when the line needs a softer finish.',
+      zh: '分类线放在 box outline 上。中段保持 solid；需要柔和收尾时，只让线的头尾渐隐。',
+    },
+  },
+  {
+    title: { en: 'CSS icons over emoji', zh: 'Title icon 用 CSS' },
+    copy: {
+      en: 'Use small CSS shapes beside titles when a page needs better scanning. Do not use emoji as the default title icon system.',
+      zh: '需要更好扫描时，用小型 CSS shape 放在 title 旁边。不要默认用 emoji 做标题 icon 系统。',
     },
   },
 ] as const;
@@ -5660,20 +7211,20 @@ const BrandGuideFullPage: React.FC<{
 
           <header className="brand-guide-hero py-16 text-center md:py-24">
             <p className="brand-guide-kicker mx-auto">
-              {isZh ? 'Brand Operating Guide' : 'Brand Operating Guide'}
+              {isZh ? 'Brand Guide' : 'Brand Guide'}
             </p>
             <h1 className="brand-guide-hero-title mx-auto mt-5 font-display font-bold tracking-tight">
-              {isZh ? 'Eden Tan 品牌操作系统' : 'Eden Tan Brand System'}
+              {isZh ? '品牌指南' : 'Brand Guide'}
             </h1>
             <p className="brand-guide-hero-subtitle mx-auto mt-5">
               {isZh
-                ? '用 Apple 式清晰度，承载 Eden 的系统思考。'
-                : 'Apple-level clarity. Eden-level systems thinking.'}
+                ? '用清楚、稳定、可复用的规则管理页面体验。'
+                : 'Clear, stable, reusable rules for the page experience.'}
             </p>
             <p className="brand-guide-hero-copy mx-auto mt-5">
               {isZh
-                ? '这个品牌不是普通履历，也不是炫技作品集。它要让读者在很短时间内知道：混乱在哪里，Eden 如何把它变成产品、策略、内容和可复用系统。'
-                : 'This is not a normal CV or a portfolio of proof. It helps a reader quickly understand where the chaos is, and how Eden turns it into products, strategy, content, and reusable systems.'}
+                ? '这份 guide 用来统一页面的视觉、结构、文案、动效和 CSS 使用边界。每个规则都应该减少混乱，让读者更快理解重点。'
+                : 'This guide aligns visual direction, structure, copy, motion, and CSS boundaries. Every rule should reduce confusion and help the reader understand the point faster.'}
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-5">
               <a href="#brand-principles" className="brand-guide-cta">
@@ -5690,22 +7241,49 @@ const BrandGuideFullPage: React.FC<{
               <div>
                 <p className="brand-guide-signature-label">{isZh ? 'Core line' : 'Core line'}</p>
                 <p className="font-display text-3xl font-bold tracking-tight md:text-5xl">
-                  I build systems from chaos.
+                  Build order from complexity.
                 </p>
               </div>
             </div>
           </header>
 
+          <section className="brand-guide-classification py-12 md:py-16" aria-labelledby="brand-guide-classification-title">
+            <div className="brand-guide-section-head">
+              <p className="brand-guide-kicker">{isZh ? 'Guide map' : 'Guide map'}</p>
+              <h2 id="brand-guide-classification-title" className="brand-guide-section-title font-display font-bold tracking-tight">
+                {isZh ? '先分清：全站规则，还是页面专属。' : 'Separate global rules from page-specific rules.'}
+              </h2>
+              <p className="brand-guide-section-copy">
+                {isZh
+                  ? 'Brand guide 不是所有规则都同一层级。全站系统负责视觉、结构和语气；故事内容规则只用于需要叙事的页面。'
+                  : 'Not every brand rule lives at the same level. The global system handles visuals, structure, and voice. Story rules only apply to pages that need narrative writing.'}
+              </p>
+            </div>
+            <div className="brand-guide-category-grid mt-10">
+              {brandGuideCategories.map((category, index) => (
+                <article key={category.name.en} className={`brand-guide-category-card brand-guide-category-${index + 1}`}>
+                  <p className="brand-guide-card-index">{category.scope[language]}</p>
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{category.name[language]}</h3>
+                  <ul>
+                    {category.items[language].map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </section>
+
           <section id="brand-principles" className="brand-guide-section py-16 md:py-24">
             <div className="brand-guide-section-head">
               <p className="brand-guide-kicker">{isZh ? '01 / Design logic' : '01 / Design logic'}</p>
               <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
-                {isZh ? 'Apple 的清晰度，Eden 的系统感。' : 'Apple clarity, Eden systems.'}
+                {isZh ? '先管理注意力，再管理风格。' : 'Manage attention before style.'}
               </h2>
               <p className="brand-guide-section-copy">
                 {isZh
-                  ? '参考 Apple 的不是外观，而是注意力管理：少说一点，说准一点，让每个区块只负责一个任务。Eden 的部分，是把混乱、行为、策略和产品思考放进这个清晰框架里。'
-                  : 'The Apple reference is not the look. It is attention management: say less, say it clearly, and let each section do one job. The Eden layer is the systems lens for chaos, behavior, strategy, and product thinking.'}
+                  ? '设计重点不是模仿某种外观，而是让注意力有秩序：少说一点，说准一点，让每个区块只负责一个任务。'
+                  : 'The goal is not to imitate a look. The goal is attention order: say less, say it clearly, and let each section do one job.'}
               </p>
             </div>
             <div className="brand-guide-principle-grid mt-12 grid gap-4 md:grid-cols-3">
@@ -5770,8 +7348,8 @@ const BrandGuideFullPage: React.FC<{
               </h2>
               <p className="brand-guide-section-copy">
                 {isZh
-                  ? 'Apple 式页面不靠很多字体大小制造高级感，而是靠稳定比例。Eden 的页面也应该少用字号，靠标题、正文、标签三层完成阅读秩序。'
-                  : 'Apple-style pages do not feel premium because of many font sizes. They feel premium because the scale is disciplined. Eden should use a clear display, body, and system-label stack.'}
+                  ? '高级感不靠很多字体大小，而是靠稳定比例。页面应该少用字号，靠标题、正文、标签三层完成阅读秩序。'
+                  : 'A premium page does not need many font sizes. It needs a disciplined scale: display, body, and system labels.'}
               </p>
             </div>
             <div className="mt-12 grid gap-5 md:grid-cols-3">
@@ -5804,8 +7382,8 @@ const BrandGuideFullPage: React.FC<{
               </h2>
               <p className="brand-guide-section-copy">
                 {isZh
-                  ? '文案先接住读者处境，再讲 Eden 的判断，最后给可行动入口。少用连续的 “I”。多用 “For founders...”, “When the work feels messy...”, “This is where...” 这类读者视角句式。'
-                  : 'Copy should receive the reader’s situation first, then show Eden’s judgment, then offer a clear next action. Avoid stacked “I” statements. Prefer reader-led lines like “For founders...”, “When the work feels messy...”, and “This is where...”.'}
+                  ? '文案先接住读者处境，再给判断，最后给可行动入口。少用连续的 “I”。多用 “For teams...”, “When the work feels messy...”, “This is where...” 这类读者视角句式。'
+                  : 'Copy should receive the reader’s situation first, then give judgment, then offer a clear next action. Avoid stacked “I” statements. Prefer reader-led lines like “For teams...”, “When the work feels messy...”, and “This is where...”.'}
               </p>
             </div>
             <div className="mt-12 space-y-4">
@@ -5848,14 +7426,14 @@ const BrandGuideFullPage: React.FC<{
 
           <section id="brand-story" className="brand-guide-section py-16 md:py-24">
             <div className="brand-guide-section-head">
-              <p className="brand-guide-kicker">{isZh ? '06 / Story style' : '06 / Story style'}</p>
+              <p className="brand-guide-kicker">{isZh ? '06 / Story content' : '06 / Story content'}</p>
               <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
-                {isZh ? '故事是用来记住好玩的，不是用来炫耀的。' : 'Stories are for remembering the fun, not for flexing.'}
+                {isZh ? '故事只写真实时刻。' : 'Story content records real moments.'}
               </h2>
               <p className="brand-guide-section-copy">
                 {isZh
-                  ? '站上的 story log（牌桌、生活、日常时刻）都用这一套语气：真实的事，轻松地讲，用小名，留画面，删废话。看 /poker 的 Story log 当样板。'
-                  : 'Every story log on the site (the table, life, everyday moments) follows one voice: true events, told loosely, on a nickname basis, kept cinematic, trimmed to the bone. The /poker Story log is the reference.'}
+                  ? '这不是所有页面都必须使用的语气。它只用于需要记录真实时刻的 story log：轻松地讲，用短称呼，留画面，删废话。'
+                  : 'This is not a voice every page must use. It is for story logs that record real moments: told loosely, with short names, kept cinematic, and trimmed to the bone.'}
               </p>
             </div>
             <div className="mt-12 grid gap-5 md:grid-cols-2">
@@ -5886,8 +7464,8 @@ const BrandGuideFullPage: React.FC<{
               </h2>
               <p className="brand-guide-section-copy">
                 {isZh
-                  ? '当前首页是动效基准：背景慢慢漂、页面轻轻入场，CSS icon 用小幅度、慢节奏的微动传达系统感。未来可以优化 timing 和性能，但不要把这套慢速、克制、有生命感的动效语言删掉或换成通用炫技效果。'
-                  : 'The current homepage is the motion reference: the background drifts slowly, the page enters softly, and CSS icons use small, slow motion to carry the system feeling. Future work can refine timing and performance, but should not remove this slow, restrained, living motion language or replace it with generic show effects.'}
+                  ? '当前动效基准是实体小物件动效：云、角色、卡片、tag、按钮状态可以清楚地动；不要靠 background fade、背景光晕、扫描线或 card 内彩色 fade 制造动感。'
+                  : 'The motion reference is visible object motion: clouds, characters, cards, tags, and button states can move clearly. Do not rely on background fade, background glow, scan lines, or card-level color fades to create energy.'}
               </p>
             </div>
             <div className="mt-12 grid gap-5 md:grid-cols-2">
@@ -5898,12 +7476,23 @@ const BrandGuideFullPage: React.FC<{
                 </article>
               ))}
             </div>
+            <div className="brand-guide-rule-board mt-10">
+              <p className="brand-guide-kicker">{isZh ? 'Current CSS rules' : 'Current CSS rules'}</p>
+              <div className="brand-guide-rule-grid mt-5">
+                {brandGuideCssRules.map((item, index) => (
+                  <article key={item.title.en} className={`brand-guide-rule-card brand-guide-rule-${index + 1}`}>
+                    <h3 className="font-display text-2xl font-bold tracking-tight">{item.title[language]}</h3>
+                    <p>{item.copy[language]}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
           </section>
 
           <p className="pb-10 text-center text-xs text-stone-500">
             {isZh
-              ? '设计参考 Apple.com 的高层信息架构逻辑，但视觉、文案和品牌资产属于 Eden Tan 个人站。最后更新以代码库与 log 为准。'
-              : 'This guide references Apple.com at the level of information architecture only. Visuals, copy, and brand assets belong to the Eden Tan site. For the latest changes, follow the repo and `log.md`.'}
+              ? '这份 guide 记录当前页面系统的基础规则。最后更新以代码库与 log 为准。'
+              : 'This guide records the current page system rules. For the latest changes, follow the repo and `log.md`.'}
           </p>
         </div>
       </main>
@@ -6199,12 +7788,12 @@ const JijuPetFullPage: React.FC<{
           <header className="jiju-hero py-16 text-center md:py-24">
             <p className="jiju-kicker mx-auto">{isZh ? 'Jiju.pet / Pet-friendly discovery system' : 'Jiju.pet / Pet-friendly discovery system'}</p>
             <h1 className="jiju-title mx-auto mt-5 font-display font-bold tracking-tight">
-              {isZh ? 'A smaller map for going out with pets.' : 'A smaller map for going out with pets.'}
+              {isZh ? 'A trusted pet life platform, starting from a smaller map.' : 'A trusted pet life platform, starting from a smaller map.'}
             </h1>
             <p className="jiju-subtitle mx-auto mt-5">
               {isZh
-                ? '从槟城开始，把宠物友好地点、出门记忆、社区贡献和 Sanctuary impact 变成一条更清楚的产品路径。'
-                : 'Starting from Penang, Jiju.pet turns pet-friendly places, outing memories, community contribution, and sanctuary impact into one clearer product path.'}
+                ? 'Jiju 不是普通 pet-friendly cafe list。它正在从地点目录进化成一套围绕可信资料、真实宠物档案、社区共建、回访成长和后台运营的宠物生活平台。'
+                : 'Jiju is not a normal pet-friendly cafe list. It is evolving from a place directory into a pet life platform around trusted information, real pet profiles, community contribution, revisit growth, and backoffice operations.'}
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-5">
               <a href="https://jiju.pet" target="_blank" rel="noopener noreferrer" className="jiju-text-cta">
@@ -6224,8 +7813,8 @@ const JijuPetFullPage: React.FC<{
               </h2>
               <p>
                 {isZh
-                  ? 'Jiju.pet 的核心不是把地点堆起来，而是让养宠的人更快判断：哪里能去、规则是否可信、这次出门值不值得留下记录，以及这个社区能不能一起变得更准。'
-                  : 'The point is not to pile up places. Jiju.pet helps pet parents decide where to go, whether the policy is trustworthy, whether the outing is worth remembering, and whether the community can make the map more accurate over time.'}
+                  ? 'Jiju.pet 的核心不是把地点堆起来，而是让养宠的人更快判断：哪里能去、规则是否可信、这次出门值不值得留下记录，后台能不能长期维护，社区能不能一起把资料变得更准。'
+                  : 'The point is not to pile up places. Jiju.pet helps pet parents decide where to go, whether the policy is trustworthy, whether the outing is worth remembering, whether operations can maintain it, and whether the community can make the map more accurate over time.'}
               </p>
             </div>
             <div className="jiju-proof-grid">
@@ -6234,6 +7823,29 @@ const JijuPetFullPage: React.FC<{
                   <span>{label}</span>
                   <strong>{value}</strong>
                 </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="jiju-section py-16 md:py-24">
+            <div className="jiju-section-head">
+              <p className="jiju-kicker">{isZh ? 'Archive review' : 'Archive review'}</p>
+              <h2 className="jiju-section-title font-display font-bold tracking-tight">
+                {isZh ? '这次复盘看到的，不是功能不会做，而是边界开始漂移。' : 'The review revealed boundary drift, not a lack of features.'}
+              </h2>
+              <p className="jiju-section-copy">
+                {isZh
+                  ? '基于项目 log、Memory、Agent Knowledge Digest、设计理念、soul 与 AGENTS 的整理，Jiju 的真正变化是：把感觉变成规则，把 bug fix 变成系统，把聊天判断沉淀成可复用 SOP。'
+                  : 'Based on the project log, Memory, Agent Knowledge Digest, design notes, soul, and AGENTS, the real shift is turning instinct into rules, bug fixes into systems, and chat decisions into reusable SOPs.'}
+              </p>
+            </div>
+            <div className="jiju-review-track mt-12">
+              {jijuArchiveReviewTracks.map((item) => (
+                <article key={item.label.en} className="jiju-review-card">
+                  <span>{item.label[language]}</span>
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.title[language]}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
               ))}
             </div>
           </section>
@@ -6250,6 +7862,32 @@ const JijuPetFullPage: React.FC<{
                 <article key={item.title} className="jiju-system-card">
                   <h3 className="font-display text-2xl font-bold tracking-tight">{item.title}</h3>
                   <p>{item.copy}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="jiju-section py-16 md:py-24">
+            <div className="jiju-section-head">
+              <p className="jiju-kicker">{isZh ? 'Operating model' : 'Operating model'}</p>
+              <h2 className="jiju-section-title font-display font-bold tracking-tight">
+                {isZh ? '可信度不是一个按钮，是资料链路。' : 'Trust is not a button. It is an information chain.'}
+              </h2>
+              <p className="jiju-section-copy">
+                {isZh
+                  ? 'Information Accuracy 不是普通纠错入口，而是平台信任资产。Add Cafe、owner form、BO review、Cafe Profile、SEO/AEO 页面要读同一套事实。'
+                  : 'Information Accuracy is not a cosmetic correction feature. Add Cafe, owner forms, BO review, Cafe Profile, and SEO/AEO pages need to read from the same facts.'}
+              </p>
+            </div>
+            <div className="jiju-operating-grid mt-12">
+              {jijuOperatingModel.map((group) => (
+                <article key={group.title.en} className="jiju-operating-card">
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{group.title[language]}</h3>
+                  <ul>
+                    {group.lines[language].map((line) => (
+                      <li key={line}>{line}</li>
+                    ))}
+                  </ul>
                 </article>
               ))}
             </div>
@@ -6297,6 +7935,45 @@ const JijuPetFullPage: React.FC<{
                       <li key={point}>{point}</li>
                     ))}
                   </ul>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="jiju-section py-16 md:py-24">
+            <div className="jiju-section-head">
+              <p className="jiju-kicker">{isZh ? 'Reusable methods' : 'Reusable methods'}</p>
+              <h2 className="jiju-section-title font-display font-bold tracking-tight">
+                {isZh ? '后来沉淀下来的，不只是 Jiju 技术债，而是一组可复用 skills。' : 'What remained was not only Jiju technical debt, but reusable build skills.'}
+              </h2>
+              <p className="jiju-section-copy">
+                {isZh
+                  ? '这些方法解决的是 agent 反复踩坑、前后台不同步、demo 变假、外部服务失效、路由与 SEO 漂移等长期问题。'
+                  : 'These methods address repeated agent mistakes, frontend/backoffice drift, fake demos, external-service failure, and route/SEO drift.'}
+              </p>
+            </div>
+            <div className="jiju-skill-grid mt-12">
+              {jijuSkillCards.map((item) => (
+                <article key={item.title.en} className="jiju-skill-card">
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.title[language]}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="jiju-section py-16 md:py-24">
+            <div className="jiju-section-head">
+              <p className="jiju-kicker">{isZh ? 'Project philosophy' : 'Project philosophy'}</p>
+              <h2 className="jiju-section-title font-display font-bold tracking-tight">
+                {isZh ? 'Jiju 最重要的复盘，不是功能，而是判断标准。' : 'The most important Jiju review is not about features, but judgment.'}
+              </h2>
+            </div>
+            <div className="jiju-philosophy-list mt-12">
+              {jijuPhilosophyPoints.map((item) => (
+                <article key={item.title.en} className="jiju-philosophy-row">
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.title[language]}</h3>
+                  <p>{item.copy[language]}</p>
                 </article>
               ))}
             </div>
@@ -6585,9 +8262,15 @@ const App: React.FC = () => {
       : currentPath;
   const isJijuPetFullPage = pathWithoutBase === '/jiju-pet';
   const isProjectsFullPage = pathWithoutBase === '/projects';
+  const isProjectCssGalleryPage = pathWithoutBase === '/project-css';
   const isETReportHubFullPage = pathWithoutBase === '/etreporthub';
   const isETReportHubSalesPage = pathWithoutBase === '/etreporthub-sales';
   const isPokerFullPage = pathWithoutBase === '/poker';
+  const wikiSlug = pathWithoutBase.startsWith('/wiki/')
+    ? pathWithoutBase.replace('/wiki/', '')
+    : '';
+  const activeWikiEntry = wikiEntries.find((item) => item.slug === wikiSlug);
+  const isWikiPage = pathWithoutBase === '/wiki' || Boolean(activeWikiEntry);
   const isCrmFullPage = pathWithoutBase === '/crm';
   const isPreviousProjectsFullPage = pathWithoutBase === '/previous-projects';
   const isAnalogTechFullPage = pathWithoutBase === '/analog-tech';
@@ -6622,6 +8305,20 @@ const App: React.FC = () => {
       <ProjectsFullPage
         homeHref={homeHref}
         baseUrl={baseUrl}
+        language={language}
+        setLanguage={setLanguage}
+        themePreference={themePreference}
+        theme={theme}
+        setThemePreference={setThemePreference}
+      />
+    );
+  }
+
+  if (isProjectCssGalleryPage) {
+    return (
+      <ProjectCssGalleryPage
+        homeHref={homeHref}
+        projectsHref={projectsHref}
         language={language}
         setLanguage={setLanguage}
         themePreference={themePreference}
@@ -6666,6 +8363,23 @@ const App: React.FC = () => {
       <PokerFullPage
         homeHref={homeHref}
         projectsHref={projectsHref}
+        baseUrl={baseUrl}
+        language={language}
+        setLanguage={setLanguage}
+        themePreference={themePreference}
+        theme={theme}
+        setThemePreference={setThemePreference}
+      />
+    );
+  }
+
+  if (isWikiPage) {
+    return (
+      <WikiPage
+        entry={activeWikiEntry}
+        homeHref={homeHref}
+        projectsHref={projectsHref}
+        pokerHref={pokerHref}
         baseUrl={baseUrl}
         language={language}
         setLanguage={setLanguage}

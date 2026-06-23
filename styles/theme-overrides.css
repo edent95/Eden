@@ -1,0 +1,303 @@
+:root[data-theme="dark"] .bg-stone-50,
+:root[data-theme="dark"] .bg-stone-50\/80,
+:root[data-theme="dark"] .bg-stone-50\/90,
+:root[data-theme="dark"] .bg-stone-50\/95 {
+  background-color: var(--theme-page) !important;
+}
+
+:root[data-theme="dark"] .bg-white {
+  background-color: var(--theme-surface) !important;
+}
+
+:root[data-theme="dark"] .bg-stone-100,
+:root[data-theme="dark"] .bg-stone-200 {
+  background-color: var(--theme-surface-muted) !important;
+}
+
+:root[data-theme="dark"] .bg-rose-50,
+:root[data-theme="dark"] .bg-red-50,
+:root[data-theme="dark"] .bg-orange-50,
+:root[data-theme="dark"] .bg-amber-50 {
+  background-color: rgb(43 37 34 / 0.92) !important;
+}
+
+:root[data-theme="dark"] .bg-stone-300,
+:root[data-theme="dark"] .bg-stone-400,
+:root[data-theme="dark"] .bg-stone-600,
+:root[data-theme="dark"] .bg-stone-800,
+:root[data-theme="dark"] .bg-stone-900 {
+  background-color: var(--theme-surface-strong) !important;
+}
+
+:root[data-theme="dark"] .text-stone-900,
+:root[data-theme="dark"] .text-stone-800,
+:root[data-theme="dark"] .text-stone-100,
+:root[data-theme="dark"] .text-stone-50,
+:root[data-theme="dark"] .text-white {
+  color: var(--theme-text-primary) !important;
+}
+
+:root[data-theme="dark"] .text-stone-700,
+:root[data-theme="dark"] .text-stone-600 {
+  color: var(--theme-text-secondary) !important;
+}
+
+:root[data-theme="dark"] .text-stone-500,
+:root[data-theme="dark"] .text-stone-400 {
+  color: var(--theme-text-soft) !important;
+}
+
+:root[data-theme="dark"] .text-teal-700,
+:root[data-theme="dark"] .text-teal-900\/70,
+:root[data-theme="dark"] .text-teal-900\/80,
+:root[data-theme="dark"] .text-teal-900\/85,
+:root[data-theme="dark"] .text-teal-950\/80 {
+  color: var(--theme-accent-teal) !important;
+}
+
+:root[data-theme="dark"] .text-amber-900\/70,
+:root[data-theme="dark"] .text-amber-950,
+:root[data-theme="dark"] .text-amber-950\/90 {
+  color: var(--theme-accent-amber) !important;
+}
+
+:root[data-theme="dark"] .life-os-open-layout :where(.bg-white, .bg-stone-50, .bg-stone-100, .bg-stone-200, .bg-eden-mint\/10, .bg-eden-amber\/10),
+:root[data-theme="dark"] .life-os-open-layout :where(.motion-card, .life-os-codex-card, .life-os-route-card, .life-os-route-badge, .life-os-banner-frame, .life-os-icon-frame, .life-os-portrait-frame) {
+  background: rgb(28 25 23 / 0.42) !important;
+  background-color: rgb(28 25 23 / 0.42) !important;
+}
+
+:root[data-theme="dark"] .life-os-open-layout .life-os-radar-frame {
+  background: rgb(12 10 9 / 0.94) !important;
+  background-color: rgb(12 10 9 / 0.94) !important;
+}
+
+:root[data-theme="dark"] .life-os-open-layout .life-os-card-footer {
+  background: rgb(28 25 23 / 0.48) !important;
+}
+
+:root[data-theme="dark"] .life-os-open-layout :where(.life-os-banner-caption, .life-os-image-overlay, .life-os-route-overlay) {
+  background: linear-gradient(to top, rgb(12 10 9 / 0.96), rgb(12 10 9 / 0.48), transparent) !important;
+}
+
+:root[data-theme="dark"] .life-os-open-layout :where(.life-os-editorial-hero, .life-os-chapter, .life-os-route-art) {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+:root[data-theme="dark"] .life-os-open-layout :where(.motion-card, .life-os-radar-frame, .life-os-codex-card, .life-os-route-card, .life-os-route-badge, .life-os-banner-frame, .life-os-card-footer) :where(.text-stone-900, .text-stone-800, .text-stone-700, .text-stone-600, .text-white, .text-stone-100, .text-stone-50) {
+  color: rgb(245 245 244) !important;
+}
+
+:root[data-theme="dark"] .life-os-open-layout :where(.motion-card, .life-os-radar-frame, .life-os-codex-card, .life-os-route-card, .life-os-route-badge, .life-os-banner-frame, .life-os-card-footer) :where(.text-stone-500, .text-stone-400, .text-stone-300) {
+  color: rgb(168 162 158) !important;
+}
+
+:root[data-theme="dark"] .life-os-open-layout :where(.life-os-banner-caption, .life-os-image-overlay, .life-os-route-overlay, .life-os-radar-frame) :where(.text-stone-900, .text-stone-800, .text-stone-700, .text-stone-600, .text-white, .text-stone-100, .text-stone-50) {
+  color: rgb(245 245 244) !important;
+}
+
+:root[data-theme="dark"] .life-os-open-layout :where(.life-os-banner-caption, .life-os-image-overlay, .life-os-route-overlay, .life-os-radar-frame) :where(.text-stone-500, .text-stone-400, .text-stone-300) {
+  color: rgb(214 211 209) !important;
+}
+
+:root[data-theme="dark"] .life-os-open-layout .life-os-active-skill-copy :where(.text-stone-900, .text-stone-800, .text-stone-700, .text-stone-600, .text-white, .text-stone-100, .text-stone-50) {
+  color: rgb(245 245 244) !important;
+}
+
+:root[data-theme="dark"] .life-os-open-layout .life-os-active-skill-copy :where(.text-stone-500, .text-stone-400, .text-stone-300) {
+  color: rgb(214 211 209) !important;
+}
+
+:root[data-theme="dark"] .life-os-open-layout :where(.life-os-editorial-hero, .life-os-chapter > .mx-auto, .life-os-editorial-nav) :where(.text-stone-900, .text-stone-800, .text-stone-700, .text-stone-600, .text-white, .text-stone-100, .text-stone-50) {
+  color: rgb(245 245 244) !important;
+}
+
+:root[data-theme="dark"] .life-os-open-layout :where(.life-os-editorial-hero, .life-os-chapter > .mx-auto, .life-os-editorial-nav) :where(.text-stone-500, .text-stone-400, .text-stone-300) {
+  color: rgb(168 162 158) !important;
+}
+
+:root[data-theme="dark"] .border-stone-50 {
+  border-color: var(--theme-page) !important;
+}
+
+:root[data-theme="dark"] .border-stone-200,
+:root[data-theme="dark"] .border-stone-200\/90,
+:root[data-theme="dark"] .border-stone-300,
+:root[data-theme="dark"] .border-stone-500 {
+  border-color: var(--theme-border) !important;
+}
+
+:root[data-theme="dark"] .border-stone-900 {
+  border-color: var(--theme-border-strong) !important;
+}
+
+:root[data-theme="dark"] .divide-stone-200\/80 > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgb(120 113 108 / 0.45) !important;
+}
+
+:root[data-theme="dark"] .outline-stone-200\/80 {
+  outline-color: rgb(120 113 108 / 0.45) !important;
+}
+
+:root[data-theme="dark"] .ring-stone-900\/\[0\.04\] {
+  --tw-ring-color: rgb(245 245 244 / 0.08) !important;
+}
+
+:root[data-theme="dark"] .ring-amber-700\/\[0\.06\] {
+  --tw-ring-color: rgb(111 164 240 / 0.18) !important;
+}
+
+:root[data-theme="dark"] .ring-teal-800\/\[0\.05\] {
+  --tw-ring-color: rgb(220 111 130 / 0.18) !important;
+}
+
+:root[data-theme="dark"] .from-stone-50\/70 {
+  --tw-gradient-from: rgb(31 27 25 / 0.92) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgb(31 27 25 / 0) var(--tw-gradient-to-position) !important;
+}
+
+:root[data-theme="dark"] .via-stone-50\/90,
+:root[data-theme="dark"] .via-stone-50\/95 {
+  --tw-gradient-via: rgb(31 27 25 / 0.88) var(--tw-gradient-via-position) !important;
+}
+
+:root[data-theme="dark"] .to-white,
+:root[data-theme="dark"] .to-stone-50\/80 {
+  --tw-gradient-to: rgb(20 18 17 / 0.96) var(--tw-gradient-to-position) !important;
+}
+
+:root[data-theme="dark"] .to-amber-50\/40,
+:root[data-theme="dark"] .to-amber-100\/50 {
+  --tw-gradient-to: rgb(111 164 240 / 0.18) var(--tw-gradient-to-position) !important;
+}
+
+:root[data-theme="dark"] .hover\:text-stone-900:hover,
+:root[data-theme="dark"] .hover\:text-stone-600:hover {
+  color: var(--theme-text-primary) !important;
+}
+
+:root[data-theme="dark"] .hover\:border-stone-900:hover {
+  border-color: rgb(245 245 244 / 0.28) !important;
+}
+
+.page-shell.life-os-open-layout,
+:root[data-theme="dark"] .page-shell.life-os-open-layout {
+  --tw-ring-color: transparent !important;
+}
+
+.page-shell.life-os-open-layout :where(
+  [class*="border"],
+  [class*="ring"],
+  .life-os-radar-frame,
+  .life-os-radar-grid,
+  .life-os-icon-frame,
+  .life-os-banner-frame,
+  .life-os-portrait-frame,
+  .life-rpg-signal-card,
+  .life-rpg-signal-css-icon,
+  .life-rpg-signal-arc,
+  .life-rpg-signal-icon-orbit,
+  .life-rpg-signal-icon-mark,
+  .life-rpg-wind-strip,
+  .life-rpg-contract-strip,
+  .life-rpg-contract-seal,
+  .life-rpg-contract-sign-stroke
+),
+:root[data-theme="dark"] .page-shell.life-os-open-layout :where(
+  [class*="border"],
+  [class*="ring"],
+  .life-os-radar-frame,
+  .life-os-radar-grid,
+  .life-os-icon-frame,
+  .life-os-banner-frame,
+  .life-os-portrait-frame,
+  .life-rpg-signal-card,
+  .life-rpg-signal-css-icon,
+  .life-rpg-signal-arc,
+  .life-rpg-signal-icon-orbit,
+  .life-rpg-signal-icon-mark,
+  .life-rpg-wind-strip,
+  .life-rpg-contract-strip,
+  .life-rpg-contract-seal,
+  .life-rpg-contract-sign-stroke
+) {
+  border-color: transparent !important;
+  outline-color: transparent !important;
+  --tw-ring-color: transparent !important;
+}
+
+.page-shell.life-os-open-layout :where(
+  .life-os-radar-frame,
+  .life-rpg-signal-css-icon,
+  .life-rpg-signal-icon-core,
+  .life-rpg-wind-strip,
+  .life-rpg-contract-strip,
+  .life-rpg-contract-seal
+),
+:root[data-theme="dark"] .page-shell.life-os-open-layout :where(
+  .life-os-radar-frame,
+  .life-rpg-signal-css-icon,
+  .life-rpg-signal-icon-core,
+  .life-rpg-wind-strip,
+  .life-rpg-contract-strip,
+  .life-rpg-contract-seal
+) {
+  box-shadow: none !important;
+}
+
+.page-shell.life-os-open-layout svg[aria-label*="雷达图"] :where(line, polygon, circle),
+.page-shell.life-os-open-layout svg[aria-label*="radar chart"] :where(line, polygon, circle),
+:root[data-theme="dark"] .page-shell.life-os-open-layout svg[aria-label*="雷达图"] :where(line, polygon, circle),
+:root[data-theme="dark"] .page-shell.life-os-open-layout svg[aria-label*="radar chart"] :where(line, polygon, circle) {
+  stroke: transparent !important;
+}
+
+:root[data-theme="dark"] .hover\:bg-stone-800:hover {
+  background-color: #4a413c !important;
+}
+
+:root[data-theme="dark"] .theme-preview-neutral .bg-stone-50 {
+  background-color: #fafaf9 !important;
+}
+
+:root[data-theme="dark"] .theme-preview-neutral .bg-stone-200 {
+  background-color: #e7e5e4 !important;
+}
+
+:root[data-theme="dark"] .theme-preview-neutral .bg-stone-600 {
+  background-color: #57534e !important;
+}
+
+:root[data-theme="dark"] .theme-preview-neutral .bg-stone-900 {
+  background-color: #1c1917 !important;
+}
+
+:root[data-theme="dark"] .theme-preview-neutral .border-stone-200 {
+  border-color: #e7e5e4 !important;
+}
+
+:root[data-theme="dark"] .theme-preview-neutral .border-stone-300 {
+  border-color: #d6d3d1 !important;
+}
+
+:root[data-theme="dark"] .theme-preview-neutral .border-stone-500 {
+  border-color: #78716c !important;
+}
+
+:root[data-theme="dark"] .theme-preview-neutral .border-stone-900 {
+  border-color: #1c1917 !important;
+}
+
+:root[data-theme="dark"] .theme-preview-neutral .text-stone-900 {
+  color: #1c1917 !important;
+}
+
+:root[data-theme="dark"] .theme-preview-neutral .text-stone-800 {
+  color: #292524 !important;
+}
+
+:root[data-theme="dark"] .theme-preview-neutral .text-stone-50,
+:root[data-theme="dark"] .theme-preview-neutral .text-white {
+  color: #fafaf9 !important;
+}

@@ -1,0 +1,76 @@
+@layer base {
+  html,
+  body {
+    background-color: var(--theme-page);
+    color: var(--theme-text-primary);
+    @apply antialiased selection:bg-eden-mint/30 selection:text-stone-900;
+  }
+}
+
+body,
+a,
+button,
+svg,
+section,
+div,
+span,
+p,
+h1,
+h2,
+h3,
+h4,
+figcaption {
+  transition:
+    border-color 320ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 320ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 320ms cubic-bezier(0.4, 0, 0.2, 1),
+    outline-color 320ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+a,
+button,
+.transition-colors,
+.transition-all,
+.transition-shadow {
+  transition-duration: 320ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-shell {
+  position: relative;
+  min-height: 100vh;
+  isolation: isolate;
+  background-color: var(--theme-page);
+}
+
+.page-shell::before {
+  content: none;
+  display: none;
+}
+
+.page-shell::after {
+  content: none;
+  display: none;
+}
+
+.page-shell > * {
+  position: relative;
+  z-index: 1;
+}
+
+.page-shell > main {
+  padding-left: var(--editorial-page-padding);
+  padding-right: var(--editorial-page-padding);
+  animation: page-enter 480ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.page-shell > main > .mx-auto[class*="max-w-"] {
+  max-width: var(--editorial-island-width) !important;
+}
+
+@media (max-width: 767px) {
+  .page-shell > main {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}

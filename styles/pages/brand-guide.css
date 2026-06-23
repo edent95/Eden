@@ -1,0 +1,395 @@
+.brand-guide-page {
+  color: var(--theme-text-primary);
+  overflow-x: hidden;
+}
+
+.brand-guide-topbar {
+  min-height: 44px;
+}
+
+.brand-guide-back-link {
+  color: var(--theme-text-secondary);
+}
+
+.brand-guide-back-link:hover {
+  color: var(--theme-text-primary);
+}
+
+.brand-guide-kicker {
+  width: fit-content;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--theme-text-soft);
+}
+
+.brand-guide-hero-title {
+  max-width: 980px;
+  font-size: clamp(2.75rem, 7vw, 6.75rem);
+  line-height: 0.98;
+  color: var(--theme-text-primary);
+}
+
+.brand-guide-hero-subtitle {
+  max-width: 780px;
+  font-size: clamp(1.35rem, 2.5vw, 2.45rem);
+  font-weight: 650;
+  line-height: 1.12;
+  color: var(--theme-text-primary);
+}
+
+.brand-guide-hero-copy {
+  max-width: 720px;
+  font-size: clamp(1rem, 1.35vw, 1.25rem);
+  line-height: 1.58;
+  color: var(--theme-text-secondary);
+}
+
+.brand-guide-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 1.05rem;
+  font-weight: 650;
+  color: var(--theme-accent-teal);
+}
+
+.brand-guide-cta:hover {
+  color: var(--theme-text-primary);
+}
+
+.brand-guide-cta-muted {
+  color: var(--theme-accent-amber);
+}
+
+.brand-guide-signature {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 1.25rem;
+  max-width: 760px;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  text-align: left;
+  background: var(--eden-panel-bg);
+  border-radius: 2rem;
+  box-shadow: 0 24px 70px rgb(28 25 23 / 0.08);
+}
+
+.brand-guide-mark {
+  display: grid;
+  place-items: center;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 1.5rem;
+  background: color-mix(in srgb, var(--theme-surface) 84%, transparent);
+  box-shadow: inset 0 0 0 1px rgb(120 113 108 / 0.16);
+}
+
+.brand-guide-mark img {
+  width: 4.5rem;
+  height: 4.5rem;
+}
+
+.brand-guide-signature-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--theme-text-soft);
+}
+
+.brand-guide-section {
+  color: var(--theme-text-primary);
+}
+
+.brand-guide-section-head {
+  max-width: 780px;
+}
+
+.brand-guide-section-title {
+  margin-top: 1rem;
+  max-width: 900px;
+  font-size: clamp(2.25rem, 5vw, 4.75rem);
+  line-height: 1.02;
+  color: var(--theme-text-primary);
+}
+
+.brand-guide-section-copy {
+  margin-top: 1.25rem;
+  max-width: 760px;
+  font-size: clamp(1rem, 1.35vw, 1.25rem);
+  line-height: 1.62;
+  color: var(--theme-text-secondary);
+}
+
+.brand-guide-principle-card,
+.brand-guide-type-card,
+.brand-guide-rhythm-card,
+.brand-guide-use-card,
+.brand-guide-category-card,
+.brand-guide-swatch,
+.brand-guide-voice-row {
+  background: var(--eden-card-bg);
+  border-radius: var(--eden-panel-radius);
+  box-shadow: var(--eden-card-shadow);
+}
+
+.brand-guide-principle-card,
+.brand-guide-type-card,
+.brand-guide-rhythm-card,
+.brand-guide-use-card,
+.brand-guide-category-card {
+  padding: clamp(1.35rem, 3vw, 2rem);
+}
+
+.brand-guide-principle-card p,
+.brand-guide-type-card p,
+.brand-guide-rhythm-card p,
+.brand-guide-use-card p,
+.brand-guide-category-card p,
+.brand-guide-swatch p,
+.brand-guide-voice-row p {
+  margin-top: 0.85rem;
+  line-height: 1.58;
+  color: var(--theme-text-secondary);
+}
+
+.brand-guide-card-index {
+  margin-top: 0 !important;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  line-height: 1.2 !important;
+  text-transform: uppercase;
+  color: var(--theme-text-soft) !important;
+}
+
+.brand-guide-category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.brand-guide-category-card {
+  --brand-category-color: var(--eden-cat-system);
+  --brand-category-bg: var(--eden-cat-system-bg);
+  min-height: 100%;
+  border-top: 0.32rem solid var(--brand-category-color);
+}
+
+.brand-guide-category-1 {
+  --brand-category-color: var(--eden-cat-build);
+  --brand-category-bg: var(--eden-cat-build-bg);
+}
+
+.brand-guide-category-2 {
+  --brand-category-color: var(--eden-cat-knowledge);
+  --brand-category-bg: var(--eden-cat-knowledge-bg);
+}
+
+.brand-guide-category-3 {
+  --brand-category-color: var(--eden-cat-interaction);
+  --brand-category-bg: var(--eden-cat-interaction-bg);
+}
+
+.brand-guide-category-card h3 {
+  margin-top: 0.85rem;
+  color: var(--theme-text-primary);
+}
+
+.brand-guide-category-card .brand-guide-card-index {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 1.65rem;
+  align-items: center;
+  padding: 0.18rem 0.58rem;
+  border-radius: 999px;
+  background: var(--brand-category-bg);
+  color: var(--brand-category-color) !important;
+}
+
+.brand-guide-category-card ul {
+  display: grid;
+  gap: 0.55rem;
+  margin: 1.2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.brand-guide-category-card li {
+  position: relative;
+  padding-left: 1rem;
+  line-height: 1.5;
+  color: var(--theme-text-secondary);
+}
+
+.brand-guide-category-card li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 999px;
+  background: var(--brand-category-color);
+}
+
+.brand-guide-color-board {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.brand-guide-swatch {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  align-items: center;
+  padding: clamp(1rem, 2.2vw, 1.35rem);
+}
+
+.brand-guide-swatch-chip {
+  display: block;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 1.25rem;
+  box-shadow:
+    inset 0 0 0 1px rgb(120 113 108 / 0.22),
+    0 18px 38px rgb(28 25 23 / 0.08);
+}
+
+.brand-guide-accent-board .brand-guide-swatch-chip {
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.28),
+    0 18px 44px rgb(var(--theme-mint-glow) / 0.14);
+}
+
+.brand-guide-voice-row {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 1rem;
+  padding: clamp(1rem, 2vw, 1.4rem);
+}
+
+.brand-guide-voice-row > div {
+  border-radius: 1.25rem;
+  padding: 1rem;
+  background: color-mix(in srgb, var(--theme-surface-muted) 78%, transparent);
+}
+
+.brand-guide-voice-row > div:last-child {
+  background: color-mix(in srgb, var(--theme-surface-muted) 78%, transparent);
+}
+
+.brand-guide-rule-board {
+  max-width: 960px;
+}
+
+.brand-guide-rule-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.brand-guide-rule-card {
+  --brand-rule-color: var(--eden-cat-system);
+  position: relative;
+  overflow: hidden;
+  padding: clamp(1.25rem, 2.6vw, 1.8rem);
+  background: var(--eden-card-bg);
+  border-radius: var(--eden-panel-radius);
+  box-shadow: var(--eden-card-shadow);
+}
+
+.brand-guide-rule-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 1.35rem;
+  right: 1.35rem;
+  height: 0.24rem;
+  background: var(--brand-rule-color);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+}
+
+.brand-guide-rule-1 {
+  --brand-rule-color: var(--eden-cat-build);
+}
+
+.brand-guide-rule-2 {
+  --brand-rule-color: var(--eden-cat-interaction);
+}
+
+.brand-guide-rule-3 {
+  --brand-rule-color: var(--eden-cat-knowledge);
+}
+
+.brand-guide-rule-4 {
+  --brand-rule-color: var(--eden-cat-system);
+}
+
+.brand-guide-rule-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--theme-text-primary);
+}
+
+.brand-guide-rule-card h3::before {
+  content: "";
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 0.95rem;
+  height: 0.95rem;
+  background: var(--brand-rule-color);
+  clip-path: polygon(50% 0, 62% 32%, 100% 32%, 70% 54%, 82% 100%, 50% 72%, 18% 100%, 30% 54%, 0 32%, 38% 32%);
+}
+
+.brand-guide-rule-card p {
+  margin-top: 0.85rem;
+  line-height: 1.58;
+  color: var(--theme-text-secondary);
+}
+
+@media (max-width: 767px) {
+  .brand-guide-hero {
+    text-align: left;
+  }
+
+  .brand-guide-hero .brand-guide-kicker,
+  .brand-guide-hero-title,
+  .brand-guide-hero-subtitle,
+  .brand-guide-hero-copy {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .brand-guide-hero-title {
+    font-size: clamp(2.55rem, 12vw, 4.25rem);
+  }
+
+  .brand-guide-signature,
+  .brand-guide-voice-row {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-guide-category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-guide-rule-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-guide-signature {
+    text-align: left;
+  }
+
+  .brand-guide-swatch {
+    grid-template-columns: 1fr;
+  }
+}

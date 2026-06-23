@@ -1,0 +1,601 @@
+.wiki-rag-flow-icon {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: inherit;
+  background: linear-gradient(180deg, #f7f2e8 0%, #edf4eb 58%, #d9e9d8 100%);
+}
+
+.wiki-topic-icon {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: inherit;
+  background: var(--wiki-topic-bg, #eef4ee);
+}
+
+.wiki-topic-icon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.56),
+    inset 0 -12px 22px rgb(45 52 42 / 0.12);
+}
+
+.wiki-topic-icon > span {
+  position: absolute;
+  display: block;
+}
+
+.wiki-topic-base {
+  left: 16%;
+  right: 16%;
+  bottom: 18%;
+  height: 15%;
+  border-radius: 999px;
+  background: var(--wiki-topic-ground, #9bc792);
+  animation: wikiTopicBaseBob 3.2s ease-in-out infinite alternate;
+}
+
+.wiki-topic-mark {
+  background: var(--wiki-topic-main, #345b50);
+  animation: wikiTopicMarkBob 4.2s ease-in-out infinite alternate;
+}
+
+.wiki-topic-mark.mark-a {
+  left: 27%;
+  top: 25%;
+  width: 38%;
+  height: 44%;
+  border-radius: 0.6rem;
+}
+
+.wiki-topic-mark.mark-b {
+  right: 22%;
+  top: 34%;
+  width: 20%;
+  height: 28%;
+  border-radius: 999px;
+  background: var(--wiki-topic-alt, #f0bf72);
+  animation-delay: -1.2s;
+}
+
+.wiki-topic-mark.mark-c {
+  left: 22%;
+  bottom: 30%;
+  width: 19%;
+  height: 11%;
+  border-radius: 999px;
+  background: var(--wiki-topic-soft, #fffaf0);
+  animation-delay: -2s;
+}
+
+.wiki-topic-signal {
+  background: var(--wiki-topic-line, #4c5a48);
+  border-radius: 999px;
+  animation: wikiTopicSignalMove 2.4s ease-in-out infinite alternate;
+}
+
+.wiki-topic-signal.signal-a {
+  right: 20%;
+  top: 23%;
+  width: 18%;
+  height: 6%;
+}
+
+.wiki-topic-signal.signal-b {
+  right: 17%;
+  top: 35%;
+  width: 12%;
+  height: 6%;
+  animation-delay: -1.1s;
+}
+
+.wiki-topic-vite {
+  --wiki-topic-bg: #eef2ff;
+  --wiki-topic-ground: #9bb4f5;
+  --wiki-topic-main: #586de8;
+  --wiki-topic-alt: #f0bf72;
+  --wiki-topic-soft: #fff4c8;
+  --wiki-topic-line: #26337f;
+}
+
+.wiki-topic-vite .mark-a {
+  left: 35%;
+  top: 18%;
+  width: 27%;
+  height: 58%;
+  border-radius: 0.2rem;
+  clip-path: polygon(44% 0, 100% 0, 66% 38%, 96% 38%, 30% 100%, 43% 55%, 10% 55%);
+  animation-name: wikiTopicBoltMove;
+}
+
+.wiki-topic-vite .mark-b {
+  right: 18%;
+  top: 26%;
+  width: 19%;
+  height: 12%;
+  border-radius: 0.25rem;
+}
+
+.wiki-topic-music {
+  --wiki-topic-bg: #eef7f6;
+  --wiki-topic-ground: #8fcfc2;
+  --wiki-topic-main: #347e75;
+  --wiki-topic-alt: #f0bf72;
+  --wiki-topic-soft: #f9f0dc;
+  --wiki-topic-line: #2f625d;
+}
+
+.wiki-topic-music .mark-a {
+  left: 24%;
+  top: 30%;
+  width: 31%;
+  height: 31%;
+  border-radius: 999px;
+}
+
+.wiki-topic-music .mark-a::after {
+  content: "";
+  position: absolute;
+  inset: 28%;
+  border-radius: 999px;
+  background: var(--wiki-topic-bg);
+}
+
+.wiki-topic-music .mark-b,
+.wiki-topic-music .mark-c {
+  width: 8%;
+  height: 42%;
+  border-radius: 999px;
+}
+
+.wiki-topic-music .mark-b {
+  right: 31%;
+  top: 24%;
+}
+
+.wiki-topic-music .mark-c {
+  right: 20%;
+  top: 31%;
+}
+
+.wiki-topic-button {
+  --wiki-topic-bg: #f6f0ec;
+  --wiki-topic-ground: #d9a875;
+  --wiki-topic-main: #845f48;
+  --wiki-topic-alt: #83c7ad;
+  --wiki-topic-soft: #fffaf0;
+  --wiki-topic-line: #5c4638;
+}
+
+.wiki-topic-button .mark-a {
+  left: 20%;
+  top: 34%;
+  width: 50%;
+  height: 28%;
+  border-radius: 0.9rem;
+}
+
+.wiki-topic-button .mark-b {
+  right: 21%;
+  top: 25%;
+  width: 18%;
+  height: 18%;
+  clip-path: polygon(50% 0, 64% 34%, 100% 34%, 70% 55%, 82% 100%, 50% 73%, 18% 100%, 30% 55%, 0 34%, 36% 34%);
+  animation-name: wikiTopicClickPop;
+}
+
+.wiki-topic-button .signal-a,
+.wiki-topic-button .signal-b {
+  transform-origin: left center;
+}
+
+.wiki-topic-firebase {
+  --wiki-topic-bg: #fff2df;
+  --wiki-topic-ground: #e0a65f;
+  --wiki-topic-main: #cc7634;
+  --wiki-topic-alt: #ffd166;
+  --wiki-topic-soft: #ffe5b4;
+  --wiki-topic-line: #7d492c;
+}
+
+.wiki-topic-firebase .mark-a {
+  left: 26%;
+  top: 25%;
+  width: 42%;
+  height: 46%;
+  border-radius: 50% 50% 18% 18%;
+  clip-path: polygon(50% 0, 76% 25%, 92% 62%, 69% 100%, 31% 100%, 8% 62%, 24% 25%);
+}
+
+.wiki-topic-firebase .mark-b {
+  right: 23%;
+  top: 35%;
+  width: 22%;
+  height: 34%;
+  border-radius: 999px 999px 0.4rem 0.4rem;
+}
+
+.wiki-topic-firebase .mark-c {
+  left: 23%;
+  bottom: 29%;
+  width: 44%;
+}
+
+.wiki-topic-skills {
+  --wiki-topic-bg: #edf5ef;
+  --wiki-topic-ground: #94c59f;
+  --wiki-topic-main: #4e7c58;
+  --wiki-topic-alt: #6fa4f0;
+  --wiki-topic-soft: #f5efe0;
+  --wiki-topic-line: #31533d;
+}
+
+.wiki-topic-skills .mark-a {
+  left: 23%;
+  top: 25%;
+  width: 28%;
+  height: 34%;
+  border-radius: 0.4rem;
+}
+
+.wiki-topic-skills .mark-b {
+  right: 22%;
+  top: 31%;
+  width: 27%;
+  height: 34%;
+  border-radius: 0.4rem;
+}
+
+.wiki-topic-skills .mark-c {
+  left: 33%;
+  bottom: 28%;
+  width: 35%;
+  height: 12%;
+}
+
+:root[data-theme="dark"] .wiki-topic-icon {
+  --wiki-topic-bg: #182028;
+  --wiki-topic-ground: #355a46;
+  --wiki-topic-main: #8fbba6;
+  --wiki-topic-alt: #d3965e;
+  --wiki-topic-soft: #d7c5aa;
+  --wiki-topic-line: #d8e3d9;
+}
+
+:root[data-theme="dark"] .wiki-topic-icon::after {
+  box-shadow:
+    inset 0 0 0 1px rgb(111 164 240 / 0.14),
+    inset 0 -12px 22px rgb(8 17 14 / 0.34);
+}
+
+.wiki-rag-flow-icon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.58),
+    inset 0 -14px 24px rgb(74 112 76 / 0.16);
+}
+
+.wiki-rag-flow-icon > span {
+  position: absolute;
+  display: block;
+}
+
+.wiki-rag-flow-cloud {
+  height: 8%;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.82);
+  animation: wikiRagCloud 18s linear infinite;
+}
+
+.wiki-rag-flow-cloud.cloud-a {
+  top: 20%;
+  left: -28%;
+  width: 38%;
+}
+
+.wiki-rag-flow-cloud.cloud-b {
+  top: 32%;
+  left: 12%;
+  width: 24%;
+  animation-delay: -9s;
+}
+
+.wiki-rag-flow-shelf {
+  left: 8%;
+  right: 8%;
+  bottom: 18%;
+  height: 13%;
+  border-radius: 999px;
+  background: #9bc792;
+  transform-origin: center;
+  animation: wikiRagShelfMove 3.2s ease-in-out infinite alternate;
+}
+
+.wiki-rag-flow-note {
+  width: 38%;
+  height: 44%;
+  border-radius: 0.55rem;
+  background: #fffaf0;
+  box-shadow:
+    inset 0 0 0 1px rgb(86 78 64 / 0.12),
+    0 7px 12px rgb(72 92 64 / 0.14);
+  animation: wikiRagNoteBob 5.8s ease-in-out infinite alternate;
+}
+
+.wiki-rag-flow-note::before,
+.wiki-rag-flow-note::after {
+  content: "";
+  position: absolute;
+  left: 17%;
+  height: 5%;
+  border-radius: 999px;
+  background: #a6b08f;
+}
+
+.wiki-rag-flow-note::before {
+  top: 29%;
+  width: 56%;
+}
+
+.wiki-rag-flow-note::after {
+  top: 44%;
+  width: 38%;
+}
+
+.wiki-rag-flow-note.note-back {
+  left: 22%;
+  bottom: 26%;
+  rotate: -7deg;
+  animation-name: wikiRagNoteBackMove;
+}
+
+.wiki-rag-flow-note.note-front {
+  left: 38%;
+  bottom: 24%;
+  background: #f7ead5;
+  rotate: 6deg;
+  animation-name: wikiRagNoteFrontMove;
+  animation-delay: -1.4s;
+}
+
+.wiki-rag-flow-tag {
+  width: 24%;
+  height: 13%;
+  border-radius: 999px;
+  background: #f0bf72;
+  transform-origin: left center;
+  animation: wikiRagTagSwing 1.9s ease-in-out infinite alternate;
+}
+
+.wiki-rag-flow-tag::after {
+  content: "";
+  position: absolute;
+  top: 38%;
+  right: 18%;
+  width: 42%;
+  height: 14%;
+  border-radius: 999px;
+  background: rgb(89 72 42 / 0.28);
+}
+
+.wiki-rag-flow-tag.tag-a {
+  left: 17%;
+  bottom: 39%;
+  rotate: -10deg;
+}
+
+.wiki-rag-flow-tag.tag-b {
+  right: 16%;
+  bottom: 45%;
+  background: #83c7ad;
+  rotate: 9deg;
+  animation-delay: -1.2s;
+}
+
+.wiki-rag-flow-search {
+  right: 18%;
+  bottom: 22%;
+  width: 19%;
+  aspect-ratio: 1 / 1;
+  border: 0.18rem solid #4c5a48;
+  border-radius: 999px;
+  animation: wikiRagSearchLook 2.2s ease-in-out infinite alternate;
+}
+
+.wiki-rag-flow-search::after {
+  content: "";
+  position: absolute;
+  right: -35%;
+  bottom: -20%;
+  width: 48%;
+  height: 16%;
+  border-radius: 999px;
+  background: #4c5a48;
+  rotate: 45deg;
+}
+
+:root[data-theme="dark"] .wiki-rag-flow-icon {
+  background: linear-gradient(180deg, #151d2a 0%, #1d2b31 58%, #1d3028 100%);
+}
+
+:root[data-theme="dark"] .wiki-rag-flow-icon::after {
+  box-shadow:
+    inset 0 0 0 1px rgb(111 164 240 / 0.14),
+    inset 0 -14px 24px rgb(8 17 14 / 0.36);
+}
+
+:root[data-theme="dark"] .wiki-rag-flow-cloud {
+  background: rgb(214 222 240 / 0.16);
+}
+
+:root[data-theme="dark"] .wiki-rag-flow-shelf {
+  background: #355a46;
+}
+
+:root[data-theme="dark"] .wiki-rag-flow-note {
+  background: #e9dfcb;
+}
+
+:root[data-theme="dark"] .wiki-rag-flow-note.note-front {
+  background: #d7c5aa;
+}
+
+:root[data-theme="dark"] .wiki-rag-flow-tag.tag-a {
+  background: #d3965e;
+}
+
+:root[data-theme="dark"] .wiki-rag-flow-tag.tag-b {
+  background: #71a999;
+}
+
+:root[data-theme="dark"] .wiki-rag-flow-search {
+  border-color: #222923;
+}
+
+:root[data-theme="dark"] .wiki-rag-flow-search::after {
+  background: #222923;
+}
+
+@keyframes wikiRagCloud {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(430%);
+  }
+}
+
+@keyframes wikiRagNoteBob {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes wikiRagNoteBackMove {
+  from {
+    transform: translateX(-2px) translateY(2px);
+  }
+
+  to {
+    transform: translateX(3px) translateY(-5px);
+  }
+}
+
+@keyframes wikiRagNoteFrontMove {
+  from {
+    transform: translateX(2px) translateY(1px);
+  }
+
+  to {
+    transform: translateX(-3px) translateY(-6px);
+  }
+}
+
+@keyframes wikiRagTagSwing {
+  from {
+    transform: translateY(1px) rotate(-9deg);
+  }
+
+  to {
+    transform: translateY(-4px) rotate(9deg);
+  }
+}
+
+@keyframes wikiRagSearchLook {
+  from {
+    transform: translateX(-4px) translateY(2px) rotate(-7deg);
+  }
+
+  to {
+    transform: translateX(4px) translateY(-3px) rotate(7deg);
+  }
+}
+
+@keyframes wikiRagShelfMove {
+  from {
+    transform: translateY(1px) scaleX(0.96);
+  }
+
+  to {
+    transform: translateY(-1px) scaleX(1.03);
+  }
+}
+
+@keyframes wikiTopicBaseBob {
+  from {
+    transform: translateY(1px) scaleX(0.96);
+  }
+
+  to {
+    transform: translateY(-1px) scaleX(1.03);
+  }
+}
+
+@keyframes wikiTopicMarkBob {
+  from {
+    transform: translateX(-1px) translateY(2px) rotate(-2deg);
+  }
+
+  to {
+    transform: translateX(2px) translateY(-4px) rotate(2deg);
+  }
+}
+
+@keyframes wikiTopicSignalMove {
+  from {
+    transform: translateX(-3px);
+  }
+
+  to {
+    transform: translateX(3px);
+  }
+}
+
+@keyframes wikiTopicBoltMove {
+  from {
+    transform: translateY(2px) rotate(-4deg) scale(0.96);
+  }
+
+  to {
+    transform: translateY(-4px) rotate(4deg) scale(1.04);
+  }
+}
+
+@keyframes wikiTopicClickPop {
+  from {
+    transform: translateY(2px) scale(0.9) rotate(-8deg);
+  }
+
+  to {
+    transform: translateY(-4px) scale(1.06) rotate(8deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wiki-rag-flow-cloud,
+  .wiki-rag-flow-shelf,
+  .wiki-rag-flow-note,
+  .wiki-rag-flow-tag,
+  .wiki-rag-flow-search,
+  .wiki-topic-base,
+  .wiki-topic-mark,
+  .wiki-topic-signal {
+    animation: none !important;
+  }
+}

@@ -57,15 +57,23 @@ npm run preview
 - `/` — 主页
 - `/jiju-pet` — Jiju.pet 构建叙事
 - `/projects` — 当前 AI build systems 与产品系统
+- `/project-css` — Projects / Home / Interests CSS art 直达检查页（隐藏直达页；不进 sitemap）
 - `/etreporthub` — ETReportHub 日报数据系统产品页
 - `/etreporthub-sales` — ETReportHub 售卖页与价格说明
 - `/poker` — Friday Poker Club 产品页与 story log
+- `/wiki` — 独立知识库总览，沉淀跨项目可复用 skills
+- `/wiki/vite` — Vite 构建技能笔记
+- `/wiki/background-music` — 背景音乐 UX 笔记
+- `/wiki/button-feedback` — 按钮反馈 UX 笔记
+- `/wiki/firebase-lifetime-storage` — Firebase lifetime storage 笔记
+- `/wiki/skills` — 跨项目 skills map
+- `/wiki/rag-flow` — Tag Registry 与 RAG flow 知识架构页
 - `/crm` — CRM Intelligence System 产品页
 - `/previous-projects` — 项目列表
 - `/analog-tech` — Film Gallery / 胶片图库
 - `/life-os` — 人生 RPG 能力系统 / Life OS 角色档案页
 - `/life` — Life 视频页（隐藏直达页；不在首页入口，不进 sitemap，客户端 SEO 设为 noindex）
-- `/brand-guide` — 品牌操作系统与 Apple-like editorial 设计规则
+- `/brand-guide` — Brand Guide：视觉、语气、版式与动效规则
 - `/conways-game-of-life` — 256 elementary cellular automata rules explorer
 - `/archive/:slug` — 归档项目详情
 
@@ -89,6 +97,10 @@ npm run preview
 3. `log.md`（最近改动）  
 
 有真实代码或文档变更时：更新实现 → 至少执行 `npm run build` 通过 → 在 `log.md` 追一条（改动 / 原因 / 影响 / 后续）。
+
+CSS art 复用入口：先看 `css-art.registry.ts` 与 `docs/css-art-system.md`，组件统一从 `components/css-art` 复用，样式放在 `styles/css-art/`。
+
+CSS 入口：`index.css` 只做 main import manifest。共享层为 `styles/tokens.css`（theme variables）、`styles/base.css`（body / page-shell）、`styles/shared.css`（shared card / panel / tag / CTA tokens）、`styles/theme-overrides.css`（dark utility overrides）和 `styles/motion.css`（全局 motion / keyframes）；路由样式放在 `styles/pages/`，复杂 CSS art 放在 `styles/css-art/`。
 
 ---
 

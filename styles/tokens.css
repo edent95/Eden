@@ -1,0 +1,50 @@
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  /* Eden accent palette (see /brand-guide) */
+  --color-eden-mint: #7bdcb5;
+  --color-eden-amber: #ffa340ed;
+}
+
+:root {
+  color-scheme: light;
+  --theme-page: #fafaf9;
+  --theme-surface: #ffffff;
+  --theme-surface-muted: #f5f5f4;
+  --theme-surface-strong: #1c1917;
+  --theme-border: #d6d3d1;
+  --theme-border-strong: #57534e;
+  --theme-text-primary: #1c1917;
+  --theme-text-secondary: #57534e;
+  --theme-text-soft: #78716c;
+  --theme-accent-teal: rgb(19 78 74 / 0.82);
+  --theme-accent-amber: rgb(120 53 15 / 0.82);
+  --theme-mint-glow: 123 220 181;
+  --theme-amber-rim: 255 163 64;
+  --editorial-island-width: 980px;
+  --editorial-page-padding: clamp(1.5rem, 7vw, 7rem);
+  --theme-background-texture: none;
+  --theme-background-lights: none;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-eden-mint: #dc6f82;
+  --color-eden-amber: #6fa4f0e6;
+  --theme-page: #141211;
+  --theme-surface: #1f1b19;
+  --theme-surface-muted: #2b2522;
+  --theme-surface-strong: #3a322e;
+  --theme-border: #57534e;
+  --theme-border-strong: #78716c;
+  --theme-text-primary: #f5f5f4;
+  --theme-text-secondary: #d6d3d1;
+  --theme-text-soft: #a8a29e;
+  --theme-accent-teal: rgb(255 170 182 / 0.92);
+  --theme-accent-amber: rgb(171 205 255 / 0.92);
+  --theme-mint-glow: 220 111 130;
+  --theme-amber-rim: 111 164 240;
+  --theme-background-texture: none;
+  --theme-background-lights: none;
+}

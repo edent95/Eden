@@ -1,0 +1,174 @@
+.motion-card {
+  position: relative;
+  isolation: isolate;
+  transition:
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 420ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.motion-card::before {
+  content: none;
+  display: none;
+}
+
+.motion-card::after {
+  content: none;
+  display: none;
+}
+
+.motion-card:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 18px 38px rgb(28 25 23 / 0.08),
+    0 4px 12px rgb(28 25 23 / 0.05);
+}
+
+:root[data-theme="dark"] .motion-card:hover {
+  box-shadow:
+    0 22px 44px rgb(0 0 0 / 0.24),
+    0 6px 14px rgb(0 0 0 / 0.2);
+}
+
+.motion-accent {
+  animation: accent-breathe 5.6s ease-in-out infinite;
+}
+
+/* Global motion keyframes and emoji utilities. */
+/* Flat emoji tiles + gentle motion (respects reduced motion) */
+@keyframes emoji-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes emoji-tilt {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes accent-breathe {
+  0%,
+  100% {
+    transform: translateY(0);
+    box-shadow: 0 0 0 rgb(var(--theme-mint-glow) / 0);
+  }
+  50% {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgb(var(--theme-mint-glow) / 0.12);
+  }
+}
+
+.flat-emoji {
+  @apply inline-flex size-10 shrink-0 items-center justify-center rounded-xl border border-eden-mint/20 bg-stone-200/60 text-xl leading-none shadow-sm;
+  transition:
+    transform 320ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 320ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 320ms cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+}
+
+.flat-emoji:hover {
+  transform: scale(1.06);
+  border-color: rgb(var(--theme-amber-rim) / 0.45);
+  box-shadow:
+    0 2px 8px rgb(var(--theme-mint-glow) / 0.35),
+    0 1px 3px rgb(28 25 23 / 0.08);
+}
+
+.flat-emoji-sm {
+  @apply size-8 rounded-lg text-base;
+}
+
+.flat-emoji-lg {
+  @apply size-12 rounded-2xl text-2xl;
+}
+
+.emoji-bob {
+  animation: emoji-bob 2.8s ease-in-out infinite;
+}
+
+.emoji-tilt {
+  animation: emoji-tilt 3.5s ease-in-out infinite;
+}
+
+.chapter-voice-enter {
+  animation: fade-in-up 480ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-shell::before,
+  .page-shell::after,
+  .page-shell > main,
+  .emoji-bob,
+  .emoji-tilt,
+  .chapter-voice-enter,
+  .motion-accent,
+  .motion-card::before,
+  .life-rpg-signal-arc,
+  .life-rpg-signal-vector,
+  .life-rpg-signal-node,
+  .life-rpg-signal-icon-orbit,
+  .life-rpg-signal-icon-core,
+  .life-rpg-wind-wave,
+  .life-rpg-wind-cloud-face,
+  .life-rpg-wind-cloud-eye,
+  .life-rpg-wind-cloud-mouth,
+  .life-rpg-wind-cloud-puff,
+  .life-rpg-wind-cloud-breath,
+  .life-rpg-wind-palm,
+  .life-rpg-wind-spray,
+  .life-rpg-contract-paper,
+  .life-rpg-contract-sign-stroke,
+  .life-rpg-contract-pen,
+  .life-rpg-contract-stamp,
+  .life-rpg-contract-seal {
+    animation: none !important;
+  }
+
+  .motion-card,
+  .motion-card::after {
+    transition: none !important;
+    will-change: auto;
+  }
+
+  .motion-card:hover,
+  .flat-emoji:hover {
+    transform: none;
+    box-shadow:
+      0 2px 8px rgb(var(--theme-mint-glow) / 0.35),
+      0 1px 3px rgb(28 25 23 / 0.08);
+  }
+}

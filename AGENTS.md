@@ -26,6 +26,47 @@ When editing this repo, preserve that positioning:
 - The wiki is LLM-maintained.
 - The schema defines how ingest, query, and lint should work.
 
+## Personal Knowledge Brand Direction
+
+If the user asks for a Dan Koe-like content direction, treat it as a reference for content architecture, not something to copy. Do not imitate Dan Koe's exact phrasing, promises, brand assets, or worldview.
+
+If the user references Dan Koe for an article or wiki page, default to the writing method only: strong thesis, short paragraphs, readable rhythm, pull quotes, and clear progression. Keep the visual system aligned with Eden's own brand guide unless the user explicitly asks to change the visual identity.
+
+The target direction is:
+
+- Personal knowledge brand, not generic portfolio.
+- Strong point of view first, credentials second.
+- Essays, systems, build logs, and resources should feel like one compounding body of thought.
+- The site should make Eden's recurring themes obvious: AI workflows, LLM-maintained knowledge, product systems, growth logic, Life OS, and how scattered work becomes usable structure.
+- Prefer a newsletter / essay / knowledge archive rhythm over a resume-first rhythm when the user asks for creator-media style changes.
+
+Content structure should usually follow this order:
+
+1. Core thesis: the short belief the whole page is organized around.
+2. Reader situation: what confusion, scattered workflow, or strategic problem the reader is already facing.
+3. Eden's lens: the original framework, system, or operating model being offered.
+4. Proof through builds: concrete projects, logs, artifacts, or before/after system changes.
+5. Durable archive: essays, wiki pages, source summaries, templates, or repeatable tools.
+6. Clear next action: read, subscribe, explore a system, or work with Eden.
+
+Writing rules for this direction:
+
+- Use short, high-signal claims.
+- Make the page feel like a worldview, not a service menu.
+- Prefer titles that express a position, for example "Knowledge should compound" rather than "About my notes app".
+- Use controlled contrast: old way vs new way, scattered vs system, one-shot answer vs durable wiki, content output vs operating memory.
+- Avoid fake certainty, inflated income/lifestyle claims, hustle-bro tone, and generic creator slogans.
+- Do not turn Eden into a self-help brand. Keep the center of gravity on knowledge systems, product thinking, AI workflows, and lived build evidence.
+- If numbers, social proof, or audience claims are used, they must be real and verifiable.
+
+For homepage-level changes in this direction, prioritize these sections:
+
+- A strong first-viewport thesis.
+- A "Read the thinking" or essay/archive entry.
+- A "Systems / resources" shelf for projects, guides, tools, and LLM Wiki assets.
+- A concise about block that explains the human behind the systems.
+- A final subscription/contact/work-with-me CTA only after the worldview is clear.
+
 ## LLM Wiki Operating Model
 
 Future agents should reason with these three layers:
@@ -229,7 +270,8 @@ When editing the concept site or future UI:
 - Do not revert to generic SaaS gradients or default startup aesthetics.
 - Preserve the knowledge-system feel: editorial, structured, durable, thoughtful.
 - Preserve the Apple-like horizontal whitespace now defined in `/brand-guide`: avoid full-width content blocks by default, keep desktop sections calm and centered, and let left/right space remain visibly open.
-- Preserve the current homepage CSS animation language at `http://localhost:4180/`: slow ambient background motion, subtle page entry, and the quiet Current Build / Jiju cat scene rhythm. Future animation changes may refine timing or performance, but should not remove this motion system or replace it with loud generic effects unless the user explicitly asks.
+- Preserve the Jiju app / Jiju cat style of CSS animation: visible objects should move clearly and simply. Do not use background fade, ambient glow layers, scanning lines, card-level colored gradient fades, or complex background-light motion as the default animation language. Put motion on concrete objects instead of the page or card background.
+- When the UI needs more color categorization, use solid category rails, dots, chips, borders, and icon accents. Do not use colored gradient fades or glow backgrounds as the categorization mechanism.
 - Favor content architecture that makes the core idea easier to grasp:
   - problem
   - architecture
@@ -244,6 +286,7 @@ When adding or editing large CSS visuals, treat them as a maintainable asset sys
 
 - Do not keep growing `index.css` with new CSS art blocks by default.
 - Put reusable or complex CSS visuals under `styles/css-art/`.
+- Register reusable CSS art in `css-art.registry.ts`, and read `docs/css-art-system.md` before adding, moving, or reusing CSS art. Future agents should import from `components/css-art` or the registry instead of copying component markup into page files.
 - One visual family should have one file, for example `life-os-signals.css`, `projects-icons.css`, or `jiju-cat.css`.
 - Keep page layout CSS separate from CSS art. Page spacing, grids, cards, and typography stay in page/style files; illustrated objects, animation layers, and visual keyframes belong in the CSS art file.
 - Use namespaced class names. Existing project namespaces such as `.life-rpg-*`, `.projects-*`, `.jiju-*`, and `.conway-*` are acceptable. Do not introduce generic art classes like `.cloud`, `.card`, `.node`, or `.line`.
@@ -266,10 +309,11 @@ When page-level CSS grows beyond a small local patch, split it by route instead 
 
 - Put route/page layout CSS under `styles/pages/`.
 - One route or closely related page family should have one file, for example `home.css`, `projects.css`, `life-os.css`, or `etreporthub.css`.
-- Keep global base rules, theme tokens, Tailwind setup, and app-wide utility behavior in `index.css` until they are intentionally moved into `styles/base.css` or `styles/tokens.css`.
+- Treat `index.css` as the CSS main manifest only. It should import Tailwind, shared layers, CSS art, and page files; do not grow it with implementation blocks.
+- Keep theme variables in `styles/tokens.css`, global page-shell/body behavior in `styles/base.css`, shared UI variables/components in `styles/shared.css`, app-wide dark utility overrides in `styles/theme-overrides.css`, and app-wide motion utilities/keyframes in `styles/motion.css`.
 - Page files should contain layout, typography scale, spacing, grids, panels, CTAs, page-specific dark mode, and responsive overrides.
 - CSS art files should remain under `styles/css-art/`; do not mix illustrated object layers or art keyframes into page files.
-- Keep imports at the top of `index.css` grouped in this order: Tailwind, CSS art, pages, then future base/tokens if added.
+- Keep imports in `index.css` grouped in this order: Tailwind, `tokens.css`, `base.css`, `shared.css`, `theme-overrides.css`, `motion.css`, CSS art files, then page files.
 - When extracting page CSS, preserve behavior first. Do not redesign while moving styles unless the user explicitly asks for visual changes.
 
 ### Route / SEO Registry Rules

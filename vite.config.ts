@@ -74,6 +74,9 @@ export default defineConfig(({ mode }) => {
       port: 4180,
       strictPort: true,
       host: 'localhost',
+      watch: {
+        ignored: ['**/verify_*/**', '**/dist_chk_*/**'],
+      },
     },
     plugins: [
       react(),

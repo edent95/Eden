@@ -16,6 +16,204 @@
 
 ## Entries
 
+### 2026-06-24 00:19
+
+- 类型：内容 / 前台 / Jiju.pet
+- 改动：根据用户提供的 Jiju 项目 Log Review，把 `/jiju-pet` 从原本的构建叙事扩展为完整项目复盘页；新增 Archive review、Operating model、Reusable methods、Project philosophy 等 section，并把 Jiju 从 pet-friendly cafe list 进化为可信宠物生活平台的主线写进 hero 和产品说明；补齐 `styles/pages/jiju-pet.css`，让该路由拥有独立页面样式。
+- 原因：用户要求根据附件内容把 Jiju 项目复盘、方法论和核心结论加入 `http://localhost:4180/jiju-pet`。
+- 影响：`/jiju-pet` 现在更清楚展示 Jiju 的产品演进、信任资料链路、前台 + BO 联动、机械 verify guardrails、live demo reuse、graceful degradation 和项目哲学；页面不再依赖空 CSS 入口。
+- 验证：关键词检查确认 `Archive review`、`Mechanical Verify Guardrails`、`Live Demo Reuse`、`Project philosophy` 与 `jiju-review-track` 已接入；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.10s）；`curl -I http://localhost:4180/jiju-pet` 返回 `200 OK`。
+- 后续：本地打开 `http://localhost:4180/jiju-pet`，应看到首屏定位更新为 trusted pet life platform，并在 Build log 前新增复盘主线、资料链路、可复用方法与项目哲学。
+
+### 2026-06-23 22:40
+
+- 类型：结构 / CSS 架构
+- 改动：把 `index.css` 收敛为 26 行 main import manifest；新增共享层 `styles/tokens.css`、`styles/base.css`、`styles/shared.css`、`styles/theme-overrides.css`、`styles/motion.css`；把原本残留在 `index.css` 的 ETReportHub、Film Gallery、Brand Guide、Conway、Life OS、Poker avatar/story 样式拆到对应 `styles/pages/*`；让 Home、Poker/Wiki、ETReport、Film、Brand Guide 的主要 card/panel/hero shadow 开始复用 shared CSS variables。
+- 原因：用户希望 CSS 不要一页一页重复写，而是有一个 main 入口和可共享的代码层。
+- 影响：之后新增页面时应从 `index.css` 挂 import，不再往 `index.css` 写实现；页面独有布局放 `styles/pages/`，跨页面 token/card/panel/tag/CTA/motion 放共享层，CSS art 继续放 `styles/css-art/`。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.09s）；`git diff --check -- index.css styles README.md AGENTS.md soul.md log.md` 通过；`curl -I` 检查 `/`、`/wiki/rag-flow`、`/etreporthub`、`/brand-guide` 均返回 `200 OK`。
+- 后续：后续页面重构时继续把重复 UI 样式迁到 `styles/shared.css`，不要在 page CSS 里重复定义基础 card/panel 数值。
+
+### 2026-06-23 22:32
+
+- 类型：修复 / 前台 / Home CSS art
+- 改动：把 `components/css-art/index.tsx` 从临时 fallback 组件恢复为真实 CSS art DOM 结构；恢复 `styles/css-art/projects-icons.css` 的完整 Projects / Jiju app icon CSS。
+- 原因：用户反馈 homepage 仍看不到 CSS；排查确认 `home.css` 已加载，但首页 CSS art 组件 DOM 与已恢复的 CSS 文件不匹配，且 `projects-icons.css` 仍是 placeholder，导致首页 Jiju scene / system icons / interest totems 看起来像样式丢失。
+- 影响：首页的 Jiju cat scene、Projects blueprint、Life magic、Power up、Gramophone、Archive evolution、Pyramid、Bagua，以及 Home system card 里的 Jiju project icon 都重新匹配真实 CSS 选择器。
+- 验证：`curl` 检查 dev server 返回的 `index.css` 已包含 `jiju-cat-scene`、`projects-jiju-css-icon`、`home-power-totem` 且不再包含 `Restored import entry`；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.07s）。
+- 后续：刷新 `http://localhost:4180/`；如果浏览器还显示旧画面，用硬刷新清掉上一轮 HMR 缓存。
+
+### 2026-06-23 22:27
+
+- 类型：修正 / 前台 / 知识库视觉
+- 改动：移除 `styles/pages/poker.css` 中 `.wiki-page` 的黑底、大标题、左对齐、透明文章模块等 Dan Koe-like 视觉覆盖；保留并收敛 `wiki-quote-bar` 为 Eden brand guide 下的品牌色 blockquote；同步 `AGENTS.md` 和 `soul.md`，明确 Dan Koe 只作为 article 写法参考，视觉仍跟随 Eden brand guide。
+- 原因：用户澄清 `/wiki/rag-flow` 只是参考 Dan Koe 写 article 的手法，其他仍需 follow 自己的 brand guide。
+- 影响：`/wiki/rag-flow` 和其他 `/wiki/...` 页面恢复 Eden/Poker 既有 ambient 背景、玻璃卡片、居中内容岛和克制视觉；内容结构仍保留重点优先、pull quote、Skill Candidate、Key points 和折叠完整笔记。
+- 验证：`rg` 确认 `#030303` 和 `.wiki-page` 黑底覆盖已从 `styles/pages/poker.css` 移除，仅保留 `.poker-page .wiki-quote-bar` 品牌化样式；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.10s）；`curl -I http://localhost:4180/wiki/rag-flow` 返回 `200 OK`。
+- 后续：刷新 `http://localhost:4180/wiki/rag-flow`，应看到 Eden brand guide 视觉，而不是黑底 Dan Koe-like 视觉。
+
+### 2026-06-23 22:23
+
+- 类型：修复 / 前台 / Home CSS
+- 改动：恢复被误写成 placeholder 的 Home 相关 CSS 文件：`styles/pages/home.css`、`styles/css-art/home-jiju-scene.css`、`styles/css-art/home-projects-blueprint.css`、`styles/css-art/home-life-magic.css`、`styles/css-art/home-interest-totems.css`。
+- 原因：用户反馈 homepage CSS 全部不见；排查发现这些文件都只剩 1 行 `Restored import entry`，是前面修 Vite missing import 时误补空入口导致的。
+- 影响：首页 layout 和 Home CSS art 样式入口恢复，CSS bundle 从缺失 Home 样式的状态恢复为完整样式。
+- 验证：`wc -l` 确认五个文件恢复为 265 / 552 / 273 / 347 / 1432 行；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.08s）；`curl -I http://localhost:4180/` 返回 `200 OK`。
+- 后续：本地硬刷新 `http://localhost:4180/`，应看到首页样式恢复；之后修 import 缺失不能再用空 CSS placeholder 覆盖已有样式文件。
+
+### 2026-06-23 22:20
+
+- 类型：前台 / 知识库 / Blockquote styling
+- 改动：把 wiki note 的 `Core thesis` 从普通大标题改成 `blockquote`，新增 `.wiki-quote-bar` 样式：黑底文章中的左侧浅金色 color bar、italic 大号重点句。
+- 原因：用户询问参考截图中 mention 的 color bar 是什么，并要求加进去。
+- 影响：`/wiki/rag-flow` 等知识库文章页的核心结论更像 editorial pull quote / blockquote，视觉重点更明确。
+- 验证：`rg` 确认 `wiki-quote-bar` 和 `blockquote` 已接入；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.12s）。
+- 后续：本地刷新 `http://localhost:4180/wiki/rag-flow`，应看到 Core thesis 左侧出现浅金色竖线。
+
+### 2026-06-23 22:18
+
+- 类型：前台 / 知识库 / Editorial styling
+- 改动：把 wiki note 页面改成黑底、左对齐、text-first 的 editorial article 风格：关闭全局 ambient gradient，缩窄内容列，hero 左对齐，大标题更接近文章标题；移除 note 主体的大玻璃卡片感，核心结论、Skill Candidate、Key points 和详情折叠区改为更克制的分隔线/文本模块。
+- 原因：用户提供参考截图和链接，要求 `/wiki/rag-flow` 采用类似黑底长文的 look and feel，同时不要一屏很多字。
+- 影响：`/wiki/rag-flow`、`/wiki/vite`、`/wiki/skills` 等 wiki note 页更像个人知识品牌的黑底文章页，重点更突出；不复制参考站文案或品牌资产，只采用高层排版逻辑。
+- 验证：`rg` 确认 `.wiki-page` 黑底和 editorial 覆盖样式已接入；`curl -I http://localhost:4180/wiki/rag-flow` 返回 `200 OK`；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.22s）。
+- 后续：本地刷新 `http://localhost:4180/wiki/rag-flow`，应看到黑底左对齐文章感，默认只显示重点和折叠详情。
+
+### 2026-06-23 22:13
+
+- 类型：前台 / 知识库 / 信息密度
+- 改动：重排 wiki note 页面，把完整 bullet 列表默认收进 `Show full note / 展开完整笔记`；正文默认只显示 `Core thesis`、`Skill candidate`、最多 3 张 `Key points` 卡片；Skill draft preview 改成 3 个摘要字段 + 详细字段网格；缩小 wiki hero 的纵向间距和标题尺度，减少首屏压迫感。
+- 原因：用户反馈 `/wiki/rag-flow` 页面字太多，只要重点。
+- 影响：`/wiki/rag-flow`、`/wiki/vite`、`/wiki/skills` 等 note 页面默认更短、更聚焦，保留完整内容但需要用户主动展开；one-click skillization 仍可用。
+- 验证：`rg` 确认 `wiki-key-points`、`wiki-detail-drawer`、`wiki-skill-summary-grid` 已接入；`curl -I http://localhost:4180/wiki/rag-flow` 返回 `200 OK`；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.17s）。
+- 后续：本地刷新 `http://localhost:4180/wiki/rag-flow`，应看到默认只展示重点卡片，完整笔记折叠在下方。
+
+### 2026-06-23 22:08
+
+- 类型：内容 / 路由 / RAG flow
+- 改动：新增 `/wiki/rag-flow` 知识架构页，说明 Tag Registry、Skill Cards、Embedding Index / RAG 和 Query / Suggest / Auto Skill Recall 的完整 flow；补充 RAG 适用场景、Tag Registry 管理规则、实现顺序和反模式；同步 `seo-routes.ts` 与 `README.md`；让 `Turn into Skill` 可用于该页面并生成对应 tags/source/anti-patterns。
+- 原因：用户要求执行 Tag/RAG 管理方向，并把这个 flow 做成独立页面。
+- 影响：知识库现在有一页专门定义未来 RAG 架构：source of truth 留在结构化 notes/cards/tags，vector DB 只作为检索层；后续可以按该页面逐步扩展 `/tag-registry`、`/skill-cards` 和 embedding index。
+- 验证：`rg` 确认 `rag-flow`、`Tag Registry and RAG flow`、`Embedding Index`、`metadata filters` 已接入；`curl -I http://localhost:4180/wiki/rag-flow` 返回 `200 OK`；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 11.18s）。
+- 后续：本地打开 `http://localhost:4180/wiki/rag-flow` 查看 RAG flow；下一步可实现 `/tag-registry` 和 `/skill-cards` 两个结构化页面。
+
+### 2026-06-23 21:53
+
+- 类型：内容 / 知识库 / Vite & Skill requirements
+- 改动：在 `/wiki/vite` 新增 `为什么我会用 Vite`，明确 Vite 的采用原因来自 Jiju 项目变得庞大后需要更快反馈和更清楚的区块边界；在 `/wiki/skills` 新增 `一个 skill 的基本要求`，并把最小数据结构补齐为 `title`、`trigger`、`reusableRule`、`procedure`、`checks`、`sourceProject`、`antiPatterns`、`tags`、`sources`、`status`。
+- 原因：用户补充 Vite 来自 Jiju 项目复杂度问题，并询问一个 skill 的基本要求。
+- 影响：Vite 笔记更贴近真实项目来源；Skill Card 的生成标准更清楚，后续 one-click skillization 不会把普通笔记误当成 skill。
+- 验证：`rg` 确认 `为什么我会用 Vite`、`Jiju 项目变得太庞大`、`一个 skill 的基本要求`、`reusableRule`、`sourceProject`、`antiPatterns` 已接入；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 3.12s）。
+- 后续：本地打开 `http://localhost:4180/wiki/vite` 和 `http://localhost:4180/wiki/skills` 查看更新内容。
+
+### 2026-06-23 21:49
+
+- 类型：代码 / 产品功能 / Skill Card schema
+- 改动：强化 one-click Skill Card draft 的必需字段：新增 `reusableRule`、`sourceProject`、`antiPatterns`，并在 preview UI 中明确展示触发场景、可复用规则、执行步骤、检查方式、来源项目、反模式和 tags；本地旧 draft 缺字段时使用 fallback，重新生成后会写入新结构。
+- 原因：用户明确要求 Skill Card 必须包含触发场景、可复用规则、执行步骤、检查方式、来源项目、反模式，并需要 tag 标记与分类。
+- 影响：`Turn into Skill` 生成的 draft 从普通摘要升级为可审核、可复用的技能卡结构；`/wiki/skills` 的 Local skill drafts 也会显示来源项目和触发场景，便于后续分类管理。
+- 验证：`rg` 确认 `reusableRule`、`sourceProject`、`antiPatterns`、`触发场景`、`可复用规则`、`反模式` 已接入；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 3.74s）。
+- 后续：本地打开 `http://localhost:4180/wiki/vite`，点击 `Regenerate skill`，应看到包含 6 个必需字段和 tags 的新版 Draft Skill Card。
+
+### 2026-06-23 21:45
+
+- 类型：代码 / 产品功能 / Wiki skills
+- 改动：实现 one-click skillization 第一版：每个 `/wiki/...` 笔记页新增 `Turn into Skill` 按钮；点击后根据当前 wiki note 生成本地 Skill Card draft，包含 `title`、`trigger`、`procedure`、`checks`、`sources`、`tags`、`status` 和 `createdAt`；draft 保存到 `localStorage` 的 `eden-wiki-skill-drafts`；`/wiki` 与 `/wiki/skills` 会显示本地生成的 Skill Cards。
+- 原因：用户要求执行“让 user one click 变成 skills”的方向。
+- 影响：知识库从静态阅读页进化为可操作的 skill extraction workflow；当前版本先用本地存储打通 preview / draft / library 体验，未来可接 Firebase 或 markdown wiki 文件作为持久化层。
+- 验证：`rg` 确认 `SKILL_DRAFTS_STORAGE_KEY`、`Turn into Skill`、`wiki-skill-preview`、`Local skill drafts` 已接入；`curl -I http://localhost:4180/wiki/vite` 和 `curl -I http://localhost:4180/wiki/skills` 均返回 `200 OK`；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 41.22s）。
+- 后续：本地打开 `http://localhost:4180/wiki/vite`，点击 `Turn into Skill`，应出现 Draft Skill Card；再打开 `http://localhost:4180/wiki/skills`，应看到生成的 Local skill drafts。
+
+### 2026-06-23 21:43
+
+- 类型：内容 / 知识库 / Skills workflow
+- 改动：扩展 `/wiki/skills`，把标题改为跨项目可复用 skills，并新增三块内容：还需要补充的 skill 记录字段、`one click 变成 skills` 的操作流程、Skill Card 的最小数据结构。
+- 原因：用户询问知识库还需要补充什么，以及未来如何让 user one click 把项目经验变成 skills。
+- 影响：知识库现在不只记录已有经验，也定义了后续产品化方向：从 wiki note / build log / bug fix 中抽取 skill candidate，经 user preview 后保存为可复用 Skill Card，并可被未来项目重新调用。
+- 验证：`rg` 确认 `One-click skillization flow`、`Minimum data shape`、`Skill Card` 已接入；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 9.14s）。
+- 后续：本地打开 `http://localhost:4180/wiki/skills`，应看到 one-click skillization 流程和最小数据结构。
+
+### 2026-06-23 21:36
+
+- 类型：内容 / 知识库 / Vite
+- 改动：优化 `/wiki/vite` 的 Vite 知识库笔记，把用户对 Vite 架构、缺点和 fully vibe coding 使用方式的理解整理为四层：为什么适合 vibe coding、真正要小心的缺点、fully vibe coding 时怎么用、我的使用原则。
+- 原因：用户给出自己对 Vite 的理解，希望补充优化，并沉淀成更准确、可复用的知识库内容。
+- 影响：`/wiki/vite` 不再只是 Friday Poker Club 的项目笔记，而是跨项目可复用的 Vite + AI 协作操作原则；同时修正“关闭强类型/随便 ts-ignore”的风险，改为开发阶段保心流、交付前跑 typecheck/build 的做法。
+- 验证：`rg` 确认 `Vite as the vibe-coding engine`、`fully vibe coding`、`Rule of thumb` 已接入；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 5.60s）。
+- 后续：本地打开 `http://localhost:4180/wiki/vite`，应看到新的 Vite 架构与 fully vibe coding 使用原则。
+
+### 2026-06-23 21:29
+
+- 类型：代码 / 路由 / 知识库独立化
+- 改动：把知识库从 `/poker/wiki` 改为独立 `/wiki` 路由；细节页同步改为 `/wiki/vite`、`/wiki/background-music`、`/wiki/button-feedback`、`/wiki/firebase-lifetime-storage`、`/wiki/skills`；`/poker` 的 Knowledge base 区块现在链接到独立 `/wiki`；同步 `seo-routes.ts` 和 `README.md`。
+- 原因：用户明确要求不要 `http://localhost:4180/poker/wiki`，只要 `http://localhost:4180/wiki`，因为其他项目也会 share 这些 skills。
+- 影响：知识库从 Friday Poker Club 私有子页变成站内独立知识库入口，可承接 Jiju、Poker、ETReportHub、CRM 等项目共同复用的 skills。
+- 验证：`rg` 确认当前实现路由使用 `/wiki`；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.11s）；`curl -I http://localhost:4180/wiki` 和 `curl -I http://localhost:4180/wiki/vite` 均返回 `200 OK`。
+- 后续：本地验证 `http://localhost:4180/wiki`，应看到独立知识库总览；从 `/poker#knowledge` 点击笔记也应进入 `/wiki/...`。
+
+### 2026-06-23 21:27
+
+- 类型：资源 / 修复 / Poker avatars
+- 改动：从 `HEAD` 恢复 `public/poker-avatars` 里的 9 张 Friday Poker Club avatar 图片：`jf.png`、`ph.png`、`zm.png`、`yt.png`、`ben.png`、`pat.png`、`jq.png`、`teik.png`、`ed.png`。
+- 原因：用户截图显示 `/poker` avatar card 图片缺失，浏览器显示 alt text；实际原因是 `public/poker-avatars` 目录存在但头像文件为空。
+- 影响：`/poker#avatar-guide` 的角色头像恢复显示，不再露出 broken image / alt text。
+- 验证：`curl -I http://localhost:4180/poker-avatars/jf.png` 返回 `200 OK`；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.11s）。
+- 后续：本地刷新 `http://localhost:4180/poker#avatar-guide`，应看到头像恢复；若仍看到旧 broken image，硬刷新一次。
+
+### 2026-06-23 21:24
+
+- 类型：代码 / 修复 / Vite import
+- 改动：新增 `components/css-art/index.tsx`，导出当前 `App.tsx` 与 `css-art.registry.ts` 需要的 CSS art 组件入口；补回 `index.css` 已 import 但当前工作区缺失的 `styles/css-art/*` 与 `styles/pages/*` 样式入口文件，避免 Vite import analysis 继续报 unresolved import。
+- 原因：用户本地 Vite overlay 报错：`Failed to resolve import "./components/css-art/index" from "App.tsx"`。
+- 影响：开发服务器可以重新解析 `App.tsx`；CSS art 先以轻量 fallback 组件恢复可见入口，后续若需要完整复杂动效，可再把各 CSS art 文件扩回详细版本。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.08s）。
+- 后续：本地刷新 `http://localhost:4180/poker`；如果浏览器仍显示旧 overlay，按 Esc 关闭后硬刷新一次。
+
+### 2026-06-23 21:14
+
+- 类型：代码 / 内容 / Poker 知识库
+- 改动：在 `/poker` 新增 `Knowledge base` 区块，沉淀 Friday Poker Club 构建中学到的 Vite、background music、click button feedback、Firebase lifetime storage 和 skills map；新增 `/poker/wiki` 总览页，以及 `/poker/wiki/vite`、`/poker/wiki/background-music`、`/poker/wiki/button-feedback`、`/poker/wiki/firebase-lifetime-storage`、`/poker/wiki/skills` 五个知识库笔记页；新增 `styles/pages/poker.css` 管理 Poker wiki 样式；同步 `seo-routes.ts` 和 `README.md` 路由表。
+- 原因：用户想把 Friday Poker Club 项目经验做成自己的知识库，并要求把 Vite、按钮反馈和 skills 等内容拆成单独页面。
+- 影响：`/poker` 现在不仅是产品页和 story log，也成为项目知识库入口；Poker 构建经验以可回看的 wiki note 形式沉淀，后续可继续追加更多项目学习页。
+- 验证：关键词检查确认 `poker/wiki`、`pokerWikiEntries`、`PokerWikiPage`、`poker-wiki-grid`、`Firebase lifetime storage` 已接入；`git diff --check -- App.tsx index.css styles/pages/poker.css seo-routes.ts README.md` 通过。`npm run build` 当前被既有工作树删除状态阻挡：`index.css` import 的 `styles/css-art/life-os-signals.css` 不存在；`npm run typecheck` 当前也被既有缺失文件阻挡：`components/css-art/index.tsx` 缺失，导致 `App.tsx` 与 `css-art.registry.ts` 的现有 import 无法解析。
+- 后续：恢复或重新接入缺失的 `components/css-art/index.tsx` 与 `styles/css-art/*` 源文件后，重新运行 `npm run build`；本地验证地址为 `http://localhost:4180/poker`、`http://localhost:4180/poker/wiki` 和各个 `/poker/wiki/...` 笔记页。
+
+### 2026-06-18 17:37
+
+- 类型：文档 / 内容方向 / 个人知识品牌
+- 改动：在 `AGENTS.md` 新增 `Personal Knowledge Brand Direction`，把 Dan Koe-like 方向定义为内容架构参考而非照搬：强观点首页、reader situation、Eden lens、build proof、durable archive、clear next action；同步在 `soul.md` 增加执行规则和防返工检查项。
+- 原因：用户询问如果想要类似 Dan Koe 的内容风格，现在应该怎么改，并点名 `AGENTS.md`。
+- 影响：后续 agent 在改首页、brand guide、essay/archive 或 LLM Wiki 内容时，会优先把 Eden 收敛成个人知识品牌 / creator media hub，而不是普通 portfolio 或 generic SaaS 页面。
+- 验证：关键词检查确认 `Personal Knowledge Brand Direction`、`Dan Koe-like`、`creator media hub` 已写入；`git diff --check -- AGENTS.md soul.md log.md` 通过；已用 `npm ci` 重建损坏的本地依赖后运行 `npm run build`，当前 build 失败在既有工作树状态：`index.css` import `./styles/css-art/life-os-signals.css`，但该文件当前处于删除/缺失状态。
+- 后续：如果继续执行前台改版，优先改 `/` 和 `/brand-guide` 的文案结构：首屏 thesis、essay/archive 入口、systems/resources shelf、真实 build proof 和 CTA。
+
+### 2026-06-12 21:22
+
+- 类型：前台 / ETReportHub System Flow 内容调整
+- 改动：重写 `/etreporthub` hero subtitle，去掉“只是换成 Eden 站主题”这种任务说明式文案，改成面向运营和交付的系统地图表达；新增 `Complete Node Map / 完整节点图` section，把原 System Flow 的 15 个节点按 Input、Transaction Pipeline、Customer Pipeline、Unified Output 分组放回页面；补充对应 Eden 风格 node map CSS 和移动端单列布局。
+- 原因：用户反馈原文案“很奇怪”，并希望把 Complete Node Map 也加进去。
+- 影响：页面内容更像正式产品系统页，不像改稿说明；System Flow 的完整链路现在更清楚地覆盖 Excel 上传、后端 fallback、Transaction append/upsert、Customer overwrite/snapshot、SQLite、Dashboard、Excel/CRM/Audit 导出、tier maintenance 和上云预留。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 3.91s）；关键词检查确认旧文案 `一样保留 System Flow` 已移除，`Complete Node Map / 完整节点图` 已接入。
+- 后续：本地验证看 `http://localhost:4180/etreporthub`，hero 下方应是更自然的系统地图文案，架构总览后应出现完整节点图。
+
+### 2026-06-12 18:31
+
+- 类型：代码 / 开发环境 / Vite
+- 改动：删除根目录下生成的 `verify_*` / `dist_chk_*` 临时验证目录；在 `vite.config.ts` 的 dev server `watch.ignored` 加入 `**/verify_*/**` 和 `**/dist_chk_*/**`；把 `App.tsx` 与 `css-art.registry.ts` 里的 `./components/css-art` 目录 import 改成明确的 `./components/css-art/index`，减少 Vite 解析目录入口的不确定性。
+- 原因：用户反馈 `http://localhost:4180/etreporthub` 进不到；排查发现 Vite dev server 能监听端口但 GET 请求无响应，终端出现大量 `verify_*` / `dist_chk_*` HTML reload，且依赖 transform/cache 状态卡住。
+- 影响：`/etreporthub`、`index.tsx`、`App.tsx`、`index.css` 已恢复 200 返回；后续临时验证目录不会再触发 dev server reload 风暴。
+- 验证：清理 `node_modules/.vite` 并重启 `npm run dev` 后，`curl http://localhost:4180/etreporthub`、`/index.tsx`、`/App.tsx`、`/index.css` 均返回 200；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 12.16s）。
+- 后续：如果以后再生成 root-level 验证目录，优先放到 ignored 路径或临时目录，不要让 Vite watcher 扫到。
+
+### 2026-06-12 18:08
+
+- 类型：代码 / 内容 / ETReportHub
+- 改动：把 `/projects` 里 ETReportHub card 和 `ETReportHub readout` 的旧 System Flow / `Daily Report/log.md` 口径，替换成 `/etreporthub` 产品页当前叙事：Daily Report OS、operating clarity、Product Promise、Data Trust、Operating Views、Next Action、CRM-ready workflow。
+- 原因：用户要求用 `https://edentan.site/etreporthub` 这个页面的信息，替换原本来自 `https://daily.etreporthub.com/systemflow` 的信息。
+- 影响：`/projects` 中 ETReportHub 的展示与 `/etreporthub` 产品页一致，不再强调 dashboard cache、Docker/backend 等偏内部工程细节。
+- 验证：关键词检查确认 `/projects` 旧 `Daily Report/log.md` 文案已移除；`git diff --check` 通过；`npm run build` 已尝试多次，但当前工作区的 Vite build 卡在 `transforming...` 且进程 0% CPU，已中断避免残留进程。
+- 后续：本地访问 `http://localhost:4180/projects`，查看 ETReportHub card 与下方 readout；访问 `http://localhost:4180/etreporthub` 对照产品页口径。后续需单独排查当前工作区 build 卡住问题。
+
 ### 2026-06-05 04:01
 
 - 类型：代码 / CSS art / Home Interests refinement
@@ -1963,3 +2161,309 @@
 - 影响：`/life-os` hero 和 `🧾 角色 Loadout` 的风之眼图腾更像风系魔法阵，保留透明底、缩小尺寸、light/dark 变量和原有风刃/风眼动效。
 - 验证：`npm run lint` 通过；`npm run build` 通过（✓ 2083 modules transformed，✓ built in 2.52s）；`curl -I http://localhost:4180/life-os` 返回 200；关键词检查确认 `life-os-wind-eye-geometry` / `tick` / `diamond` 已接入；`git diff --check -- App.tsx styles/css-art/life-os-signals.css log.md` 通过。
 - 后续：本地验证看 `http://localhost:4180/life-os` hero 和 `🧾 角色 Loadout`，风之眼周围应多出三角阵、菱形节点和符文短线。
+
+### 2026-06-05 16:07
+
+- 类型：前台 / `/project-css` CSS art 检查页
+- 改动：新增 `/project-css` 直达页面，集中展示 `/projects` 的 4 个 CSS app icon（Jiju、Friday Poker Club、ETReportHub、CRM Intelligence System）；页面复用现有 `ProjectsJijuCssIcon`、`ProjectsPokerCssIcon`、`ProjectsEtReportCssIcon`、`ProjectsCrmCssIcon`，没有复制第二套 CSS art；`/projects` hero 增加「看 CSS 图标 / View CSS icons」CTA；新增 `.project-css-*` 页面布局样式；`seo-routes.ts` 添加 `/project-css`，设为 `index:false`、`sitemap:false`；README 路由表同步。
+- 原因：用户想多开一个 page，把 `http://localhost:4180/projects` 里的 4 个 CSS 放进去，并询问影响。
+- 影响：新增一个隐藏直达检查页，不影响 `/projects` 原卡片结构；因为 noindex 且不进 sitemap，不会扩大公开 SEO 面；以后 4 个 icon 组件本身改动时，新页面会复用同一套组件展示。
+- 验证：`npm run build` 通过（✓ 2083 modules transformed，✓ built in 2.43s）；`curl -I http://localhost:4180/project-css` 和 `curl -I http://localhost:4180/projects` 均返回 200；关键词检查确认 `/project-css`、`ProjectCssGalleryPage`、`ProjectCssGalleryIcon`、`.project-css-board`、SEO route 和 README 路由已接入；`git diff --check -- App.tsx styles/pages/projects.css seo-routes.ts README.md log.md` 通过。`npm run typecheck` 两次进入 0 CPU 挂起状态，已清理 stale `tsc --noEmit` 进程，本次未把 typecheck 作为完成验证。
+- 后续：本地验证看 `http://localhost:4180/project-css`，应看到 4 个 CSS app icon 独立排版；看 `http://localhost:4180/projects` hero，应多一个「看 CSS 图标」入口。
+
+### 2026-06-05 16:19
+
+- 类型：前台 / `/project-css` CSS art gallery 扩充
+- 改动：把 `/project-css` 从只展示 `/projects` 四个 app icon，扩充为站内 CSS art 检查页；新增 Home `System Files` 里的 `Projects Hub` 设计图纸 CSS 和 `Life OS RPG System` 心跳魔法阵 CSS；新增 Home `Interests` 当前实际显示的四个透明底图腾：`Life OS` 黑发变金发、`Analog Tech` 留声机、`Pattern Archive` 八卦镜、`Conway's Game of Life` 金字塔碰坏；新增 `.project-css-section-*`、`.project-css-home-*`、`.project-css-totem-*` 布局样式；README 和 `seo-routes.ts` 描述同步从“四个项目图标”改为 Projects / Home / Interests CSS art 检查页。
+- 原因：用户要求把 `Life OS RPG System`、`Projects Hub` 和 `Interests` 里面的 CSS 也加进去。
+- 影响：`/project-css` 成为更完整的内部 CSS 视觉 review board；仍只复用现有 React/CSS 组件，不改 Home 或 `/projects` 原页面内容；路由继续 `noindex` 且不进 sitemap。
+- 验证：`npm run build` 通过（✓ 2083 modules transformed，✓ built in 2.11s）；`curl -I http://localhost:4180/project-css` 和 `curl -I http://localhost:4180/` 均返回 200；关键词检查确认 `HomeProjectsBlueprintIcon`、`HomeLifeMagicIcon`、`HomePowerUpTotem`、`HomeGramophoneTotem`、`HomeBaguaMirrorTotem`、`HomePyramidBreakTotem` 都已在 `/project-css` 接入；`git diff --check -- App.tsx styles/pages/projects.css seo-routes.ts README.md log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/project-css`，应依次看到 Projects app icon、Home System Files 两个 CSS、Interests 四个透明底 CSS 图腾。
+
+### 2026-06-05 16:28
+
+- 类型：前台架构 / CSS art registry 与复用系统
+- 改动：新增 `components/css-art/index.tsx`，把 Home/Projects 当前复用的 CSS art React wrapper 从 `App.tsx` 拆出；新增 `css-art.registry.ts`，登记 10 个可复用 CSS art 的 `id`、分类、来源 route、比例、透明底/固定底、CSS 文件、组件、双语 label 和使用说明；`/project-css` 改为从 `projectCssArtItems`、`homeSystemCssArtItems`、`homeInterestCssArtItems` 自动渲染；`/projects` 卡片 icon 改为通过 `getProjectCssArtByProjectTitle` 取组件；新增 `docs/css-art-system.md` 操作手册；同步更新 `AGENTS.md`、`soul.md`、`README.md`，要求未来 agent 先查 registry 和文档，不要复制 CSS art DOM。
+- 原因：用户希望以后其他 agent 可以直接拿这些 CSS 来用，而不是每次重新翻页面或复制一份。
+- 影响：CSS art 现在有可发现、可复用、可维护的入口；页面视觉 CSS 没有重写，Home、`/projects`、`/project-css` 仍使用同一批 class 和动画；后续新增 CSS art 需要登记到 registry。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 2.14s）；`curl -I http://localhost:4180/project-css`、`curl -I http://localhost:4180/projects`、`curl -I http://localhost:4180/` 均返回 200；关键词检查确认旧 `ProjectCssGalleryIcon` 已移除，`cssArtRegistry`、`components/css-art`、`docs/css-art-system.md`、AGENTS/soul 规则都已接入；`git diff --check -- App.tsx components/css-art/index.tsx css-art.registry.ts docs/css-art-system.md AGENTS.md soul.md README.md styles/pages/projects.css seo-routes.ts log.md` 通过。
+- 后续：未来复用 CSS art 时，从 `css-art.registry.ts` 查 ID 和组件；新增视觉时先改 `components/css-art` 与 `styles/css-art`，再补 registry 和 `/project-css` 检查。
+
+### 2026-06-05 16:36
+
+- 类型：前台 / office framed CSS app icons
+- 改动：根据 System Files 的克制视觉语言和 framed app icon 规则，新增 6 个办公系统 1:1 CSS icon：`Desk Calendar`、`Inbox Tray`、`Report Sheet`、`Team Board`、`Contract Seal`、`Workflow Automator`；React wrapper 放进 `components/css-art/index.tsx`，新增 CSS 家族 `styles/css-art/office-icons.css`，并在 `index.css` 导入；`css-art.registry.ts` 新增 `office-icon` 分类和 6 个 registry 条目；`/project-css` 新增 `Office / Framed app icons` section；`docs/css-art-system.md` 同步 category 和 ID 列表。
+- 原因：用户要求基于 System Files 和 framed app icon 风格，设计 6 个办公 CSS 1:1。
+- 影响：新增一组可复用的 office icon visual family，不影响 Home、`/projects` 原有视觉；这些 icon 已走 registry，可被后续 agent 直接复用；全部按 framed app icon 处理，带 flat background、light/dark mode 和 `prefers-reduced-motion`。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 2.34s）；`curl -I http://localhost:4180/project-css` 和 `curl -I http://localhost:4180/projects` 均返回 200；关键词检查确认 `officeIconCssArtItems`、`office-icon`、6 个 `Office*CssIcon`、`.project-css-office-grid`、`office-icons.css` 和 `office-desk-calendar` 已接入；`git diff --check -- App.tsx components/css-art/index.tsx css-art.registry.ts styles/css-art/office-icons.css styles/pages/projects.css index.css docs/css-art-system.md log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/project-css` 的 `Office / Framed app icons` section，应看到 6 个办公 1:1 CSS app icon。
+
+### 2026-06-05 16:41
+
+- 类型：前台 / office CSS icon emoji-style 简化
+- 改动：重写 `styles/css-art/office-icons.css`，把 6 个 office framed app icon 从偏复杂的系统 UI 细节改成更 emoji-style 的大主体图标：大日历页、大纸张托盘、大报表文件、大团队看板、大签署文件和大流程节点；减少细线、grid、scan、复杂阴影和小元素，保留 flat framed background、少量 bob/pulse 动效、light/dark mode 与 `prefers-reduced-motion`；同步把 `css-art.registry.ts` 的 6 个 office copy 改成 emoji-like 描述。
+- 原因：用户反馈上一版有点复杂，希望更接近 emoji style。
+- 影响：`/project-css` 的 `Office / Framed app icons` section 更直观、符号更大、更容易一眼识别；组件和 registry ID 不变，后续复用方式不变。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 4.01s）；`curl -I http://localhost:4180/project-css` 返回 200；关键词检查确认 `officeEmoji*` keyframes、`emoji-like` registry copy、`office-calendar-page::after` 已接入；`git diff --check -- styles/css-art/office-icons.css css-art.registry.ts log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/project-css` 的 office section，6 个 icon 应更像大块 emoji 图标，而不是细节很多的系统小插画。
+
+### 2026-06-05 16:47
+
+- 类型：前台 / office CSS icon 指定减法
+- 改动：继续简化 `styles/css-art/office-icons.css` 的 office icon：`Desk Calendar` 隐藏 grid 和圆圈，改成 3 个若隐若现日期 dot；`Inbox Tray` 明确隐藏横线；`Team Board` 的任务卡改成 3D 翻卡；`Contract Seal` 把原本丑的签名条改成三角形记号；`Workflow Automator` 从抽象流程节点改成工厂机械流水线罐头，使用 factory block、conveyor path、can node 和 rolling can token；同步更新 `css-art.registry.ts` 对应 copy。
+- 原因：用户指出上一版仍然复杂，并给出每个 icon 的具体修改方向。
+- 影响：`/project-css` 的 office section 更接近直观 emoji icon，减少信息密度；组件和 registry ID 不变，后续复用 API 不变。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 3.26s）；`curl -I http://localhost:4180/project-css` 返回 200；关键词检查确认 `officeDateGhost`、`officeCardFlip`、`officeTrianglePop`、`officeCanRoll`、`officeCanJiggle`、`office-inbox-line` 已接入；`git diff --check -- styles/css-art/office-icons.css css-art.registry.ts log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/project-css` 的 office section，Calendar 应只剩淡 dots，Inbox 无横线，Team card 会翻，Contract 是三角形记号，Workflow 是工厂流水线罐头。
+
+### 2026-06-05 16:53
+
+- 类型：前台 / office CSS icon 可见差异加强
+- 改动：针对用户反馈“看没有任何差别”，进一步加大 `styles/css-art/office-icons.css` 的视觉差异：`Desk Calendar` 移除日期数字，只保留若隐若现 dot；`Team Board` 移除头像和底板，改成更大的三张翻卡；`Contract Seal` 把三角形记号放大成紫色主形；`Workflow Automator` 放大 factory block、conveyor 和 can token；重启本地 Vite dev server，避免浏览器继续吃旧 HMR 状态。
+- 原因：上一版 CSS 虽然已被 dev server 读取，但视觉变化不够明显，用户侧看不出差别。
+- 影响：`/project-css` office section 应出现肉眼明显变化；registry/组件/API 不变。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 3.29s）；重启 `npm run dev` 后 `curl -I http://localhost:4180/project-css` 返回 200；直接请求 `http://localhost:4180/styles/css-art/office-icons.css` 确认包含新版 `content: ""`、`officeCardFlip 4.8s`、`width: 30%`、`officeCanRoll`、`officeDateGhost`；`git diff --check -- styles/css-art/office-icons.css css-art.registry.ts log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/project-css`，需要强刷页面；如果仍没变化，优先检查浏览器缓存或当前 tab 是否不是 4180 dev server。
+
+### 2026-06-05 16:56
+
+- 类型：前台 / office CSS icon 隐藏 bug 修复
+- 改动：修复 `styles/css-art/office-icons.css` 的 specificity bug：原本 `.office-css-icon span { display: none; }` 比后续 `.office-calendar-page { display: block; }` 等单 class 规则更强，导致内部图形全被隐藏，只剩 icon 底色；现在改为 `.office-css-icon span { display: block; }`，并只针对 `.office-calendar-grid`、`.office-calendar-marker`、`.office-inbox-line`、`.office-team-avatar` 做明确隐藏。
+- 原因：用户截图显示 6 个 office icon 直接不见，只剩空白底。
+- 影响：`/project-css` office section 的内部图形会重新显示；保留上一轮简化后的 Calendar dots、翻卡、三角形、工厂罐头等视觉方向。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 3.17s）；重启 `npm run dev` 后 `curl -I http://localhost:4180/project-css` 返回 200；直接请求 `http://localhost:4180/styles/css-art/office-icons.css` 确认 `.office-css-icon span { display: block; }` 和指定隐藏列表存在；`git diff --check -- styles/css-art/office-icons.css log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/project-css` 的 office section，图形应重新显示，不再是空白底。
+
+### 2026-06-05 17:01
+
+- 类型：前台 / Workflow Automator magic wand redesign
+- 改动：把 `Workflow Automator` office icon 从工厂流水线罐头改成 `Magic Wand Automation`：复用原 workflow DOM，`.office-workflow-grid` 改为圆形魔法 aura，`.office-workflow-node` 改为被点亮的 workflow 节点，`.office-workflow-path` 改为发光连接线，`.office-workflow-token` 改为魔法棒；新增 `officeMagicAura`、`officeMagicSpark`、`officeMagicNode`、`officeMagicLine`、`officeMagicWand` keyframes，并清掉旧 `officeCanRoll` / `officeCanJiggle` / `officeEmojiToken` 残留；`css-art.registry.ts` 文案同步改为魔法棒点亮流程节点。
+- 原因：用户选择 Magic Wand Automation 方向替换不合适的 Workflow Automator 工厂流水线版本。
+- 影响：`/project-css` office section 的 Workflow Automator 更贴近“自动化”和站内魔法/系统视觉语言；组件、registry ID 和页面结构不变。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 2.30s）；重启 `npm run dev` 后 `curl -I http://localhost:4180/project-css` 返回 200；直接请求 `http://localhost:4180/styles/css-art/office-icons.css` 确认 `officeMagicWand` / `officeMagicAura` 存在且旧 `officeCan*` / factory 方向已清掉；`git diff --check -- styles/css-art/office-icons.css css-art.registry.ts log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/project-css` 的 Workflow Automator，应看到魔法棒点亮节点，而不是工厂流水线罐头。
+
+### 2026-06-05 17:11
+
+- 类型：前台 / math magic framed CSS app icons
+- 改动：新增 6 个数学魔法 framed 1:1 CSS app icon：`Prime Sigil`、`Vector Gate`、`Integral Spell`、`Pi Orb`、`Fractal Rune`、`Matrix Portal`；React wrapper 放进 `components/css-art/index.tsx`；新增 `styles/css-art/math-magic-icons.css` 并在 `index.css` 导入；`css-art.registry.ts` 新增 `math-magic-icon` 分类和 6 个 registry 条目；`/project-css` 新增 Math magic section；`docs/css-art-system.md` 同步 category 和 ID。
+- 原因：用户要求再给一组六个数学魔法元素 framed app icon。
+- 影响：新增可复用的 math-magic visual family，不影响现有 Projects/Home/Office icons；所有组件走 registry，可被后续 agent 直接复用；支持 light/dark mode 和 `prefers-reduced-motion`。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 3.56s）；重启 `npm run dev` 后 `curl -I http://localhost:4180/project-css` 返回 200；关键词检查确认 `mathMagicIconCssArtItems`、`math-magic-icon`、`MathPrimeSigilCssIcon`、`math-magic-icons.css` 和 `math-prime-sigil` 已接入；浏览器背景验证确认 `Prime Sigil`、`Vector Gate`、`Integral Spell`、`Pi Orb`、`Fractal Rune`、`Matrix Portal` 均已出现在 `/project-css`；`git diff --check -- App.tsx components/css-art/index.tsx css-art.registry.ts styles/css-art/math-magic-icons.css styles/pages/projects.css index.css docs/css-art-system.md log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/project-css` 的 Math magic section。
+
+### 2026-06-05 17:17
+
+- 类型：前台 / math magic icon 魔法化增强
+- 改动：重写 `styles/css-art/math-magic-icons.css` 的视觉调性，把 6 个 math-magic framed icon 从浅色数学符号改成更明显的魔法 icon：深色魔法底、星尘、旋转法阵、发光核心、传送门、奥术轨道和慢速漂浮；新增 `mathMagicDust`、`mathGlyphTurn`、`mathSpellHover` 动效；同步更新 `css-art.registry.ts` 的 6 个 copy，让描述更偏 spellbook / artifact / portal / rune。
+- 原因：用户希望这组更像“魔法那种”，不只是数学符号。
+- 影响：`/project-css` 的 Math magic section 视觉更接近 CRM 魔法阵和 Magic Wand Automation 的站内魔法语言；registry ID、React 组件和页面结构不变，后续复用方式不变。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 3.60s）；`curl -I http://localhost:4180/project-css` 返回 200；关键词检查确认 `mathMagicDust`、`mathGlyphTurn`、`mathSpellHover` 和新版 spellbook copy 已接入；`git diff --check -- styles/css-art/math-magic-icons.css css-art.registry.ts log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/project-css` 的 Math magic section，应看到更暗、更发光、更像魔法道具的 6 个 framed app icon。
+
+### 2026-06-05 17:20
+
+- 类型：前台 / math magic icon 几何符文增强
+- 改动：在 `styles/css-art/math-magic-icons.css` 给 6 个 math-magic framed icon 增加几何图形层：通用 aura 叠加菱形框、三角符文和六边形；Vector Gate 增加菱形平面和中心几何门；Integral Spell 增加三角面积符文；Pi Orb 增加六边形 artifact；Fractal Rune seed 改成六边形并加内三角；Matrix Portal 增加菱形框和三角符文；新增 `mathTriangleFloat` 动效，并把部分节点改成 `clip-path` 菱形以避免 transform 动画冲突。
+- 原因：用户要求在魔法 icon 里再加一些几何图形。
+- 影响：Math magic section 现在不只靠圆形法阵和发光，几何结构更明显；React DOM、registry ID 和页面结构不变。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 3.11s）；`curl -I http://localhost:4180/project-css` 返回 200；关键词检查确认 `mathTriangleFloat`、`math-vector-plane::before`、`math-pi-orb::before`、`math-fractal-seed::before`、`math-matrix-grid::after` 已接入；`git diff --check -- styles/css-art/math-magic-icons.css log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/project-css` 的 Math magic section，应看到更明显的三角、菱形、六边形几何符文。
+
+### 2026-06-05 17:35
+
+- 类型：前台 / Fire Element 1:1 CSS icon
+- 改动：新增 `ElementFireCssIcon` React wrapper；新增 `styles/css-art/elemental-icons.css`，实现一个 1:1 framed 火元素 CSS icon：火焰核心、三角火符、旋转火环、灰烬火星和底部熔岩光；`index.css` 导入 elemental CSS；`css-art.registry.ts` 新增 `elemental-icon` 分类、`element-fire` registry 条目和 `elementalIconCssArtItems` 导出；`/project-css` 新增 Elemental section；`docs/css-art-system.md` 同步 category 和 ID。
+- 原因：用户要求给一个火元素 CSS 1:1。
+- 影响：新增可复用 elemental visual family 的第一个 icon，不影响现有 Projects/Home/Office/Math magic sections；后续可以按同一分类继续扩展水、风、土等元素。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 3.11s）；`curl -I http://localhost:4180/project-css` 返回 200；关键词检查确认 `ElementFireCssIcon`、`elementalIconCssArtItems`、`element-fire`、`elemental-icons.css` 和 `project-css-elemental` 已接入；`git diff --check -- App.tsx components/css-art/index.tsx css-art.registry.ts styles/css-art/elemental-icons.css styles/pages/projects.css index.css docs/css-art-system.md log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/project-css` 的 Elemental section，应看到单个 Fire Element 1:1 framed CSS icon。
+
+### 2026-06-05 17:40
+
+- 类型：前台 / Fire Element flat 简化
+- 改动：按用户反馈重写 `styles/css-art/elemental-icons.css` 的 Fire Element 视觉：隐藏 `fire-element-ring` 和 `fire-element-sigil`，移除旋转火环、三角符印、conic 法阵感和对应 `fireGlyphTurn` / `fireSigilFloat` keyframes；背景改成更 flat 的深色面，火焰改成大块红/橙/金三层，底光和 ember 保留但降低光效；同步更新 `/project-css` section copy 与 `css-art.registry.ts` 描述，不再写 triangle sigil。
+- 原因：用户要求 flat 一点，不要旋转火环，不要三角型。
+- 影响：Elemental section 的 Fire Element 更像简洁 app icon，而不是魔法符文 icon；组件、registry ID 和页面结构不变。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 3.33s）；`curl -I http://localhost:4180/project-css` 返回 200；关键词检查确认 `fireGlyphTurn`、`fireSigilFloat`、`triangle sigil`、`三角符印`、`旋转火环` 无残留，仅保留隐藏用的 `.fire-element-ring` selector；`git diff --check -- App.tsx css-art.registry.ts styles/css-art/elemental-icons.css log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/project-css` 的 Elemental section，Fire Element 应是 flat 大火焰，无旋转火环和三角符印。
+
+### 2026-06-12 21:16
+
+- 类型：前台 / ETReportHub System Flow 内容迁移
+- 改动：将 `/etreporthub` 从原来的产品介绍页改为 System Flow 信息页，吸收 `daily.etreporthub.com/systemflow` 的核心内容：60 秒系统导览、系统目的、功能地图、业务规则、Daily Upload Flow、运营闭环、系统架构流、Convert 发生位置、SQLite 表和优化路线图；视觉仍使用 Eden 当前的深色 editorial/product theme，而不是复制原站样式。
+- 原因：用户要求保留 `https://daily.etreporthub.com/systemflow` 的信息内容，但放进 `edentan.site` 的主题和风格里。
+- 影响：`http://localhost:4180/etreporthub` 现在是 ETReportHub 的系统说明页，内容更接近内部 system flow 文档，同时保留 Eden 页面节奏、卡片密度、CTA 和 responsive 样式。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 2.11s）；dev server 已重启在 `http://localhost:4180/`；`curl` 检查确认 `/etreporthub`、`/index.tsx`、`/App.tsx`、`/index.css` 和 React/Vite 依赖均返回 200。
+- 后续：本地验证看 `http://localhost:4180/etreporthub`，应看到 “ETReportHub / System Flow” hero、60-second tour、feature map、business rules、architecture flow 和 optimization roadmap。
+
+### 2026-06-05 17:43
+
+- 类型：前台 / Fire Element 火焰角度修正
+- 改动：调整 `styles/css-art/elemental-icons.css` 的 Fire Element 火焰主体角度：基础 transform 从 `rotate(45deg)` 改为 `rotate(12deg)`；`fireFlameWave` 从 42/49 度摆动改为 9/15 度；`fireCorePulse` 同步改为 12 度；圆角改成更接近直立火苗的形状。
+- 原因：用户反馈火焰太歪。
+- 影响：Elemental section 的 Fire Element 火焰更正、更像 upright flat flame，但仍保留轻微动态呼吸。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 5.33s）；`curl -I http://localhost:4180/project-css` 返回 200；关键词检查确认旧 45/42/49 度旋转无残留，新 9/12/15 度角度已接入；`git diff --check -- styles/css-art/elemental-icons.css log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/project-css` 的 Elemental section，Fire Element 火焰应不再明显倾斜。
+
+### 2026-06-05 17:46
+
+- 类型：前台 / Water Element 1:1 CSS icon
+- 改动：新增 `ElementWaterCssIcon` React wrapper；在 `styles/css-art/elemental-icons.css` 增加 Water Element 视觉：flat 深蓝 framed 底、大水滴、两层柔和水波、三颗 bubble、慢速 tide glow；`css-art.registry.ts` 新增 `element-water` registry 条目；`/project-css` Elemental section 改成复数元素文案，并把 `.project-css-elemental-grid` 从单列改成桌面两列；`docs/css-art-system.md` 同步新增 `element-water`。
+- 原因：用户要求多一个水元素。
+- 影响：Elemental section 现在有 Fire Element 和 Water Element 两个 1:1 framed CSS icon；后续可继续按 `elemental-icon` 分类扩展风、土等元素。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 5.06s）；`curl -I http://localhost:4180/project-css` 返回 200；关键词检查确认 `ElementWaterCssIcon`、`element-water`、`water-element-*`、`project-css-elemental-grid` 和 docs ID 已接入；`git diff --check -- App.tsx components/css-art/index.tsx css-art.registry.ts styles/css-art/elemental-icons.css styles/pages/projects.css docs/css-art-system.md log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/project-css` 的 Elemental section，应看到 Fire Element 和 Water Element 两个 flat 1:1 icon。
+
+### 2026-06-05 17:49
+
+- 类型：前台 / Water Element 水滴化简化
+- 改动：调整 `styles/css-art/elemental-icons.css` 的 Water Element：把三层 `water-element-drop` 改成明确尖顶水滴 `clip-path` 轮廓；隐藏 `.water-element-wave`，移除 `waterWaveDrift` keyframe，让底部不再出现像木材的横条；同步更新 `/project-css` section copy 和 `css-art.registry.ts` 描述，从“柔和水波”改为“水滴轮廓、气泡和 tide glow”。
+- 原因：用户要求水元素做成水滴型，并移除下面像木材的部分。
+- 影响：Water Element 更像单一 flat 水滴 icon，视觉更简洁；组件和 registry ID 不变。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 3.79s）；`curl -I http://localhost:4180/project-css` 返回 200；关键词检查确认 `waterWaveDrift`、`soft waves`、`柔和水波` 无残留，水滴 `clip-path` 已接入；`git diff --check -- App.tsx css-art.registry.ts styles/css-art/elemental-icons.css log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/project-css` 的 Elemental section，Water Element 应是清楚水滴型，底部没有横条。
+
+### 2026-06-05 17:52
+
+- 类型：前台 / Wind Element 1:1 CSS icon
+- 改动：新增 `ElementWindCssIcon` React wrapper；在 `styles/css-art/elemental-icons.css` 增加 Wind Element 视觉：flat 青绿色 framed 底、三条柔和风带、两条尾风、小叶片、微风点和慢速 breeze glow；`css-art.registry.ts` 新增 `element-wind` registry 条目；`/project-css` Elemental section copy 从火/水扩展为火/水/风，并把 `.project-css-elemental-grid` 改为桌面三栏；`docs/css-art-system.md` 同步新增 `element-wind`。
+- 原因：用户要求多一个风元素。
+- 影响：Elemental section 现在有 Fire、Water、Wind 三个 flat 1:1 framed CSS icon；后续可继续按同一 `elemental-icon` 分类扩展土等元素。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 3.66s）；`curl -I http://localhost:4180/project-css` 返回 200；关键词检查确认 `ElementWindCssIcon`、`element-wind`、`wind-element-*`、`project-css-elemental-grid` 和 docs ID 已接入；`git diff --check -- App.tsx components/css-art/index.tsx css-art.registry.ts styles/css-art/elemental-icons.css styles/pages/projects.css docs/css-art-system.md log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/project-css` 的 Elemental section，应看到 Fire Element、Water Element、Wind Element 三个 flat 1:1 icon。
+
+### 2026-06-23 22:53
+
+- 类型：前台 / Brand guide 分类与 Wiki RAG CSS icon
+- 改动：`/brand-guide` 新增 Guide map 分类区块，把规则分成全站品牌系统、内容语气和 Poker page 专属；将 Story style section 改为 `/poker` only，明确不作为全站写作规则；新增 `WikiRagFlowCssIcon` 与 `styles/css-art/wiki-icons.css`，用 CSS art 替换 `/wiki/rag-flow` 的 emoji 视觉；同步注册 `wiki-rag-flow` 到 `css-art.registry.ts`，并更新 `docs/css-art-system.md`。
+- 原因：用户要求 brand guide 也要分类，并明确 Story style 只属于 poker page；同时要求 Tag Registry 与 RAG flow 不再用 emoji，而改用 CSS visual。
+- 影响：`http://localhost:4180/brand-guide` 现在能直接看出哪些规则是全站、哪些是 `/poker` 专属；`http://localhost:4180/wiki/rag-flow` 的 card 和 note lead 使用知识流 CSS icon，其他 wiki entry 仍保留原本轻量符号。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.06s）；`curl -I http://localhost:4180/brand-guide` 返回 200；`curl -I http://localhost:4180/wiki/rag-flow` 返回 200；`git diff --check -- App.tsx components/css-art/index.tsx css-art.registry.ts index.css styles/css-art/wiki-icons.css styles/pages/brand-guide.css styles/pages/poker.css docs/css-art-system.md log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/brand-guide`，应看到 Guide map 三个分类卡；看 `http://localhost:4180/wiki/rag-flow`，Tag Registry 与 RAG flow 应显示 CSS art icon，不再显示 compass emoji。
+
+### 2026-06-23 22:56
+
+- 类型：前台 / Wiki RAG CSS icon 动效收敛
+- 改动：重写 `styles/css-art/wiki-icons.css`，移除 RAG icon 的 ring、scan、node/link 网络和 opacity/fade 类效果；把 `WikiRagFlowCssIcon` DOM 从复杂知识流层减少为云、书架、两张 note、两个 tag 和搜索圈；动画改为接近 Jiju app icon 的实体小物件位移：云慢飘、note 轻微 bob、tag 轻摆、搜索圈轻移；同步更新 `css-art.registry.ts` copy 和 background 类型。
+- 原因：用户反馈不要 fade effect、不要太多细节，希望更接近 Jiju app CSS 动画类型。
+- 影响：`/wiki/rag-flow` 的视觉从科技感 RAG 图改为更简单、可爱、实体化的 note/tag 小场景；不影响 `/brand-guide` 分类和 wiki 内容结构。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.04s）；`curl -I http://localhost:4180/wiki/rag-flow` 返回 200；`curl -I http://localhost:4180/brand-guide` 返回 200；`git diff --check -- components/css-art/index.tsx styles/css-art/wiki-icons.css css-art.registry.ts` 通过。
+- 后续：本地验证看 `http://localhost:4180/wiki/rag-flow`，RAG icon 应是简化的 note/tag 小场景，没有扫描线、复杂圆环或 fade 细节。
+
+### 2026-06-23 22:59
+
+- 类型：前台 / Wiki RAG CSS icon 可见动效增强
+- 改动：加强 `styles/css-art/wiki-icons.css` 的 transform 动效幅度：note 从轻微 bob 改成更明显的左右/上下位移，tag 摆动角度加大，搜索圈增加左右寻找感，书架底座加入轻微伸缩；仍不使用 fade、scan、opacity 动画或复杂细节。
+- 原因：用户反馈 icon 要“看起来能动那种”，上一版动作太细。
+- 影响：`/wiki/rag-flow` 的 CSS icon 现在更容易一眼看出在动，同时仍保持 Jiju-like 实体小物件动画方向。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.13s）；`curl -I http://localhost:4180/wiki/rag-flow` 返回 200；`git diff --check -- styles/css-art/wiki-icons.css` 通过。
+- 后续：本地验证看 `http://localhost:4180/wiki/rag-flow`，note/tag/search 应该有更明显的移动感。
+
+### 2026-06-23 23:06
+
+- 类型：前台 / 全站 background fade 移除
+- 改动：移除 `styles/base.css` 的 `.page-shell::before` texture layer 和 `.page-shell::after` ambient light layer；移除全局 `background-color` transition，避免背景颜色做 fade；关闭 `styles/motion.css` 的 motion-card flare / hover background glow，并删除 `texture-drift`、`light-orbit`、`light-pulse`、`card-flare-drift`、`flare-breathe` 这些背景光效 keyframes；关闭 `styles/pages/conway.css` 的额外背景 pseudo layer；把 `styles/tokens.css` 的 `--theme-background-texture` 和 `--theme-background-lights` 设为 `none`；同步更新 `/brand-guide` Motion language、`AGENTS.md` 和 `soul.md`，明确以后动效走 Jiju-like 实体物件，不走 background fade。
+- 原因：用户要求把全部 background fade 拿掉。
+- 影响：全站页面背景不再有漂移纹理、ambient glow、背景光晕、card flare 或背景色 fade；前景内容入场和 CSS art 里的实体物件动画仍保留。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 992ms）；关键词检查确认 `texture-drift`、`light-orbit`、`light-pulse`、`card-flare-drift`、`flare-breathe` 无残留；`curl -I http://localhost:4180/`、`/brand-guide`、`/wiki/rag-flow`、`/conways-game-of-life` 均返回 200；`git diff --check -- styles/base.css styles/motion.css styles/pages/conway.css styles/tokens.css App.tsx AGENTS.md soul.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/` 和 `http://localhost:4180/wiki/rag-flow`，背景应保持静态纯底，动效只发生在可见物件上。
+
+### 2026-06-23 23:12
+
+- 类型：前台 / Card 内彩色 fade 移除
+- 改动：把 shared card/panel surface 从半透明 color-mix 改为纯 `var(--theme-surface)` / `var(--theme-surface-muted)`；移除 `/poker`、`/wiki/*`、`/etreporthub`、`/etreporthub-sales`、`/brand-guide`、`/life-os` card/panel/radar 内部的 mint/amber/radial/linear 彩色渐层 fade；同步更新 `AGENTS.md` 和 `soul.md`，明确以后 card-level colored gradient fades 也不要再作为默认视觉语言。
+- 原因：用户要求 card 里面有颜色的 fade 也拿掉。
+- 影响：页面 card 和 panel 现在是更干净的纯 surface；保留内容结构、实体 CSS art 动画和必要的图片文字遮罩。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.02s）；关键词检查确认 page/shared/theme override CSS 中没有 mint/amber 相关 radial/linear colored fade 残留；`curl -I http://localhost:4180/`、`/wiki/rag-flow`、`/brand-guide`、`/life-os` 均返回 200；`git diff --check -- styles/shared.css styles/pages/poker.css styles/pages/etreport.css styles/pages/brand-guide.css styles/pages/life-os.css styles/theme-overrides.css` 通过。
+- 后续：本地验证看 `http://localhost:4180/wiki/rag-flow`、`http://localhost:4180/brand-guide` 和 `http://localhost:4180/life-os`，card 内不应再有彩色渐层 fade。
+
+### 2026-06-23 23:27
+
+- 类型：前台 / Solid 颜色分类增强
+- 改动：在 `styles/shared.css` 新增 build、experience、interaction、data、knowledge、system 六组 solid 分类色 token；给 `/wiki` 与 `/poker` knowledge cards 增加 per-slug tone class、顶部色条、icon 色块、eyebrow/link 色彩、quote bar 和 bullet 分类色；Skill Card tags 改成循环 solid 分类色；`/brand-guide` Guide map 三张分类卡增加不同 solid 色条、scope chip 和 bullet 色点；同步更新 `AGENTS.md` 与 `soul.md`，明确颜色分类用 solid rails/chips/dots，不用渐层 fade。
+- 原因：用户在移除背景和彩色 fade 后，希望保留更多颜色分类。
+- 影响：页面不回到彩色渐层，但不同知识类型和 brand-guide 分类更容易一眼区分。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.09s）；colored fade 关键词检查无残留；`curl -I http://localhost:4180/wiki`、`/wiki/rag-flow`、`/brand-guide`、`/poker` 均返回 200；`git diff --check -- App.tsx styles/shared.css styles/pages/poker.css styles/pages/brand-guide.css AGENTS.md soul.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/wiki`，每张 knowledge card 应有不同 solid 分类色；看 `http://localhost:4180/brand-guide`，Guide map 三类应有不同色条和 chip。
+
+### 2026-06-23 23:29
+
+- 类型：前台 / Wiki key points 色条直线化
+- 改动：将 `.wiki-key-point-card` 的左侧分类色从 `border-left` 改成内部 `::before` 直线，增加左侧 padding，并让色条上下留距，避免沿着卡片圆角形成弧形。
+- 原因：用户指出 Key points 卡片里的 color tag 看起来变成弧线，希望改成直线。
+- 影响：`/wiki/rag-flow` 与其他 wiki note 的 Key points 卡片左侧分类色现在是干净竖直线，不再贴着圆角弯曲。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 997ms）；`curl -I http://localhost:4180/wiki/rag-flow` 和 `/wiki` 均返回 200；`git diff --check -- styles/pages/poker.css` 通过。
+- 后续：本地验证看 `http://localhost:4180/wiki/rag-flow` 的 Key points section，左侧绿色分类线应为直线。
+
+### 2026-06-23 23:32
+
+- 类型：前台 / Wiki key points 色条贴边
+- 改动：调整 `.wiki-key-point-card::before`，把分类线从卡片内部移到 box outline 左边缘，top/bottom 贴齐卡片高度，并移除线条自身圆角。
+- 原因：用户要求 color tag 加在 box outline 那边。
+- 影响：Key points 卡片的分类色现在贴着 box 左边缘，同时保持直线。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 965ms）；`curl -I http://localhost:4180/wiki/rag-flow` 和 `/wiki` 均返回 200；`git diff --check -- styles/pages/poker.css` 通过。
+- 后续：本地验证看 `http://localhost:4180/wiki/rag-flow`，Key points 的绿色线应在卡片 outline 左边缘。
+
+### 2026-06-23 23:35
+
+- 类型：前台 / Wiki note 顶部色条贴边直线化
+- 改动：将 `.poker-wiki-note`、`.poker-wiki-index-panel` 和 `.poker-wiki-card` 的顶部分类色从 `border-top` 改成贴在 box outline 顶边的 `::before` 直线，避免顶部色条跟着圆角弯曲；同时保留不同 wiki tone 的分类色。
+- 原因：用户指出 Core thesis 外层 note card 顶部色条也需要变成 box outline 上的直线。
+- 影响：`/wiki/rag-flow` 的大 note 卡和 `/wiki` 的知识卡顶部色条现在都是贴边直线，不再出现弧形色条。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 976ms）；`curl -I http://localhost:4180/wiki/rag-flow` 和 `/wiki` 均返回 200；`git diff --check -- styles/pages/poker.css` 通过。
+- 后续：本地验证看 `http://localhost:4180/wiki/rag-flow`，Core thesis 外层卡片顶部绿色线应在 box outline 顶边且保持直线。
+
+### 2026-06-23 23:39
+
+- 类型：前台 / Wiki 分类线头尾渐隐
+- 改动：将 `.poker-wiki-card::before`、`.poker-wiki-note::before`、`.poker-wiki-index-panel::before` 的水平分类线改为线条自身的 90deg gradient，让左右两端渐隐；将 `.wiki-key-point-card::before` 的垂直分类线改为 180deg gradient，让上下两端渐隐。
+- 原因：用户要求线的头跟末端都 fade 着去。
+- 影响：分类线仍在 box outline 上，仍是直线，但线条两端会柔和收掉；不恢复 card/background fade。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 999ms）；`curl -I http://localhost:4180/wiki/rag-flow` 和 `/wiki` 均返回 200；`git diff --check -- styles/pages/poker.css` 通过。
+- 后续：本地验证看 `http://localhost:4180/wiki/rag-flow`，顶部绿色线和 Key points 左线应在两端渐隐。
+
+### 2026-06-23 23:42
+
+- 类型：前台 / Wiki 分类线 CSS polish
+- 改动：把 wiki 分类线从颜色 gradient 改为 solid `background` 加 `mask-image` 渐隐，水平线使用 90deg mask，垂直线使用 180deg mask；增加轻微 `saturate(1.08)` 让线条主体更清楚。
+- 原因：用户要求加一点 CSS；此次只 polish 线条本身，不恢复 card/background fade。
+- 影响：分类线主体更干净，头尾渐隐更稳定；card 背景仍保持纯色。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.06s）；`curl -I http://localhost:4180/wiki/rag-flow` 和 `/wiki` 均返回 200；`git diff --check -- styles/pages/poker.css` 通过。
+- 后续：本地验证看 `http://localhost:4180/wiki/rag-flow`，分类线主体应更 solid，头尾仍柔和渐隐。
+
+### 2026-06-23 23:45
+
+- 类型：前台 / Wiki title CSS icons
+- 改动：在 `styles/pages/poker.css` 给 `.poker-wiki-card-title`、`.wiki-key-point-card h3` 和 `.poker-wiki-note-section h3` 增加纯 CSS `::before` icon；不同 wiki tone 使用不同 CSS shape：Vite 闪电、background music 声音、button feedback 星形点击、Firebase 数据六边形、skills 多点星、RAG flow 阶梯/卡片形状；icon 跟随当前分类色。
+- 原因：用户要求用 CSS 给 title 加一些 icon。
+- 影响：`/wiki` cards、`/wiki/rag-flow` Key points 和完整笔记 section title 更容易扫描，同时不使用 emoji、不增加背景 fade。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.08s）；`curl -I http://localhost:4180/wiki`、`/wiki/rag-flow`、`/wiki/vite` 均返回 200；`git diff --check -- styles/pages/poker.css` 通过。
+- 后续：本地验证看 `http://localhost:4180/wiki` 和 `http://localhost:4180/wiki/rag-flow`，标题旁应出现对应分类色 CSS icon。
+
+### 2026-06-23 23:49
+
+- 类型：前台 / Brand guide CSS rules 固化
+- 改动：在 `/brand-guide` 的 Motion language 下新增 `Current CSS rules` 卡片组，明确四条规则：不要 background/card fade、分类用 solid 色条/点/chip/border/CSS title icon、分类线放在 box outline 且只允许线条头尾渐隐、title icon 默认用 CSS shape 不用 emoji；同步更新 Motion 文案，加入 scan lines 和 card-level color fades 的禁用说明；新增对应 `brand-guide-rule-*` CSS，让规则卡本身使用纯 surface、实色分类线和 CSS title icon。
+- 原因：用户要求把刚才确认的 rules 加进 Brand Guide，作为未来页面修改的可见规范。
+- 影响：`/brand-guide` 现在不只记录大方向，也记录了当前全站 CSS 执行边界；后续新增 wiki、project 或 brand 页面时可以直接按这组规则检查。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 978ms）；`curl -I http://localhost:4180/brand-guide` 返回 200；`git diff --check -- App.tsx styles/pages/brand-guide.css` 通过；关键词检查确认 `Current CSS rules` 与四条 rule 已写入 `App.tsx`。
+- 后续：本地验证看 `http://localhost:4180/brand-guide#brand-motion`，Motion language 下方应出现 `Current CSS rules` 四张卡。
+
+### 2026-06-23 23:57
+
+- 类型：前台 / Brand Guide 去命名化
+- 改动：将 `/brand-guide` 页面文案从个人/项目命名版改成通用 Brand Guide：移除 Brand Guide 区域内 Apple、Eden、Jiju、Poker、Life OS 等名称引用；Hero 改为 `品牌指南 / Brand Guide`；Design logic、Type、Voice、Story、Motion 文案改成普通品牌规范语气；Story section 从项目专属说明改成通用 story log 规则；色彩命名从个人化 accent 改为 `Signal Mint` / `Signal Amber`；同步更新 `/brand-guide` 的 SEO title/description 和 README 路由说明。
+- 原因：用户要求 Brand Guide 不要再出现 Apple、Eden、Jiju 等 mentioned name，改成 normal brand guide basic rules。
+- 影响：`/brand-guide` 现在更像标准品牌规范页，保留视觉、语气、版式、动效与 CSS rules，但不再依赖具体人物、参考品牌或项目名称来解释规则。
+- 验证：Brand Guide 区域关键词检查确认无 `Apple`、`Eden`、`Jiju`、`Poker`、`Life OS` 等命中；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 984ms）；`curl -I http://localhost:4180/brand-guide` 返回 200；`git diff --check -- App.tsx seo-routes.ts README.md log.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/brand-guide`，首屏应显示通用 `品牌指南 / Brand Guide`，页面内不再出现那些被点名的名称。
+
+### 2026-06-24 00:04
+
+- 类型：前台 / Wiki emoji 替换为 CSS icon
+- 改动：新增 `WikiViteCssIcon`、`WikiBackgroundMusicCssIcon`、`WikiButtonFeedbackCssIcon`、`WikiFirebaseStorageCssIcon`、`WikiSkillsCssIcon` 五个 CSS art component；在 `styles/css-art/wiki-icons.css` 增加共享 `.wiki-topic-icon` 系统和各 slug modifier；`/wiki` 与 wiki note lead 的 `WikiEntryVisual` 改为所有 slug 都使用 CSS icon，不再 fallback 到 `entry.emoji`；移除 `wikiEntries` 的 emoji 字段，并把相关 class 从 `poker-wiki-emoji` 改为 `poker-wiki-visual`；同步更新 `css-art.registry.ts` 与 `docs/css-art-system.md`。
+- 原因：用户要求 `http://localhost:4180/wiki` 里面的 emoji 全部拿掉，replace with CSS icon。
+- 影响：`/wiki` 总览和 `/wiki/*` note 顶部视觉现在全部是 CSS icon；RAG flow 保留原 CSS icon，其余 Vite、Background music、Button feedback、Firebase lifetime storage、Skills 也都有各自的 CSS icon。
+- 验证：`wikiEntries` / wiki visual 关键词检查确认没有 `entry.emoji`、`poker-wiki-emoji` 或 wiki emoji fallback 残留；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.01s）；`curl -I http://localhost:4180/wiki`、`/wiki/vite`、`/wiki/rag-flow` 均返回 200；`git diff --check -- App.tsx components/css-art/index.tsx styles/css-art/wiki-icons.css styles/pages/poker.css css-art.registry.ts docs/css-art-system.md` 通过。
+- 后续：本地验证看 `http://localhost:4180/wiki`，六张 wiki card 左上角都应是 CSS icon，不再是 emoji。

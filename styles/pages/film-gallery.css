@@ -1,0 +1,122 @@
+.film-gallery-page * {
+  max-width: 100%;
+}
+
+.film-gallery-topbar {
+  min-height: 44px;
+}
+
+.film-gallery-back-link {
+  color: var(--theme-text-secondary);
+}
+
+.film-gallery-back-link:hover {
+  color: var(--theme-text-primary);
+}
+
+.film-gallery-kicker {
+  width: fit-content;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--theme-text-soft);
+}
+
+.film-gallery-title {
+  max-width: 980px;
+  font-size: clamp(3.35rem, 9vw, 8.5rem);
+  line-height: 0.92;
+  color: var(--theme-text-primary);
+}
+
+.film-gallery-subtitle {
+  max-width: 760px;
+  font-size: clamp(1.35rem, 2.65vw, 2.45rem);
+  font-weight: 650;
+  line-height: 1.12;
+  color: var(--theme-text-primary);
+}
+
+.film-gallery-copy {
+  max-width: 700px;
+  font-size: clamp(1rem, 1.35vw, 1.22rem);
+  line-height: 1.62;
+  color: var(--theme-text-secondary);
+}
+
+.film-gallery-hero-frame {
+  overflow: hidden;
+  border-radius: 2.6rem;
+  background: var(--theme-surface-muted);
+  box-shadow: var(--eden-hero-shadow);
+}
+
+.film-gallery-hero-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.film-gallery-section-head {
+  max-width: 820px;
+}
+
+.film-gallery-section-title {
+  margin-top: 1rem;
+  max-width: 880px;
+  font-size: clamp(2.35rem, 5vw, 5rem);
+  line-height: 1.02;
+  color: var(--theme-text-primary);
+}
+
+.film-gallery-grid {
+  column-count: 2;
+  column-gap: clamp(0.9rem, 1.6vw, 1.35rem);
+}
+
+.film-gallery-frame {
+  display: block;
+  break-inside: avoid;
+  margin-bottom: clamp(0.9rem, 1.6vw, 1.35rem);
+  overflow: hidden;
+  border-radius: clamp(1.2rem, 2.4vw, 2rem);
+  background: var(--theme-surface-muted);
+  box-shadow: var(--eden-card-shadow);
+}
+
+.film-gallery-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 767px) {
+  .film-gallery-hero {
+    text-align: left;
+  }
+
+  .film-gallery-hero .film-gallery-kicker,
+  .film-gallery-title,
+  .film-gallery-subtitle,
+  .film-gallery-copy {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .film-gallery-title {
+    font-size: clamp(3.15rem, 17vw, 5rem);
+  }
+
+  .film-gallery-hero-frame {
+    border-radius: 2rem;
+  }
+
+  .film-gallery-grid {
+    column-count: 1;
+  }
+}
+
+

@@ -1,0 +1,770 @@
+.conway-page {
+  --editorial-island-width: 1100px;
+  --conway-ink: var(--theme-text-primary);
+  --conway-muted: var(--theme-text-soft);
+  --conway-line: var(--theme-accent-teal);
+  --conway-line-soft: var(--theme-border);
+  --conway-change: var(--theme-accent-amber);
+  --conway-surface: color-mix(in srgb, var(--theme-surface) 88%, transparent);
+  --conway-surface-muted: color-mix(in srgb, var(--theme-surface-muted) 88%, transparent);
+  --conway-border: rgb(120 113 108 / 0.18);
+  --conway-art-ink: #0b0b0b;
+  --conway-art-paper: #fafaf9;
+  --conway-shadow: 0 24px 70px rgb(28 25 23 / 0.07);
+  color: var(--theme-text-primary);
+}
+
+.conway-page::before {
+  content: none;
+  display: none;
+}
+
+.conway-page::after {
+  content: none;
+  display: none;
+}
+
+.conway-pattern-only {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 4vw, 3rem) !important;
+}
+
+.conway-rules-page {
+  min-height: 100vh;
+  padding: clamp(1.25rem, 4vw, 3.5rem) !important;
+}
+
+.conway-rules-shell {
+  width: min(100%, 1100px);
+  margin: 0 auto;
+}
+
+.conway-rules-topbar,
+.conway-rules-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.conway-rules-header {
+  padding: clamp(2.5rem, 6vw, 5rem) 0 clamp(1.4rem, 3vw, 2.2rem);
+}
+
+.conway-rules-copy {
+  max-width: 760px;
+}
+
+.conway-rules-title {
+  margin-top: 0.7rem;
+  color: var(--conway-ink);
+  font-size: clamp(3.2rem, 7.4vw, 6.75rem);
+  line-height: 0.94;
+}
+
+.conway-rules-subtitle {
+  max-width: 620px;
+  margin-top: 1rem;
+  color: var(--theme-text-secondary);
+  font-size: clamp(1.05rem, 1.65vw, 1.35rem);
+  font-weight: 620;
+  line-height: 1.36;
+}
+
+.conway-rules-controls,
+.elementary-featured-rules {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.55rem;
+}
+
+:root[data-theme="dark"] .conway-page {
+  --conway-ink: var(--theme-text-primary);
+  --conway-muted: var(--theme-text-soft);
+  --conway-line: var(--theme-accent-teal);
+  --conway-line-soft: var(--theme-border);
+  --conway-change: var(--theme-accent-amber);
+  --conway-surface: color-mix(in srgb, var(--theme-surface) 88%, transparent);
+  --conway-surface-muted: color-mix(in srgb, var(--theme-surface-muted) 88%, transparent);
+  --conway-border: rgb(214 211 209 / 0.15);
+  --conway-art-ink: #050505;
+  --conway-art-paper: #fafaf9;
+  --conway-shadow: 0 26px 76px rgb(0 0 0 / 0.24);
+}
+
+.conway-topbar {
+  color: var(--conway-ink);
+}
+
+.conway-back-link {
+  color: var(--conway-muted);
+}
+
+.conway-back-link:hover {
+  color: var(--conway-ink);
+}
+
+.conway-stage {
+  display: grid;
+  gap: clamp(1.2rem, 3vw, 2rem);
+}
+
+.conway-stage-head {
+  max-width: 920px;
+}
+
+.conway-kicker {
+  width: fit-content;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--conway-muted);
+}
+
+.conway-title {
+  max-width: 960px;
+  margin-top: 1rem;
+  color: var(--conway-ink);
+  font-size: clamp(3.2rem, 8.5vw, 7.4rem);
+  line-height: 0.92;
+}
+
+.conway-subtitle {
+  max-width: 680px;
+  margin-top: 1.1rem;
+  color: var(--conway-muted);
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  line-height: 1.65;
+}
+
+.conway-console {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--conway-border);
+  border-radius: 1.25rem;
+  background: var(--conway-border);
+  box-shadow: var(--conway-shadow);
+}
+
+.conway-console > div {
+  min-height: 5.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 1rem 1.15rem;
+  background: var(--conway-surface);
+}
+
+.conway-console span {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--conway-muted);
+}
+
+.conway-console strong {
+  color: var(--conway-ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.2vw, 1.7rem);
+  line-height: 1;
+}
+
+.conway-console .conway-controls {
+  min-width: 15rem;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.conway-control-button {
+  display: inline-flex;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border-radius: 999px;
+  background: var(--theme-accent-teal);
+  color: var(--theme-page);
+  padding: 0.65rem 0.9rem;
+  font-size: 0.86rem;
+  font-weight: 800;
+  box-shadow: 0 14px 34px rgb(var(--theme-mint-glow) / 0.16);
+}
+
+.conway-control-button:hover {
+  transform: translateY(-1px);
+}
+
+.conway-control-button-muted {
+  background: var(--conway-surface-muted);
+  color: var(--conway-ink);
+  box-shadow: inset 0 0 0 1px var(--conway-border);
+}
+
+.elementary-rule-viewer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(15.5rem, 0.32fr);
+  gap: clamp(0.85rem, 1.8vw, 1.25rem);
+  align-items: stretch;
+}
+
+.elementary-rule-stage,
+.elementary-rule-readout,
+.elementary-rule-index {
+  border: 1px solid var(--conway-border);
+  border-radius: 1.35rem;
+  background: var(--conway-surface);
+  box-shadow: var(--conway-shadow);
+}
+
+.elementary-rule-stage {
+  padding: clamp(0.75rem, 1.4vw, 1rem);
+}
+
+.elementary-rule-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--rule-columns), minmax(0, 1fr));
+  overflow: hidden;
+  border-radius: 0.9rem;
+  background: var(--conway-art-paper);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  image-rendering: pixelated;
+  box-shadow: inset 0 0 0 1px rgb(28 25 23 / 0.1);
+}
+
+.elementary-rule-main-grid {
+  aspect-ratio: 16 / 9;
+}
+
+.elementary-rule-readout {
+  display: grid;
+  align-content: space-between;
+  gap: 1rem;
+  padding: clamp(1rem, 2vw, 1.35rem);
+  color: var(--theme-text-primary);
+}
+
+.elementary-rule-label {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--theme-text-soft);
+}
+
+.elementary-rule-readout strong {
+  display: block;
+  margin-top: 0.35rem;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 5vw, 4.7rem);
+  line-height: 0.86;
+}
+
+.elementary-rule-readout code {
+  display: block;
+  margin-top: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  letter-spacing: 0.08em;
+  color: var(--theme-text-primary);
+}
+
+.elementary-neighborhoods {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.elementary-neighborhoods div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.45rem;
+  border: 1px solid var(--conway-border);
+  border-radius: 0.7rem;
+  padding: 0.36rem 0.42rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--theme-text-secondary);
+}
+
+.elementary-neighborhoods i {
+  width: 0.72rem;
+  aspect-ratio: 1;
+  border-radius: 0.18rem;
+  background: var(--theme-surface-muted);
+  box-shadow: inset 0 0 0 1px var(--conway-border);
+}
+
+.elementary-neighborhoods i.is-active {
+  background: var(--theme-accent-amber);
+  box-shadow: 0 0 18px rgb(var(--theme-amber-rim) / 0.22);
+}
+
+.iching-rule-readout {
+  display: grid;
+  gap: 0.85rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--conway-border);
+}
+
+.iching-rule-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.iching-rule-head strong {
+  margin-top: 0;
+  font-size: clamp(2rem, 3.4vw, 3.15rem);
+  line-height: 0.9;
+}
+
+.iching-hexagram-lines {
+  display: grid;
+  gap: 0.32rem;
+}
+
+.iching-hexagram-lines span {
+  display: grid;
+  height: 0.3rem;
+  gap: 0.32rem;
+}
+
+.iching-hexagram-lines span::before,
+.iching-hexagram-lines span::after {
+  content: "";
+  border-radius: 999px;
+  background: var(--theme-text-primary);
+}
+
+.iching-hexagram-lines .is-yang {
+  grid-template-columns: 1fr;
+}
+
+.iching-hexagram-lines .is-yang::after {
+  display: none;
+}
+
+.iching-hexagram-lines .is-yin {
+  grid-template-columns: 1fr 1fr;
+}
+
+.iching-hexagram-lines .is-yin::before,
+.iching-hexagram-lines .is-yin::after {
+  background: color-mix(in srgb, var(--theme-text-primary) 48%, var(--theme-surface-muted));
+}
+
+.iching-hexagram-lines .is-changing {
+  filter: drop-shadow(0 0 8px rgb(var(--theme-amber-rim) / 0.42));
+}
+
+.iching-hexagram-lines .is-changing::before,
+.iching-hexagram-lines .is-changing::after {
+  background: color-mix(in srgb, var(--theme-accent-amber) 76%, var(--theme-text-primary));
+}
+
+.iching-trigram-grid {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.iching-trigram-grid div {
+  display: grid;
+  gap: 0.16rem;
+  border: 1px solid var(--conway-border);
+  border-radius: 0.75rem;
+  padding: 0.48rem 0.55rem;
+}
+
+.iching-trigram-grid span,
+.iching-changing-lines {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--theme-text-soft);
+}
+
+.iching-trigram-grid b {
+  font-size: 0.9rem;
+  color: var(--theme-text-primary);
+}
+
+.iching-rule-note {
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--theme-text-secondary);
+}
+
+.iching-changing-lines {
+  letter-spacing: 0.08em;
+}
+
+.elementary-featured-rules {
+  justify-content: flex-start;
+  padding: clamp(1rem, 1.8vw, 1.4rem) 0;
+}
+
+.elementary-featured-rules button {
+  border: 1px solid var(--conway-border);
+  border-radius: 999px;
+  background: var(--conway-surface);
+  color: var(--conway-ink);
+  padding: 0.58rem 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 850;
+}
+
+.elementary-featured-rules button.is-selected {
+  border-color: transparent;
+  background: var(--theme-accent-amber);
+  color: var(--theme-page);
+}
+
+.elementary-rule-index {
+  display: grid;
+  grid-template-columns: repeat(16, minmax(0, 1fr));
+  gap: 0.45rem;
+  padding: clamp(0.75rem, 1.4vw, 1rem);
+}
+
+.elementary-rule-thumb {
+  position: relative;
+  display: grid;
+  gap: 0.25rem;
+  min-width: 0;
+  border: 1px solid var(--conway-border);
+  border-radius: 0.75rem;
+  background: color-mix(in srgb, var(--theme-surface) 86%, transparent);
+  padding: 0.3rem;
+  color: var(--theme-text-primary);
+  text-align: left;
+}
+
+.elementary-rule-thumb:hover,
+.elementary-rule-thumb.is-selected {
+  border-color: color-mix(in srgb, var(--theme-accent-amber) 72%, var(--conway-border));
+  box-shadow: 0 0 0 2px rgb(var(--theme-amber-rim) / 0.16);
+  z-index: 1;
+}
+
+.elementary-rule-thumb-grid {
+  border-radius: 0.45rem;
+  aspect-ratio: 12 / 7;
+}
+
+.elementary-rule-thumb span {
+  font-family: var(--font-mono);
+  font-size: clamp(0.42rem, 0.8vw, 0.56rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.conway-textile-panel {
+  display: grid;
+  width: min(100%, 1100px);
+  padding: clamp(0.5rem, 1vw, 0.75rem);
+  border: 1px solid var(--conway-ink);
+  background: var(--conway-ink);
+  box-shadow: var(--conway-shadow);
+}
+
+.conway-textile-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  color: #f5f5f4;
+}
+
+.conway-textile-head .conway-kicker {
+  color: #f5f5f4;
+}
+
+.conway-textile-head p:last-child {
+  max-width: 32rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 750;
+  line-height: 1.5;
+  text-align: right;
+  color: rgb(245 245 244 / 0.72);
+}
+
+.conway-textile-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--textile-columns), minmax(0, 1fr));
+  aspect-ratio: 2.15 / 1;
+  overflow: hidden;
+  background: #fff;
+  image-rendering: pixelated;
+}
+
+.conway-textile-grid span {
+  display: block;
+  min-width: 0;
+  min-height: 0;
+  background: #fff;
+  transform: scale(1.02);
+  transition: background-color 900ms steps(1, end);
+}
+
+.conway-textile-grid span.is-active {
+  background: #050505;
+}
+
+.conway-board {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: clamp(0.45rem, 1vw, 0.72rem);
+  width: min(100%, 980px);
+}
+
+.conway-cell {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  aspect-ratio: 1;
+  align-content: space-between;
+  overflow: hidden;
+  border: 1px solid var(--conway-border);
+  border-radius: clamp(0.7rem, 1.4vw, 1.05rem);
+  background: var(--conway-surface);
+  padding: clamp(0.42rem, 0.9vw, 0.76rem);
+  box-shadow: 0 10px 26px rgb(28 25 23 / 0.06);
+  animation: conway-cell-breathe 4.8s ease-in-out infinite;
+  animation-delay: calc(var(--order) * -74ms);
+}
+
+:root[data-theme="dark"] .conway-cell {
+  box-shadow: 0 14px 34px rgb(0 0 0 / 0.22);
+}
+
+.conway-cell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: calc(0.12 + (var(--energy) * 0.008));
+  background:
+    linear-gradient(90deg, transparent 0 48%, color-mix(in srgb, var(--conway-line) 38%, transparent) 49% 51%, transparent 52%),
+    linear-gradient(0deg, transparent 0 48%, color-mix(in srgb, var(--conway-change) 28%, transparent) 49% 51%, transparent 52%);
+  pointer-events: none;
+}
+
+.conway-cell-meta {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: clamp(0.48rem, 0.9vw, 0.65rem);
+  font-weight: 850;
+  letter-spacing: 0.04em;
+  color: var(--conway-muted);
+}
+
+.conway-hexagram {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: clamp(0.18rem, 0.46vw, 0.38rem);
+}
+
+.conway-line {
+  display: grid;
+  height: clamp(0.2rem, 0.54vw, 0.42rem);
+  gap: clamp(0.18rem, 0.42vw, 0.36rem);
+}
+
+.conway-line::before,
+.conway-line::after {
+  content: "";
+  min-width: 0;
+  border-radius: 999px;
+  background: var(--conway-line);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--conway-line) 22%, transparent);
+}
+
+.conway-line-yang {
+  grid-template-columns: 1fr;
+}
+
+.conway-line-yang::after {
+  display: none;
+}
+
+.conway-line-yin {
+  grid-template-columns: 1fr 1fr;
+}
+
+.conway-line-changing::before,
+.conway-line-changing::after {
+  animation: conway-line-change 1.6s ease-out both;
+}
+
+.conway-line-yin:not(.conway-line-changing)::before,
+.conway-line-yin:not(.conway-line-changing)::after {
+  background: color-mix(in srgb, var(--conway-line) 54%, var(--conway-line-soft));
+}
+
+@keyframes conway-cell-breathe {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes conway-line-change {
+  0% {
+    background: var(--conway-change);
+    transform: scaleX(0.72);
+    box-shadow: 0 0 24px color-mix(in srgb, var(--conway-change) 50%, transparent);
+  }
+
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+@media (max-width: 900px) {
+  .elementary-rule-viewer {
+    grid-template-columns: 1fr;
+  }
+
+  .elementary-rule-readout {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-content: stretch;
+  }
+
+  .elementary-neighborhoods {
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .conway-console {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .conway-console .conway-controls {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .conway-rules-page {
+    padding: 1rem !important;
+  }
+
+  .conway-rules-topbar,
+  .conway-rules-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .conway-rules-controls {
+    justify-content: flex-start;
+  }
+
+  .conway-rules-title {
+    font-size: clamp(3.2rem, 18vw, 5.2rem);
+  }
+
+  .conway-rules-subtitle {
+    font-size: 1rem;
+  }
+
+  .elementary-rule-readout {
+    grid-template-columns: 1fr;
+  }
+
+  .elementary-neighborhoods {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .elementary-rule-index {
+    gap: 0.35rem;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    padding: 0.55rem;
+  }
+
+  .elementary-rule-thumb {
+    border-radius: 0.58rem;
+    padding: 0.22rem;
+  }
+
+  .conway-stage-head {
+    text-align: left;
+  }
+
+  .conway-title {
+    font-size: clamp(3rem, 16vw, 4.8rem);
+  }
+
+  .conway-console {
+    grid-template-columns: 1fr;
+  }
+
+  .conway-console > div {
+    min-height: 4.6rem;
+  }
+
+  .conway-console .conway-controls {
+    justify-content: stretch;
+  }
+
+  .conway-control-button {
+    flex: 1;
+  }
+
+  .conway-textile-head {
+    display: grid;
+  }
+
+  .conway-textile-head p:last-child {
+    text-align: left;
+  }
+
+  .conway-board {
+    gap: 0.32rem;
+  }
+
+  .conway-cell {
+    border-radius: 0.56rem;
+    padding: 0.34rem;
+  }
+
+  .conway-cell-meta {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .conway-cell,
+  .conway-line-changing::before,
+  .conway-line-changing::after {
+    animation: none !important;
+  }
+}

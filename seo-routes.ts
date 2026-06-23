@@ -51,6 +51,20 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
   },
   {
+    path: '/project-css',
+    priority: '0.5',
+    index: false,
+    sitemap: false,
+    title: {
+      en: 'Project CSS Icons | Eden Tan',
+      zh: 'Project CSS Icons | Eden Tan',
+    },
+    desc: {
+      en: 'A direct review page for Eden Tan’s animated CSS art across Projects, Home system files, and Home interests.',
+      zh: '一个直达检查页，用来集中查看 Eden Tan 在 Projects、主页系统文件和主页兴趣区里的动态 CSS 图腾。',
+    },
+  },
+  {
     path: '/etreporthub',
     priority: '0.8',
     title: {
@@ -84,6 +98,90 @@ export const ROUTE_SEO: RouteSeo[] = [
     desc: {
       en: 'Friday Poker Club is a Firebase-realtime Hold’em host: solo BOT and public host-started tables, stakes-aware buy-ins, invite links, optional in-table voice, and an 8/9 mini game.',
       zh: 'Friday Poker Club 是基于 Firebase 实时数据库的德州牌桌主机：单人 BOT 房与公开房主开桌、盲注感买入、邀请链接、可选语音和 8/9 小游戏。',
+    },
+  },
+  {
+    path: '/wiki',
+    priority: '0.7',
+    title: {
+      en: 'Eden Knowledge Base | Reusable build skills',
+      zh: 'Eden 知识库 | 可复用构建技能',
+    },
+    desc: {
+      en: 'A personal knowledge base for reusable build skills across Eden projects: Vite, background music, button feedback, Firebase lifetime storage, and product judgment.',
+      zh: 'Eden 的个人知识库，沉淀跨项目可复用构建技能：Vite、背景音乐、按钮反馈、Firebase lifetime storage 和产品判断。',
+    },
+  },
+  {
+    path: '/wiki/vite',
+    priority: '0.6',
+    title: {
+      en: 'Practical Vite Skills | Friday Poker Club',
+      zh: '实用 Vite 技能 | Friday Poker Club',
+    },
+    desc: {
+      en: 'A build note on the practical Vite skills learned from Friday Poker Club: dev loop, routing, assets, env values, and production build checks.',
+      zh: 'Friday Poker Club 的 Vite 构建笔记：dev loop、路由、资源、环境变量和 production build 检查。',
+    },
+  },
+  {
+    path: '/wiki/background-music',
+    priority: '0.6',
+    title: {
+      en: 'Background Music UX | Friday Poker Club',
+      zh: 'Background Music UX | Friday Poker Club',
+    },
+    desc: {
+      en: 'A UX note on why optional background music matters in a browser poker table and how it changes the feeling of a shared room.',
+      zh: '一篇 UX 笔记：为什么可控的背景音乐会影响浏览器 poker table 的空间感与共同在场感。',
+    },
+  },
+  {
+    path: '/wiki/button-feedback',
+    priority: '0.6',
+    title: {
+      en: 'Button Feedback UX | Friday Poker Club',
+      zh: 'Button Feedback UX | Friday Poker Club',
+    },
+    desc: {
+      en: 'A UX note on click button feedback in realtime game interfaces: pressed, pending, accepted, blocked, and failed states.',
+      zh: '实时游戏界面的按钮反馈笔记：按下、等待、接受、阻挡与失败状态。',
+    },
+  },
+  {
+    path: '/wiki/firebase-lifetime-storage',
+    priority: '0.6',
+    title: {
+      en: 'Firebase Lifetime Storage | Friday Poker Club',
+      zh: 'Firebase Lifetime Storage | Friday Poker Club',
+    },
+    desc: {
+      en: 'A build note on using Firebase as durable table memory for rooms, reconnects, host-started public games, and cleanup logic.',
+      zh: '一篇构建笔记：用 Firebase 作为牌桌长期记忆，支撑房间、重连、公开房主开桌与 cleanup 逻辑。',
+    },
+  },
+  {
+    path: '/wiki/skills',
+    priority: '0.6',
+    title: {
+      en: 'Friday Poker Club Skills Map | Eden Tan',
+      zh: 'Friday Poker Club Skills Map | Eden Tan',
+    },
+    desc: {
+      en: 'The reusable skill map behind Friday Poker Club: Vite release loop, Firebase realtime memory, UX feedback, audio controls, and product judgment.',
+      zh: 'Friday Poker Club 背后的可复用技能地图：Vite release loop、Firebase realtime memory、UX feedback、声音控制与产品判断。',
+    },
+  },
+  {
+    path: '/wiki/rag-flow',
+    priority: '0.6',
+    title: {
+      en: 'Tag Registry and RAG Flow | Eden Knowledge Base',
+      zh: 'Tag Registry 与 RAG Flow | Eden 知识库',
+    },
+    desc: {
+      en: 'The knowledge architecture for Eden’s reusable skills: structured wiki notes, Skill Cards, controlled tags, embedding index, and RAG-based recall.',
+      zh: 'Eden 可复用 skills 的知识架构：结构化 wiki notes、Skill Cards、受控 tags、embedding index 和 RAG 召回。',
     },
   },
   {
@@ -152,12 +250,12 @@ export const ROUTE_SEO: RouteSeo[] = [
     path: '/brand-guide',
     priority: '0.8',
     title: {
-      en: 'Eden Tan Brand System | Apple-inspired editorial clarity',
-      zh: 'Eden Tan 品牌操作系统 | Apple 式清晰度',
+      en: 'Brand Guide | Visual, voice, layout, and motion rules',
+      zh: 'Brand Guide | 视觉、语气、版式与动效规则',
     },
     desc: {
-      en: 'A practical brand operating guide for Eden Tan: Apple-inspired clarity, systems thinking, typography, color, voice, layout rhythm, and page application rules.',
-      zh: 'Eden Tan 的品牌操作指南：结合 Apple 式清晰度与系统思考，整理字体、色彩、语气、版式节奏和页面应用规则。',
+      en: 'A practical brand guide covering visual direction, typography, color, voice, layout rhythm, motion language, and reusable CSS rules.',
+      zh: '一份实用 Brand Guide，整理视觉方向、字体、色彩、语气、版式节奏、动效语言和可复用 CSS 规则。',
     },
   },
   {
