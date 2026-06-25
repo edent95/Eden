@@ -6988,6 +6988,86 @@ const brandGuideRhythm = [
   },
 ] as const;
 
+const brandGuideLayoutRules = [
+  {
+    title: { en: 'Radius is a scale', zh: '圆角是一套 scale' },
+    copy: {
+      en: 'Small controls can stay tight, content cards need softer corners, and large visual containers need the most generous radius.',
+      zh: '小控件可以紧一点，内容卡片需要更柔和，大视觉容器要用更大的圆角。',
+    },
+  },
+  {
+    title: { en: 'Whitespace leads', zh: '留白是主体' },
+    copy: {
+      en: 'Desktop sections should breathe vertically and horizontally. Do not crowd text, visuals, and CTAs into the same attention lane.',
+      zh: '桌面 section 要有上下和左右呼吸。不要把文字、视觉和 CTA 挤在同一条注意力线上。',
+    },
+  },
+  {
+    title: { en: 'Neutral canvas first', zh: '中性底色优先' },
+    copy: {
+      en: 'Build the page from stone, white, and quiet surfaces. Let accent color mark state or category instead of filling the background.',
+      zh: '页面先用 stone、白色和安静表面建立底盘。强调色负责状态或分类，不负责铺满背景。',
+    },
+  },
+  {
+    title: { en: 'Color comes from content', zh: '颜色来自真实内容' },
+    copy: {
+      en: 'Use project visuals, interface screenshots, real artifacts, and category signals as the color source. Avoid decorative color noise.',
+      zh: '颜色来自项目视觉、界面截图、真实 artifact 和分类信号。避免为了气氛而加装饰色。',
+    },
+  },
+  {
+    title: { en: 'Copy stays short', zh: '文案极短' },
+    copy: {
+      en: 'Hero and section copy should deliver one judgment fast. Save explanations, caveats, and dense detail for the next module.',
+      zh: '首屏和 section 文案要快速给出一个判断。解释、条件和细节放到后面的模块。',
+    },
+  },
+  {
+    title: { en: 'Components stay light', zh: '组件保持轻' },
+    copy: {
+      en: 'Avoid heavy borders, heavy shadows, and nested cards. Use spacing, radius, type hierarchy, and solid category marks to create structure.',
+      zh: '避免重边框、重阴影和 card 套 card。用间距、圆角、字体层级和实色分类标记建立结构。',
+    },
+  },
+] as const;
+
+const brandGuideLayoutNumbers = [
+  {
+    value: '44',
+    label: { en: 'Minimum touch target height for buttons and interactive controls.', zh: '按钮和可交互控件的最小触控高度。' },
+  },
+  {
+    value: '2',
+    label: { en: 'Maximum hero CTAs: one primary action and one secondary action.', zh: 'Hero CTA 上限：一个主操作，一个次操作。' },
+  },
+  {
+    value: '0.98-1.08',
+    label: { en: 'Display headline line-height range for tight but readable title blocks.', zh: '大标题行高范围：紧凑，但不能挤压可读性。' },
+  },
+  {
+    value: '80-160',
+    label: { en: 'Desktop section vertical spacing range for calm editorial pacing.', zh: '桌面 section 纵向留白范围，用来建立安静节奏。' },
+  },
+  {
+    value: '48-96',
+    label: { en: 'Mobile section vertical spacing range, enough breathing room without wasting screen height.', zh: '移动端 section 纵向留白范围，有呼吸但不浪费屏幕高度。' },
+  },
+  {
+    value: '16-24',
+    label: { en: 'Default internal spacing for compact cards, lists, and control groups.', zh: '紧凑 card、列表和控件组的默认内部间距。' },
+  },
+  {
+    value: '24-32',
+    label: { en: 'Main content card radius range for soft but still structured panels.', zh: '主内容 card 圆角范围：柔和，但仍然有结构感。' },
+  },
+  {
+    value: '1200+',
+    label: { en: 'Minimum preferred width for major visuals, screenshots, and hero assets.', zh: '大视觉、截图和 hero 素材建议最低宽度。' },
+  },
+] as const;
+
 const brandGuideVoicePairs = [
   {
     avoid: { en: 'I am good at marketing and AI.', zh: '我很擅长营销和 AI。' },
@@ -7036,8 +7116,8 @@ const brandGuideCategories = [
     name: { en: 'Global brand system', zh: '全站品牌系统' },
     scope: { en: 'Use across the site', zh: '全站可用' },
     items: {
-      en: ['Design principles', 'Color system', 'Typography', 'Layout rhythm', 'Motion language'],
-      zh: ['设计原则', '颜色系统', '字体层级', '版面节奏', '动效语言'],
+      en: ['Design principles', 'Color system', 'Layout and imagery', 'Typography', 'Layout rhythm', 'Motion language'],
+      zh: ['设计原则', '颜色系统', '版式与图像', '字体层级', '版面节奏', '动效语言'],
     },
   },
   {

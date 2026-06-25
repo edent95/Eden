@@ -16,6 +16,15 @@
 
 ## Entries
 
+### 2026-06-25 23:30
+
+- 类型：文档 / 结构
+- 改动：确认 `AGENTS.md` 已完整包含旧版 `AGENTS 2.md` 的规则内容，删除旧副本 `AGENTS 2.md`，保留 `AGENTS.md` 作为唯一 agent 操作规则入口。
+- 原因：用户要求把两个 AGENTS 文件结合在一起，并删除另一个；实际 diff 显示 `AGENTS 2.md` 没有独有规则，只是旧版子集。
+- 影响：后续 agent 不会在两个规则文件之间误读或分叉；项目规则 source of truth 收敛到 `AGENTS.md`。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.14s）；`ls` 确认 `AGENTS 2.md` 已不存在，`AGENTS.md` 保留。
+- 后续：后续如果协作规则继续演进，只更新 `AGENTS.md`，并按需同步 `soul.md`。
+
 ### 2026-06-24 00:19
 
 - 类型：内容 / 前台 / Jiju.pet
