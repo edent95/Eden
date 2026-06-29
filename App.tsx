@@ -12,7 +12,6 @@ import {
   getProjectCssArtByProjectTitle,
   homeInterestCssArtItems,
   homeSystemCssArtItems,
-  mathMagicIconCssArtItems,
   officeIconCssArtItems,
   projectCssArtItems,
 } from './css-art.registry';
@@ -34,17 +33,31 @@ import {
   WikiViteCssIcon,
 } from './components/css-art/index';
 import { 
+  Bookmark,
+  Brain,
   Linkedin, 
   ExternalLink,
   Download,
+  Database,
+  GitBranch,
+  Layers,
   MapPin,
   ArrowLeft,
   Clock3,
+  Copy,
+  MessageSquare,
   MoonStar,
+  Plus,
+  Search,
+  Send,
+  SlidersHorizontal,
   SunMedium,
   Pause,
   Play,
-  RotateCcw
+  RotateCcw,
+  SearchCheck,
+  TrendingUp,
+  UserRound
 } from 'lucide-react';
 
 type Language = 'en' | 'zh';
@@ -2721,8 +2734,18 @@ const resolveAssetPath = (base: string, value: string) => {
 
 const LANGUAGE_STORAGE_KEY = 'eden-portfolio-language';
 const THEME_STORAGE_KEY = 'eden-portfolio-theme';
+const GUEST_TOPIC_STORAGE_KEY = 'eden-guest-topic-board';
 const AUTO_THEME_DAY_START_HOUR = 7;
 const AUTO_THEME_NIGHT_START_HOUR = 19;
+
+type GuestTopicEntry = {
+  id: string;
+  kind: 'topic' | 'comment';
+  name: string;
+  topic: string;
+  message: string;
+  createdAt: string;
+};
 
 const readStoredLanguage = (): Language | null => {
   if (typeof window === 'undefined') return null;
@@ -2749,6 +2772,38 @@ const readStoredThemePreference = (): ThemePreference => {
     // ignore (private mode, storage disabled, etc.)
   }
   return 'auto';
+};
+
+const readStoredGuestTopics = (): GuestTopicEntry[] => {
+  if (typeof window === 'undefined') return [];
+  try {
+    const raw = window.localStorage.getItem(GUEST_TOPIC_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((item): item is GuestTopicEntry => {
+      return (
+        item &&
+        typeof item.id === 'string' &&
+        (item.kind === 'topic' || item.kind === 'comment') &&
+        typeof item.name === 'string' &&
+        typeof item.topic === 'string' &&
+        typeof item.message === 'string' &&
+        typeof item.createdAt === 'string'
+      );
+    });
+  } catch {
+    return [];
+  }
+};
+
+const writeStoredGuestTopics = (entries: GuestTopicEntry[]) => {
+  if (typeof window === 'undefined') return;
+  try {
+    window.localStorage.setItem(GUEST_TOPIC_STORAGE_KEY, JSON.stringify(entries));
+  } catch {
+    // ignore storage failures
+  }
 };
 
 const LanguageToggle: React.FC<{
@@ -2862,6 +2917,485 @@ const HeaderControls: React.FC<{
     <LanguageToggle language={language} setLanguage={setLanguage} />
   </div>
 );
+
+type TopicMarketQuestion = {
+  id: string;
+  icon: React.ComponentType<{ size?: number; strokeWidth?: number }>;
+  tone: 'mint' | 'amber' | 'blue' | 'pink' | 'violet';
+  categoryKey: 'all' | 'llm-wiki' | 'ai-workflow' | 'systems' | 'content' | 'signals';
+  category: Record<Language, string>;
+  title: Record<Language, string>;
+  outcomes: Array<{
+    label: Record<Language, string>;
+    probability: number;
+  }>;
+  volume: string;
+  cadence?: Record<Language, string>;
+};
+
+const topicMarketQuestions: TopicMarketQuestion[] = [
+  {
+    id: 'wiki-memory-boundary',
+    icon: Database,
+    tone: 'mint',
+    categoryKey: 'llm-wiki',
+    category: { en: 'LLM Wiki', zh: 'LLM Wiki' },
+    title: {
+      en: 'What should an LLM-maintained wiki remember?',
+      zh: 'LLM 维护的 wiki 应该记住什么？',
+    },
+    outcomes: [
+      { label: { en: 'Reusable workflows', zh: '可复用流程' }, probability: 82 },
+      { label: { en: 'Claims and decisions', zh: '关键判断' }, probability: 74 },
+    ],
+    volume: '128 answers',
+    cadence: { en: 'Weekly', zh: '每周' },
+  },
+  {
+    id: 'workflow-breakpoint',
+    icon: GitBranch,
+    tone: 'blue',
+    categoryKey: 'ai-workflow',
+    category: { en: 'AI workflow', zh: 'AI 工作流' },
+    title: {
+      en: 'Where do AI workflows break first in real projects?',
+      zh: 'AI 工作流在真实项目里最先卡在哪里？',
+    },
+    outcomes: [
+      { label: { en: 'Bad context', zh: '上下文太差' }, probability: 68 },
+      { label: { en: 'No verification', zh: '没有验证' }, probability: 61 },
+    ],
+    volume: '94 answers',
+  },
+  {
+    id: 'system-worthy-work',
+    icon: Layers,
+    tone: 'amber',
+    categoryKey: 'systems',
+    category: { en: 'Systems', zh: '系统化' },
+    title: {
+      en: 'Which scattered work should become a reusable system?',
+      zh: '哪些散乱工作最应该变成可复用系统？',
+    },
+    outcomes: [
+      { label: { en: 'Repeated reports', zh: '重复报表' }, probability: 89 },
+      { label: { en: 'Project handoff', zh: '项目交接' }, probability: 76 },
+    ],
+    volume: '211 answers',
+    cadence: { en: 'NEW', zh: 'NEW' },
+  },
+  {
+    id: 'essay-or-tool',
+    icon: Brain,
+    tone: 'violet',
+    categoryKey: 'content',
+    category: { en: 'Content', zh: '内容' },
+    title: {
+      en: 'Should this idea become an essay, a tool, or a wiki page?',
+      zh: '一个想法应该变成文章、工具，还是 wiki page？',
+    },
+    outcomes: [
+      { label: { en: 'Wiki page', zh: 'Wiki page' }, probability: 57 },
+      { label: { en: 'Tool', zh: '工具' }, probability: 31 },
+    ],
+    volume: '76 answers',
+  },
+  {
+    id: 'worth-answering',
+    icon: SearchCheck,
+    tone: 'pink',
+    categoryKey: 'signals',
+    category: { en: 'Topic signal', zh: '选题信号' },
+    title: {
+      en: 'Is this question worth answering publicly?',
+      zh: '这个问题值得公开回答吗？',
+    },
+    outcomes: [
+      { label: { en: 'Yes, public answer', zh: '值得公开回答' }, probability: 73 },
+      { label: { en: 'Private note only', zh: '只适合私下记录' }, probability: 19 },
+    ],
+    volume: '52 answers',
+  },
+  {
+    id: 'source-summary',
+    icon: MessageSquare,
+    tone: 'mint',
+    categoryKey: 'llm-wiki',
+    category: { en: 'LLM Wiki', zh: 'LLM Wiki' },
+    title: {
+      en: 'Should raw sources be summarized before synthesis?',
+      zh: 'Raw source 需要先 summary 再 synthesis 吗？',
+    },
+    outcomes: [
+      { label: { en: 'Always summarize first', zh: '永远先 summary' }, probability: 64 },
+      { label: { en: 'Only for long sources', zh: '长 source 才需要' }, probability: 28 },
+    ],
+    volume: '37 answers',
+  },
+  {
+    id: 'agent-handoff',
+    icon: UserRound,
+    tone: 'blue',
+    categoryKey: 'ai-workflow',
+    category: { en: 'AI workflow', zh: 'AI 工作流' },
+    title: {
+      en: 'What makes an agent handoff actually useful?',
+      zh: '什么样的 agent handoff 才真的有用？',
+    },
+    outcomes: [
+      { label: { en: 'Concrete changed files', zh: '清楚列出改动文件' }, probability: 81 },
+      { label: { en: 'Known risks', zh: '明确剩余风险' }, probability: 69 },
+    ],
+    volume: '143 answers',
+    cadence: { en: 'Weekly', zh: '每周' },
+  },
+  {
+    id: 'proof-through-builds',
+    icon: TrendingUp,
+    tone: 'amber',
+    categoryKey: 'signals',
+    category: { en: 'Topic signal', zh: '选题信号' },
+    title: {
+      en: 'Does proof through builds beat a traditional portfolio?',
+      zh: '用真实 build 证明，是否比传统 portfolio 更有力？',
+    },
+    outcomes: [
+      { label: { en: 'Yes, stronger signal', zh: '是，更强信号' }, probability: 91 },
+      { label: { en: 'Depends on reader', zh: '看受众' }, probability: 22 },
+    ],
+    volume: '188 answers',
+  },
+];
+
+const formatGuestTopicDate = (value: string, language: Language) => {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return value;
+  return new Intl.DateTimeFormat(language === 'zh' ? 'zh-CN' : 'en', {
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).format(date);
+};
+
+const GuestTopicsPage: React.FC<{
+  homeHref: string;
+  projectsHref: string;
+  language: Language;
+  setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
+  theme: Theme;
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ homeHref, projectsHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
+  const isZh = language === 'zh';
+  const [entries, setEntries] = React.useState<GuestTopicEntry[]>(() => readStoredGuestTopics());
+  const [activeCategory, setActiveCategory] = React.useState<TopicMarketQuestion['categoryKey']>('llm-wiki');
+  const [searchTerm, setSearchTerm] = React.useState('');
+  const [guestName, setGuestName] = React.useState('');
+  const [newTopic, setNewTopic] = React.useState('');
+  const [copied, setCopied] = React.useState(false);
+
+  const displayName = guestName.trim() || (isZh ? 'Guest 访客' : 'Guest');
+  const storedEntries = entries.slice(0, 6);
+  const categoryItems: Array<{ key: TopicMarketQuestion['categoryKey']; label: Record<Language, string> }> = [
+    { key: 'all', label: { en: 'All', zh: 'All' } },
+    { key: 'llm-wiki', label: { en: 'LLM Wiki', zh: 'LLM Wiki' } },
+    { key: 'ai-workflow', label: { en: 'AI Workflow', zh: 'AI 工作流' } },
+    { key: 'systems', label: { en: 'Systems', zh: '系统化' } },
+    { key: 'content', label: { en: 'Content', zh: '内容' } },
+    { key: 'signals', label: { en: 'Signals', zh: '信号' } },
+  ];
+  const marketNavItems = [
+    { key: 'all', label: isZh ? 'Trending' : 'Trending' },
+    { key: 'llm-wiki', label: 'LLM Wiki' },
+    { key: 'ai-workflow', label: isZh ? 'AI 工作流' : 'AI Workflow' },
+    { key: 'systems', label: isZh ? '系统化' : 'Systems' },
+    { key: 'content', label: isZh ? '内容' : 'Content' },
+    { key: 'signals', label: isZh ? '选题信号' : 'Signals' },
+  ] satisfies Array<{ key: TopicMarketQuestion['categoryKey']; label: string }>;
+  const filteredQuestions = topicMarketQuestions.filter((item) => {
+    const haystack = [
+      item.category[language],
+      item.title[language],
+      ...item.outcomes.map((outcome) => outcome.label[language]),
+    ].join(' ').toLowerCase();
+    const categoryMatches = activeCategory === 'all' || item.categoryKey === activeCategory;
+    const searchMatches = !searchTerm.trim() || haystack.includes(searchTerm.trim().toLowerCase());
+    return categoryMatches && searchMatches;
+  });
+  const activeCategoryLabel = categoryItems.find((item) => item.key === activeCategory)?.label[language] ?? 'All';
+
+  const saveEntries = (nextEntries: GuestTopicEntry[]) => {
+    setEntries(nextEntries);
+    writeStoredGuestTopics(nextEntries);
+  };
+
+  const handleMarketAnswer = (question: TopicMarketQuestion, outcomeLabel: string, side: 'Yes' | 'No') => {
+    const nextEntry: GuestTopicEntry = {
+      id: `answer-${Date.now()}`,
+      kind: 'comment',
+      name: displayName,
+      topic: question.title[language],
+      message: `${outcomeLabel} — ${side}`,
+      createdAt: new Date().toISOString(),
+    };
+    saveEntries([nextEntry, ...entries]);
+  };
+
+  const handleCreateTopic = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const topic = newTopic.trim();
+    if (!topic) return;
+    const nextEntry: GuestTopicEntry = {
+      id: `topic-${Date.now()}`,
+      kind: 'topic',
+      name: displayName,
+      topic: isZh ? 'Guest 新问题' : 'Guest new question',
+      message: topic,
+      createdAt: new Date().toISOString(),
+    };
+    saveEntries([nextEntry, ...entries]);
+    setNewTopic('');
+  };
+
+  const handleCopyBoard = async () => {
+    const summary = entries
+      .map((entry) => {
+        const label = entry.kind === 'topic' ? 'Topic' : 'Answer';
+        return `[${label}] ${entry.topic}\nFrom: ${entry.name}\n${entry.message}`;
+      })
+      .join('\n\n');
+    const fallbackText = summary || (isZh ? '目前还没有本地留言。' : 'No local submissions yet.');
+    try {
+      await navigator.clipboard.writeText(fallbackText);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1800);
+    } catch {
+      setCopied(false);
+    }
+  };
+
+  return (
+    <div className="page-shell topics-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
+      <header className="topics-market-topbar">
+        <div className="topics-market-brand">
+          <a href={homeHref} className="topics-back-link inline-flex items-center gap-2 text-sm font-medium">
+              <ArrowLeft size={16} />
+            <span>{isZh ? '主页' : 'Home'}</span>
+          </a>
+          <strong>Eden Markets</strong>
+        </div>
+        <label className="topics-market-search">
+          <Search size={21} />
+          <input
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+            placeholder={isZh ? 'Search topics...' : 'Search topics...'}
+          />
+        </label>
+        <a href="#how-it-works" className="topics-help-link">
+          <SearchCheck size={16} />
+          {isZh ? 'How it works' : 'How it works'}
+        </a>
+        <div className="topics-market-actions">
+          <a href="#create-topic" className="topics-login-link">{isZh ? 'Guest' : 'Guest'}</a>
+          <a href="#create-topic" className="topics-signup-button">{isZh ? 'New Topic' : 'New Topic'}</a>
+          <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
+        </div>
+      </header>
+
+      <nav className="topics-market-nav" aria-label={isZh ? 'Topic categories' : 'Topic categories'}>
+        {marketNavItems.map((item, index) => (
+          <button
+            key={item.key}
+            type="button"
+            className={activeCategory === item.key ? 'topics-market-nav-active' : ''}
+            onClick={() => setActiveCategory(item.key)}
+          >
+            {index === 0 && <TrendingUp size={16} />}
+            {item.label}
+          </button>
+        ))}
+      </nav>
+
+      <main className="topics-market-shell">
+        <aside className="topics-market-sidebar" aria-label={isZh ? 'Categories' : 'Categories'}>
+          {categoryItems.map((item) => {
+            const count = item.key === 'all'
+              ? topicMarketQuestions.length
+              : topicMarketQuestions.filter((question) => question.categoryKey === item.key).length;
+            return (
+              <button
+                key={item.key}
+                type="button"
+                className={activeCategory === item.key ? 'topics-sidebar-active' : ''}
+                onClick={() => setActiveCategory(item.key)}
+              >
+                <span>{item.label[language]}</span>
+                <strong>{count}</strong>
+              </button>
+            );
+          })}
+          <form id="create-topic" className="topics-create-card" onSubmit={handleCreateTopic}>
+            <p className="topics-mini-label">{isZh ? 'Guest market' : 'Guest market'}</p>
+            <label>
+              <span>{isZh ? '名字' : 'Name'}</span>
+              <input
+                value={guestName}
+                onChange={(event) => setGuestName(event.target.value)}
+                placeholder={isZh ? 'Guest' : 'Guest'}
+              />
+            </label>
+            <label>
+              <span>{isZh ? '新问题' : 'New question'}</span>
+              <textarea
+                value={newTopic}
+                onChange={(event) => setNewTopic(event.target.value)}
+                placeholder={isZh ? '留下一个新的 topic...' : 'Leave a new topic...'}
+                rows={4}
+              />
+            </label>
+            <button type="submit">
+              <Plus size={16} />
+              {isZh ? 'Create' : 'Create'}
+            </button>
+          </form>
+        </aside>
+
+        <section className="topics-market-main" id="topic-market">
+          <div className="topics-market-main-head">
+            <div>
+              <p>{isZh ? 'Markets / Knowledge systems' : 'Markets / Knowledge systems'}</p>
+              <h1>{activeCategoryLabel}</h1>
+            </div>
+            <div className="topics-market-tools" aria-hidden>
+              <Search size={22} />
+              <SlidersHorizontal size={22} />
+              <Bookmark size={22} />
+            </div>
+          </div>
+
+          <div className="topics-card-grid">
+            {filteredQuestions.map((question) => {
+              const Icon = question.icon;
+              return (
+                <article key={question.id} className={`topics-market-card topics-tone-${question.tone}`}>
+                  <div className="topics-market-card-head">
+                    <span className="topics-market-icon" aria-hidden>
+                      <Icon size={25} strokeWidth={2.25} />
+                    </span>
+                    <h2>{question.title[language]}</h2>
+                  </div>
+                  <div className="topics-outcome-list">
+                    {question.outcomes.map((outcome) => (
+                      <div key={outcome.label.en} className="topics-outcome-row">
+                        <span className="topics-outcome-label">{outcome.label[language]}</span>
+                        <strong>{outcome.probability}%</strong>
+                        <button type="button" className="topics-yes-button" onClick={() => handleMarketAnswer(question, outcome.label[language], 'Yes')}>
+                          Yes
+                        </button>
+                        <button type="button" className="topics-no-button" onClick={() => handleMarketAnswer(question, outcome.label[language], 'No')}>
+                          No
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                  <footer className="topics-market-card-footer">
+                    <span>{question.volume}</span>
+                    {question.cadence && <span>{question.cadence[language]}</span>}
+                    <Bookmark size={18} />
+                  </footer>
+                </article>
+              );
+            })}
+
+            <form className="topics-market-card topics-create-market-card" onSubmit={handleCreateTopic}>
+              <div className="topics-market-card-head">
+                <span className="topics-market-icon" aria-hidden>
+                  <Plus size={25} strokeWidth={2.25} />
+                </span>
+                <h2>{isZh ? '你想让 Eden 回答什么？' : 'What should Eden answer next?'}</h2>
+              </div>
+              <input
+                value={guestName}
+                onChange={(event) => setGuestName(event.target.value)}
+                placeholder={isZh ? 'Guest / 你的名字' : 'Guest / your name'}
+              />
+              <textarea
+                value={newTopic}
+                onChange={(event) => setNewTopic(event.target.value)}
+                placeholder={isZh ? '写一个新问题，或补充你想讨论的 topic。' : 'Write a new question or topic you want to discuss.'}
+                rows={5}
+              />
+              <button type="submit" className="topics-create-market-button">
+                <Send size={17} />
+                {isZh ? '提交新问题' : 'Submit question'}
+              </button>
+              <footer className="topics-market-card-footer">
+                <span>{isZh ? 'Stored locally' : 'Stored locally'}</span>
+                <Bookmark size={18} />
+              </footer>
+            </form>
+          </div>
+
+          <section id="local-board" className="topics-local-board">
+            <div className="topics-local-head">
+              <div>
+                <p>{isZh ? 'Local activity' : 'Local activity'}</p>
+                <h2>{isZh ? '这台浏览器里的回答。' : 'Answers in this browser.'}</h2>
+              </div>
+              <button type="button" onClick={handleCopyBoard}>
+                <Copy size={16} />
+                {copied ? (isZh ? '已复制' : 'Copied') : isZh ? '复制给 Eden' : 'Copy'}
+              </button>
+            </div>
+
+            <div className="topics-local-list">
+              {storedEntries.length > 0 ? (
+                storedEntries.map((entry) => (
+                  <article key={entry.id}>
+                    <span>{entry.kind === 'topic' ? (isZh ? 'Guest topic' : 'Guest topic') : isZh ? 'Answer' : 'Answer'}</span>
+                    <h3>{entry.topic}</h3>
+                    <p>{entry.message}</p>
+                    <small>
+                      <UserRound size={14} />
+                      {entry.name} · {formatGuestTopicDate(entry.createdAt, language)}
+                    </small>
+                  </article>
+                ))
+              ) : (
+                <div className="topics-empty-state">
+                  <MessageSquare size={24} />
+                  <p>
+                    {isZh
+                      ? '还没有本地回答。点击任一卡片的 Yes / No，或创建新问题。'
+                      : 'No local answers yet. Click Yes / No on any card, or create a new question.'}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            <div id="how-it-works" className="topics-note-panel">
+              <p className="topics-mini-label">{isZh ? 'Persistence note' : 'Persistence note'}</p>
+              <p>
+                {isZh
+                  ? '当前版本不连接数据库，所以不同访客之间不会互相看到回答。要做真正公开 topic market，下一步需要接 Firebase / Supabase / GitHub Issues / Formspree 这类持久化层。'
+                  : 'This version does not connect to a database, so different visitors will not see each other’s answers. A public topic market needs Firebase, Supabase, GitHub Issues, or a form service next.'}
+              </p>
+              <a href={projectsHref}>{isZh ? '看系统项目' : 'View systems'} <span aria-hidden>›</span></a>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+  );
+};
 
 const ProjectCssGalleryPage: React.FC<{
   homeHref: string;
@@ -3021,38 +3555,6 @@ const ProjectCssGalleryPage: React.FC<{
                     </div>
                     <div className="project-css-card-copy">
                       <p className="projects-card-eyebrow">{isZh ? 'Office icon' : 'Office icon'}</p>
-                      <h2 className="font-display text-2xl font-bold tracking-tight">{item.title}</h2>
-                      <p>{item.copy[language]}</p>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          </section>
-
-          <section className="project-css-section">
-            <div className="project-css-section-head">
-              <p className="projects-kicker">{isZh ? 'Math magic / Framed app icons' : 'Math magic / Framed app icons'}</p>
-              <h2 className="project-css-section-title font-display font-bold tracking-tight">
-                {isZh ? '6 个数学魔法 1:1 CSS icon' : '6 math-magic 1:1 CSS icons'}
-              </h2>
-              <p className="project-css-section-copy">
-                {isZh
-                  ? '数学符号、几何门、积分咒式、π 球体、分形符文和矩阵传送门，全部按 framed app icon 规则做。'
-                  : 'Math symbols, geometric gates, calculus spells, pi orb, fractal rune, and matrix portal, all built as framed app icons.'}
-              </p>
-            </div>
-            <div className="project-css-office-grid project-css-math-grid">
-              {mathMagicIconCssArtItems.map((item) => {
-                const Icon = item.Component;
-
-                return (
-                  <article key={item.id} className="project-css-card project-css-office-card project-css-math-card">
-                    <div className="project-css-icon-stage project-css-office-icon-stage project-css-math-icon-stage">
-                      <Icon label={item.label[language]} />
-                    </div>
-                    <div className="project-css-card-copy">
-                      <p className="projects-card-eyebrow">{isZh ? 'Math magic icon' : 'Math magic icon'}</p>
                       <h2 className="font-display text-2xl font-bold tracking-tight">{item.title}</h2>
                       <p>{item.copy[language]}</p>
                     </div>
@@ -6863,97 +7365,212 @@ const LifeOsFullPage: React.FC<{
 
 const brandGuidePrinciples = [
   {
-    title: { en: 'Controlled attention', zh: '控制注意力' },
+    title: { en: 'Clarity', zh: '清晰' },
     copy: {
-      en: 'Every screen should carry one clear message. If two ideas compete, split the section.',
-      zh: '每一屏只服务一个主信息。两个想法互相抢，就拆成两个区块。',
+      en: 'One page. One point. One next step.',
+      zh: '一页一个重点，一个下一步。',
     },
   },
   {
-    title: { en: 'Systems from chaos', zh: '从混乱到系统' },
+    title: { en: 'Restraint', zh: '克制' },
     copy: {
-      en: 'The brand should feel like a calm operating system for messy product, growth, AI, and life questions.',
-      zh: '品牌要像一个安静的操作系统，用来整理产品、增长、AI 和人生问题里的混乱。',
+      en: 'Remove what does not help the reader decide.',
+      zh: '删掉不能帮助判断的东西。',
     },
   },
   {
-    title: { en: 'Human before impressive', zh: '先让人看懂，再让人觉得厉害' },
+    title: { en: 'Depth', zh: '层级' },
     copy: {
-      en: 'The reader should feel helped before they feel impressed. Capability appears through clarity.',
-      zh: '读者先感觉被帮到，再感觉专业。能力要通过清晰度出现。',
+      en: 'Use size, space, and real visuals.',
+      zh: '用尺寸、留白和真实视觉。',
+    },
+  },
+  {
+    title: { en: 'Trust', zh: '信任' },
+    copy: {
+      en: 'Make it feel stable before asking for action.',
+      zh: '先稳定，再行动。',
+    },
+  },
+] as const;
+
+const brandGuideDetailRules = [
+  {
+    title: { en: 'Whitespace shortens the decision path', zh: '留白缩短判断路径' },
+    copy: {
+      en: 'Let the main idea breathe.',
+      zh: '让主信息有呼吸。',
+    },
+  },
+  {
+    title: { en: 'Radius creates a shared touch language', zh: '圆角统一触感' },
+    copy: {
+      en: 'Use one radius scale.',
+      zh: '使用同一套圆角 scale。',
+    },
+  },
+  {
+    title: { en: 'Color must earn its place', zh: '颜色必须有来源' },
+    copy: {
+      en: 'Use color only when it explains.',
+      zh: '颜色只在能解释时使用。',
+    },
+  },
+  {
+    title: { en: 'Short copy keeps the page decisive', zh: '短文案让页面更果断' },
+    copy: {
+      en: 'Say the point fast.',
+      zh: '快速说重点。',
+    },
+  },
+  {
+    title: { en: 'Sharp visuals carry proof', zh: '清楚视觉承载证明' },
+    copy: {
+      en: 'Use real, sharp proof.',
+      zh: '用真实、清楚的证明。',
+    },
+  },
+  {
+    title: { en: 'Motion explains, never distracts', zh: '动效解释，不抢戏' },
+    copy: {
+      en: 'Move only what helps.',
+      zh: '只动有帮助的东西。',
     },
   },
 ] as const;
 
 const brandGuidePalette = [
   {
-    name: { en: 'Stone 50', zh: 'Stone 50' },
-    hex: '#fafaf9',
+    name: { en: 'Paper', zh: 'Paper' },
+    hex: '#ffffff',
     role: { en: 'Primary canvas', zh: '主画布' },
-    usage: { en: 'Use for page backgrounds and quiet editorial space.', zh: '用于页面背景和安静的编辑式留白。' },
+    usage: { en: 'Main page background.', zh: '主页面背景。' },
   },
   {
-    name: { en: 'Stone 200', zh: 'Stone 200' },
-    hex: '#e7e5e4',
-    role: { en: 'Soft structure', zh: '柔和结构' },
-    usage: { en: 'Use for subtle dividers, soft fills, and low-volume surfaces.', zh: '用于轻分隔、柔和填充和低存在感表面。' },
+    name: { en: 'Soft', zh: 'Soft' },
+    hex: '#f5f5f7',
+    role: { en: 'Section band', zh: '章节底色' },
+    usage: { en: 'Quiet section surface.', zh: '安静的 section 底色。' },
   },
   {
-    name: { en: 'Stone 600', zh: 'Stone 600' },
-    hex: '#57534e',
+    name: { en: 'Muted', zh: 'Muted' },
+    hex: '#6e6e73',
     role: { en: 'Secondary voice', zh: '次级语气' },
-    usage: { en: 'Use for metadata, quiet labels, and supporting copy.', zh: '用于 metadata、安静标签和辅助说明。' },
+    usage: { en: 'Support text and labels.', zh: '辅助文字和标签。' },
   },
   {
-    name: { en: 'Stone 900', zh: 'Stone 900' },
-    hex: '#1c1917',
+    name: { en: 'Ink', zh: 'Ink' },
+    hex: '#111113',
     role: { en: 'Primary text', zh: '主文字' },
-    usage: { en: 'Use for headlines, decisive copy, and rare inverted moments.', zh: '用于标题、决断型文案和少量反色时刻。' },
+    usage: { en: 'Headlines and key text.', zh: '标题和重点文字。' },
+  },
+  {
+    name: { en: 'Deep', zh: 'Deep' },
+    hex: '#050505',
+    role: { en: 'Inverted emphasis', zh: '反色重点' },
+    usage: { en: 'Rare high-contrast moments.', zh: '少量高对比时刻。' },
+  },
+  {
+    name: { en: 'Line', zh: 'Line' },
+    hex: '#d9d9df',
+    role: { en: 'Quiet divider', zh: '安静分隔' },
+    usage: { en: 'Borders and dividers.', zh: '边框和分隔线。' },
   },
 ] as const;
 
 const brandGuideAccent = [
   {
-    name: { en: 'Signal Mint', zh: 'Signal Mint' },
-    hex: { light: '#7bdcb5', dark: '#dc6f82' },
-    role: { en: 'Insight signal', zh: '洞察信号' },
+    name: { en: 'Eden Mint', zh: 'Eden Mint' },
+    hex: { light: '#7bdcb5', dark: '#7bdcb5' },
+    role: { en: 'Primary brand color', zh: '主品牌色' },
     usage: {
-      en: 'Selection, quote rail, insight highlight, subtle glow.',
-      zh: '用于文本划选、引用竖线、洞察重点和轻微光感。',
+      en: 'Primary brand signal.',
+      zh: '主品牌信号。',
     },
   },
   {
-    name: { en: 'Signal Amber', zh: 'Signal Amber' },
-    hex: { light: '#ffa340ed', dark: '#6fa4f0e6' },
-    role: { en: 'Action signal', zh: '行动信号' },
+    name: { en: 'Eden Pink', zh: 'Eden Pink' },
+    hex: { light: '#dc6f82', dark: '#dc6f82' },
+    role: { en: 'Primary brand color', zh: '主品牌色' },
     usage: {
-      en: 'Current status, active states, CTA focus, small moments of energy.',
-      zh: '用于当前状态、激活状态、CTA 焦点和少量能量点。',
+      en: 'Warm primary counterpart.',
+      zh: '温暖的主色对位。',
+    },
+  },
+  {
+    name: { en: 'Dream Purple', zh: 'Dream Purple' },
+    hex: { light: '#a78bfa', dark: '#c4b5fd' },
+    role: { en: 'Action color', zh: '行动色' },
+    usage: {
+      en: 'Links and action cues.',
+      zh: '链接和行动提示。',
+    },
+  },
+  {
+    name: { en: 'Sky Tint', zh: 'Sky Tint' },
+    hex: { light: '#dcebf8', dark: '#dcebf8' },
+    role: { en: 'Cool support', zh: '冷色辅助' },
+    usage: {
+      en: 'Cool support tint.',
+      zh: '冷色辅助。',
+    },
+  },
+  {
+    name: { en: 'Gold Tint', zh: 'Gold Tint' },
+    hex: { light: '#f4dfb9', dark: '#f4dfb9' },
+    role: { en: 'Warm support', zh: '暖色辅助' },
+    usage: {
+      en: 'Warm support tint.',
+      zh: '暖色辅助。',
+    },
+  },
+  {
+    name: { en: 'Pink Tint', zh: 'Pink Tint' },
+    hex: { light: '#f6d9d8', dark: '#f6d9d8' },
+    role: { en: 'Human signal', zh: '人味信号' },
+    usage: {
+      en: 'Softer human moments.',
+      zh: '柔和的人感时刻。',
+    },
+  },
+  {
+    name: { en: 'Green Tint', zh: 'Green Tint' },
+    hex: { light: '#dcebd9', dark: '#dcebd9' },
+    role: { en: 'System signal', zh: '系统信号' },
+    usage: {
+      en: 'Stable system signal.',
+      zh: '稳定系统信号。',
     },
   },
 ] as const;
 
 const brandGuideTypography = [
   {
-    name: 'Space Grotesk',
-    role: { en: 'Display voice', zh: '标题声线' },
+    name: 'MiSans',
+    role: { en: 'Primary typeface', zh: '主字体' },
     sample: { en: 'Build order from complexity.', zh: 'Build order from complexity.' },
-    detail: { en: 'Use for hero headlines, section titles, and short high-signal statements.', zh: '用于首屏标题、章节标题和短而有力的判断句。' },
+    detail: {
+      en: 'Use everywhere except system labels.',
+      zh: '除系统标签外都用它。',
+    },
   },
   {
-    name: 'Inter',
-    role: { en: 'Reading voice', zh: '阅读声线' },
+    name: 'MiSans VF',
+    role: { en: 'Weight system', zh: '字重系统' },
     sample: {
-      en: 'Product growth, AI workflows, digital strategy, and long-form build narratives.',
-      zh: 'Product growth, AI workflows, digital strategy, and long-form build narratives.',
+      en: 'Light / Regular / Medium / Semibold / Bold',
+      zh: 'Light / Regular / Medium / Semibold / Bold',
     },
-    detail: { en: 'Use for body copy and interface text. Keep it direct, plain, and easy to scan.', zh: '用于正文和界面文字。保持直接、简单、容易扫描。' },
+    detail: {
+      en: 'Use weight for hierarchy.',
+      zh: '用字重做层级。',
+    },
   },
   {
     name: 'JetBrains Mono',
     role: { en: 'System voice', zh: '系统声线' },
     sample: { en: 'STATUS / CURRENTLY BUILDING / 2026', zh: 'STATUS / CURRENTLY BUILDING / 2026' },
-    detail: { en: 'Use for labels, routes, timestamps, and operating-system cues.', zh: '用于标签、路由、时间戳和操作系统感提示。' },
+    detail: { en: 'Use for labels and status text.', zh: '用于标签和状态文字。' },
   },
 ] as const;
 
@@ -6961,29 +7578,29 @@ const brandGuideRhythm = [
   {
     title: { en: 'Hero', zh: '首屏' },
     copy: {
-      en: 'Name, one positioning line, one reader benefit, one large visual or signature statement.',
-      zh: '名字、一句定位、一句读者收益，一个大视觉或品牌核心句。',
+      en: 'One claim. One action.',
+      zh: '一个判断，一个行动。',
     },
   },
   {
     title: { en: 'Sections', zh: '章节' },
     copy: {
-      en: 'One idea per section. Big title first, then one short paragraph, then proof or example.',
-      zh: '一个章节只讲一个想法。先大标题，再短段落，最后给证据或例子。',
+      en: 'One idea per section.',
+      zh: '一个 section 一个想法。',
     },
   },
   {
     title: { en: 'Grids', zh: '网格' },
     copy: {
-      en: 'Use grids only after the story is clear. Two columns on desktop, one column on mobile.',
-      zh: '先把故事讲清楚，再用网格。桌面两栏，手机一栏。',
+      en: 'Two columns desktop. One column mobile.',
+      zh: '桌面两栏，手机一栏。',
     },
   },
   {
     title: { en: 'Horizontal whitespace', zh: '左右留白' },
     copy: {
-      en: 'Do not let content fill the whole desktop width by default. Use a narrow content island, center it, and let the sides stay quiet.',
-      zh: '桌面端不要默认把内容铺满。用较窄的内容岛居中，让左右保持安静留白。',
+      en: 'Keep the content island narrow.',
+      zh: '内容岛保持窄一点。',
     },
   },
 ] as const;
@@ -6992,79 +7609,79 @@ const brandGuideLayoutRules = [
   {
     title: { en: 'Radius is a scale', zh: '圆角是一套 scale' },
     copy: {
-      en: 'Small controls can stay tight, content cards need softer corners, and large visual containers need the most generous radius.',
-      zh: '小控件可以紧一点，内容卡片需要更柔和，大视觉容器要用更大的圆角。',
+      en: 'Small, medium, large. Do not improvise.',
+      zh: '小、中、大。不要临场乱调。',
     },
   },
   {
     title: { en: 'Whitespace leads', zh: '留白是主体' },
     copy: {
-      en: 'Desktop sections should breathe vertically and horizontally. Do not crowd text, visuals, and CTAs into the same attention lane.',
-      zh: '桌面 section 要有上下和左右呼吸。不要把文字、视觉和 CTA 挤在同一条注意力线上。',
+      en: 'Give every section room.',
+      zh: '每个 section 都要留空间。',
     },
   },
   {
     title: { en: 'Neutral canvas first', zh: '中性底色优先' },
     copy: {
-      en: 'Build the page from stone, white, and quiet surfaces. Let accent color mark state or category instead of filling the background.',
-      zh: '页面先用 stone、白色和安静表面建立底盘。强调色负责状态或分类，不负责铺满背景。',
+      en: 'Start with white, soft gray, and black.',
+      zh: '先用白、浅灰、黑。',
     },
   },
   {
     title: { en: 'Color comes from content', zh: '颜色来自真实内容' },
     copy: {
-      en: 'Use project visuals, interface screenshots, real artifacts, and category signals as the color source. Avoid decorative color noise.',
-      zh: '颜色来自项目视觉、界面截图、真实 artifact 和分类信号。避免为了气氛而加装饰色。',
+      en: 'Color should mean something.',
+      zh: '颜色要有意义。',
     },
   },
   {
     title: { en: 'Copy stays short', zh: '文案极短' },
     copy: {
-      en: 'Hero and section copy should deliver one judgment fast. Save explanations, caveats, and dense detail for the next module.',
-      zh: '首屏和 section 文案要快速给出一个判断。解释、条件和细节放到后面的模块。',
+      en: 'Cut every extra sentence.',
+      zh: '删掉多余句子。',
     },
   },
   {
     title: { en: 'Components stay light', zh: '组件保持轻' },
     copy: {
-      en: 'Avoid heavy borders, heavy shadows, and nested cards. Use spacing, radius, type hierarchy, and solid category marks to create structure.',
-      zh: '避免重边框、重阴影和 card 套 card。用间距、圆角、字体层级和实色分类标记建立结构。',
+      en: 'No heavy borders. No card inside card.',
+      zh: '不要重边框，不要 card 套 card。',
     },
   },
 ] as const;
 
 const brandGuideLayoutNumbers = [
   {
-    value: '44',
-    label: { en: 'Minimum touch target height for buttons and interactive controls.', zh: '按钮和可交互控件的最小触控高度。' },
+    value: { en: '44px', zh: '44px' },
+    label: { en: 'Button / input minimum height.', zh: '按钮、输入框最小高度。' },
   },
   {
-    value: '2',
-    label: { en: 'Maximum hero CTAs: one primary action and one secondary action.', zh: 'Hero CTA 上限：一个主操作，一个次操作。' },
+    value: { en: '2 max', zh: '最多 2 个' },
+    label: { en: 'Hero buttons: primary + secondary.', zh: 'Hero 按钮：主按钮 + 次按钮。' },
   },
   {
-    value: '0.98-1.08',
-    label: { en: 'Display headline line-height range for tight but readable title blocks.', zh: '大标题行高范围：紧凑，但不能挤压可读性。' },
+    value: { en: '0.98-1.08', zh: '0.98-1.08' },
+    label: { en: 'Large headline line-height ratio.', zh: '大标题行高比例。' },
   },
   {
-    value: '80-160',
-    label: { en: 'Desktop section vertical spacing range for calm editorial pacing.', zh: '桌面 section 纵向留白范围，用来建立安静节奏。' },
+    value: { en: '80-160px', zh: '80-160px' },
+    label: { en: 'Desktop section top / bottom spacing.', zh: '桌面 section 上下留白。' },
   },
   {
-    value: '48-96',
-    label: { en: 'Mobile section vertical spacing range, enough breathing room without wasting screen height.', zh: '移动端 section 纵向留白范围，有呼吸但不浪费屏幕高度。' },
+    value: { en: '48-96px', zh: '48-96px' },
+    label: { en: 'Mobile section top / bottom spacing.', zh: '手机 section 上下留白。' },
   },
   {
-    value: '16-24',
-    label: { en: 'Default internal spacing for compact cards, lists, and control groups.', zh: '紧凑 card、列表和控件组的默认内部间距。' },
+    value: { en: '16-24px', zh: '16-24px' },
+    label: { en: 'Compact card inside padding.', zh: '紧凑卡片内部留白。' },
   },
   {
-    value: '24-32',
-    label: { en: 'Main content card radius range for soft but still structured panels.', zh: '主内容 card 圆角范围：柔和，但仍然有结构感。' },
+    value: { en: '24-32px', zh: '24-32px' },
+    label: { en: 'Normal content card radius.', zh: '普通内容卡片圆角。' },
   },
   {
-    value: '1200+',
-    label: { en: 'Minimum preferred width for major visuals, screenshots, and hero assets.', zh: '大视觉、截图和 hero 素材建议最低宽度。' },
+    value: { en: '1200px+', zh: '1200px+' },
+    label: { en: 'Minimum width for hero visuals.', zh: 'Hero 大图建议最小宽度。' },
   },
 ] as const;
 
@@ -7072,22 +7689,22 @@ const brandGuideVoicePairs = [
   {
     avoid: { en: 'I am good at marketing and AI.', zh: '我很擅长营销和 AI。' },
     prefer: {
-      en: 'For teams with messy product ideas or scattered workflows, turn the signals into a usable system.',
-      zh: '当产品想法很散、流程很乱时，把线索整理成能使用的系统。',
+      en: 'Turn messy signals into a usable system.',
+      zh: '把混乱线索变成可用系统。',
     },
   },
   {
     avoid: { en: 'A visionary brand.', zh: '一个有远见的品牌。' },
     prefer: {
-      en: 'A builder archive for product growth, AI workflows, digital strategy, and long-form build notes.',
-      zh: '一个记录产品增长、AI 工作流、数字策略和长期构建笔记的 builder archive。',
+      en: 'A builder archive for systems and notes.',
+      zh: '一个系统和笔记的 builder archive。',
     },
   },
   {
     avoid: { en: 'Empowering people to transform their future.', zh: '赋能每个人改变未来。' },
     prefer: {
-      en: 'Make the next move clearer. Then build the system around it.',
-      zh: '先让下一步变清楚，再围绕它建立系统。',
+      en: 'Make the next move clear.',
+      zh: '让下一步变清楚。',
     },
   },
 ] as const;
@@ -7095,45 +7712,45 @@ const brandGuideVoicePairs = [
 const brandGuideUseCases = [
   {
     title: { en: 'Home', zh: 'Home' },
-    copy: { en: 'Start with the reader’s messy situation, then show what becomes clear.', zh: '从读者的混乱处境开始，再展示什么会变清楚。' },
+    copy: { en: 'Start with the main belief.', zh: '从核心信念开始。' },
   },
   {
     title: { en: 'Projects', zh: 'Projects' },
-    copy: { en: 'Show the problem, system, decisions, and output. Do not only show screenshots.', zh: '展示问题、系统、判断和产出。不要只放截图。' },
+    copy: { en: 'Show problem, system, output.', zh: '展示问题、系统、产出。' },
   },
   {
     title: { en: 'System Pages', zh: 'System Pages' },
-    copy: { en: 'Keep the concept clear, but let the content breathe like a focused product page.', zh: '保留概念清晰度，但让内容像聚焦的产品页一样有呼吸。' },
+    copy: { en: 'Keep the concept clear.', zh: '概念保持清楚。' },
   },
   {
     title: { en: 'Build Notes', zh: 'Build Notes' },
-    copy: { en: 'Every note starts from a concrete chaos, then explains the build logic.', zh: '每篇从一个具体混乱开始，再解释构建逻辑。' },
+    copy: { en: 'Start with the real problem.', zh: '从真实问题开始。' },
   },
 ] as const;
 
 const brandGuideCategories = [
   {
-    name: { en: 'Global brand system', zh: '全站品牌系统' },
-    scope: { en: 'Use across the site', zh: '全站可用' },
+    name: { en: 'Foundation', zh: '基础层' },
+    scope: { en: 'Start here', zh: '先看这里' },
     items: {
-      en: ['Design principles', 'Color system', 'Layout and imagery', 'Typography', 'Layout rhythm', 'Motion language'],
-      zh: ['设计原则', '颜色系统', '版式与图像', '字体层级', '版面节奏', '动效语言'],
+      en: ['Core philosophy', 'Design rules', 'Layout numbers'],
+      zh: ['核心哲学', '设计规则', '版式数字'],
     },
   },
   {
-    name: { en: 'Content voice', zh: '内容语气' },
-    scope: { en: 'Essays, projects, wiki notes', zh: '文章、项目、知识库适用' },
+    name: { en: 'Surface system', zh: '表层系统' },
+    scope: { en: 'Build the page', zh: '用于页面搭建' },
     items: {
-      en: ['Reader-first copy', 'Proof through builds', 'Clear next action'],
-      zh: ['读者视角文案', '用 build 当证据', '清楚的下一步'],
+      en: ['Visual system', 'Typography', 'Motion boundaries'],
+      zh: ['视觉系统', '字体层级', '动效边界'],
     },
   },
   {
-    name: { en: 'Story content', zh: '故事内容' },
-    scope: { en: 'Use for story logs', zh: '用于故事记录' },
+    name: { en: 'Content usage', zh: '内容用法' },
+    scope: { en: 'Apply by page type', zh: '按页面类型使用' },
     items: {
-      en: ['True moments', 'Short names', 'People-first narration'],
-      zh: ['真实时刻', '短称呼', '先写人再写事'],
+      en: ['Homepage', 'Project pages', 'Wiki notes', 'Story logs'],
+      zh: ['首页', '项目页', '知识库笔记', '故事记录'],
     },
   },
 ] as const;
@@ -7142,43 +7759,43 @@ const brandGuideStoryRules = [
   {
     title: { en: 'Log the moment, not the score', zh: '记录时刻，不是战绩' },
     copy: {
-      en: 'A story log exists to remember what is worth retelling, not to prove a result. The human moment matters more than the outcome.',
-      zh: '故事是为了记住值得再讲的瞬间，不是证明结果。人的那一刻，比结果更重要。',
+      en: 'Remember the moment.',
+      zh: '记住那个瞬间。',
     },
   },
   {
     title: { en: 'Only what really happened', zh: '只写真的' },
     copy: {
-      en: 'You can polish the pacing and the imagery, but the events, people, and outcomes stay true. Never invent drama for effect.',
-      zh: '可以润色节奏和画面，但事件、人物、结果必须是真的。不为戏剧效果编故事。',
+      en: 'Do not invent drama.',
+      zh: '不要编戏剧效果。',
     },
   },
   {
     title: { en: 'Nicknames, not epic titles', zh: '用小名，别中二' },
     copy: {
-      en: 'Use short, natural names in the narrative. Save longer character labels or formal titles for profile cards.',
-      zh: '正文里用自然短称呼。较长的人物标签或正式称号，留给 profile card。',
+      en: 'Use short names.',
+      zh: '用短称呼。',
     },
   },
   {
     title: { en: 'Short, but cinematic', zh: '短，但有画面' },
     copy: {
-      en: 'One beat per paragraph. Let the key moment land, then cut everything else to the bone.',
-      zh: '一段讲清一件事。让关键那一下落地，其余删到不能再删。',
+      en: 'One beat per paragraph.',
+      zh: '一段一个画面。',
     },
   },
   {
     title: { en: 'People first, details second', zh: '先有人，再有细节' },
     copy: {
-      en: 'People carry the story. The detail only matters when the reader understands who it happened to.',
-      zh: '人本身才撑起故事。读者先理解是谁遇到这件事，细节才有意义。',
+      en: 'People carry the story.',
+      zh: '人撑起故事。',
     },
   },
   {
     title: { en: 'Not a technical report', zh: '不是技术报告' },
     copy: {
-      en: 'No jargon dumps, no over-explaining, no flexing. It should read like a real moment being retold, not a textbook.',
-      zh: '不堆术语、不解释过头、不自夸。读起来像真实时刻被重新讲出来，而不是教科书。',
+      en: 'No jargon. No flexing.',
+      zh: '不堆术语，不自夸。',
     },
   },
 ] as const;
@@ -7198,29 +7815,29 @@ const brandGuideMotionRules = [
   {
     title: { en: 'Object motion first', zh: '先动实体物件' },
     copy: {
-      en: 'Use visible object motion: clouds drift, small objects bob, and the user can see what is moving. Avoid background fade, ambient glow, scan lines, and card-level color fades.',
-      zh: '动效使用可见物件运动：云会飘，小物件会晃，用户一眼看得出是什么在动。避免 background fade、ambient glow、扫描线和 card 内彩色 fade。',
+      en: 'Move visible objects.',
+      zh: '动可见物件。',
     },
   },
   {
     title: { en: 'Quiet page entry', zh: '安静入场' },
     copy: {
-      en: 'Page entry can soften the first moment, but it should stay brief and precise. Avoid dramatic reveals, bouncing panels, or motion that makes reading wait.',
-      zh: '页面入场可以让第一眼更柔和，但必须短、准、克制。不要夸张 reveal、弹跳面板，或让读者等动画播完才阅读。',
+      en: 'Keep entry motion short.',
+      zh: '入场动效要短。',
     },
   },
   {
     title: { en: 'Motion must belong to the build', zh: '动效要属于产品' },
     copy: {
-      en: 'Character, object, or icon motion should carry product meaning, not act as loose decoration. Motion earns its place when it clarifies what the system is doing.',
-      zh: '角色、物件或 icon 动效要承载产品含义，不要只是松散装饰。只有当动效能说明系统正在做什么，它才值得留下。',
+      en: 'Motion must explain the product.',
+      zh: '动效要解释产品。',
     },
   },
   {
     title: { en: 'Preserve reduced motion', zh: '保留 reduced motion' },
     copy: {
-      en: 'Every object, character, or icon animation should still respect `prefers-reduced-motion`. The static state must remain composed, not broken.',
-      zh: '所有物件、角色或 icon 动效都要尊重 `prefers-reduced-motion`。静止状态也必须是完整画面，而不是坏掉的动画中间帧。',
+      en: 'Support `prefers-reduced-motion`.',
+      zh: '支持 `prefers-reduced-motion`。',
     },
   },
 ] as const;
@@ -7229,29 +7846,29 @@ const brandGuideCssRules = [
   {
     title: { en: 'No background or card fade', zh: '不要 background / card fade' },
     copy: {
-      en: 'Page backgrounds and cards stay solid. Do not use ambient glow, scanning lines, background fade, or colored gradient fades inside cards.',
-      zh: '页面背景和 card 保持纯色。不要用 ambient glow、扫描线、background fade，或 card 内彩色渐层 fade。',
+      en: 'No glow, scan lines, or card fades.',
+      zh: '不要 glow、扫描线、card fade。',
     },
   },
   {
     title: { en: 'Solid category language', zh: '分类用实色系统' },
     copy: {
-      en: 'Use solid rails, dots, chips, borders, and CSS title icons for categorization. Color should classify, not decorate.',
-      zh: '分类用 solid 色条、色点、chip、border 和 CSS title icon。颜色负责分类，不负责装饰。',
+      en: 'Use rails, dots, chips, and borders.',
+      zh: '用线、点、chip、border。',
     },
   },
   {
     title: { en: 'Rails belong on outlines', zh: '线条放在 box outline' },
     copy: {
-      en: 'Category rails should sit on the box outline. Keep the middle solid; fade only the head and tail when the line needs a softer finish.',
-      zh: '分类线放在 box outline 上。中段保持 solid；需要柔和收尾时，只让线的头尾渐隐。',
+      en: 'Keep rails on the outline.',
+      zh: '线条放在外框上。',
     },
   },
   {
     title: { en: 'CSS icons over emoji', zh: 'Title icon 用 CSS' },
     copy: {
-      en: 'Use small CSS shapes beside titles when a page needs better scanning. Do not use emoji as the default title icon system.',
-      zh: '需要更好扫描时，用小型 CSS shape 放在 title 旁边。不要默认用 emoji 做标题 icon 系统。',
+      en: 'Use CSS icons, not emoji.',
+      zh: '用 CSS icon，不用 emoji。',
     },
   },
 ] as const;
@@ -7298,20 +7915,20 @@ const BrandGuideFullPage: React.FC<{
             </h1>
             <p className="brand-guide-hero-subtitle mx-auto mt-5">
               {isZh
-                ? '用清楚、稳定、可复用的规则管理页面体验。'
-                : 'Clear, stable, reusable rules for the page experience.'}
+                ? '清楚、克制、可信。'
+                : 'Clear. Calm. Trustworthy.'}
             </p>
             <p className="brand-guide-hero-copy mx-auto mt-5">
               {isZh
-                ? '这份 guide 用来统一页面的视觉、结构、文案、动效和 CSS 使用边界。每个规则都应该减少混乱，让读者更快理解重点。'
-                : 'This guide aligns visual direction, structure, copy, motion, and CSS boundaries. Every rule should reduce confusion and help the reader understand the point faster.'}
+                ? '先讲清楚，再设计。'
+                : 'Say it clearly. Then design it.'}
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-5">
-              <a href="#brand-principles" className="brand-guide-cta">
-                {isZh ? '看设计原则' : 'View principles'} <span aria-hidden>›</span>
+              <a href="#brand-philosophy" className="brand-guide-cta">
+                {isZh ? '看核心哲学' : 'View philosophy'} <span aria-hidden>›</span>
               </a>
-              <a href="#brand-voice" className="brand-guide-cta brand-guide-cta-muted">
-                {isZh ? '看文案语气' : 'View voice'} <span aria-hidden>›</span>
+              <a href="#brand-rules" className="brand-guide-cta brand-guide-cta-muted">
+                {isZh ? '看执行规则' : 'View rules'} <span aria-hidden>›</span>
               </a>
             </div>
             <div className="brand-guide-signature mx-auto mt-12">
@@ -7331,12 +7948,12 @@ const BrandGuideFullPage: React.FC<{
             <div className="brand-guide-section-head">
               <p className="brand-guide-kicker">{isZh ? 'Guide map' : 'Guide map'}</p>
               <h2 id="brand-guide-classification-title" className="brand-guide-section-title font-display font-bold tracking-tight">
-                {isZh ? '先分清：全站规则，还是页面专属。' : 'Separate global rules from page-specific rules.'}
+                {isZh ? '按顺序使用。' : 'Use it in order.'}
               </h2>
               <p className="brand-guide-section-copy">
                 {isZh
-                  ? 'Brand guide 不是所有规则都同一层级。全站系统负责视觉、结构和语气；故事内容规则只用于需要叙事的页面。'
-                  : 'Not every brand rule lives at the same level. The global system handles visuals, structure, and voice. Story rules only apply to pages that need narrative writing.'}
+                  ? '先规则，再视觉，再应用。'
+                  : 'Rules first. Visuals second. Application last.'}
               </p>
             </div>
             <div className="brand-guide-category-grid mt-10">
@@ -7354,21 +7971,65 @@ const BrandGuideFullPage: React.FC<{
             </div>
           </section>
 
-          <section id="brand-principles" className="brand-guide-section py-16 md:py-24">
+          <section id="brand-philosophy" className="brand-guide-section py-16 md:py-24">
             <div className="brand-guide-section-head">
-              <p className="brand-guide-kicker">{isZh ? '01 / Design logic' : '01 / Design logic'}</p>
+              <p className="brand-guide-kicker">{isZh ? '01 / Core philosophy' : '01 / Core philosophy'}</p>
               <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
-                {isZh ? '先管理注意力，再管理风格。' : 'Manage attention before style.'}
+                {isZh ? '内容先行。' : 'Content first.'}
               </h2>
               <p className="brand-guide-section-copy">
                 {isZh
-                  ? '设计重点不是模仿某种外观，而是让注意力有秩序：少说一点，说准一点，让每个区块只负责一个任务。'
-                  : 'The goal is not to imitate a look. The goal is attention order: say less, say it clearly, and let each section do one job.'}
+                  ? '界面服务判断，不抢内容。'
+                  : 'The interface supports the point.'}
               </p>
             </div>
-            <div className="brand-guide-principle-grid mt-12 grid gap-4 md:grid-cols-3">
+            <article className="brand-guide-manifesto mt-12">
+              <div>
+                <p className="brand-guide-card-index">{isZh ? 'Manifesto' : 'Manifesto'}</p>
+                <h3 className="font-display text-3xl font-bold tracking-tight md:text-5xl">
+                  {isZh ? '少一点，准一点。' : 'Less, but sharper.'}
+                </h3>
+              </div>
+              <p>
+                {isZh
+                  ? '每个 section 只做一件事。'
+                  : 'Each section does one job.'}
+              </p>
+            </article>
+            <div className="brand-guide-principle-grid mt-5 grid gap-4 md:grid-cols-4">
               {brandGuidePrinciples.map((item, index) => (
                 <article key={item.title.en} className="brand-guide-principle-card">
+                  <p className="brand-guide-card-index">{String(index + 1).padStart(2, '0')}</p>
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.title[language]}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
+              ))}
+            </div>
+            <div className="brand-guide-detail-grid mt-8">
+              {brandGuideDetailRules.map((item) => (
+                <article key={item.title.en} className="brand-guide-detail-item">
+                  <h3>{item.title[language]}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section id="brand-rules" className="brand-guide-section py-16 md:py-24">
+            <div className="brand-guide-section-head">
+              <p className="brand-guide-kicker">{isZh ? '02 / Design rules' : '02 / Design rules'}</p>
+              <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
+                {isZh ? '页面规则。' : 'Page rules.'}
+              </h2>
+              <p className="brand-guide-section-copy">
+                {isZh
+                  ? '默认按这些做。'
+                  : 'Use these as defaults.'}
+              </p>
+            </div>
+            <div className="brand-guide-layout-grid mt-12">
+              {brandGuideLayoutRules.map((item, index) => (
+                <article key={item.title.en} className={`brand-guide-layout-card brand-guide-layout-card-${index + 1}`}>
                   <p className="brand-guide-card-index">{String(index + 1).padStart(2, '0')}</p>
                   <h3 className="font-display text-2xl font-bold tracking-tight">{item.title[language]}</h3>
                   <p>{item.copy[language]}</p>
@@ -7379,14 +8040,36 @@ const BrandGuideFullPage: React.FC<{
 
           <section className="brand-guide-section py-16 md:py-24">
             <div className="brand-guide-section-head">
-              <p className="brand-guide-kicker">{isZh ? '02 / Visual system' : '02 / Visual system'}</p>
+              <p className="brand-guide-kicker">{isZh ? '03 / Layout numbers' : '03 / Layout numbers'}</p>
               <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
-                {isZh ? '中性为主，强调色只负责信号。' : 'Neutral first. Accent as signal.'}
+                {isZh ? '页面尺寸参考。' : 'Page size reference.'}
               </h2>
               <p className="brand-guide-section-copy">
                 {isZh
-                  ? 'Stone 是品牌底盘。Mint 和 Amber 不是装饰色，而是系统里的状态灯。浅色模式保持薄荷和琥珀；深色模式自动切到红系和蓝系补色。'
-                  : 'Stone is the base system. Mint and amber are not decorative colors. They are signal lights. Light mode uses mint and amber; dark mode switches them into red and blue complements.'}
+                  ? '做页面时先用这些值。'
+                  : 'Use these values first when building pages.'}
+              </p>
+            </div>
+            <div className="brand-guide-layout-spec-grid mt-8">
+              {brandGuideLayoutNumbers.map((item) => (
+                <article key={item.value.en} className="brand-guide-layout-spec-card">
+                  <b>{item.value[language]}</b>
+                  <p>{item.label[language]}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="brand-guide-section py-16 md:py-24">
+            <div className="brand-guide-section-head">
+              <p className="brand-guide-kicker">{isZh ? '04 / Visual system' : '04 / Visual system'}</p>
+              <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
+                {isZh ? '颜色只做信号。' : 'Color is signal.'}
+              </h2>
+              <p className="brand-guide-section-copy">
+                {isZh
+                  ? 'Mint 和 Pink 是主色。Dream Purple 是行动色。'
+                  : 'Mint and Pink are primary. Dream Purple is action.'}
               </p>
             </div>
             <div className="mt-12 grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
@@ -7422,14 +8105,14 @@ const BrandGuideFullPage: React.FC<{
 
           <section className="brand-guide-section py-16 md:py-24">
             <div className="brand-guide-section-head">
-              <p className="brand-guide-kicker">{isZh ? '03 / Type and rhythm' : '03 / Type and rhythm'}</p>
+              <p className="brand-guide-kicker">{isZh ? '05 / Type and rhythm' : '05 / Type and rhythm'}</p>
               <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
-                {isZh ? '字体少一点，层级清楚一点。' : 'Fewer type moves. Clearer hierarchy.'}
+                {isZh ? '少用字体变化。' : 'Keep type simple.'}
               </h2>
               <p className="brand-guide-section-copy">
                 {isZh
-                  ? '高级感不靠很多字体大小，而是靠稳定比例。页面应该少用字号，靠标题、正文、标签三层完成阅读秩序。'
-                  : 'A premium page does not need many font sizes. It needs a disciplined scale: display, body, and system labels.'}
+                  ? '标题、正文、标签，三层够了。'
+                  : 'Display, body, label. That is enough.'}
               </p>
             </div>
             <div className="mt-12 grid gap-5 md:grid-cols-3">
@@ -7437,7 +8120,7 @@ const BrandGuideFullPage: React.FC<{
                 <article key={item.name} className="brand-guide-type-card">
                   <p className="brand-guide-card-index">{item.name}</p>
                   <h3 className="font-display text-2xl font-bold tracking-tight">{item.role[language]}</h3>
-                  <p className={item.name === 'JetBrains Mono' ? 'font-mono' : item.name === 'Space Grotesk' ? 'font-display text-2xl font-bold' : ''}>
+                  <p className={item.name === 'JetBrains Mono' ? 'font-mono' : 'font-display text-2xl font-bold'}>
                     {item.sample[language]}
                   </p>
                   <p>{item.detail[language]}</p>
@@ -7456,14 +8139,14 @@ const BrandGuideFullPage: React.FC<{
 
           <section id="brand-voice" className="brand-guide-section py-16 md:py-24">
             <div className="brand-guide-section-head">
-              <p className="brand-guide-kicker">{isZh ? '04 / Voice' : '04 / Voice'}</p>
+              <p className="brand-guide-kicker">{isZh ? '06 / Voice' : '06 / Voice'}</p>
               <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
-                {isZh ? '不要让读者看你很厉害。让读者知道你能帮什么忙。' : 'Do not perform expertise. Make the help obvious.'}
+                {isZh ? '说清楚能帮什么。' : 'Make the help clear.'}
               </h2>
               <p className="brand-guide-section-copy">
                 {isZh
-                  ? '文案先接住读者处境，再给判断，最后给可行动入口。少用连续的 “I”。多用 “For teams...”, “When the work feels messy...”, “This is where...” 这类读者视角句式。'
-                  : 'Copy should receive the reader’s situation first, then give judgment, then offer a clear next action. Avoid stacked “I” statements. Prefer reader-led lines like “For teams...”, “When the work feels messy...”, and “This is where...”.'}
+                  ? '少说自己，多说结果。'
+                  : 'Less about me. More about the result.'}
               </p>
             </div>
             <div className="mt-12 space-y-4">
@@ -7484,14 +8167,14 @@ const BrandGuideFullPage: React.FC<{
 
           <section className="brand-guide-section py-16 md:py-24">
             <div className="brand-guide-section-head">
-              <p className="brand-guide-kicker">{isZh ? '05 / Application' : '05 / Application'}</p>
+              <p className="brand-guide-kicker">{isZh ? '07 / Application' : '07 / Application'}</p>
               <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
-                {isZh ? '每个页面都像一个清楚的产品说明。' : 'Every page behaves like a clear product story.'}
+                {isZh ? '每页都要清楚。' : 'Every page must be clear.'}
               </h2>
               <p className="brand-guide-section-copy">
                 {isZh
-                  ? '少一点框，多一点层级。少一点装饰，多一点判断。页面可以有神秘感，但信息路径必须清楚。'
-                  : 'Less framing, more hierarchy. Less decoration, more judgment. The site can feel mysterious, but the information path must stay clear.'}
+                  ? '先问题，再系统，再结果。'
+                  : 'Problem. System. Result.'}
               </p>
             </div>
             <div className="mt-12 grid gap-5 md:grid-cols-2">
@@ -7506,14 +8189,14 @@ const BrandGuideFullPage: React.FC<{
 
           <section id="brand-story" className="brand-guide-section py-16 md:py-24">
             <div className="brand-guide-section-head">
-              <p className="brand-guide-kicker">{isZh ? '06 / Story content' : '06 / Story content'}</p>
+              <p className="brand-guide-kicker">{isZh ? '08 / Story content' : '08 / Story content'}</p>
               <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
-                {isZh ? '故事只写真实时刻。' : 'Story content records real moments.'}
+                {isZh ? '故事写真实时刻。' : 'Stories record real moments.'}
               </h2>
               <p className="brand-guide-section-copy">
                 {isZh
-                  ? '这不是所有页面都必须使用的语气。它只用于需要记录真实时刻的 story log：轻松地讲，用短称呼，留画面，删废话。'
-                  : 'This is not a voice every page must use. It is for story logs that record real moments: told loosely, with short names, kept cinematic, and trimmed to the bone.'}
+                  ? '短、真、有画面。'
+                  : 'Short, true, visual.'}
               </p>
             </div>
             <div className="mt-12 grid gap-5 md:grid-cols-2">
@@ -7538,14 +8221,14 @@ const BrandGuideFullPage: React.FC<{
 
           <section id="brand-motion" className="brand-guide-section py-16 md:py-24">
             <div className="brand-guide-section-head">
-              <p className="brand-guide-kicker">{isZh ? '07 / Motion language' : '07 / Motion language'}</p>
+              <p className="brand-guide-kicker">{isZh ? '09 / Motion language' : '09 / Motion language'}</p>
               <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
-                {isZh ? '动效要像呼吸，不要像表演。' : 'Motion should breathe, not perform.'}
+                {isZh ? '动效要轻。' : 'Motion stays light.'}
               </h2>
               <p className="brand-guide-section-copy">
                 {isZh
-                  ? '当前动效基准是实体小物件动效：云、角色、卡片、tag、按钮状态可以清楚地动；不要靠 background fade、背景光晕、扫描线或 card 内彩色 fade 制造动感。'
-                  : 'The motion reference is visible object motion: clouds, characters, cards, tags, and button states can move clearly. Do not rely on background fade, background glow, scan lines, or card-level color fades to create energy.'}
+                  ? '动实体物件，不动背景气氛。'
+                  : 'Move objects, not atmosphere.'}
               </p>
             </div>
             <div className="mt-12 grid gap-5 md:grid-cols-2">
@@ -7571,8 +8254,8 @@ const BrandGuideFullPage: React.FC<{
 
           <p className="pb-10 text-center text-xs text-stone-500">
             {isZh
-              ? '这份 guide 记录当前页面系统的基础规则。最后更新以代码库与 log 为准。'
-              : 'This guide records the current page system rules. For the latest changes, follow the repo and `log.md`.'}
+              ? '最后更新以代码库和 log 为准。'
+              : 'Latest source: repo and `log.md`.'}
           </p>
         </div>
       </main>
@@ -7882,6 +8565,9 @@ const JijuPetFullPage: React.FC<{
               <a href="#build-log" className="jiju-text-cta jiju-text-cta-muted">
                 {isZh ? '看构建记录' : 'View build log'} <span aria-hidden>›</span>
               </a>
+              <a href={joinBasePath(import.meta.env.BASE_URL || '/', 'jiju-revamp')} className="jiju-text-cta jiju-text-cta-muted">
+                {isZh ? '看转型提案' : 'View revamp proposal'} <span aria-hidden>›</span>
+              </a>
             </div>
           </header>
 
@@ -8119,6 +8805,528 @@ const JijuPetFullPage: React.FC<{
   );
 };
 
+const JijuRevampFullPage: React.FC<{
+  homeHref: string;
+  language: Language;
+  setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
+  theme: Theme;
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ homeHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
+  const isZh = language === 'zh';
+  const revampBase = import.meta.env.BASE_URL || '/';
+
+  const sceneEntries = isZh
+    ? ['现在吃 lunch', '去 cafe 办公', '带宠物', '好停车', '看 promo', '本地最爱', 'Michelin 但本地认可', '下雨天去哪']
+    : ['Lunch now', 'Work from cafe', 'Bringing my pet', 'Easy parking', 'Show me promos', 'Local favorites', 'Michelin but local-approved', 'Rainy-day spot'];
+
+  const proofPoints: [string, string][] = isZh
+    ? [
+        ['Was', '宠物友好地点目录'],
+        ['Now', '场景化本地探索引擎'],
+        ['Core question', 'Where should we go today?'],
+        ['Start', '一个城市 · 100 个地点 · 8 个 filter'],
+      ]
+    : [
+        ['Was', 'Pet-friendly place directory'],
+        ['Now', 'Context-based local discovery engine'],
+        ['Core question', 'Where should we go today?'],
+        ['Start', 'One city · 100 places · 8 filters'],
+      ];
+
+  const mapShows = isZh
+    ? ['Name', 'Address', 'Rating（星级）', 'Opening hour', 'Reviews（嘈杂、游客化）']
+    : ['Name', 'Address', 'Rating (stars)', 'Opening hour', 'Reviews (noisy, touristy)'];
+
+  const jijuAnswers = isZh
+    ? ['适合 laptop work 吗？有 plug / 稳 WiFi 吗？', 'Parking 难吗？冷气够吗？吵不吵？', '能坐久吗？午餐便宜吗？有 lunch set 吗？', '适合一个人 / date / 带宠物吗？', 'food 是真好吃还是只是环境美？local 会回访吗？']
+    : ['Good for laptop work? Power plug & stable WiFi?', 'Parking hard? Aircon strong? Noisy?', 'Can sit long? Cheap lunch? Lunch set?', 'Good for solo / date / pets?', 'Actually tasty or just pretty? Will locals return?'];
+
+  const problemCards = isZh
+    ? [
+        { label: '01 / Maps', title: '地图太宽泛', copy: 'Google Map 有评分和位置,但答不了场景:plug、parking、能不能坐久、有没有 lunch set、本地认不认。' },
+        { label: '02 / Reviews', title: '评论太游客化', copy: '太网红、太多假 review、太情绪化。4.5 星不代表它适合你今天的目的。' },
+        { label: '03 / Context', title: '没有场景标签', copy: '不知道 parking、不知道能不能坐久、不知道 local 是否真去、不知道 promo 是否还 active。' },
+      ]
+    : [
+        { label: '01 / Maps', title: 'Maps are too broad', copy: 'Ratings and locations, but no scene: plugs, parking, sit-long, lunch sets, or local approval.' },
+        { label: '02 / Reviews', title: 'Reviews are too touristy', copy: 'Too influencer-driven, too many fake reviews, too emotional. 4.5 stars does not mean right for today.' },
+        { label: '03 / Context', title: 'No scene tags', copy: 'No parking info, no sit-long info, no signal on whether locals actually go or if a promo is still active.' },
+      ];
+
+  const categoryCards = isZh
+    ? [
+        { title: 'Eat', note: '流量最大', tags: ['Lunch set', 'Local favorite', 'Michelin / Bib', 'Cheap good food', 'Date night', 'Solo meal', 'Family dinner', 'Supper', 'Hidden gem', 'Trap warning'] },
+        { title: 'Work', note: 'Google Map 查不到', tags: ['Power plug', 'WiFi', 'Quiet', 'Can sit long', 'Good coffee', 'Big table', 'Parking easy', 'Aircon strong', 'Laptop friendly', 'Meeting friendly'] },
+        { title: 'Chill', note: '适合内容化', tags: ['Afternoon cafe', 'Rainy day', 'With friend', 'First date', 'Healing place', 'Good view', 'Walkable', 'Photo spot', 'Weekend half-day'] },
+        { title: 'Pet', note: '保留差异化,做强 filter', tags: ['Indoor allowed', 'Outdoor only', 'Cat friendly', 'Dog friendly', 'Water bowl', 'Pet menu', 'Walking area', 'Spacious', 'Pet-friendly staff'] },
+        { title: 'Promo', note: '每天有人搜', tags: ['Lunch set', 'Coffee promo', 'Student promo', 'Weekday deal', 'Happy hour', 'Buy 1 free 1', 'Set under RM20', 'New opening'] },
+      ]
+    : [
+        { title: 'Eat', note: 'Highest traffic', tags: ['Lunch set', 'Local favorite', 'Michelin / Bib', 'Cheap good food', 'Date night', 'Solo meal', 'Family dinner', 'Supper', 'Hidden gem', 'Trap warning'] },
+        { title: 'Work', note: 'Hard to find on Maps', tags: ['Power plug', 'WiFi', 'Quiet', 'Can sit long', 'Good coffee', 'Big table', 'Parking easy', 'Aircon strong', 'Laptop friendly', 'Meeting friendly'] },
+        { title: 'Chill', note: 'Great for content', tags: ['Afternoon cafe', 'Rainy day', 'With friend', 'First date', 'Healing place', 'Good view', 'Walkable', 'Photo spot', 'Weekend half-day'] },
+        { title: 'Pet', note: 'Differentiation, as a filter', tags: ['Indoor allowed', 'Outdoor only', 'Cat friendly', 'Dog friendly', 'Water bowl', 'Pet menu', 'Walking area', 'Spacious', 'Pet-friendly staff'] },
+        { title: 'Promo', note: 'Searched daily', tags: ['Lunch set', 'Coffee promo', 'Student promo', 'Weekday deal', 'Happy hour', 'Buy 1 free 1', 'Set under RM20', 'New opening'] },
+      ];
+
+  const scoreRows: [string, number][] = [
+    ['Food', 8.5],
+    ['Comfort', 7.8],
+    ['Parking', 6.5],
+    ['Work-friendly', 9.0],
+    ['Pet-friendly', 7.0],
+    ['Value', 8.2],
+    ['Local approval', 8.8],
+  ];
+
+  const profileRows = isZh
+    ? [
+        ['Area', 'Georgetown'],
+        ['Best for', 'Laptop work / brunch / 安静下午'],
+        ['Price', 'RM20–40'],
+        ['Parking', 'Medium difficulty'],
+        ['Power plug', 'Yes, limited'],
+        ['WiFi', 'Stable'],
+        ['Can sit long', 'Yes'],
+        ['Pet-friendly', 'Outdoor only'],
+        ['Lunch set', 'Weekday 12pm–3pm'],
+        ['Local verdict', '适合办公,食物普通但咖啡稳'],
+        ['Avoid', 'Weekend 2pm–5pm'],
+        ['Best time', 'Weekday morning'],
+      ]
+    : [
+        ['Area', 'Georgetown'],
+        ['Best for', 'Laptop work / brunch / quiet afternoon'],
+        ['Price', 'RM20–40'],
+        ['Parking', 'Medium difficulty'],
+        ['Power plug', 'Yes, limited'],
+        ['WiFi', 'Stable'],
+        ['Can sit long', 'Yes'],
+        ['Pet-friendly', 'Outdoor only'],
+        ['Lunch set', 'Weekday 12pm–3pm'],
+        ['Local verdict', 'Good to work, food average, coffee reliable'],
+        ['Avoid', 'Weekend 2pm–5pm'],
+        ['Best time', 'Weekday morning'],
+      ];
+
+  const todaysPicks = isZh
+    ? ['Best lunch set under RM20', '有 plug & parking 的 cafe', 'Local 认可的 Michelin 地点', '本周末宠物友好去处', '今天适合办公的安静地点']
+    : ['Best lunch set under RM20', 'Cafes with plug & parking', 'Local-approved Michelin spots', 'Pet-friendly places this weekend', 'Quiet places to work today'];
+
+  const mvpFilters = ['Lunch set', 'Work-friendly', 'Power plug', 'Easy parking', 'Pet-friendly', 'Local favorite', 'Date-friendly', 'Promo available'];
+
+  const mvpCards = isZh
+    ? [
+        { title: 'Phase 1 · 做有用的数据', lines: ['先做一个城市 / 区域:Penang、KL、PJ、Georgetown、Mont Kiara、Bangsar。', '先做 100 个地点,每个比 Google Map 更有用。', '上 8 个 filter 与 Place Profile。'] },
+        { title: 'Phase 2 · 上线场景探索', lines: ['场景入口首页 + 搜索/筛选。', 'SEO landing pages 与本地指南。', 'TikTok / IG / community submission 做增长。'] },
+        { title: 'Phase 3 · 验证商户', lines: ['接触 cafe / 餐厅更新资料与 lunch set。', '早期免费 verified listing。', '收集用户与商户反馈。'] },
+        { title: 'Phase 4 · 变现', lines: ['Featured placement 与 promo 页。', 'Merchant dashboard。', '扩展城市与垂类,验证后再考虑换域名。'] },
+      ]
+    : [
+        { title: 'Phase 1 · Build useful data', lines: ['One city/area first: Penang, KL, PJ, Georgetown, Mont Kiara, Bangsar.', '100 places, each more useful than Google Maps.', 'Ship 8 filters and the Place Profile.'] },
+        { title: 'Phase 2 · Launch scene discovery', lines: ['Scene-entry homepage + search/filter.', 'SEO landing pages and local guides.', 'Grow via TikTok / IG / community submissions.'] },
+        { title: 'Phase 3 · Merchant validation', lines: ['Approach cafes/restaurants for profiles and lunch sets.', 'Free verified listing for early merchants.', 'Collect user and merchant feedback.'] },
+        { title: 'Phase 4 · Monetization', lines: ['Featured placement and promo pages.', 'Merchant dashboard.', 'Expand cities/verticals; revisit domain after validation.'] },
+      ];
+
+  const businessCards = isZh
+    ? [
+        { title: 'Featured listing', copy: '商户付费出现在相关场景。' },
+        { title: 'Promo placement', copy: 'Lunch set、限时优惠在 promo 入口曝光。' },
+        { title: 'Merchant subscription', copy: '商户订阅管理资料与表现。' },
+        { title: 'Verified place badge', copy: '核验 plug / parking / 宠物政策 / promo。' },
+        { title: 'Work-friendly badge', copy: 'Cafe 办公友好认证,强差异化。' },
+        { title: 'Local guide sponsorship', copy: '赞助本地指南与清单文。' },
+        { title: 'Pet-friendly premium', copy: '宠物友好高信任类别 + 活动。' },
+        { title: 'Data insights', copy: '给商户的客流与场景数据。' },
+      ]
+    : [
+        { title: 'Featured listing', copy: 'Merchants pay to appear in relevant scenes.' },
+        { title: 'Promo placement', copy: 'Lunch sets and limited deals in the promo entry.' },
+        { title: 'Merchant subscription', copy: 'Subscription to manage profile and performance.' },
+        { title: 'Verified place badge', copy: 'Verify plug / parking / pet policy / promo.' },
+        { title: 'Work-friendly badge', copy: 'Cafe work-friendly certification — strong edge.' },
+        { title: 'Local guide sponsorship', copy: 'Sponsor local guides and listicles.' },
+        { title: 'Pet-friendly premium', copy: 'High-trust pet category plus events.' },
+        { title: 'Data insights', copy: 'Footfall and scene data for merchants.' },
+      ];
+
+  const domainCards = isZh
+    ? [
+        { title: 'A · 继续 jiju.pet', lines: ['品牌解释变宽:从 pet-friendly 扩到 places worth visiting。', '缺点:新用户可能误会只跟宠物有关。'] },
+        { title: 'B · 买新主域名', lines: ['jiju.my / jiju.place / jiju.city / gojiju.com / jiju.guide。', 'jiju.pet 变成其中一个频道。最干净。'] },
+        { title: 'C · 先 MVP 再换', lines: ['先用 jiju.pet 做 MVP,验证场景搜索。', '最现实:先别纠结 domain。'] },
+      ]
+    : [
+        { title: 'A · Keep jiju.pet', lines: ['Widen the brand: pet-friendly to places worth visiting.', 'Risk: new users assume it is pet-only.'] },
+        { title: 'B · Buy a new domain', lines: ['jiju.my / jiju.place / jiju.city / gojiju.com / jiju.guide.', 'jiju.pet becomes one channel. Cleanest.'] },
+        { title: 'C · MVP first, switch later', lines: ['Use jiju.pet for the MVP, validate scene search.', 'Most realistic: do not over-think the domain yet.'] },
+      ];
+
+  const founderRows = isZh
+    ? [
+        { role: 'Eden · 系统', copy: '标签系统、搜索、推荐、地点 database、scoring、merchant dashboard、user submission、AI recommendation、SEO landing pages。' },
+        { role: 'Partner · 增长', copy: '去店里验证、拍短视频、跟商家谈 promo、拿 lunch set、做 cafe work list、本地推荐、merchant onboarding、TikTok series、社区探店。' },
+        { role: 'Shared', copy: '品牌方向、变现策略、重大支出、股权、合作条款、融资与扩张。' },
+      ]
+    : [
+        { role: 'Eden · Systems', copy: 'Tagging, search, recommendation, place database, scoring, merchant dashboard, user submission, AI recommendation, SEO landing pages.' },
+        { role: 'Partner · Growth', copy: 'On-site verification, short videos, merchant promo deals, lunch-set info, cafe-work lists, local picks, merchant onboarding, TikTok series, community outings.' },
+        { role: 'Shared', copy: 'Brand direction, monetization, major spend, equity, partnership terms, fundraising, expansion.' },
+      ];
+
+  const sloganCards = isZh
+    ? [
+        { title: 'Find places worth visiting', copy: '强调“值得去”。' },
+        { title: 'Where should we go today?', copy: '直接命中脑内问题,最强。' },
+        { title: 'Local spots, real context', copy: '强调本地与真实场景。' },
+        { title: '今天去哪里？', copy: '中文感,生活化。' },
+      ]
+    : [
+        { title: 'Find places worth visiting', copy: 'Emphasizes “worth it”.' },
+        { title: 'Where should we go today?', copy: 'Hits the in-head question. Strongest.' },
+        { title: 'Local spots, real context', copy: 'Emphasizes local + real scenes.' },
+        { title: '今天去哪里？', copy: 'A local, lived-in Chinese voice.' },
+      ];
+
+  return (
+    <div className="page-shell jiju-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
+      <main className="px-5 py-8 md:px-8 md:py-10">
+        <div className="mx-auto max-w-6xl">
+          <div className="jiju-topbar flex flex-wrap items-center justify-between gap-3">
+            <a href={homeHref} className="jiju-back-link inline-flex items-center gap-2 text-sm font-medium">
+              <ArrowLeft size={16} />
+              {isZh ? '返回主页' : 'Back to Home'}
+            </a>
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
+          </div>
+
+          <header className="jiju-hero py-16 text-center md:py-24">
+            <p className="jiju-kicker mx-auto">{isZh ? 'Jiju / 本地人也会用的去处指南' : 'Jiju / A local discovery guide for places worth visiting'}</p>
+            <h1 className="jiju-title mx-auto mt-5 font-display font-bold tracking-tight">Where should we go today?</h1>
+            <p className="jiju-subtitle mx-auto mt-5">
+              {isZh
+                ? '不是普通 review site,也不是 pet-friendly app。Jiju 用真实生活需求帮你决定去哪:lunch set、laptop cafe、plug、parking、promo、宠物友好,以及本地人真的认可的食物。'
+                : 'Not a review site, not a pet-friendly app. Jiju helps you decide where to go by real-life needs: lunch sets, laptop cafes, plugs, parking, promos, pet-friendly spots, and food locals actually approve.'}
+            </p>
+            <div className="jiju-scene-chips">
+              {sceneEntries.map((label) => (
+                <span key={label} className="jiju-scene-chip">{label}</span>
+              ))}
+            </div>
+            <div className="mt-7 flex flex-wrap justify-center gap-5">
+              <a href="https://jiju.pet" target="_blank" rel="noopener noreferrer" className="jiju-text-cta">
+                {isZh ? '打开 jiju.pet' : 'Open jiju.pet'} <ExternalLink size={15} />
+              </a>
+              <a href="#mvp" className="jiju-text-cta jiju-text-cta-muted">
+                {isZh ? '看 MVP 计划' : 'View MVP plan'} <span aria-hidden>›</span>
+              </a>
+            </div>
+          </header>
+
+          <section className="jiju-product-panel">
+            <div className="jiju-product-copy">
+              <p className="jiju-kicker">{isZh ? 'Positioning' : 'Positioning'}</p>
+              <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
+                {isZh ? '卖的是“场景”,不是“地点”。' : 'It sells the scene, not the place.'}
+              </h2>
+              <p>
+                {isZh
+                  ? 'Google Map 是地点数据库。Jiju 要做的是场景数据库——把同一家店拆成「适不适合现在的我」。从 niche directory 变成 lifestyle utility:where to go, based on mood, need, time, budget, and lifestyle。'
+                  : 'Google Maps is a place database. Jiju is a scene database — breaking each place into “does it fit me right now”. From a niche directory into a lifestyle utility: where to go, based on mood, need, time, budget, and lifestyle.'}
+              </p>
+            </div>
+            <div className="jiju-proof-grid">
+              {proofPoints.map(([label, value]) => (
+                <div key={label} className="jiju-proof-row">
+                  <span>{label}</span>
+                  <strong>{value}</strong>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="jiju-section py-16 md:py-24">
+            <div className="jiju-section-head">
+              <p className="jiju-kicker">{isZh ? 'Same cafe, different data' : 'Same cafe, different data'}</p>
+              <h2 className="jiju-section-title font-display font-bold tracking-tight">
+                {isZh ? '同一家 cafe,在 Jiju 里被拆成可回答的问题。' : 'The same cafe, broken into questions Jiju can answer.'}
+              </h2>
+            </div>
+            <div className="jiju-split-grid mt-12">
+              <article className="jiju-note-card">
+                <h3 className="font-display text-2xl font-bold tracking-tight">{isZh ? 'Google Map 显示' : 'Google Maps shows'}</h3>
+                <ul>
+                  {mapShows.map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
+                </ul>
+              </article>
+              <article className="jiju-note-card">
+                <h3 className="font-display text-2xl font-bold tracking-tight">{isZh ? 'Jiju 回答' : 'Jiju answers'}</h3>
+                <ul>
+                  {jijuAnswers.map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
+                </ul>
+              </article>
+            </div>
+          </section>
+
+          <section className="jiju-section py-16 md:py-24">
+            <div className="jiju-section-head">
+              <p className="jiju-kicker">{isZh ? 'The problem' : 'The problem'}</p>
+              <h2 className="jiju-section-title font-display font-bold tracking-tight">
+                {isZh ? '人们搜的不是“餐厅”,是“情境”。' : 'People do not search for restaurants. They search for situations.'}
+              </h2>
+              <p className="jiju-section-copy">
+                {isZh
+                  ? '今天 lunch 去哪、哪里能办公、哪里好 parking、本地人觉得哪里真的好——现有工具回答不了。'
+                  : 'Where to eat now, where to work, where parking is easy, what locals actually rate — existing tools cannot answer.'}
+              </p>
+            </div>
+            <div className="jiju-review-track mt-12">
+              {problemCards.map((item) => (
+                <article key={item.label} className="jiju-review-card">
+                  <span>{item.label}</span>
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.title}</h3>
+                  <p>{item.copy}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="jiju-section py-16 md:py-24">
+            <div className="jiju-section-head">
+              <p className="jiju-kicker">{isZh ? '5 main categories' : '5 main categories'}</p>
+              <h2 className="jiju-section-title font-display font-bold tracking-tight">Eat · Work · Chill · Pet · Promo</h2>
+              <p className="jiju-section-copy">
+                {isZh
+                  ? '五个主分类,每个都有很具体的标签。Pet 保留为强 filter,而不是唯一主轴。'
+                  : 'Five main categories, each with concrete tags. Pet stays a strong filter, not the only axis.'}
+              </p>
+            </div>
+            <div className="jiju-cat-grid mt-12">
+              {categoryCards.map((cat) => (
+                <article key={cat.title} className="jiju-cat-card">
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{cat.title}</h3>
+                  <p className="jiju-kicker">{cat.note}</p>
+                  <div className="jiju-tag-row">
+                    {cat.tags.map((tag) => (
+                      <span key={tag} className="jiju-tag">{tag}</span>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="jiju-section py-16 md:py-24">
+            <div className="jiju-section-head">
+              <p className="jiju-kicker">{isZh ? 'Jiju Fit Score' : 'Jiju Fit Score'}</p>
+              <h2 className="jiju-section-title font-display font-bold tracking-tight">
+                {isZh ? '不只显示 rating,显示“适不适合你”。' : 'Not just a rating — a fit score.'}
+              </h2>
+            </div>
+            <div className="jiju-score-card mt-12">
+              <div className="jiju-score-grid">
+                {scoreRows.map(([label, value]) => (
+                  <div key={label} className="jiju-score-row">
+                    <span>{label}</span>
+                    <div className="jiju-score-bar">
+                      <div className="jiju-score-fill" style={{ width: `${value * 10}%` }} />
+                    </div>
+                    <strong>{value.toFixed(1)}</strong>
+                  </div>
+                ))}
+              </div>
+              <p className="jiju-score-summary">
+                Best for weekday laptop work and affordable lunch set, but parking gets difficult after 12:30pm.
+              </p>
+            </div>
+          </section>
+
+          <section className="jiju-section py-16 md:py-24">
+            <div className="jiju-section-head">
+              <p className="jiju-kicker">{isZh ? 'Place Profile' : 'Place Profile'}</p>
+              <h2 className="jiju-section-title font-display font-bold tracking-tight">
+                {isZh ? '资料像数据库,比 Google Map 更有用。' : 'Each profile reads like a database, more useful than Maps.'}
+              </h2>
+            </div>
+            <div className="jiju-profile-card mt-12">
+              {profileRows.map(([label, value]) => (
+                <div key={label} className="jiju-profile-row">
+                  <span>{label}</span>
+                  <strong>{value}</strong>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="jiju-section py-16 md:py-24">
+            <div className="jiju-section-head">
+              <p className="jiju-kicker">{isZh ? 'Differentiation' : 'Differentiation'}</p>
+              <h2 className="jiju-section-title font-display font-bold tracking-tight">Not just highly rated. Actually useful.</h2>
+              <p className="jiju-section-copy">
+                {isZh
+                  ? 'Michelin / Google / Tripadvisor / 小红书都太游客化、太网红化、太多假 review、没有场景标签。Jiju 的差异化是 Local Context:plug、parking、能不能坐久、local 是否真去、promo 是否还 active。'
+                  : 'Michelin / Google / Tripadvisor / XHS are too touristy, too influencer-driven, too many fake reviews, no scene tags. Jiju’s edge is Local Context: plugs, parking, sit-long, whether locals really go, and whether the promo is still active.'}
+              </p>
+            </div>
+          </section>
+
+          <section className="jiju-section py-16 md:py-24">
+            <div className="jiju-section-head">
+              <p className="jiju-kicker">{isZh ? 'Homepage concept' : 'Homepage concept'}</p>
+              <h2 className="jiju-section-title font-display font-bold tracking-tight">
+                {isZh ? '首页是场景入口,不是地图。' : 'The homepage is a scene entry, not a map.'}
+              </h2>
+            </div>
+            <div className="jiju-split-grid mt-12">
+              <article className="jiju-note-card">
+                <h3 className="font-display text-2xl font-bold tracking-tight">{isZh ? '第一屏 · 场景按钮' : 'First screen · scene buttons'}</h3>
+                <div className="jiju-tag-row">
+                  {sceneEntries.map((label) => (
+                    <span key={label} className="jiju-tag">{label}</span>
+                  ))}
+                </div>
+              </article>
+              <article className="jiju-note-card">
+                <h3 className="font-display text-2xl font-bold tracking-tight">Today&apos;s useful picks</h3>
+                <ul>
+                  {todaysPicks.map((pick) => (
+                    <li key={pick}>{pick}</li>
+                  ))}
+                </ul>
+              </article>
+            </div>
+          </section>
+
+          <section id="mvp" className="jiju-section py-16 md:py-24">
+            <div className="jiju-section-head">
+              <p className="jiju-kicker">{isZh ? 'MVP plan' : 'MVP plan'}</p>
+              <h2 className="jiju-section-title font-display font-bold tracking-tight">
+                {isZh ? '不要做整个 Malaysia。先做透一个城市。' : 'Do not do all of Malaysia. Nail one city first.'}
+              </h2>
+              <p className="jiju-section-copy">
+                {isZh ? '第一版只做 8 个 filter:' : 'V1 ships only 8 filters:'}
+              </p>
+              <div className="jiju-tag-row">
+                {mvpFilters.map((f) => (
+                  <span key={f} className="jiju-tag">{f}</span>
+                ))}
+              </div>
+            </div>
+            <div className="mt-12 grid gap-5 md:grid-cols-2">
+              {mvpCards.map((item) => (
+                <article key={item.title} className="jiju-note-card">
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.title}</h3>
+                  <ul>
+                    {item.lines.map((line) => (
+                      <li key={line}>{line}</li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="jiju-section py-16 md:py-24">
+            <div className="jiju-section-head">
+              <p className="jiju-kicker">{isZh ? 'Business model' : 'Business model'}</p>
+              <h2 className="jiju-section-title font-display font-bold tracking-tight">
+                {isZh ? '日常高频,变现方式比 pet directory 多。' : 'Daily frequency, more monetization than a pet directory.'}
+              </h2>
+              <p className="jiju-section-copy">
+                {isZh ? '用户每周用,而不是只有带宠物时才用。' : 'Used weekly, not only when bringing a pet.'}
+              </p>
+            </div>
+            <div className="jiju-skill-grid mt-12">
+              {businessCards.map((item) => (
+                <article key={item.title} className="jiju-skill-card">
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.title}</h3>
+                  <p>{item.copy}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="jiju-section py-16 md:py-24">
+            <div className="jiju-section-head">
+              <p className="jiju-kicker">{isZh ? 'Domain strategy' : 'Domain strategy'}</p>
+              <h2 className="jiju-section-title font-display font-bold tracking-tight">
+                {isZh ? '.pet 还是新域名?先验证再决定。' : '.pet or a new domain? Validate first.'}
+              </h2>
+              <p className="jiju-section-copy">
+                {isZh ? '当下结论:先别纠结 domain,先验证有没有人真的用场景搜索。' : 'For now: do not over-think the domain, validate that people actually use scene search.'}
+              </p>
+            </div>
+            <div className="jiju-operating-grid mt-12">
+              {domainCards.map((group) => (
+                <article key={group.title} className="jiju-operating-card">
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{group.title}</h3>
+                  <ul>
+                    {group.lines.map((line) => (
+                      <li key={line}>{line}</li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="jiju-section py-16 md:py-24">
+            <div className="jiju-section-head">
+              <p className="jiju-kicker">{isZh ? 'Founder roles' : 'Founder roles'}</p>
+              <h2 className="jiju-section-title font-display font-bold tracking-tight">
+                {isZh ? 'Eden 做系统,partner 做真实增长。' : 'Eden builds systems; partner drives real-world growth.'}
+              </h2>
+            </div>
+            <div className="jiju-philosophy-list mt-12">
+              {founderRows.map((item) => (
+                <article key={item.role} className="jiju-philosophy-row">
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.role}</h3>
+                  <p>{item.copy}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="jiju-section py-16 md:py-24">
+            <div className="jiju-section-head">
+              <p className="jiju-kicker">{isZh ? 'Slogan & brand' : 'Slogan & brand'}</p>
+              <h2 className="jiju-section-title font-display font-bold tracking-tight">Local places, filtered by real-life needs.</h2>
+              <p className="jiju-section-copy">
+                {isZh
+                  ? '不看星级、不看网红、不看广告——看我现在饿了、要坐着工作、怕 parking、带宠物、想省钱、想吃 local 觉得真好吃的、不想踩雷。'
+                  : 'Not stars, not influencers, not ads — but: I am hungry now, I need to sit and work, I dread parking, I have my pet, I want to save, I want food locals actually love, I do not want to get burned.'}
+              </p>
+            </div>
+            <div className="mt-12 grid gap-5 md:grid-cols-2">
+              {sloganCards.map((item) => (
+                <article key={item.title} className="jiju-system-card">
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.title}</h3>
+                  <p>{item.copy}</p>
+                </article>
+              ))}
+            </div>
+            <a href={joinBasePath(revampBase, 'jiju-pet')} className="jiju-text-cta jiju-text-cta-muted mt-10 inline-flex">
+              {isZh ? '看 Jiju.pet 构建记录' : 'View the Jiju.pet build log'} <span aria-hidden>›</span>
+            </a>
+          </section>
+        </div>
+      </main>
+    </div>
+  );
+};
+
 type ActiveBuildSkill = {
   label: string;
   kind: 'hard' | 'soft';
@@ -8268,71 +9476,35 @@ const App: React.FC = () => {
   const lifeOsHref = joinBasePath(baseUrl, 'life-os');
   const lifeHref = joinBasePath(baseUrl, 'life');
   const brandGuideHref = joinBasePath(baseUrl, 'brand-guide');
+  const topicsHref = joinBasePath(baseUrl, 'topics');
   const conwayHref = joinBasePath(baseUrl, 'conways-game-of-life');
   const resumeHref = 'https://drive.google.com/uc?export=download&id=1PRXj4BwpeAX_7F9H2PJumG0slIEZmLZ0';
   const homeHref = baseUrl;
-  const homeChaosSignals = isZh
+  const homeSystemFiles: Array<{ title: string; href: string; cta: string; visual?: 'blueprint' | 'jiju' | 'life-magic' }> = isZh
     ? [
-        '产品方向很多，但主线不清楚。',
-        'AI 工具到处都是，却没有真正进入工作流。',
-        '增长压力很大，但活动、内容和用户路径各跑各的。',
-        '运营知道问题存在，却缺一个能复用的系统。',
+        { title: 'Projects Hub', href: projectsHref, cta: '看项目系统', visual: 'blueprint' },
+        { title: 'Jiju Knowledge System', href: fullPageHref, cta: '看 Jiju 复盘', visual: 'jiju' },
+        { title: 'Life OS RPG System', href: lifeOsHref, cta: '打开 Life OS', visual: 'life-magic' },
       ]
     : [
-        'Product ideas are everywhere, but the main line is unclear.',
-        'AI tools are everywhere, but the workflow is still missing.',
-        'Growth pressure is real, but campaigns, content, and user paths run apart.',
-        'Operations can feel the problem, but the reusable system is not there yet.',
+        { title: 'Projects Hub', href: projectsHref, cta: 'View systems', visual: 'blueprint' },
+        { title: 'Jiju Knowledge System', href: fullPageHref, cta: 'Read Jiju review', visual: 'jiju' },
+        { title: 'Life OS RPG System', href: lifeOsHref, cta: 'Open Life OS', visual: 'life-magic' },
       ];
-  const homeClearOutputs = isZh
+  const homeInterestLinks: Array<{ title: string; href: string; visual?: 'bagua-mirror' | 'gramophone' | 'power-up' | 'pyramid-break' | 'archive-evolution' }> = isZh
     ? [
-        { title: 'Product Logic', copy: '把想法整理成用户路径、验证顺序和可上线范围。' },
-        { title: 'Growth Structure', copy: '把增长从口号拆成渠道、机制、节奏和复盘。' },
-        { title: 'AI Workflow', copy: '把 AI 从工具清单变成小团队真正能使用的流程。' },
-        { title: 'Campaign System', copy: '把活动、provider、素材、规则和追踪变成同一张图。' },
-        { title: 'Content Engine', copy: '把长期构建过程整理成品牌叙事和可持续输出。' },
+        { title: 'Life OS', href: lifeOsHref, visual: 'power-up' },
+        { title: 'Analog Tech', href: analogTechHref, visual: 'gramophone' },
+        { title: 'Topic Board', href: topicsHref, visual: 'archive-evolution' },
+        { title: 'Pattern Archive', href: 'https://edent95.github.io/8g/', visual: 'bagua-mirror' },
+        { title: "Conway's Game of Life", href: conwayHref, visual: 'pyramid-break' },
       ]
     : [
-        { title: 'Product Logic', copy: 'Turn ideas into user paths, validation order, and shippable scope.' },
-        { title: 'Growth Structure', copy: 'Break growth into channels, mechanics, rhythm, and review loops.' },
-        { title: 'AI Workflow', copy: 'Move AI from a tool list into a workflow a small team can actually use.' },
-        { title: 'Campaign System', copy: 'Map campaigns, providers, assets, rules, and tracking into one operating view.' },
-        { title: 'Content Engine', copy: 'Turn the build process into brand narrative and sustainable output.' },
-      ];
-  const homeSystemFiles: Array<{ title: string; copy: string; href: string; cta: string; visual?: 'blueprint' | 'jiju' | 'life-magic' }> = isZh
-    ? [
-        { title: 'Projects Hub', copy: 'Jiju、Friday Poker Club、ETReportHub 和 CRM 的 AI build systems。', href: projectsHref, cta: '看 Projects', visual: 'blueprint' },
-        { title: 'Jiju Growth System', copy: '从槟城开始的宠物友好发现平台，先把小地图做清楚。', href: fullPageHref, cta: '看案例', visual: 'jiju' },
-        { title: 'Life OS RPG System', copy: '把人格、经历、能力和阴影转成角色卡、技能与成长路线。', href: lifeOsHref, cta: '打开角色档案', visual: 'life-magic' },
-      ]
-    : [
-        { title: 'Projects Hub', copy: 'AI build systems for Jiju, Friday Poker Club, ETReportHub, and CRM.', href: projectsHref, cta: 'View Projects', visual: 'blueprint' },
-        { title: 'Jiju Growth System', copy: 'A pet-friendly discovery platform starting from Penang, built by making the small map clear first.', href: fullPageHref, cta: 'View case', visual: 'jiju' },
-        { title: 'Life OS RPG System', copy: 'A character-card system for turning personality, experience, ability, and shadow into upgrade routes.', href: lifeOsHref, cta: 'Open profile', visual: 'life-magic' },
-      ];
-  const homeCollaborationPaths = isZh
-    ? [
-        { title: 'Product & Growth Systems', copy: '适合早期创始人，需要产品方向、用户路径、增长逻辑和验证顺序。' },
-        { title: 'AI Workflow Design', copy: '适合小团队，需要减少手工、整理知识、建立内部工作流。' },
-        { title: 'iGaming Strategy', copy: '适合 operator、aggregator 或 provider，需要活动结构、留存机制和 promotion coordination。' },
-      ]
-    : [
-        { title: 'Product & Growth Systems', copy: 'For early-stage founders who need product direction, user flow, growth logic, and validation order.' },
-        { title: 'AI Workflow Design', copy: 'For small teams that need to reduce manual work, organize knowledge, and build internal workflows.' },
-        { title: 'iGaming Strategy', copy: 'For operators, aggregators, or providers that need campaign structure, retention mechanics, and promotion coordination.' },
-      ];
-  const homeInterestLinks: Array<{ title: string; copy: string; href: string; visual?: 'bagua-mirror' | 'gramophone' | 'power-up' | 'pyramid-break' | 'archive-evolution' }> = isZh
-    ? [
-        { title: 'Life OS', copy: '人生 RPG 能力系统与角色档案。', href: lifeOsHref, visual: 'power-up' },
-        { title: 'Analog Tech', copy: '机械、胶片和旧技术的手感。', href: analogTechHref, visual: 'gramophone' },
-        { title: 'Pattern Archive', copy: '人类行为、选择模式和旧系统的长期观察档案。', href: 'https://edent95.github.io/8g/', visual: 'bagua-mirror' },
-        { title: "Conway's Game of Life", copy: '黑白 256 rules 元胞自动机浏览器。', href: conwayHref, visual: 'pyramid-break' },
-      ]
-    : [
-        { title: 'Life OS', copy: 'A life RPG ability system and character profile.', href: lifeOsHref, visual: 'power-up' },
-        { title: 'Analog Tech', copy: 'Mechanical, film, and old-technology texture.', href: analogTechHref, visual: 'gramophone' },
-        { title: 'Pattern Archive', copy: 'A long-running archive on human behavior, choice patterns, and old systems.', href: 'https://edent95.github.io/8g/', visual: 'bagua-mirror' },
-        { title: "Conway's Game of Life", copy: 'A black-and-white browser for 256 cellular automata rules.', href: conwayHref, visual: 'pyramid-break' },
+        { title: 'Life OS', href: lifeOsHref, visual: 'power-up' },
+        { title: 'Analog Tech', href: analogTechHref, visual: 'gramophone' },
+        { title: 'Topic Board', href: topicsHref, visual: 'archive-evolution' },
+        { title: 'Pattern Archive', href: 'https://edent95.github.io/8g/', visual: 'bagua-mirror' },
+        { title: "Conway's Game of Life", href: conwayHref, visual: 'pyramid-break' },
       ];
   const currentPath = typeof window !== 'undefined' ? normalizePath(window.location.pathname) : '/';
   const normalizedBase = normalizePath(baseUrl);
@@ -8341,6 +9513,7 @@ const App: React.FC = () => {
       ? normalizePath(currentPath.slice(normalizedBase.length))
       : currentPath;
   const isJijuPetFullPage = pathWithoutBase === '/jiju-pet';
+  const isJijuRevampFullPage = pathWithoutBase === '/jiju-revamp';
   const isProjectsFullPage = pathWithoutBase === '/projects';
   const isProjectCssGalleryPage = pathWithoutBase === '/project-css';
   const isETReportHubFullPage = pathWithoutBase === '/etreporthub';
@@ -8357,6 +9530,7 @@ const App: React.FC = () => {
   const isLifeOsFullPage = pathWithoutBase === '/life-os';
   const isLifeFullPage = pathWithoutBase === '/life';
   const isBrandGuideFullPage = pathWithoutBase === '/brand-guide';
+  const isTopicsFullPage = pathWithoutBase === '/topics';
   const isConwayGameOfLifeFullPage = pathWithoutBase === '/conways-game-of-life';
   const archivedWorkSlug = pathWithoutBase.startsWith('/archive/')
     ? pathWithoutBase.replace('/archive/', '')
@@ -8370,6 +9544,19 @@ const App: React.FC = () => {
   if (isJijuPetFullPage) {
     return (
       <JijuPetFullPage
+        homeHref={homeHref}
+        language={language}
+        setLanguage={setLanguage}
+        themePreference={themePreference}
+        theme={theme}
+        setThemePreference={setThemePreference}
+      />
+    );
+  }
+
+  if (isJijuRevampFullPage) {
+    return (
+      <JijuRevampFullPage
         homeHref={homeHref}
         language={language}
         setLanguage={setLanguage}
@@ -8552,6 +9739,20 @@ const App: React.FC = () => {
     );
   }
 
+  if (isTopicsFullPage) {
+    return (
+      <GuestTopicsPage
+        homeHref={homeHref}
+        projectsHref={projectsHref}
+        language={language}
+        setLanguage={setLanguage}
+        themePreference={themePreference}
+        theme={theme}
+        setThemePreference={setThemePreference}
+      />
+    );
+  }
+
   if (isConwayGameOfLifeFullPage) {
     return (
       <ConwayGameOfLifeFullPage
@@ -8617,30 +9818,30 @@ const App: React.FC = () => {
         >
           <motion.p variants={fadeIn} className="home-kicker mx-auto inline-flex items-center gap-2">
             <MapPin size={14} />
-            {isZh ? 'Malaysia · Systems Architect & Digital Strategist' : 'Malaysia · Systems Architect & Digital Strategist'}
+            {isZh ? 'Malaysia · Knowledge systems · Product logic · AI workflows' : 'Malaysia · Knowledge systems · Product logic · AI workflows'}
           </motion.p>
           <motion.h1 variants={fadeIn} className="home-hero-title mx-auto mt-5 font-display font-bold tracking-tight">
-            Eden Tan
+            {isZh ? 'Knowledge should compound.' : 'Knowledge should compound.'}
           </motion.h1>
           <motion.p variants={fadeIn} className="home-hero-subtitle mx-auto mt-4 font-display font-bold tracking-tight">
-            I build systems from chaos.
+            {isZh ? '把散乱工作，整理成能复用的系统。' : 'I turn scattered work into reusable systems.'}
           </motion.p>
           <motion.p variants={fadeIn} className="home-hero-copy mx-auto mt-5">
             {isZh
-              ? 'For founders, operators, and small teams dealing with messy product ideas, scattered workflows, growth pressure, or unclear digital direction.'
-              : 'For founders, operators, and small teams dealing with messy product ideas, scattered workflows, growth pressure, or unclear digital direction.'}
+              ? 'Eden Tan 设计产品、增长、AI 工作流和知识库结构，让项目经验不会只停在聊天记录、临时判断和一次性交付里。'
+              : 'Eden Tan designs product systems, growth logic, AI workflows, and knowledge structures so project learning does not disappear into chat history, one-off decisions, and finished deliverables.'}
           </motion.p>
           <motion.p variants={fadeIn} className="home-hero-support mx-auto mt-3">
             {isZh
-              ? 'Product growth, AI workflows, digital strategy, and long-form build narratives from Malaysia.'
-              : 'Product growth, AI workflows, digital strategy, and long-form build narratives from Malaysia.'}
+              ? '核心不是做更多内容，而是让判断、流程和知识持续累积。'
+              : 'The point is not more output. The point is judgment, workflow, and knowledge that keep compounding.'}
           </motion.p>
           <motion.div variants={fadeIn} className="mt-7 flex flex-wrap justify-center gap-5">
-            <a href={fullPageHref} className="home-text-cta">
-              {isZh ? '看 Jiju.pet' : 'View Jiju.pet'} <span aria-hidden>›</span>
+            <a href={projectsHref} className="home-text-cta">
+              {isZh ? '看系统证明' : 'Read the systems'} <span aria-hidden>›</span>
             </a>
-            <a href="#work-with-me" className="home-text-cta home-text-cta-muted">
-              {isZh ? '合作方式' : 'Work with me'} <span aria-hidden>›</span>
+            <a href={brandGuideHref} className="home-text-cta home-text-cta-muted">
+              {isZh ? '看品牌指南' : 'Read the brand guide'} <span aria-hidden>›</span>
             </a>
           </motion.div>
           <motion.div
@@ -8655,48 +9856,9 @@ const App: React.FC = () => {
 
         <section className="home-section mx-auto max-w-6xl py-14 md:py-24">
           <div className="home-section-head">
-            <p className="home-kicker">{isZh ? 'When things feel messy' : 'When things feel messy'}</p>
+            <p className="home-kicker">{isZh ? 'Proof through builds' : 'Proof through builds'}</p>
             <h2 className="home-section-title font-display font-bold tracking-tight">
-              {isZh ? '先接住混乱。再开始设计系统。' : 'Start with the mess. Then design the system.'}
-            </h2>
-          </div>
-          <div className="mt-10 grid gap-4 md:grid-cols-2">
-            {homeChaosSignals.map((item) => (
-              <div key={item} className="home-quiet-row">
-                <span aria-hidden>✦</span>
-                <p>{item}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="home-section mx-auto max-w-6xl py-14 md:py-24">
-          <div className="home-section-head">
-            <p className="home-kicker">{isZh ? 'What becomes clear' : 'What becomes clear'}</p>
-            <h2 className="home-section-title font-display font-bold tracking-tight">
-              {isZh ? '从想法，到路径，到能复用的操作系统。' : 'From ideas, to paths, to reusable operating systems.'}
-            </h2>
-            <p className="home-section-copy">
-              {isZh
-                ? 'Eden 的工作不是把页面做漂亮而已，而是把判断、流程、内容和增长机制整理到同一条链路里。'
-                : 'Eden’s work is not just making pages look better. It is turning judgment, workflow, content, and growth mechanics into one usable chain.'}
-            </p>
-          </div>
-          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-5">
-            {homeClearOutputs.map((item) => (
-              <article key={item.title} className="home-output-card">
-                <h3 className="font-display text-2xl font-bold tracking-tight">{item.title}</h3>
-                <p>{item.copy}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="home-section mx-auto max-w-6xl py-14 md:py-24">
-          <div className="home-section-head">
-            <p className="home-kicker">{isZh ? 'Systems, not claims' : 'Systems, not claims'}</p>
-            <h2 className="home-section-title font-display font-bold tracking-tight">
-              {isZh ? '如果要了解 Eden，先看系统文件。' : 'To understand Eden, read the system files.'}
+              {isZh ? '不要只看介绍。看系统文件。' : 'Do not read the bio first. Read the systems.'}
             </h2>
           </div>
           <div className="mt-12 grid gap-5 md:grid-cols-3">
@@ -8714,7 +9876,6 @@ const App: React.FC = () => {
                   <HomeLifeMagicIcon label={isZh ? 'Life OS 心跳魔法阵 CSS 图标' : 'Life OS heartbeat magic circle CSS icon'} />
                 )}
                 <h3 className="font-display text-3xl font-bold tracking-tight">{item.title}</h3>
-                <p>{item.copy}</p>
                 <a href={item.href} className="home-text-cta">
                   {item.cta} <span aria-hidden>›</span>
                 </a>
@@ -8723,46 +9884,11 @@ const App: React.FC = () => {
           </div>
         </section>
 
-        <section id="work-with-me" className="home-section mx-auto max-w-6xl py-14 md:py-24">
-          <div className="home-section-head">
-            <p className="home-kicker">{isZh ? 'Work with me' : 'Work with me'}</p>
-            <h2 className="home-section-title font-display font-bold tracking-tight">
-              {isZh ? '适合需要把事情变清楚的人。' : 'For people who need the work to become clearer.'}
-            </h2>
-            <p className="home-section-copy">
-              {isZh
-                ? '合作入口不从职位开始，而从你现在面对的混乱开始。'
-                : 'The entry point is not a job title. It is the kind of mess you are trying to organize.'}
-            </p>
-          </div>
-          <div className="mt-12 grid gap-5 md:grid-cols-3">
-            {homeCollaborationPaths.map((item) => (
-              <article key={item.title} className="home-collab-card">
-                <h3 className="font-display text-2xl font-bold tracking-tight">{item.title}</h3>
-                <p>{item.copy}</p>
-              </article>
-            ))}
-          </div>
-          <div className="mt-9 flex flex-wrap gap-5">
-            <a
-              href="https://www.linkedin.com/in/daniel-yi-tern-tan-461567199/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="home-text-cta"
-            >
-              <Linkedin size={17} /> LinkedIn
-            </a>
-            <a href={resumeHref} target="_blank" rel="noopener noreferrer" className="home-text-cta home-text-cta-muted">
-              <Download size={17} /> {isZh ? '下载简历' : 'Download resume'}
-            </a>
-          </div>
-        </section>
-
         <section className="home-section mx-auto max-w-6xl py-14 md:py-24">
           <div className="home-section-head">
-            <p className="home-kicker">{isZh ? 'Interests' : 'Interests'}</p>
+            <p className="home-kicker">{isZh ? 'Durable archive' : 'Durable archive'}</p>
             <h2 className="home-section-title font-display font-bold tracking-tight">
-              {isZh ? '系统之外，也保留观察世界的入口。' : 'Outside the system, there are still ways to observe the world.'}
+              {isZh ? '这些不是杂项，是长期观察入口。' : 'These are not side interests. They are observation loops.'}
             </h2>
           </div>
           <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -8784,7 +9910,6 @@ const App: React.FC = () => {
                   <HomeBaguaMirrorTotem label={isZh ? 'Pattern Archive 道教八卦镜透明底 CSS 图腾' : 'Pattern Archive transparent Bagua mirror CSS totem'} />
                 )}
                 <h3 className="font-display text-2xl font-bold tracking-tight">{item.title}</h3>
-                <p>{item.copy}</p>
                 <span className="home-interest-arrow" aria-hidden>›</span>
               </a>
             ))}

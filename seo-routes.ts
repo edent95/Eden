@@ -10,13 +10,13 @@ export type RouteSeo = {
 };
 
 export const HOME_TITLE: Record<SeoLanguage, string> = {
-  en: 'Eden Tan | Systems Architect & Digital Strategist',
-  zh: 'Eden Tan | 系统架构与数字战略',
+  en: 'Eden Tan | Knowledge should compound',
+  zh: 'Eden Tan | 知识应该持续累积',
 };
 
 export const HOME_DESC: Record<SeoLanguage, string> = {
-  en: 'Eden Tan is a Malaysia-based product and growth strategist building Jiju.pet, portfolio systems, and zero-to-one digital products across marketing, analytics, and UX.',
-  zh: 'Eden Tan，马来西亚产品与增长策略实践者，作品涵盖 Jiju.pet、营销分析、UX 原型与从 0 到 1 的数字产品构建。',
+  en: 'Eden Tan designs product systems, growth logic, AI workflows, and knowledge structures so scattered work becomes reusable operating memory.',
+  zh: 'Eden Tan 设计产品系统、增长逻辑、AI 工作流和知识结构，把散乱工作整理成能复用的操作记忆。',
 };
 
 export const ROUTE_SEO: RouteSeo[] = [
@@ -36,6 +36,18 @@ export const ROUTE_SEO: RouteSeo[] = [
     desc: {
       en: 'How Jiju.pet went from fragile to shippable: auth, routes, analytics, and mobile UX — a structured zero-to-one operating log by Eden Tan.',
       zh: 'Jiju.pet 从易碎到可交付的过程：认证、路由、埋点与移动端体验加固——Eden Tan 的阶段性构建实录。',
+    },
+  },
+  {
+    path: '/jiju-revamp',
+    priority: '0.7',
+    title: {
+      en: 'Jiju.pet revamp | From pet-friendly to local discovery',
+      zh: 'Jiju.pet 转型提案 | 从宠物友好到本地生活探索',
+    },
+    desc: {
+      en: 'A revamp proposal turning Jiju.pet from a pet-friendly directory into a local discovery platform: scene-based search, real-life filters, and a larger market — by Eden Tan.',
+      zh: 'Jiju.pet 从宠物友好目录转型为本地生活探索平台的提案：按场景搜索、真实生活筛选、更大市场——Eden Tan。',
     },
   },
   {
@@ -256,6 +268,18 @@ export const ROUTE_SEO: RouteSeo[] = [
     desc: {
       en: 'A practical brand guide covering visual direction, typography, color, voice, layout rhythm, motion language, and reusable CSS rules.',
       zh: '一份实用 Brand Guide，整理视觉方向、字体、色彩、语气、版式节奏、动效语言和可复用 CSS 规则。',
+    },
+  },
+  {
+    path: '/topics',
+    priority: '0.7',
+    title: {
+      en: 'Topic Market | Question board for Eden',
+      zh: 'Topic Market | Eden 的问题市场',
+    },
+    desc: {
+      en: 'A lightweight topic market where each card is one question with one icon, and the answer control changes by question type.',
+      zh: '一个轻量 topic market：一张卡一个问题和 icon，回答控件按问题类型变化。',
     },
   },
   {

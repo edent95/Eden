@@ -74,6 +74,7 @@ npm run preview
 - `/life-os` — 人生 RPG 能力系统 / Life OS 角色档案页
 - `/life` — Life 视频页（隐藏直达页；不在首页入口，不进 sitemap，客户端 SEO 设为 noindex）
 - `/brand-guide` — Brand Guide：视觉、语气、版式与动效规则
+- `/topics` — Topic Market：一张卡一个问题和 icon，回答控件按问题类型变化（当前浏览器本地保存）
 - `/conways-game-of-life` — 256 elementary cellular automata rules explorer
 - `/archive/:slug` — 归档项目详情
 

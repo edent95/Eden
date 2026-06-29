@@ -1,1 +1,335 @@
-/* Restored import entry. */
+/* Office CSS art: framed office-system app icons. */
+
+.office-icon {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(180deg, #f8fafc 0%, #e8eef5 100%);
+  box-shadow:
+    0 18px 50px rgb(28 25 23 / 0.1),
+    inset 0 0 0 1px rgb(255 255 255 / 0.58);
+}
+
+.office-icon span {
+  position: absolute;
+  display: block;
+}
+
+.office-icon-surface {
+  inset: 9%;
+  border-radius: 24%;
+  background: rgb(255 255 255 / 0.42);
+}
+
+.office-calendar-icon { background: linear-gradient(180deg, #eef6ff 0%, #dbeafe 100%); }
+.office-inbox-icon { background: linear-gradient(180deg, #f1fbf7 0%, #d7f0e5 100%); }
+.office-report-icon { background: linear-gradient(180deg, #fff7e8 0%, #f5dfb8 100%); }
+.office-team-icon { background: linear-gradient(180deg, #f6f0ff 0%, #e6d7ff 100%); }
+.office-contract-icon { background: linear-gradient(180deg, #fff0f2 0%, #f4d3d9 100%); }
+.office-workflow-icon { background: linear-gradient(180deg, #f0f7ff 0%, #d9e7ff 100%); }
+
+.office-calendar-page,
+.office-inbox-paper,
+.office-report-sheet,
+.office-team-board,
+.office-contract-paper {
+  background: #fffdf8;
+  box-shadow: 0 12px 24px rgb(57 45 32 / 0.13);
+}
+
+.office-calendar-page {
+  left: 23%;
+  top: 22%;
+  width: 54%;
+  height: 58%;
+  border-radius: 12% 12% 18% 18%;
+}
+
+.office-calendar-header {
+  left: 23%;
+  top: 22%;
+  width: 54%;
+  height: 16%;
+  border-radius: 12% 12% 0 0;
+  background: #2563eb;
+}
+
+.office-calendar-bind {
+  top: 17%;
+  width: 8%;
+  height: 15%;
+  border-radius: 999px;
+  background: #334155;
+}
+
+.office-calendar-bind.bind-a { left: 35%; }
+.office-calendar-bind.bind-b { right: 35%; }
+
+.office-calendar-date {
+  width: 9%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #93c5fd;
+  animation: officeIconBob 4s ease-in-out infinite;
+}
+
+.office-calendar-date.date-a { left: 34%; top: 48%; }
+.office-calendar-date.date-b { left: 49%; top: 48%; animation-delay: -1s; }
+.office-calendar-date.date-c { left: 34%; top: 63%; animation-delay: -2s; }
+.office-calendar-date.date-d { left: 49%; top: 63%; animation-delay: -3s; }
+
+.office-inbox-paper {
+  left: 28%;
+  width: 42%;
+  height: 42%;
+  border-radius: 10%;
+}
+
+.office-inbox-paper.paper-back {
+  top: 20%;
+  transform: rotate(-8deg);
+  opacity: 0.72;
+}
+
+.office-inbox-paper.paper-front {
+  top: 27%;
+  transform: rotate(6deg);
+  animation: officePaperDrop 4.8s ease-in-out infinite;
+}
+
+.office-inbox-tray {
+  left: 18%;
+  bottom: 20%;
+  width: 64%;
+  height: 28%;
+  border-radius: 16% 16% 22% 22%;
+  background: #0f766e;
+  box-shadow: inset 0 -10px 18px rgb(8 47 73 / 0.22);
+}
+
+.office-inbox-lip {
+  left: 26%;
+  bottom: 31%;
+  width: 48%;
+  height: 8%;
+  border-radius: 999px;
+  background: #99f6e4;
+}
+
+.office-report-sheet {
+  left: 25%;
+  top: 18%;
+  width: 50%;
+  height: 64%;
+  border-radius: 12%;
+}
+
+.office-report-bar {
+  left: 36%;
+  height: 7%;
+  border-radius: 999px;
+  background: #f59e0b;
+}
+
+.office-report-bar.bar-a { top: 37%; width: 28%; }
+.office-report-bar.bar-b { top: 50%; width: 18%; }
+.office-report-bar.bar-c { top: 63%; width: 32%; }
+
+.office-report-check {
+  right: 25%;
+  bottom: 22%;
+  width: 20%;
+  height: 11%;
+  border-left: 0.42rem solid #16a34a;
+  border-bottom: 0.42rem solid #16a34a;
+  transform: rotate(-45deg);
+  animation: officeCheckTap 3.6s ease-in-out infinite;
+}
+
+.office-team-board {
+  left: 18%;
+  top: 22%;
+  width: 64%;
+  height: 58%;
+  border-radius: 16%;
+}
+
+.office-team-card {
+  width: 23%;
+  height: 25%;
+  border-radius: 16%;
+  background: #a78bfa;
+  box-shadow: 0 8px 18px rgb(67 56 202 / 0.14);
+  animation: officeCardFlip 5.2s ease-in-out infinite;
+}
+
+.office-team-card.card-a { left: 28%; top: 34%; }
+.office-team-card.card-b { right: 28%; top: 34%; animation-delay: -1.5s; }
+.office-team-card.card-c { left: 39%; bottom: 28%; animation-delay: -3s; }
+
+.office-team-pin {
+  width: 7%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #7c3aed;
+}
+
+.office-team-pin.pin-a { left: 26%; top: 27%; }
+.office-team-pin.pin-b { right: 26%; top: 27%; }
+
+.office-contract-paper {
+  left: 25%;
+  top: 17%;
+  width: 50%;
+  height: 65%;
+  border-radius: 12%;
+}
+
+.office-contract-mark {
+  left: 38%;
+  top: 41%;
+  width: 22%;
+  height: 17%;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  background: #f472b6;
+}
+
+.office-contract-pen {
+  right: 22%;
+  bottom: 22%;
+  width: 11%;
+  height: 42%;
+  border-radius: 999px;
+  background: #334155;
+  transform: rotate(42deg);
+  animation: officePenWrite 3.8s ease-in-out infinite;
+}
+
+.office-contract-seal {
+  left: 30%;
+  bottom: 23%;
+  width: 20%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #e11d48;
+  box-shadow: inset 0 0 0 5px rgb(255 255 255 / 0.35);
+}
+
+.office-workflow-line {
+  height: 4%;
+  border-radius: 999px;
+  background: #60a5fa;
+  transform-origin: left center;
+}
+
+.office-workflow-line.line-a {
+  left: 29%;
+  top: 40%;
+  width: 42%;
+  transform: rotate(23deg);
+}
+
+.office-workflow-line.line-b {
+  left: 30%;
+  top: 60%;
+  width: 39%;
+  transform: rotate(-21deg);
+}
+
+.office-workflow-node {
+  width: 22%;
+  aspect-ratio: 1;
+  border-radius: 28%;
+  background: #2563eb;
+  box-shadow: 0 10px 22px rgb(37 99 235 / 0.18);
+  animation: officeNodePulse 4.2s ease-in-out infinite;
+}
+
+.office-workflow-node.node-a { left: 18%; top: 36%; }
+.office-workflow-node.node-b { right: 18%; top: 27%; animation-delay: -1.4s; }
+.office-workflow-node.node-c { right: 19%; bottom: 21%; animation-delay: -2.8s; }
+
+.office-workflow-wand {
+  left: 31%;
+  bottom: 20%;
+  width: 9%;
+  height: 42%;
+  border-radius: 999px;
+  background: #111827;
+  transform: rotate(44deg);
+  animation: officeWandMove 4.6s ease-in-out infinite;
+}
+
+.office-workflow-spark {
+  width: 9%;
+  aspect-ratio: 1;
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  background: #facc15;
+  animation: officeSparkPop 2.8s ease-in-out infinite;
+}
+
+.office-workflow-spark.spark-a { left: 47%; top: 28%; }
+.office-workflow-spark.spark-b { right: 23%; top: 55%; animation-delay: -1.4s; }
+
+:root[data-theme="dark"] .office-icon {
+  background: linear-gradient(180deg, #1f2937 0%, #111827 100%);
+  box-shadow:
+    0 18px 50px rgb(0 0 0 / 0.25),
+    inset 0 0 0 1px rgb(255 255 255 / 0.08);
+}
+
+:root[data-theme="dark"] .office-calendar-page,
+:root[data-theme="dark"] .office-inbox-paper,
+:root[data-theme="dark"] .office-report-sheet,
+:root[data-theme="dark"] .office-team-board,
+:root[data-theme="dark"] .office-contract-paper {
+  background: #f8fafc;
+}
+
+@keyframes officeIconBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12%); }
+}
+
+@keyframes officePaperDrop {
+  0%, 100% { transform: translateY(0) rotate(6deg); }
+  50% { transform: translateY(7%) rotate(3deg); }
+}
+
+@keyframes officeCheckTap {
+  0%, 100% { transform: rotate(-45deg) scale(1); }
+  50% { transform: rotate(-45deg) scale(1.12); }
+}
+
+@keyframes officeCardFlip {
+  0%, 100% { transform: translateY(0) rotateY(0deg); }
+  50% { transform: translateY(-8%) rotateY(24deg); }
+}
+
+@keyframes officePenWrite {
+  0%, 100% { transform: translate(0, 0) rotate(42deg); }
+  50% { transform: translate(6%, -4%) rotate(36deg); }
+}
+
+@keyframes officeNodePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+@keyframes officeWandMove {
+  0%, 100% { transform: translate(0, 0) rotate(44deg); }
+  50% { transform: translate(12%, -10%) rotate(34deg); }
+}
+
+@keyframes officeSparkPop {
+  0%, 100% { transform: scale(0.82) rotate(0deg); }
+  50% { transform: scale(1.12) rotate(12deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .office-icon *,
+  .office-icon *::before,
+  .office-icon *::after {
+    animation: none !important;
+  }
+}

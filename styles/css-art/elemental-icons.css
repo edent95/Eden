@@ -1,1 +1,234 @@
-/* Restored import entry. */
+/* Elemental CSS art: flat framed element icons. */
+
+.element-icon {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  box-shadow:
+    0 18px 50px rgb(28 25 23 / 0.12),
+    inset 0 0 0 1px rgb(255 255 255 / 0.12);
+}
+
+.element-icon span {
+  position: absolute;
+  display: block;
+}
+
+.element-base-glow {
+  left: 20%;
+  right: 20%;
+  bottom: 15%;
+  height: 14%;
+  border-radius: 999px;
+  opacity: 0.72;
+  animation: elementBaseBreathe 4.8s ease-in-out infinite;
+}
+
+.element-fire-icon {
+  background: linear-gradient(180deg, #2a1210 0%, #401412 100%);
+}
+
+.fire-element-flame {
+  left: 50%;
+  bottom: 22%;
+  border-radius: 60% 40% 58% 42% / 62% 42% 58% 38%;
+  transform-origin: center bottom;
+}
+
+.fire-element-flame.flame-back {
+  width: 46%;
+  height: 58%;
+  background: #ef4444;
+  transform: translateX(-50%) rotate(8deg);
+  animation: fireFlameWaveBack 2.8s ease-in-out infinite;
+}
+
+.fire-element-flame.flame-mid {
+  width: 34%;
+  height: 48%;
+  background: #fb923c;
+  transform: translateX(-50%) rotate(-8deg);
+  animation: fireFlameWaveMid 2.4s ease-in-out infinite;
+}
+
+.fire-element-flame.flame-front {
+  width: 22%;
+  height: 34%;
+  background: #fde68a;
+  transform: translateX(-50%) rotate(5deg);
+  animation: fireCorePulse 2.2s ease-in-out infinite;
+}
+
+.fire-element-ember {
+  width: 8%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #facc15;
+  animation: fireEmberRise 3.6s ease-in-out infinite;
+}
+
+.fire-element-ember.ember-a { left: 25%; top: 56%; }
+.fire-element-ember.ember-b { right: 24%; top: 45%; animation-delay: -1.8s; }
+
+.element-fire-icon .element-base-glow {
+  background: #f97316;
+}
+
+.element-water-icon {
+  background: linear-gradient(180deg, #09233e 0%, #0e3a5a 100%);
+}
+
+.water-element-drop {
+  left: 50%;
+  clip-path: polygon(50% 0, 66% 20%, 82% 43%, 91% 63%, 88% 80%, 75% 93%, 50% 100%, 25% 93%, 12% 80%, 9% 63%, 18% 43%, 34% 20%);
+  transform: translateX(-50%);
+}
+
+.water-element-drop.drop-back {
+  top: 22%;
+  width: 48%;
+  height: 58%;
+  background: #38bdf8;
+  opacity: 0.8;
+  animation: waterDropFloat 4s ease-in-out infinite;
+}
+
+.water-element-drop.drop-front {
+  top: 31%;
+  width: 31%;
+  height: 40%;
+  background: #bae6fd;
+  opacity: 0.9;
+  animation: waterDropFloat 4s ease-in-out infinite reverse;
+}
+
+.water-element-bubble {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgb(224 242 254 / 0.8);
+  animation: waterBubbleRise 4.8s ease-in-out infinite;
+}
+
+.water-element-bubble.bubble-a { left: 25%; top: 58%; width: 8%; }
+.water-element-bubble.bubble-b { right: 24%; top: 41%; width: 11%; animation-delay: -1.6s; }
+.water-element-bubble.bubble-c { right: 34%; bottom: 22%; width: 6%; animation-delay: -3.2s; }
+
+.element-water-icon .element-base-glow {
+  background: #38bdf8;
+}
+
+.element-wind-icon {
+  background: linear-gradient(180deg, #0e2f2d 0%, #12423d 100%);
+}
+
+.wind-element-gust {
+  height: 11%;
+  border-radius: 999px;
+  background: #99f6e4;
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.12);
+  animation: windGustSlide 4.4s ease-in-out infinite;
+}
+
+.wind-element-gust.gust-a {
+  left: 20%;
+  top: 34%;
+  width: 58%;
+}
+
+.wind-element-gust.gust-b {
+  left: 31%;
+  top: 50%;
+  width: 48%;
+  animation-delay: -1.4s;
+}
+
+.wind-element-gust.gust-c {
+  left: 23%;
+  top: 66%;
+  width: 38%;
+  animation-delay: -2.8s;
+}
+
+.wind-element-leaf {
+  width: 13%;
+  height: 8%;
+  border-radius: 100% 0 100% 0;
+  background: #bef264;
+  animation: windLeafDrift 5s ease-in-out infinite;
+}
+
+.wind-element-leaf.leaf-a {
+  right: 22%;
+  top: 27%;
+  transform: rotate(24deg);
+}
+
+.wind-element-leaf.leaf-b {
+  left: 25%;
+  bottom: 23%;
+  transform: rotate(-18deg);
+  animation-delay: -2.2s;
+}
+
+.element-wind-icon .element-base-glow {
+  background: #2dd4bf;
+}
+
+:root[data-theme="dark"] .element-icon {
+  box-shadow:
+    0 18px 50px rgb(0 0 0 / 0.28),
+    inset 0 0 0 1px rgb(255 255 255 / 0.08);
+}
+
+@keyframes elementBaseBreathe {
+  0%, 100% { transform: scaleX(0.88); opacity: 0.48; }
+  50% { transform: scaleX(1.08); opacity: 0.78; }
+}
+
+@keyframes fireFlameWaveBack {
+  0%, 100% { transform: translateX(-50%) rotate(8deg) scaleY(1); }
+  50% { transform: translateX(-50%) rotate(13deg) scaleY(1.05); }
+}
+
+@keyframes fireFlameWaveMid {
+  0%, 100% { transform: translateX(-50%) rotate(-8deg) scaleY(1); }
+  50% { transform: translateX(-50%) rotate(-13deg) scaleY(1.08); }
+}
+
+@keyframes fireCorePulse {
+  0%, 100% { transform: translateX(-50%) rotate(5deg) scale(0.94); }
+  50% { transform: translateX(-50%) rotate(9deg) scale(1.04); }
+}
+
+@keyframes fireEmberRise {
+  0%, 100% { transform: translateY(8%) scale(0.8); }
+  50% { transform: translateY(-22%) scale(1.08); }
+}
+
+@keyframes waterDropFloat {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-5%); }
+}
+
+@keyframes waterBubbleRise {
+  0%, 100% { transform: translateY(8%) scale(0.88); }
+  50% { transform: translateY(-18%) scale(1.08); }
+}
+
+@keyframes windGustSlide {
+  0%, 100% { transform: translateX(-6%); }
+  50% { transform: translateX(8%); }
+}
+
+@keyframes windLeafDrift {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 18% -18%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .element-icon *,
+  .element-icon *::before,
+  .element-icon *::after {
+    animation: none !important;
+  }
+}

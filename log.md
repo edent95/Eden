@@ -16,6 +16,195 @@
 
 ## Entries
 
+### 2026-06-29 09:28
+
+- 类型：前台 / 内容 / 文档 / Jiju revamp 深化
+- 改动：(1) 重写 `JijuRevampFullPage`（App.tsx），按 Eden 给的更详细定位（context-based local discovery）扩充：hero 加 8 个场景入口 chip + “Where should we go today?”；新增「场景数据库 vs 地点数据库」positioning、「同一家 cafe：Google Map 显示 vs Jiju 回答」对照、5 大主分类（Eat/Work/Chill/Pet/Promo，每类具体 tag）、Jiju Fit Score（score bar + 一句话总结）、Place Profile（数据库式资料）、Differentiation（Not just highly rated. Actually useful.）、Homepage concept（场景按钮 + Today’s useful picks）、MVP（8 个 filter + 4 phase）、Business model（8 张卡）、Domain strategy（A/B/C）、Founder roles（Eden 系统 / Partner 增长 / Shared）、Slogan & brand。中英双语。(2) `styles/pages/jiju-pet.css` 新增 revamp 用类：`.jiju-scene-chip(s)`、`.jiju-cat-grid/.jiju-cat-card`、`.jiju-tag-row/.jiju-tag`、`.jiju-split-grid`、`.jiju-score-card/.jiju-score-row/.jiju-score-bar/.jiju-score-fill/.jiju-score-summary`、`.jiju-profile-card/.jiju-profile-row`，并把 `.jiju-split-grid` 加进 900px 单列断点。(3) 新增 `docs/jiju-revamp-positioning.md` 作为 durable 参考文档，完整收录这次定位，供下次执行参考。
+- 原因：用户补充了更具体的 pivot 方向（场景而非地点、5 分类具体标签、Jiju Fit Score、Place Profile、首页场景入口、domain 策略、分工），要求「更新页面 + 存参考文档」。
+- 影响：`/jiju-revamp` 从概要提案升级为可对外展示的完整产品定位页；沿用 brand guide 的居中留白、solid 色条/色点/chip 分类、无 background fade（score bar 为 solid mint fill，不是渐层）。参考文档让未来 agent 可直接对齐定位。
+- 验证：`tsc --noEmit` 通过（exit 0）；`npx vite build --outDir /tmp/jiju_build` 通过（✓ 2085 modules，✓ built in 2.05s）；bundle JS 含 “Jiju Fit Score” 与 “scene database/场景数据库”，CSS 含 `jiju-scene-chip / jiju-cat-card / jiju-score-fill`。（仓库内 `npm run build` 仍因 sandbox 为 Linux + 无法删 `dist/.DS_Store` 失败，与代码无关；本地 macOS 不受影响。）
+- 后续：本地 `npm run dev` 打开 `http://localhost:4180/jiju-revamp` 验证场景 chip、score bar、Place Profile mono 排版、双语与移动端单列；如要进一步，可把场景 chip 做成可点 filter、或把 Jiju Fit Score 做成 CSS art 组件。
+
+### 2026-06-29 09:14
+
+- 类型：前台 / 路由 / Jiju.pet revamp
+- 改动：新增 `/jiju-revamp` 路由与 `JijuRevampFullPage` 组件（App.tsx），内容为 Jiju.pet 从 pet-friendly app 转型为「a place to visit / 本地生活探索平台」的提案，中英双语。复用现有 `.jiju-*` 编辑式样式（jiju-hero / product-panel / proof-grid / review-track / system-card / operating-grid / note-card / skill-grid / philosophy-row），不新增 CSS。Sections：Positioning（场景引擎）、The problem（地图太宽/评论嘈杂/社媒分散）、The solution（Eat/Work/Chill/Pet 场景探索）、Place profile（实用信息分组）、Market opportunity（旧 vs 新方向）、Business model（6 张商户变现卡）、MVP plan（4 phase）、Founder roles、Brand direction。`seo-routes.ts` 注册 `/jiju-revamp`（priority 0.7，双语 title/desc，进 sitemap）。在 `/jiju-pet` hero 增加「看转型提案 / View revamp proposal」入口链接。
+- 原因：用户提供了一份 Jiju proposal HTML，要求按 `/jiju-pet` 格式 + AGENTS/brand guide，把宠物友好 app 转成「去哪玩」更大市场的 revamp 内容；选择新增 React 路由、中英双语。
+- 影响：新增一个可对外展示的提案页，沿用 brand guide 的 Apple-like 居中留白（max-width 1040px）、solid 色条/色点分类、无 background fade；宠物友好定位为强筛选而非全部市场。`/jiju-pet` 多一个 discoverable 入口；sitemap/SEO 与 route registry 同步。
+- 验证：`npm run typecheck` 通过（exit 0）；`npx vite build --outDir /tmp/jiju_build` 通过（✓ 2085 modules transformed，✓ built in 2.01s），产物 `assets/index-*.js` 含 `jiju-revamp` 与 “Where should we go” 字符串，确认组件已编译进 bundle。（仓库内 `npm run build` 仅因 sandbox 为 Linux 而 node_modules 自带 macOS rollup binary、以及无法删除 `dist/.DS_Store` 而失败，与本次代码无关。）
+- 后续：本地 `npm run dev` 后打开 `http://localhost:4180/jiju-revamp` 验证双语切换、light/dark、移动端单列；如需，可把它接进 `/projects` 卡片或主页入口。
+
+### 2026-06-26 13:35
+
+- 类型：前台 / Topics / Topbar typography
+- 改动：将 `/topics` 顶部两条 menu bar 改为 follow `/brand-guide` 的 topbar 语言：第一条 topbar 使用 `rgb(22 22 23 / 0.78)` 半透明背景、`blur(24px)`、56px 高度、轻边线；第二条 category nav 使用同样的 glass 背景、54px 高度；搜索框改为半透明 pill；New Topic CTA 改为 40px Eden Mint pill；顶部字体统一走 MiSans / brand font stack，并降低 nav 字重到 650。
+- 原因：用户要求 top menu bar 两条也 follow 自己的 brand guide，font 也 follow 回 brand。
+- 影响：`/topics` 保留 market 信息架构，但顶部导航不再像外部市场站，而是和 Eden Brand Guide 的半透明、克制、MiSans 风格一致；移动端第二条 nav 改为非 sticky，避免 topbar 多行时遮挡内容。
+- 验证：Playwright computed style 确认 `.topics-market-topbar` 背景 `rgba(22, 22, 23, 0.78)`、高度 56px、`blur(24px)`、MiSans font stack；`.topics-market-nav` 高度 54px、同样 glass 背景；`.topics-signup-button` 为 40px Eden Mint pill；`git diff --check -- styles/pages/topics-market.css log.md` 通过；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.12s）。
+- 后续：本地打开 `http://localhost:4180/topics`，顶部两条导航应更接近 `/brand-guide` 的 glass topbar，而不是厚重黑色 market bar。
+
+### 2026-06-26 13:30
+
+- 类型：前台 / Topics / Brand color
+- 改动：将 `/topics` 的 market layout 颜色从 Polymarket-like 蓝绿红黑，改为跟随 `/brand-guide`：Deep `#050505`、Soft `#161617`、Line `#303034`、Ink `#f5f5f7`、Eden Mint `#7bdcb5`、Eden Pink `#dc6f82`、Dream Purple `#c4b5fd`，并把 Yes / New Topic 设为 Mint、No 设为 Pink、action link 设为 Purple。
+- 原因：用户要求颜色部分 follow 自己的 brand guide。
+- 影响：`/topics` 保留市场式排版，但视觉回到 Eden 品牌系统，不再使用外部站点的蓝绿红市场色。
+- 验证：Playwright computed style 确认 `.topics-page` 背景为 `rgb(5, 5, 5)`、`.topics-market-card` 为 `rgb(22, 22, 23)`、`.topics-signup-button` / `.topics-yes-button` 为 `rgb(123, 220, 181)`、`.topics-no-button` 为 `rgb(220, 111, 130)`、`.topics-help-link` 为 `rgb(196, 181, 253)`；`git diff --check -- styles/pages/topics-market.css log.md` 通过；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.16s）。
+- 后续：本地打开 `http://localhost:4180/topics`，应看到 Polymarket-like 排版但颜色属于 Eden Brand Guide。
+
+### 2026-06-26 13:18
+
+- 类型：修复 / 前台 / Topics CSS
+- 改动：修复 `/topics` 页面 CSS 未生效导致排版退回默认文档流的问题；将页面样式文件从 `styles/pages/topics.css` 重命名为 `styles/pages/topics-market.css`，并同步更新 `index.css` import，强制 Vite 使用新的 CSS module；Playwright computed style 验证确认 `.topics-page` 为深色背景、`.topics-market-topbar` / `.topics-market-shell` / `.topics-card-grid` 均为 grid、`.topics-market-card` 为深色卡片。
+- 原因：浏览器实际注入的是旧版 topics CSS，导致截图中顶部、分类、sidebar 和 card grid 全部失效。
+- 影响：`/topics` 现在正确显示为深色 market layout，不再出现白底、文字挤在一起、卡片单列和按钮贴字的问题。
+- 验证：Playwright 检查 computed style 通过；`git diff --check -- App.tsx index.css styles/pages/topics-market.css log.md` 通过；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.13s）。
+- 后续：如果浏览器仍显示旧画面，打开 `http://localhost:4180/topics?cssBust=renamed-20260626` 或硬刷新一次清掉旧 HMR 缓存。
+
+### 2026-06-26 13:13
+
+- 类型：前台 / Topics / Layout
+- 改动：按用户提供的 Polymarket 截图重排 `/topics`：新增深色顶部栏、搜索框、横向分类导航、左侧分类列表、右侧三列 market card；每张卡以一个问题和一个 icon 为主，卡内直接展示 outcomes、percentage、Yes/No 按钮、volume 和 bookmark 图标；保留 guest 新问题输入和本地 activity。
+- 原因：用户希望 Topics page 排版接近截图，而不是上一版的 hero + answer panel。
+- 影响：`/topics` 现在更像可浏览的问题市场，答案直接在卡内完成；当前数据仍是静态前端示例，本地回答仍只存在当前浏览器 localStorage。
+- 验证：关键词检查确认 `topics-market-topbar`、`topics-market-sidebar`、`topics-card-grid`、`topics-outcome-row`、`Eden Markets` 已接入；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.18s）；`curl -I http://localhost:4180/topics` 返回 `200 OK`。
+- 后续：如需更接近真实市场，可接持久化层并为每个 outcome 计算公开聚合百分比。
+
+### 2026-06-26 12:46
+
+- 类型：前台 / Topics / Interaction
+- 改动：将 `/topics` 从留言板表单改成 Polymarket-like 的轻量 Topic Market：一张卡一个问题和 icon；点击问题卡后，右侧 answer panel 根据问题类型切换为 Yes/No、多选、优先级、评分或开放文本；同步更新 `styles/pages/topics.css`、`seo-routes.ts` 与 README 路由说明。
+- 原因：用户希望 Topics page 类似 Polymarket，以“一个问题 + 一个 icon”为基本单元，答案形式需要 depend on question。
+- 影响：页面更像可浏览的问题市场，而不是普通 guestbook；当前回答仍保存在当前浏览器 localStorage，不同访客之间不会共享。
+- 验证：关键词检查确认 `topicMarketQuestions`、`responseType`、`topics-market-card`、`Topic markets` 已接入；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.11s）；`curl -I http://localhost:4180/topics` 返回 `200 OK`。
+- 后续：如果要变成真实公开 market，需要接后端并为每个 question 计算公开聚合结果。
+
+### 2026-06-26 02:06
+
+- 类型：代码 / 前台 / Topics
+- 改动：新增 `/topics` Visitor Topic Board 页面，支持访客以 guest 身份新增 topic、对 seed topic 或本地 topic 留 comment、在本机浏览器保存最近留言，并提供复制本地留言给 Eden 的按钮；首页 Durable archive 新增 Topic Board 入口；同步 `seo-routes.ts`、`README.md` 和 `styles/pages/topics.css`。
+- 原因：用户要求多开一个页面，让其他访客可以 comment 一些 topic，也可以作为 guest 留下 topic。
+- 影响：站点新增一个可访问的 visitor topic inbox；当前版本不接后端，留言只保存在当前浏览器 localStorage，不同访客之间不会互相看到。
+- 验证：关键词检查确认 `/topics`、`Topic Board`、`GUEST_TOPIC_STORAGE_KEY`、`topics-page` 已接入；`git diff --check -- App.tsx seo-routes.ts README.md index.css styles/pages/topics.css log.md` 通过；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.21s）；`curl -I http://localhost:4180/topics` 返回 `200 OK`。
+- 后续：如果要做真正跨访客公开留言墙，下一步接 Firebase / Supabase / GitHub Issues / Formspree 等持久化层。
+
+### 2026-06-26 01:39
+
+- 类型：内容 / 前台 / Homepage
+- 改动：移除首页 `Proof through builds` 三张系统卡和 `Durable archive` 四张入口卡的解释型副文案；对应数据结构不再保存 `copy`，卡片渲染也不再输出说明段落。
+- 原因：用户要求把“从槟城小地图开始……”这类卡片解说全部 remove。
+- 影响：首页卡片更干净，只保留 CSS 图标、标题、CTA 或入口箭头；中英两套首页内容同步更新。
+- 验证：关键词检查确认点名句和同类首页卡片说明已移除；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.11s）；`curl -I http://localhost:4180/` 返回 `200 OK`。
+- 后续：本地打开 `http://localhost:4180/`，`Proof through builds` 与 `Durable archive` 卡片应不再显示解释段落。
+
+### 2026-06-26 01:28
+
+- 类型：内容 / 前台 / Homepage
+- 改动：移除首页 `Proof through builds` 中 `Life OS RPG System` 卡片的说明文案；将该卡片中英 `copy` 置空，并把 system card 渲染改为仅在 `item.copy` 存在时输出说明段落。
+- 原因：用户要求移除 `Life OS RPG System` 里面的解释。
+- 影响：首页该卡片只保留 CSS 图标、标题和 CTA，其它 system card 说明不变。
+- 验证：关键词检查确认原说明文案已从首页 system card 移除；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.29s）；`curl -I http://localhost:4180/` 返回 `200 OK`。
+- 后续：本地打开 `http://localhost:4180/`，`Life OS RPG System` 卡片应不再显示解释文字。
+
+### 2026-06-26 01:26
+
+- 类型：内容 / 前台 / Homepage
+- 改动：从首页移除 `Reader situation` section、`Eden’s lens` section、`Clear next action` section；同步删除对应的 `homeChaosSignals`、`homeClearOutputs`、`homeCollaborationPaths` 数据；移除首页主体里的 LinkedIn 和 resume CTA；首屏第二 CTA 从失效的 `#work-with-me` 改为 `/brand-guide`。
+- 原因：用户要求删除 Reader situation、Eden’s lens、Clear next action，以及该 section 内的 LinkedIn 和 resume。
+- 影响：首页结构更短：Hero → Proof through builds → Durable archive；不会再出现 Clear next action 的合作卡片和联系/简历按钮。
+- 验证：关键词检查确认首页主体无 `Reader situation`、`Eden’s lens`、`Clear next action`、`work-with-me`、`Download resume`、`下载简历` 残留；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.17s）；`curl -I http://localhost:4180/` 返回 `200 OK`。
+- 后续：本地打开 `http://localhost:4180/`，应看到首页从首屏直接进入 Proof through builds，再进入 Durable archive。
+
+### 2026-06-26 01:22
+
+- 类型：内容 / 前台 / Homepage
+- 改动：按 `/brand-guide` 的内容顺序重写首页文案：首屏从泛职业介绍改为 `Knowledge should compound` 核心 thesis；读者处境改为“努力不缺，缺的是可复用记忆”；Eden lens 改成先澄清判断再长出系统；Proof through builds、Clear next action、Durable archive 三个 section 的标题、说明、卡片文案和 CTA 全部同步调整；同步更新 `seo-routes.ts` 与 `index.html` 的首页 title / description / OG / Twitter copy。
+- 原因：用户要求 follow brand guide redesign home page content and wording；Brand Guide 当前规则强调内容先行、少一点准一点、先问题再系统再结果、少说自己多说结果。
+- 影响：首页更像个人知识品牌和系统归档入口，不再只是 portfolio / service intro；SEO 与首屏 thesis 保持一致。
+- 验证：关键词检查确认 `Knowledge should compound`、`I turn scattered work into reusable systems`、`问题通常不是不会做`、`先把判断变清楚`、`不要只看介绍`、`这些不是杂项` 已接入；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.22s）；`curl -I http://localhost:4180/` 返回 `200 OK`。
+- 后续：本地打开 `http://localhost:4180/`，应看到首页首屏和各 section 文案围绕“知识持续累积 / 系统记忆 / 真实 builds”展开。
+
+### 2026-06-26 01:12
+
+- 类型：前台 / Brand Guide / Typography ratio
+- 改动：修正 `/brand-guide` Guide map 区块的字号与卡片比例：为 `.brand-guide-classification` 单独降低 section title / subtitle 字号；将 `.brand-guide-category-grid` 从三张窄卡改为两栏内容岛，第三张横跨整行；降低 category card 标题和列表字号，并强制列表保持 horizontal writing mode。
+- 原因：用户截图反馈 `brand-guide#brand-philosophy` 附近 font size ratio design 有问题；实际表现为 Guide map 标题过大、三栏过窄，中文卡片内容被挤成逐字竖排。
+- 影响：Guide map 不再像 hero 标题，卡片内容横向可读，视觉层级更接近正文 section；改动限定在 Brand Guide 的分类引导区块，不影响后续 section 的主标题体系。
+- 验证：关键词检查确认 `brand-guide-classification .brand-guide-section-title`、`repeat(2, minmax(280px, 1fr))`、`brand-guide-category-card:nth-child(3)`、`writing-mode: horizontal-tb` 已接入；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.14s）；`curl -I http://localhost:4180/brand-guide#brand-philosophy` 返回 `200 OK`。
+- 后续：本地打开 `http://localhost:4180/brand-guide#brand-philosophy`，Guide map 应显示为更低调的 section heading 和横向可读卡片，不再出现逐字竖排。
+
+### 2026-06-26 01:05
+
+- 类型：前台 / CSS art review page
+- 改动：从 `/project-css` 移除 `Math magic / Framed app icons` 区块，包括中文标题 `6 个数学魔法 1:1 CSS icon`、英文标题、6 个 math-magic card map，以及页面侧不再使用的 `mathMagicIconCssArtItems` import；同步清理 `styles/pages/projects.css` 中 `project-css-math-*` stage selector。
+- 原因：用户要求移除数学魔法 1:1 CSS icon 区块。
+- 影响：`/project-css` 现在从 Office icons 直接进入 Elemental icons；底层 `css-art.registry.ts` 与 `styles/css-art/math-magic-icons.css` 保留，避免影响未来复用或重新挂载。
+- 验证：关键词检查确认 `App.tsx` 与 `styles/pages/projects.css` 中无 `mathMagicIconCssArtItems`、`6 个数学魔法`、`6 math-magic`、`project-css-math` 残留；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.22s）；`curl -I http://localhost:4180/project-css` 返回 `200 OK`。
+- 后续：本地打开 `http://localhost:4180/project-css`，应看不到 Math magic 区块。
+
+### 2026-06-26 01:03
+
+- 类型：修复 / 前台 / CSS art review page
+- 改动：修复 `/project-css` 页面样式丢失问题：将 `styles/pages/projects.css` 从 placeholder 恢复为 Projects 页面完整布局样式，并新增 `project-css-*` review board、office/math/elemental/grid/card/stage 响应式规则；把 `components/css-art/index.tsx` 里的 office、math magic、elemental 图标从 fallback glyph 替换为可被 CSS 精准控制的结构化 CSS art DOM；补齐 `styles/css-art/office-icons.css`、`math-magic-icons.css`、`elemental-icons.css` 的 framed icon 样式、light/dark mode 和 `prefers-reduced-motion`。
+- 原因：`/project-css` 依赖的 `projects.css` 以及后半页三组 CSS art 文件只剩 `Restored import entry` placeholder，导致页面布局和图标视觉失效。
+- 影响：`/project-css` 恢复为可用的 CSS art 检查页；`/projects` 的页面布局也随 `projects.css` 恢复；office/math/elemental 三组图标不再只是临时文字 fallback。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.15s）；`git diff --check -- App.tsx styles/pages/projects.css styles/css-art/office-icons.css styles/css-art/math-magic-icons.css styles/css-art/elemental-icons.css` 通过；`curl -I http://localhost:4180/project-css` 和 `curl -I http://localhost:4180/projects` 均返回 `200 OK`。
+- 后续：本地打开 `http://localhost:4180/project-css`，应看到首屏、Projects icons、Home System Files、Interests totems、Office、Math magic、Elemental 各区块都有稳定卡片布局和可见 CSS art 图标。
+
+### 2026-06-26 00:00
+
+- 类型：前台 / Brand Guide / Dark mode color
+- 改动：进一步提高 `/brand-guide` dark mode 奶油色卡片的透明感：将 sky/gold/pink/green dark tokens 改为 `rgb(... / 0.68)`，并把 manifesto 的 dark 彩色光斑透明度降到 0.24 / 0.22 / 0.20。
+- 原因：用户希望浅奶油色再透明一点，减少实色块压迫感。
+- 影响：dark mode 的彩色模块更轻、更透，仍保留黑底高级产品页基调。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.09s）；关键词检查确认 `rgb(234 244 255 / 0.68)`、`rgb(255 240 209 / 0.68)`、`rgb(255 231 230 / 0.68)`、`rgb(233 246 223 / 0.68)` 已接入。
+- 后续：本地打开 `http://localhost:4180/brand-guide`，切到 dark mode 后硬刷新，应看到彩色卡更透明。
+
+### 2026-06-25 23:58
+
+- 类型：前台 / Brand Guide / Dark mode color
+- 改动：把 `/brand-guide` dark mode 的彩色 rule/category cards 从低亮度沉色改成浅奶油 pastel：sky `#eaf4ff`、gold `#fff0d1`、pink `#ffe7e6`、green `#e9f6df`；为这些浅色卡增加 dark mode 专属深色文字 token，保留黑色主画布和深色重点卡；同时把 manifesto 的 dark 彩色光斑改成更轻的奶油色透明层。
+- 原因：用户反馈 dark mode 的其他颜色太 sad，希望改成浅色奶的颜色。
+- 影响：dark mode 仍保持黑底高级产品页基调，但彩色模块更轻、更暖、更有呼吸感，不再显得压抑。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.08s）；关键词检查确认 `#eaf4ff`、`#fff0d1`、`#ffe7e6`、`#e9f6df`、`brand-tint-ink` 和 `brand-tint-muted` 已接入。
+- 后续：本地打开 `http://localhost:4180/brand-guide`，切到 dark mode，应看到彩色卡变成浅奶油色。
+
+### 2026-06-25 23:55
+
+- 类型：前台 / Brand Guide / Dark mode
+- 改动：为 `/brand-guide` 新增专属 dark mode 视觉覆盖：黑色主画布、深灰 section band、白色标题、灰色正文、亮蓝 CTA、低亮度 sky/gold/pink/green rule cards、深色 topbar、dark manifesto 和深色 swatch/spec/card surfaces。
+- 原因：用户确认 light mode 可以，但需要补齐同一套高级产品页逻辑下的 dark mode。
+- 影响：Brand Guide 在 dark mode 下不再沿用全站棕色暗色 token，而是拥有独立的黑/深灰/亮蓝/低亮度 tint 系统；light mode 保持不变。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.07s）；关键词检查确认 dark tokens `#050505`、`#2997ff`、`#10253c` 和 `:root[data-theme="dark"] .brand-guide-page` 已接入。
+- 后续：本地打开 `http://localhost:4180/brand-guide`，切换右上角 dark mode，应看到黑底产品页式 Brand Guide。
+
+### 2026-06-25 23:51
+
+- 类型：前台 / Brand Guide / CSS
+- 改动：将 `/brand-guide` 的视觉 CSS 更彻底地向本地 brand book 参考页靠拢：重写页面专属 CSS 为白底、浅灰 band、118px section spacing、1180px 内容岛、大圆角、黑色重点卡、蓝色 pill CTA、柔和彩色 rule cards 和更大的标题比例；同步 Brand Guide 色彩文案与 palette 数据为 Paper / Soft / Ink / Deep / Action Blue / soft tints。
+- 原因：用户反馈当前 Brand Guide 仍不够高级，希望颜色、排版和 CSS 感觉都以本地参考页为主。
+- 影响：`/brand-guide` 现在更接近高留白、产品页式、克制高级的视觉系统；改动限定在 Brand Guide 页面，不影响其他路由。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.06s）；关键词检查确认 `App.tsx` 与 `styles/pages/brand-guide.css` 没有 `Apple`、`Newsroom`、`SF Pro`、`iPhone`；关键词检查确认参考视觉 token `#0071e3`、`#f5f5f7`、`#111113`、`118px` 已接入。
+- 后续：本地打开 `http://localhost:4180/brand-guide` 并硬刷新，应看到整体颜色、卡片、CTA、section 间距和标题比例明显接近参考页。
+
+### 2026-06-25 23:43
+
+- 类型：内容 / 前台 / Brand Guide
+- 改动：按本地 Apple Web Brand Book 参考页的逻辑重排 `/brand-guide` 主结构：首屏改为“界面退后，让内容、系统和判断站到前面”；正文顺序调整为 Core philosophy、Design rules、Layout numbers、Visual system、Type and rhythm、Voice、Application、Story content、Motion language；新增 manifesto 与哲学落地细则，保留 Eden 自有 voice、story 和 CSS rules 作为后段规范。
+- 原因：用户要求重新 Brand Guide，并以本地参考页的规则结构为主，而不是只把参考内容作为一个新增 section。
+- 影响：`/brand-guide` 现在先建立清晰、克制、可信的页面哲学，再给可执行规则和数字参数，后续页面修改可以直接按这个顺序执行。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.08s）；关键词检查确认 `App.tsx` 与 `styles/pages/brand-guide.css` 没有 `Apple`、`Newsroom`、`SF Pro`、`iPhone`；章节编号检查确认 `01` 到 `09` 已按新结构接入。
+- 后续：本地打开 `http://localhost:4180/brand-guide`，应看到 Brand Guide 不再以旧分类为主，而是先展示 philosophy / manifesto，再展示 rules 和 numbers。
+
+### 2026-06-25 23:36
+
+- 类型：内容 / 前台 / Brand Guide
+- 改动：把本地 Apple Web Brand Book 参考页抽象为 `/brand-guide` 的通用 `03 / Layout and imagery` 章节；新增 layout/imagery 规则卡和 compact number specs，覆盖圆角 scale、留白、短文案、真实内容色彩、轻组件、CTA 上限、section spacing、触控尺寸和视觉素材尺寸；同步顺延后续章节编号，并把 `Layout and imagery` 加入 Guide map。
+- 原因：用户要求把参考页里的可执行网页规则加进现有 Brand Guide，但不要照搬 Apple 名称、图片、字体或来源链接。
+- 影响：`/brand-guide` 现在更明确记录页面版式和图像使用规则，后续页面可以直接按这些数值和约束执行；主 Brand Guide 仍保持通用品牌规范。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.03s）；关键词检查确认 `App.tsx` 与 `styles/pages/brand-guide.css` 没有 `Apple`、`Newsroom`、`SF Pro`、`iPhone`。
+- 后续：本地打开 `http://localhost:4180/brand-guide`，应看到新增 `03 / Layout and imagery` 章节，规则卡和数字 specs 在移动端单栏展示。
+
 ### 2026-06-25 23:30
 
 - 类型：文档 / 结构
@@ -2476,3 +2665,138 @@
 - 影响：`/wiki` 总览和 `/wiki/*` note 顶部视觉现在全部是 CSS icon；RAG flow 保留原 CSS icon，其余 Vite、Background music、Button feedback、Firebase lifetime storage、Skills 也都有各自的 CSS icon。
 - 验证：`wikiEntries` / wiki visual 关键词检查确认没有 `entry.emoji`、`poker-wiki-emoji` 或 wiki emoji fallback 残留；`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.01s）；`curl -I http://localhost:4180/wiki`、`/wiki/vite`、`/wiki/rag-flow` 均返回 200；`git diff --check -- App.tsx components/css-art/index.tsx styles/css-art/wiki-icons.css styles/pages/poker.css css-art.registry.ts docs/css-art-system.md` 通过。
 - 后续：本地验证看 `http://localhost:4180/wiki`，六张 wiki card 左上角都应是 CSS icon，不再是 emoji。
+
+### 2026-06-26 00:12
+
+- 类型：前台 / Brand Guide / Dark mode color
+- 改动：把 `/brand-guide` dark mode 的奶色变量改成更亮、更白的半透明色，透明度从上一版实感色进一步降到 `0.56`；同时给暗色下的浅奶色规则卡、分类卡和 layout 卡增加半透明白色边线与内高光，并把 manifesto 背景光斑调亮但保持低透明度。
+- 原因：用户希望暗色模式“透明度感多，颜色亮多”。
+- 影响：暗色模式的浅色卡片现在更像轻奶玻璃，不再是厚重实心色块；页面仍保持克制、无外链素材、无品牌借用。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.10s）；关键词检查确认 `0.56` 透明度变量、`--brand-tint-border` 和 `--brand-tint-highlight` 已写入 `styles/pages/brand-guide.css`。
+- 后续：本地验证看 `http://localhost:4180/brand-guide`，切到 dark mode 后，Guide map、Layout and imagery、Design rules 里的奶色卡应更亮、更透。
+
+### 2026-06-26 00:19
+
+- 类型：前台 / Brand Guide / Hero alignment
+- 改动：统一 `/brand-guide` hero 与下方 section 的水平内容轴线：hero 左右 padding 改用同一套 `--brand-max` 计算，signature 卡片改为吃满同一个内容岛，并补充内部文本容器的 `min-width: 0`。
+- 原因：用户截图指出首屏 signature 卡片和下方 Guide map 区域视觉上没有对齐。
+- 影响：首屏的核心卡片左右边缘现在会和下方内容岛保持同一轴线，减少右侧对齐、左侧缩进不一致的问题；移动端仍保持单栏。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.07s）；关键词检查确认 hero padding、`justify-items`、signature 宽度规则已写入 `styles/pages/brand-guide.css`。
+- 后续：本地验证看 `http://localhost:4180/brand-guide`，首屏 `Build order from complexity.` 卡片应与下方 `Guide map` 内容岛对齐。
+
+### 2026-06-26 00:24
+
+- 类型：前台 / Brand Guide / Design rules card polish
+- 改动：单独优化 `/brand-guide` 的 Design rules 规则卡：减少 grid 间距、降低卡片最小高度、收小圆角和 padding；dark mode 下改用更亮的奶白/奶绿/奶黄/奶粉背景，并把专属 rule-card 背景规则放在通用色卡规则之后，确保不会被覆盖。
+- 原因：用户截图指出这一组卡片观感不满意；原效果在 dark mode 中偏灰、偏厚，空白和圆角过重。
+- 影响：Design rules 区域现在更轻、更亮、更紧凑，移动端单栏卡片不再像大块灰板；其他 Brand Guide 色卡区域不受这次专属调整影响。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.12s）；关键词检查确认 `brand-guide-rule-card` 的高度、圆角和亮奶色 dark mode 背景已写入 `styles/pages/brand-guide.css`。
+- 后续：本地验证看 `http://localhost:4180/brand-guide#brand-motion` 附近的 Design rules / CSS rules 卡片，暗色模式下应更亮、更轻、更少空底。
+
+### 2026-06-26 00:29
+
+- 类型：前台 / Brand Guide / Premium rule cards
+- 改动：将 `/brand-guide` 的 Current CSS rules 卡片从浅奶色块改成 manifesto 同类的深色 premium card：深 graphite 底、柔和灰色 radial 光面、超大留白、标题置顶、正文压到底部；移动端也保留大卡高度和大圆角。
+- 原因：用户截图表示更喜欢 manifesto 这种卡片设计方向，而不是前一版浅色规则卡。
+- 影响：Design rules / CSS rules 区域现在和 Brand Guide 里的 premium manifesto 卡保持同一视觉语言，避免灰脏浅色块和过度压缩的卡片感。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.11s）；关键词检查确认 `brand-guide-rule-card` 的大卡高度、深色 radial 背景、底部正文和移动端大圆角已写入 `styles/pages/brand-guide.css`。
+- 后续：本地验证看 `http://localhost:4180/brand-guide` 的 Current CSS rules 卡片，应接近用户截图里 manifesto 卡的深色大卡设计。
+
+### 2026-06-26 00:35
+
+- 类型：前台 / Brand Guide / Glass rule cards
+- 改动：将 `/brand-guide` 的 Current CSS rules 卡片从深色 manifesto 大卡恢复为普通规则卡尺寸和信息结构；仅保留玻璃感背景、blur/saturate、半透明边线和四条小面积色彩点缀线。
+- 原因：用户明确只要“玻璃感”和“点缀颜色 CSS”这种设计，其他布局和卡片结构恢复。
+- 影响：Current CSS rules 区域不再是大展示卡，回到轻量规则卡；dark mode 仍有玻璃透明感和少量分类色点缀。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.07s）；关键词检查确认 `min-height: 230px`、`backdrop-filter: blur(22px)` 和 `--brand-rule-accent` 已写入，同时大卡用的 `min-height: clamp(360px...)` 和大标题样式不再命中。
+- 后续：本地验证看 `http://localhost:4180/brand-guide` 的 Current CSS rules，卡片应是普通规则卡比例，但有玻璃底和小色条。
+
+### 2026-06-26 00:40
+
+- 类型：前台 / Brand Guide / Colored card glass style
+- 改动：将 `/brand-guide` 里其他原本使用整块彩色背景的卡片也改为玻璃卡语言：Guide map 三张分类卡、Layout and imagery 中的 sky/gold/pink/green 卡统一使用半透明玻璃底、blur/saturate、轻边线和小面积色彩点缀线；灰卡和黑卡不加点缀线。
+- 原因：用户希望其他有颜色背景的卡片也跟随“只要玻璃感 + 点缀颜色 CSS”的方向。
+- 影响：Brand Guide 的彩色卡从大面积铺色统一收敛为玻璃底加色条，整体更克制，也和 Current CSS rules 卡片一致。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.10s）；关键词检查确认 `--brand-card-accent`、`backdrop-filter: blur(22px)`、category/layout card 的 `::before` 色条规则已写入。
+- 后续：本地验证看 `http://localhost:4180/brand-guide` 的 Guide map 和 Layout and imagery，原彩色卡应变成玻璃底加小色条。
+
+### 2026-06-26 00:45
+
+- 类型：前台 / Brand Guide / Remove card color bars
+- 改动：移除 `/brand-guide` 玻璃卡内部的小颜色 bar，包括 Guide map 分类卡、Layout and imagery 彩色卡和 Current CSS rules 卡；同步清理 `--brand-card-accent`、`--brand-rule-accent` 变量，并恢复标题上方因为色条预留的间距。
+- 原因：用户要求 card 里面的颜色 bar 都拿掉。
+- 影响：卡片保留玻璃感、半透明边线和 blur，但不再有内部颜色条点缀，整体更干净。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.10s）；关键词检查确认 accent 变量和 `margin-top: 1.5rem` 不再残留。
+- 后续：本地验证看 `http://localhost:4180/brand-guide`，所有玻璃卡内部应没有颜色 bar。
+
+### 2026-06-26 00:50
+
+- 类型：前台 / Brand Guide / Primary colors
+- 改动：在 `/brand-guide` 的 Visual system 色彩区加入 `Eden Mint`（`#7bdcb5`）和 `Eden Pink`（`#dc6f82`）作为 primary brand colors；将 `Action Blue` 从 primary action 改为 action color，并更新色彩说明文案，明确 Mint/Pink 负责品牌识别，Blue 负责交互行动。
+- 原因：用户要求把 menu bar 的 mint 和 pink 加进 Brandbook 作为 primary color。
+- 影响：Brand Guide 现在会把现有 menu bar / selection 使用的 mint 与 dark-mode pink 作为主品牌色呈现，不再让蓝色承担品牌主色角色。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.15s）；关键词检查确认 `Eden Mint`、`Eden Pink`、`#7bdcb5`、`#dc6f82` 和 `Primary brand color` 已写入 `App.tsx`。
+- 后续：本地验证看 `http://localhost:4180/brand-guide` 的 Visual system / Accent 色彩列表，前两项应为 Eden Mint 和 Eden Pink。
+
+### 2026-06-26 00:55
+
+- 类型：前台 / Brand Guide / MiSans typography
+- 改动：在 `index.css` 接入官方 MiSans VF CSS，并将全站 `--font-sans` 和 `--font-display` 改为 MiSans-first font stack；把 `/brand-guide` 的字体说明从 Space Grotesk / Inter 更新为 MiSans / MiSans VF；JetBrains Mono 继续保留为系统标签字体。
+- 原因：用户确认可以使用小米 MiSans，希望 Brand Guide 的字体方向也跟进。
+- 影响：站点会通过官方 HyperOS CDN 加载 MiSans VF；如果网络或字体加载失败，会 fallback 到 Inter / system-ui。当前仓库不打包字体文件。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.15s）；关键词检查确认 MiSans 官方 CSS import 已写入 `index.css`，MiSans font stack 已写入 `styles/tokens.css`，Brand Guide typography 已改为 MiSans / MiSans VF。
+- 后续：本地验证看 `http://localhost:4180/brand-guide` 的 Type and rhythm 区域，应显示 MiSans 作为主字体。
+
+### 2026-06-26 00:59
+
+- 类型：前台 / Brand Guide / Primary CTA color
+- 改动：把 `/brand-guide` 首屏 CTA 从蓝色 action color 改成 Eden primary color：light mode 使用 Eden Mint，dark mode 使用 Eden Pink；outline CTA 的 border、文字和 hover 也跟随 primary color。
+- 原因：用户截图指出按钮颜色还不是 primary color。
+- 影响：Brand Guide 首屏按钮现在和 Visual system 里定义的 primary brand colors 一致；Action Blue 仍保留为独立 action color，不再用于这组首屏按钮。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.11s）；关键词检查确认 `--brand-primary`、`--brand-primary-outline` 和 `.brand-guide-cta` 已更新。
+- 后续：本地验证看 `http://localhost:4180/brand-guide`，首屏 `View philosophy` 按钮应为 mint，切到 dark mode 后应为 pink。
+
+### 2026-06-26 01:03
+
+- 类型：前台 / Brand Guide / Action color
+- 改动：将 `/brand-guide` Visual system 里的 `Action Blue` 替换为 `Dream Purple`，light mode 为 `#a78bfa`，dark mode 为 `#c4b5fd`；同步把说明文案从 “blue carries action” 改为 “Dream Purple carries action”，并把页面 CSS action token 从 `--brand-blue` 改为 `--brand-action`。
+- 原因：用户要求 action color 改成 dream purple 方向。
+- 影响：Brand Guide 的 action 色不再是蓝色，改为更轻、更梦感的紫色；primary brand colors 仍然是 Eden Mint 和 Eden Pink。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.10s）；关键词检查确认 `Action Blue`、`--brand-blue`、`#0071e3` 和 `#2997ff` 不再残留于 Brand Guide 当前实现。
+- 后续：本地验证看 `http://localhost:4180/brand-guide` 的 Visual system / Accent 色彩列表，第三个 action 色应为 Dream Purple。
+
+### 2026-06-26 01:09
+
+- 类型：内容 / Brand Guide / Simplification
+- 改动：大幅简化 `/brand-guide` 文案：hero、guide map、section intro、principle cards、layout rules、number specs、color usage、type/rhythm、voice、application、story、motion 和 CSS rules 都改成更短的 rulebook 句式。
+- 原因：用户要求 Brand Guide content 变得 very simple。
+- 影响：Brand Guide 保留原有章节结构和视觉系统，但阅读负担更低，规则更像 checklist。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.14s）；关键词检查确认主要旧长句不再出现在当前 Brand Guide 内容中。
+- 后续：本地验证看 `http://localhost:4180/brand-guide`，页面文案应明显更短、更直接。
+
+### 2026-06-26 01:15
+
+- 类型：内容 / 前台 / Brand Guide / Layout numbers clarity
+- 改动：将 `/brand-guide` 的 `03 / Layout numbers` 改为更清楚的“页面尺寸参考”：数字补上 `px / max` 等单位，中文 CTA 上限显示为“最多 2 个”；说明文案改成具体用途，例如按钮/输入框最小高度、桌面 section 上下留白、Hero 大图建议宽度；同时把 spec card 从 4 列大数字改成 2 列清楚的数值 + 用途布局，移动端内部单列。
+- 原因：用户截图指出这一段看不明白。
+- 影响：Layout numbers 不再像抽象数字展示，而是更像可执行的设计尺寸表。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.11s）；关键词检查确认 `页面尺寸参考`、`最多 2 个` 和新的 spec card CSS 已写入。
+- 后续：本地验证看 `http://localhost:4180/brand-guide` 的 `03 / Layout numbers`，应能直接看懂每个数字对应的页面用途。
+
+### 2026-06-26 01:18
+
+- 类型：前台 / Brand Guide / Layout numbers ratio
+- 改动：调整 `/brand-guide` 的 Layout numbers spec card 比例：桌面 grid 改为更宽的 2 列卡片，每张卡内部按数值区和说明区比例分配；数值字号改成更稳定的 `clamp()`，说明文字增加 `text-wrap` 和 `word-break` 控制；900px 以下保留横向比例，767px 以下改成上下排。
+- 原因：用户截图指出说明文字被挤成竖排，希望字体大小和布局跟着 ratio 走。
+- 影响：Layout numbers 区域不再出现中文说明被压成一字一行的问题，数字和说明的比例更稳定。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.11s）。
+- 后续：本地验证看 `http://localhost:4180/brand-guide` 的 `03 / Layout numbers`，卡片应按比例排版，说明文字横向可读。
+
+### 2026-06-26 01:22
+
+- 类型：前台 / Brand Guide / Container query typography
+- 改动：将 `/brand-guide` 的 `02 / Design rules` 卡片改为 `auto-fit + minmax()` 自适应网格，并给 `.brand-guide-layout-card` 增加 `container-type: inline-size`；卡片编号、标题和正文改用 `cqw` container query units 配合 `clamp()`，让字号跟随卡片宽度比例缩放。
+- 原因：用户截图指出 Design rules 卡片在窄宽度下标题和正文被挤成竖排，要求字体大小也跟 ratio，并提到类似术语修复这个问题。
+- 影响：Design rules 卡片不再硬塞三栏；卡片变窄时会自动减少列数，同时文字根据卡片自身宽度缩放。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.15s）。
+- 后续：本地验证看 `http://localhost:4180/brand-guide` 的 `02 / Design rules`，卡片标题和正文应按卡片比例缩放，不再一字一行。

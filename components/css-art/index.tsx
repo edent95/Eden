@@ -344,52 +344,174 @@ export const WikiSkillsCssIcon: CssArtComponent = ({ label }) => (
   <WikiTopicIconFrame label={label} tone="skills" />
 );
 
-const fallbackFrameStyle: React.CSSProperties = {
-  position: 'relative',
-  display: 'grid',
-  placeItems: 'center',
-  width: '100%',
-  aspectRatio: '1 / 1',
-  minWidth: 0,
-  overflow: 'hidden',
-  borderRadius: '1.25rem',
-  background: 'color-mix(in srgb, var(--theme-surface-muted) 76%, transparent)',
-  boxShadow: 'inset 0 0 0 1px rgb(120 113 108 / 0.14)',
-};
-
-const fallbackGlyphStyle: React.CSSProperties = {
-  display: 'grid',
-  placeItems: 'center',
-  width: '58%',
-  aspectRatio: '1 / 1',
-  borderRadius: '999px',
-  fontSize: 'clamp(2rem, 6vw, 4rem)',
-  background: 'rgb(var(--theme-mint-glow) / 0.16)',
-  color: 'var(--theme-text-primary)',
-};
-
-const CssArtGlyph: React.FC<{ label: string; children: React.ReactNode }> = ({ label, children }) => (
-  <div className="projects-card-icon css-art-fallback-icon" style={fallbackFrameStyle} role="img" aria-label={label}>
-    <span style={fallbackGlyphStyle} aria-hidden>
-      {children}
-    </span>
+const OfficeIconFrame: React.FC<{ label: string; tone: string; children: React.ReactNode }> = ({ label, tone, children }) => (
+  <div className={`projects-card-icon office-icon office-${tone}-icon`} role="img" aria-label={label}>
+    <span className="office-icon-surface" />
+    {children}
   </div>
 );
 
-export const OfficeCalendarCssIcon: CssArtComponent = ({ label }) => <CssArtGlyph label={label}>▣</CssArtGlyph>;
-export const OfficeInboxCssIcon: CssArtComponent = ({ label }) => <CssArtGlyph label={label}>▤</CssArtGlyph>;
-export const OfficeReportCssIcon: CssArtComponent = ({ label }) => <CssArtGlyph label={label}>▦</CssArtGlyph>;
-export const OfficeTeamBoardCssIcon: CssArtComponent = ({ label }) => <CssArtGlyph label={label}>▧</CssArtGlyph>;
-export const OfficeContractCssIcon: CssArtComponent = ({ label }) => <CssArtGlyph label={label}>✎</CssArtGlyph>;
-export const OfficeWorkflowCssIcon: CssArtComponent = ({ label }) => <CssArtGlyph label={label}>⌁</CssArtGlyph>;
+export const OfficeCalendarCssIcon: CssArtComponent = ({ label }) => (
+  <OfficeIconFrame label={label} tone="calendar">
+    <span className="office-calendar-page" />
+    <span className="office-calendar-bind bind-a" />
+    <span className="office-calendar-bind bind-b" />
+    <span className="office-calendar-header" />
+    <span className="office-calendar-date date-a" />
+    <span className="office-calendar-date date-b" />
+    <span className="office-calendar-date date-c" />
+    <span className="office-calendar-date date-d" />
+  </OfficeIconFrame>
+);
 
-export const MathPrimeSigilCssIcon: CssArtComponent = ({ label }) => <CssArtGlyph label={label}>7</CssArtGlyph>;
-export const MathVectorGateCssIcon: CssArtComponent = ({ label }) => <CssArtGlyph label={label}>→</CssArtGlyph>;
-export const MathIntegralSpellCssIcon: CssArtComponent = ({ label }) => <CssArtGlyph label={label}>∫</CssArtGlyph>;
-export const MathPiOrbCssIcon: CssArtComponent = ({ label }) => <CssArtGlyph label={label}>π</CssArtGlyph>;
-export const MathFractalRuneCssIcon: CssArtComponent = ({ label }) => <CssArtGlyph label={label}>⌬</CssArtGlyph>;
-export const MathMatrixPortalCssIcon: CssArtComponent = ({ label }) => <CssArtGlyph label={label}>[]</CssArtGlyph>;
+export const OfficeInboxCssIcon: CssArtComponent = ({ label }) => (
+  <OfficeIconFrame label={label} tone="inbox">
+    <span className="office-inbox-paper paper-back" />
+    <span className="office-inbox-paper paper-front" />
+    <span className="office-inbox-tray" />
+    <span className="office-inbox-lip" />
+  </OfficeIconFrame>
+);
 
-export const ElementFireCssIcon: CssArtComponent = ({ label }) => <CssArtGlyph label={label}>火</CssArtGlyph>;
-export const ElementWaterCssIcon: CssArtComponent = ({ label }) => <CssArtGlyph label={label}>水</CssArtGlyph>;
-export const ElementWindCssIcon: CssArtComponent = ({ label }) => <CssArtGlyph label={label}>风</CssArtGlyph>;
+export const OfficeReportCssIcon: CssArtComponent = ({ label }) => (
+  <OfficeIconFrame label={label} tone="report">
+    <span className="office-report-sheet" />
+    <span className="office-report-bar bar-a" />
+    <span className="office-report-bar bar-b" />
+    <span className="office-report-bar bar-c" />
+    <span className="office-report-check" />
+  </OfficeIconFrame>
+);
+
+export const OfficeTeamBoardCssIcon: CssArtComponent = ({ label }) => (
+  <OfficeIconFrame label={label} tone="team">
+    <span className="office-team-board" />
+    <span className="office-team-card card-a" />
+    <span className="office-team-card card-b" />
+    <span className="office-team-card card-c" />
+    <span className="office-team-pin pin-a" />
+    <span className="office-team-pin pin-b" />
+  </OfficeIconFrame>
+);
+
+export const OfficeContractCssIcon: CssArtComponent = ({ label }) => (
+  <OfficeIconFrame label={label} tone="contract">
+    <span className="office-contract-paper" />
+    <span className="office-contract-mark" />
+    <span className="office-contract-pen" />
+    <span className="office-contract-seal" />
+  </OfficeIconFrame>
+);
+
+export const OfficeWorkflowCssIcon: CssArtComponent = ({ label }) => (
+  <OfficeIconFrame label={label} tone="workflow">
+    <span className="office-workflow-line line-a" />
+    <span className="office-workflow-line line-b" />
+    <span className="office-workflow-node node-a" />
+    <span className="office-workflow-node node-b" />
+    <span className="office-workflow-node node-c" />
+    <span className="office-workflow-wand" />
+    <span className="office-workflow-spark spark-a" />
+    <span className="office-workflow-spark spark-b" />
+  </OfficeIconFrame>
+);
+
+const MathIconFrame: React.FC<{ label: string; tone: string; children: React.ReactNode }> = ({ label, tone, children }) => (
+  <div className={`projects-card-icon math-magic-icon math-${tone}-icon`} role="img" aria-label={label}>
+    <span className="math-magic-aura" />
+    <span className="math-magic-ring ring-outer" />
+    <span className="math-magic-ring ring-inner" />
+    {children}
+  </div>
+);
+
+export const MathPrimeSigilCssIcon: CssArtComponent = ({ label }) => (
+  <MathIconFrame label={label} tone="prime">
+    <span className="math-prime-number">7</span>
+    <span className="math-prime-tick tick-a" />
+    <span className="math-prime-tick tick-b" />
+  </MathIconFrame>
+);
+
+export const MathVectorGateCssIcon: CssArtComponent = ({ label }) => (
+  <MathIconFrame label={label} tone="vector">
+    <span className="math-vector-plane" />
+    <span className="math-vector-arrow arrow-a" />
+    <span className="math-vector-arrow arrow-b" />
+  </MathIconFrame>
+);
+
+export const MathIntegralSpellCssIcon: CssArtComponent = ({ label }) => (
+  <MathIconFrame label={label} tone="integral">
+    <span className="math-integral-symbol">∫</span>
+    <span className="math-integral-area" />
+  </MathIconFrame>
+);
+
+export const MathPiOrbCssIcon: CssArtComponent = ({ label }) => (
+  <MathIconFrame label={label} tone="pi">
+    <span className="math-pi-orb" />
+    <span className="math-pi-symbol">π</span>
+    <span className="math-pi-moon moon-a" />
+    <span className="math-pi-moon moon-b" />
+  </MathIconFrame>
+);
+
+export const MathFractalRuneCssIcon: CssArtComponent = ({ label }) => (
+  <MathIconFrame label={label} tone="fractal">
+    <span className="math-fractal-branch branch-a" />
+    <span className="math-fractal-branch branch-b" />
+    <span className="math-fractal-branch branch-c" />
+    <span className="math-fractal-node node-a" />
+    <span className="math-fractal-node node-b" />
+    <span className="math-fractal-node node-c" />
+  </MathIconFrame>
+);
+
+export const MathMatrixPortalCssIcon: CssArtComponent = ({ label }) => (
+  <MathIconFrame label={label} tone="matrix">
+    <span className="math-matrix-bracket bracket-left" />
+    <span className="math-matrix-bracket bracket-right" />
+    <span className="math-matrix-cell cell-a" />
+    <span className="math-matrix-cell cell-b" />
+    <span className="math-matrix-cell cell-c" />
+    <span className="math-matrix-core" />
+  </MathIconFrame>
+);
+
+const ElementIconFrame: React.FC<{ label: string; tone: string; children: React.ReactNode }> = ({ label, tone, children }) => (
+  <div className={`projects-card-icon element-icon element-${tone}-icon`} role="img" aria-label={label}>
+    <span className="element-base-glow" />
+    {children}
+  </div>
+);
+
+export const ElementFireCssIcon: CssArtComponent = ({ label }) => (
+  <ElementIconFrame label={label} tone="fire">
+    <span className="fire-element-flame flame-back" />
+    <span className="fire-element-flame flame-mid" />
+    <span className="fire-element-flame flame-front" />
+    <span className="fire-element-ember ember-a" />
+    <span className="fire-element-ember ember-b" />
+  </ElementIconFrame>
+);
+
+export const ElementWaterCssIcon: CssArtComponent = ({ label }) => (
+  <ElementIconFrame label={label} tone="water">
+    <span className="water-element-drop drop-back" />
+    <span className="water-element-drop drop-front" />
+    <span className="water-element-bubble bubble-a" />
+    <span className="water-element-bubble bubble-b" />
+    <span className="water-element-bubble bubble-c" />
+  </ElementIconFrame>
+);
+
+export const ElementWindCssIcon: CssArtComponent = ({ label }) => (
+  <ElementIconFrame label={label} tone="wind">
+    <span className="wind-element-gust gust-a" />
+    <span className="wind-element-gust gust-b" />
+    <span className="wind-element-gust gust-c" />
+    <span className="wind-element-leaf leaf-a" />
+    <span className="wind-element-leaf leaf-b" />
+  </ElementIconFrame>
+);

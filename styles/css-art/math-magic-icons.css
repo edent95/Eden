@@ -1,1 +1,276 @@
-/* Restored import entry. */
+/* Math magic CSS art: framed spellbook-style app icons. */
+
+.math-magic-icon {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(180deg, #17122b 0%, #251742 58%, #120d24 100%);
+  box-shadow:
+    0 18px 50px rgb(28 25 23 / 0.14),
+    inset 0 0 0 1px rgb(255 255 255 / 0.1);
+}
+
+.math-magic-icon span {
+  position: absolute;
+  display: block;
+}
+
+.math-magic-aura {
+  inset: 16%;
+  border-radius: 50%;
+  background: rgb(167 139 250 / 0.18);
+}
+
+.math-magic-ring {
+  left: 22%;
+  top: 22%;
+  width: 56%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid rgb(236 214 255 / 0.56);
+  animation: mathGlyphTurn 14s linear infinite;
+}
+
+.math-magic-ring.ring-inner {
+  left: 31%;
+  top: 31%;
+  width: 38%;
+  border-color: rgb(125 211 252 / 0.52);
+  animation-duration: 10s;
+  animation-direction: reverse;
+}
+
+.math-prime-number,
+.math-integral-symbol,
+.math-pi-symbol {
+  inset: 0;
+  display: grid !important;
+  place-items: center;
+  color: #f8fafc;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 9vw, 4.6rem);
+  font-weight: 900;
+  text-shadow: 0 0 22px rgb(196 181 253 / 0.6);
+  animation: mathSpellHover 4s ease-in-out infinite;
+}
+
+.math-prime-tick {
+  width: 7%;
+  height: 18%;
+  border-radius: 999px;
+  background: #facc15;
+}
+
+.math-prime-tick.tick-a {
+  left: 29%;
+  top: 25%;
+  transform: rotate(-28deg);
+}
+
+.math-prime-tick.tick-b {
+  right: 28%;
+  bottom: 24%;
+  transform: rotate(-28deg);
+}
+
+.math-vector-plane {
+  left: 29%;
+  top: 30%;
+  width: 42%;
+  height: 42%;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  background: rgb(34 211 238 / 0.28);
+  border: 1px solid rgb(125 211 252 / 0.55);
+  animation: mathSpellHover 4.8s ease-in-out infinite;
+}
+
+.math-vector-arrow {
+  left: 30%;
+  top: 49%;
+  width: 40%;
+  height: 5%;
+  border-radius: 999px;
+  background: #67e8f9;
+  transform-origin: center;
+}
+
+.math-vector-arrow::after {
+  content: "";
+  position: absolute;
+  right: -2%;
+  top: -120%;
+  width: 18%;
+  aspect-ratio: 1;
+  border-right: 0.24rem solid #67e8f9;
+  border-top: 0.24rem solid #67e8f9;
+  transform: rotate(45deg);
+}
+
+.math-vector-arrow.arrow-a {
+  transform: rotate(-22deg);
+  animation: mathArrowCastA 3.6s ease-in-out infinite;
+}
+
+.math-vector-arrow.arrow-b {
+  transform: rotate(34deg);
+  animation: mathArrowCastB 4.2s ease-in-out infinite;
+}
+
+.math-integral-area {
+  left: 31%;
+  bottom: 28%;
+  width: 40%;
+  height: 22%;
+  clip-path: polygon(0 100%, 25% 45%, 46% 68%, 68% 25%, 100% 100%);
+  background: rgb(250 204 21 / 0.35);
+  animation: mathAreaPulse 4s ease-in-out infinite;
+}
+
+.math-pi-orb {
+  left: 27%;
+  top: 27%;
+  width: 46%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 28%, #fef3c7 0 14%, #a78bfa 15% 58%, #4338ca 100%);
+  box-shadow: 0 0 28px rgb(167 139 250 / 0.42);
+  animation: mathOrbPulse 4.8s ease-in-out infinite;
+}
+
+.math-pi-symbol {
+  font-size: clamp(2rem, 7vw, 3.6rem);
+}
+
+.math-pi-moon {
+  width: 9%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #fde68a;
+  animation: mathMoonFloat 4.6s ease-in-out infinite;
+}
+
+.math-pi-moon.moon-a { left: 24%; top: 28%; }
+.math-pi-moon.moon-b { right: 24%; bottom: 28%; animation-delay: -2s; }
+
+.math-fractal-branch {
+  left: 49%;
+  bottom: 27%;
+  width: 4%;
+  height: 38%;
+  border-radius: 999px;
+  background: #86efac;
+  transform-origin: bottom center;
+}
+
+.math-fractal-branch.branch-a { transform: rotate(0deg); }
+.math-fractal-branch.branch-b { transform: rotate(-36deg); }
+.math-fractal-branch.branch-c { transform: rotate(36deg); }
+
+.math-fractal-node {
+  width: 14%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #bbf7d0;
+  box-shadow: 0 0 18px rgb(134 239 172 / 0.48);
+  animation: mathNodeBlink 3.2s ease-in-out infinite;
+}
+
+.math-fractal-node.node-a { left: 43%; top: 24%; }
+.math-fractal-node.node-b { left: 27%; top: 39%; animation-delay: -1s; }
+.math-fractal-node.node-c { right: 27%; top: 39%; animation-delay: -2s; }
+
+.math-matrix-bracket {
+  top: 28%;
+  width: 8%;
+  height: 44%;
+  border-top: 0.32rem solid #93c5fd;
+  border-bottom: 0.32rem solid #93c5fd;
+}
+
+.math-matrix-bracket.bracket-left {
+  left: 25%;
+  border-left: 0.32rem solid #93c5fd;
+}
+
+.math-matrix-bracket.bracket-right {
+  right: 25%;
+  border-right: 0.32rem solid #93c5fd;
+}
+
+.math-matrix-cell {
+  width: 10%;
+  aspect-ratio: 1;
+  border-radius: 20%;
+  background: #bfdbfe;
+  animation: mathCellBlink 2.8s ease-in-out infinite;
+}
+
+.math-matrix-cell.cell-a { left: 39%; top: 37%; }
+.math-matrix-cell.cell-b { right: 39%; top: 37%; animation-delay: -0.9s; }
+.math-matrix-cell.cell-c { left: 45%; bottom: 36%; animation-delay: -1.8s; }
+
+.math-matrix-core {
+  left: 46%;
+  top: 46%;
+  width: 8%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #fef3c7;
+  box-shadow: 0 0 22px rgb(254 243 199 / 0.7);
+}
+
+:root[data-theme="dark"] .math-magic-icon {
+  background: linear-gradient(180deg, #0f1020 0%, #1b1630 100%);
+}
+
+@keyframes mathGlyphTurn {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes mathSpellHover {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5%); }
+}
+
+@keyframes mathArrowCastA {
+  0%, 100% { transform: translateX(-4%) rotate(-22deg); }
+  50% { transform: translateX(6%) rotate(-22deg); }
+}
+
+@keyframes mathArrowCastB {
+  0%, 100% { transform: translateX(4%) rotate(34deg); }
+  50% { transform: translateX(-6%) rotate(34deg); }
+}
+
+@keyframes mathAreaPulse {
+  0%, 100% { transform: scaleY(0.92); }
+  50% { transform: scaleY(1.08); }
+}
+
+@keyframes mathOrbPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+@keyframes mathMoonFloat {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(12%, -16%); }
+}
+
+@keyframes mathNodeBlink {
+  0%, 100% { transform: scale(0.9); }
+  50% { transform: scale(1.12); }
+}
+
+@keyframes mathCellBlink {
+  0%, 100% { transform: scale(0.86); }
+  50% { transform: scale(1.08); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .math-magic-icon *,
+  .math-magic-icon *::before,
+  .math-magic-icon *::after {
+    animation: none !important;
+  }
+}
