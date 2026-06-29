@@ -16,6 +16,24 @@
 
 ## Entries
 
+### 2026-06-29 19:55
+
+- 类型：内容 / 首页 / Project card descriptions
+- 改动：给首页 `Proof through builds` 的四张项目卡补上中英双语短介绍，分别说明 Jiju、Friday Poker Club、ETReportHub 和 CRM Intelligence System 的用途；介绍显示在项目标题和 CTA 之间，复用现有 `.home-system-card p` 样式。
+- 原因：用户要求每个 project 都需要简单介绍。
+- 影响：首页 proof 区块不再只有项目名和按钮，访客可以快速理解每个项目是什么。
+- 验证：关键词检查确认四个项目的中英短介绍已写入 `homeSystemFiles`；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.09s）；`curl -I http://localhost:4180/` 返回 `200 OK`。
+- 后续：本地验证看 `http://localhost:4180/` 的 `Proof through builds` 区块，每张卡标题下方应有一行简短说明。
+
+### 2026-06-29 19:49
+
+- 类型：前台 / 首页 / Proof through builds
+- 改动：从首页 `Proof through builds` 移除 `Projects Hub` 卡片，改为直接展示 `Friday Poker Club`、`ETReportHub`、`CRM Intelligence System`；保留 `Jiju Knowledge System`，并复用项目页已有的 Poker / ETReportHub / CRM CSS app icon，网格改为桌面 4 列。
+- 原因：用户要求拿掉 `Projects Hub`，把里面的 `Friday Poker Club`、`ETReport hub`、`CRM Intelligence System` 放到 homepage 的 `Proof through builds`。
+- 影响：首页不再需要先进 Projects Hub 才看到这三个项目，首屏下方 proof 更直接。
+- 验证：首页数据源检查确认 `homeSystemFiles` 包含 `Jiju Knowledge System`、`Friday Poker Club`、`ETReportHub`、`CRM Intelligence System` 且不再包含 `Projects Hub`；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.13s）；`curl -I http://localhost:4180/` 返回 `200 OK`。
+- 后续：本地验证看 `http://localhost:4180/` 的 `Proof through builds` 区块，应看到 Jiju、Friday Poker Club、ETReportHub、CRM 四张卡。
+
 ### 2026-06-29 (infra) Deploy workflow restored
 
 - 类型：流程 / CI / 部署

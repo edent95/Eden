@@ -9481,21 +9481,70 @@ const App: React.FC = () => {
   const homeHref = baseUrl;
   const homeSystemFiles: Array<{
     title: string;
+    copy: string;
     href: string;
     cta: string;
     visual?: 'jiju' | 'poker' | 'etreporthub' | 'crm';
   }> = isZh
     ? [
-        { title: 'Jiju Knowledge System', href: fullPageHref, cta: '看 Jiju 复盘', visual: 'jiju' },
-        { title: 'Friday Poker Club', href: pokerHref, cta: '看 Poker Club', visual: 'poker' },
-        { title: 'ETReportHub', href: etReportHubHref, cta: '看 ETReportHub', visual: 'etreporthub' },
-        { title: 'CRM Intelligence System', href: crmHref, cta: '看 CRM 系统', visual: 'crm' },
+        {
+          title: 'Jiju Knowledge System',
+          copy: '把地点、场景和真实出门经验整理成可查询的本地发现系统。',
+          href: fullPageHref,
+          cta: '看 Jiju 复盘',
+          visual: 'jiju',
+        },
+        {
+          title: 'Friday Poker Club',
+          copy: '给熟人局使用的浏览器牌桌，处理房间、邀请、买入和游戏流程。',
+          href: pokerHref,
+          cta: '看 Poker Club',
+          visual: 'poker',
+        },
+        {
+          title: 'ETReportHub',
+          copy: '把每日 Excel、会员、渠道和趋势变成可复盘的运营数据层。',
+          href: etReportHubHref,
+          cta: '看 ETReportHub',
+          visual: 'etreporthub',
+        },
+        {
+          title: 'CRM Intelligence System',
+          copy: '接在报表之后的会员分群、风险信号和下一步跟进工作流。',
+          href: crmHref,
+          cta: '看 CRM 系统',
+          visual: 'crm',
+        },
       ]
     : [
-        { title: 'Jiju Knowledge System', href: fullPageHref, cta: 'Read Jiju review', visual: 'jiju' },
-        { title: 'Friday Poker Club', href: pokerHref, cta: 'Open Poker Club', visual: 'poker' },
-        { title: 'ETReportHub', href: etReportHubHref, cta: 'Open ETReportHub', visual: 'etreporthub' },
-        { title: 'CRM Intelligence System', href: crmHref, cta: 'Open CRM system', visual: 'crm' },
+        {
+          title: 'Jiju Knowledge System',
+          copy: 'A local discovery system that turns places, scenes, and real outings into usable knowledge.',
+          href: fullPageHref,
+          cta: 'Read Jiju review',
+          visual: 'jiju',
+        },
+        {
+          title: 'Friday Poker Club',
+          copy: 'A browser poker table for private games, with rooms, invites, buy-ins, and game flow.',
+          href: pokerHref,
+          cta: 'Open Poker Club',
+          visual: 'poker',
+        },
+        {
+          title: 'ETReportHub',
+          copy: 'A daily-report data layer for Excel, members, channels, trends, and reviewable operations.',
+          href: etReportHubHref,
+          cta: 'Open ETReportHub',
+          visual: 'etreporthub',
+        },
+        {
+          title: 'CRM Intelligence System',
+          copy: 'A retention workflow layer for member segments, risk signals, and next actions.',
+          href: crmHref,
+          cta: 'Open CRM system',
+          visual: 'crm',
+        },
       ];
   const homeInterestLinks: Array<{ title: string; href: string; visual?: 'bagua-mirror' | 'gramophone' | 'pyramid-break' | 'archive-evolution' }> = isZh
     ? [
@@ -9889,6 +9938,7 @@ const App: React.FC = () => {
                   </div>
                 )}
                 <h3 className="font-display text-3xl font-bold tracking-tight">{item.title}</h3>
+                <p>{item.copy}</p>
                 <a href={item.href} className="home-text-cta">
                   {item.cta} <span aria-hidden>›</span>
                 </a>
