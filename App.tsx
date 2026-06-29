@@ -20,11 +20,11 @@ import {
   HomeBaguaMirrorTotem,
   HomeGramophoneTotem,
   HomeJijuCatScene,
-  HomeLifeMagicIcon,
-  HomePowerUpTotem,
-  HomeProjectsBlueprintIcon,
   HomePyramidBreakTotem,
+  ProjectsCrmCssIcon,
+  ProjectsEtReportCssIcon,
   ProjectsJijuCssIcon,
+  ProjectsPokerCssIcon,
   WikiBackgroundMusicCssIcon,
   WikiButtonFeedbackCssIcon,
   WikiFirebaseStorageCssIcon,
@@ -9473,34 +9473,38 @@ const App: React.FC = () => {
   const crmHref = joinBasePath(baseUrl, 'crm');
   const previousProjectsHref = joinBasePath(baseUrl, 'previous-projects');
   const analogTechHref = joinBasePath(baseUrl, 'analog-tech');
-  const lifeOsHref = joinBasePath(baseUrl, 'life-os');
   const lifeHref = joinBasePath(baseUrl, 'life');
   const brandGuideHref = joinBasePath(baseUrl, 'brand-guide');
   const topicsHref = joinBasePath(baseUrl, 'topics');
   const conwayHref = joinBasePath(baseUrl, 'conways-game-of-life');
   const resumeHref = 'https://drive.google.com/uc?export=download&id=1PRXj4BwpeAX_7F9H2PJumG0slIEZmLZ0';
   const homeHref = baseUrl;
-  const homeSystemFiles: Array<{ title: string; href: string; cta: string; visual?: 'blueprint' | 'jiju' | 'life-magic' }> = isZh
+  const homeSystemFiles: Array<{
+    title: string;
+    href: string;
+    cta: string;
+    visual?: 'jiju' | 'poker' | 'etreporthub' | 'crm';
+  }> = isZh
     ? [
-        { title: 'Projects Hub', href: projectsHref, cta: '看项目系统', visual: 'blueprint' },
         { title: 'Jiju Knowledge System', href: fullPageHref, cta: '看 Jiju 复盘', visual: 'jiju' },
-        { title: 'Life OS RPG System', href: lifeOsHref, cta: '打开 Life OS', visual: 'life-magic' },
+        { title: 'Friday Poker Club', href: pokerHref, cta: '看 Poker Club', visual: 'poker' },
+        { title: 'ETReportHub', href: etReportHubHref, cta: '看 ETReportHub', visual: 'etreporthub' },
+        { title: 'CRM Intelligence System', href: crmHref, cta: '看 CRM 系统', visual: 'crm' },
       ]
     : [
-        { title: 'Projects Hub', href: projectsHref, cta: 'View systems', visual: 'blueprint' },
         { title: 'Jiju Knowledge System', href: fullPageHref, cta: 'Read Jiju review', visual: 'jiju' },
-        { title: 'Life OS RPG System', href: lifeOsHref, cta: 'Open Life OS', visual: 'life-magic' },
+        { title: 'Friday Poker Club', href: pokerHref, cta: 'Open Poker Club', visual: 'poker' },
+        { title: 'ETReportHub', href: etReportHubHref, cta: 'Open ETReportHub', visual: 'etreporthub' },
+        { title: 'CRM Intelligence System', href: crmHref, cta: 'Open CRM system', visual: 'crm' },
       ];
-  const homeInterestLinks: Array<{ title: string; href: string; visual?: 'bagua-mirror' | 'gramophone' | 'power-up' | 'pyramid-break' | 'archive-evolution' }> = isZh
+  const homeInterestLinks: Array<{ title: string; href: string; visual?: 'bagua-mirror' | 'gramophone' | 'pyramid-break' | 'archive-evolution' }> = isZh
     ? [
-        { title: 'Life OS', href: lifeOsHref, visual: 'power-up' },
         { title: 'Analog Tech', href: analogTechHref, visual: 'gramophone' },
         { title: 'Topic Board', href: topicsHref, visual: 'archive-evolution' },
         { title: 'Pattern Archive', href: 'https://edent95.github.io/8g/', visual: 'bagua-mirror' },
         { title: "Conway's Game of Life", href: conwayHref, visual: 'pyramid-break' },
       ]
     : [
-        { title: 'Life OS', href: lifeOsHref, visual: 'power-up' },
         { title: 'Analog Tech', href: analogTechHref, visual: 'gramophone' },
         { title: 'Topic Board', href: topicsHref, visual: 'archive-evolution' },
         { title: 'Pattern Archive', href: 'https://edent95.github.io/8g/', visual: 'bagua-mirror' },
@@ -9824,17 +9828,17 @@ const App: React.FC = () => {
             {isZh ? 'Knowledge should compound.' : 'Knowledge should compound.'}
           </motion.h1>
           <motion.p variants={fadeIn} className="home-hero-subtitle mx-auto mt-4 font-display font-bold tracking-tight">
-            {isZh ? '把散乱工作，整理成能复用的系统。' : 'I turn scattered work into reusable systems.'}
+            {isZh ? '把散乱工作变成可复用系统。' : 'Scattered work becomes reusable systems.'}
           </motion.p>
           <motion.p variants={fadeIn} className="home-hero-copy mx-auto mt-5">
             {isZh
-              ? 'Eden Tan 设计产品、增长、AI 工作流和知识库结构，让项目经验不会只停在聊天记录、临时判断和一次性交付里。'
-              : 'Eden Tan designs product systems, growth logic, AI workflows, and knowledge structures so project learning does not disappear into chat history, one-off decisions, and finished deliverables.'}
+              ? 'Eden Tan 构建产品系统、增长逻辑、AI 工作流和知识结构，让项目经验沉淀成可复用的工作记忆。'
+              : 'Eden Tan builds product systems, growth logic, AI workflows, and knowledge structures that turn project learning into operating memory.'}
           </motion.p>
           <motion.p variants={fadeIn} className="home-hero-support mx-auto mt-3">
             {isZh
-              ? '核心不是做更多内容，而是让判断、流程和知识持续累积。'
-              : 'The point is not more output. The point is judgment, workflow, and knowledge that keep compounding.'}
+              ? '少一点一次性输出，多一点持续复利的判断和流程。'
+              : 'Less output. Better judgment. Compounding workflow.'}
           </motion.p>
           <motion.div variants={fadeIn} className="mt-7 flex flex-wrap justify-center gap-5">
             <a href={projectsHref} className="home-text-cta">
@@ -9861,19 +9865,28 @@ const App: React.FC = () => {
               {isZh ? '不要只看介绍。看系统文件。' : 'Do not read the bio first. Read the systems.'}
             </h2>
           </div>
-          <div className="mt-12 grid gap-5 md:grid-cols-3">
+          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {homeSystemFiles.map((item) => (
               <article key={item.title} className="home-system-card">
-                {item.visual === 'blueprint' && (
-                  <HomeProjectsBlueprintIcon label={isZh ? 'Projects Hub 设计图纸 CSS 图标' : 'Projects Hub blueprint CSS icon'} />
-                )}
                 {item.visual === 'jiju' && (
                   <div className="home-system-project-icon">
                     <ProjectsJijuCssIcon label={isZh ? 'Jiju CSS 图标' : 'Jiju CSS icon'} />
                   </div>
                 )}
-                {item.visual === 'life-magic' && (
-                  <HomeLifeMagicIcon label={isZh ? 'Life OS 心跳魔法阵 CSS 图标' : 'Life OS heartbeat magic circle CSS icon'} />
+                {item.visual === 'poker' && (
+                  <div className="home-system-project-icon">
+                    <ProjectsPokerCssIcon label={isZh ? 'Friday Poker Club CSS 图标' : 'Friday Poker Club CSS icon'} />
+                  </div>
+                )}
+                {item.visual === 'etreporthub' && (
+                  <div className="home-system-project-icon">
+                    <ProjectsEtReportCssIcon label={isZh ? 'ETReportHub 数据 CSS 图标' : 'ETReportHub data CSS icon'} />
+                  </div>
+                )}
+                {item.visual === 'crm' && (
+                  <div className="home-system-project-icon">
+                    <ProjectsCrmCssIcon label={isZh ? 'CRM Intelligence System CSS 图标' : 'CRM Intelligence System CSS icon'} />
+                  </div>
                 )}
                 <h3 className="font-display text-3xl font-bold tracking-tight">{item.title}</h3>
                 <a href={item.href} className="home-text-cta">
@@ -9891,12 +9904,9 @@ const App: React.FC = () => {
               {isZh ? '这些不是杂项，是长期观察入口。' : 'These are not side interests. They are observation loops.'}
             </h2>
           </div>
-          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {homeInterestLinks.map((item) => (
               <a key={item.title} href={item.href} className="home-interest-link">
-                {item.visual === 'power-up' && (
-                  <HomePowerUpTotem label={isZh ? 'Life OS 黑发变金发能量变身透明底 CSS 图腾' : 'Life OS black hair to golden power-up transparent CSS totem'} />
-                )}
                 {item.visual === 'gramophone' && (
                   <HomeGramophoneTotem label={isZh ? 'Analog Tech 留声机振动透明底 CSS 图腾' : 'Analog Tech vibrating gramophone transparent CSS totem'} />
                 )}

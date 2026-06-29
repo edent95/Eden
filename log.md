@@ -16,6 +16,24 @@
 
 ## Entries
 
+### 2026-06-29 (infra) Deploy workflow restored
+
+- 类型：流程 / CI / 部署
+- 改动：新增 `.github/workflows/deploy.yml`（GitHub Actions → GitHub Pages 自动部署）：push 到 main 或手动 dispatch 时,`npm ci` + `npm run build`（env `VITE_BASE=/`、`VITE_SITE_URL=https://edentan.site`）→ `upload-pages-artifact` → `deploy-pages@v4`。新增 `public/CNAME`（edentan.site）保证自定义域名在每次部署后不丢失。
+- 原因：GitHub Pages Settings 显示 Source = GitHub Actions,但 repo 内 `.github/workflows` 为空,"Last deployed last month"。即最近 push 没有触发任何部署,线上站停在上个月构建,导致 `/jiju-revamp` 等新改动看不到。
+- 影响：补回自动部署后,push main 即自动重新构建并发布到 edentan.site;包含此 workflow 的那次 push 本身就会触发首次部署。base 固定为根域 `/`,与自定义域名一致。
+- 验证：本地确认 vite 会把 `public/` 复制到 `dist/`（CNAME 会进产物根目录）;workflow 用官方 actions（checkout@v4 / setup-node@v4 / upload-pages-artifact@v3 / deploy-pages@v4）。需要用户 push 后在 GitHub Actions 看 "Deploy to GitHub Pages" run 成功。
+- 后续：用户 push;若 Actions 因 environment protection 需要审批,在 repo Settings → Environments → github-pages 放行。部署完成后硬刷新打开 `https://edentan.site/jiju-revamp`。
+
+### 2026-06-29 19:44
+
+- 类型：前台 / 首页 / Life OS entry removal
+- 改动：从首页 `Proof through builds` 移除 `Life OS RPG System` 卡片，从 `Durable archive` 移除 `Life OS` 入口；同步清理首页对应的 `life-magic` / `power-up` 渲染分支和 import，并把首页网格调整为 2 个系统卡、4 个 archive 入口的布局。
+- 原因：用户要求移除 homepage 上的 `Life OS RPG System` 和 `Life OS`。
+- 影响：首页不再露出 Life OS 入口；独立 `/life-os` 路由与页面内容保留。
+- 验证：首页数据源检查确认 `homeSystemFiles` 只剩 `Projects Hub` 与 `Jiju Knowledge System`，`homeInterestLinks` 不再包含 `Life OS`；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.14s）；`curl -I http://localhost:4180/` 返回 `200 OK`。
+- 后续：本地验证看 `http://localhost:4180/`，首页系统文件区应只剩 `Projects Hub` 与 `Jiju Knowledge System`，archive 区不再有 `Life OS`。
+
 ### 2026-06-29 09:28
 
 - 类型：前台 / 内容 / 文档 / Jiju revamp 深化
@@ -2800,3 +2818,12 @@
 - 影响：Design rules 卡片不再硬塞三栏；卡片变窄时会自动减少列数，同时文字根据卡片自身宽度缩放。
 - 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.15s）。
 - 后续：本地验证看 `http://localhost:4180/brand-guide` 的 `02 / Design rules`，卡片标题和正文应按卡片比例缩放，不再一字一行。
+
+### 2026-06-29
+
+- 类型：内容 / 首页 / Hero copy
+- 改动：缩短首页首屏 thesis 下方的中英文文案：副标题改为更短的 reusable systems 表达，正文压缩为 project learning 到 operating memory，结尾句改为更短的 judgment / workflow 节奏。
+- 原因：用户要求缩短 `Knowledge should compound` 首屏文案。
+- 影响：首页保留个人知识品牌定位，但阅读负担更低，首屏更利落。
+- 验证：关键词检查确认 `Scattered work becomes reusable systems`、`Less output. Better judgment. Compounding workflow` 和中文短句已写入；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 2.59s）；`curl -I http://localhost:4180/` 返回 `200 OK`。
+- 后续：本地验证看 `http://localhost:4180/` 首屏，应看到更短的 hero 文案。
