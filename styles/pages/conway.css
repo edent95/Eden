@@ -121,6 +121,57 @@
   color: var(--conway-ink);
 }
 
+.conway-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.conway-app-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+
+.conway-install-button {
+  display: inline-flex;
+  min-height: 2.35rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.42rem;
+  border: 1px solid var(--conway-line-soft);
+  border-radius: 999px;
+  background: var(--conway-surface);
+  color: var(--conway-ink);
+  padding: 0.56rem 0.82rem;
+  font-size: 0.78rem;
+  font-weight: 680;
+  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.conway-install-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: var(--conway-line);
+  background: var(--conway-surface-muted);
+}
+
+.conway-install-button:disabled {
+  cursor: default;
+  opacity: 0.58;
+}
+
+.conway-download-button {
+  border-color: transparent;
+  background: var(--theme-accent-teal);
+  color: var(--theme-page);
+}
+
+.conway-download-button:hover:not(:disabled) {
+  border-color: transparent;
+  background: var(--theme-accent-teal);
+}
+
 .conway-kicker {
   width: fit-content;
   font-family: var(--font-mono);
@@ -1003,6 +1054,21 @@
     flex: 0 0 auto;
     font-size: 0.75rem;
     white-space: nowrap;
+  }
+
+  .conway-life-page .conway-topbar-actions {
+    gap: 0.45rem;
+  }
+
+  .conway-life-page .conway-install-button {
+    min-height: 2rem;
+    padding: 0.42rem 0.58rem;
+    font-size: 0.7rem;
+  }
+
+  .conway-life-page .conway-install-button svg {
+    width: 13px;
+    height: 13px;
   }
 
   .conway-life-page .header-controls {

@@ -69,6 +69,7 @@ npm run preview
 - `/wiki/skills` — 跨项目 skills map
 - `/wiki/rag-flow` — Tag Registry 与 RAG flow 知识架构页
 - `/film-gallery` — Film Gallery / 胶片图库（旧 `/analog-tech` 会自动换到新地址）
+- `/film-gallery` 支持安装为独立 PWA，也可一键把 15 张照片、相机、胶卷与说明打包成单一离线 HTML
 - `/notes` — Eden 发布的文章与 Build Notes 归档
 - `/notes/:slug` — Eden 原创 synthesis note 独立文章页
 - `/life-os` — 人生 RPG 能力系统 / Life OS 角色档案页
@@ -76,6 +77,7 @@ npm run preview
 - `/brand-guide` — 持续与 `log.md` 对齐的 Brand Guide：核心主张、视觉、语气、版式、资产类型、动效与实现规则
 - `/topics` — Topic Market：一张卡一个问题和 icon，回答控件按问题类型变化（当前浏览器本地保存）
 - `/conways-game-of-life` — 真正的二维 Conway B3/S23 互动生命棋盘
+- `/conways-game-of-life` 可通过页面内 `Install app / 安装 App` 安装为 standalone PWA；不支持安装提示的 Safari 会显示加入主画面 / Dock 指引
 - `/cellular-automata-lab` — 独立的 256 elementary cellular automata rules explorer
 - `/archive/:slug` — 归档项目详情
 

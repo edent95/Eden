@@ -114,3 +114,128 @@
   font-size: 0.74rem;
   font-weight: 800;
 }
+
+/* One menu system for every public route. Page files may position their shell,
+   but the interaction, surface, border, and compact controls live here. */
+:is(
+  .topics-market-topbar,
+  .projects-topbar,
+  .etreport-topbar,
+  .notes-topbar,
+  .conway-rules-topbar,
+  .film-gallery-topbar,
+  .life-topbar,
+  .brand-guide-topbar,
+  .jiju-topbar
+) {
+  position: sticky !important;
+  top: 0;
+  z-index: 40 !important;
+  display: flex;
+  min-height: 64px;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(0.65rem, 2vw, 1.5rem);
+  border: 0 !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-text-primary) 10%, transparent) !important;
+  border-radius: 0 !important;
+  background: color-mix(in srgb, var(--theme-page) 86%, transparent) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(18px) saturate(1.12);
+  -webkit-backdrop-filter: blur(18px) saturate(1.12);
+}
+
+.page-shell :is(.header-theme-toggle, .header-language-toggle) {
+  border: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transition: gap 240ms var(--eden-ease-enter), padding 240ms var(--eden-ease-enter);
+}
+
+.page-shell :is(.header-theme-option, .header-language-option) {
+  max-width: 8rem;
+  overflow: hidden;
+  transform-origin: center;
+  transition:
+    max-width 240ms var(--eden-ease-enter),
+    width 240ms var(--eden-ease-enter),
+    min-width 240ms var(--eden-ease-enter),
+    padding 240ms var(--eden-ease-enter),
+    opacity 160ms ease,
+    transform 240ms var(--eden-ease-enter),
+    background-color 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.page-shell .header-toggle-collapsed {
+  gap: 0;
+}
+
+.page-shell .header-toggle-option-hidden {
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  padding-inline: 0 !important;
+  opacity: 0;
+  transform: scale(0.82);
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  :is(
+    .topics-market-topbar,
+    .projects-topbar,
+    .etreport-topbar,
+    .notes-topbar,
+    .conway-rules-topbar,
+    .film-gallery-topbar,
+    .life-topbar,
+    .brand-guide-topbar,
+    .jiju-topbar
+  ) {
+    min-height: 56px;
+    gap: 0.55rem;
+  }
+
+  .page-shell .header-controls {
+    min-width: 0;
+    margin-left: auto;
+    gap: 0.4rem;
+  }
+
+  .page-shell :is(.header-theme-toggle, .header-language-toggle) {
+    flex: 0 0 auto;
+    gap: 0.2rem;
+    padding: 0.2rem;
+  }
+
+  .page-shell .header-theme-option {
+    width: 2.125rem;
+    height: 2.125rem;
+    justify-content: center;
+    gap: 0;
+    padding: 0;
+    white-space: nowrap;
+  }
+
+  .page-shell .header-theme-label {
+    display: none;
+  }
+
+  .page-shell .header-language-option {
+    min-width: 2.375rem;
+    height: 2.125rem;
+    padding: 0 0.55rem;
+    white-space: nowrap;
+  }
+
+  .page-shell .header-language-label-full {
+    display: none;
+  }
+
+  .page-shell .header-language-label-short {
+    display: inline;
+  }
+}

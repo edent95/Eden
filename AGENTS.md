@@ -266,7 +266,7 @@ If this voice evolves, update both `/brand-guide` section 06 and this block.
 
 When editing the concept site or future UI:
 
-- Treat the current homepage menu bar as the navigation source of truth for all new pages and page redesigns. Reuse its sticky translucent surface, quiet divider, borderless Theme/Language controls, compact-on-selection interaction, smooth transition, and mobile compact layout. Do not copy a route's older menu bar into new work; prefer a shared implementation when touching multiple pages.
+- Treat `HeaderControls` and the global menu rules in `styles/shared.css` as the navigation source of truth for every page. Compact-on-selection is the component default; sticky translucent surface, quiet divider, borderless Theme/Language controls, smooth transition, and mobile sizing belong to the shared layer. Route CSS may set content width and back destination only; do not copy or redefine the core menu system in page files.
 - Keep the visual direction intentional and distinctive.
 - Do not revert to generic SaaS gradients or default startup aesthetics.
 - Preserve the knowledge-system feel: editorial, structured, durable, thoughtful.

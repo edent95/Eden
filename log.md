@@ -16,6 +16,76 @@
 
 ## Entries
 
+### 2026-07-21 · Shared menu system across all pages
+
+- 类型：全站 UI / Shared menu bar
+- 改动：将 `HeaderControls` 的 theme 与 language compact-on-selection 改为全站默认，不再要求每个 route 单独传入 compact props。
+- 改动：在 `styles/shared.css` 建立统一 menu layer，覆盖 Topics、Projects、ETReportHub、Poker、Wiki、Notes、Conway、Cellular Automata、Film Gallery、Life、Brand Guide、Jiju 等公开页面 topbar：统一 sticky translucent surface、hairline divider、无外框、无 box shadow、blur / saturate、transition 与 mobile 56px 紧凑控件。
+- 改动：更新 `soul.md`，明确页面 CSS 只保留内容宽度和返回目标，核心 menu 视觉与交互必须来自 shared layer。
+- 原因：用户希望全部页面共用同一个 menu bar，而不是每个 route 保留近似但逐渐漂移的版本。
+- 影响：Theme / Language 在所有使用 `HeaderControls` 的页面都默认只显示当前选择，点击才展开；未来新页面接入同一组件即可自动获得最新 menu 行为。
+- 验证：待本次 typecheck、build 与 menu selector 检查完成。
+- 后续：逐步删除 page CSS 中已被 shared layer 取代的旧 menu override，当前先保留以降低一次性重构风险。
+
+### 2026-07-21 · Jiju install entry on portfolio
+
+- 类型：导航 / Jiju product page / PWA handoff
+- 改动：确认 `jiju.pet` 已在线提供 manifest、192 / 512 icons、service worker、Chromium `beforeinstallprompt` 与 iOS 加入主屏幕指引；无需修改 Jiju 项目本身。
+- 改动：在 `/jiju-pet` 产品 hero 与底部 CTA 加入 `Install app / 安装 App`，使用下载 icon 并跳转 `https://jiju.pet/?install=1`；原有 `Open Jiju / 打开 Jiju` 与产品内容入口保留。
+- 原因：用户希望 Jiju 跟 Friday Poker Club 一样，可以从 Portfolio 产品页直接进入安装流程。
+- 影响：Jiju 与 Poker 产品页现在使用一致的双入口结构；安装确认仍由各自产品域名按浏览器安全规则完成。
+- 验证：待本次 typecheck、build 与线上 PWA 资源检查完成。
+- 后续：无。
+
+### 2026-07-21 · Friday Poker Club install entry on portfolio
+
+- 类型：导航 / Poker product page / PWA handoff
+- 改动：在 `/poker` 产品 hero 与页面底部 CTA 同时加入 `Install app / 安装 App` 按钮，使用下载 icon，并跳转至已部署 PWA 的 `https://poker.edentan.site/?install=1`；原有 `Open a table / 开一局` 保留。
+- 原因：用户希望从 Portfolio 的 Friday Poker Club 页面直接找到一键安装入口。
+- 影响：访客无需先自行寻找 Poker 域名；点击安装入口会进入 Poker 自己的 origin，由目标页面的原生 PWA 安装按钮完成浏览器确认。由于浏览器安全限制，`edentan.site` 不能直接替 `poker.edentan.site` 调用安装 prompt。
+- 验证：待本次 typecheck、build 与链接检查完成。
+- 后续：无。
+
+### 2026-07-21 · Film Gallery reversed frame order
+
+- 类型：内容顺序 / Film Gallery
+- 改动：将 Film Gallery 的横向照片顺序由 `01 → 15` 完整倒转为 `15 → 01`；每张照片继续保留原始 frame number、相机与胶卷对应关系。
+- 改动：一键下载的离线 Gallery 同步采用 `15 → 01`，不再依据倒序后的 array index 重编号。
+- 原因：用户要求把图片顺序倒反。
+- 影响：网页与离线导出从最新一格开始向早期照片浏览，metadata 不会因倒序错配。
+- 验证：待本次 typecheck、build 与顺序代码检查完成。
+- 后续：无。
+
+### 2026-07-21 · Film Gallery install and offline download
+
+- 类型：功能 / Film Gallery / PWA + offline export
+- 改动：为 `/film-gallery` 新增独立 Web App manifest 与 maskable Film Gallery icon；首页会按当前 route 在初始 HTML 阶段选择 Conway 或 Film Gallery manifest、theme color 与 Apple touch icon，避免安装错误 App。
+- 改动：Film Gallery hero 新增 `Install app / 安装 App` 与 `Download offline / 下载离线版`；离线下载会读取全部 15 张照片并内嵌为 data URL，连同双语当前文案、相机、胶卷和 frame index 打包为单一 `film-gallery-offline.html`。
+- 原因：用户希望 Film Gallery 也拥有与 Conway 相同的安装和一键下载能力。
+- 影响：Film Gallery 可从主屏幕 / Dock 独立启动；下载的单文件 gallery 不依赖网站资源，断网后仍可浏览全部照片。
+- 验证：待本次 typecheck、build、manifest routing 与静态产物检查完成。
+- 后续：无。
+
+### 2026-07-21 · Conway one-click offline download
+
+- 类型：功能 / Conway’s Game of Life / Offline export
+- 改动：在 Conway 页面标题区加入 `Download offline / 下载离线版` 按钮；点击会把当前棋盘与世代写入一个无外部依赖的单文件 HTML 并立即下载。
+- 改动：下载版保留 36 × 24 棋盘、点击细胞、Run / Pause、Step、Clear、Random、世代与存活数量，可离线双击运行；PWA 的 `Install app` 按钮继续保留，并与下载按钮一起移到标题说明下，避免挤压 menu bar。
+- 原因：用户希望除了浏览器安装，也能通过明确的下载按钮一键取得可运行版本。
+- 影响：用户现在可选择安装为 PWA，或下载一个可携带、无需安装的离线 HTML；下载内容以点击当下的棋盘状态为起点。
+- 验证：待本次 typecheck、build 与静态检查完成。
+- 后续：无。
+
+### 2026-07-21 · Conway installable web app
+
+- 类型：功能 / Conway’s Game of Life / PWA install
+- 改动：新增 Conway 专用 Web App manifest、maskable SVG app icon 与 network-first service worker；在 `/conways-game-of-life` 最新 menu bar 加入 `Install app / 安装 App` 按钮。
+- 改动：Chrome、Edge 与 Android 等支持 `beforeinstallprompt` 的浏览器会打开原生安装视窗；已安装状态显示 `Installed / 已安装`。iOS、iPadOS 或没有暴露安装事件的 Safari 会提供 `Add to Home Screen / Add to Dock` 指引。
+- 原因：用户希望 Conway 页面可以 one click save as webapp。
+- 影响：安装后从 icon 启动会直接进入 Conway 页面，并以 standalone display 打开；service worker 提供已访问资源的离线 fallback，同时优先网络避免开发与更新时读取旧资源。
+- 验证：待本次 typecheck、build、manifest 与 service-worker 产物检查完成。
+- 后续：无。
+
 ### 2026-07-21 · Removed The books that became part of me note
 
 - 类型：内容 / Notes / Route removal

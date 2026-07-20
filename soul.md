@@ -31,7 +31,7 @@
 14. 如果用户要求类似 Dan Koe 的内容风格，默认理解为“个人知识品牌 / creator media hub”的内容架构：强观点首页、essay/archive 入口、系统资源货架、真实 build proof 和清晰 CTA；不要照搬 Dan Koe 的文案、承诺或财富/生活方式叙事。
 15. 如果用户说 Dan Koe 是 article 写法参考，只取写作手法：强 thesis、短段落、可扫读节奏、pull quote、清晰推进；视觉仍然 follow Eden brand guide，除非用户明确说要换视觉系统。
 16. 页面名称、SEO 名称与实际运行模型必须是同一个概念；不要因为两个系统同属一个领域就混用名字。若两套功能都值得保留，拆成独立路由，并在页面内明确互链。
-17. 所有新页面与后续改版页面，默认使用当前首页最新版 menu bar：sticky translucent background、细分隔线、无 Theme/Language 外框、compact-on-selection（当前选项默认收起，点击才展开其他选项）与一致的 mobile 紧凑布局。不要复制旧页面 menu bar；应优先抽取或复用最新共享实现。
+17. 所有页面统一使用 `HeaderControls` + `styles/shared.css` 的最新版 menu system：sticky translucent background、细分隔线、无 Theme/Language 外框、compact-on-selection（现在是 `HeaderControls` 全局默认）与一致的 mobile 紧凑布局。页面文件只决定内容宽度与返回目标，不得再复制或重新定义 menu 的核心视觉与交互。
 
 ## 防返工清单（执行前自检）
 

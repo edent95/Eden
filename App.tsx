@@ -67,6 +67,11 @@ type Language = 'en' | 'zh';
 type Theme = 'light' | 'dark';
 type ThemePreference = Theme | 'auto';
 
+type BeforeInstallPromptEvent = Event & {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed'; platform: string }>;
+};
+
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -838,6 +843,10 @@ const filmGalleryStocks = [
   { name: 'Kodak Gold 200', frameNumbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13] },
   { name: 'Kodak Gold 400', frameNumbers: [14, 15] },
 ];
+
+const filmGalleryFrames = filmGalleryPhotos
+  .map((photo, index) => ({ photo, frameNumber: index + 1 }))
+  .reverse();
 
 type AiProjectSystem = {
   eyebrow: Record<Language, string>;
@@ -2987,7 +2996,7 @@ const HeaderControls: React.FC<{
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
   compactThemeOnSelection?: boolean;
   compactLanguageOnSelection?: boolean;
-}> = ({ language, setLanguage, themePreference, theme, setThemePreference, compactThemeOnSelection = false, compactLanguageOnSelection = false }) => (
+}> = ({ language, setLanguage, themePreference, theme, setThemePreference, compactThemeOnSelection = true, compactLanguageOnSelection = true }) => (
   <div className="header-controls flex items-center gap-3">
     <ThemeToggle
       language={language}
@@ -4967,6 +4976,7 @@ const PokerFullPage: React.FC<{
 }> = ({ projectsHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
   const playUrl = 'https://poker.edentan.site/';
+  const installUrl = 'https://poker.edentan.site/?install=1';
   const highlights = isZh
     ? [['不用等到所有人都有空', '开一个房间，把链接丢进群里。有人晚到、有人重连，牌桌都应该接得住，而不是整局重来。'], ['像熟人局，不像线上赌场', '房主开桌、朋友买入、桌边聊天。界面保留真正需要的规则，但不加入催促下注或制造焦虑的机制。'], ['每个动作都要让人放心', '下注有没有成功、现在轮到谁、房间在等什么，都用清楚的状态回应。少一次误会，牌局就顺一点。'], ['记住人，不只记住牌', '我们不需要另一份战绩炫耀榜。真正值得保存的是谁说了什么、哪一刻全桌笑了，以及下一次为什么还想再来。']]
     : [['Do not wait for everyone to be free', 'Open a room and drop the link in the group. Late arrivals and reconnects should be absorbed by the table—not force the whole night to restart.'], ['Feel like a home game, not a casino', 'The host starts, friends buy in, and the table keeps the conversation alive. It has the rules a real game needs without pressure mechanics designed to keep people betting.'], ['Every action should feel certain', 'A bet should confirm, the turn should be obvious, and the room should say what it is waiting for. Fewer misunderstandings make a better night.'], ['Remember the people, not only the cards', 'We do not need another leaderboard to flex. What deserves to stay is who said what, when the whole table laughed, and why everyone wants another game.']];
@@ -4979,7 +4989,7 @@ const PokerFullPage: React.FC<{
       <main className="px-5 py-8 md:px-8 md:py-10"><div className="mx-auto max-w-6xl">
         <div className="etreport-topbar flex flex-wrap items-center justify-between gap-3"><a href={projectsHref} className="etreport-back-link inline-flex items-center gap-2 text-sm font-medium"><ArrowLeft size={16} />{isZh ? '返回主页' : 'Back home'}</a><HeaderControls language={language} setLanguage={setLanguage} themePreference={themePreference} theme={theme} setThemePreference={setThemePreference} /></div>
 
-        <header className="etreport-store-hero"><div className="etreport-store-icon"><ProjectsPokerCssIcon label="Friday Poker Club CSS app icon" /></div><div className="etreport-store-intro"><p className="etreport-kicker">{isZh ? '多人游戏 · 私人牌局' : 'Multiplayer Game · Private Table'}</p><h1>Friday Poker Club</h1><p className="etreport-store-tagline">{isZh ? '不用约地点。把那群人叫回来就好。' : 'No place to book. Just bring the crew back.'}</p><p className="etreport-store-byline">{isZh ? '由 Eden Tan 为自己的朋友局设计与构建' : 'Designed and built by Eden Tan for his own Friday crew.'}</p><div className="etreport-store-actions"><a href={playUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get">{isZh ? '开一局' : 'Open a table'}</a></div></div></header>
+        <header className="etreport-store-hero"><div className="etreport-store-icon"><ProjectsPokerCssIcon label="Friday Poker Club CSS app icon" /></div><div className="etreport-store-intro"><p className="etreport-kicker">{isZh ? '多人游戏 · 私人牌局' : 'Multiplayer Game · Private Table'}</p><h1>Friday Poker Club</h1><p className="etreport-store-tagline">{isZh ? '不用约地点。把那群人叫回来就好。' : 'No place to book. Just bring the crew back.'}</p><p className="etreport-store-byline">{isZh ? '由 Eden Tan 为自己的朋友局设计与构建' : 'Designed and built by Eden Tan for his own Friday crew.'}</p><div className="etreport-store-actions"><a href={playUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get">{isZh ? '开一局' : 'Open a table'}</a><a href={installUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get poker-store-install"><Download size={15} />{isZh ? '安装 App' : 'Install app'}</a></div></div></header>
 
         <div className="etreport-store-facts"><div><UserRound aria-hidden="true" /><span>{isZh ? '模式' : 'Mode'}</span><strong>{isZh ? '私人多人局' : 'Private multiplayer'}</strong></div><div><Layers aria-hidden="true" /><span>{isZh ? '玩法' : 'Game'}</span><strong>Texas Hold’em</strong></div><div><GitBranch aria-hidden="true" /><span>{isZh ? '同步' : 'Realtime'}</span><strong>Firebase</strong></div><div><Play aria-hidden="true" /><span>{isZh ? '平台' : 'Platform'}</span><strong>{isZh ? '浏览器' : 'Web browser'}</strong></div></div>
 
@@ -4995,7 +5005,7 @@ const PokerFullPage: React.FC<{
 
         <section className="etreport-app-details"><h2><Layers aria-hidden="true" />{isZh ? '产品资料' : 'Information'}</h2><dl><div><dt>{isZh ? '类别' : 'Category'}</dt><dd>{isZh ? '私人多人游戏' : 'Private multiplayer game'}</dd></div><div><dt>{isZh ? '游戏' : 'Game'}</dt><dd>Texas Hold’em · 8/9 mini game</dd></div><div><dt>{isZh ? '主要模块' : 'Modules'}</dt><dd>Rooms · Invites · Buy-ins · Realtime table · Optional voice</dd></div><div><dt>{isZh ? '平台' : 'Platform'}</dt><dd>{isZh ? '响应式浏览器牌桌' : 'Responsive browser table'}</dd></div><div><dt>{isZh ? '开发者' : 'Developer'}</dt><dd>Eden Tan</dd></div></dl></section>
 
-        <section className="etreport-app-final"><ProjectsPokerCssIcon label="Friday Poker Club CSS app icon" /><div><h2>{isZh ? '把链接发回那个群。看看今晚谁会坐下。' : 'Send the link back to the group. See who takes a seat tonight.'}</h2><p>{isZh ? '不用准备场地，也不用把周五变成一场正式活动。先开一张桌，故事自然会来。' : 'No venue to prepare and no need to turn Friday into an event. Open the table first. The story can arrive on its own.'}</p><div className="etreport-app-final-actions"><a href={playUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get">{isZh ? '开一局' : 'Open a table'}</a></div></div></section>
+        <section className="etreport-app-final"><ProjectsPokerCssIcon label="Friday Poker Club CSS app icon" /><div><h2>{isZh ? '把链接发回那个群。看看今晚谁会坐下。' : 'Send the link back to the group. See who takes a seat tonight.'}</h2><p>{isZh ? '不用准备场地，也不用把周五变成一场正式活动。先开一张桌，故事自然会来。' : 'No venue to prepare and no need to turn Friday into an event. Open the table first. The story can arrive on its own.'}</p><div className="etreport-app-final-actions"><a href={playUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get">{isZh ? '开一局' : 'Open a table'}</a><a href={installUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get poker-store-install"><Download size={15} />{isZh ? '安装 App' : 'Install app'}</a></div></div></section>
       </div></main>
     </div>
   );
@@ -6255,6 +6265,10 @@ const ConwayGameOfLifeFullPage: React.FC<{
   const [isRunning, setIsRunning] = React.useState(() =>
     typeof window !== 'undefined' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   );
+  const [installPrompt, setInstallPrompt] = React.useState<BeforeInstallPromptEvent | null>(null);
+  const [isInstalled, setIsInstalled] = React.useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches,
+  );
 
   React.useEffect(() => {
     const mobileMenuQuery = window.matchMedia('(max-width: 640px)');
@@ -6262,6 +6276,24 @@ const ConwayGameOfLifeFullPage: React.FC<{
     updateMobileMenu();
     mobileMenuQuery.addEventListener('change', updateMobileMenu);
     return () => mobileMenuQuery.removeEventListener('change', updateMobileMenu);
+  }, []);
+
+  React.useEffect(() => {
+    const captureInstallPrompt = (event: Event) => {
+      event.preventDefault();
+      setInstallPrompt(event as BeforeInstallPromptEvent);
+    };
+    const markInstalled = () => {
+      setIsInstalled(true);
+      setInstallPrompt(null);
+    };
+
+    window.addEventListener('beforeinstallprompt', captureInstallPrompt);
+    window.addEventListener('appinstalled', markInstalled);
+    return () => {
+      window.removeEventListener('beforeinstallprompt', captureInstallPrompt);
+      window.removeEventListener('appinstalled', markInstalled);
+    };
   }, []);
 
   React.useEffect(() => {
@@ -6286,15 +6318,57 @@ const ConwayGameOfLifeFullPage: React.FC<{
 
   const population = board.reduce((total, isAlive) => total + (isAlive ? 1 : 0), 0);
 
+  const installWebApp = async () => {
+    if (isInstalled) return;
+    if (installPrompt) {
+      await installPrompt.prompt();
+      const choice = await installPrompt.userChoice;
+      if (choice.outcome === 'accepted') setIsInstalled(true);
+      setInstallPrompt(null);
+      return;
+    }
+
+    window.alert(
+      isZh
+        ? '如果浏览器没有弹出安装视窗：iPhone / iPad 请点分享，再选择「加入主画面」；Safari 桌面版请选择 File → Add to Dock。'
+        : 'If no install window appears: on iPhone or iPad, tap Share → Add to Home Screen. In desktop Safari, choose File → Add to Dock.',
+    );
+  };
+
+  const downloadOfflineVersion = () => {
+    const initialBoard = JSON.stringify(board.map((cell) => (cell ? 1 : 0)));
+    const offlineHtml = `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Conway's Game of Life — Offline</title><style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#0c2026;color:#f5f3ef;font-family:system-ui,-apple-system,sans-serif}.app{width:min(1100px,100%);margin:auto;padding:clamp(18px,4vw,48px)}h1{font-size:clamp(36px,7vw,82px);line-height:.95;margin:0 0 14px}p{color:#b8c7c8}.bar{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin:24px 0}.bar button{border:0;border-radius:999px;background:#78d7b5;color:#0c2026;padding:10px 16px;font-weight:700;cursor:pointer}.bar button.alt{background:#243a40;color:#f5f3ef}.stats{margin-left:auto;font:600 13px ui-monospace,monospace}.grid{display:grid;grid-template-columns:repeat(36,1fr);aspect-ratio:3/2;border:1px solid #355057;border-radius:18px;overflow:hidden;background:#132b31}.cell{border:0;border-right:1px solid #1e3b42;border-bottom:1px solid #1e3b42;background:transparent;padding:0}.cell.on{background:#78d7b5}@media(max-width:600px){.app{padding:16px}.stats{width:100%;margin:4px 0 0}.grid{border-radius:10px}}
+</style></head><body><main class="app"><p>B3 / S23 · OFFLINE WEB APP</p><h1>Conway's Game of Life</h1><p>Click cells, run the simulation, and watch simple rules create unexpected life.</p><div class="bar"><button id="run">Run</button><button class="alt" id="step">Step</button><button class="alt" id="clear">Clear</button><button class="alt" id="random">Random</button><span class="stats" id="stats"></span></div><div class="grid" id="grid"></div></main><script>
+var cols=36,rows=24,board=${initialBoard},generation=${generation},timer=null,grid=document.getElementById('grid'),stats=document.getElementById('stats'),run=document.getElementById('run');
+function draw(){grid.innerHTML='';board.forEach(function(on,i){var b=document.createElement('button');b.className='cell'+(on?' on':'');b.setAttribute('aria-label','Cell '+(i+1));b.onclick=function(){board[i]=board[i]?0:1;draw()};grid.appendChild(b)});stats.textContent='Generation '+generation+' · Population '+board.reduce(function(a,b){return a+b},0)}
+function evolve(){board=board.map(function(alive,i){var r=Math.floor(i/cols),c=i%cols,n=0;for(var y=-1;y<=1;y++)for(var x=-1;x<=1;x++){if(!x&&!y)continue;var rr=r+y,cc=c+x;if(rr>=0&&rr<rows&&cc>=0&&cc<cols&&board[rr*cols+cc])n++}return alive?(n===2||n===3?1:0):(n===3?1:0)});generation++;draw()}
+run.onclick=function(){if(timer){clearInterval(timer);timer=null;run.textContent='Run'}else{timer=setInterval(evolve,240);run.textContent='Pause'}};document.getElementById('step').onclick=evolve;document.getElementById('clear').onclick=function(){board=board.map(function(){return 0});generation=0;draw()};document.getElementById('random').onclick=function(){board=board.map(function(){return Math.random()<.22?1:0});generation=0;draw()};draw();
+</script></body></html>`;
+    const file = new Blob([offlineHtml], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(file);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = 'conways-game-of-life-offline.html';
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="page-shell conway-page conway-life-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
       <main className="conway-rules-page">
         <div className="conway-rules-shell">
           <div className="conway-rules-topbar">
-            <a href={homeHref} className="conway-back-link inline-flex items-center gap-2 text-sm font-medium">
-              <ArrowLeft size={16} />
-              {isZh ? '返回主页' : 'Back to Home'}
-            </a>
+            <div className="conway-topbar-actions">
+              <a href={homeHref} className="conway-back-link inline-flex items-center gap-2 text-sm font-medium">
+                <ArrowLeft size={16} />
+                {isZh ? '返回主页' : 'Back to Home'}
+              </a>
+            </div>
             <HeaderControls
               language={language}
               setLanguage={setLanguage}
@@ -6321,6 +6395,21 @@ const ConwayGameOfLifeFullPage: React.FC<{
                     ? '几条简单规则，也能长出意想不到的生命。点亮细胞，然后看秩序自己出现。'
                     : 'Small rules. Unexpected life. Turn on a few cells, then watch order appear on its own.'}
                 </p>
+                <div className="conway-app-actions">
+                  <button
+                    type="button"
+                    className="conway-install-button"
+                    onClick={installWebApp}
+                    disabled={isInstalled}
+                  >
+                    <Plus size={15} />
+                    <span>{isInstalled ? (isZh ? '已安装' : 'Installed') : isZh ? '安装 App' : 'Install app'}</span>
+                  </button>
+                  <button type="button" className="conway-install-button conway-download-button" onClick={downloadOfflineVersion}>
+                    <Download size={15} />
+                    <span>{isZh ? '下载离线版' : 'Download offline'}</span>
+                  </button>
+                </div>
               </div>
             </div>
           </header>
@@ -6834,6 +6923,29 @@ const FilmGalleryFullPage: React.FC<{
 }> = ({ homeHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
   const filmStripRef = React.useRef<HTMLDivElement>(null);
+  const [installPrompt, setInstallPrompt] = React.useState<BeforeInstallPromptEvent | null>(null);
+  const [isInstalled, setIsInstalled] = React.useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches,
+  );
+  const [isDownloading, setIsDownloading] = React.useState(false);
+
+  React.useEffect(() => {
+    const captureInstallPrompt = (event: Event) => {
+      event.preventDefault();
+      setInstallPrompt(event as BeforeInstallPromptEvent);
+    };
+    const markInstalled = () => {
+      setIsInstalled(true);
+      setInstallPrompt(null);
+    };
+    window.addEventListener('beforeinstallprompt', captureInstallPrompt);
+    window.addEventListener('appinstalled', markInstalled);
+    return () => {
+      window.removeEventListener('beforeinstallprompt', captureInstallPrompt);
+      window.removeEventListener('appinstalled', markInstalled);
+    };
+  }, []);
+
   const scrollFilmStrip = (direction: -1 | 1) => {
     const strip = filmStripRef.current;
     if (!strip) return;
@@ -6841,6 +6953,62 @@ const FilmGalleryFullPage: React.FC<{
       left: direction * Math.min(strip.clientWidth * 0.82, 760),
       behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
     });
+  };
+
+  const installFilmGallery = async () => {
+    if (isInstalled) return;
+    if (installPrompt) {
+      await installPrompt.prompt();
+      const choice = await installPrompt.userChoice;
+      if (choice.outcome === 'accepted') setIsInstalled(true);
+      setInstallPrompt(null);
+      return;
+    }
+    window.alert(
+      isZh
+        ? '如果浏览器没有弹出安装视窗：iPhone / iPad 请点分享，再选择「加入主画面」；Safari 桌面版请选择 File → Add to Dock。'
+        : 'If no install window appears: on iPhone or iPad, tap Share → Add to Home Screen. In desktop Safari, choose File → Add to Dock.',
+    );
+  };
+
+  const downloadFilmGallery = async () => {
+    if (isDownloading) return;
+    setIsDownloading(true);
+    try {
+      const offlinePhotos = await Promise.all(filmGalleryFrames.map(async ({ photo, frameNumber }) => {
+        const response = await fetch(resolveAssetPath(baseUrl, photo.src));
+        if (!response.ok) throw new Error(`Unable to download frame ${frameNumber}`);
+        const blob = await response.blob();
+        const dataUrl = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(String(reader.result));
+          reader.onerror = () => reject(reader.error);
+          reader.readAsDataURL(blob);
+        });
+        const camera = filmGalleryCameras.find((item) => item.frameNumbers.includes(frameNumber));
+        const stock = filmGalleryStocks.find((item) => item.frameNumbers.includes(frameNumber));
+        return { frameNumber, dataUrl, alt: photo.alt[language], caption: photo.caption[language], camera: camera?.name ?? '', stock: stock?.name ?? '' };
+      }));
+      const galleryData = JSON.stringify(offlinePhotos).replace(/</g, '\\u003c');
+      const offlineHtml = `<!doctype html><html lang="${language}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Film Gallery — Eden Tan</title><style>
+*{box-sizing:border-box}body{margin:0;background:#f5f3ef;color:#171411;font-family:system-ui,-apple-system,sans-serif}.wrap{width:min(1080px,100%);margin:auto;padding:clamp(24px,6vw,80px)}.k{font:700 12px ui-monospace,monospace;letter-spacing:.15em;text-transform:uppercase;color:#766f68}h1{font-size:clamp(56px,12vw,138px);line-height:.88;letter-spacing:-.07em;margin:22px 0 28px}.intro{max-width:720px;font-size:clamp(18px,2.4vw,28px);line-height:1.25;color:#514c47}.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,4vw,52px);margin-top:80px}figure{margin:0}img{display:block;width:100%;height:auto;border-radius:18px;background:#171411}figcaption{display:grid;gap:7px;padding-top:14px}.n{font:700 12px ui-monospace,monospace;color:#176b87}.gear{font-size:13px;color:#766f68}.cap{font-size:15px;line-height:1.5}@media(max-width:680px){.gallery{grid-template-columns:1fr;margin-top:48px}h1{font-size:58px}}
+</style></head><body><main class="wrap"><p class="k">15 frames · 3 cameras · 2 film stocks</p><h1>Film Gallery</h1><p class="intro">Fifteen records of stopping to look: streets, water, buildings, temples, and people who happened to enter the frame.</p><section class="gallery" id="gallery"></section></main><script>
+var photos=${galleryData},root=document.getElementById('gallery');photos.forEach(function(p){var f=document.createElement('figure'),img=document.createElement('img'),c=document.createElement('figcaption'),n=document.createElement('span'),g=document.createElement('span'),d=document.createElement('span');img.src=p.dataUrl;img.alt=p.alt;n.className='n';n.textContent=String(p.frameNumber).padStart(2,'0');g.className='gear';g.textContent=p.camera+' · '+p.stock;d.className='cap';d.textContent=p.caption;c.append(n,g,d);f.append(img,c);root.appendChild(f)});
+</script></body></html>`;
+      const file = new Blob([offlineHtml], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(file);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = 'film-gallery-offline.html';
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(url);
+    } catch {
+      window.alert(isZh ? '照片下载失败，请确认网络后再试一次。' : 'The photos could not be downloaded. Check your connection and try again.');
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   return (
@@ -6883,6 +7051,16 @@ const FilmGalleryFullPage: React.FC<{
                 ? '使用 Konica Auto S2、Rolleiflex Old Standard (Model 621) 与 Zeiss Ikon Contessa 35 拍摄，胶卷为 Kodak Gold 200 和 400。每张照片下方保留当时使用的相机与胶卷。'
                 : 'Shot on the Konica Auto S2, Rolleiflex Old Standard (Model 621), and Zeiss Ikon Contessa 35 with Kodak Gold 200 and 400. The camera and film stock stay with each frame below.'}
             </p>
+            <div className="film-gallery-app-actions">
+              <button type="button" onClick={installFilmGallery} disabled={isInstalled}>
+                <Plus size={16} />
+                <span>{isInstalled ? (isZh ? '已安装' : 'Installed') : isZh ? '安装 App' : 'Install app'}</span>
+              </button>
+              <button type="button" className="is-primary" onClick={downloadFilmGallery} disabled={isDownloading}>
+                <Download size={16} />
+                <span>{isDownloading ? (isZh ? '正在打包照片…' : 'Packing photos…') : isZh ? '下载离线版' : 'Download offline'}</span>
+              </button>
+            </div>
           </header>
 
           <section className="film-gallery-section pb-16 md:pb-24">
@@ -6918,8 +7096,7 @@ const FilmGalleryFullPage: React.FC<{
                 aria-label={isZh ? '可横向滚动的胶片照片' : 'Horizontally scrollable film photographs'}
                 tabIndex={0}
               >
-              {filmGalleryPhotos.map((photo, index) => {
-                const frameNumber = index + 1;
+              {filmGalleryFrames.map(({ photo, frameNumber }, index) => {
                 const camera = filmGalleryCameras.find((item) => item.frameNumbers.includes(frameNumber));
                 const stock = filmGalleryStocks.find((item) => item.frameNumbers.includes(frameNumber));
 
@@ -9399,6 +9576,8 @@ const JijuPetFullPage: React.FC<{
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
 }> = ({ homeHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
+  const jijuUrl = 'https://jiju.pet/';
+  const jijuInstallUrl = 'https://jiju.pet/?install=1';
   const highlights = isZh
     ? [['发现', '用真实需求寻找地点，不只看星级。室内或户外、宠物政策、空间和现场体验都应该说清楚。'], ['信任', '地点资料、商家政策与社区记录互相验证，减少“到了才发现不适合”的落差。'], ['记忆', '为宠物建立真实档案，把去过的地方、共同经历和成长过程保存下来。'], ['社区', '让用户贡献地点、补充情况并记录 Sanctuary impact，让资料随着使用持续变好。']]
     : [['Discovery', 'Find places through real needs, not ratings alone. Indoor or outdoor, pet policy, space, and on-site reality should be clear.'], ['Trust', 'Place details, merchant policies, and community records verify one another—reducing the gap between a listing and the real visit.'], ['Memory', 'Build a real profile for each pet and keep the places, shared experiences, and growth that happen over time.'], ['Community', 'Let people contribute places, update conditions, and record sanctuary impact so the knowledge improves through use.']];
@@ -9411,11 +9590,11 @@ const JijuPetFullPage: React.FC<{
       <main className="px-5 py-8 md:px-8 md:py-10"><div className="mx-auto max-w-6xl">
         <div className="etreport-topbar flex flex-wrap items-center justify-between gap-3"><a href={homeHref} className="etreport-back-link inline-flex items-center gap-2 text-sm font-medium"><ArrowLeft size={16} />{isZh ? '返回主页' : 'Back to Home'}</a><HeaderControls language={language} setLanguage={setLanguage} themePreference={themePreference} theme={theme} setThemePreference={setThemePreference} /></div>
 
-        <header className="etreport-store-hero"><div className="etreport-store-icon"><ProjectsJijuCssIcon label="Jiju CSS app icon" /></div><div className="etreport-store-intro"><p className="etreport-kicker">{isZh ? '本地发现 · 宠物生活' : 'Local Discovery · Pet Life'}</p><h1>Jiju</h1><p className="etreport-store-tagline">{isZh ? '找到真正适合你和宠物一起去的地方。' : 'Find places that truly work for you and your pet.'}</p><p className="etreport-store-byline">{isZh ? '从 Penang 开始，由 Eden Tan 设计与构建' : 'Starting in Penang. Designed and built by Eden Tan.'}</p><div className="etreport-store-actions"><a href="https://jiju.pet" target="_blank" rel="noopener noreferrer" className="etreport-store-get">{isZh ? '打开 Jiju' : 'Open Jiju'}</a><a href="#jiju-overview" className="etreport-text-cta">{isZh ? '了解产品' : 'Explore product'} <span aria-hidden>›</span></a></div></div></header>
+        <header className="etreport-store-hero"><div className="etreport-store-icon"><ProjectsJijuCssIcon label="Jiju CSS app icon" /></div><div className="etreport-store-intro"><p className="etreport-kicker">{isZh ? '本地发现 · 宠物生活' : 'Local Discovery · Pet Life'}</p><h1>Jiju</h1><p className="etreport-store-tagline">{isZh ? '找到真正适合你和宠物一起去的地方。' : 'Find places that truly work for you and your pet.'}</p><p className="etreport-store-byline">{isZh ? '从 Penang 开始，由 Eden Tan 设计与构建' : 'Starting in Penang. Designed and built by Eden Tan.'}</p><div className="etreport-store-actions"><a href={jijuUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get">{isZh ? '打开 Jiju' : 'Open Jiju'}</a><a href={jijuInstallUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get jiju-store-install"><Download size={15} />{isZh ? '安装 App' : 'Install app'}</a><a href="#jiju-overview" className="etreport-text-cta">{isZh ? '了解产品' : 'Explore product'} <span aria-hidden>›</span></a></div></div></header>
 
         <div className="etreport-store-facts"><div><MapPin aria-hidden="true" /><span>{isZh ? '起点' : 'Started'}</span><strong>Penang</strong></div><div><Search aria-hidden="true" /><span>{isZh ? '核心' : 'Core'}</span><strong>{isZh ? '地点发现' : 'Place discovery'}</strong></div><div><UserRound aria-hidden="true" /><span>{isZh ? '资料' : 'Profiles'}</span><strong>{isZh ? '宠物档案' : 'Real pet identity'}</strong></div><div><Bookmark aria-hidden="true" /><span>{isZh ? '记忆' : 'Memory'}</span><strong>{isZh ? '到访记录' : 'Visit records'}</strong></div></div>
 
-        <section className="etreport-live-demo" aria-labelledby="jiju-live-title"><div className="etreport-live-demo-head"><div><p className="etreport-kicker">Live site</p><h2 id="jiju-live-title">{isZh ? '直接探索 Jiju。' : 'Explore Jiju right here.'}</h2></div><a href="https://jiju.pet" target="_blank" rel="noopener noreferrer" className="etreport-text-cta">{isZh ? '在新标签打开' : 'Open in new tab'} <span aria-hidden>↗</span></a></div><div className="etreport-live-demo-frame"><div className="etreport-live-demo-toolbar" aria-hidden="true"><span /><span /><span /><p>jiju.pet</p></div><iframe src="https://jiju.pet" title={isZh ? 'Jiju 互动网站' : 'Interactive Jiju website'} loading="lazy" /></div></section>
+        <section className="etreport-live-demo" aria-labelledby="jiju-live-title"><div className="etreport-live-demo-head"><div><p className="etreport-kicker">Live site</p><h2 id="jiju-live-title">{isZh ? '直接探索 Jiju。' : 'Explore Jiju right here.'}</h2></div><a href={jijuUrl} target="_blank" rel="noopener noreferrer" className="etreport-text-cta">{isZh ? '在新标签打开' : 'Open in new tab'} <span aria-hidden>↗</span></a></div><div className="etreport-live-demo-frame"><div className="etreport-live-demo-toolbar" aria-hidden="true"><span /><span /><span /><p>jiju.pet</p></div><iframe src={jijuUrl} title={isZh ? 'Jiju 互动网站' : 'Interactive Jiju website'} loading="lazy" /></div></section>
 
         <section className="etreport-app-description" id="jiju-overview"><div className="etreport-app-prose"><p className="etreport-kicker">{isZh ? '产品简介' : 'Overview'}</p><h2>{isZh ? 'Pet-friendly 不应该只是一个模糊标签。' : 'Pet-friendly should mean more than a vague label.'}</h2><p>{isZh ? 'Jiju 是一个围绕真实宠物生活建立的本地发现系统。它帮助宠物主人在出门前看懂地点政策、空间条件与实际体验，也让每次到访成为可以保存和回看的共同记忆。' : 'Jiju is a local discovery system built around real life with pets. It helps pet parents understand place policies, space, and lived experience before leaving—and gives every outing a place to be remembered.'}</p><p>{isZh ? '重点不是收集最多地点，而是让资料值得相信：这个地方是否真的欢迎宠物、适合哪种宠物、应该坐哪里，以及最近的情况有没有改变。' : 'The goal is not the largest directory. It is information worth trusting: whether a place genuinely welcomes pets, which pets it works for, where they can stay, and whether conditions have changed.'}</p></div></section>
 
@@ -9427,7 +9606,7 @@ const JijuPetFullPage: React.FC<{
 
         <section className="etreport-app-details"><h2><Layers aria-hidden="true" />{isZh ? '产品资料' : 'Information'}</h2><dl><div><dt>{isZh ? '类别' : 'Category'}</dt><dd>{isZh ? '本地发现与宠物生活' : 'Local discovery and pet life'}</dd></div><div><dt>{isZh ? '当前城市' : 'Current city'}</dt><dd>Penang, Malaysia</dd></div><div><dt>{isZh ? '主要模块' : 'Modules'}</dt><dd>Discovery · Place profiles · Pet profiles · Visits · Community</dd></div><div><dt>{isZh ? '平台' : 'Platform'}</dt><dd>{isZh ? '响应式 Web App' : 'Responsive web app'}</dd></div><div><dt>{isZh ? '开发者' : 'Developer'}</dt><dd>Eden Tan</dd></div></dl></section>
 
-        <section className="etreport-app-final"><ProjectsJijuCssIcon label="Jiju CSS app icon" /><div><h2>{isZh ? '下一次出门，先问 Jiju。' : 'For the next outing, ask Jiju first.'}</h2><p>{isZh ? '探索地点、确认真实条件，再和宠物一起留下新的记忆。' : 'Explore the place, check the real conditions, then make a new memory together.'}</p><div className="etreport-app-final-actions"><a href="https://jiju.pet" target="_blank" rel="noopener noreferrer" className="etreport-store-get">{isZh ? '打开 Jiju' : 'Open Jiju'}</a></div></div></section>
+        <section className="etreport-app-final"><ProjectsJijuCssIcon label="Jiju CSS app icon" /><div><h2>{isZh ? '下一次出门，先问 Jiju。' : 'For the next outing, ask Jiju first.'}</h2><p>{isZh ? '探索地点、确认真实条件，再和宠物一起留下新的记忆。' : 'Explore the place, check the real conditions, then make a new memory together.'}</p><div className="etreport-app-final-actions"><a href={jijuUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get">{isZh ? '打开 Jiju' : 'Open Jiju'}</a><a href={jijuInstallUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get jiju-store-install"><Download size={15} />{isZh ? '安装 App' : 'Install app'}</a></div></div></section>
       </div></main>
     </div>
   );
