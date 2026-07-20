@@ -30,6 +30,8 @@
 13. 以后复用或新增 CSS art，先查 `css-art.registry.ts` 和 `docs/css-art-system.md`；React 组件从 `components/css-art` import，不要在页面里复制一份 DOM/CSS art markup。
 14. 如果用户要求类似 Dan Koe 的内容风格，默认理解为“个人知识品牌 / creator media hub”的内容架构：强观点首页、essay/archive 入口、系统资源货架、真实 build proof 和清晰 CTA；不要照搬 Dan Koe 的文案、承诺或财富/生活方式叙事。
 15. 如果用户说 Dan Koe 是 article 写法参考，只取写作手法：强 thesis、短段落、可扫读节奏、pull quote、清晰推进；视觉仍然 follow Eden brand guide，除非用户明确说要换视觉系统。
+16. 页面名称、SEO 名称与实际运行模型必须是同一个概念；不要因为两个系统同属一个领域就混用名字。若两套功能都值得保留，拆成独立路由，并在页面内明确互链。
+17. 所有新页面与后续改版页面，默认使用当前首页最新版 menu bar：sticky translucent background、细分隔线、无 Theme/Language 外框、compact-on-selection（当前选项默认收起，点击才展开其他选项）与一致的 mobile 紧凑布局。不要复制旧页面 menu bar；应优先抽取或复用最新共享实现。
 
 ## 防返工清单（执行前自检）
 
@@ -44,9 +46,11 @@
 - 如果是图腾 / sigil / glyph 类 CSS art，是否默认透明底，而不是做成固定底 app icon？
 - 是否把页面级 layout / typography / responsive CSS 放进 `styles/pages/`，并把可复用 card/panel/tag/CTA 数值放进 shared layer，而不是继续扩张 `index.css`？
 - 是否需要同步 `README.md`、`AGENTS.md`、`log.md`？
+- 页面名称、SEO 与实际实现是否描述同一个概念，而不是把相邻但不同的系统混在一起？
 - 是否把“本次完成标准”写清楚给用户（看哪里、看到什么）？
 - 如果是 Dan Koe-like 方向，是否先把页面核心 thesis、读者处境、Eden 的独特 lens、真实 proof 和下一步动作理清楚，而不是只改视觉或堆 slogan？
 - 如果只是参考 Dan Koe 的 article 写法，是否保留 Eden brand guide 的视觉系统，没有误换成黑底大字风格？
+- 页面是否使用当前最新版 menu bar，而不是继续保留或复制旧导航？
 
 ## 常见误区（禁止）
 

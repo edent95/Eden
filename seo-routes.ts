@@ -65,18 +65,6 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
   },
   {
-    path: '/projects',
-    priority: '0.9',
-    title: {
-      en: 'Projects | AI Build Systems by Eden Tan',
-      zh: 'Projects | Eden Tan 的 AI 构建系统',
-    },
-    desc: {
-      en: 'Jiju, Friday Poker Club, ETReportHub, and CRM: active AI build systems and product systems by Eden Tan, grouped by one operating logic.',
-      zh: 'Jiju、Friday Poker Club、ETReportHub 和 CRM：Eden Tan 当前的 AI 构建系统与产品系统，以同一套操作逻辑整理。',
-    },
-  },
-  {
     path: '/project-css',
     priority: '0.5',
     index: false,
@@ -211,30 +199,6 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
   },
   {
-    path: '/crm',
-    priority: '0.8',
-    title: {
-      en: 'CRM Intelligence System | A back-office CRM build by Eden Tan',
-      zh: 'CRM Intelligence System | Eden Tan 的后台 CRM 构建',
-    },
-    desc: {
-      en: 'A back-office CRM that pulls a whole business out of messy Excel — providers, merchants, accounts, rates — into one normalized Postgres database, with AI semantic search, RBAC, encrypted credentials, and a golden-ratio design system.',
-      zh: '一个后台 CRM：把一整门生意从混乱 Excel 里整理进一个标准化 Postgres 数据库——供应商、商户、账号、费率——配 AI 语义搜索、RBAC、加密凭证和黄金比例设计系统。',
-    },
-  },
-  {
-    path: '/previous-projects',
-    priority: '0.8',
-    title: {
-      en: 'Project archive | Eden Tan',
-      zh: '项目归档 | Eden Tan',
-    },
-    desc: {
-      en: 'Selected projects, roles, and long-form case notes from Eden Tan’s marketing and product work across regions.',
-      zh: 'Eden Tan 过往项目、角色与跨地区营销／产品向案例要点的归档页。',
-    },
-  },
-  {
     path: '/film-gallery',
     priority: '0.8',
     title: {
@@ -242,8 +206,20 @@ export const ROUTE_SEO: RouteSeo[] = [
       zh: 'Film Gallery 胶片图库 | Eden Tan',
     },
     desc: {
-      en: 'A quiet film archive from Eden Tan: selected frames of light, grain, waterlines, buildings, and analog attention without frame-by-frame captions.',
-      zh: 'Eden Tan 的安静胶片档案：关于光、颗粒、水岸、建筑与模拟注意力的选片，不再逐张解释。',
+      en: 'Fifteen film photographs by Eden Tan—streets, water, buildings, temples, and people—shot across three cameras on Kodak Gold 200 and 400.',
+      zh: 'Eden Tan 的十五张胶片记录：街道、水岸、建筑、庙宇与人物，使用三台相机及 Kodak Gold 200、400 拍摄。',
+    },
+  },
+  {
+    path: '/notes',
+    priority: '0.8',
+    title: {
+      en: 'Notes | Essays and build notes by Eden Tan',
+      zh: 'Notes | Eden Tan 的文章与构建笔记',
+    },
+    desc: {
+      en: 'Published essays and build notes by Eden Tan on products, AI, human behavior, and turning messy realities into useful systems.',
+      zh: 'Eden Tan 发布的文章与构建笔记，关于产品、AI、人的行为，以及怎样把混乱慢慢变成可用的系统。',
     },
   },
   {
@@ -300,12 +276,24 @@ export const ROUTE_SEO: RouteSeo[] = [
     path: '/conways-game-of-life',
     priority: '0.8',
     title: {
-      en: "Conway's Game of Life | 256 Elementary Cellular Automata Rules",
-      zh: "Conway's Game of Life | 256 个一维元胞自动机规则",
+      en: "Conway's Game of Life | Interactive B3/S23 Life Board",
+      zh: "Conway's Game of Life | B3/S23 互动生命棋盘",
     },
     desc: {
-      en: 'A black-and-white browser for all 256 elementary cellular automata rules, with live rule previews, binary rule readouts, and a 16-by-16 rule index.',
-      zh: '一个黑白 256 elementary cellular automata rules 浏览器，包含实时规则预览、二进制规则读数和 16×16 规则索引。',
+      en: "An interactive two-dimensional Conway's Game of Life board using B3/S23, with editable cells, live simulation, and classic Glider, R-pentomino, and Pulsar seeds.",
+      zh: '一个使用 B3/S23 的二维 Conway 生命棋盘，可编辑细胞、实时演化，并载入 Glider、R-pentomino 与 Pulsar 经典图案。',
+    },
+  },
+  {
+    path: '/cellular-automata-lab',
+    priority: '0.7',
+    title: {
+      en: 'Cellular Automata Lab | 256 Elementary Rules',
+      zh: 'Cellular Automata Lab | 256 个一维元胞自动机规则',
+    },
+    desc: {
+      en: 'A browser for all 256 elementary cellular automata rules, with live previews, binary readouts, I Ching mappings, and a 16-by-16 rule index.',
+      zh: '一个 256 elementary cellular automata rules 浏览器，包含实时预览、二进制读数、易经映射与 16×16 规则索引。',
     },
   },
   {

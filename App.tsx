@@ -898,21 +898,6 @@ const aiProjectSystems: AiProjectSystem[] = [
     },
     href: 'etreporthub',
   },
-  {
-    eyebrow: { en: 'AI Build System', zh: 'AI 构建系统' },
-    title: 'CRM Intelligence System',
-    status: { en: 'In design', zh: '设计中' },
-    role: { en: 'Retention and member workflow layer', zh: '留存与会员工作流层' },
-    summary: {
-      en: 'A CRM layer going on top of the reporting data: member segments, retention signals, follow-up queues, channel context, and AI helping the operator figure out the next move.',
-      zh: '正在往报表数据上面搭的 CRM 层：会员分群、留存信号、跟进队列、渠道语境，还有 AI 帮运营想下一步该干嘛。',
-    },
-    system: {
-      en: 'Member segmentation, risk signals, retention tasks, CRM export logic, operator next-action workflow.',
-      zh: '会员分群、风险信号、留存任务、CRM 导出逻辑和运营下一步行动工作流。',
-    },
-    href: 'crm',
-  },
 ];
 
 const aiProjectSharedLogic = [
@@ -2845,35 +2830,68 @@ const writeStoredGuestTopics = (entries: GuestTopicEntry[]) => {
 const LanguageToggle: React.FC<{
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
-}> = ({ language, setLanguage }) => (
-  <div className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white p-1">
-    <button
-      type="button"
-      onClick={() => setLanguage('en')}
-      className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
-        language === 'en' ? 'bg-eden-mint text-stone-900 shadow-sm' : 'text-stone-600 hover:text-stone-900'
-      }`}
-    >
-      EN
-    </button>
-    <button
-      type="button"
-      onClick={() => setLanguage('zh')}
-      className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
-        language === 'zh' ? 'bg-eden-mint text-stone-900 shadow-sm' : 'text-stone-600 hover:text-stone-900'
-      }`}
-    >
-      中文
-    </button>
-  </div>
-);
+  compactOnSelection?: boolean;
+}> = ({ language, setLanguage, compactOnSelection = false }) => {
+  const [isExpanded, setIsExpanded] = React.useState(() => !compactOnSelection);
+
+  React.useEffect(() => {
+    setIsExpanded(!compactOnSelection);
+  }, [compactOnSelection, language]);
+
+  const isCompact = compactOnSelection && !isExpanded;
+  const options = [
+    { value: 'en' as const, label: 'English', visibleLabel: <span>EN</span> },
+    {
+      value: 'zh' as const,
+      label: '中文',
+      visibleLabel: <><span className="header-language-label-full">中文</span><span className="header-language-label-short hidden" aria-hidden="true">中</span></>,
+    },
+  ];
+
+  return (
+    <div className={`header-language-toggle inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white p-1${isCompact ? ' header-toggle-collapsed' : ''}`}>
+      {options.map((option) => {
+        const isActive = language === option.value;
+        const isHidden = isCompact && !isActive;
+
+        return (
+          <button
+            key={option.value}
+            type="button"
+            onClick={() => {
+              if (isCompact && isActive) {
+                setIsExpanded(true);
+                return;
+              }
+
+              setLanguage(option.value);
+              if (compactOnSelection) setIsExpanded(false);
+            }}
+            className={`header-language-option rounded-full px-3 py-1 text-xs font-semibold ${
+              isActive ? 'bg-eden-mint text-stone-900 shadow-sm' : 'text-stone-600 hover:text-stone-900'
+            }${isHidden ? ' header-toggle-option-hidden' : ''}`}
+            aria-label={isCompact && isActive ? `${option.label}，显示语言选项` : `Switch language to ${option.label}`}
+            aria-pressed={isActive}
+            aria-expanded={compactOnSelection && isActive ? isExpanded : undefined}
+            aria-hidden={isHidden || undefined}
+            tabIndex={isHidden ? -1 : undefined}
+          >
+            {option.visibleLabel}
+          </button>
+        );
+      })}
+    </div>
+  );
+};
 
 const ThemeToggle: React.FC<{
   language: Language;
   themePreference: ThemePreference;
   theme: Theme;
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
-}> = ({ language, themePreference, theme, setThemePreference }) => {
+  compactOnSelection?: boolean;
+}> = ({ language, themePreference, theme, setThemePreference, compactOnSelection = false }) => {
+  const [isExpanded, setIsExpanded] = React.useState(() => !compactOnSelection);
   const options = [
     {
       value: 'auto' as const,
@@ -2902,25 +2920,50 @@ const ThemeToggle: React.FC<{
         : `Automatically switches by local time, currently ${theme}`
       : undefined;
 
+  React.useEffect(() => {
+    setIsExpanded(!compactOnSelection);
+  }, [compactOnSelection, themePreference]);
+
+  const isCompact = compactOnSelection && !isExpanded;
+
   return (
     <div
-      className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white p-1"
+      className={`header-theme-toggle inline-flex items-center gap-2 rounded-full border border-stone-300 bg-white p-1${isCompact ? ' header-toggle-collapsed' : ''}`}
       title={autoStatus}
     >
       {options.map((option) => {
         const Icon = option.icon;
         const isActive = themePreference === option.value;
+        const isHidden = isCompact && !isActive;
         return (
           <button
             key={option.value}
             type="button"
-            onClick={() => setThemePreference(option.value)}
-            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
+            onClick={() => {
+              if (isCompact && isActive) {
+                setIsExpanded(true);
+                return;
+              }
+
+              setThemePreference(option.value);
+              if (compactOnSelection) setIsExpanded(false);
+            }}
+            className={`header-theme-option inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold ${
               isActive ? option.activeClass : 'text-stone-600 hover:text-stone-900'
-            }`}
+            }${isHidden ? ' header-toggle-option-hidden' : ''}`}
             aria-pressed={isActive}
+            aria-expanded={compactOnSelection && isActive ? isExpanded : undefined}
+            aria-hidden={isHidden || undefined}
+            tabIndex={isHidden ? -1 : undefined}
+            aria-label={
+              language === 'zh'
+                ? `${option.label}${isActive ? '，目前已选择' : ''}`
+                : `${option.label}${isActive ? ', currently selected' : ''}`
+            }
             title={
-              option.value === 'auto'
+              isCompact && isActive
+                ? language === 'zh' ? '显示主题选项' : 'Show theme options'
+                : option.value === 'auto'
                 ? autoStatus
                 : language === 'zh'
                   ? `切换到${option.label}`
@@ -2928,7 +2971,7 @@ const ThemeToggle: React.FC<{
             }
           >
             <Icon size={13} />
-            <span>{option.label}</span>
+            <span className="header-theme-label">{option.label}</span>
           </button>
         );
       })}
@@ -2942,15 +2985,18 @@ const HeaderControls: React.FC<{
   themePreference: ThemePreference;
   theme: Theme;
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
-}> = ({ language, setLanguage, themePreference, theme, setThemePreference }) => (
-  <div className="flex items-center gap-3">
+  compactThemeOnSelection?: boolean;
+  compactLanguageOnSelection?: boolean;
+}> = ({ language, setLanguage, themePreference, theme, setThemePreference, compactThemeOnSelection = false, compactLanguageOnSelection = false }) => (
+  <div className="header-controls flex items-center gap-3">
     <ThemeToggle
       language={language}
       themePreference={themePreference}
       theme={theme}
       setThemePreference={setThemePreference}
+      compactOnSelection={compactThemeOnSelection}
     />
-    <LanguageToggle language={language} setLanguage={setLanguage} />
+    <LanguageToggle language={language} setLanguage={setLanguage} compactOnSelection={compactLanguageOnSelection} />
   </div>
 );
 
@@ -3424,7 +3470,7 @@ const GuestTopicsPage: React.FC<{
                   ? '当前版本不连接数据库，所以不同访客之间不会互相看到回答。要做真正公开 topic market，下一步需要接 Firebase / Supabase / GitHub Issues / Formspree 这类持久化层。'
                   : 'This version does not connect to a database, so different visitors will not see each other’s answers. A public topic market needs Firebase, Supabase, GitHub Issues, or a form service next.'}
               </p>
-              <a href={projectsHref}>{isZh ? '看系统项目' : 'View systems'} <span aria-hidden>›</span></a>
+              <a href={homeHref}>{isZh ? '返回主页' : 'Back home'} <span aria-hidden>›</span></a>
             </div>
           </section>
         </section>
@@ -3451,7 +3497,7 @@ const ProjectCssGalleryPage: React.FC<{
           <div className="projects-topbar flex flex-wrap items-center justify-between gap-3">
             <a href={projectsHref} className="projects-back-link inline-flex items-center gap-2 text-sm font-medium">
               <ArrowLeft size={16} />
-              {isZh ? '返回 Projects' : 'Back to Projects'}
+              {isZh ? '返回主页' : 'Back home'}
             </a>
             <HeaderControls
               language={language}
@@ -3669,8 +3715,8 @@ const ProjectCssGalleryPage: React.FC<{
                 : 'Impact remains low: this page only reuses existing CSS components and does not change the original Home or `/projects` page structure. It is noindex / excluded from the sitemap by default, intended as a direct review page.'}
             </p>
             <div className="mt-6 flex flex-wrap gap-5">
-              <a href={projectsHref} className="projects-text-cta">
-                {isZh ? '回到 Projects' : 'Back to Projects'} <span aria-hidden>›</span>
+              <a href={homeHref} className="projects-text-cta">
+                {isZh ? '返回主页' : 'Back home'} <span aria-hidden>›</span>
               </a>
               <a href={homeHref} className="projects-text-cta projects-text-cta-muted">
                 {isZh ? '回到主页' : 'Back to Home'} <span aria-hidden>›</span>
@@ -3697,9 +3743,6 @@ const ProjectsFullPage: React.FC<{
   const etReportHubHref = joinBasePath(baseUrl, 'etreporthub');
   const etReportHubSalesHref = joinBasePath(baseUrl, 'etreporthub-sales');
   const pokerHref = joinBasePath(baseUrl, 'poker');
-  const crmHref = joinBasePath(baseUrl, 'crm');
-  const projectCssHref = joinBasePath(baseUrl, 'project-css');
-  const previousProjectsHref = joinBasePath(baseUrl, 'previous-projects');
 
   return (
     <div className="page-shell projects-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
@@ -3716,28 +3759,27 @@ const ProjectsFullPage: React.FC<{
               themePreference={themePreference}
               theme={theme}
               setThemePreference={setThemePreference}
+              compactThemeOnSelection
+              compactLanguageOnSelection
             />
           </div>
 
-          <header className="projects-hero py-16 text-center md:py-24">
-            <p className="projects-kicker mx-auto">{isZh ? 'Projects / AI Build Systems' : 'Projects / AI Build Systems'}</p>
-            <h1 className="projects-title mx-auto mt-5 font-display font-bold tracking-tight">
+          <header className="projects-hero py-16 md:py-24">
+            <p className="projects-kicker">{isZh ? 'Projects / AI Build Systems' : 'Projects / AI Build Systems'}</p>
+            <h1 className="projects-title mt-5 font-display font-bold tracking-tight">
               {isZh ? 'Different builds. Same stubborn habit.' : 'Different builds. Same stubborn habit.'}
             </h1>
-            <p className="projects-subtitle mx-auto mt-5">
+            <p className="projects-subtitle mt-5">
               {isZh
-                ? 'Jiju、Friday Poker Club、ETReportHub 和 CRM。项目不一样，底下其实每次都是同一招：把一团乱的输入，变成真的能用的系统。'
-                : 'Jiju, Friday Poker Club, ETReportHub, and CRM. Different projects, but underneath it’s the same move every time: take messy input and turn it into something you can actually use.'}
+                ? 'Jiju、Friday Poker Club 和 ETReportHub。项目不一样，底下其实每次都是同一招：把一团乱的输入，变成真的能用的 system。'
+                : 'Jiju, Friday Poker Club, and ETReportHub. Different projects, but underneath it’s the same move every time: take messy input and turn it into something you can actually use.'}
             </p>
-            <div className="mt-7 flex flex-wrap justify-center gap-5">
+            <div className="mt-7 flex flex-wrap gap-5">
               <a href="#project-stack" className="projects-text-cta">
                 {isZh ? '看项目合集' : 'View stack'} <span aria-hidden>›</span>
               </a>
               <a href="#etreporthub" className="projects-text-cta projects-text-cta-muted">
                 {isZh ? '看 ETReportHub' : 'View ETReportHub'} <span aria-hidden>›</span>
-              </a>
-              <a href={projectCssHref} className="projects-text-cta projects-text-cta-muted">
-                {isZh ? '看 CSS 图标' : 'View CSS icons'} <span aria-hidden>›</span>
               </a>
             </div>
           </header>
@@ -3750,8 +3792,8 @@ const ProjectsFullPage: React.FC<{
               </h2>
               <p>
                 {isZh
-                  ? '不想把作品平铺成一张清单，所以把几套系统放进同一个叙事里：发现、游戏房、报表、CRM。'
-                  : 'Instead of laying everything out flat as a list, this groups the different systems into one story: discovery, game rooms, reporting, and CRM.'}
+                  ? '不想把作品平铺成一张清单。这里留下的是三种一直重复出现的动作：发现、一起玩，以及把资料变成判断。'
+                  : 'This is not a flat portfolio list. These builds repeat three moves: discovery, shared play, and turning information into judgment.'}
               </p>
             </div>
             <div className="projects-bundle-grid">
@@ -3768,7 +3810,7 @@ const ProjectsFullPage: React.FC<{
             <div className="projects-section-head">
               <p className="projects-kicker">{isZh ? 'Project stack' : 'Project stack'}</p>
               <h2 className="projects-section-title font-display font-bold tracking-tight">
-                {isZh ? '四个慢慢长成系统的东西。' : 'Four things slowly turning into real systems.'}
+                {isZh ? '三个慢慢长成系统的东西。' : 'Three things slowly turning into real systems.'}
               </h2>
             </div>
             <div className="projects-grid mt-12">
@@ -3776,12 +3818,10 @@ const ProjectsFullPage: React.FC<{
                 const isJiju = project.href === 'jiju';
                 const isETReportHub = project.title === 'ETReportHub';
                 const isPoker = project.title === 'Friday Poker Club';
-                const isCrm = project.title === 'CRM Intelligence System';
                 const cardClassName = ['projects-card', isJiju ? 'projects-card-jiju' : ''].filter(Boolean).join(' ');
                 const titleClassName = [
                   'projects-card-title font-display font-bold tracking-tight',
                   isETReportHub ? 'projects-card-title-compact' : '',
-                  isCrm ? 'projects-card-title-long' : '',
                   isPoker ? 'projects-card-title-stacked' : '',
                 ].filter(Boolean).join(' ');
                 const projectCssArt = getProjectCssArtByProjectTitle(project.title);
@@ -3794,6 +3834,7 @@ const ProjectsFullPage: React.FC<{
                       <span className="projects-status">{project.status[language]}</span>
                     </div>
                     <div className="projects-card-identity mt-5">
+                      <div className="projects-card-icon-slot">{projectIcon}</div>
                       <div>
                         <div className="projects-card-title-row">
                           <h3 className={titleClassName}>
@@ -3809,7 +3850,6 @@ const ProjectsFullPage: React.FC<{
                         </div>
                         <p className="projects-card-role">{project.role[language]}</p>
                       </div>
-                      <div className="projects-card-icon-slot">{projectIcon}</div>
                     </div>
                     <p className="projects-card-summary">{project.summary[language]}</p>
                     <div className="projects-system-line">
@@ -3837,11 +3877,6 @@ const ProjectsFullPage: React.FC<{
                           {isZh ? '看售卖页' : 'View sales page'} <span aria-hidden>›</span>
                         </a>
                       )}
-                      {isCrm && (
-                        <a href={crmHref} className="projects-text-cta">
-                          {isZh ? '看这个疯东西' : 'See the wild one'} <span aria-hidden>›</span>
-                        </a>
-                      )}
                       {project.external && (
                         <a
                           href={project.external}
@@ -3867,8 +3902,8 @@ const ProjectsFullPage: React.FC<{
               </h2>
               <p className="projects-section-copy">
                 {isZh
-                  ? 'ETReportHub 的价值不是把数字排漂亮，而是把每天最容易出错的资料流变成可追踪、可解释、可导出、可继续接 CRM 的系统。'
-                  : 'ETReportHub is not about making numbers look pretty. It turns a fragile daily data flow into something traceable, explainable, exportable, and ready for CRM workflows.'}
+                  ? 'ETReportHub 的价值不是把数字排漂亮，而是把每天最容易出错的资料流变成可追踪、可解释、可导出、可以继续行动的系统。'
+                  : 'ETReportHub is not about making numbers look pretty. It turns a fragile daily data flow into something traceable, explainable, exportable, and ready for the next action.'}
               </p>
             </div>
             <div className="projects-readout-grid mt-12">
@@ -3877,13 +3912,13 @@ const ProjectsFullPage: React.FC<{
                     ['Product Promise', '少一点人工对表，多一点可判断的运营系统。'],
                     ['Data Trust', 'Transaction 与 Customer Excel 按规则导入、标准化，并保留可复盘的资料层。'],
                     ['Operating Views', 'Performance、Members、Channels、Trends 和品牌对比，把日报变成判断。'],
-                    ['Next Action', '会员分群、风险信号、留存区间和 CRM export，准备接后续跟进工作流。'],
+                    ['Next Action', '会员分群、风险信号与留存区间，把资料变成下一步可以执行的动作。'],
                   ]
                 : [
                     ['Product Promise', 'Less manual checking. More operating judgment.'],
                     ['Data Trust', 'Transaction and Customer Excel files are imported under rules, normalized, and kept reviewable.'],
                     ['Operating Views', 'Performance, Members, Channels, Trends, and brand comparison turn daily reporting into decisions.'],
-                    ['Next Action', 'Member segments, risk signals, retention buckets, and CRM export prepare the next follow-up workflow.'],
+                    ['Next Action', 'Member segments, risk signals, and retention buckets turn the data into a clear next move.'],
                   ]
               ).map(([label, copy]) => (
                 <article key={label} className="projects-readout-card">
@@ -3894,21 +3929,6 @@ const ProjectsFullPage: React.FC<{
             </div>
           </section>
 
-          <section className="projects-section py-16 md:py-24">
-            <div className="projects-final-panel">
-              <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
-                {isZh ? '旧的留在档案里，正在跑的系统放前台。' : 'Old stuff stays in the archive. The live systems get the front page.'}
-              </h2>
-              <p>
-                {isZh
-                  ? '以前那些 iGaming promotion、campaign、UI/UX 的活儿都放在 legacy archive。这个 `/projects` 页只放当前的 AI build systems 和产品。'
-                  : 'The older iGaming promotion, campaign, and UI/UX work lives in the legacy archive. This `/projects` page is just for the current AI build systems and products.'}
-              </p>
-              <a href={previousProjectsHref} className="projects-text-cta">
-                {isZh ? '看 legacy archive' : 'View legacy archive'} <span aria-hidden>›</span>
-              </a>
-            </div>
-          </section>
         </div>
       </main>
     </div>
@@ -3948,13 +3968,13 @@ const ETReportHubFullPage: React.FC<{
       <main className="px-5 py-8 md:px-8 md:py-10">
         <div className="mx-auto max-w-6xl">
           <div className="etreport-topbar flex flex-wrap items-center justify-between gap-3">
-            <a href={projectsHref} className="etreport-back-link inline-flex items-center gap-2 text-sm font-medium"><ArrowLeft size={16} />{isZh ? '返回 Projects' : 'Back to Projects'}</a>
+            <a href={projectsHref} className="etreport-back-link inline-flex items-center gap-2 text-sm font-medium"><ArrowLeft size={16} />{isZh ? '返回主页' : 'Back home'}</a>
             <HeaderControls language={language} setLanguage={setLanguage} themePreference={themePreference} theme={theme} setThemePreference={setThemePreference} />
           </div>
 
           <header className="etreport-store-hero">
             <div className="etreport-store-icon"><ProjectsEtReportCssIcon label="ETReportHub CSS app icon" /></div>
-            <div className="etreport-store-intro"><p className="etreport-kicker">{isZh ? '数据分析 · 商业工具' : 'Data Analytics · Business Tool'}</p><h1>ETReportHub</h1><p className="etreport-store-tagline">{isZh ? '把每日 Excel 变成清楚的运营判断。' : 'Turn daily Excel into clear operating decisions.'}</p><p className="etreport-store-byline">{isZh ? '由 Eden Tan 设计与构建' : 'Designed and built by Eden Tan'}</p><div className="etreport-store-actions"><a href="https://edent95.github.io/daily-report-dashboard/demo/" target="_blank" rel="noopener noreferrer" className="etreport-store-get">{isZh ? '查看 Demo' : 'View demo'}</a><a href={salesHref} className="etreport-text-cta">{isZh ? '查看方案' : 'View offer'} <span aria-hidden>›</span></a></div></div>
+            <div className="etreport-store-intro"><p className="etreport-kicker">{isZh ? '数据分析 · 商业工具' : 'Data Analytics · Business Tool'}</p><h1>ETReportHub</h1><p className="etreport-store-tagline">{isZh ? '把每日 Excel 变成清楚的运营判断。' : 'Turn daily Excel into clear operating decisions.'}</p><p className="etreport-store-byline">{isZh ? '由 Eden Tan 设计与构建' : 'Designed and built by Eden Tan'}</p><div className="etreport-store-actions"><a href="https://edent95.github.io/daily-report-dashboard/demo/" target="_blank" rel="noopener noreferrer" className="etreport-store-get">{isZh ? '查看 Demo' : 'View demo'}</a></div></div>
           </header>
 
           <div className="etreport-store-facts"><div><UserRound aria-hidden="true" /><span>{isZh ? '适合' : 'Built for'}</span><strong>{isZh ? '运营团队' : 'Operations teams'}</strong></div><div><Download aria-hidden="true" /><span>{isZh ? '输入' : 'Input'}</span><strong>Excel</strong></div><div><Database aria-hidden="true" /><span>{isZh ? '存储' : 'Storage'}</span><strong>Local SQLite</strong></div><div><TrendingUp aria-hidden="true" /><span>{isZh ? '输出' : 'Output'}</span><strong>Dashboard + CRM</strong></div></div>
@@ -4244,7 +4264,7 @@ const ETReportHubLegacyFullPage: React.FC<{
           <div className="etreport-topbar flex flex-wrap items-center justify-between gap-3">
             <a href={projectsHref} className="etreport-back-link inline-flex items-center gap-2 text-sm font-medium">
               <ArrowLeft size={16} />
-              {isZh ? '返回 Projects' : 'Back to Projects'}
+              {isZh ? '返回主页' : 'Back home'}
             </a>
             <HeaderControls
               language={language}
@@ -4622,7 +4642,7 @@ const ETReportHubLegacyFullPage: React.FC<{
                   {isZh ? '看售卖页' : 'View sales page'} <span aria-hidden>›</span>
                 </a>
                 <a href={projectsHref} className="etreport-text-cta">
-                  {isZh ? '回 Projects' : 'Back to Projects'} <span aria-hidden>›</span>
+                  {isZh ? '回主页' : 'Back home'} <span aria-hidden>›</span>
                 </a>
                 <a href={homeHref} className="etreport-text-cta etreport-text-cta-muted">
                   {isZh ? '回主页' : 'Back home'} <span aria-hidden>›</span>
@@ -4922,7 +4942,7 @@ const ETReportHubSalesPage: React.FC<{
                   {isZh ? '看产品页' : 'View product page'} <span aria-hidden>›</span>
                 </a>
                 <a href={projectsHref} className="etreport-text-cta etreport-text-cta-muted">
-                  {isZh ? '回 Projects' : 'Back to Projects'} <span aria-hidden>›</span>
+                  {isZh ? '回主页' : 'Back home'} <span aria-hidden>›</span>
                 </a>
                 <a href={homeHref} className="etreport-text-cta etreport-text-cta-muted">
                   {isZh ? '回主页' : 'Back home'} <span aria-hidden>›</span>
@@ -4939,16 +4959,14 @@ const ETReportHubSalesPage: React.FC<{
 const PokerFullPage: React.FC<{
   homeHref: string;
   projectsHref: string;
-  baseUrl: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
   themePreference: ThemePreference;
   theme: Theme;
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
-}> = ({ projectsHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
+}> = ({ projectsHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
   const playUrl = 'https://poker.edentan.site/';
-  const wikiHref = joinBasePath(baseUrl, 'wiki');
   const highlights = isZh
     ? [['不用等到所有人都有空', '开一个房间，把链接丢进群里。有人晚到、有人重连，牌桌都应该接得住，而不是整局重来。'], ['像熟人局，不像线上赌场', '房主开桌、朋友买入、桌边聊天。界面保留真正需要的规则，但不加入催促下注或制造焦虑的机制。'], ['每个动作都要让人放心', '下注有没有成功、现在轮到谁、房间在等什么，都用清楚的状态回应。少一次误会，牌局就顺一点。'], ['记住人，不只记住牌', '我们不需要另一份战绩炫耀榜。真正值得保存的是谁说了什么、哪一刻全桌笑了，以及下一次为什么还想再来。']]
     : [['Do not wait for everyone to be free', 'Open a room and drop the link in the group. Late arrivals and reconnects should be absorbed by the table—not force the whole night to restart.'], ['Feel like a home game, not a casino', 'The host starts, friends buy in, and the table keeps the conversation alive. It has the rules a real game needs without pressure mechanics designed to keep people betting.'], ['Every action should feel certain', 'A bet should confirm, the turn should be obvious, and the room should say what it is waiting for. Fewer misunderstandings make a better night.'], ['Remember the people, not only the cards', 'We do not need another leaderboard to flex. What deserves to stay is who said what, when the whole table laughed, and why everyone wants another game.']];
@@ -4959,9 +4977,9 @@ const PokerFullPage: React.FC<{
   return (
     <div className="page-shell etreport-page etreport-product-page poker-store-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
       <main className="px-5 py-8 md:px-8 md:py-10"><div className="mx-auto max-w-6xl">
-        <div className="etreport-topbar flex flex-wrap items-center justify-between gap-3"><a href={projectsHref} className="etreport-back-link inline-flex items-center gap-2 text-sm font-medium"><ArrowLeft size={16} />{isZh ? '返回 Projects' : 'Back to Projects'}</a><HeaderControls language={language} setLanguage={setLanguage} themePreference={themePreference} theme={theme} setThemePreference={setThemePreference} /></div>
+        <div className="etreport-topbar flex flex-wrap items-center justify-between gap-3"><a href={projectsHref} className="etreport-back-link inline-flex items-center gap-2 text-sm font-medium"><ArrowLeft size={16} />{isZh ? '返回主页' : 'Back home'}</a><HeaderControls language={language} setLanguage={setLanguage} themePreference={themePreference} theme={theme} setThemePreference={setThemePreference} /></div>
 
-        <header className="etreport-store-hero"><div className="etreport-store-icon"><ProjectsPokerCssIcon label="Friday Poker Club CSS app icon" /></div><div className="etreport-store-intro"><p className="etreport-kicker">{isZh ? '多人游戏 · 私人牌局' : 'Multiplayer Game · Private Table'}</p><h1>Friday Poker Club</h1><p className="etreport-store-tagline">{isZh ? '不用约地点。把那群人叫回来就好。' : 'No place to book. Just bring the crew back.'}</p><p className="etreport-store-byline">{isZh ? '由 Eden Tan 为自己的朋友局设计与构建' : 'Designed and built by Eden Tan for his own Friday crew.'}</p><div className="etreport-store-actions"><a href={playUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get">{isZh ? '开一局' : 'Open a table'}</a><a href={wikiHref} className="etreport-text-cta">{isZh ? '查看构建笔记' : 'View build notes'} <span aria-hidden>›</span></a></div></div></header>
+        <header className="etreport-store-hero"><div className="etreport-store-icon"><ProjectsPokerCssIcon label="Friday Poker Club CSS app icon" /></div><div className="etreport-store-intro"><p className="etreport-kicker">{isZh ? '多人游戏 · 私人牌局' : 'Multiplayer Game · Private Table'}</p><h1>Friday Poker Club</h1><p className="etreport-store-tagline">{isZh ? '不用约地点。把那群人叫回来就好。' : 'No place to book. Just bring the crew back.'}</p><p className="etreport-store-byline">{isZh ? '由 Eden Tan 为自己的朋友局设计与构建' : 'Designed and built by Eden Tan for his own Friday crew.'}</p><div className="etreport-store-actions"><a href={playUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get">{isZh ? '开一局' : 'Open a table'}</a></div></div></header>
 
         <div className="etreport-store-facts"><div><UserRound aria-hidden="true" /><span>{isZh ? '模式' : 'Mode'}</span><strong>{isZh ? '私人多人局' : 'Private multiplayer'}</strong></div><div><Layers aria-hidden="true" /><span>{isZh ? '玩法' : 'Game'}</span><strong>Texas Hold’em</strong></div><div><GitBranch aria-hidden="true" /><span>{isZh ? '同步' : 'Realtime'}</span><strong>Firebase</strong></div><div><Play aria-hidden="true" /><span>{isZh ? '平台' : 'Platform'}</span><strong>{isZh ? '浏览器' : 'Web browser'}</strong></div></div>
 
@@ -4977,7 +4995,7 @@ const PokerFullPage: React.FC<{
 
         <section className="etreport-app-details"><h2><Layers aria-hidden="true" />{isZh ? '产品资料' : 'Information'}</h2><dl><div><dt>{isZh ? '类别' : 'Category'}</dt><dd>{isZh ? '私人多人游戏' : 'Private multiplayer game'}</dd></div><div><dt>{isZh ? '游戏' : 'Game'}</dt><dd>Texas Hold’em · 8/9 mini game</dd></div><div><dt>{isZh ? '主要模块' : 'Modules'}</dt><dd>Rooms · Invites · Buy-ins · Realtime table · Optional voice</dd></div><div><dt>{isZh ? '平台' : 'Platform'}</dt><dd>{isZh ? '响应式浏览器牌桌' : 'Responsive browser table'}</dd></div><div><dt>{isZh ? '开发者' : 'Developer'}</dt><dd>Eden Tan</dd></div></dl></section>
 
-        <section className="etreport-app-final"><ProjectsPokerCssIcon label="Friday Poker Club CSS app icon" /><div><h2>{isZh ? '把链接发回那个群。看看今晚谁会坐下。' : 'Send the link back to the group. See who takes a seat tonight.'}</h2><p>{isZh ? '不用准备场地，也不用把周五变成一场正式活动。先开一张桌，故事自然会来。' : 'No venue to prepare and no need to turn Friday into an event. Open the table first. The story can arrive on its own.'}</p><div className="etreport-app-final-actions"><a href={playUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get">{isZh ? '开一局' : 'Open a table'}</a><a href={wikiHref} className="etreport-text-cta">{isZh ? '查看构建笔记' : 'View build notes'} <span aria-hidden>›</span></a></div></div></section>
+        <section className="etreport-app-final"><ProjectsPokerCssIcon label="Friday Poker Club CSS app icon" /><div><h2>{isZh ? '把链接发回那个群。看看今晚谁会坐下。' : 'Send the link back to the group. See who takes a seat tonight.'}</h2><p>{isZh ? '不用准备场地，也不用把周五变成一场正式活动。先开一张桌，故事自然会来。' : 'No venue to prepare and no need to turn Friday into an event. Open the table first. The story can arrive on its own.'}</p><div className="etreport-app-final-actions"><a href={playUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get">{isZh ? '开一局' : 'Open a table'}</a></div></div></section>
       </div></main>
     </div>
   );
@@ -5004,7 +5022,7 @@ const PokerLegacyFullPage: React.FC<{
           <div className="etreport-topbar flex flex-wrap items-center justify-between gap-3">
             <a href={projectsHref} className="etreport-back-link inline-flex items-center gap-2 text-sm font-medium">
               <ArrowLeft size={16} />
-              {isZh ? '返回 Projects' : 'Back to Projects'}
+              {isZh ? '返回主页' : 'Back home'}
             </a>
             <HeaderControls
               language={language}
@@ -5172,7 +5190,7 @@ const PokerLegacyFullPage: React.FC<{
                   {isZh ? '打开 poker.edentan.site' : 'Open poker.edentan.site'} <ExternalLink size={15} />
                 </a>
                 <a href={projectsHref} className="etreport-text-cta etreport-text-cta-muted">
-                  {isZh ? '回 Projects' : 'Back to Projects'} <span aria-hidden>›</span>
+                  {isZh ? '回主页' : 'Back home'} <span aria-hidden>›</span>
                 </a>
                 <a href={homeHref} className="etreport-text-cta etreport-text-cta-muted">
                   {isZh ? '回主页' : 'Back home'} <span aria-hidden>›</span>
@@ -5383,6 +5401,8 @@ const WikiPage: React.FC<{
 }> = ({ entry, homeHref, projectsHref, pokerHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
   const wikiHref = joinBasePath(baseUrl, 'wiki');
+  const notesHref = joinBasePath(baseUrl, 'notes');
+  const isPublishedNote = Boolean(entry && publishedNotes.some((note) => note.href === `wiki/${entry.slug}`));
   const [skillDrafts, setSkillDrafts] = React.useState<SkillDraft[]>(() => readStoredSkillDrafts());
   const latestDraft = entry ? skillDrafts.find((draft) => draft.sourceSlug === entry.slug) : undefined;
   const isSkillsIndex = !entry || entry.slug === 'skills';
@@ -5401,6 +5421,67 @@ const WikiPage: React.FC<{
     setSkillDrafts(nextDrafts);
     writeStoredSkillDrafts(nextDrafts);
   };
+
+  if (entry && isPublishedNote) {
+    return (
+      <div className={`page-shell notes-article-page ${getWikiToneClassName(entry.slug)} min-h-screen`}>
+        <main className="notes-article-main">
+          <div className="notes-article-island">
+            <div className="notes-topbar">
+              <a href={notesHref} className="notes-back-link">
+                <ArrowLeft size={17} />
+                {isZh ? '返回 Notes' : 'Back to Notes'}
+              </a>
+              <HeaderControls
+                language={language}
+                setLanguage={setLanguage}
+                themePreference={themePreference}
+                theme={theme}
+                setThemePreference={setThemePreference}
+                compactThemeOnSelection
+                compactLanguageOnSelection
+              />
+            </div>
+
+            <header className="notes-article-hero">
+              <div className="notes-article-mark">
+                <WikiEntryVisual entry={entry} language={language} variant="note" />
+              </div>
+              <p className="notes-eyebrow">{entry.eyebrow[language]}</p>
+              <h1>{entry.title[language]}</h1>
+              <p className="notes-article-deck">{entry.summary[language]}</p>
+            </header>
+
+            <article className="notes-article-body">
+              <blockquote className="notes-article-thesis">
+                <span>{isZh ? 'Core thesis' : 'Core thesis'}</span>
+                <p>{entry.thesis[language]}</p>
+              </blockquote>
+
+              <div className="notes-article-sections">
+                {entry.sections.map((section, index) => (
+                  <section key={section.title.en} className="notes-article-section">
+                    <div className="notes-article-section-number">{String(index + 1).padStart(2, '0')}</div>
+                    <div>
+                      <h2>{section.title[language]}</h2>
+                      <div className="notes-article-points">
+                        {section.points[language].map((point) => <p key={point}>{point}</p>)}
+                      </div>
+                    </div>
+                  </section>
+                ))}
+              </div>
+            </article>
+
+            <footer className="notes-article-footer">
+              <p>{isZh ? '继续阅读 Eden 的文章与 build notes' : "Keep reading Eden's essays and build notes"}</p>
+              <a href={notesHref}>{isZh ? '回到全部 Notes' : 'View all Notes'} <span aria-hidden>→</span></a>
+            </footer>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="page-shell etreport-page poker-page wiki-page poker-wiki-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
@@ -5439,7 +5520,7 @@ const WikiPage: React.FC<{
                 {isZh ? '知识库总览' : 'Knowledge index'} <span aria-hidden>›</span>
               </a>
               <a href={projectsHref} className="etreport-text-cta etreport-text-cta-muted">
-                {isZh ? '回 Projects' : 'Back to Projects'} <span aria-hidden>›</span>
+                {isZh ? '回主页' : 'Back home'} <span aria-hidden>›</span>
               </a>
               <a href={homeHref} className="etreport-text-cta etreport-text-cta-muted">
                 {isZh ? '回主页' : 'Back home'} <span aria-hidden>›</span>
@@ -5757,69 +5838,64 @@ const crmStories = [
   },
 ] as const;
 
-type ConwayHexCell = {
-  hexagram: number;
-  changedMask: number;
-  energy: number;
+const CONWAY_LIFE_COLUMNS = 36;
+const CONWAY_LIFE_ROWS = 24;
+const CONWAY_LIFE_CELL_COUNT = CONWAY_LIFE_COLUMNS * CONWAY_LIFE_ROWS;
+
+type ConwayLifePattern = 'glider' | 'r-pentomino' | 'pulsar';
+
+const CONWAY_LIFE_PATTERNS: Record<ConwayLifePattern, readonly [number, number][]> = {
+  glider: [[1, 0], [2, 1], [0, 2], [1, 2], [2, 2]],
+  'r-pentomino': [[1, 0], [2, 0], [0, 1], [1, 1], [1, 2]],
+  pulsar: [
+    [2, 0], [3, 0], [4, 0], [8, 0], [9, 0], [10, 0],
+    [0, 2], [5, 2], [7, 2], [12, 2],
+    [0, 3], [5, 3], [7, 3], [12, 3],
+    [0, 4], [5, 4], [7, 4], [12, 4],
+    [2, 5], [3, 5], [4, 5], [8, 5], [9, 5], [10, 5],
+    [2, 7], [3, 7], [4, 7], [8, 7], [9, 7], [10, 7],
+    [0, 8], [5, 8], [7, 8], [12, 8],
+    [0, 9], [5, 9], [7, 9], [12, 9],
+    [0, 10], [5, 10], [7, 10], [12, 10],
+    [2, 12], [3, 12], [4, 12], [8, 12], [9, 12], [10, 12],
+  ],
 };
 
-const CONWAY_GRID_SIZE = 8;
-const CONWAY_CELL_COUNT = CONWAY_GRID_SIZE * CONWAY_GRID_SIZE;
+const createConwayLifeBoard = (pattern: ConwayLifePattern = 'pulsar'): boolean[] => {
+  const board = Array.from({ length: CONWAY_LIFE_CELL_COUNT }, () => false);
+  const coordinates = CONWAY_LIFE_PATTERNS[pattern];
+  const patternWidth = Math.max(...coordinates.map(([x]) => x)) + 1;
+  const patternHeight = Math.max(...coordinates.map(([, y]) => y)) + 1;
+  const startX = Math.floor((CONWAY_LIFE_COLUMNS - patternWidth) / 2);
+  const startY = Math.floor((CONWAY_LIFE_ROWS - patternHeight) / 2);
 
-const conwayNeighborMap = Array.from({ length: CONWAY_CELL_COUNT }, (_, index) => {
-  const row = Math.floor(index / CONWAY_GRID_SIZE);
-  const col = index % CONWAY_GRID_SIZE;
-  const neighbors: number[] = [];
-
-  for (let rowOffset = -1; rowOffset <= 1; rowOffset += 1) {
-    for (let colOffset = -1; colOffset <= 1; colOffset += 1) {
-      if (rowOffset === 0 && colOffset === 0) continue;
-      const nextRow = (row + rowOffset + CONWAY_GRID_SIZE) % CONWAY_GRID_SIZE;
-      const nextCol = (col + colOffset + CONWAY_GRID_SIZE) % CONWAY_GRID_SIZE;
-      neighbors.push(nextRow * CONWAY_GRID_SIZE + nextCol);
-    }
-  }
-
-  return neighbors;
-});
-
-const createConwayInitialCells = (): ConwayHexCell[] =>
-  Array.from({ length: CONWAY_CELL_COUNT }, (_, index) => {
-    const seed = ((index + 1) * 37 + (index % CONWAY_GRID_SIZE) * 11 + Math.floor(index / CONWAY_GRID_SIZE) * 17) & 63;
-    return {
-      hexagram: seed,
-      changedMask: 0,
-      energy: 0,
-    };
+  coordinates.forEach(([x, y]) => {
+    board[(startY + y) * CONWAY_LIFE_COLUMNS + startX + x] = true;
   });
 
-const evolveConwayHexCells = (cells: ConwayHexCell[]): ConwayHexCell[] =>
-  cells.map((cell, index) => {
-    let nextHexagram = 0;
-    let changedMask = 0;
-    let energy = 0;
+  return board;
+};
 
-    for (let lineIndex = 0; lineIndex < 6; lineIndex += 1) {
-      const lineMask = 1 << lineIndex;
-      const isYang = (cell.hexagram & lineMask) !== 0;
-      const neighborYangCount = conwayNeighborMap[index].reduce(
-        (count, neighborIndex) => count + ((cells[neighborIndex].hexagram & lineMask) !== 0 ? 1 : 0),
-        0,
-      );
-      const becomesYang = isYang
-        ? neighborYangCount === 2 || neighborYangCount === 3 || neighborYangCount === 5
-        : neighborYangCount === 3 || neighborYangCount === 6;
+const createRandomConwayLifeBoard = (): boolean[] =>
+  Array.from({ length: CONWAY_LIFE_CELL_COUNT }, () => Math.random() < 0.22);
 
-      if (becomesYang) nextHexagram |= lineMask;
-      if (becomesYang !== isYang) changedMask |= lineMask;
-      energy += neighborYangCount;
+const evolveConwayLifeBoard = (board: readonly boolean[]): boolean[] =>
+  board.map((isAlive, index) => {
+    const row = Math.floor(index / CONWAY_LIFE_COLUMNS);
+    const column = index % CONWAY_LIFE_COLUMNS;
+    let neighbors = 0;
+
+    for (let rowOffset = -1; rowOffset <= 1; rowOffset += 1) {
+      for (let columnOffset = -1; columnOffset <= 1; columnOffset += 1) {
+        if (rowOffset === 0 && columnOffset === 0) continue;
+        const nextRow = row + rowOffset;
+        const nextColumn = column + columnOffset;
+        if (nextRow < 0 || nextRow >= CONWAY_LIFE_ROWS || nextColumn < 0 || nextColumn >= CONWAY_LIFE_COLUMNS) continue;
+        if (board[nextRow * CONWAY_LIFE_COLUMNS + nextColumn]) neighbors += 1;
+      }
     }
 
-    return {
-      hexagram: nextHexagram,
-      changedMask,
-      energy,
-    };
+    return isAlive ? neighbors === 2 || neighbors === 3 : neighbors === 3;
   });
 
 const ELEMENTARY_RULE_COUNT = 256;
@@ -5831,47 +5907,109 @@ const FEATURED_ELEMENTARY_RULES = [30, 90, 110, 184] as const;
 const ELEMENTARY_NEIGHBORHOODS = ['111', '110', '101', '100', '011', '010', '001', '000'] as const;
 const I_CHING_TRIGRAMS = [
   { bits: '111', name: { en: 'Qian', zh: '乾' }, symbol: '☰', nature: { en: 'Heaven', zh: '天' } },
-  { bits: '011', name: { en: 'Dui', zh: '兑' }, symbol: '☱', nature: { en: 'Lake', zh: '泽' } },
+  { bits: '110', name: { en: 'Dui', zh: '兑' }, symbol: '☱', nature: { en: 'Lake', zh: '泽' } },
   { bits: '101', name: { en: 'Li', zh: '离' }, symbol: '☲', nature: { en: 'Fire', zh: '火' } },
-  { bits: '001', name: { en: 'Zhen', zh: '震' }, symbol: '☳', nature: { en: 'Thunder', zh: '雷' } },
-  { bits: '110', name: { en: 'Xun', zh: '巽' }, symbol: '☴', nature: { en: 'Wind', zh: '风' } },
+  { bits: '100', name: { en: 'Zhen', zh: '震' }, symbol: '☳', nature: { en: 'Thunder', zh: '雷' } },
+  { bits: '011', name: { en: 'Xun', zh: '巽' }, symbol: '☴', nature: { en: 'Wind', zh: '风' } },
   { bits: '010', name: { en: 'Kan', zh: '坎' }, symbol: '☵', nature: { en: 'Water', zh: '水' } },
-  { bits: '100', name: { en: 'Gen', zh: '艮' }, symbol: '☶', nature: { en: 'Mountain', zh: '山' } },
+  { bits: '001', name: { en: 'Gen', zh: '艮' }, symbol: '☶', nature: { en: 'Mountain', zh: '山' } },
   { bits: '000', name: { en: 'Kun', zh: '坤' }, symbol: '☷', nature: { en: 'Earth', zh: '地' } },
 ] as const;
 
 const getIChingTrigram = (bits: string) => I_CHING_TRIGRAMS.find((item) => item.bits === bits) ?? I_CHING_TRIGRAMS[0];
 
-const I_CHING_RULE_PHASES = [
-  {
-    bits: '00',
-    name: { en: 'Still', zh: '静卦' },
-    note: { en: 'base hexagram', zh: '基础卦象' },
-    changingLines: [] as number[],
-  },
-  {
-    bits: '01',
-    name: { en: 'Lower moving', zh: '下卦动' },
-    note: { en: 'lines 1-3 are in motion', zh: '一至三爻进入变化' },
-    changingLines: [1, 2, 3],
-  },
-  {
-    bits: '10',
-    name: { en: 'Upper moving', zh: '上卦动' },
-    note: { en: 'lines 4-6 are in motion', zh: '四至六爻进入变化' },
-    changingLines: [4, 5, 6],
-  },
-  {
-    bits: '11',
-    name: { en: 'Full change', zh: '通卦动' },
-    note: { en: 'all six lines are in motion', zh: '六爻全部进入变化' },
-    changingLines: [1, 2, 3, 4, 5, 6],
-  },
+const I_CHING_HEXAGRAMS = [
+  { number: 1, bits: '111111', name: { en: 'Qian', zh: '乾' } },
+  { number: 2, bits: '000000', name: { en: 'Kun', zh: '坤' } },
+  { number: 3, bits: '100010', name: { en: 'Zhun', zh: '屯' } },
+  { number: 4, bits: '010001', name: { en: 'Meng', zh: '蒙' } },
+  { number: 5, bits: '111010', name: { en: 'Xu', zh: '需' } },
+  { number: 6, bits: '010111', name: { en: 'Song', zh: '讼' } },
+  { number: 7, bits: '010000', name: { en: 'Shi', zh: '师' } },
+  { number: 8, bits: '000010', name: { en: 'Bi', zh: '比' } },
+  { number: 9, bits: '111011', name: { en: 'Xiao Xu', zh: '小畜' } },
+  { number: 10, bits: '110111', name: { en: 'Lu', zh: '履' } },
+  { number: 11, bits: '111000', name: { en: 'Tai', zh: '泰' } },
+  { number: 12, bits: '000111', name: { en: 'Pi', zh: '否' } },
+  { number: 13, bits: '101111', name: { en: 'Tong Ren', zh: '同人' } },
+  { number: 14, bits: '111101', name: { en: 'Da You', zh: '大有' } },
+  { number: 15, bits: '001000', name: { en: 'Qian', zh: '谦' } },
+  { number: 16, bits: '000100', name: { en: 'Yu', zh: '豫' } },
+  { number: 17, bits: '100110', name: { en: 'Sui', zh: '随' } },
+  { number: 18, bits: '011001', name: { en: 'Gu', zh: '蛊' } },
+  { number: 19, bits: '110000', name: { en: 'Lin', zh: '临' } },
+  { number: 20, bits: '000011', name: { en: 'Guan', zh: '观' } },
+  { number: 21, bits: '100101', name: { en: 'Shi He', zh: '噬嗑' } },
+  { number: 22, bits: '101001', name: { en: 'Bi', zh: '贲' } },
+  { number: 23, bits: '000001', name: { en: 'Bo', zh: '剥' } },
+  { number: 24, bits: '100000', name: { en: 'Fu', zh: '复' } },
+  { number: 25, bits: '100111', name: { en: 'Wu Wang', zh: '无妄' } },
+  { number: 26, bits: '111001', name: { en: 'Da Xu', zh: '大畜' } },
+  { number: 27, bits: '100001', name: { en: 'Yi', zh: '颐' } },
+  { number: 28, bits: '011110', name: { en: 'Da Guo', zh: '大过' } },
+  { number: 29, bits: '010010', name: { en: 'Kan', zh: '坎' } },
+  { number: 30, bits: '101101', name: { en: 'Li', zh: '离' } },
+  { number: 31, bits: '001110', name: { en: 'Xian', zh: '咸' } },
+  { number: 32, bits: '011100', name: { en: 'Heng', zh: '恒' } },
+  { number: 33, bits: '001111', name: { en: 'Dun', zh: '遁' } },
+  { number: 34, bits: '111100', name: { en: 'Da Zhuang', zh: '大壮' } },
+  { number: 35, bits: '000101', name: { en: 'Jin', zh: '晋' } },
+  { number: 36, bits: '101000', name: { en: 'Ming Yi', zh: '明夷' } },
+  { number: 37, bits: '101011', name: { en: 'Jia Ren', zh: '家人' } },
+  { number: 38, bits: '110101', name: { en: 'Kui', zh: '睽' } },
+  { number: 39, bits: '001010', name: { en: 'Jian', zh: '蹇' } },
+  { number: 40, bits: '010100', name: { en: 'Xie', zh: '解' } },
+  { number: 41, bits: '110001', name: { en: 'Sun', zh: '损' } },
+  { number: 42, bits: '100011', name: { en: 'Yi', zh: '益' } },
+  { number: 43, bits: '111110', name: { en: 'Guai', zh: '夬' } },
+  { number: 44, bits: '011111', name: { en: 'Gou', zh: '姤' } },
+  { number: 45, bits: '000110', name: { en: 'Cui', zh: '萃' } },
+  { number: 46, bits: '011000', name: { en: 'Sheng', zh: '升' } },
+  { number: 47, bits: '010110', name: { en: 'Kun', zh: '困' } },
+  { number: 48, bits: '011010', name: { en: 'Jing', zh: '井' } },
+  { number: 49, bits: '101110', name: { en: 'Ge', zh: '革' } },
+  { number: 50, bits: '011101', name: { en: 'Ding', zh: '鼎' } },
+  { number: 51, bits: '100100', name: { en: 'Zhen', zh: '震' } },
+  { number: 52, bits: '001001', name: { en: 'Gen', zh: '艮' } },
+  { number: 53, bits: '001011', name: { en: 'Jian', zh: '渐' } },
+  { number: 54, bits: '110100', name: { en: 'Gui Mei', zh: '归妹' } },
+  { number: 55, bits: '101100', name: { en: 'Feng', zh: '丰' } },
+  { number: 56, bits: '001101', name: { en: 'Lu', zh: '旅' } },
+  { number: 57, bits: '011011', name: { en: 'Xun', zh: '巽' } },
+  { number: 58, bits: '110110', name: { en: 'Dui', zh: '兑' } },
+  { number: 59, bits: '010011', name: { en: 'Huan', zh: '涣' } },
+  { number: 60, bits: '110010', name: { en: 'Jie', zh: '节' } },
+  { number: 61, bits: '110011', name: { en: 'Zhong Fu', zh: '中孚' } },
+  { number: 62, bits: '001100', name: { en: 'Xiao Guo', zh: '小过' } },
+  { number: 63, bits: '101010', name: { en: 'Ji Ji', zh: '既济' } },
+  { number: 64, bits: '010101', name: { en: 'Wei Ji', zh: '未济' } },
 ] as const;
 
-const getRuleHexagramBits = (rule: number) => (rule & 63).toString(2).padStart(6, '0');
+const I_CHING_RULE_YAO_POSITIONS = [1, 4, 2, 8, 5, 7] as const;
+const I_CHING_RULE_VARIANT_POSITIONS = [3, 6] as const;
 
-const getRuleIChingPhase = (rule: number) => I_CHING_RULE_PHASES[rule >> 6] ?? I_CHING_RULE_PHASES[0];
+const createIChingRuleVariant = (hexagramBits: string, variantBits: string) => {
+  const ruleBits = Array.from({ length: 8 }, () => '0');
+  I_CHING_RULE_YAO_POSITIONS.forEach((position, index) => {
+    ruleBits[position - 1] = hexagramBits[index] ?? '0';
+  });
+  I_CHING_RULE_VARIANT_POSITIONS.forEach((position, index) => {
+    ruleBits[position - 1] = variantBits[index] ?? '0';
+  });
+  return Number.parseInt(ruleBits.join(''), 2);
+};
+
+const getRuleIChingMapping = (rule: number) => {
+  const ruleBits = rule.toString(2).padStart(8, '0');
+  const hexagramBits = I_CHING_RULE_YAO_POSITIONS.map((position) => ruleBits[position - 1]).join('');
+  const variantBits = I_CHING_RULE_VARIANT_POSITIONS.map((position) => ruleBits[position - 1]).join('');
+  const hexagram = I_CHING_HEXAGRAMS.find((item) => item.bits === hexagramBits) ?? I_CHING_HEXAGRAMS[0];
+  const groupRules = ['00', '01', '10', '11']
+    .map((bits) => createIChingRuleVariant(hexagramBits, bits))
+    .sort((first, second) => first - second);
+
+  return { ruleBits, hexagramBits, variantBits, hexagram, groupRules };
+};
 
 const createElementaryRuleCells = (rule: number, width: number, height: number, offset = 0): boolean[] => {
   let row = Array.from({ length: width }, (_, index) => index === Math.floor(width / 2));
@@ -5914,40 +6052,6 @@ const createElementaryRuleSvgDataUri = (rule: number, width: number, height: num
   return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
 };
 
-const ConwayHexagramGlyph: React.FC<{ cell: ConwayHexCell; index: number }> = ({ cell, index }) => (
-  <article
-    className="conway-cell"
-    style={
-      {
-        '--energy': cell.energy,
-        '--order': index,
-      } as React.CSSProperties
-    }
-    aria-label={`Hexagram cell ${index + 1}, state ${cell.hexagram + 1}`}
-  >
-    <div className="conway-cell-meta">
-      <span>{String(index + 1).padStart(2, '0')}</span>
-      <span>{String(cell.hexagram + 1).padStart(2, '0')}</span>
-    </div>
-    <div className="conway-hexagram" aria-hidden>
-      {Array.from({ length: 6 }, (_, visualIndex) => {
-        const lineIndex = 5 - visualIndex;
-        const lineMask = 1 << lineIndex;
-        const isYang = (cell.hexagram & lineMask) !== 0;
-        const changed = (cell.changedMask & lineMask) !== 0;
-        return (
-          <span
-            key={lineIndex}
-            className={`conway-line ${isYang ? 'conway-line-yang' : 'conway-line-yin'} ${
-              changed ? 'conway-line-changing' : ''
-            }`}
-          />
-        );
-      })}
-    </div>
-  </article>
-);
-
 const ElementaryRulePattern: React.FC<{
   rule: number;
   width: number;
@@ -5978,75 +6082,88 @@ const ElementaryRuleThumb: React.FC<{
   rule: number;
   selected: boolean;
   onSelect: (rule: number) => void;
-}> = ({ rule, selected, onSelect }) => (
+  ariaLabel?: string;
+}> = ({ rule, selected, onSelect, ariaLabel }) => (
   <button
     type="button"
     className={`elementary-rule-thumb ${selected ? 'is-selected' : ''}`}
     onClick={() => onSelect(rule)}
     aria-pressed={selected}
-    aria-label={`Rule ${rule}`}
+    aria-label={ariaLabel ?? `Rule ${rule}`}
   >
     <ElementaryRulePattern rule={rule} width={ELEMENTARY_THUMB_WIDTH} height={ELEMENTARY_THUMB_HEIGHT} className="elementary-rule-thumb-grid" />
     <span>{String(rule).padStart(3, '0')}</span>
   </button>
 );
 
-const IChingRuleReadout: React.FC<{ rule: number; binary: string; language: Language }> = ({ rule, binary, language }) => {
-  const hexagramBits = getRuleHexagramBits(rule);
-  const phase = getRuleIChingPhase(rule);
-  const upperBits = hexagramBits.slice(0, 3);
-  const lowerBits = hexagramBits.slice(3, 6);
+const IChingRuleReadout: React.FC<{ rule: number; language: Language }> = ({ rule, language }) => {
+  const { hexagramBits, variantBits, hexagram, groupRules } = getRuleIChingMapping(rule);
+  const lowerBits = hexagramBits.slice(0, 3);
+  const upperBits = hexagramBits.slice(3, 6);
   const lower = getIChingTrigram(lowerBits);
   const upper = getIChingTrigram(upperBits);
   const yangCount = [...hexagramBits].filter((bit) => bit === '1').length;
-  const phaseBits = binary.slice(0, 2);
-  const changingLines: readonly number[] = phase.changingLines;
+  const visualLines = [...hexagramBits].reverse();
+  const variantNumber = Number.parseInt(variantBits, 2) + 1;
   const isZh = language === 'zh';
 
   return (
     <div className="iching-rule-readout">
       <div className="iching-rule-head">
-        <p className="elementary-rule-label">{isZh ? '易经读数' : 'I Ching layer'}</p>
+        <div>
+          <p className="elementary-rule-label">{isZh ? '实验性易经映射' : 'Experimental I Ching mapping'}</p>
+          <p className="iching-hexagram-name">
+            {String(hexagram.number).padStart(2, '0')} · {hexagram.name[language]}
+          </p>
+        </div>
         <strong>{upper.symbol}{lower.symbol}</strong>
       </div>
       <div className="iching-hexagram-lines" aria-label={isZh ? '六爻卦象' : 'Six-line hexagram'}>
-        {[...hexagramBits].map((bit, index) => {
-          const lineNumber = 6 - index;
-          const isChanging = changingLines.includes(lineNumber);
-          return (
-            <span
-              key={`${bit}-${index}`}
-              className={`${bit === '1' ? 'is-yang' : 'is-yin'} ${isChanging ? 'is-changing' : ''}`}
-            />
-          );
-        })}
+        {visualLines.map((bit, index) => (
+          <span key={`${bit}-${index}`} className={bit === '1' ? 'is-yang' : 'is-yin'} />
+        ))}
       </div>
       <div className="iching-trigram-grid">
         <div>
-          <span>{isZh ? '上卦' : 'Upper'}</span>
-          <b>{upper.name[language]} / {upper.nature[language]}</b>
+          <span>{isZh ? '下卦 · 初爻向上' : 'Lower · bottom-up'}</span>
+          <b>{lower.name[language]} / {lower.nature[language]} · {lowerBits}</b>
         </div>
         <div>
-          <span>{isZh ? '下卦' : 'Lower'}</span>
-          <b>{lower.name[language]} / {lower.nature[language]}</b>
+          <span>{isZh ? '上卦 · 四爻向上' : 'Upper · bottom-up'}</span>
+          <b>{upper.name[language]} / {upper.nature[language]} · {upperBits}</b>
         </div>
         <div>
-          <span>Phase {phaseBits}</span>
-          <b>{phase.name[language]} / {phase.note[language]}</b>
+          <span>{isZh ? '六爻卦码' : 'Six yao bits'}</span>
+          <b>{hexagramBits} · {yangCount}/6 {isZh ? '阳' : 'yang'}</b>
         </div>
         <div>
-          <span>{isZh ? '卦码' : 'Hex bits'}</span>
-          <b>{hexagramBits}</b>
+          <span>Variant</span>
+          <b>{variantBits} · {variantNumber}/4</b>
         </div>
+      </div>
+      <div className="iching-rule-path">
+        <span>{isZh ? '取爻位置' : 'Yao positions'}</span>
+        <b>1 → 4 → 2 → 8 → 5 → 7</b>
+        <small>{isZh ? 'Rule 输出位置 3 与 6 组成 Variant。' : 'Rule output positions 3 and 6 form the variant.'}</small>
+      </div>
+      <div className="iching-rule-group" aria-label={isZh ? '同卦的四条 Rule' : 'Four rules in the same hexagram group'}>
+        {groupRules.map((groupRule) => (
+          <span key={groupRule} className={groupRule === rule ? 'is-current' : undefined}>Rule {groupRule}</span>
+        ))}
       </div>
       <p className="iching-rule-note">
         {isZh
-          ? `阳爻 ${yangCount}/6。Rule 的低 6 位决定六爻；高 2 位决定 phase，所以 000 与 001 会读成不同卦。`
-          : `${yangCount}/6 yang lines. The low six rule bits form the hexagram; the high two bits set the phase, so 000 and 001 read differently.`}
+          ? '这是 8-bit Rule 与六爻之间的实验性结构映射，不代表传统占卜、吉凶或 Rule 的固有卦义。'
+          : 'This is an experimental structural mapping between an 8-bit rule and six yao—not a traditional divination or an intrinsic meaning of the rule.'}
       </p>
-      <p className="iching-changing-lines">
-        {isZh ? '变爻位' : 'Changing lines'}: {changingLines.length ? changingLines.join(' / ') : '0'}
-      </p>
+      <a
+        className="iching-rule-source"
+        href="https://doi.org/10.1016/j.jum.2022.11.001"
+        target="_blank"
+        rel="noreferrer"
+      >
+        {isZh ? '查看映射研究 ↗' : 'Read the mapping research ↗'}
+      </a>
     </div>
   );
 };
@@ -6055,32 +6172,50 @@ const ElementaryRuleViewer: React.FC<{
   rule: number;
   generation: number;
   language: Language;
-}> = ({ rule, generation, language }) => {
+  ruleBrowser: React.ReactNode;
+  playbackControls: React.ReactNode;
+}> = ({ rule, generation, language, ruleBrowser, playbackControls }) => {
   const binary = rule.toString(2).padStart(8, '0');
+  const isZh = language === 'zh';
 
   return (
-    <section className="elementary-rule-viewer" aria-label={`Rule ${rule} preview`}>
-      <div
-        className="elementary-rule-stage"
-        aria-label={`Elementary cellular automata rule ${rule}`}
-      >
-        <ElementaryRulePattern
-          rule={rule}
-          width={ELEMENTARY_MAIN_WIDTH}
-          height={ELEMENTARY_MAIN_HEIGHT}
-          offset={generation}
-          className="elementary-rule-main-grid"
-        />
+    <section className="cellular-lab-workspace" aria-label={isZh ? `Rule ${rule} 实验台` : `Rule ${rule} workspace`}>
+      <aside className="cellular-rule-browser" aria-label={isZh ? '规则浏览器' : 'Rule browser'}>
+        {ruleBrowser}
+      </aside>
+
+      <div className="cellular-rule-preview">
+        <div className="cellular-preview-meta">
+          <span>Rule {String(rule).padStart(3, '0')}</span>
+          <span>{isZh ? '世代' : 'Generation'} {generation}</span>
+        </div>
+        <div
+          className="elementary-rule-stage"
+          aria-label={isZh ? `一维元胞自动机 Rule ${rule}，世代 ${generation}` : `Elementary cellular automata rule ${rule}, generation ${generation}`}
+        >
+          <ElementaryRulePattern
+            rule={rule}
+            width={ELEMENTARY_MAIN_WIDTH}
+            height={ELEMENTARY_MAIN_HEIGHT}
+            offset={generation}
+            className="elementary-rule-main-grid"
+          />
+        </div>
+        <div className="cellular-playback-controls" aria-label={isZh ? '播放控制' : 'Playback controls'}>
+          {playbackControls}
+        </div>
       </div>
 
       <aside className="elementary-rule-readout">
-        <div>
-          <p className="elementary-rule-label">Rule</p>
-          <strong>{String(rule).padStart(3, '0')}</strong>
-        </div>
-        <div>
-          <p className="elementary-rule-label">Binary</p>
-          <code>{binary}</code>
+        <div className="elementary-rule-primary-readout">
+          <div>
+            <p className="elementary-rule-label">Rule</p>
+            <strong>{String(rule).padStart(3, '0')}</strong>
+          </div>
+          <div>
+            <p className="elementary-rule-label">Binary</p>
+            <code>{binary}</code>
+          </div>
         </div>
         <div className="elementary-neighborhoods">
           {ELEMENTARY_NEIGHBORHOODS.map((neighborhood, index) => (
@@ -6090,7 +6225,13 @@ const ElementaryRuleViewer: React.FC<{
             </div>
           ))}
         </div>
-        <IChingRuleReadout rule={rule} binary={binary} language={language} />
+        <details className="iching-rule-details">
+          <summary>
+            <span>{isZh ? 'Advanced / 实验性易经映射' : 'Advanced / Experimental I Ching mapping'}</span>
+            <span aria-hidden>+</span>
+          </summary>
+          <IChingRuleReadout rule={rule} language={language} />
+        </details>
       </aside>
     </section>
   );
@@ -6098,33 +6239,55 @@ const ElementaryRuleViewer: React.FC<{
 
 const ConwayGameOfLifeFullPage: React.FC<{
   homeHref: string;
+  labHref: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
   themePreference: ThemePreference;
   theme: Theme;
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
-}> = ({ homeHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
+}> = ({ homeHref, labHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
-  const [selectedRule, setSelectedRule] = React.useState(30);
+  const [board, setBoard] = React.useState<boolean[]>(() => createConwayLifeBoard());
   const [generation, setGeneration] = React.useState(0);
-  const [isRunning, setIsRunning] = React.useState(true);
+  const [isMobileMenu, setIsMobileMenu] = React.useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(max-width: 640px)').matches,
+  );
+  const [isRunning, setIsRunning] = React.useState(() =>
+    typeof window !== 'undefined' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  );
+
+  React.useEffect(() => {
+    const mobileMenuQuery = window.matchMedia('(max-width: 640px)');
+    const updateMobileMenu = () => setIsMobileMenu(mobileMenuQuery.matches);
+    updateMobileMenu();
+    mobileMenuQuery.addEventListener('change', updateMobileMenu);
+    return () => mobileMenuQuery.removeEventListener('change', updateMobileMenu);
+  }, []);
 
   React.useEffect(() => {
     if (!isRunning) return undefined;
     const intervalId = window.setInterval(() => {
+      setBoard((currentBoard) => evolveConwayLifeBoard(currentBoard));
       setGeneration((currentGeneration) => currentGeneration + 1);
-    }, 720);
-
+    }, 240);
     return () => window.clearInterval(intervalId);
   }, [isRunning]);
 
-  const selectRule = (rule: number) => {
-    setSelectedRule(rule);
-    setGeneration(0);
+  const step = () => {
+    setBoard((currentBoard) => evolveConwayLifeBoard(currentBoard));
+    setGeneration((currentGeneration) => currentGeneration + 1);
   };
 
+  const loadPattern = (pattern: ConwayLifePattern) => {
+    setBoard(createConwayLifeBoard(pattern));
+    setGeneration(0);
+    setIsRunning(false);
+  };
+
+  const population = board.reduce((total, isAlive) => total + (isAlive ? 1 : 0), 0);
+
   return (
-    <div className="page-shell conway-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
+    <div className="page-shell conway-page conway-life-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
       <main className="conway-rules-page">
         <div className="conway-rules-shell">
           <div className="conway-rules-topbar">
@@ -6132,6 +6295,336 @@ const ConwayGameOfLifeFullPage: React.FC<{
               <ArrowLeft size={16} />
               {isZh ? '返回主页' : 'Back to Home'}
             </a>
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+              compactThemeOnSelection={isMobileMenu}
+              compactLanguageOnSelection={isMobileMenu}
+            />
+          </div>
+
+          <header className="conway-rules-header conway-life-header">
+            <div className="conway-rules-identity">
+              <div className="conway-rules-app-icon">
+                <ProjectsCrmCssIcon label={isZh ? "Conway's Game of Life CSS app 图标" : "Conway's Game of Life CSS app icon"} />
+              </div>
+              <div className="conway-rules-copy">
+                <p className="conway-kicker">B3 / S23 · Two-dimensional cellular automaton</p>
+                <h1 className="conway-rules-title font-display font-bold tracking-tight">
+                  Conway’s Game of Life
+                </h1>
+                <p className="conway-rules-subtitle">
+                  {isZh
+                    ? '几条简单规则，也能长出意想不到的生命。点亮细胞，然后看秩序自己出现。'
+                    : 'Small rules. Unexpected life. Turn on a few cells, then watch order appear on its own.'}
+                </p>
+              </div>
+            </div>
+          </header>
+
+          <div className="conway-life-console">
+            <div>
+              <span>{isZh ? '世代' : 'Generation'}</span>
+              <strong>{generation}</strong>
+            </div>
+            <div>
+              <span>{isZh ? '活细胞' : 'Population'}</span>
+              <strong>{population}</strong>
+            </div>
+            <div>
+              <span>{isZh ? '规则' : 'Rule'}</span>
+              <strong>B3 / S23</strong>
+            </div>
+            <div className="conway-rules-controls">
+              <button type="button" className="conway-control-button" onClick={() => setIsRunning((value) => !value)}>
+                {isRunning ? <Pause size={16} /> : <Play size={16} />}
+                <span>{isRunning ? (isZh ? '暂停' : 'Pause') : isZh ? '运行' : 'Run'}</span>
+              </button>
+              <button type="button" className="conway-control-button conway-control-button-muted" onClick={step} disabled={isRunning}>
+                <ArrowRight size={16} />
+                <span>{isZh ? '单步' : 'Step'}</span>
+              </button>
+              <button type="button" className="conway-control-button conway-control-button-muted" onClick={() => loadPattern('pulsar')}>
+                <RotateCcw size={16} />
+                <span>{isZh ? '重置' : 'Reset'}</span>
+              </button>
+              <button
+                type="button"
+                className="conway-control-button conway-control-button-muted"
+                onClick={() => {
+                  setBoard(Array.from({ length: CONWAY_LIFE_CELL_COUNT }, () => false));
+                  setGeneration(0);
+                  setIsRunning(false);
+                }}
+              >
+                <span>{isZh ? '清空' : 'Clear'}</span>
+              </button>
+              <button
+                type="button"
+                className="conway-control-button conway-control-button-muted"
+                onClick={() => {
+                  setBoard(createRandomConwayLifeBoard());
+                  setGeneration(0);
+                  setIsRunning(false);
+                }}
+              >
+                <span>{isZh ? '随机' : 'Random'}</span>
+              </button>
+            </div>
+          </div>
+
+          <section className="conway-life-layout" aria-label={isZh ? 'Conway 二维生命棋盘' : "Conway's two-dimensional life board"}>
+            <div className="conway-life-stage">
+              <div
+                className="conway-life-grid"
+                style={{ '--life-column-count': CONWAY_LIFE_COLUMNS } as React.CSSProperties}
+                role="grid"
+                aria-label={isZh ? '点击格子切换细胞生死' : 'Click cells to toggle life and death'}
+              >
+                {board.map((isAlive, index) => {
+                  const row = Math.floor(index / CONWAY_LIFE_COLUMNS) + 1;
+                  const column = (index % CONWAY_LIFE_COLUMNS) + 1;
+                  return (
+                    <button
+                      key={index}
+                      type="button"
+                      role="gridcell"
+                      className={isAlive ? 'is-alive' : undefined}
+                      aria-pressed={isAlive}
+                      aria-label={isZh ? `第 ${row} 行第 ${column} 列，${isAlive ? '存活' : '死亡'}` : `Row ${row}, column ${column}, ${isAlive ? 'alive' : 'dead'}`}
+                      onClick={() => setBoard((currentBoard) => currentBoard.map((cell, cellIndex) => cellIndex === index ? !cell : cell))}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+
+            <aside className="conway-life-sidebar">
+              <div>
+                <p className="conway-kicker">{isZh ? '经典图案' : 'Classic seeds'}</p>
+                <div className="conway-life-patterns">
+                  <button type="button" onClick={() => loadPattern('glider')}>Glider</button>
+                  <button type="button" onClick={() => loadPattern('r-pentomino')}>R-pentomino</button>
+                  <button type="button" onClick={() => loadPattern('pulsar')}>Pulsar</button>
+                </div>
+              </div>
+              <div className="conway-life-rules">
+                <p className="conway-kicker">{isZh ? '四条规则' : 'Four rules'}</p>
+                <ol>
+                  <li><b>01</b><span>{isZh ? '活细胞少于 2 个邻居，死亡。' : 'A live cell with fewer than 2 neighbors dies.'}</span></li>
+                  <li><b>02</b><span>{isZh ? '活细胞有 2 或 3 个邻居，存活。' : 'A live cell with 2 or 3 neighbors survives.'}</span></li>
+                  <li><b>03</b><span>{isZh ? '活细胞多于 3 个邻居，死亡。' : 'A live cell with more than 3 neighbors dies.'}</span></li>
+                  <li><b>04</b><span>{isZh ? '死细胞恰好有 3 个邻居，诞生。' : 'A dead cell with exactly 3 neighbors is born.'}</span></li>
+                </ol>
+              </div>
+              <a href={labHref} className="conway-lab-link">
+                <span>{isZh ? '探索相关系统' : 'Explore the related system'}</span>
+                <strong>Cellular Automata Lab <ArrowRight size={16} /></strong>
+              </a>
+            </aside>
+          </section>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+const CellularAutomataLabFullPage: React.FC<{
+  homeHref: string;
+  conwayHref: string;
+  language: Language;
+  setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
+  theme: Theme;
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ homeHref, conwayHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
+  const isZh = language === 'zh';
+  const [selectedRule, setSelectedRule] = React.useState(() => {
+    if (typeof window === 'undefined') return 30;
+    const rawRuleParam = new URLSearchParams(window.location.search).get('rule');
+    if (rawRuleParam === null || rawRuleParam.trim() === '') return 30;
+    const ruleParam = Number(rawRuleParam);
+    return Number.isInteger(ruleParam) && ruleParam >= 0 && ruleParam < ELEMENTARY_RULE_COUNT ? ruleParam : 30;
+  });
+  const [generation, setGeneration] = React.useState(0);
+  const [isRunning, setIsRunning] = React.useState(() =>
+    typeof window !== 'undefined' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  );
+  const [speedMs, setSpeedMs] = React.useState(720);
+  const [ruleSearch, setRuleSearch] = React.useState('');
+  const [searchMessage, setSearchMessage] = React.useState('');
+  const [isPageVisible, setIsPageVisible] = React.useState(() =>
+    typeof document === 'undefined' || !document.hidden,
+  );
+
+  const visibleRules = React.useMemo(() => {
+    const query = ruleSearch.trim();
+    const rules = Array.from({ length: ELEMENTARY_RULE_COUNT }, (_, rule) => rule);
+    return query ? rules.filter((rule) => String(rule).includes(query)) : rules;
+  }, [ruleSearch]);
+
+  React.useEffect(() => {
+    if (!isRunning || !isPageVisible) return undefined;
+    const intervalId = window.setInterval(() => {
+      setGeneration((currentGeneration) => currentGeneration + 1);
+    }, speedMs);
+
+    return () => window.clearInterval(intervalId);
+  }, [isPageVisible, isRunning, speedMs]);
+
+  React.useEffect(() => {
+    const handleVisibilityChange = () => setIsPageVisible(!document.hidden);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, []);
+
+  React.useEffect(() => {
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handleReducedMotion = () => {
+      if (reducedMotionQuery.matches) setIsRunning(false);
+    };
+    reducedMotionQuery.addEventListener('change', handleReducedMotion);
+    return () => reducedMotionQuery.removeEventListener('change', handleReducedMotion);
+  }, []);
+
+  React.useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    params.set('rule', String(selectedRule));
+    const query = params.toString();
+    window.history.replaceState(window.history.state, '', `${window.location.pathname}${query ? `?${query}` : ''}${window.location.hash}`);
+  }, [selectedRule]);
+
+  const selectRule = (rule: number) => {
+    setSelectedRule(rule);
+    setGeneration(0);
+    setSearchMessage('');
+  };
+
+  const jumpToRule = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (ruleSearch.trim() === '') {
+      setSearchMessage(isZh ? '请输入 0–255 之间的整数。' : 'Enter a whole number from 0–255.');
+      return;
+    }
+    const rule = Number(ruleSearch);
+    if (!Number.isInteger(rule) || rule < 0 || rule >= ELEMENTARY_RULE_COUNT) {
+      setSearchMessage(isZh ? '请输入 0–255 之间的整数。' : 'Enter a whole number from 0–255.');
+      return;
+    }
+    selectRule(rule);
+    setRuleSearch('');
+  };
+
+  const ruleBrowser = (
+    <>
+      <div className="cellular-rule-browser-head">
+        <div>
+          <p className="elementary-rule-label">{isZh ? '规则浏览器' : 'Rule browser'}</p>
+          <strong>{visibleRules.length} / {ELEMENTARY_RULE_COUNT}</strong>
+        </div>
+        <form className="cellular-rule-search" onSubmit={jumpToRule}>
+          <label htmlFor="cellular-rule-search">{isZh ? '跳到规则' : 'Jump to rule'}</label>
+          <div>
+            <input
+              id="cellular-rule-search"
+              value={ruleSearch}
+              onChange={(event) => {
+                setRuleSearch(event.target.value.replace(/\D/g, '').slice(0, 3));
+                setSearchMessage('');
+              }}
+              inputMode="numeric"
+              autoComplete="off"
+              placeholder="0–255"
+            />
+            <button type="submit">{isZh ? '前往' : 'Go'}</button>
+          </div>
+          <span className="cellular-rule-search-message" role="status">{searchMessage}</span>
+        </form>
+      </div>
+
+      <div className="elementary-featured-rules" aria-label={isZh ? '常见规则' : 'Featured rules'}>
+        {FEATURED_ELEMENTARY_RULES.map((rule) => (
+          <button
+            key={rule}
+            type="button"
+            className={selectedRule === rule ? 'is-selected' : ''}
+            onClick={() => selectRule(rule)}
+            aria-label={isZh ? `精选 Rule ${rule}` : `Featured Rule ${rule}`}
+            aria-pressed={selectedRule === rule}
+          >
+            Rule {rule}
+          </button>
+        ))}
+      </div>
+
+      <div className="cellular-rule-scroll">
+        <div className="elementary-rule-index" aria-label={isZh ? '一维元胞自动机规则列表' : 'Elementary cellular automata rule list'}>
+          {visibleRules.map((rule) => (
+            <ElementaryRuleThumb key={rule} rule={rule} selected={selectedRule === rule} onSelect={selectRule} />
+          ))}
+        </div>
+      </div>
+    </>
+  );
+
+  const playbackControls = (
+    <>
+      <div className="cellular-playback-actions">
+        <button type="button" className="conway-control-button" onClick={() => setIsRunning((value) => !value)}>
+          {isRunning ? <Pause size={16} /> : <Play size={16} />}
+          <span>{isRunning ? (isZh ? '暂停' : 'Pause') : isZh ? '运行' : 'Run'}</span>
+        </button>
+        <button
+          type="button"
+          className="conway-control-button conway-control-button-muted"
+          onClick={() => setGeneration((currentGeneration) => currentGeneration + 1)}
+          disabled={isRunning}
+        >
+          <ArrowRight size={16} />
+          <span>{isZh ? '单步' : 'Step'}</span>
+        </button>
+        <button
+          type="button"
+          className="conway-control-button conway-control-button-muted"
+          onClick={() => setGeneration(0)}
+        >
+          <RotateCcw size={16} />
+          <span>{isZh ? '重置' : 'Reset'}</span>
+        </button>
+      </div>
+      <div className="cellular-speed-group" aria-label={isZh ? '播放速度' : 'Playback speed'}>
+        {[{ label: '0.5×', value: 1440 }, { label: '1×', value: 720 }, { label: '2×', value: 360 }].map((speed) => (
+          <button
+            key={speed.value}
+            type="button"
+            className={speedMs === speed.value ? 'is-selected' : ''}
+            aria-pressed={speedMs === speed.value}
+            onClick={() => setSpeedMs(speed.value)}
+          >
+            {speed.label}
+          </button>
+        ))}
+      </div>
+    </>
+  );
+
+  return (
+    <div className="page-shell conway-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
+      <main className="conway-rules-page">
+        <div className="conway-rules-shell">
+          <div className="conway-rules-topbar">
+            <div className="conway-topbar-links">
+              <a href={homeHref} className="conway-back-link inline-flex items-center gap-2 text-sm font-medium">
+                <ArrowLeft size={16} />
+                {isZh ? '返回主页' : 'Back to Home'}
+              </a>
+              <a href={conwayHref} className="conway-back-link text-sm font-medium">
+                Conway’s Game of Life
+              </a>
+            </div>
           <HeaderControls
             language={language}
             setLanguage={setLanguage}
@@ -6147,53 +6640,26 @@ const ConwayGameOfLifeFullPage: React.FC<{
                 <ProjectsCrmCssIcon label={isZh ? "Conway's Game of Life CSS app 图标" : "Conway's Game of Life CSS app icon"} />
               </div>
               <div className="conway-rules-copy">
-                <p className="conway-kicker">Elementary cellular automata</p>
+                <p className="conway-kicker">One-dimensional rule explorer</p>
                 <h1 className="conway-rules-title font-display font-bold tracking-tight">
-                  {isZh ? '256 个规则' : '256 rules'}
+                  Cellular Automata Lab
                 </h1>
                 <p className="conway-rules-subtitle">
                   {isZh
-                    ? '把 8-bit 规则转成黑白生长图案：一个规则，一种秩序。'
-                    : 'Turn each 8-bit rule into a black-and-white growth pattern: one rule, one order.'}
+                    ? '探索全部 256 个一维元胞自动机规则：每个 8-bit 规则，都会长成不同的黑白秩序。'
+                    : 'Explore all 256 elementary cellular automata: each 8-bit rule grows into a different black-and-white order.'}
                 </p>
               </div>
             </div>
-            <div className="conway-rules-controls">
-              <button type="button" className="conway-control-button" onClick={() => setIsRunning((value) => !value)}>
-                {isRunning ? <Pause size={16} /> : <Play size={16} />}
-                <span>{isRunning ? (isZh ? '暂停' : 'Pause') : isZh ? '继续' : 'Run'}</span>
-              </button>
-              <button
-                type="button"
-                className="conway-control-button conway-control-button-muted"
-                onClick={() => setGeneration(0)}
-              >
-                <RotateCcw size={16} />
-                <span>{isZh ? '重置' : 'Reset'}</span>
-              </button>
-            </div>
           </header>
 
-          <ElementaryRuleViewer rule={selectedRule} generation={generation} language={language} />
-
-          <div className="elementary-featured-rules" aria-label={isZh ? '常见规则' : 'Featured rules'}>
-            {FEATURED_ELEMENTARY_RULES.map((rule) => (
-              <button
-                key={rule}
-                type="button"
-                className={selectedRule === rule ? 'is-selected' : ''}
-                onClick={() => selectRule(rule)}
-              >
-                Rule {rule}
-              </button>
-            ))}
-          </div>
-
-          <section className="elementary-rule-index" aria-label={isZh ? '256 个 elementary cellular automata 规则' : '256 elementary cellular automata rules'}>
-            {Array.from({ length: ELEMENTARY_RULE_COUNT }, (_, rule) => (
-              <ElementaryRuleThumb key={rule} rule={rule} selected={selectedRule === rule} onSelect={selectRule} />
-            ))}
-          </section>
+          <ElementaryRuleViewer
+            rule={selectedRule}
+            generation={generation}
+            language={language}
+            ruleBrowser={ruleBrowser}
+            playbackControls={playbackControls}
+          />
         </div>
       </main>
     </div>
@@ -6218,7 +6684,7 @@ const CrmFullPage: React.FC<{
           <div className="etreport-topbar flex flex-wrap items-center justify-between gap-3">
             <a href={projectsHref} className="etreport-back-link inline-flex items-center gap-2 text-sm font-medium">
               <ArrowLeft size={16} />
-              {isZh ? '返回 Projects' : 'Back to Projects'}
+              {isZh ? '返回主页' : 'Back home'}
             </a>
             <HeaderControls
               language={language}
@@ -6343,7 +6809,7 @@ const CrmFullPage: React.FC<{
               </p>
               <div className="mt-7 flex flex-wrap gap-5">
                 <a href={projectsHref} className="etreport-text-cta">
-                  {isZh ? '回 Projects' : 'Back to Projects'} <span aria-hidden>›</span>
+                  {isZh ? '回主页' : 'Back home'} <span aria-hidden>›</span>
                 </a>
                 <a href={homeHref} className="etreport-text-cta etreport-text-cta-muted">
                   {isZh ? '回主页' : 'Back home'} <span aria-hidden>›</span>
@@ -6400,20 +6866,22 @@ const FilmGalleryFullPage: React.FC<{
 
           <header className="film-gallery-hero py-16 text-center md:py-24">
             <p className="film-gallery-kicker mx-auto">
-              {isZh ? 'Film Gallery / 胶片档案' : 'Film Gallery / Film Archive'}
+              {isZh
+                ? `${filmGalleryPhotos.length} 格 · 3 台相机 · 2 种胶卷`
+                : `${filmGalleryPhotos.length} frames · 3 cameras · 2 film stocks`}
             </p>
             <h1 className="film-gallery-title mx-auto mt-5 font-display font-bold tracking-tight">
               {isZh ? 'Film Gallery' : 'Film Gallery'}
             </h1>
             <p className="film-gallery-subtitle mx-auto mt-5">
               {isZh
-                ? 'A quiet archive of light, grain, waterlines, buildings, and the way attention lands on a frame.'
-                : 'A quiet archive of light, grain, waterlines, buildings, and the way attention lands on a frame.'}
+                ? '它不太像作品集，更像十五次停下来看的记录：街道、水岸、建筑、庙宇，以及偶然走进画面的人。'
+                : 'Less a portfolio than fifteen records of stopping to look: streets, water, buildings, temples, and people who happened to enter the frame.'}
             </p>
             <p className="film-gallery-copy mx-auto mt-5">
               {isZh
-                ? '这里不解释每张图。只保留画面、顺序和呼吸感。胶片里的颗粒、软高光和偶然漏光，是材料本身，不是需要被修掉的噪音。'
-                : 'No frame-by-frame explanation here. Only image, sequence, and breathing room. Grain, soft highlights, and occasional light leaks are treated as material, not noise to remove.'}
+                ? '使用 Konica Auto S2、Rolleiflex Old Standard (Model 621) 与 Zeiss Ikon Contessa 35 拍摄，胶卷为 Kodak Gold 200 和 400。每张照片下方保留当时使用的相机与胶卷。'
+                : 'Shot on the Konica Auto S2, Rolleiflex Old Standard (Model 621), and Zeiss Ikon Contessa 35 with Kodak Gold 200 and 400. The camera and film stock stay with each frame below.'}
             </p>
           </header>
 
@@ -6426,7 +6894,7 @@ const FilmGalleryFullPage: React.FC<{
                     : `Horizontal roll / ${filmGalleryPhotos.length} frames`}
                 </p>
                 <h2 className="film-gallery-section-title font-display font-bold tracking-tight">
-                  {isZh ? '从左到右，慢慢看。' : 'Move through the roll, left to right.'}
+                  {isZh ? '沿着胶卷，从左看到右。' : 'Follow the roll from left to right.'}
                 </h2>
               </div>
               <div className="film-gallery-strip-actions">
@@ -10089,6 +10557,131 @@ const homeFocusAreas = [
   },
 ];
 
+const HomeManifesto: React.FC<{ language: Language }> = ({ language }) => {
+  const isZh = language === 'zh';
+
+  return (
+    <section className="eden-manifesto" id="notes">
+      <div className="eden-manifesto-banner eden-home-island">
+        <div className="eden-manifesto-line eden-manifesto-line-primary">
+          <p>
+            {isZh ? '技术不应该替我们决定命运' : 'Technology should not decide who we are.'}
+          </p>
+        </div>
+        <div className="eden-manifesto-line eden-manifesto-line-accent">
+          <p>
+            {isZh ? '它应该帮助我们看清自己' : 'It should help us understand ourselves.'}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const publishedNotes = [
+  {
+    title: { en: 'Button feedback is part of the system', zh: '按钮反馈，本来就是系统的一部分' },
+    summary: {
+      en: 'Pressed, pending, accepted, blocked, and failed: what a realtime interface needs to say after a click.',
+      zh: '按下、等待、接受、阻挡与失败：一个 realtime interface 在 click 之后应该说清楚什么。',
+    },
+    category: { en: 'Interaction', zh: '交互' },
+    href: 'wiki/button-feedback',
+  },
+  {
+    title: { en: 'Background music changes the room', zh: 'Background music 会改变一个房间' },
+    summary: {
+      en: 'Why optional sound can make a browser poker table feel shared, present, and alive.',
+      zh: '为什么可控的声音，会让 browser poker table 更像一个大家真的在场的空间。',
+    },
+    category: { en: 'Experience', zh: '体验' },
+    href: 'wiki/background-music',
+  },
+  {
+    title: { en: 'Firebase as durable table memory', zh: '用 Firebase 留住牌桌的记忆' },
+    summary: {
+      en: 'Rooms, reconnects, public games, and cleanup logic behind a table that needs to remember.',
+      zh: '房间、重连、公开游戏与 cleanup logic：一张需要记得事情的牌桌，是怎样被搭起来的。',
+    },
+    category: { en: 'Build note', zh: '构建笔记' },
+    href: 'wiki/firebase-lifetime-storage',
+  },
+  {
+    title: { en: 'The Vite skills that survived the build', zh: '真正留到最后的 Vite skills' },
+    summary: {
+      en: 'A practical release loop covering local development, routes, assets, environment values, and production checks.',
+      zh: '从 local development、routes、assets、environment values 到 production checks 的实用 release loop。',
+    },
+    category: { en: 'Engineering', zh: '工程' },
+    href: 'wiki/vite',
+  },
+];
+
+const NotesPage: React.FC<{
+  homeHref: string;
+  baseUrl: string;
+  language: Language;
+  setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
+  theme: Theme;
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ homeHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
+  const isZh = language === 'zh';
+
+  return (
+    <div className="page-shell notes-page min-h-screen">
+      <main className="notes-main">
+        <div className="notes-island">
+          <div className="notes-topbar">
+            <a href={homeHref} className="notes-back-link">
+              <ArrowLeft size={17} />
+              {isZh ? '返回主页' : 'Back home'}
+            </a>
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+              compactThemeOnSelection
+              compactLanguageOnSelection
+            />
+          </div>
+
+          <header className="notes-hero">
+            <p className="notes-eyebrow">Notes by Eden</p>
+            <h1>{isZh ? '一些值得留下来的想法' : 'Ideas worth keeping around'}</h1>
+            <p className="notes-intro">
+              {isZh
+                ? '这里放我发布的文章、build notes，还有那些做着做着才想明白的东西。关于 product、AI、人的行为，以及怎样把混乱慢慢变成 system。'
+                : 'Published essays, build notes, and the things I only understood after making them. About products, AI, human behavior, and turning messy realities into systems.'}
+            </p>
+          </header>
+
+          <section className="notes-index" aria-labelledby="notes-index-title">
+            <div className="notes-index-heading">
+              <h2 id="notes-index-title">{isZh ? '已发布' : 'Published'}</h2>
+              <span>{publishedNotes.length.toString().padStart(2, '0')}</span>
+            </div>
+            <div className="notes-list">
+              {publishedNotes.map((note) => (
+                <a key={note.href} className="notes-entry" href={joinBasePath(baseUrl, note.href)}>
+                  <span className="notes-entry-category">{note.category[language]}</span>
+                  <div>
+                    <h3>{note.title[language]}</h3>
+                    <p>{note.summary[language]}</p>
+                  </div>
+                  <span className="notes-entry-arrow" aria-hidden>↗</span>
+                </a>
+              ))}
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  );
+};
+
 const iconPromptProducts = [
   {
     id: 'etreporthub',
@@ -10342,20 +10935,19 @@ const App: React.FC = () => {
 
   const isZh = language === 'zh';
   const baseUrl = import.meta.env.BASE_URL || '/';
+  const homeHref = baseUrl;
   const fullPageHref = joinBasePath(baseUrl, 'jiju-pet');
-  const projectsHref = joinBasePath(baseUrl, 'projects');
+  const projectsHref = homeHref;
   const etReportHubHref = joinBasePath(baseUrl, 'etreporthub');
   const etReportHubSalesHref = joinBasePath(baseUrl, 'etreporthub-sales');
   const pokerHref = joinBasePath(baseUrl, 'poker');
-  const crmHref = joinBasePath(baseUrl, 'crm');
-  const previousProjectsHref = joinBasePath(baseUrl, 'previous-projects');
   const filmGalleryHref = joinBasePath(baseUrl, 'film-gallery');
+  const notesHref = joinBasePath(baseUrl, 'notes');
   const lifeHref = joinBasePath(baseUrl, 'life');
   const brandGuideHref = joinBasePath(baseUrl, 'brand-guide');
   const topicsHref = joinBasePath(baseUrl, 'topics');
   const conwayHref = joinBasePath(baseUrl, 'conways-game-of-life');
-  const resumeHref = 'https://drive.google.com/uc?export=download&id=1PRXj4BwpeAX_7F9H2PJumG0slIEZmLZ0';
-  const homeHref = baseUrl;
+  const cellularAutomataLabHref = joinBasePath(baseUrl, 'cellular-automata-lab');
   const homeSystemFiles: Array<{
     title: string;
     copy: string;
@@ -10385,13 +10977,6 @@ const App: React.FC = () => {
           cta: '看 ETReportHub',
           visual: 'etreporthub',
         },
-        {
-          title: 'CRM Intelligence System',
-          copy: '接在报表之后的会员分群、风险信号和下一步跟进工作流。',
-          href: crmHref,
-          cta: '看 CRM 系统',
-          visual: 'crm',
-        },
       ]
     : [
         {
@@ -10414,13 +10999,6 @@ const App: React.FC = () => {
           href: etReportHubHref,
           cta: 'Open ETReportHub',
           visual: 'etreporthub',
-        },
-        {
-          title: 'CRM Intelligence System',
-          copy: 'A retention workflow layer for member segments, risk signals, and next actions.',
-          href: crmHref,
-          cta: 'Open CRM system',
-          visual: 'crm',
         },
       ];
   const homeInterestLinks: Array<{ title: string; href: string; visual?: 'bagua-mirror' | 'gramophone' | 'conway-magic-circle' | 'archive-evolution' }> = isZh
@@ -10455,7 +11033,6 @@ const App: React.FC = () => {
 
   const isJijuPetFullPage = pathWithoutBase === '/jiju-pet';
   const isJijuRevampFullPage = pathWithoutBase === '/jiju-revamp';
-  const isProjectsFullPage = pathWithoutBase === '/projects';
   const isProjectCssGalleryPage = pathWithoutBase === '/project-css';
   const isETReportHubFullPage = pathWithoutBase === '/etreporthub';
   const isETReportHubSalesPage = pathWithoutBase === '/etreporthub-sales';
@@ -10465,14 +11042,14 @@ const App: React.FC = () => {
     : '';
   const activeWikiEntry = wikiEntries.find((item) => item.slug === wikiSlug);
   const isWikiPage = pathWithoutBase === '/wiki' || Boolean(activeWikiEntry);
-  const isCrmFullPage = pathWithoutBase === '/crm';
-  const isPreviousProjectsFullPage = pathWithoutBase === '/previous-projects';
   const isFilmGalleryFullPage = pathWithoutBase === '/film-gallery' || pathWithoutBase === '/analog-tech';
+  const isNotesPage = pathWithoutBase === '/notes';
   const isLifeOsFullPage = pathWithoutBase === '/life-os';
   const isLifeFullPage = pathWithoutBase === '/life';
   const isBrandGuideFullPage = pathWithoutBase === '/brand-guide';
   const isTopicsFullPage = pathWithoutBase === '/topics';
   const isConwayGameOfLifeFullPage = pathWithoutBase === '/conways-game-of-life';
+  const isCellularAutomataLabFullPage = pathWithoutBase === '/cellular-automata-lab';
   const isIconPromptsPage = pathWithoutBase === '/icon-prompts';
   const archivedWorkSlug = pathWithoutBase.startsWith('/archive/')
     ? pathWithoutBase.replace('/archive/', '')
@@ -10510,19 +11087,6 @@ const App: React.FC = () => {
     );
   }
 
-  if (isProjectsFullPage) {
-    return (
-      <ProjectsFullPage
-        homeHref={homeHref}
-        baseUrl={baseUrl}
-        language={language}
-        setLanguage={setLanguage}
-        themePreference={themePreference}
-        theme={theme}
-        setThemePreference={setThemePreference}
-      />
-    );
-  }
 
   if (isProjectCssGalleryPage) {
     return (
@@ -10573,7 +11137,6 @@ const App: React.FC = () => {
       <PokerFullPage
         homeHref={homeHref}
         projectsHref={projectsHref}
-        baseUrl={baseUrl}
         language={language}
         setLanguage={setLanguage}
         themePreference={themePreference}
@@ -10600,23 +11163,10 @@ const App: React.FC = () => {
     );
   }
 
-  if (isCrmFullPage) {
-    return (
-      <CrmFullPage
-        homeHref={homeHref}
-        projectsHref={projectsHref}
-        language={language}
-        setLanguage={setLanguage}
-        themePreference={themePreference}
-        theme={theme}
-        setThemePreference={setThemePreference}
-      />
-    );
-  }
 
-  if (isPreviousProjectsFullPage) {
+  if (isFilmGalleryFullPage) {
     return (
-      <PreviousProjectsFullPage
+      <FilmGalleryFullPage
         homeHref={homeHref}
         baseUrl={baseUrl}
         language={language}
@@ -10628,9 +11178,9 @@ const App: React.FC = () => {
     );
   }
 
-  if (isFilmGalleryFullPage) {
+  if (isNotesPage) {
     return (
-      <FilmGalleryFullPage
+      <NotesPage
         homeHref={homeHref}
         baseUrl={baseUrl}
         language={language}
@@ -10700,6 +11250,21 @@ const App: React.FC = () => {
     return (
       <ConwayGameOfLifeFullPage
         homeHref={homeHref}
+        labHref={cellularAutomataLabHref}
+        language={language}
+        setLanguage={setLanguage}
+        themePreference={themePreference}
+        theme={theme}
+        setThemePreference={setThemePreference}
+      />
+    );
+  }
+
+  if (isCellularAutomataLabFullPage) {
+    return (
+      <CellularAutomataLabFullPage
+        homeHref={homeHref}
+        conwayHref={conwayHref}
         language={language}
         setLanguage={setLanguage}
         themePreference={themePreference}
@@ -10736,8 +11301,7 @@ const App: React.FC = () => {
         <div className="eden-home-island eden-nav-inner">
           <a href={homeHref} className="eden-wordmark">Eden Tan</a>
           <div className="eden-nav-actions">
-            <HeaderControls language={language} setLanguage={setLanguage} themePreference={themePreference} theme={theme} setThemePreference={setThemePreference} />
-            <a href={resumeHref} target="_blank" rel="noopener noreferrer" className="eden-nav-resume"><Download size={16} /><span>{isZh ? '简历' : 'Resume'}</span></a>
+            <HeaderControls language={language} setLanguage={setLanguage} themePreference={themePreference} theme={theme} setThemePreference={setThemePreference} compactThemeOnSelection compactLanguageOnSelection />
           </div>
         </div>
       </nav>
@@ -10746,7 +11310,7 @@ const App: React.FC = () => {
         <motion.section className="eden-hero eden-home-island" initial="initial" animate="animate" variants={staggerContainer}>
           <motion.p variants={fadeIn} className="eden-eyebrow">EDEN · HUMAN SYSTEMS & PRODUCT</motion.p>
           <motion.h1 variants={fadeIn}>
-            {isZh ? <><span>理解人。</span><br /><span>建立系统。</span></> : <><span>Human, interpreted.</span><br /><span>Systems, built.</span></>}
+            {isZh ? <><span>理解人</span><br /><span>建立系统</span></> : <><span>Human, interpreted.</span><br /><span>Systems, built.</span></>}
           </motion.h1>
           <motion.p variants={fadeIn} className="eden-hero-copy">
             {isZh ? '我把复杂的人性、行为与现实问题，转化成可以被理解、验证和使用的数据、产品与 AI 系统。' : 'I turn complex human behavior and messy realities into useful products, data, and AI systems.'}
@@ -10763,10 +11327,9 @@ const App: React.FC = () => {
 
         <section className="eden-focus eden-home-island" id="lab">
           <p className="eden-section-label">01 · {isZh ? '实践领域' : 'Ways of building'}</p>
-          <h2>One mind.<br />Three ways of building.</h2>
+          <h2>{isZh ? '三边形战士' : <>One mind.<br />Three ways of building.</>}</h2>
           <div className="eden-focus-grid">
-            {homeFocusAreas.map((area, index) => <article key={area.title}>
-              <span className="eden-focus-number">0{index + 1}</span><h3>{area.title}</h3><p>{area.body[language]}</p>
+            {homeFocusAreas.map((area) => <article key={area.title}>
               {area.hrefKey === 'projects' ? (
                 <div className="eden-focus-app-shelf">
                   <a className="eden-focus-app-link" href={etReportHubHref} aria-label={isZh ? '进入 ETReportHub' : 'Enter ETReportHub'} title="ETReportHub">
@@ -10792,17 +11355,13 @@ const App: React.FC = () => {
                   </a>
                 </div>
               )}
+              <h3>{area.title}</h3>
+              <p>{area.body[language]}</p>
             </article>)}
           </div>
         </section>
 
-        <section className="eden-manifesto" id="notes">
-          <div className="eden-home-island">
-            <p>
-              {isZh ? <><span>技术不应该替我们决定命运。</span><br /><span>它应该帮助我们看清自己。</span></> : <><span>Technology should help us</span><br /><span>understand ourselves—</span><br /><span>not decide who we are.</span></>}
-            </p>
-          </div>
-        </section>
+        <HomeManifesto language={language} />
 
         <section className="eden-about eden-home-island" id="about">
           <div className="eden-about-photo">
@@ -10812,11 +11371,11 @@ const App: React.FC = () => {
               loading="lazy"
             />
           </div>
-          <div className="eden-about-copy"><p className="eden-section-label">02 · About Eden</p><h2>{isZh ? <>嗨，我是 Eden。</> : <>Hey, I’m Eden.</>}</h2><div className="eden-about-body">{isZh ? <><p>我原本是一名营销人，后来不知不觉开始做 Dashboard、AI 产品，以及帮助理解人的系统。我着迷于人类行为、技术，还有那些在工作、关系和人生里不断重复的模式。</p><p>过去，我通过营销帮助公司增长。现在，我用数据和 AI 做产品，把自己的人生当作一场实验记录下来，再把学到的东西转化成真正可用的产品。大多数时候，我只是在试着理清那些混乱的事——包括我自己。</p><p className="eden-about-now"><strong>现在，我不想再等待所谓完美的方向。我正在打造自己的产品，直接面对市场，也在这个过程中弄清楚：我究竟想成为一家怎样的公司，以及一个怎样的人。</strong></p></> : <><p>I’m a marketer who somehow ended up building dashboards, AI products, and systems for understanding people. I’m obsessed with human behavior, technology, and why we keep repeating the same patterns in work, relationships, and life.</p><p>Previously, I helped companies grow through marketing. Now I build with data and AI, document my life as an experiment, and turn whatever I learn into products. Most of the time, I’m just trying to make sense of messy things—including myself.</p><p className="eden-about-now"><strong>Right now, I’m done waiting for the perfect direction. I’m building my own products, facing the market, and figuring out what kind of company—and person—I actually want to become.</strong></p></>}</div></div>
+          <div className="eden-about-copy"><p className="eden-section-label">02 · About Eden</p><h2>{isZh ? <>嗨，我是 Eden</> : <>Hey, I’m Eden.</>}</h2><div className="eden-about-body">{isZh ? <><p>我不是一个很容易用职位介绍自己的人。Marketing、策划、管理、Dashboard、AI Product，这些我都做过，但好像没有一个 Title 可以完整解释我。</p><p>我比较像一个收集 Pattern 的人。工作哪里卡住？人为什么会做这个选择？关系为什么又回到同一个问题？甚至我自己为什么会重复某一种生活？我都会忍不住拆开来看。写日记、旅行、潜水、做 Product，都是我理解这个世界的方法。</p><p>我最擅长的，不是把同一件事重复做一百次。我比较会在一堆很乱的东西里面，找到那个真正的问题，然后重新排成一个可以运行的 System。以前我拿这份能力帮公司做 Growth。现在，我想拿它来 build 自己的 Product。</p><p className="eden-about-now"><strong>这个阶段，我已经没有很想再解释自己是谁。我比较想让做出来的东西回答。</strong></p></> : <><p>I am not easy to explain with a job title. I have worked across marketing, planning, management, dashboards, and AI products, but none of those titles fully explains me.</p><p>I am more like a collector of patterns. Where does work get stuck? Why do people make certain choices? Why do relationships circle back to the same problem? Why do I repeat certain versions of my own life? I cannot help taking these things apart. Journaling, traveling, diving, and building products are all ways I understand the world.</p><p>My strength is not doing the same thing a hundred times. It is finding the real problem inside a mess, then rearranging it into a system that can run. I used to apply that ability to helping companies grow. Now I want to use it to build products of my own.</p><p className="eden-about-now"><strong>At this stage, I am less interested in explaining who I am. I would rather let the work answer.</strong></p></>}</div></div>
         </section>
       </main>
 
-      <footer className="eden-footer"><div className="eden-home-island"><div><strong>EDEN</strong><p>Building systems for people, products, and uncertain futures.</p></div><div className="eden-footer-links"><a href="mailto:hello@edentan.site">Email</a><a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/edent95" target="_blank" rel="noreferrer">GitHub</a><a href={filmGalleryHref}>Notes</a></div></div></footer>
+      <footer className="eden-footer"><div className="eden-home-island"><div><strong>EDEN</strong><p>Building systems for people, products, and uncertain futures.</p></div><div className="eden-footer-links"><a href="mailto:hello@edentan.site">Email</a><a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/edent95" target="_blank" rel="noreferrer">GitHub</a><a href={notesHref}>Notes</a></div></div></footer>
     </div>
   );
 };

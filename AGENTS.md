@@ -266,6 +266,7 @@ If this voice evolves, update both `/brand-guide` section 06 and this block.
 
 When editing the concept site or future UI:
 
+- Treat the current homepage menu bar as the navigation source of truth for all new pages and page redesigns. Reuse its sticky translucent surface, quiet divider, borderless Theme/Language controls, compact-on-selection interaction, smooth transition, and mobile compact layout. Do not copy a route's older menu bar into new work; prefer a shared implementation when touching multiple pages.
 - Keep the visual direction intentional and distinctive.
 - Do not revert to generic SaaS gradients or default startup aesthetics.
 - Preserve the knowledge-system feel: editorial, structured, durable, thoughtful.
@@ -322,6 +323,7 @@ When adding, hiding, renaming, or changing a route:
 
 - Treat `seo-routes.ts` as the route registry source of truth.
 - Keep client SEO copy, index/noindex status, sitemap inclusion, README route docs, and visible page entries consistent with that registry.
+- Keep the route name, visible title, SEO copy, and implemented model conceptually identical. Do not conflate adjacent systems under one familiar name; if both systems remain useful, split them into explicit routes and cross-link them.
 - If a route should be reachable but hidden from discovery, keep the React route but set `index: false` and `sitemap: false` in `seo-routes.ts`, then remove visible navigation/card entry points as needed.
 - Do not maintain separate ad hoc route lists in `vite.config.ts`, `seo.ts`, README, or page components without checking the registry first.
 

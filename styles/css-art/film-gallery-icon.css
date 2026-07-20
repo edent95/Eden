@@ -146,10 +146,11 @@
 }
 
 :root[data-theme="dark"] .film-app-icon {
+  box-sizing: border-box;
+  border: 1px solid #5b5147;
   background: #2a2521;
   box-shadow:
     0 18px 42px rgb(0 0 0 / 0.32),
-    inset 0 0 0 1px rgb(234 223 201 / 0.18),
     inset 0 -16px 28px rgb(0 0 0 / 0.18);
 }
 

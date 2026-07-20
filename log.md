@@ -16,6 +16,214 @@
 
 ## Entries
 
+### 2026-07-21 · Projects route removed
+
+- 类型：路由 / 导航 / 公开信息架构
+- 改动：移除 `/projects` 的公开 route 判断、SEO registry 与 README 路由说明；旧 URL 现在直接落回主页，Projects page component 保留为 dormant history 但不会进入 production bundle。
+- 改动：全站原本指向 Projects 的 product/wiki/project-css 返回链接统一改为主页，并同步中文与英文 label，避免出现“返回不存在页面”的导航。
+- 改动：`projectsHref` 现在统一解析为主页，Home 的现有 project banners 与 Ways of building 继续直接进入各自产品页。
+- 原因：用户确认 `/projects` 页面也要移除。
+- 影响：公开站不再存在 Projects 聚合页；项目发现改由首页直接分流到 Jiju、Friday Poker Club、ETReportHub 等详情页。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.12s）；Projects component 不再进入可达 route 后 production JS 从 389.28kB 进一步降至 380.26kB，`seo-routes.ts` 已无 `/projects`、`/crm`、`/previous-projects`。
+- 后续：如果以后需要新的项目聚合入口，应从当前首页内容架构重新设计，不恢复旧 Projects component。
+
+### 2026-07-21 · Projects redesign and public archive removal
+
+- 类型：页面 / 导航 / 路由 / Projects
+- 改动：`/projects` 跟随当前 Brand Guide 重做为 1040px editorial content island：最新 compact menu bar、左对齐 hero、无厚重 panel 的 build logic、三条 border-separated project rows，以及两栏 ETReportHub readout。
+- 改动：Project row 调整为 `icon → title/role → description/system/action` 的阅读顺序，light 使用 mint accent，dark 使用 coral accent；移除公开 CSS icon 检查页 CTA 与 legacy archive CTA。
+- 改动：从 Projects 与首页 system files 移除 CRM Intelligence System；Projects 现在只展示 Jiju、Friday Poker Club、ETReportHub，并同步中英文文案与 Projects SEO。
+- 改动：`/crm` 与 `/previous-projects` 从公开路由判断、SEO registry、README 与可见入口移除；旧 URL 不再渲染对应页面并会落回主页。历史组件源码暂时保留，避免不可逆删除资料。
+- 原因：用户要求 Projects 跟随当前风格重新设计，并移除 CRM Intelligence System 与 Previous Projects。
+- 影响：公开项目叙事收敛为三个当前系统；旧 CRM 与 previous-projects 页面不再可达或进入 sitemap。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.17s）；移除不可达 route 后 production JS 从上一版约 415.43kB 降至 389.28kB。
+- 后续：若确认历史组件永远不再需要，可在独立 cleanup 中删除 dormant CRM / PreviousProjects component 与 data。
+
+### 2026-07-21 · Latest menu bar made the global default
+
+- 类型：流程 / 设计系统 / 长期规则
+- 改动：在 `soul.md` 与 `AGENTS.md` 记录长期规则：所有新页面与后续页面改版默认使用当前首页最新版 menu bar，并优先复用共享实现，不再复制各 route 的旧导航。
+- 改动：明确最新版包含 sticky translucent surface、细分隔线、Theme/Language 无外框、compact-on-selection、smooth transition 与 mobile compact layout。
+- 原因：用户要求以后全部使用最新 menu bar design，避免页面之间再次出现版本不一致。
+- 影响：未来 agent 在新增或重做页面时必须主动统一导航，并在防返工检查中确认。
+- 验证：`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.31s）。
+- 后续：当 menu bar 设计再次更新时，应同步修改这两份规则中的“当前最新版”定义。
+
+### 2026-07-21 · Notes menu bar update
+
+- 类型：导航 / Notes / Article
+- 改动：更新 `/notes` 与公开 article 的 menu bar，使用与当前首页一致的 sticky blur、细分隔线和 compact Theme/Language menu behavior。
+- 改动：Theme 与 Language 外层移除 border、outline、background 和 shadow；当前选项默认收起，用户点击后才展开其他选项，并保留 240ms CSS 过渡。
+- 改动：mobile 返回文字收成单一 back arrow，Theme/Language 控件缩成 34px 高的紧凑布局，避免 menu bar 横向拥挤。
+- 原因：用户希望 Notes 的 menu bar 更新到当前品牌与首页的交互版本。
+- 影响：Notes index 与四篇公开 article 共用一致导航；文章和正文内容不变。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.22s）。
+- 后续：无。
+
+### 2026-07-21 · Published Notes article redesign
+
+- 类型：视觉 / 文章模板 / Brand Guide alignment
+- 改动：将 `/notes` 收录的四篇公开文章从旧 Poker/Wiki card 模板分离，改为当前 Brand Guide 的 editorial 阅读模板：1040px 内容岛、左对齐大标题、克制留白、mint/coral theme accent 与清楚的正文层级。
+- 改动：article 顶部改为返回 Notes；移除公开阅读页里的厚卡片、顶部彩色 rail、Skill Card 生成工具与折叠全文，Core thesis 使用品牌色 statement，所有正文 section 默认展开。
+- 改动：保留文章原有 title、summary、thesis 与全部 section points；Wiki index 和未列入 Notes 的内部知识页继续使用原功能模板。
+- 原因：用户认为 Notes 内的 article design 已过时，希望跟随当前 Brand Guide 重新设计。
+- 影响：四篇公开文章更像正式 editorial article，而不是内部产品工具；light 使用 mint，dark 使用 coral，mobile 改为单栏阅读。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.15s）。
+- 后续：未来新增到 `publishedNotes` 的 wiki article 会自动使用同一新版模板。
+
+### 2026-07-21 · Notes article archive page
+
+- 类型：页面 / 路由 / 内容归档
+- 改动：新增公开 `/notes` 页面，使用 editorial 内容岛、强标题、安静留白与无卡片式文章索引；支持中英文、light/dark theme 和 mobile layout。
+- 改动：先收录四篇已有完整正文的 Build Notes（Button Feedback、Background Music、Firebase Lifetime Storage、Vite），不虚构尚未发布的文章。
+- 改动：首页 Footer 的 Notes 从 Film Gallery 改为 `/notes`；同步 `seo-routes.ts`、sitemap route registry、README 路由说明与独立 `styles/pages/notes.css`。
+- 原因：用户需要一个新的 Notes 页面，用来集中放置自己发布的 articles。
+- 影响：Notes 与 Film Gallery 成为两个独立入口；未来发布文章可以继续加入同一个 archive list。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.15s）。
+- 后续：未来新增独立 article slug 时，将文章卡链接从现有 Wiki note 逐步迁移到 `/notes/:slug`。
+
+### 2026-07-21 · Ways of building desktop content order
+
+- 类型：布局 / 首页 / Ways of building
+- 改动：将三个实践领域卡片的 DOM 与视觉顺序统一为 `icon → title → description`；desktop 与 mobile 现在共用相同阅读顺序。
+- 原因：用户希望 desktop 也先看到 app icon，再阅读标题与说明。
+- 影响：只调整内容层级和间距，不更改文案、链接或 icon 尺寸。
+- 验证：`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.21s）。
+- 后续：无。
+
+### 2026-07-21 · Mobile About Eden icon left alignment
+
+- 类型：响应式视觉 / 首页 / About
+- 改动：mobile 的 About Eden `84 × 84px` 图片由居中改为贴齐内容栏左侧；尺寸、圆角和图片焦点保持不变。
+- 原因：用户希望 About Eden icon 偏回左边，与下方文案起点对齐。
+- 影响：仅影响 600px 以下的首页布局，desktop 不变。
+- 验证：`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.17s）。
+- 后续：无。
+
+### 2026-07-21 · Homepage manifesto static brand banner
+
+- 类型：视觉 / 首页 / Manifesto
+- 改动：移除 manifesto 的 IntersectionObserver、一次性闪切动画、延迟与动画状态；两句话改为始终可见。
+- 改动：将 section 整理为一张静态双层 banner，上层使用 Eden Blue 与暖白字，下层使用 Sunset Orange 与深色字；desktop 与 mobile 共用同一结构并按 viewport 缩放。
+- 原因：用户不要闪烁 effect，希望内容直接成为一个稳定、容易阅读的 banner。
+- 影响：首页不再因 scroll 或动画时序切换内容，品牌声明在所有 motion preference 下保持一致。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.16s）。
+- 后续：无。
+
+### 2026-07-21 · Mobile About thumbnail and one-shot manifesto frame cut
+
+- 类型：响应式视觉 / 首页 / About + Manifesto
+- 改动：mobile About Eden 环境人像从 500px 高的大图缩成与首页 app icon 相同的 `84 × 84px`，使用 `20px` 圆角、居中摆放，并将人物裁切焦点调整到 `53% 60%`。
+- 改动：Manifesto 取消纯黑 / 纯白，改用首页品牌色 Eden Blue `#176b87` + warm paper `#f5f3ef`，以及 Sunset Orange `#e8683a` + deep ink `#171717`。
+- 改动：移除 10 秒循环滑盖，改为 section 进入 viewport 45% 后才启动的一次性 CSS frame cut；第一句停留后，第二句以 `steps(1, end)` 做一次短促闪切，`iteration-count: 1`，结束停在第二句。Reduced Motion 继续静态上下展示两句。
+- 原因：用户希望 mobile 图片只保留 app-icon 尺寸，manifesto 使用品牌色，并把重复滑盖改成更快、只播放一次的闪切。
+- 影响：mobile About 更轻量；manifesto 不会在用户尚未滚到该 section 时提前播完，也不会循环干扰阅读。依据 Emil Design Engineering skill，动效仅使用 opacity，避免 layout / paint-heavy movement。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.24s）；390px 浏览器实测照片 `84 × 84px / 20px radius`，品牌色 computed 为 `rgb(23,107,135)` 与 `rgb(232,104,58)`，动画 iteration `1`、transform `none`、终态 opacity `1`，且 `scrollWidth = innerWidth = 390px`。
+- 后续：无。
+
+### 2026-07-21 · Homepage manifesto solid-panel transition
+
+- 类型：视觉 / 首页 / Manifesto motion
+- 改动：将原本同一背景中的双行 manifesto 拆成两个全幅实体 panel：`技术不应该替我们决定命运` 使用 `#050505` 黑底与白字，`它应该帮助我们看清自己` 使用纯白底与黑字；英文模式同步拆成对应的两句。
+- 改动：白色 panel 使用 `transform: translateY()` 从下方平滑覆盖黑色 panel，10 秒循环包含阅读停留、约 1.2 秒进场、再次停留与退场；使用强 `cubic-bezier(.77, 0, .175, 1)`，不加入 gradient、glow 或背景光效。
+- 改动：`prefers-reduced-motion` 下取消移动，改为上下静态展示黑白两个 panel。
+- 原因：用户指定两句话分别采用白字黑底与黑字白底，并希望中间有 smooth CSS transition。
+- 影响：首页 manifesto 成为清楚的两状态视觉叙事；About 与前后 section 不变。依据 Emil Design Engineering skill，动画只作用于 transform，并保留 reduced-motion fallback。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.25s）；浏览器 computed style 确认 dark `rgb(5,5,5) / rgb(245,245,247)`、light `rgb(255,255,255) / rgb(5,5,5)`、animation `eden-manifesto-panel-wipe 10s`，且 `scrollWidth = innerWidth = 319px`。
+- 后续：无。
+
+### 2026-07-21 · Homepage Chinese display-title punctuation cleanup
+
+- 类型：内容 / 首页 / 中文标题
+- 改动：移除首页大型中文展示标题中的句号：`理解人 / 建立系统`、`技术不应该替我们决定命运 / 它应该帮助我们看清自己`、`嗨，我是 Eden`；`三边形战士` 本身没有句号，保持不变。
+- 原因：用户希望 big title 不再使用中文句号，画面更干净。
+- 影响：只处理首页大型标题，正文标点与英文标题不变。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.17s）；首页大型中文标题关键词检查确认无 `。`。
+- 后续：无。
+
+### 2026-07-21 · Homepage Ways of building Chinese title
+
+- 类型：内容 / 首页 / 双语标题
+- 改动：`One mind. Three ways of building.` 在中文模式下改为显示 `三边形战士`；英文模式保留原标题与换行。
+- 原因：用户指定新的中文表达。
+- 影响：只调整首页 Ways of building section 的中文主标题，section 内容与英文版本不变。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.19s）；中英文条件渲染关键词检查通过。
+- 后续：无。
+
+### 2026-07-21 · Conway mobile top menu parity
+
+- 类型：响应式交互 / Conway's Game of Life / Mobile navigation
+- 改动：Conway mobile topbar 改为单行：Back to Home 在左，compact Theme / Language 在右；两组 controls 默认只显示当前选择，点击展开、选择后收起，并复用首页的 240ms width / opacity / scale transition。
+- 改动：mobile Theme 只显示 icon，Language 显示 `EN / 中`；移除两组 control 的外层 border、outline、background 与 shadow。通过 `matchMedia('(max-width: 640px)')` 只在 mobile 启用 compact state，desktop 保持完整 3 个主题与 2 个语言选项。
+- 原因：Conway mobile 仍使用旧的两行 full control header，与刚更新的首页 menu bar 不一致，也占用过多首屏空间。
+- 影响：手机顶部更紧凑并与首页交互一致；Conway hero、棋盘、运行按钮和 desktop navigation 不变。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.18s）；390px 实测 topbar 为 row、Back / controls center delta `0`、Theme / Language 可见选项各 `1`、两组 border `0px`、`scrollWidth = innerWidth = 390px`；1000px desktop 仍显示 Theme `3`、Language `2`。
+- 后续：无。
+
+### 2026-07-21 · Conway mobile controls in one row
+
+- 类型：响应式布局 / Conway's Game of Life / Mobile controls
+- 改动：撤销未交付的“mobile 整页按 1100px desktop workspace 等比例 zoom”方案，保留原本 mobile 单栏结构；将 Run、Step、Reset、Clear、Random 五个 controls 改为同一横排，使用五等分宽度、紧凑 gap、padding 与字体。
+- 原因：用户确认不需要 mobile 跟 desktop 等比例缩小，只需要运行控制排版变横。
+- 影响：棋盘与规则栏继续使用 mobile 友好的上下结构；五个主要动作现在一眼可见，不再纵向占据五行。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.20s）；379px 实际 mobile viewport 检查为 5 buttons、`flex-direction: row`、`nowrap`、全部 top `764px`、每个约 `60px`，页面 `scrollWidth` 与 `innerWidth` 同为 `379px`，无横向溢出。
+- 后续：无。
+
+### 2026-07-21 · Homepage header outline removed across themes
+
+- 类型：视觉修复 / 首页 / Header controls
+- 改动：将首页 Theme 与 Language 外层 control group 的 border、outline、background 与 shadow 设为强制清空，覆盖 dark-mode 全局 `.border-stone-300` 的 `!important` 样式。
+- 原因：上一轮普通透明 border 会在 Dark / Auto 实际切换到深色时被全局 theme override 重新绘制，因此 outline 仍会出现。
+- 影响：Auto、Light、Dark 与中英文状态下的外层 outline 现在都不会显示；active option、compact menu 与 transition 保持不变。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.17s）；首页 scoped rule 已使用 `border: 0 !important` 与 `outline: 0 !important`。
+- 后续：无。
+
+### 2026-07-21 · Homepage theme picker compact in every mode
+
+- 类型：前台 / 首页 / Theme menu
+- 改动：首页 theme picker 从 `Light-only compact` 改为统一的 selection-based compact menu：Auto、Light、Dark 无论选中哪一个，默认都只显示当前选项；点击当前选项展开全部，选择后自动收起。
+- 原因：用户希望三种 theme mode 全部使用同一套 menu bar 逻辑，而不是只有 Light 收起。
+- 影响：首页 Theme 与 Language 现在使用完全一致的 compact interaction、无外层白色 outline 与同一组 CSS transition；其他路由不变。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.19s）；旧 `compactOnLight` / `compactThemeOnLight` / `isCompactLight` 命名与逻辑均无残留。
+- 后续：无。
+
+### 2026-07-21 · Homepage header outer pills removed
+
+- 类型：视觉 / 首页 / Header controls
+- 改动：移除首页 Theme 与 Language control group 的白色外层背景、边框与 shadow，只保留当前选项本身的 active pill。
+- 原因：compact controls 外面再包一层白色 outline 显得重复，也削弱了收起后的轻量感。
+- 影响：首页 desktop 与 mobile header 更干净；展开 / 收起动画、active state 与其他路由的 controls 不变。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.20s）。
+- 后续：无。
+
+### 2026-07-21 · Homepage compact language picker and toggle motion
+
+- 类型：前台 / 首页 / Header interaction
+- 改动：首页语言选择器改成与 Light theme 相同的 compact interaction：默认只显示当前语言，点击当前语言才展开另一个选项，切换后自动收起。
+- 改动：为 theme / language pill 与 option 加入 240ms CSS transition，使用宽度、padding、opacity 与 scale 的克制过渡；隐藏选项同步移出 tab order，并保留 `aria-expanded` / `aria-hidden` 状态。
+- 原因：完整 EN / 中文控制仍占用 header 空间，而且上一轮 theme 收起与展开缺少视觉过渡。
+- 影响：首页 desktop 与 mobile 的两组 controls 都更 compact，展开逻辑一致；其他路由继续显示完整选项，`prefers-reduced-motion` 仍会关闭全部动画。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.15s）；关键词检查确认 compact language prop 只传给首页 HeaderControls。
+- 后续：无。
+
+### 2026-07-21 · Homepage compact light-theme control
+
+- 类型：前台 / 首页 / Desktop navigation
+- 改动：从首页 navigation 完全移除 Resume download 入口；首页选择 Light 后，theme picker 默认只保留 Light，点击 Light 才展开 Auto / Light / Dark，再次选择 Light 会自动收起。
+- 原因：桌面 header 不再需要 Resume CTA，同时完整三段式 theme control 在 Light 常用状态下占用太多空间。
+- 影响：compact theme picker 只应用于首页；其他产品页继续显示完整三项主题控制。Mobile 也继承同一收起逻辑与上一轮固定尺寸 icon layout。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.14s）；关键词检查确认首页 Resume URL / class 已移除，compact prop 仅传给首页 `HeaderControls`。
+- 后续：无。
+
+### 2026-07-21 · Homepage mobile header language parity
+
+- 类型：前台 / 首页 / Mobile header
+- 改动：首页 600px 以下的主题控制改为固定尺寸 icon buttons，语言控制改为等宽 `EN / 中`；固定 wordmark 与 controls 的 grid 比例，补上不换行、完整 `aria-label` 与 selected-state 语义。
+- 原因：旧 header 根据中英文字宽自行撑开，中文 `自动 / 浅色 / 深色 / 中文` 会换行，英文则会把语言切换器挤出 viewport，造成两种语言的比例与位置不一致。
+- 影响：首页 mobile 中英文 header 现在使用同一组尺寸和间距，不再因翻译长度改变布局；desktop 与其他路由的完整文字控制保持不变。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.15s）。
+- 后续：无。
+
 ### 2026-07-20 · Emil Kowalski design skills installation
 
 - 类型：工具 / Skills installation
@@ -41,6 +249,24 @@
 - 原因：用户要求页面内容也重新创作，而不只是套用统一布局。
 - 影响：Friday Poker Club 的声音更私人、更像真实朋友局，同时保持对外产品说明所需的清楚边界。
 - 验证：`npm run lint`、`npm run build` 与 `git diff --check` 通过。
+- 后续：无。
+
+### 2026-07-21
+
+- 类型：视觉 / Home app shelf / Theme-colored outlines
+- 改动：将首页五种 dark-mode app icon 的多层低透明 inset outline 统一改为单层 `1px` 实色主题边框：ETReportHub `#2b5878`、Jiju `#354c73`、Friday Poker Club `#28543f`、Film Gallery `#5b5147`、Conway `#673247`；各自保留原有背景、投影和底部内阴影。
+- 原因：单纯把描边压深会让蓝、绿、米色和粉红色相消失；原有低透明 inset 又会在圆角抗锯齿处断续。需要同时保留深度、主题色与四边连续性。
+- 影响：首页 app shelf 的五个 icon 继续有各自颜色身份，同时 outline 的粗细和绘制方式一致；相关详情页与 `/project-css` 复用同一 CSS art，因此同步获得一致外框。
+- 验证：已在本地首页 `/#lab` 的 dark mode、实际 84px 尺寸做浏览器视觉检查，五种边框颜色可区分且圆角连续；computed style 确认五个 icon 均为单层 `1px` 实色 border；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.10s）；`git diff --check` 通过。
+- 后续：无。
+
+### 2026-07-21
+
+- 类型：视觉 / CSS Art / ETReportHub app icon uniform outline
+- 改动：复看首页 84px app shelf 实际截图后，移除 ETReportHub dark-mode icon 原本叠加在本体与 `::after` 上的两层 inset outline，改为单层 `1px` 深海军蓝实色 border `#18364d`；保留背景、投影和底部内阴影。
+- 原因：前一版 `2px #17486c` 在 Retina 小尺寸下过亮、过粗，且底部因暗背景对比形成特别突出的蓝线，四边视觉不均匀。
+- 影响：首页 ETReportHub icon 现在应与旁边 Jiju、Poker、Film Gallery、Conway icon 的边框重量更一致；大尺寸复用、内部动画与 light mode 不变。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.16s）；`git diff --check` 通过；确认 dark mode 只剩单层 `1px #18364d` border，重复 inset outline 已移除。
 - 后续：无。
 
 ### 2026-07-20 · Friday Poker Club product page recreation
@@ -3380,3 +3606,223 @@
 - 影响：Brand Guide 现在可以直接指导后续首页 banner 的素材准入、版式、CTA、视频、CSS art 与 reduced-motion 实现；页面主张、搜索摘要与当前首页一致。
 - 验证：`npx tsc --noEmit` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.18s）；本地 `/brand-guide` 返回 `200 OK`；主张、6 项入口、4 / 2 / 1、真实素材准入、更新日期与 SEO description 关键词检查通过。
 - 后续：本地验证看 `http://localhost:4180/brand-guide`，重点检查首屏主张、07 / Application 的 Current Home / Media system，以及 09 / Motion language 的实现规则。
+
+### 2026-07-21
+
+- 类型：内容 / Film Gallery / Personal and factual rewrite
+- 改动：重写 `/film-gallery` 首屏内容：kicker 改为 `15 frames · 3 cameras · 2 film stocks`，主说明从抽象的光、颗粒与注意力描述，改成十五次停下来观看街道、水岸、建筑、庙宇与人物的个人记录；中文版不再显示英文 subtitle。
+- 改动：明确列出 Konica Auto S2、Rolleiflex Old Standard (Model 621)、Zeiss Ikon Contessa 35，以及 Kodak Gold 200 / 400，并说明每张照片下方保留相机与胶卷资料；横向观看标题改为 `Follow the roll from left to right.` / `沿着胶卷，从左看到右。`。
+- 改动：同步更新 `/film-gallery` SEO description，使用十五张照片、三台相机与两种胶卷的可验证事实，不再使用旧的抽象档案描述。
+- 原因：用户要求调整 Film Gallery 内容；旧文案偏抽象、中文首屏夹有未翻译英文，也没有把已经整理好的器材资料说清楚。
+- 影响：页面内容更个人、更直接，并与照片下方真实 camera / film metadata 一致；布局、照片顺序、横向滚动与图片本身不变。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.15s）；中英文首屏、器材名称、横向观看标题与 SEO description 关键词检查通过。
+- 后续：本地验证看 `http://localhost:4180/film-gallery`，首屏应显示 15 格、3 台相机、2 种胶卷，并能继续从左向右浏览全部照片。
+
+### 2026-07-21
+
+- 类型：产品 / Conway's Game of Life / Concept correction and route split
+- 改动：将 `/conways-game-of-life` 从原本错误命名的 1D 256 rules explorer，改为真正的二维 Conway B3/S23 互动生命棋盘；使用 36×24 可编辑网格，提供 Run / Pause、Step、Reset、Clear、Random，并显示 generation、population 与 B3/S23。
+- 改动：加入 Glider、R-pentomino、Pulsar 三个经典 seed；页面解释四条生存规则，并使用 `Small rules. Unexpected life.` / `几条简单规则，也能长出意想不到的生命。` 作为核心定位。
+- 改动：原有 256 elementary cellular automata explorer 没有删除，重命名为 `Cellular Automata Lab` 并迁移到 `/cellular-automata-lab`；保留 256 rule index、featured rules、binary readout 与 I Ching layer，和 Conway 页面互相链接。
+- 改动：同步更新 `seo-routes.ts`、README 路由说明、Conway route dispatch 与 `styles/pages/conway.css`；清理不再使用的旧 hexagram-grid React/CSS 实现；在 `soul.md` 与 `AGENTS.md` 记录“页面命名、SEO 与实际模型必须概念一致”的长期规则。
+- 原因：原页面把二维 Conway's Game of Life 与一维 Elementary Cellular Automata 混成同一个产品；用户确认执行拆分方案。
+- 影响：首页 Conway banner 继续进入 `/conways-game-of-life`，但现在看到的是正确的二维生命游戏；研究型 256 rules 功能通过独立名称与路由继续存在，不损失原功能。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.20s）；`git diff --check` 通过。浏览器实测 Conway 自动演化、暂停稳定、Step +1、Clear population 0、单格编辑 population 1、Glider population 5；Lab 显示 256 个 rule thumb、Rule 110 可选且读数为 110；两页 console 无 error / warning。
+- 后续：本地验证 `http://localhost:4180/conways-game-of-life` 与 `http://localhost:4180/cellular-automata-lab`。
+
+### 2026-07-21
+
+- 类型：视觉 / CSS Art / ETReportHub app icon outline
+- 改动：将 ETReportHub app icon 在 dark mode 下最上层的圆角内描边从 `1px / 14%` 提升为 `1.5px / 38%`，保留原圆角、背景与底部内阴影。
+- 原因：低透明度 1px inset shadow 在深色底和圆角抗锯齿下对比不足，导致最外层 rounded outline 尤其在四角显得发浅、断续。
+- 影响：只增强 ETReportHub dark-mode app icon 的外缘清晰度；内部 topbar、grid、bar、动画以及 light mode 不变。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.14s）；`git diff --check` 通过；dark-mode 描边厚度与透明度关键词检查通过。
+- 后续：若缩到首页 84px shelf 后仍偏淡，再按小尺寸单独降为 1px 并提高不透明度，不继续增加全尺寸描边厚度。
+
+### 2026-07-21
+
+- 类型：视觉 / CSS Art / ETReportHub app icon deeper outline
+- 改动：根据复看反馈，将 ETReportHub dark-mode app icon 外框从半透明浅蓝改为 `2px` 实色深蓝 `#17486c`。
+- 原因：提高浅蓝透明度只增强了亮度，没有达到用户要的更深、更扎实的 rounded outline。
+- 影响：外框颜色更深、更饱和，圆角连续性更强；icon 内部内容、动画与 light mode 不变。
+- 验证：`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.14s）；`git diff --check` 通过；实色深蓝描边关键词检查通过。
+- 后续：无。
+
+### 2026-07-21
+
+- 类型：产品体验 / Cellular Automata Lab / Fixed workspace
+- 改动：将 `/cellular-automata-lab` 从“上方预览 + 下方 256 项长索引”重构为三栏实验台：左侧 Rule Browser、中间 16:9 Preview、右侧 Inspector；桌面三栏分别 sticky，Rule Browser 内部独立滚动，页面总高度由约 2444px 降至约 1217px。
+- 改动：新增 0–255 Rule 搜索 / 跳转、实时筛选数量、Generation、Pause / Run、Step、Reset 与 0.5× / 1× / 2× 速度；当前 Rule 写入 `?rule=`，可刷新与分享；Featured 与索引 Rule 使用不同 accessible name，避免重复控件名称。
+- 改动：I Ching 映射收进默认折叠的 Advanced details；`prefers-reduced-motion` 默认暂停，运行中切换 Reduce Motion 会停止，页面隐藏时暂停 interval；按钮增加克制的 press feedback，并补齐 900px / 640px 响应式工作区布局。
+- 原因：旧页面选择 Rule 后会把 Preview 留在视口上方，控制、索引和读数彼此分离；高级信息常驻也占用过多高度。
+- 影响：核心循环变成“找到 Rule → 看变化 → 调速度 / 单步 → 读规则”，无需在预览与索引之间往返滚动；直接打开 `?rule=110` 会恢复 Rule 110。
+- 验证：`npm run typecheck` 与 `npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.11s）。浏览器实测 Rule 184 跳转后 URL 更新为 `?rule=184`；Pause 后 Step 从 16 增至 17 且等待保持 17；2× 在约 820ms 内推进 2 代；Advanced 默认折叠并可展开；Rule 110 的索引 / Featured accessible name 各唯一；999 显示范围错误；Rule 90 从索引选择后 Preview 仍完整留在视口；console 无 error / warning。
+- 后续：第二阶段可加入两条 Rule 对比模式与 256-grid 的 roving tabindex；当前先保持单 Rule 实验主线清晰。
+
+### 2026-07-21
+
+- 类型：排版修复 / Cellular Automata Lab / Inspector readout
+- 改动：将 Inspector 顶部的 Rule 与 Binary 从窄栏双列改为上下排列；收紧 Rule 三位数字的最大字号与字距，并让 Binary 使用稳定的单行等宽读数。
+- 原因：三位 Rule 数字在约 219px 的 Inspector 内容宽度内会溢出原列，覆盖 Binary label 与数值。
+- 影响：Rule 与 Binary 现在各自占满一行，000–255 的三位数字和 8-bit Binary 都不会互相遮挡；Neighborhood 与 Advanced 区域不变。
+- 验证：`npm run typecheck` 与 `npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.10s）；浏览器在 `?rule=11` 下实测 Inspector 内容宽度约 218.8px，Rule 与 Binary block 垂直分离且 overlap 为 false；console 无 error / warning。
+- 后续：无。
+
+### 2026-07-21
+
+- 类型：研究型功能 / Cellular Automata Lab / Experimental I Ching mapping
+- 改动：将原本“Rule 低 6 位直接成卦、高 2 位决定静卦 / 下卦动 / 上卦动 / 全卦动”的自定义解释，替换为 Lai（2022）提出的 `1–4–2–8–5–7` Rule output position 映射；第 3、6 位不再解释成变爻，而是明确作为每卦四条 Rule 的 `Variant 00 / 01 / 10 / 11`。
+- 改动：补齐 64 个 King Wen 卦序的卦码、编号、中英文名称；八卦编码统一为初爻向上的 bottom-up 顺序，读数展示卦名、上下卦、六爻、阴阳数量、当前 Variant、同卦四条 Rule 与抽取路径。
+- 改动：Advanced 标题改为 `实验性易经映射 / Experimental I Ching mapping`，加入“不代表传统占卜、吉凶或 Rule 固有卦义”的边界说明，并链接 DOI `10.1016/j.jum.2022.11.001`；删除旧 Phase、changing lines 与发光变爻样式。
+- 原因：旧映射只有数量上的 256 = 64 × 4 关系，但具体取位和变爻解释没有外部依据，容易把结构实验误解成传统易经结论。
+- 影响：易经层现在是可追溯、可验证的研究型分类视角；ECA Rule 仍是变化规律，卦象只作为实验性二进制映射，不宣称因果或占卜意义。
+- 验证：`npm run typecheck` 与 `npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.19s）；registry 数量检查为 64，旧 Phase / changing-line 关键词无残留。浏览器实测 Rule 11→12 否、30→59 涣、90→57 巽、110→53 渐、184→60 节；各自同卦四 Rule group、`1→4→2→8→5→7` 路径、Variant current state、中英文说明与 DOI 链接正确；console 无 error / warning。
+- 后续：若未来加入 Compare 模式，可比较两个 Rule 的六爻差异，但应继续标成实验性结构比较，不恢复占卜式“变爻”断语。
+
+### 2026-07-21
+
+- 类型：移动端体验 / Cellular Automata Lab / Content order
+- 改动：在 900px 以下的单栏布局中，将区块顺序从 `Preview → 256 Rule Browser → Inspector` 改成 `Preview → Rule / Binary Inspector → 256 Rule Browser`。
+- 原因：原本完整的 256 条规则库夹在显示结果与当前 Rule 读数之间，手机用户需要穿过大型滚动区才能看到所选 Rule 的 Binary、neighborhood 与 Advanced 信息。
+- 影响：当前 Rule 的读数现在紧跟 16:9 Preview；搜索、Featured rules 和 256 条规则库移到页面后段，仍保留独立 544px 高滚动区，不影响桌面三栏布局。
+- 验证：390 × 844 Playwright mobile viewport 实测区块 order 为 Preview `1`、Inspector `2`、Rule Browser `3`，对应页面 top 约 603 / 975 / 1346px；页面 `scrollWidth` 与 `innerWidth` 均为 390px，无横向溢出；console 0 error / 0 warning。`npm run typecheck` 与 `npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.17s）。
+- 后续：无。
+
+### 2026-07-21
+
+- 类型：内容入口 / ETReportHub / Remove hero offer CTA
+- 改动：移除 `/etreporthub` hero 内的 `View offer / 查看方案` 按钮，只保留 `View demo / 查看 Demo` 主入口。
+- 原因：用户要求页面首屏不再显示 View offer button。
+- 影响：首屏 CTA 更单一，直接引导进入公开 Demo；页面底部原有 `View launch offer / 查看上线方案` 仍保留，没有删除独立 `/etreporthub-sales` 页面或其他页面入口。
+- 验证：`npm run typecheck` 与 `npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.17s）；当前 `ETReportHubFullPage` hero 只剩 Demo link。
+- 后续：无。
+
+### 2026-07-21
+
+- 类型：内容入口 / Friday Poker Club / Remove build-notes CTA
+- 改动：移除 `/poker` 首屏与页面底部的 `View build notes / 查看构建笔记` 按钮，并清理该页面不再需要的 Wiki URL 参数。
+- 原因：用户要求 Poker 页面不再展示构建笔记入口。
+- 影响：两个主要 CTA 区域现在都只保留 `Open a table / 开一局`，牌桌 Demo、内容区与其他页面不受影响。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.15s）。
+- 后续：无。
+
+### 2026-07-21
+
+- 类型：内容 / 首页 / About Eden 中文改写
+- 改动：重写首页 `About Eden` 的三段中文自述，将生硬的英文直译改成“从营销出发，以理解人的行为与选择为持续主线，再用数据和 AI 把混乱整理成可行动系统”的自然中文表达。
+- 原因：原文存在翻译腔，营销、Dashboard、AI 产品与 Humans & Systems 之间的关系不够连贯。
+- 影响：中文版本更像个人自述，并更清楚地连接 Eden 的职业经历、产品实践、长期实验与当前独立面对市场的方向；英文原文不变。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.09s）。
+- 后续：本地查看首页 `02 · About Eden`，确认语气是否需要再向“更个人”或“更克制”微调。
+
+### 2026-07-21
+
+- 类型：内容 / 首页 / About Eden 口语化调整
+- 改动：根据用户复看反馈，再次重写首页中文自述；减少完整的品牌宣言句式，加入“不知道怎么就开始”“好像”“并不是特别知道”“先试一试”等更接近日常说话的表达。
+- 原因：上一版虽然逻辑清楚，但仍过于正式，像经过包装的品牌稿，不像本人自然写下的介绍。
+- 影响：中文内容保留营销、数据与 AI、生活实验、独立产品和市场检验等事实，同时呈现更真实的犹豫、探索和边做边理解的状态；英文原文不变。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.07s）。
+- 后续：无。
+
+### 2026-07-21
+
+- 类型：内容 / 首页 / About Eden Malaysian Chinese voice
+- 改动：将中文自述进一步调整为马来西亚华人自然使用的中英夹杂语气，使用 `marketing`、`dashboard`、`system`、`pattern`、`blur`、`sure`、`figure out`、`market` 等日常语境词，并采用“不知道怎样”“一间怎样的 company”等本地句型。
+- 原因：用户希望文案带一点 Malaysia 味道和自然 English code-switching，不像正式中文品牌稿。
+- 影响：自述更接近 Eden 实际会说话的方式，同时控制英文比例，仍可作为公开首页介绍；纯英文版本不变。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.14s）。
+- 后续：无。
+
+### 2026-07-21
+
+- 类型：内容 / 首页 / About Eden personal voice
+- 改动：按照 Eden 平常简短、直接、先讲事实再讲感受的表达方式重写中文 About；拆短段落，以“我以前是做 marketing 的”“我一直都很喜欢观察人”“先做出来，放去 market”作为自然叙事节点。
+- 原因：单纯加入 Malaysian English 仍可能像刻意设计的品牌文案；用户要求进一步使用自己的语气。
+- 影响：内容读起来更像 Eden 本人的口头自述，少了完整论证和包装感；仍保留职业转向、human behavior、data / AI、life experiment 与独立做产品的核心信息。英文版本不变。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.16s）。
+- 后续：无。
+
+### 2026-07-21
+
+- 类型：内容 / 首页 / About Eden sourced personal voice
+- 改动：以用户亲自写下的三段 About 为主体，只统一公开页面所需的标点与少量语序；结尾直接采用 Obsidian `Report/我的金句.md` 中“我已经想过很多了，接下来要用行动替我回答”与“先做出来，再让现实修正我”两句。
+- 原因：相比继续模仿口吻，使用 Eden 自己写下的原句更能保留本人语气，也能让职业经历自然落到当前行动阶段。
+- 影响：首页中文 About 现在从 Marketing / Dashboard / Product / Human Behavior，推进到观察 Pattern、用 Data 与 AI 建立 System，最后以真实个人金句收尾；英文版本与只读 Obsidian 来源均未修改。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.18s）。
+- 后续：无。
+
+### 2026-07-21
+
+- 类型：内容 / 首页 / Report-informed self introduction
+- 改动：只读审阅 Obsidian `Eden/Report` 的索引、日记分析、人生课题、外部视角、命理交叉、八卦结构、综合闭环、个人书稿与金句后，重新编写首页中英文 About；公开版本聚焦 `观察 Pattern → 看懂混乱 → 重新组织 → 做成 System / Product`，不把命理或私人创伤写成身份标签。
+- 改动：中文版保留 Eden 的 Malaysian Chinese code-switching；英文版同步同一内容结构。收尾继续使用本人原句“用行动替我回答 / 先做出来，再让现实修正我”。
+- 原因：用户要求在真正阅读 Report 后，不只拼接金句，而是从反复被不同资料验证的人生主线重新写自我介绍。
+- 影响：首页 About 现在更完整地连接 Marketing、策划管理、Human Behavior、日记与旅行、Data / AI、System / Product 和从分析走向作品的当前阶段；Obsidian Report 来源未修改。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.19s）。
+- 后续：无。
+
+### 2026-07-21
+
+- 类型：内容 / 首页 / About Eden full structural rewrite
+- 改动：根据用户“不要继续写得差不多”的反馈，完全移除原本按职业时间线展开的 About 骨架；新版从“无法被单一职位讲完”切入，以 `Pattern collector` 为人物定义，再说明拆解混乱、找到真正问题、重组可运行 System 的能力，最后用“让做出来的东西回答”收尾。
+- 改动：同步重写英文版本，保持相同的四段叙事结构，不再沿用前一版句型或行动金句。
+- 原因：前几版虽持续换词，但仍是“过去职业 → 观察人 → 现在做产品 → 行动宣言”的同一结构，没有给用户真正不同的自我介绍方案。
+- 影响：首页 About 现在更像一个鲜明的人物侧写，而不是履历解释；Marketing、策划管理、Dashboard、AI Product、日记、旅行与潜水仍作为事实证据保留，但不再主导叙事。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.20s）。
+- 后续：无。
+
+### 2026-07-21
+
+- 类型：响应式交互 / 首页 / Banner CTA hover gating
+- 改动：删除 600px mobile breakpoint 中强制 `.eden-collage-reveal` 常驻显示的规则；将 banner CTA 与素材放大效果限制到 `(hover: hover) and (pointer: fine)` 的鼠标设备，并保留 `:focus-visible` 键盘入口。
+- 改动：为 `(hover: none)` 或 `(pointer: coarse)` 的触控设备完全隐藏 CTA 视觉，整张 banner link 与 accessible label 继续负责导航。
+- 原因：旧 mobile CSS 直接设定 `opacity: 1`，导致手机没有 mouse hover 仍显示所有按钮，与“mouse over 才出现”逻辑冲突。
+- 影响：手机只显示干净的 16:9 banner，tap 整张卡即可进入；桌面 CTA 只在鼠标经过时出现，键盘用户聚焦时仍能看见操作提示。
+- 验证：390 × 844 响应式检查确认修改前 CTA opacity 为 `1`、修改后未 hover 为 `0`；`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.21s）。
+- 后续：无。
+
+### 2026-07-21
+
+- 类型：响应式布局 / 首页 / Desktop-like mobile banner grid
+- 改动：移除 900px 以下两栏与 600px 以下单栏的 banner grid override，让 mobile 继续使用 desktop 的四栏排列；手机间距按比例收至 6px、圆角收至 8px，每张卡继续使用固定 `16 / 9`。
+- 原因：用户希望 mobile banner 跟 desktop 一样整体缩小，不再把每张卡维持为接近整屏宽的大尺寸。
+- 影响：6 张 banner 在手机上以 `4 + 2` 两行显示，整组视觉按 viewport 缩放；触控设备 CTA 继续隐藏，整张卡仍可 tap 导航。
+- 验证：390 × 844 响应式实测为 4 columns、6px gap，首张卡 85 × 47.81px、比例 1.78（16:9），页面 `scrollWidth` 与 viewport 均为 390px，无横向溢出；`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.13s）。
+- 后续：无。
+
+### 2026-07-21
+
+- 类型：响应式布局 / 首页 / Ways of building cleanup
+- 改动：移除「实践领域 / Ways of building」三项内容前的 `01 / 02 / 03` 编号及对应 CSS；将每项标题、说明与 app icon shelf 统一水平居中。
+- 改动：删除 mobile 单栏中各项之间的 border divider，article 全尺寸统一使用无边框布局。
+- 原因：用户希望该 section 更干净，内容位于中央，并移除截图中明显的编号和横向 outline。
+- 影响：Desktop 与 mobile 使用同一套无编号、居中、无分隔线的内容呈现；app icon 导航与文字内容不变。
+- 验证：390 × 844 响应式实测 number count `0`、article `text-align: center` / `align-items: center`、上下 border 均为 `0px`、icon shelf `justify-content: center`，页面无横向溢出；`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.20s）。
+- 后续：无。
+
+### 2026-07-21
+
+- 类型：响应式布局 / 首页 / App icons above focus titles
+- 改动：在 900px 以下将「实践领域 / Ways of building」每项的 app icon shelf 以 flex order 移到 title 上方，并增加 24px 的 icon-to-title 间距；Desktop DOM 与视觉顺序不变。
+- 原因：用户希望 mobile view 先看到 app icons，再阅读对应领域标题与说明。
+- 影响：三组内容在手机上统一呈现为 `icons → title → description`；icon links、accessible labels 与桌面布局不受影响。
+- 验证：390 × 844 响应式实测 shelf order 为 `-1`、margin-bottom 为 `24px`，icon shelf bottom 位于 title top 之前；`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.18s）。
+- 后续：无。
+
+### 2026-07-21
+
+- 类型：响应式交互 / 首页 / Proportional banner CTA
+- 改动：将首页 banner 设为 inline-size container，让 CTA 的高度、左右 padding、字体、shadow 与 reveal padding 使用 container query units 和 `clamp()`，随每张 16:9 card 的实际宽度缩放；加入 nowrap 避免小尺寸按钮断行。
+- 原因：mobile 保持四栏后，每张 banner 已缩至约 85px 宽，但原 CTA 仍维持 desktop 的 40px 高与 14px 字体，比例过大。
+- 影响：Desktop CTA 保持接近原始尺寸；窄屏鼠标 / 键盘状态下的 CTA 会缩成小型胶囊。触控 mobile 原有“隐藏 CTA、tap 整张 card”逻辑不变。
+- 验证：390px viewport 下 85 × 47.81px card 对应 CTA 约 46.9 × 17.28px、6px 字体与 6px 左右 padding；1440px viewport 下 335 × 188.44px card 对应 CTA 约 111.36 × 38.4px、13.4px 字体与 18.09px padding。`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.15s）。
+- 后续：无。
+
+### 2026-07-21
+
+- 类型：响应式交互 / 首页 / Hide mobile banner CTA
+- 改动：在 600px 以下强制隐藏 `.eden-collage-reveal`，不再依赖 hover / pointer capability 判断。
+- 原因：用户要求 mobile banner 完全不显示 button，即使在窄 viewport 的鼠标设备或模拟环境中也不要出现。
+- 影响：Mobile 只显示 banner 素材，整张 card link 继续负责 tap 导航；Desktop 仍保留 mouse-over CTA。
+- 验证：390 × 844 响应式实测 reveal `display: none`，首张 banner 仍是可导航 `<a href="/etreporthub">`；`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.13s）。
+- 后续：无。

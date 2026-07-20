@@ -56,7 +56,6 @@ npm run preview
 
 - `/` — 主页
 - `/jiju-pet` — Jiju 产品详情：可信宠物友好地点发现、宠物档案、到访记忆与社区资料
-- `/projects` — 当前 AI build systems 与产品系统
 - `/project-css` — Projects / Home / Interests CSS art 直达检查页（隐藏直达页；不进 sitemap）
 - `/icon-prompts` — ETReportHub / Jiju / Friday Poker Club 四宫格 icon prompt 复制页（隐藏直达页；不进 sitemap）
 - `/etreporthub` — ETReportHub 日报数据系统产品页
@@ -69,14 +68,14 @@ npm run preview
 - `/wiki/firebase-lifetime-storage` — Firebase lifetime storage 笔记
 - `/wiki/skills` — 跨项目 skills map
 - `/wiki/rag-flow` — Tag Registry 与 RAG flow 知识架构页
-- `/crm` — CRM Intelligence System 产品页
-- `/previous-projects` — 项目列表
 - `/film-gallery` — Film Gallery / 胶片图库（旧 `/analog-tech` 会自动换到新地址）
+- `/notes` — Eden 发布的文章与 Build Notes 归档
 - `/life-os` — 人生 RPG 能力系统 / Life OS 角色档案页
 - `/life` — Life 视频页（隐藏直达页；不在首页入口，不进 sitemap，客户端 SEO 设为 noindex）
 - `/brand-guide` — 持续与 `log.md` 对齐的 Brand Guide：核心主张、视觉、语气、版式、资产类型、动效与实现规则
 - `/topics` — Topic Market：一张卡一个问题和 icon，回答控件按问题类型变化（当前浏览器本地保存）
-- `/conways-game-of-life` — 256 elementary cellular automata rules explorer
+- `/conways-game-of-life` — 真正的二维 Conway B3/S23 互动生命棋盘
+- `/cellular-automata-lab` — 独立的 256 elementary cellular automata rules explorer
 - `/archive/:slug` — 归档项目详情
 
 ---
