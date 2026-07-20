@@ -223,6 +223,36 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
   },
   {
+    path: '/notes/turn-chaos-into-systems',
+    priority: '0.7',
+    title: { en: 'Turn chaos into systems | Eden Tan', zh: '把混乱变成系统 | Eden Tan' },
+    desc: { en: 'Why the value of a system is not automation itself, but making repeated confusion unnecessary.', zh: 'System 的价值不是 automation 本身，而是让同一种混乱不需要发生第二次。' },
+  },
+  {
+    path: '/notes/the-books-that-became-me',
+    priority: '0.7',
+    title: { en: 'The books that became part of me | Eden Tan', zh: '那些书最后变成了我 | Eden Tan' },
+    desc: { en: 'How books on habits, strategy, relationships, marketing, and work slowly became Eden Tan’s personal operating system.', zh: '习惯、策略、关系、营销与工作的书，怎样慢慢变成 Eden Tan 自己的 operating system。' },
+  },
+  {
+    path: '/notes/judgment-is-not-more-information',
+    priority: '0.7',
+    title: { en: 'Judgment is not knowing more | Eden Tan', zh: '判断不是知道更多 | Eden Tan' },
+    desc: { en: 'More data does not automatically create better decisions. Judgment begins by deciding what matters.', zh: '更多 data 不会自动带来更好的决定。判断从决定什么才重要开始。' },
+  },
+  {
+    path: '/notes/human-nature-is-a-design-condition',
+    priority: '0.7',
+    title: { en: 'Human nature is a design condition | Eden Tan', zh: '人性不是借口，是设计条件 | Eden Tan' },
+    desc: { en: 'Good products and systems are designed for real human behavior, not ideal users.', zh: '好的产品与系统应该设计在真实人性上，而不是只适合理想中的用户。' },
+  },
+  {
+    path: '/notes/win-before-you-fight',
+    priority: '0.7',
+    title: { en: 'Win before you fight | Eden Tan', zh: '先胜后战 | Eden Tan' },
+    desc: { en: 'Strategy is deciding which battlefield deserves your effort before entering it.', zh: 'Strategy 是在行动之前先决定，哪个 battlefield 值得你用力。' },
+  },
+  {
     path: '/life',
     priority: '0.8',
     index: false,

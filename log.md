@@ -16,6 +16,28 @@
 
 ## Entries
 
+### 2026-07-21 · The books that became part of me article
+
+- 类型：内容 / Notes / 阅读影响 synthesis
+- 改动：新增原创文章《那些书最后变成了我》，整理《七个习惯》《孙子兵法》《厚黑学》《人性的弱点》《蔡康永的说话之道》《营销管理》、杜拉克与《Eden Book》如何共同形成 Eden 的判断方式。
+- 改动：文章不做逐本摘要，而以五段脉络说明责任与整合、局势与边界、理解与关系、价值与系统，以及最早已经存在的个人母题；提供完整中英文内容、Core thesis 与 source chips。
+- 改动：文章置于 `/notes` 列表首位，Published count 从 08 更新为 09，并新增 `/notes/the-books-that-became-me` SEO route。
+- 原因：用户希望把“我被哪些书影响”这一分析正式写进 Notes。
+- 影响：Notes 增加一篇更直接连接阅读史、个人品牌与 Human Systems 世界观的核心文章。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.14s）。
+- 后续：无。
+
+### 2026-07-21 · Four original synthesis notes published on site
+
+- 类型：内容 / Notes / 新文章路由
+- 改动：将 Obsidian `Book` folder 新写的四篇 synthesis notes 正式发布到网站 Notes：`把混乱变成系统`、`判断不是知道更多`、`人性不是借口，是设计条件`、`先胜后战`。
+- 改动：新增四个 `/notes/:slug` 独立 route，使用当前 editorial article template、最新 compact menu bar、Core thesis、完整双语正文 section 与 source-book chips。
+- 改动：四篇原创 synthesis 排在 `/notes` 列表最前面，原有四篇 Build Notes 保留，Published count 从 04 更新为 08；同步 SEO registry 与 README。
+- 原因：用户说明这些 notes 应该放在网站 Notes 页面，而不只是 Obsidian Book folder。
+- 影响：Notes 现在同时包含 Eden 原创观点文章与 build notes，形成可持续扩充的公开文章 archive。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.17s）。
+- 后续：Obsidian 文件继续作为原稿 source；未来可把文章内容抽成 markdown ingest，避免 App.tsx 内手动维护。
+
 ### 2026-07-21 · Projects route removed
 
 - 类型：路由 / 导航 / 公开信息架构

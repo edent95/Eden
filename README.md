@@ -70,6 +70,7 @@ npm run preview
 - `/wiki/rag-flow` — Tag Registry 与 RAG flow 知识架构页
 - `/film-gallery` — Film Gallery / 胶片图库（旧 `/analog-tech` 会自动换到新地址）
 - `/notes` — Eden 发布的文章与 Build Notes 归档
+- `/notes/:slug` — Eden 原创 synthesis note 独立文章页
 - `/life-os` — 人生 RPG 能力系统 / Life OS 角色档案页
 - `/life` — Life 视频页（隐藏直达页；不在首页入口，不进 sitemap，客户端 SEO 设为 noindex）
 - `/brand-guide` — 持续与 `log.md` 对齐的 Brand Guide：核心主张、视觉、语气、版式、资产类型、动效与实现规则

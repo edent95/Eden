@@ -218,6 +218,36 @@
   color: var(--notes-accent);
 }
 
+.notes-essay-mark {
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  background: var(--notes-accent-soft);
+  color: var(--notes-accent-ink);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -.04em;
+}
+
+.notes-article-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 30px;
+}
+
+.notes-article-sources span {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  padding: 0 12px;
+  border: 1px solid color-mix(in srgb, var(--eden-ink) 15%, transparent);
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--eden-ink) 60%, transparent);
+  font-size: 12px;
+  font-weight: 650;
+}
+
 .notes-article-hero h1 {
   max-width: 880px;
   margin-top: 22px;

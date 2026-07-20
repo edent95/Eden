@@ -10578,7 +10578,228 @@ const HomeManifesto: React.FC<{ language: Language }> = ({ language }) => {
   );
 };
 
+type SiteEssayNote = {
+  slug: string;
+  title: Record<Language, string>;
+  summary: Record<Language, string>;
+  category: Record<Language, string>;
+  thesis: Record<Language, string>;
+  sources: string[];
+  sections: Array<{
+    title: Record<Language, string>;
+    paragraphs: Record<Language, string[]>;
+  }>;
+};
+
+const siteEssayNotes: SiteEssayNote[] = [
+  {
+    slug: 'the-books-that-became-me',
+    title: { en: 'The books that became part of me', zh: '那些书最后变成了我' },
+    summary: {
+      en: 'I was not shaped by one book. I took responsibility from one, strategy from another, and slowly turned them into my own operating system.',
+      zh: '我不是被某一本书塑造的。我从不同的书里拿走责任、边界、策略和价值，最后慢慢拼成自己的 operating system。',
+    },
+    category: { en: 'Reading & identity', zh: '阅读与自我' },
+    thesis: {
+      en: 'I learned to understand myself, read the rules, and build a system that can survive reality without betraying who I am.',
+      zh: '我学到的，是先看懂自己，再看懂规则；然后建立一套既不会背叛自己，也能在现实里持续运行的系统。',
+    },
+    sources: ['七个习惯', '孙子兵法', '厚黑学', '人性的弱点', '蔡康永的说话之道', '营销管理', '杜拉克- 行销与创新', 'Eden Book'],
+    sections: [
+      {
+        title: { en: 'The Seven Habits gave me a skeleton', zh: '《七个习惯》给了我骨架' },
+        paragraphs: {
+          en: ['The deepest influence was not a quote. It was the idea that a person can choose a response, define an ending, and build life around principles instead of circumstances.', 'That idea later became my obsession with integration. I do not just want to become more productive. I want the complicated parts of me to stop fighting and begin operating as one whole person.'],
+          zh: ['对我影响最深的，不是哪一句金句，而是一个人可以选择回应、先定义终点，再用原则而不是环境来安排自己。', '这后来变成了我对「整合」的执着。我不只是想变得更有效率。我想让自己复杂的部分不再互相打架，最后能够作为一个完整的人运行。'],
+        },
+      },
+      {
+        title: { en: 'Sun Tzu and Thick Black Theory taught me boundaries', zh: '《孙子兵法》和《厚黑学》教我边界' },
+        paragraphs: {
+          en: ['They taught me to read the field before investing myself: who sets the rules, what each person wants, what I might lose, and whether this battle deserves to become mine.', 'I did not keep the manipulative parts. What stayed was defensive strategy: leave an exit, do not confuse kindness with weakness, and do not place every relationship at the same level.'],
+          zh: ['它们让我在投入之前先看局：规则是谁定的、每个人想要什么、我可能失去什么，以及这一场到底值不值得成为我的战争。', '我没有留下操控别人的部分。真正留下来的，是防御型 strategy：为自己保留后路，不把善良变成软弱，也不再把所有关系放进同一个位置。'],
+        },
+      },
+      {
+        title: { en: 'Carnegie and Tsai taught me what it means to be received', zh: '卡耐基和蔡康永教我什么叫被接住' },
+        paragraphs: {
+          en: ['People want to feel important, understood, and respected. Communication is not only about saying the correct thing; it is also about giving another person somewhere to stand.', 'But my question has changed over time. It used to be: how do I understand people and make them comfortable? Now it is also: who is willing to understand me, and which relationship lets both people remain themselves?'],
+          zh: ['人想被重视、被理解、被尊重。沟通不只是把正确的话说出来，也要给对方一个接得住的位置。', '但我的问题后来变了。以前是：我怎样理解别人，让别人舒服？现在还多了一句：谁愿意理解我，哪一种关系能让两个人都不需要把自己弄丢？'],
+        },
+      },
+      {
+        title: { en: 'Marketing and Drucker changed how I see work', zh: 'Marketing 和杜拉克改变了我看工作的方式' },
+        paragraphs: {
+          en: ['Work stopped being only a job title. Value could come from judgment, structure, method, taste, and the ability to turn experience into something repeatable.', 'That is why I keep thinking in systems. I do not want to sell only time. I want every build to leave behind a clearer model, a reusable workflow, or a better way to decide.'],
+          zh: ['工作不再只是一个岗位。价值可以来自判断、结构、方法、品味，以及把经验变成可重复能力的整合力。', '所以我会一直想到 system。我不想只卖时间。我希望每一次 build 都留下更清楚的模型、可以复用的 workflow，或下一次更好的判断方式。'],
+        },
+      },
+      {
+        title: { en: 'The earliest theme was already mine', zh: '最早的母题，本来就是我的' },
+        paragraphs: {
+          en: ['Long before I could name these frameworks, Eden Book was already recording freedom, travel, love, loneliness, direction, and the fear of losing myself while adapting to the world.', 'The books gave language and structure to those questions. Experience decided which parts stayed. What remains now is not a reading list. It is a personal system: understand myself, understand the field, protect what matters, and turn what I live through into work that can last.'],
+          zh: ['在我会说这些 framework 之前，《Eden Book》已经在写自由、旅行、爱情、孤独、方向，还有为了适应世界而失去自己的恐惧。', '书只是给了这些问题语言和结构，经历才决定最后留下什么。现在留下来的已经不是一张阅读清单，而是一套自己的 system：看懂自己，看懂局，保护重要的东西，再把活过的经验变成可以留下来的作品。'],
+        },
+      },
+    ],
+  },
+  {
+    slug: 'turn-chaos-into-systems',
+    title: { en: 'Turn chaos into systems', zh: '把混乱变成系统' },
+    summary: {
+      en: 'The point of a system is not to look sophisticated. It is to make the same confusion unnecessary the second time.',
+      zh: 'System 不是为了显得复杂。它真正的价值，是让同一种混乱不需要发生第二次。',
+    },
+    category: { en: 'System thinking', zh: '系统思考' },
+    thesis: {
+      en: 'Automation is not the value. Removing repeated confusion is the value.',
+      zh: 'Automation 不是价值。减少重复的混乱，才是价值。',
+    },
+    sources: ['数字会说话', '营销管理', '商弈'],
+    sections: [
+      {
+        title: { en: 'The same fire should not need saving twice', zh: '同样的火，不应该救第二次' },
+        paragraphs: {
+          en: ['I used to think capable people knew more, reacted faster, and could answer anything immediately. Building dashboards, products, and AI changed that view.', 'Real capability is not endless firefighting. It is turning a repeated problem into a rule, a workflow, or a boundary so the same fire does not return.'],
+          zh: ['我以前会觉得，厉害的人就是知道很多、反应很快、什么问题都能马上回答。后来做 Dashboard、product 和 AI，我才发现，不是这样。', '真正厉害的不是一直救火。是把重复出现的问题变成规则、workflow 或 boundary，让同样的火不需要再救第二次。'],
+        },
+      },
+      {
+        title: { en: 'Separate input, judgment, and action', zh: '先分开输入、判断与行动' },
+        paragraphs: {
+          en: ['Messy work usually mixes three things together: what enters the system, how it is judged, and what action should follow.', 'A spreadsheet is not always messy because of Excel. Sometimes every person simply means something different when they use the same number. A team that keeps asking questions may not be weak; the system may never have explained what happened, why it matters, and what comes next.'],
+          zh: ['很多工作看起来很乱，其实只是三个东西没有被分开：输入是什么，中间用什么规则判断，最后要产生什么行动。', 'Excel 很乱，不一定是 Excel 的问题。可能是每个人对同一个数字有不同定义。团队一直追问，也不一定是他们不会。可能是 system 从来没有告诉他们：发生了什么、为什么发生、下一步应该做什么。'],
+        },
+      },
+      {
+        title: { en: 'Where a system should appear', zh: 'System 应该出现在哪里' },
+        paragraphs: {
+          en: ['Look for work that repeats daily, judgment that depends on one person remembering, information nobody understands after its owner leaves, and mistakes that should only happen once.', 'A good system keeps complexity inside and gives clarity to the person outside. It should let people spend less attention on unimportant repetition and more on the judgment that still needs a human.'],
+          zh: ['我现在会找四种地方：每天都在重复的动作、只能靠某个人记得的判断、人一离开就没人看得懂的资料，以及理论上不该发生第二次的错误。', '好的 system 会把复杂留在里面，把清楚交给外面的人。它让人少想一点不重要的重复，把注意力留给真正需要判断的地方。'],
+        },
+      },
+    ],
+  },
+  {
+    slug: 'judgment-is-not-more-information',
+    title: { en: 'Judgment is not knowing more', zh: '判断不是知道更多' },
+    summary: {
+      en: 'More data does not automatically produce a better decision. Often the missing piece is deciding what matters.',
+      zh: '更多 data 不会自动带来更好的决定。很多时候缺的不是资料，而是先决定什么才重要。',
+    },
+    category: { en: 'Data & judgment', zh: '数据与判断' },
+    thesis: {
+      en: 'Information tells you what happened. Judgment decides what you are willing to trade next.',
+      zh: 'Information 告诉你发生了什么。Judgment 决定你接下来愿意牺牲什么。',
+    },
+    sources: ['数字会说话', '薛兆丰的经济学讲义', '营销管理'],
+    sections: [
+      {
+        title: { en: 'The “so what?” problem', zh: '那个 So what 的问题' },
+        paragraphs: {
+          en: ['Data creates an easy illusion: one more chart, one more metric, and the answer will appear. But a dashboard can hold a hundred numbers and still leave the user asking, “So what?”', 'Numbers show that something moved. Judgment places that movement inside context. A sales drop might come from traffic, conversion, stock, seasonality, or an unusually strong previous month.'],
+          zh: ['Data 很容易让人产生一种错觉：只要再多看一点，就会更接近答案。但 dashboard 可以放一百个数字，用户最后还是会问：So what？', '数字只能告诉你某个东西发生了变化。真正的判断，是把这个变化放进 context。Sales 掉了，可能是流量、conversion、库存、淡季，甚至只是上个月刚好太好。'],
+        },
+      },
+      {
+        title: { en: 'Four questions behind a number', zh: '一个数字后面的四个问题' },
+        paragraphs: {
+          en: ['Ask what it is compared with, why it changed, who is affected, and whether it deserves action now.', 'Good analysis does not deliver the most information. It shortens the distance between seeing and deciding.'],
+          zh: ['看到一个数字，至少要问四件事：跟谁比、为什么变、影响谁，以及现在值得行动还是继续观察。', '好的分析不是给最多 information。它是帮人缩短从「看到」到「决定」之间的距离。'],
+        },
+      },
+      {
+        title: { en: 'A small decision format', zh: '一个很小的判断格式' },
+        paragraphs: {
+          en: ['Write four lines: Signal — what changed? Context — why does it matter? Trade-off — what will action cost? Next move — what is the smallest safe step?', 'If those four lines are impossible to write, more data may not be the answer. The problem itself may still be unclear.'],
+          zh: ['我会先写四句话：Signal，什么变了？Context，为什么值得注意？Trade-off，行动会牺牲什么？Next move，现在最小、最安全的下一步是什么？', '如果四句话写不出来，可能还不需要更多 data。可能只是问题本身还没想清楚。'],
+        },
+      },
+    ],
+  },
+  {
+    slug: 'human-nature-is-a-design-condition',
+    title: { en: 'Human nature is a design condition', zh: '人性不是借口，是设计条件' },
+    summary: {
+      en: 'People forget, protect themselves, and take easier paths. Good systems are designed for those realities, not ideal users.',
+      zh: '人会忘记、保护自己，也会走比较容易的路。好的 system 应该设计在这些现实上。',
+    },
+    category: { en: 'Human systems', zh: '人与系统' },
+    thesis: {
+      en: 'Do not design a system that only ideal people can use correctly.',
+      zh: '不要设计一个只有理想中的人才会用对的 system。',
+    },
+    sources: ['人性的弱点', '商弈', '七个习惯'],
+    sections: [
+      {
+        title: { en: 'Blaming people is not a design', zh: '怪人，不是一种设计' },
+        paragraphs: {
+          en: ['Management language often sounds like this: the employee is not proactive, the user has no patience, the team cannot execute. These statements may be true, but they do not solve anything.', 'When the same failure repeats, blaming the person is often a way to avoid designing the system.'],
+          zh: ['做 management 的时候，我们很喜欢说：这个人不够主动、那个用户没有耐心、这个团队执行力不行。可能都是真的，但没有什么用。', '如果一个问题会不断重复，单纯怪人，通常只是在逃避 system design。'],
+        },
+      },
+      {
+        title: { en: 'Design for real behavior', zh: '设计在真实行为上' },
+        paragraphs: {
+          en: ['People forget, protect their status, follow the easier path, and copy others under uncertainty. These are not bugs. They are operating conditions.', 'An unclear button produces random clicks. Unclear ownership makes teams wait. Rewards based only on outcomes make people beautify numbers. Punishing every mistake teaches people to hide problems.'],
+          zh: ['人会懒、会忘记、会保护自己、会选择比较容易的路，也会在不确定的时候跟着别人走。这些不是 bug，而是 operating condition。', '按钮不清楚，用户就会乱点。责任不清楚，团队就会互相等。奖励只看结果，人就会把数字做漂亮。犯错只会被骂，人就会开始隐藏问题。'],
+        },
+      },
+      {
+        title: { en: 'Four questions about behavior', zh: '关于行为的四个问题' },
+        paragraphs: {
+          en: ['What immediate benefit does the action give? What does the person fear losing? Which path is easiest? When something fails, does the system help correction or encourage concealment?', 'Understanding human nature is not permission to manipulate. It is a way to make fewer assumptions, blame less, and build something people can actually use.'],
+          zh: ['我会问：这个动作对他有什么好处？他最怕失去什么？最容易走的路是哪一条？出错时，system 会帮助修正，还是鼓励隐藏？', '理解人性，不是为了 manipulate people。是为了少一点假设，少一点责怪，多一点真的可以用的设计。'],
+        },
+      },
+    ],
+  },
+  {
+    slug: 'win-before-you-fight',
+    title: { en: 'Win before you fight', zh: '先胜后战' },
+    summary: {
+      en: 'Strategy is not about pushing harder. It is deciding which battlefield deserves your effort before you enter it.',
+      zh: 'Strategy 不是教你怎样更用力，而是在进去之前先决定，哪个 battlefield 值得你用力。',
+    },
+    category: { en: 'Strategy', zh: '策略' },
+    thesis: {
+      en: 'Strategy does not teach you to push harder. It teaches you where effort is not worth spending.',
+      zh: 'Strategy 不是教你怎样更用力。是教你哪里不值得用力。',
+    },
+    sources: ['孙子兵法', '厚黑学', '不完美人生经验法则'],
+    sections: [
+      {
+        title: { en: 'Moving fast into a bad game', zh: '很快地走进一个烂局' },
+        paragraphs: {
+          en: ['Action is often confused with speed. I used to think the same way. Later I learned that some speed only gets you into a bad game faster.', 'Effective action is not a hard fight every time. Avoid starting when you are weakest, the other side is strongest, and the rules already work against you.'],
+          zh: ['很多人把行动力理解成：想到就做，越快越好。我以前也会这样。后来才发现，有些快只是很快地走进一个烂局。', '真正有效的行动，不是每一次都 hard fight。是尽量不要在自己最弱、对方最强、规则又不利的时候开战。'],
+        },
+      },
+      {
+        title: { en: 'Define the win condition first', zh: '先定义什么叫赢' },
+        paragraphs: {
+          en: ['Before acting, ask what winning means, who set the battlefield rules, what resources each side controls, whether another entry exists, and how you leave if the worst case happens.', 'Proving yourself, defeating someone, and getting the result are three different goals. They may look similar, but they demand very different moves.'],
+          zh: ['行动之前，先问：我真正要赢的是什么？规则是谁定的？双方有什么筹码？正面打不过有没有别的入口？最坏情况发生时怎么退？', '想证明自己、想赢过某个人、想拿到结果，是三个不同目标。看起来很像，却会导向完全不同的动作。'],
+        },
+      },
+      {
+        title: { en: 'Six moves, not two', zh: '不是只有打与不打' },
+        paragraphs: {
+          en: ['A situation offers at least six moves: fight directly, go around, delay, retreat, change the field, or form an alliance.', 'The highest-risk mistake is fighting a battle with no upside just to prove courage. Maturity is not winning every fight. It is knowing which fight deserves to become yours.'],
+          zh: ['一个局至少有六种动作：正打、绕打、拖、退、换场、结盟。不是只有「打」和「不打」。', '最危险的动作，是为了证明自己勇敢，在一个没有 upside 的地方硬碰。成熟不是每一场都赢，而是越来越清楚，哪一场值得成为自己的战争。'],
+        },
+      },
+    ],
+  },
+];
+
 const publishedNotes = [
+  ...siteEssayNotes.map((note) => ({
+    title: note.title,
+    summary: note.summary,
+    category: note.category,
+    href: `notes/${note.slug}`,
+  })),
   {
     title: { en: 'Button feedback is part of the system', zh: '按钮反馈，本来就是系统的一部分' },
     summary: {
@@ -10676,6 +10897,79 @@ const NotesPage: React.FC<{
               ))}
             </div>
           </section>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+const SiteEssayNotePage: React.FC<{
+  note: SiteEssayNote;
+  homeHref: string;
+  baseUrl: string;
+  language: Language;
+  setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
+  theme: Theme;
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ note, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
+  const isZh = language === 'zh';
+  const notesHref = joinBasePath(baseUrl, 'notes');
+
+  return (
+    <div className="page-shell notes-article-page min-h-screen">
+      <main className="notes-article-main">
+        <div className="notes-article-island">
+          <div className="notes-topbar">
+            <a href={notesHref} className="notes-back-link">
+              <ArrowLeft size={17} />
+              {isZh ? '返回 Notes' : 'Back to Notes'}
+            </a>
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+              compactThemeOnSelection
+              compactLanguageOnSelection
+            />
+          </div>
+
+          <header className="notes-article-hero">
+            <div className="notes-article-mark notes-essay-mark" aria-hidden>ET</div>
+            <p className="notes-eyebrow">{note.category[language]}</p>
+            <h1>{note.title[language]}</h1>
+            <p className="notes-article-deck">{note.summary[language]}</p>
+            <div className="notes-article-sources" aria-label={isZh ? '来源书目' : 'Source books'}>
+              {note.sources.map((source) => <span key={source}>{source}</span>)}
+            </div>
+          </header>
+
+          <article className="notes-article-body">
+            <blockquote className="notes-article-thesis">
+              <span>Core thesis</span>
+              <p>{note.thesis[language]}</p>
+            </blockquote>
+            <div className="notes-article-sections">
+              {note.sections.map((section, index) => (
+                <section key={section.title.en} className="notes-article-section">
+                  <div className="notes-article-section-number">{String(index + 1).padStart(2, '0')}</div>
+                  <div>
+                    <h2>{section.title[language]}</h2>
+                    <div className="notes-article-points">
+                      {section.paragraphs[language].map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                    </div>
+                  </div>
+                </section>
+              ))}
+            </div>
+          </article>
+
+          <footer className="notes-article-footer">
+            <p>{isZh ? '继续阅读 Eden 的文章与 build notes' : "Keep reading Eden's essays and build notes"}</p>
+            <a href={notesHref}>{isZh ? '回到全部 Notes' : 'View all Notes'} <span aria-hidden>→</span></a>
+          </footer>
         </div>
       </main>
     </div>
@@ -11043,6 +11337,8 @@ const App: React.FC = () => {
   const activeWikiEntry = wikiEntries.find((item) => item.slug === wikiSlug);
   const isWikiPage = pathWithoutBase === '/wiki' || Boolean(activeWikiEntry);
   const isFilmGalleryFullPage = pathWithoutBase === '/film-gallery' || pathWithoutBase === '/analog-tech';
+  const siteEssaySlug = pathWithoutBase.startsWith('/notes/') ? pathWithoutBase.replace('/notes/', '') : '';
+  const activeSiteEssay = siteEssayNotes.find((note) => note.slug === siteEssaySlug);
   const isNotesPage = pathWithoutBase === '/notes';
   const isLifeOsFullPage = pathWithoutBase === '/life-os';
   const isLifeFullPage = pathWithoutBase === '/life';
@@ -11167,6 +11463,21 @@ const App: React.FC = () => {
   if (isFilmGalleryFullPage) {
     return (
       <FilmGalleryFullPage
+        homeHref={homeHref}
+        baseUrl={baseUrl}
+        language={language}
+        setLanguage={setLanguage}
+        themePreference={themePreference}
+        theme={theme}
+        setThemePreference={setThemePreference}
+      />
+    );
+  }
+
+  if (activeSiteEssay) {
+    return (
+      <SiteEssayNotePage
+        note={activeSiteEssay}
         homeHref={homeHref}
         baseUrl={baseUrl}
         language={language}
