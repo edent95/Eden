@@ -10,13 +10,13 @@ export type RouteSeo = {
 };
 
 export const HOME_TITLE: Record<SeoLanguage, string> = {
-  en: 'Eden Tan | Knowledge should compound',
-  zh: 'Eden Tan | 知识应该持续累积',
+  en: 'Eden Tan | Human, interpreted. Systems, built.',
+  zh: 'Eden Tan | 理解人，建立系统',
 };
 
 export const HOME_DESC: Record<SeoLanguage, string> = {
-  en: 'Eden Tan designs product systems, growth logic, AI workflows, and knowledge structures so scattered work becomes reusable operating memory.',
-  zh: 'Eden Tan 设计产品系统、增长逻辑、AI 工作流和知识结构，把散乱工作整理成能复用的操作记忆。',
+  en: 'Eden Tan turns complex human behavior and messy realities into useful products, data, and AI systems.',
+  zh: 'Eden Tan 把复杂的人性、行为与现实问题，转化成可以被理解、验证和使用的数据、产品与 AI 系统。',
 };
 
 export const ROUTE_SEO: RouteSeo[] = [
@@ -27,15 +27,29 @@ export const ROUTE_SEO: RouteSeo[] = [
     desc: HOME_DESC,
   },
   {
+    path: '/icon-prompts',
+    priority: '0.1',
+    index: false,
+    sitemap: false,
+    title: {
+      en: 'Product Icon Prompt Studio | Eden Tan',
+      zh: '产品 Icon Prompt Studio | Eden Tan',
+    },
+    desc: {
+      en: 'A private prompt workspace for generating coordinated 2×2 product icon grids.',
+      zh: '用于生成统一产品四宫格图标的隐藏 Prompt 工作页。',
+    },
+  },
+  {
     path: '/jiju-pet',
     priority: '0.8',
     title: {
-      en: 'Jiju.pet build log | Eden Tan',
-      zh: 'Jiju.pet 构建记录 | Eden Tan',
+      en: 'Jiju | Trusted pet-friendly local discovery',
+      zh: 'Jiju | 值得相信的宠物友好地点发现',
     },
     desc: {
-      en: 'How Jiju.pet went from fragile to shippable: auth, routes, analytics, and mobile UX — a structured zero-to-one operating log by Eden Tan.',
-      zh: 'Jiju.pet 从易碎到可交付的过程：认证、路由、埋点与移动端体验加固——Eden Tan 的阶段性构建实录。',
+      en: 'Discover genuinely pet-friendly places, check real policies and conditions, keep pet profiles and visit memories, and contribute trusted local context with Jiju.',
+      zh: '用 Jiju 发现真正宠物友好的地点，确认真实政策与现场条件，保存宠物档案和到访记忆，并共同补充可信的本地资料。',
     },
   },
   {
@@ -92,12 +106,12 @@ export const ROUTE_SEO: RouteSeo[] = [
     path: '/etreporthub-sales',
     priority: '0.8',
     title: {
-      en: 'ETReportHub Pricing | RM960/month or RM19,888 buyout',
-      zh: 'ETReportHub 售卖页 | RM960/月或 RM19,888 买断',
+      en: 'ETReportHub Pricing | RM4,890 launch package',
+      zh: 'ETReportHub 售卖页 | RM4,890 上线套餐',
     },
     desc: {
-      en: 'Why iGaming operators and aggregators should buy ETReportHub: daily report clarity, Excel risk reduction, CRM-ready exports, RM960/month or RM19,888 buyout.',
-      zh: '为什么 iGaming operator 和 aggregator 应该购买 ETReportHub：日报清晰度、降低 Excel 风险、CRM-ready 导出，RM960/月或 RM19,888 买断。',
+      en: 'Why iGaming operators and aggregators should buy ETReportHub: daily report clarity, Excel risk reduction, CRM-ready exports, and an RM4,890 launch package.',
+      zh: '为什么 iGaming operator 和 aggregator 应该购买 ETReportHub：日报清晰度、降低 Excel 风险、CRM-ready 导出，以及 RM4,890 上线套餐。',
     },
   },
   {
@@ -108,8 +122,8 @@ export const ROUTE_SEO: RouteSeo[] = [
       zh: 'Friday Poker Club | Eden Tan 的浏览器德州牌桌主机',
     },
     desc: {
-      en: 'Friday Poker Club is a Firebase-realtime Hold’em host: solo BOT and public host-started tables, stakes-aware buy-ins, invite links, optional in-table voice, and an 8/9 mini game.',
-      zh: 'Friday Poker Club 是基于 Firebase 实时数据库的德州牌桌主机：单人 BOT 房与公开房主开桌、盲注感买入、邀请链接、可选语音和 8/9 小游戏。',
+      en: 'A browser Hold’em table for private games: create a room, invite the crew, buy in, play in realtime, and keep the stories that happen around the table.',
+      zh: '为熟人局设计的浏览器德州牌桌：创建房间、邀请朋友、买入、实时开局，并留下那群人在桌边发生的故事。',
     },
   },
   {
@@ -221,7 +235,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
   },
   {
-    path: '/analog-tech',
+    path: '/film-gallery',
     priority: '0.8',
     title: {
       en: 'Film Gallery | Eden Tan',
@@ -266,8 +280,8 @@ export const ROUTE_SEO: RouteSeo[] = [
       zh: 'Brand Guide | 视觉、语气、版式与动效规则',
     },
     desc: {
-      en: 'A practical brand guide covering visual direction, typography, color, voice, layout rhythm, motion language, and reusable CSS rules.',
-      zh: '一份实用 Brand Guide，整理视觉方向、字体、色彩、语气、版式节奏、动效语言和可复用 CSS 规则。',
+      en: 'A living brand guide for a compounding knowledge system: thesis, layout, theme colors, typography, voice, visual assets, motion, and implementation rules.',
+      zh: '一份持续更新的 Brand Guide，整理知识复利主张、版式、主题色、字体、语气、视觉资产、动效和实现规则。',
     },
   },
   {

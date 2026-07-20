@@ -25,9 +25,9 @@ Each reusable visual should have:
 
 - `id`: stable kebab-case ID.
 - `title`: public display name.
-- `category`: `project-icon`, `home-system`, `home-interest`, `office-icon`, `math-magic-icon`, `elemental-icon`, or `wiki-icon`.
+- `category`: `project-icon`, `home-selected-work-banner`, `home-system`, `home-interest`, `office-icon`, `math-magic-icon`, `elemental-icon`, or `wiki-icon`.
 - `sourceRoute`: where the visual appears first.
-- `ratio`: use `1:1` for icons, `transparent-totem` for transparent symbolic art.
+- `ratio`: use `1:1` for icons, `banner` for wide feature visuals, and `transparent-totem` for transparent symbolic art.
 - `background`: `framed`, `transparent`, or `scene`.
 - `supportsDarkMode`: should be `true` for public page visuals.
 - `supportsReducedMotion`: should be `true` for animated visuals.
@@ -85,12 +85,18 @@ import { homeInterestCssArtItems } from './css-art.registry';
 - `projects-friday-poker-club`
 - `projects-etreporthub`
 - `projects-crm-intelligence-system`
+- `home-selected-work-edwin-dashboard`
+- `home-selected-work-jiju`
+- `home-selected-work-life-as-a-dataset`
+- `home-conway-game-banner`
+- `home-film-gallery-banner`
 - `home-projects-hub-blueprint`
 - `home-life-os-magic`
 - `home-life-os-power-up`
 - `home-analog-tech-gramophone`
+- `home-film-gallery-app-icon`
 - `home-pattern-archive-bagua`
-- `home-conway-pyramid-break`
+- `home-conway-magic-circle`
 - `office-desk-calendar`
 - `office-inbox-tray`
 - `office-report-sheet`

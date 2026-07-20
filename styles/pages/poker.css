@@ -769,3 +769,12 @@
     border-radius: 1.5rem;
   }
 }
+.poker-store-page {
+  --et-product-blue: #2b8a62;
+  --et-product-line: color-mix(in srgb, var(--theme-text-primary) 13%, transparent);
+}
+
+.poker-store-page .etreport-store-get { background: #176447; }
+.poker-store-page .etreport-live-demo-frame { box-shadow: 0 28px 80px rgb(16 49 39 / .16); }
+.poker-store-page .etreport-store-icon,
+.poker-store-page .etreport-app-final > :first-child { filter: saturate(.88); }

@@ -215,6 +215,163 @@ export const HomeArchiveEvolutionTotem: React.FC<{ label: string }> = ({ label }
   </div>
 );
 
+export const FilmGalleryCssIcon: React.FC<{ label: string }> = ({ label }) => (
+  <div className="film-app-icon" role="img" aria-label={label}>
+    <span className="film-app-strip">
+      <span className="film-app-perforations perforations-top" />
+      <span className="film-app-perforations perforations-bottom" />
+    </span>
+    <span className="film-app-frame">
+      <span className="film-app-sun" />
+      <span className="film-app-horizon horizon-back" />
+      <span className="film-app-horizon horizon-front" />
+    </span>
+    <span className="film-app-reel reel-left"><i /><i /><i /></span>
+    <span className="film-app-reel reel-right"><i /><i /><i /></span>
+    <span className="film-app-counter">11</span>
+  </div>
+);
+
+export const HomeFilmGalleryBanner: React.FC<{ label: string }> = ({ label }) => (
+  <div className="film-gallery-banner" role="img" aria-label={label}>
+    <span className="film-banner-strip" aria-hidden="true">
+      <span className="film-banner-perforations perforations-top">
+        {Array.from({ length: 14 }, (_, index) => <i key={`top-${index}`} style={{ left: `${3 + index * 7.2}%` }} />)}
+      </span>
+      <span className="film-banner-perforations perforations-bottom">
+        {Array.from({ length: 14 }, (_, index) => <i key={`bottom-${index}`} style={{ left: `${3 + index * 7.2}%` }} />)}
+      </span>
+      <span className="film-banner-frame frame-a">
+        <i className="film-banner-sun" />
+        <i className="film-banner-horizon horizon-back" />
+        <i className="film-banner-horizon horizon-front" />
+      </span>
+      <span className="film-banner-frame frame-b">
+        <i className="film-banner-arch arch-a" />
+        <i className="film-banner-arch arch-b" />
+        <i className="film-banner-floor" />
+      </span>
+      <span className="film-banner-frame frame-c">
+        <i className="film-banner-moon" />
+        <i className="film-banner-roof roof-back" />
+        <i className="film-banner-roof roof-front" />
+      </span>
+    </span>
+    <span className="film-banner-reel reel-left" aria-hidden="true"><i /><i /><i /></span>
+    <span className="film-banner-reel reel-right" aria-hidden="true"><i /><i /><i /></span>
+    <span className="film-banner-counter" aria-hidden="true">15 FRAMES</span>
+  </div>
+);
+
+export const HomeEdwinDashboardBanner: React.FC<{ label: string }> = ({ label }) => (
+  <div className="home-work-banner home-work-dashboard" role="img" aria-label={label}>
+    <span className="home-work-dashboard-window" />
+    <span className="home-work-dashboard-topbar" />
+    <span className="home-work-dashboard-dot dot-a" />
+    <span className="home-work-dashboard-dot dot-b" />
+    <span className="home-work-dashboard-dot dot-c" />
+    <span className="home-work-dashboard-sidebar" />
+    <span className="home-work-dashboard-nav nav-a" />
+    <span className="home-work-dashboard-nav nav-b" />
+    <span className="home-work-dashboard-nav nav-c" />
+    <span className="home-work-dashboard-metric metric-a" />
+    <span className="home-work-dashboard-metric metric-b" />
+    <span className="home-work-dashboard-metric metric-c" />
+    <span className="home-work-dashboard-grid" />
+    <span className="home-work-dashboard-bar bar-a" />
+    <span className="home-work-dashboard-bar bar-b" />
+    <span className="home-work-dashboard-bar bar-c" />
+    <span className="home-work-dashboard-bar bar-d" />
+    <span className="home-work-dashboard-trend trend-a" />
+    <span className="home-work-dashboard-trend trend-b" />
+    <span className="home-work-dashboard-trend trend-c" />
+    <span className="home-work-dashboard-signal" />
+  </div>
+);
+
+export const HomeJijuDiscoveryBanner: React.FC<{ label: string }> = ({ label }) => (
+  <div className="home-work-banner home-work-jiju" role="img" aria-label={label}>
+    <span className="home-work-jiju-map" />
+    <span className="home-work-jiju-block block-a" />
+    <span className="home-work-jiju-block block-b" />
+    <span className="home-work-jiju-block block-c" />
+    <span className="home-work-jiju-road road-a" />
+    <span className="home-work-jiju-road road-b" />
+    <span className="home-work-jiju-route route-a" />
+    <span className="home-work-jiju-route route-b" />
+    <span className="home-work-jiju-route route-c" />
+    <span className="home-work-jiju-pin pin-a" />
+    <span className="home-work-jiju-pin pin-b" />
+    <span className="home-work-jiju-traveler" />
+    <span className="home-work-jiju-card" />
+    <span className="home-work-jiju-cat-body" />
+    <span className="home-work-jiju-cat-tail" />
+    <span className="home-work-jiju-cat-head" />
+    <span className="home-work-jiju-cat-ear ear-a" />
+    <span className="home-work-jiju-cat-ear ear-b" />
+    <span className="home-work-jiju-verified" />
+  </div>
+);
+
+export const HomeLifeDatasetBanner: React.FC<{ label: string }> = ({ label }) => (
+  <div className="home-work-banner home-work-life-data" role="img" aria-label={label}>
+    <span className="home-work-life-grid" />
+    <span className="home-work-life-axis axis-x" />
+    <span className="home-work-life-axis axis-y" />
+    <span className="home-work-life-card card-a" />
+    <span className="home-work-life-card card-b" />
+    <span className="home-work-life-card card-c" />
+    <span className="home-work-life-line line-a" />
+    <span className="home-work-life-line line-b" />
+    <span className="home-work-life-line line-c" />
+    <span className="home-work-life-node node-a" />
+    <span className="home-work-life-node node-b" />
+    <span className="home-work-life-node node-c" />
+    <span className="home-work-life-node node-d" />
+    <span className="home-work-life-orbit" />
+    <span className="home-work-life-core" />
+    <span className="home-work-life-marker" />
+  </div>
+);
+
+export const HomeConwayGameBanner: React.FC<{ label: string }> = ({ label }) => (
+  <div className="home-conway-banner" role="img" aria-label={label}>
+    <span className="home-conway-board" aria-hidden="true">
+      {Array.from({ length: 9 }, (_, index) => (
+        <span key={`v-${index}`} className="home-conway-grid-line line-v" style={{ left: `${(index + 1) * 10}%` }} />
+      ))}
+      {Array.from({ length: 7 }, (_, index) => (
+        <span key={`h-${index}`} className="home-conway-grid-line line-h" style={{ top: `${(index + 1) * 12.5}%` }} />
+      ))}
+      {Array.from({ length: 12 }, (_, index) => (
+        <span key={`cell-${index}`} className={`home-conway-live-cell cell-${index + 1}`} />
+      ))}
+    </span>
+    <span className="home-conway-sigil" aria-hidden="true">
+      <span className="home-conway-ring ring-outer" />
+      <span className="home-conway-ring ring-middle" />
+      <span className="home-conway-ring ring-inner" />
+      <span className="home-conway-axis axis-x" />
+      <span className="home-conway-axis axis-y" />
+      <span className="home-conway-diamond" />
+      <span className="home-conway-core" />
+      <span className="home-conway-node node-a" />
+      <span className="home-conway-node node-b" />
+      <span className="home-conway-node node-c" />
+      <span className="home-conway-node node-d" />
+      <span className="home-conway-orbit"><i /></span>
+    </span>
+    <span className="home-conway-glider" aria-hidden="true">
+      <i className="glider-a" />
+      <i className="glider-b" />
+      <i className="glider-c" />
+      <i className="glider-d" />
+      <i className="glider-e" />
+    </span>
+    <span className="home-conway-rule" aria-hidden="true">B3 / S23</span>
+  </div>
+);
+
 export const ProjectsJijuCssIcon: React.FC<{ label: string }> = ({ label }) => (
   <div className="projects-card-icon projects-jiju-css-icon" role="img" aria-label={label}>
     <span className="projects-jiju-icon-sun" />

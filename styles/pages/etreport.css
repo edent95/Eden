@@ -766,3 +766,132 @@
     grid-column: auto;
   }
 }
+
+/* ETReportHub product detail — App Store-like hierarchy, scoped away from sibling routes. */
+.etreport-product-page {
+  --et-product-blue: #087fc5;
+  --et-product-line: color-mix(in srgb, var(--theme-text-primary) 13%, transparent);
+  background: var(--theme-page);
+}
+
+.etreport-product-page main > div { max-width: 980px !important; }
+.etreport-product-page .etreport-topbar { border-bottom: 1px solid var(--et-product-line); }
+
+.etreport-store-hero {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  gap: 42px;
+  align-items: end;
+  padding: 72px 0 34px;
+}
+
+.etreport-store-icon { width: 210px; aspect-ratio: 1; }
+.etreport-store-icon > * { width: 100%; height: 100%; }
+.etreport-store-intro { padding-bottom: 3px; }
+.etreport-store-intro h1 { margin-top: 10px; font-family: var(--font-display); font-size: clamp(3.2rem, 7vw, 5.8rem); font-weight: 780; letter-spacing: -.055em; line-height: .94; color: var(--theme-text-primary); }
+.etreport-store-tagline { margin-top: 13px; font-size: clamp(1.25rem, 2.6vw, 2rem); font-weight: 620; line-height: 1.2; color: var(--theme-text-secondary); }
+.etreport-store-byline { margin-top: 12px; font-size: .92rem; color: var(--theme-text-soft); }
+.etreport-store-actions { margin-top: 24px; display: flex; align-items: center; gap: 22px; }
+.etreport-store-get { display: inline-flex; min-width: 112px; min-height: 38px; padding: 0 18px; align-items: center; justify-content: center; border-radius: 999px; background: var(--et-product-blue); color: #fff !important; font-size: .9rem; font-weight: 760; }
+.etreport-store-get:hover { transform: translateY(-2px); filter: brightness(.95); }
+
+.etreport-store-facts { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--et-product-line); border-bottom: 1px solid var(--et-product-line); }
+.etreport-store-facts > div { min-width: 0; padding: 19px 22px; text-align: center; }
+.etreport-store-facts > div + div { border-left: 1px solid var(--et-product-line); }
+.etreport-store-facts svg { width: 20px; height: 20px; margin: 0 auto 10px; color: var(--et-product-blue); stroke-width: 1.8; }
+.etreport-store-facts span { display: block; font-size: .68rem; font-weight: 720; letter-spacing: .08em; text-transform: uppercase; color: var(--theme-text-soft); }
+.etreport-store-facts strong { display: block; margin-top: 6px; overflow: hidden; text-overflow: ellipsis; font-size: .92rem; white-space: nowrap; color: var(--theme-text-primary); }
+
+.etreport-live-demo { padding: 64px 0 76px; }
+.etreport-live-demo-head { display: flex; align-items: end; justify-content: space-between; gap: 28px; margin-bottom: 28px; }
+.etreport-live-demo-head h2 { margin-top: 10px; font-family: var(--font-display); font-size: clamp(2.25rem, 4.8vw, 4rem); font-weight: 760; letter-spacing: -.05em; line-height: 1; color: var(--theme-text-primary); }
+.etreport-live-demo-frame { overflow: hidden; border: 1px solid var(--et-product-line); border-radius: 20px; background: var(--theme-surface); box-shadow: 0 28px 80px rgb(20 35 45 / .12); }
+.etreport-live-demo-toolbar { min-height: 44px; display: flex; align-items: center; gap: 7px; padding: 0 14px; border-bottom: 1px solid var(--et-product-line); background: var(--theme-surface-muted); }
+.etreport-live-demo-toolbar > span { width: 10px; height: 10px; flex: 0 0 auto; border-radius: 50%; background: #ff5f57; }.etreport-live-demo-toolbar > span:nth-child(2) { background: #febc2e; }.etreport-live-demo-toolbar > span:nth-child(3) { background: #28c840; }
+.etreport-live-demo-toolbar p { min-width: 0; margin: 0 0 0 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .72rem; color: var(--theme-text-soft); }
+.etreport-live-demo-frame iframe { display: block; width: 100%; height: min(760px, 76vh); min-height: 620px; border: 0; background: #fff; }
+
+.etreport-store-gallery { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(360px, 66%); gap: 16px; margin: 36px calc((100vw - min(980px, calc(100vw - 3rem))) / -2 + 1.5rem) 0; padding: 0 max(1.5rem, calc((100vw - 980px) / 2)) 28px; overflow-x: auto; overscroll-behavior-inline: contain; scroll-snap-type: inline mandatory; scrollbar-width: thin; }
+.etreport-store-shot { position: relative; min-height: 520px; padding: 34px 32px 0; overflow: hidden; border-radius: 22px; background: #e8f4fb; scroll-snap-align: start; }
+.etreport-store-shot-members { background: #f5eee6; }.etreport-store-shot-channels { background: #edf2e9; }
+.etreport-store-shot > p { max-width: 470px; font-size: clamp(1.8rem, 3.8vw, 3.15rem); font-weight: 760; line-height: 1.02; letter-spacing: -.045em; color: #17212a; }
+.etreport-store-shot > small { position: absolute; right: 22px; top: 20px; font-size: .68rem; font-weight: 800; letter-spacing: .12em; color: rgb(23 33 42 / .42); }
+.etreport-shot-window { position: absolute; left: 8%; right: -5%; bottom: -9%; height: 68%; display: grid; grid-template-columns: 22% 1fr; overflow: hidden; border-radius: 14px 14px 0 0; background: #fff; box-shadow: 0 30px 70px rgb(23 33 42 / .18); transform: rotate(-1.2deg); }
+.etreport-shot-sidebar { padding: 22px 12px; background: #f2f5f7; }
+.etreport-shot-sidebar i { display: block; width: 80%; height: 8px; margin: 0 0 17px; border-radius: 99px; background: #cbd7dd; }.etreport-shot-sidebar i:nth-child(2) { width: 55%; }.etreport-shot-sidebar i:nth-child(3) { width: 72%; }.etreport-shot-sidebar i:nth-child(4) { width: 46%; }
+.etreport-shot-canvas { position: relative; padding: 24px; }.etreport-shot-canvas span { color: #18252c; font-size: 13px; font-weight: 800; }.etreport-shot-canvas b { display: inline-block; width: 27%; height: 72px; margin: 24px 3% 0 0; border-radius: 9px; background: #e6f2f8; }.etreport-shot-canvas b:nth-of-type(2) { background: #edf4e9; }.etreport-shot-canvas b:nth-of-type(3) { background: #f7eee6; }.etreport-shot-canvas em { display: block; width: 88%; height: 10px; margin-top: 22px; border-radius: 99px; background: #e4eaed; }.etreport-shot-canvas em:last-child { width: 64%; }
+
+.etreport-product-page .etreport-console-panel { margin-top: 18px; border-top: 1px solid var(--et-product-line); border-bottom: 1px solid var(--et-product-line); border-radius: 0; background: transparent; box-shadow: none; padding: 70px 0; }
+.etreport-product-page .etreport-console-copy { min-height: 340px; }
+.etreport-product-page .etreport-console-row { border-radius: 12px; background: var(--theme-surface-muted); box-shadow: none; }
+.etreport-product-page .etreport-section { border-top: 1px solid var(--et-product-line); }
+.etreport-product-page .etreport-section-title { font-size: clamp(2.2rem, 4.8vw, 4.4rem); }
+.etreport-product-page .etreport-value-card,
+.etreport-product-page .etreport-module-card,
+.etreport-product-page .etreport-proof-card,
+.etreport-product-page .etreport-audience-card,
+.etreport-product-page .etreport-faq-panel,
+.etreport-product-page .etreport-final-panel,
+.etreport-product-page .etreport-table-wrap,
+.etreport-product-page .etreport-node-column,
+.etreport-product-page .etreport-flow-board { box-shadow: none; border: 1px solid var(--et-product-line); }
+.etreport-product-page .etreport-value-card,
+.etreport-product-page .etreport-module-card,
+.etreport-product-page .etreport-proof-card,
+.etreport-product-page .etreport-audience-card { border-radius: 16px; background: var(--theme-surface); }
+.etreport-product-page .etreport-tour-emoji { filter: grayscale(.15); }
+.etreport-product-page .etreport-text-cta { color: var(--et-product-blue); }
+
+.etreport-app-description,
+.etreport-app-section,
+.etreport-app-privacy,
+.etreport-app-details,
+.etreport-app-final { padding: 82px 0; border-top: 1px solid var(--et-product-line); }
+.etreport-app-prose { max-width: 760px; }
+.etreport-app-description h2,
+.etreport-app-section > h2,
+.etreport-app-privacy h2,
+.etreport-app-final h2 { margin-top: 14px; max-width: 840px; font-family: var(--font-display); font-size: clamp(2.25rem, 5vw, 4.4rem); font-weight: 760; letter-spacing: -.05em; line-height: 1; color: var(--theme-text-primary); }
+.etreport-app-prose > p:not(.etreport-kicker) { margin-top: 24px; font-size: clamp(1.05rem, 1.45vw, 1.22rem); line-height: 1.7; color: var(--theme-text-secondary); }
+.etreport-app-feature-list { margin-top: 52px; }
+.etreport-app-feature-list article { display: grid; grid-template-columns: 48px 38px 1fr; gap: 18px; align-items: start; padding: 28px 0; border-top: 1px solid var(--et-product-line); }
+.etreport-app-feature-list article > span { padding-top: 4px; font-size: .72rem; font-weight: 800; letter-spacing: .12em; color: var(--et-product-blue); }
+.etreport-app-feature-icon { width: 28px; height: 28px; color: var(--et-product-blue); stroke-width: 1.7; }
+.etreport-app-feature-list h3 { font-size: clamp(1.35rem, 2.2vw, 1.85rem); font-weight: 720; color: var(--theme-text-primary); }
+.etreport-app-feature-list p { margin-top: 7px; max-width: 680px; line-height: 1.6; color: var(--theme-text-secondary); }
+.etreport-app-workflow { margin-top: 52px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; }
+.etreport-app-workflow article { min-width: 0; }.etreport-app-workflow-head { display: flex; align-items: center; justify-content: space-between; }.etreport-app-workflow-head svg { width: 26px; height: 26px; color: var(--et-product-blue); stroke-width: 1.7; }.etreport-app-workflow span { font-size: .72rem; font-weight: 800; letter-spacing: .12em; color: var(--et-product-blue); }.etreport-app-workflow h3 { margin-top: 28px; font-size: 1.35rem; color: var(--theme-text-primary); }.etreport-app-workflow p { margin-top: 10px; font-size: .94rem; line-height: 1.6; color: var(--theme-text-secondary); }
+.etreport-app-section-icon { width: 34px; height: 34px; margin-bottom: 22px; color: var(--et-product-blue); stroke-width: 1.6; }
+.etreport-app-privacy { display: grid; grid-template-columns: 1.05fr .95fr; gap: 70px; align-items: end; }
+.etreport-app-privacy > p { padding-bottom: 5px; font-size: 1.08rem; line-height: 1.7; color: var(--theme-text-secondary); }
+.etreport-app-details h2 { display: flex; align-items: center; gap: 12px; font-size: 1.75rem; font-weight: 740; color: var(--theme-text-primary); }.etreport-app-details h2 svg { width: 27px; height: 27px; color: var(--et-product-blue); stroke-width: 1.7; }
+.etreport-app-details dl { margin: 28px 0 0; }.etreport-app-details dl > div { display: grid; grid-template-columns: 180px 1fr; gap: 30px; padding: 17px 0; border-top: 1px solid var(--et-product-line); }.etreport-app-details dt { color: var(--theme-text-soft); }.etreport-app-details dd { margin: 0; color: var(--theme-text-primary); }
+.etreport-app-final { display: grid; grid-template-columns: 132px 1fr; gap: 38px; align-items: center; }.etreport-app-final > :first-child { width: 132px; height: 132px; }.etreport-app-final h2 { margin-top: 0; font-size: clamp(2.1rem, 4.4vw, 3.9rem); }.etreport-app-final p { margin-top: 14px; color: var(--theme-text-secondary); }.etreport-app-final .etreport-store-get { margin-top: 24px; }
+.etreport-app-final-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; }
+.etreport-app-final-actions .etreport-text-cta { margin-top: 24px; }
+
+@media (max-width: 767px) {
+  .etreport-product-page main { padding-inline: 1.25rem; }
+  .etreport-store-hero { grid-template-columns: 112px minmax(0, 1fr); gap: 20px; align-items: center; padding: 44px 0 26px; }
+  .etreport-store-icon { width: 112px; }
+  .etreport-store-intro h1 { font-size: clamp(2.35rem, 11vw, 3.5rem); }
+  .etreport-store-tagline { font-size: 1.05rem; }
+  .etreport-store-byline { display: none; }
+  .etreport-store-actions { margin-top: 16px; gap: 14px; }
+  .etreport-store-actions .etreport-text-cta { display: none; }
+  .etreport-store-actions .etreport-text-cta:first-of-type { display: inline-flex; }
+  .etreport-store-facts { grid-template-columns: repeat(4, 44vw); overflow-x: auto; }
+  .etreport-store-facts > div { padding-inline: 14px; }
+  .etreport-store-gallery { grid-auto-columns: 86%; margin-inline: -1.25rem; padding-inline: 1.25rem; }
+  .etreport-store-shot { min-height: 440px; padding: 28px 24px 0; }
+  .etreport-live-demo { padding: 48px 0 60px; }
+  .etreport-live-demo-head { align-items: flex-start; flex-direction: column; gap: 18px; }
+  .etreport-live-demo-frame { border-radius: 14px; }
+  .etreport-live-demo-frame iframe { height: 680px; min-height: 680px; }
+  .etreport-product-page .etreport-console-panel { padding: 54px 0; }
+  .etreport-app-description, .etreport-app-section, .etreport-app-privacy, .etreport-app-details, .etreport-app-final { padding: 60px 0; }
+  .etreport-app-workflow { grid-template-columns: 1fr 1fr; gap: 36px 20px; }
+  .etreport-app-privacy { grid-template-columns: 1fr; gap: 28px; }
+  .etreport-app-details dl > div { grid-template-columns: 110px 1fr; gap: 18px; }
+  .etreport-app-final { grid-template-columns: 88px 1fr; gap: 22px; }.etreport-app-final > :first-child { width: 88px; height: 88px; }
+}

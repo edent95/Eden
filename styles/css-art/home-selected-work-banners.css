@@ -1,0 +1,511 @@
+/* Home Selected work banners: dashboard, local discovery, and life dataset. */
+
+.home-work-banner {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  min-height: 18rem;
+}
+
+.home-work-banner span {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+/* Edwin Dashboard */
+
+.home-work-dashboard {
+  background: #176b87;
+}
+
+.home-work-dashboard-window {
+  inset: 13% 9% 10%;
+  border: 1px solid rgb(255 255 255 / 0.34);
+  border-radius: 1.25rem;
+  background: #f2eee5;
+  box-shadow: 0 22px 44px rgb(15 46 56 / 0.3);
+}
+
+.home-work-dashboard-topbar {
+  left: 9%;
+  right: 9%;
+  top: 13%;
+  height: 10%;
+  border-radius: 1.25rem 1.25rem 0 0;
+  background: #dbe3df;
+}
+
+.home-work-dashboard-dot {
+  top: 17.2%;
+  width: 1.7%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.home-work-dashboard-dot.dot-a { left: 13%; background: #e8683a; }
+.home-work-dashboard-dot.dot-b { left: 16.2%; background: #d9a93e; }
+.home-work-dashboard-dot.dot-c { left: 19.4%; background: #5a9d76; }
+
+.home-work-dashboard-sidebar {
+  left: 9%;
+  top: 23%;
+  bottom: 10%;
+  width: 16%;
+  border-radius: 0 0 0 1.25rem;
+  background: #173b47;
+}
+
+.home-work-dashboard-nav {
+  left: 12%;
+  width: 10%;
+  height: 2.2%;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.48);
+}
+
+.home-work-dashboard-nav.nav-a { top: 31%; width: 8%; background: #f08b64; }
+.home-work-dashboard-nav.nav-b { top: 38%; }
+.home-work-dashboard-nav.nav-c { top: 45%; width: 7%; }
+
+.home-work-dashboard-metric {
+  top: 28%;
+  width: 18%;
+  height: 16%;
+  border: 1px solid rgb(23 59 71 / 0.12);
+  border-radius: 0.7rem;
+  background: #fffaf1;
+}
+
+.home-work-dashboard-metric::before,
+.home-work-dashboard-metric::after {
+  content: "";
+  position: absolute;
+  left: 14%;
+  border-radius: 999px;
+}
+
+.home-work-dashboard-metric::before {
+  top: 22%;
+  width: 45%;
+  height: 7%;
+  background: #9ca9a5;
+}
+
+.home-work-dashboard-metric::after {
+  bottom: 20%;
+  width: 62%;
+  height: 18%;
+  background: #176b87;
+}
+
+.home-work-dashboard-metric.metric-a { left: 29%; }
+.home-work-dashboard-metric.metric-b { left: 49%; }
+.home-work-dashboard-metric.metric-c { left: 69%; }
+.home-work-dashboard-metric.metric-b::after { background: #e8683a; }
+.home-work-dashboard-metric.metric-c::after { background: #5a9d76; }
+
+.home-work-dashboard-grid {
+  left: 29%;
+  right: 13%;
+  bottom: 16%;
+  height: 34%;
+  border: 1px solid rgb(23 59 71 / 0.12);
+  border-radius: 0.8rem;
+  background: #fffaf1;
+}
+
+.home-work-dashboard-grid::before,
+.home-work-dashboard-grid::after {
+  content: "";
+  position: absolute;
+  inset: 25% 7%;
+  border-top: 1px solid rgb(23 59 71 / 0.12);
+  border-bottom: 1px solid rgb(23 59 71 / 0.12);
+}
+
+.home-work-dashboard-grid::after {
+  inset: 48% 7% auto;
+  border-bottom: 0;
+}
+
+.home-work-dashboard-bar {
+  z-index: 2;
+  bottom: 21%;
+  width: 5%;
+  border-radius: 0.3rem 0.3rem 0 0;
+  background: #6fa4b3;
+  transform-origin: center bottom;
+  animation: home-work-bar-rise 4.8s ease-in-out infinite;
+}
+
+.home-work-dashboard-bar.bar-a { left: 35%; height: 12%; }
+.home-work-dashboard-bar.bar-b { left: 43%; height: 20%; animation-delay: -1.2s; }
+.home-work-dashboard-bar.bar-c { left: 51%; height: 16%; animation-delay: -2.4s; }
+.home-work-dashboard-bar.bar-d { left: 59%; height: 25%; background: #e8683a; animation-delay: -3.6s; }
+
+.home-work-dashboard-trend {
+  z-index: 3;
+  height: 3px;
+  border-radius: 999px;
+  background: #176b87;
+  transform-origin: left center;
+}
+
+.home-work-dashboard-trend.trend-a { left: 62%; top: 67%; width: 8%; transform: rotate(-20deg); }
+.home-work-dashboard-trend.trend-b { left: 69.2%; top: 64%; width: 8%; transform: rotate(15deg); }
+.home-work-dashboard-trend.trend-c { left: 76.5%; top: 65%; width: 8%; transform: rotate(-28deg); }
+
+.home-work-dashboard-signal {
+  z-index: 4;
+  right: 14%;
+  top: 58%;
+  width: 3.6%;
+  aspect-ratio: 1;
+  border: 3px solid #fffaf1;
+  border-radius: 50%;
+  background: #e8683a;
+  animation: home-work-signal-pulse 2.8s ease-in-out infinite;
+}
+
+/* Jiju local discovery */
+
+.home-work-jiju {
+  background: #d7623b;
+}
+
+.home-work-jiju-map {
+  inset: 10% 8%;
+  border-radius: 1.6rem;
+  background: #f0e8d7;
+  box-shadow: 0 22px 44px rgb(77 40 24 / 0.28);
+}
+
+.home-work-jiju-block {
+  border-radius: 1rem;
+  background: #bdd0b9;
+}
+
+.home-work-jiju-block.block-a { left: 13%; top: 16%; width: 30%; height: 24%; }
+.home-work-jiju-block.block-b { right: 13%; top: 18%; width: 34%; height: 27%; background: #d8c79e; }
+.home-work-jiju-block.block-c { left: 18%; bottom: 16%; width: 38%; height: 26%; background: #aac5bd; }
+
+.home-work-jiju-road {
+  z-index: 2;
+  border-radius: 999px;
+  background: #fffaf1;
+  box-shadow: 0 0 0 1px rgb(82 76 63 / 0.08);
+}
+
+.home-work-jiju-road.road-a { left: 9%; right: 9%; top: 49%; height: 11%; transform: rotate(-8deg); }
+.home-work-jiju-road.road-b { left: 54%; top: 10%; bottom: 10%; width: 10%; transform: rotate(7deg); }
+
+.home-work-jiju-route {
+  z-index: 3;
+  height: 4px;
+  border-radius: 999px;
+  background: #176447;
+  transform-origin: left center;
+}
+
+.home-work-jiju-route.route-a { left: 20%; top: 63%; width: 20%; transform: rotate(-18deg); }
+.home-work-jiju-route.route-b { left: 38%; top: 56%; width: 22%; transform: rotate(7deg); }
+.home-work-jiju-route.route-c { left: 58%; top: 58%; width: 18%; transform: rotate(-28deg); }
+
+.home-work-jiju-pin {
+  z-index: 5;
+  width: 6%;
+  aspect-ratio: 0.78;
+  border-radius: 50% 50% 50% 0;
+  background: #176447;
+  transform: rotate(-45deg);
+}
+
+.home-work-jiju-pin::after {
+  content: "";
+  position: absolute;
+  inset: 28%;
+  border-radius: 50%;
+  background: #f0e8d7;
+}
+
+.home-work-jiju-pin.pin-a { left: 18%; top: 56%; }
+.home-work-jiju-pin.pin-b { left: 75%; top: 39%; background: #e8683a; }
+
+.home-work-jiju-traveler {
+  z-index: 6;
+  left: 22%;
+  top: 63%;
+  width: 4%;
+  aspect-ratio: 1;
+  border: 3px solid #f0e8d7;
+  border-radius: 50%;
+  background: #176447;
+  animation: home-work-jiju-travel 6.4s ease-in-out infinite;
+}
+
+.home-work-jiju-card {
+  z-index: 4;
+  right: 10%;
+  bottom: 9%;
+  width: 30%;
+  height: 33%;
+  border: 1px solid rgb(64 49 35 / 0.12);
+  border-radius: 1rem;
+  background: #fffaf1;
+  box-shadow: 0 13px 28px rgb(82 48 29 / 0.22);
+}
+
+.home-work-jiju-cat-body {
+  z-index: 7;
+  right: 18%;
+  bottom: 16%;
+  width: 12%;
+  height: 10%;
+  border-radius: 55% 48% 46% 52%;
+  background: #e08c4c;
+}
+
+.home-work-jiju-cat-tail {
+  z-index: 6;
+  right: 27%;
+  bottom: 19%;
+  width: 8%;
+  height: 3%;
+  border-radius: 999px;
+  background: #c96c35;
+  transform: rotate(24deg);
+  transform-origin: right center;
+  animation: home-work-jiju-tail 2s ease-in-out infinite;
+}
+
+.home-work-jiju-cat-head {
+  z-index: 8;
+  right: 15%;
+  bottom: 23%;
+  width: 8%;
+  aspect-ratio: 1;
+  border-radius: 48%;
+  background: #ed9c55;
+}
+
+.home-work-jiju-cat-ear {
+  z-index: 7;
+  bottom: 29.5%;
+  width: 3%;
+  aspect-ratio: 1;
+  background: #ed9c55;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.home-work-jiju-cat-ear.ear-a { right: 20%; transform: rotate(-18deg); }
+.home-work-jiju-cat-ear.ear-b { right: 15.5%; transform: rotate(18deg); }
+
+.home-work-jiju-verified {
+  z-index: 8;
+  right: 12%;
+  bottom: 12%;
+  width: 5%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #176447;
+}
+
+.home-work-jiju-verified::after {
+  content: "";
+  position: absolute;
+  left: 28%;
+  top: 25%;
+  width: 42%;
+  height: 24%;
+  border-left: 2px solid #fffaf1;
+  border-bottom: 2px solid #fffaf1;
+  transform: rotate(-45deg);
+}
+
+/* Life as a Dataset */
+
+.home-work-life-data {
+  background: #6b706c;
+}
+
+.home-work-life-grid {
+  inset: 9%;
+  border: 1px solid rgb(255 255 255 / 0.18);
+  border-radius: 1.6rem;
+  background: #232825;
+  box-shadow: 0 22px 44px rgb(21 24 22 / 0.32);
+}
+
+.home-work-life-grid::before,
+.home-work-life-grid::after {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border-top: 1px solid rgb(255 255 255 / 0.1);
+  border-bottom: 1px solid rgb(255 255 255 / 0.1);
+}
+
+.home-work-life-grid::after {
+  inset: 38% 12% auto;
+  border-bottom: 0;
+}
+
+.home-work-life-axis {
+  z-index: 2;
+  background: rgb(255 255 255 / 0.16);
+}
+
+.home-work-life-axis.axis-x { left: 16%; right: 16%; top: 58%; height: 1px; }
+.home-work-life-axis.axis-y { left: 50%; top: 16%; bottom: 16%; width: 1px; }
+
+.home-work-life-card {
+  z-index: 3;
+  width: 23%;
+  height: 18%;
+  border: 1px solid rgb(255 255 255 / 0.15);
+  border-radius: 0.85rem;
+  background: #343a36;
+  box-shadow: 0 9px 18px rgb(0 0 0 / 0.18);
+}
+
+.home-work-life-card::before,
+.home-work-life-card::after {
+  content: "";
+  position: absolute;
+  left: 14%;
+  height: 6%;
+  border-radius: 999px;
+  background: #a8b2aa;
+}
+
+.home-work-life-card::before { top: 28%; width: 48%; }
+.home-work-life-card::after { top: 53%; width: 68%; background: #dc6f82; }
+
+.home-work-life-card.card-a { left: 15%; top: 18%; transform: rotate(-4deg); }
+.home-work-life-card.card-b { right: 14%; top: 20%; transform: rotate(5deg); }
+.home-work-life-card.card-c { left: 18%; bottom: 15%; transform: rotate(3deg); }
+.home-work-life-card.card-b::after { background: #7bdcb5; }
+.home-work-life-card.card-c::after { background: #e7b567; }
+
+.home-work-life-line {
+  z-index: 4;
+  height: 3px;
+  border-radius: 999px;
+  background: #7bdcb5;
+  transform-origin: left center;
+}
+
+.home-work-life-line.line-a { left: 24%; top: 59%; width: 18%; transform: rotate(-18deg); }
+.home-work-life-line.line-b { left: 40%; top: 54%; width: 20%; transform: rotate(12deg); }
+.home-work-life-line.line-c { left: 58%; top: 58%; width: 20%; transform: rotate(-24deg); background: #dc6f82; }
+
+.home-work-life-node {
+  z-index: 5;
+  width: 3.6%;
+  aspect-ratio: 1;
+  border: 2px solid #232825;
+  border-radius: 50%;
+  background: #7bdcb5;
+}
+
+.home-work-life-node.node-a { left: 22%; top: 59%; }
+.home-work-life-node.node-b { left: 40%; top: 53%; }
+.home-work-life-node.node-c { left: 59%; top: 57%; background: #e7b567; }
+.home-work-life-node.node-d { left: 77%; top: 50%; background: #dc6f82; }
+
+.home-work-life-orbit {
+  z-index: 3;
+  right: 13%;
+  bottom: 11%;
+  width: 29%;
+  aspect-ratio: 1;
+  border: 2px solid rgb(123 220 181 / 0.5);
+  border-radius: 50%;
+  animation: home-work-life-orbit-spin 12s linear infinite;
+}
+
+.home-work-life-orbit::before {
+  content: "";
+  position: absolute;
+  left: 44%;
+  top: -5%;
+  width: 12%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #7bdcb5;
+}
+
+.home-work-life-core {
+  z-index: 5;
+  right: 22.5%;
+  bottom: 20.5%;
+  width: 10%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #dc6f82;
+  animation: home-work-life-core-pulse 3.6s ease-in-out infinite;
+}
+
+.home-work-life-marker {
+  z-index: 6;
+  left: 22%;
+  top: 57.5%;
+  width: 4%;
+  aspect-ratio: 1;
+  border: 2px solid #f2eee5;
+  border-radius: 50%;
+  background: #7bdcb5;
+  animation: home-work-life-marker-travel 6.8s ease-in-out infinite;
+}
+
+@keyframes home-work-bar-rise {
+  0%, 100% { transform: scaleY(0.72); }
+  50% { transform: scaleY(1); }
+}
+
+@keyframes home-work-signal-pulse {
+  0%, 100% { transform: scale(0.82); }
+  50% { transform: scale(1.12); }
+}
+
+@keyframes home-work-jiju-travel {
+  0%, 100% { transform: translate(0, 0); }
+  45% { transform: translate(880%, -140%); }
+  70% { transform: translate(1320%, -520%); }
+}
+
+@keyframes home-work-jiju-tail {
+  0%, 100% { transform: rotate(18deg); }
+  50% { transform: rotate(34deg); }
+}
+
+@keyframes home-work-life-orbit-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes home-work-life-core-pulse {
+  0%, 100% { transform: scale(0.9); }
+  50% { transform: scale(1.14); }
+}
+
+@keyframes home-work-life-marker-travel {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(470%, -170%); }
+  66% { transform: translate(940%, -40%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-work-dashboard-bar,
+  .home-work-dashboard-signal,
+  .home-work-jiju-traveler,
+  .home-work-jiju-cat-tail,
+  .home-work-life-orbit,
+  .home-work-life-core,
+  .home-work-life-marker {
+    animation: none !important;
+  }
+}

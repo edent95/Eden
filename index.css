@@ -8,6 +8,9 @@
 
 @import "./styles/css-art/life-os-signals.css";
 @import "./styles/css-art/projects-icons.css";
+@import "./styles/css-art/film-gallery-icon.css";
+@import "./styles/css-art/home-selected-work-banners.css";
+@import "./styles/css-art/home-conway-banner.css";
 @import "./styles/css-art/home-jiju-scene.css";
 @import "./styles/css-art/home-projects-blueprint.css";
 @import "./styles/css-art/home-life-magic.css";
@@ -28,3 +31,4 @@
 @import "./styles/pages/brand-guide.css";
 @import "./styles/pages/topics-market.css";
 @import "./styles/pages/conway.css";
+@import "./styles/pages/icon-prompts.css";

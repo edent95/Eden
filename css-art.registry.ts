@@ -3,12 +3,17 @@ import {
   ElementFireCssIcon,
   ElementWindCssIcon,
   ElementWaterCssIcon,
+  FilmGalleryCssIcon,
+  HomeConwayGameBanner,
+  HomeEdwinDashboardBanner,
+  HomeFilmGalleryBanner,
   HomeBaguaMirrorTotem,
   HomeGramophoneTotem,
+  HomeJijuDiscoveryBanner,
+  HomeLifeDatasetBanner,
   HomeLifeMagicIcon,
   HomePowerUpTotem,
   HomeProjectsBlueprintIcon,
-  HomePyramidBreakTotem,
   MathFractalRuneCssIcon,
   MathIntegralSpellCssIcon,
   MathMatrixPortalCssIcon,
@@ -40,6 +45,7 @@ export type LocalizedText = {
 
 export type CssArtCategory =
   | 'project-icon'
+  | 'home-selected-work-banner'
   | 'home-system'
   | 'home-interest'
   | 'office-icon'
@@ -47,7 +53,7 @@ export type CssArtCategory =
   | 'elemental-icon'
   | 'wiki-icon';
 export type CssArtBackground = 'framed' | 'transparent' | 'scene';
-export type CssArtRatio = '1:1' | 'transparent-totem';
+export type CssArtRatio = '1:1' | 'banner' | 'transparent-totem';
 
 export type CssArtRegistryItem = {
   id: string;
@@ -151,6 +157,111 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
     },
   },
   {
+    id: 'home-selected-work-edwin-dashboard',
+    title: 'Edwin Dashboard',
+    projectTitle: 'Edwin Dashboard',
+    category: 'home-selected-work-banner',
+    sourceRoute: '/',
+    ratio: 'banner',
+    background: 'scene',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/home-selected-work-banners.css',
+    Component: HomeEdwinDashboardBanner,
+    label: {
+      en: 'Edwin Dashboard decision system CSS banner',
+      zh: 'Edwin Dashboard 决策系统 CSS banner',
+    },
+    copy: {
+      en: 'A dashboard window with KPI cards, bars, a trend line, and one highlighted decision signal.',
+      zh: '包含 KPI 卡、柱状图、趋势线与重点决策信号的 dashboard 视窗。',
+    },
+  },
+  {
+    id: 'home-selected-work-jiju',
+    title: 'Jiju',
+    projectTitle: 'Jiju',
+    category: 'home-selected-work-banner',
+    sourceRoute: '/',
+    ratio: 'banner',
+    background: 'scene',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/home-selected-work-banners.css',
+    Component: HomeJijuDiscoveryBanner,
+    label: {
+      en: 'Jiju local discovery CSS banner',
+      zh: 'Jiju 本地发现 CSS banner',
+    },
+    copy: {
+      en: 'A pet-friendly map route with place pins, a moving traveler, and a verified pet profile card.',
+      zh: '包含地点 pin、移动路线与已验证宠物资料卡的宠物友好发现地图。',
+    },
+  },
+  {
+    id: 'home-selected-work-life-as-a-dataset',
+    title: 'Life as a Dataset',
+    projectTitle: 'Life as a Dataset',
+    category: 'home-selected-work-banner',
+    sourceRoute: '/',
+    ratio: 'banner',
+    background: 'scene',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/home-selected-work-banners.css',
+    Component: HomeLifeDatasetBanner,
+    label: {
+      en: 'Life as a Dataset timeline CSS banner',
+      zh: 'Life as a Dataset 人生时间轴 CSS banner',
+    },
+    copy: {
+      en: 'A personal-data timeline with journal cards, changing nodes, and a recurring orbit.',
+      zh: '由记录卡、变化节点与循环轨迹组成的个人数据时间轴。',
+    },
+  },
+  {
+    id: 'home-conway-game-banner',
+    title: "Conway's Game of Life",
+    projectTitle: "Conway's Game of Life",
+    category: 'home-selected-work-banner',
+    sourceRoute: '/',
+    ratio: 'banner',
+    background: 'scene',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/home-conway-banner.css',
+    Component: HomeConwayGameBanner,
+    label: {
+      en: "Conway's Game of Life cellular automata CSS banner",
+      zh: "Conway's Game of Life 细胞自动机 CSS banner",
+    },
+    copy: {
+      en: 'A 16:9 cellular board with living cells, a glider, and the magic-circle language from the Conway app icon.',
+      zh: '16:9 生命棋盘、活细胞与 glider，并延续 Conway app icon 的魔法阵视觉语言。',
+    },
+  },
+  {
+    id: 'home-film-gallery-banner',
+    title: 'Film Gallery',
+    projectTitle: 'Film Gallery',
+    category: 'home-selected-work-banner',
+    sourceRoute: '/',
+    ratio: 'banner',
+    background: 'scene',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/film-gallery-icon.css',
+    Component: HomeFilmGalleryBanner,
+    label: {
+      en: 'Film Gallery moving film strip CSS banner',
+      zh: 'Film Gallery 横向移动胶卷 CSS banner',
+    },
+    copy: {
+      en: 'A 16:9 film strip with perforations, three framed scenes, twin reels, and restrained left-to-right motion.',
+      zh: '16:9 胶卷、齿孔、三格取景、双卷轴与克制的横向移动动效。',
+    },
+  },
+  {
     id: 'home-projects-hub-blueprint',
     title: 'Projects Hub',
     category: 'home-system',
@@ -231,6 +342,26 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
     },
   },
   {
+    id: 'home-film-gallery-app-icon',
+    title: 'Film Gallery',
+    category: 'home-interest',
+    sourceRoute: '/',
+    ratio: '1:1',
+    background: 'framed',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/film-gallery-icon.css',
+    Component: FilmGalleryCssIcon,
+    label: {
+      en: 'Film Gallery rounded-square CSS app icon',
+      zh: 'Film Gallery 圆角正方形 CSS app 图标',
+    },
+    copy: {
+      en: 'A framed film-strip app icon used by the Home Humans & Systems shelf.',
+      zh: '主页 Humans & Systems 货架使用的固定底胶片卷轴 app 图标。',
+    },
+  },
+  {
     id: 'home-pattern-archive-bagua',
     title: 'Pattern Archive',
     category: 'home-interest',
@@ -251,23 +382,23 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
     },
   },
   {
-    id: 'home-conway-pyramid-break',
+    id: 'home-conway-magic-circle',
     title: "Conway's Game of Life",
     category: 'home-interest',
     sourceRoute: '/',
-    ratio: 'transparent-totem',
-    background: 'transparent',
+    ratio: '1:1',
+    background: 'framed',
     supportsDarkMode: true,
     supportsReducedMotion: true,
-    cssFile: 'styles/css-art/home-interest-totems.css',
-    Component: HomePyramidBreakTotem,
+    cssFile: 'styles/css-art/projects-icons.css',
+    Component: ProjectsCrmCssIcon,
     label: {
-      en: "Conway's Game of Life broken pyramid transparent CSS totem",
-      zh: "Conway's Game of Life 金字塔碰坏透明底 CSS 图腾",
+      en: "Conway's Game of Life magic-circle CSS app icon",
+      zh: "Conway's Game of Life 魔法阵 CSS app 图标",
     },
     copy: {
-      en: "The transparent broken-pyramid totem used by the Home Interests Conway's Game of Life card.",
-      zh: "主页 Interests 里 Conway's Game of Life 使用的透明底金字塔碰坏图腾。",
+      en: "The framed magic-circle app icon used by the Conway page and the Home Humans & Systems shelf.",
+      zh: "Conway 页面与主页 Humans & Systems 货架使用的固定底魔法阵 app 图标。",
     },
   },
   {
@@ -693,6 +824,7 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
 ];
 
 export const projectCssArtItems = cssArtRegistry.filter((item) => item.category === 'project-icon');
+export const homeSelectedWorkBannerItems = cssArtRegistry.filter((item) => item.category === 'home-selected-work-banner');
 export const homeSystemCssArtItems = cssArtRegistry.filter((item) => item.category === 'home-system');
 export const homeInterestCssArtItems = cssArtRegistry.filter((item) => item.category === 'home-interest');
 export const officeIconCssArtItems = cssArtRegistry.filter((item) => item.category === 'office-icon');
@@ -702,3 +834,6 @@ export const wikiIconCssArtItems = cssArtRegistry.filter((item) => item.category
 
 export const getProjectCssArtByProjectTitle = (projectTitle: string): CssArtRegistryItem | undefined =>
   projectCssArtItems.find((item) => item.projectTitle === projectTitle);
+
+export const getHomeSelectedWorkBannerByTitle = (projectTitle: string): CssArtRegistryItem | undefined =>
+  homeSelectedWorkBannerItems.find((item) => item.projectTitle === projectTitle);

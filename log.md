@@ -16,6 +16,222 @@
 
 ## Entries
 
+### 2026-07-20 · Emil Kowalski design skills installation
+
+- 类型：工具 / Skills installation
+- 改动：按用户指定执行 `npx skills@latest add emilkowalski/skills`，安装 `animation-vocabulary`、`apple-design`、`emil-design-eng`、`find-animation-opportunities`、`improve-animations`、`review-animations` 六个 skills；项目生成 `.agents/skills/` 与 `skills-lock.json`。
+- 原因：用户认为当前 `/icon-prompts` 设计不够好，希望配合 Emil Kowalski 的 design-engineering skills 重做 icon design。
+- 影响：新 skills 会从下一轮对话开始正式进入可用 skill catalog；最相关的是 `emil-design-eng` 与 `apple-design`。
+- 验证：安装器报告 6/6 安装成功，安全评估为 Safe / Low Risk，skill 文件均存在。
+- 后续：下一轮读取相关 SKILL.md，并据此重做 `/icon-prompts` 页面与四宫格 prompt 视觉系统。
+
+### 2026-07-20 · Product icon 4-grid prompt studio
+
+- 类型：内部工具 / `/icon-prompts` / Prompt copy page
+- 改动：新增隐藏直达页 `/icon-prompts`，为 ETReportHub、Jiju、Friday Poker Club 各提供 4 组可复制 Prompt；每组明确要求 agent 一次生成一个包含 4 枚独立图标的 2×2 四宫格，共 12 组、48 个 icon brief；加入一键复制反馈、双栏 icon 清单、完整 Prompt 预览与响应式布局。
+- 原因：用户希望有一个 HTML 页面，可以直接复制 Prompt 给其他 agent 生成四宫格图标。
+- 影响：页面设为 `noindex`、不进入 sitemap 或公开导航；README 与 route registry 已同步。
+- 验证：`npm run lint`、`npm run build` 与 `git diff --check` 通过；本地验证 `http://localhost:4180/icon-prompts`。
+- 后续：新 icon 生成后，可按产品与 batch 编号替换页面内现有 Lucide icon。
+
+### 2026-07-20 · Friday Poker Club narrative rewrite
+
+- 类型：内容 / `/poker` / 产品叙事
+- 改动：完整重写新版产品页文案：从通用功能介绍转为“让各自生活中的朋友重新坐回同一张桌”的真实起点；重写 Hero、Why this table exists、四项私人牌局设计选择、产品边界与最终 CTA，中英文同步；明确私人房间、娱乐筹码、无充值提现、非公开赌场的边界。
+- 原因：用户要求页面内容也重新创作，而不只是套用统一布局。
+- 影响：Friday Poker Club 的声音更私人、更像真实朋友局，同时保持对外产品说明所需的清楚边界。
+- 验证：`npm run lint`、`npm run build` 与 `git diff --check` 通过。
+- 后续：无。
+
+### 2026-07-20 · Friday Poker Club product page recreation
+
+- 类型：前台 / `/poker` / 产品详情页重构
+- 改动：按 `/etreporthub` 与新版 `/jiju-pet` 的产品详情架构重做 Friday Poker Club：Poker CSS app icon 首屏、四项产品资料、可操作 live table、产品简介、四项核心能力、四步开桌流程、Firebase 房间边界、Information、Build Notes 与最终开桌 CTA；中英文同步重写，并使用深牌桌绿强调色。
+- 原因：用户要求 `/poker` 也使用相同 layout and everything。
+- 影响：`/poker` 从混合产品页 / story log 转为清楚的对外产品详情页；SEO description 与 README 同步。旧 story、avatar、wiki cards 内容保留为未挂载 legacy component。
+- 验证：`https://poker.edentan.site/` 返回 `200` 且未设置阻止 iframe 的响应头；`npm run lint`、`npm run build` 与 `git diff --check` 通过。
+- 后续：旧 Story Log 与 Avatar Guide 可迁移到独立 `/poker/stories` 或 Wiki 后再清理 legacy component。
+
+### 2026-07-20 · Jiju product page recreation
+
+- 类型：前台 / `/jiju-pet` / 产品详情页重构
+- 改动：按 `/etreporthub` 的完整产品详情架构重做 Jiju：CSS app icon + 产品首屏、四项产品资料、可操作 `jiju.pet` Live Site、产品简介、Discovery / Trust / Memory / Community 核心能力、四步到访工作流、信任边界、Information 与最终 CTA；中英文同步重写，并使用 Jiju 绿色强调色。
+- 原因：用户要求 `/jiju-pet` follow `/etreporthub` 的 layout and everything 重新创建。
+- 影响：`/jiju-pet` 从 build log 转为对外产品页；SEO 与 README 路由说明同步更新。旧构建叙事保留为未挂载 legacy component，避免丢失历史知识。
+- 验证：`jiju.pet` 返回 `200` 且未设置阻止 iframe 的响应头；`npm run lint`、`npm run build` 与 `git diff --check` 通过。
+- 后续：旧 build log 适合迁移到 Wiki / Build Notes 后再从 `App.tsx` 清理 legacy component。
+
+### 2026-07-20 · Restore previous home top menu
+
+- 类型：前台 / 首页 / Navigation restore
+- 改动：首页顶部恢复改版前的结构：左侧 `Eden Tan`，右侧完整 Auto / Light / Dark 与 EN / 中文控制，并恢复 Resume 入口；移除新版 Work / Lab / Notes / About 与 `Let’s build something` 导航。
+- 原因：用户要求恢复首页之前的 top menu bar。
+- 影响：首页顶部重新使用用户熟悉的主题与语言控制布局；移动端隐藏 Resume，保留核心控制。
+- 验证：`npm run lint`、`npm run build` 与 `git diff --check` 通过。
+- 后续：无。
+
+### 2026-07-20 · ETReportHub icon system
+
+- 类型：前台 / `/etreporthub` / Icon hierarchy
+- 改动：产品资料栏加入 Team、Excel input、SQLite storage、Dashboard output 图标；核心能力加入上传、趋势、会员、检查图标；四步工作流加入输入、存储、判断、发送图标；数据边界与 Information 标题补充统一线性图标。
+- 原因：用户希望 ETReportHub 页面增加更多 icon。
+- 影响：长页面的扫描性提升；所有 icon 统一使用 ETReportHub 蓝色、细线风格，不增加渐层、glow 或额外卡片背景。
+- 验证：`npm run lint`、`npm run build` 与 `git diff --check` 通过。
+- 后续：无。
+
+### 2026-07-20 · ETReportHub embedded live demo
+
+- 类型：前台 / `/etreporthub` / Live demo
+- 改动：将三张 CSS 产品界面占位图替换为嵌入式 `https://edent95.github.io/daily-report-dashboard/demo/`；新增浏览器窗口外框、互动 iframe、双语标题和新标签直达入口，并处理桌面与移动高度。
+- 原因：用户希望截图区域直接显示自己的 live demo site。
+- 影响：访客无需离开产品页即可实际操作 ETReportHub；GitHub Pages 响应未设置 `X-Frame-Options` 或阻止嵌入的 CSP。
+- 验证：Demo URL 返回 `200`；`npm run lint`、`npm run build` 与 `git diff --check` 通过。
+- 后续：若 Demo 后续添加 frame 限制，需要改回实时截图预览加外链。
+
+### 2026-07-15 · Remove ETReportHub Learn more CTA
+
+- 类型：前台 / `/etreporthub` / CTA cleanup
+- 改动：移除产品首屏的 `Learn more / 了解产品` 按钮，只保留 Demo 主入口与方案入口。
+- 原因：用户要求移除 Learn more button。
+- 影响：首屏行动层级更精简。
+- 验证：`npm run lint`、`npm run build` 与 `git diff --check` 通过。
+- 后续：无。
+
+### 2026-07-15 · ETReportHub public demo entry
+
+- 类型：前台 / `/etreporthub` / Demo CTA
+- 改动：产品首屏新增 `View demo / 查看 Demo` 主按钮，链接 `https://edent95.github.io/daily-report-dashboard/demo/` 并在新标签打开；页面底部 CTA 同步加入 Demo 入口，售卖方案保留为次级行动。
+- 原因：用户要求在 ETReportHub 产品页加入公开 demo site。
+- 影响：访客现在可以先体验产品，再查看上线方案；桌面与移动端均保留直接 Demo 入口。
+- 验证：`npm run lint`、`npm run build` 与 `git diff --check` 通过。
+- 后续：无。
+
+### 2026-07-15 · ETReportHub public copy rewrite
+
+- 类型：内容 / `/etreporthub` / 产品叙事重写
+- 改动：公开页不再沿用旧 System Flow 技术文档；重写为 Things 3 式产品详情结构：产品简介、四项核心能力、四步日常工作流、本地数据边界、产品资料与最终上线 CTA。文案从数据库字段和内部规则转向运营团队能理解的价值、场景与下一步行动，中英文同步。
+- 原因：用户明确要求内容也重新写过，而不只是视觉重做。
+- 影响：`/etreporthub` 现在是对外产品页；旧技术实现仍保留为未挂载的 legacy component，避免本轮重写误删系统事实，后续可迁移到 Wiki / technical notes。
+- 验证：`npm run lint`、`npm run build` 与 `git diff --check` 通过；本地验证 `http://localhost:4180/etreporthub`。
+- 后续：把 legacy System Flow 内容迁移到独立 Wiki 页面后，可从 `App.tsx` 清理旧 component。
+
+### 2026-07-15 · ETReportHub Things 3 product-page redesign
+
+- 类型：前台 / `/etreporthub` / 产品详情页重构
+- 改动：参考 Things 3 App Store 产品详情的信息架构，重做 ETReportHub 首屏为 app icon、产品名、一句话价值、开发者署名与主 CTA；新增四项产品元信息栏和三张横向界面预览；页面根节点增加 `etreport-product-page` 作用域，后续视觉调整不会影响 sales、Poker、CRM 或 Wiki 共用样式。
+- 原因：用户要求 `/etreporthub` 使用 Things 3 的设计语言与排版。
+- 影响：产品入口从“大型系统说明 Hero”变成清楚的 app listing；完整业务规则、流程、表格与系统边界内容继续保留。
+- 验证：`npm run lint`、`npm run build` 与 `git diff --check` 通过；本地验证地址 `http://localhost:4180/etreporthub`。
+- 后续：有真实 ETReportHub 截图后，可替换当前三张 CSS 界面预览。
+
+### 2026-07-15 · Data & Decisions app icon
+
+- 类型：前台 / 首页 / CSS app icon
+- 改动：`Data & Decisions` 底部的文字 CTA 替换为现有 ETReportHub CSS app icon，并直接链接 `/etreporthub`。
+- 原因：用户要求该领域放置 ETReportHub app icon CSS。
+- 影响：Data 与 AI 两个领域现在都使用真实产品 icon 作为入口；Humans & Systems 保留文字链接。
+- 验证：`npm run lint`、`npm run build` 与 `git diff --check` 通过。
+- 后续：无。
+
+### 2026-07-15 · About environmental portrait
+
+- 类型：前台 / 首页 / 图片素材
+- 改动：将用户提供的 `4.jpg` 优化为 1800px、约 548KB 的 `public/images/eden-environmental-portrait.jpg`，替换 About 区原 CSS 环境人像占位图；使用真实语义图片、双语 alt、lazy loading、cover 裁切与人物焦点设置。
+- 原因：用户指定该胶片照片作为 Environmental portrait。
+- 影响：首页 About 现在使用真实 Eden 环境人像；桌面与移动端沿用原卡片比例并自动裁切。
+- 验证：`npm run lint`、`npm run build`、`git diff --check` 通过，并确认构建产物包含该图片。
+- 后续：无。
+
+### 2026-07-15 · About Eden Chinese translation
+
+- 类型：内容 / 首页 / About 双语
+- 改动：中文 About 同步为新版英文结构；标题改为 `嗨，我是 Eden。`，补充从营销走向 Dashboard、AI 产品与理解人的系统，以及当前主动做产品、面对市场的方向；最后一段保持加粗。
+- 原因：用户要求中文模式也翻译新版 About 内容。
+- 影响：About 中英文模式现在语义与段落层级一致。
+- 验证：`npm run lint`、`npm run build` 与 `git diff --check` 通过。
+- 后续：无。
+
+### 2026-07-15 · About Eden English rewrite
+
+- 类型：内容 / 首页 / About
+- 改动：英文 About 标题改为 `Hey, I’m Eden.`；正文重写为营销背景、dashboard / AI product / human systems 构建路径，以及当前主动面向市场创建产品的三段个人叙事；最后一段加粗突出。
+- 原因：用户提供新的英文个人介绍，希望替换原本较抽象的 `first dataset` 文案。
+- 影响：英文 About 更个人、更具体，也更清楚交代 Eden 当前的产品创业方向；中文模式暂时保持原文。
+- 验证：`npm run lint`、`npm run build` 与 `git diff --check` 通过。
+- 后续：如需双语语义一致，可再提供或确认对应中文版本。
+
+### 2026-07-15 · Manifesto language replacement
+
+- 类型：前台 / 首页 / 双语宣言
+- 改动：大型宣言区改为按语言直接替换；英文模式只显示英文巨型宣言，中文模式只显示 `技术不应该替我们决定命运。它应该帮助我们看清自己。`，并使用同一主视觉字号。
+- 原因：用户要求该区也像 Hero 一样中英文分开显示。
+- 影响：宣言区不再出现英文主文加中文小字的混排，两种语言的视觉层级一致。
+- 验证：`npm run lint`、`npm run build` 与 `git diff --check` 通过。
+- 后续：无。
+
+### 2026-07-15 · AI product dual app icons
+
+- 类型：前台 / 首页 / CSS app icons
+- 改动：`AI & Products` 底部从单一 Jiju icon 扩展为并排双入口，新增 Friday Poker Club CSS app icon；Jiju 链接 `/jiju-pet`，Poker 链接 `/poker`。
+- 原因：用户要求把 Friday Poker Club app icon 同时加入 AI & Products。
+- 影响：该领域现在直接展示两个真实产品入口，并保留各自无障碍标签、hover 与键盘 focus。
+- 验证：`npm run lint`、`npm run build` 与 `git diff --check` 通过。
+- 后续：无。
+
+### 2026-07-15 · AI product CTA icon
+
+- 类型：前台 / 首页 / CSS app icon
+- 改动：`AI & Products` 栏底部的 `进入产品实验室 →` 文字链接替换为现有 `ProjectsJijuCssIcon`；icon 继续链接 `/jiju-pet`，并补充 hover、键盘 focus 与双语无障碍标签。
+- 原因：用户希望产品实验室入口直接使用自己的 Jiju app CSS icon。
+- 影响：AI 产品栏以真实产品识别图标作为入口，另外两栏仍保留文字 CTA。
+- 验证：`npm run lint`、`npm run build` 与 `git diff --check` 通过。
+- 后续：如需同时展示 Friday Poker Club，可扩展为双 app icon shelf。
+
+### 2026-07-15 · Hero title language replacement
+
+- 类型：前台 / 首页 / 双语标题
+- 改动：Hero 主标题改为按语言直接替换：中文模式显示 `理解人。建立系统。`，英文模式显示 `Human, interpreted. Systems, built.`；移除额外中文副标题。
+- 原因：用户要求中文模式隐藏英文 Hero 标题，并让中文标题占据同一主标题位置。
+- 影响：两种语言模式均只显示一套主标题，层级与首屏高度保持一致。
+- 验证：`npm run lint`、`npm run build` 与 `git diff --check` 通过。
+- 后续：无。
+
+### 2026-07-15 · Hero language separation
+
+- 类型：前台 / 首页 / 双语显示逻辑
+- 改动：首页 Hero 的 `理解人。建立系统。` 改为仅中文模式显示；英文模式只显示 `Human, interpreted. Systems, built.`。
+- 原因：用户要求英文模式隐藏中文辅助标题。
+- 影响：首页两种语言不再在 Hero 同时出现，语言切换更清楚。
+- 验证：`npm run lint`、`npm run build` 与 `git diff --check` 通过。
+- 后续：无。
+
+### 2026-07-15 · Apple One reference proportion correction
+
+- 类型：前台 / 首页 / 排版比例调整
+- 改动：按用户提供的 Apple One / Arcade 截图重新校准首页节奏：顶栏收窄至 48px、Hero 缩短并降低标题尺度、拼贴墙固定为三行横向内容带、三领域标题居中且卡片改为轻量无框三栏、宣言区同步降低高度。
+- 原因：上一版更接近纵向品牌展览页，用户明确指定参考截图中的紧凑居中首屏、横向三行拼贴与其后的轻量栏目节奏。
+- 影响：首屏到拼贴的转换更快，桌面端信息密度更接近参考；移动端仍保留两列拼贴与单栏内容结构。
+- 验证：执行 `npm run lint`、`npm run build` 与 `git diff --check`；本地地址为 `http://localhost:4180/`。
+- 后续：真实素材到位后按当前三行槽位替换 CSS 占位视觉。
+
+### 2026-07-15
+
+- 类型：前台 / 首页 / 个人生命实验室重构
+- 改动：完整重做 `/` 首页，建立 Apple-like 编辑节奏与 Eden 自有暖白、深海蓝、日落橙视觉系统；新增双语 Hero、12 项可替换数据拼贴、三大实践领域、全宽宣言、3 个精选项目、环境人像 About 与完整 Footer；内容数据集中在 `App.tsx`，页面样式独立保留在 `styles/pages/home.css`。
+- 原因：需要让首页呈现“外表像精密产品公司，走进去却发现是一个人的生命实验室”，并覆盖数据、AI 产品、营销、人类行为与生活观察。
+- 影响：首页定位、内容架构、移动端布局与首页 SEO 全部更新；其他既有路由和项目详情页保持不变。拼贴与个人照片当前使用高级感 CSS 占位视觉，后续可直接替换真实素材。
+- 验证：`npm run typecheck`、`npm run lint`、`npm run build`、`git diff --check` 通过；桌面三栏/横向拼贴与 900px、600px 两级响应式规则已检查；触控小屏默认显示拼贴项目名；全页支持 `prefers-reduced-motion`。
+- 后续：提供 Eden 环境人像、12 张项目/旅行/海洋/胶片素材，以及最终 Email / LinkedIn URL 后，可完成真实素材替换。
+
+### 2026-07-01 21:09
+
+- 类型：内容 / 前台 / ETReportHub sales pricing
+- 改动：将 `/etreporthub-sales` 的销售价格从旧的月费 / 买断双方案改为单一 `RM4,890` 上线套餐；同步更新 hero price strip、ROI 卡片、Pricing 区块、FAQ 和中英文销售话术；`seo-routes.ts` 的 `/etreporthub-sales` title / description 也改为 `RM4,890 launch package` 口径。
+- 原因：用户要求 `https://edentan.site/etreporthub-sales` 价钱改为 4890。
+- 影响：前台售卖页不再显示 `RM960/月`、`RM19,888`、`RM2,880 首期` 或旧买断回本口径；当前公开价格统一为一次性 `RM4,890`。
+- 验证：关键词检查确认当前实现与 SEO 中旧价已无残留；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.18s）。
+- 后续：本地验证看 `http://localhost:4180/etreporthub-sales`，hero、ROI、Pricing 和 FAQ 应只看到 `RM4,890` 这一套价格。
+
 ### 2026-06-29 19:55
 
 - 类型：内容 / 首页 / Project card descriptions
@@ -2845,3 +3061,311 @@
 - 影响：首页保留个人知识品牌定位，但阅读负担更低，首屏更利落。
 - 验证：关键词检查确认 `Scattered work becomes reusable systems`、`Less output. Better judgment. Compounding workflow` 和中文短句已写入；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 2.59s）；`curl -I http://localhost:4180/` 返回 `200 OK`。
 - 后续：本地验证看 `http://localhost:4180/` 首屏，应看到更短的 hero 文案。
+
+### 2026-07-20
+
+- 类型：前台 / CSS art / Conway + Home
+- 改动：把原 CRM Intelligence System 的魔法阵 CSS app icon 复用为 Conway's Game of Life 的视觉标识；在 `/conways-game-of-life` 首屏加入该图标，并在首页 `Humans & Systems` 卡片加入可点击图标直达 Conway；同步把 CSS art registry 的旧 Conway 金字塔入口更新为 `home-conway-magic-circle`，并调整 `/project-css` 的 Interests 说明以支持透明图腾与 framed app icon 混合展示。
+- 原因：用户要求把 CRM Intelligence System app icon 给 Conway's Game of Life，并放到 Humans & Systems 首页区域。
+- 影响：Conway 页面、首页入口和 CSS art registry 现在使用同一套 app icon 视觉；中英文 aria label 与移动端尺寸均已处理。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.09s）；`git diff --check` 通过；关键词检查确认 Conway 首屏、首页入口与 registry ID 已写入。
+- 后续：本地验证看 `http://localhost:4180/` 的 `Humans & Systems` 卡片和 `http://localhost:4180/conways-game-of-life` 首屏，两处应显示同一枚魔法阵 app icon。
+
+### 2026-07-20
+
+- 类型：前台 / Film Gallery / 图片恢复与横向胶卷
+- 改动：从历史构建产物恢复 `public/analog-tech/` 下 11 张真实胶片照片；把 `/analog-tech` 从首图 + 双列瀑布流改成由左至右的横向 film strip，加入胶片孔、逐格编号、scroll snap、键盘/触控横滑与左右按钮，并保留完整画面不裁切；支持 light/dark 页面环境与 `prefers-reduced-motion`。
+- 原因：Film Gallery 代码仍引用 `/analog-tech/analog-tech-1.png` 到 `-11.png`，但资源目录已不在 `public/`，导致所有图片请求缺失；用户同时要求改成类似从左到右滚动胶卷的设计。
+- 影响：Film Gallery 的 11 张照片重新进入生产构建；桌面和手机现在使用同一条可横向浏览的胶卷，不再使用瀑布流。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.11s）；构建产物 `dist/analog-tech/` 确认有 11 张照片；本地 `/analog-tech` 与 `/analog-tech/analog-tech-11.png` 均返回 200；`git diff --check` 通过。
+- 后续：本地验证看 `http://localhost:4180/analog-tech`，应看到 11 格由左至右滚动的胶片卷；可拖动、触控横滑或点击左右按钮。
+
+### 2026-07-20
+
+- 类型：前台 / CSS art / Film Gallery app icon
+- 改动：新增 `FilmGalleryCssIcon` 与独立 `styles/css-art/film-gallery-icon.css`：圆角正方形 framed icon 内包含胶片条、齿孔、取景画面、双卷轴和实体旋转/位移动效；补齐 dark mode 与 `prefers-reduced-motion`；注册为 `home-film-gallery-app-icon`，并放入首页 `Humans & Systems` app shelf，点击直达 `/analog-tech`；同步更新 CSS manifest、registry 文档与 `/project-css` 自动检查入口。
+- 原因：用户要求为 Film Gallery 创建 square + rounded corner app icon，并放到首页 Humans & Systems。
+- 影响：首页 Humans & Systems 现在同时显示 Film Gallery 与 Conway 两枚 app icon；Film Gallery 拥有独立、可复用的 CSS visual asset。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.05s）；`git diff --check` 通过；首页与 `/project-css` 均返回 200；关键词检查确认 component、registry、CSS import 与首页链接全部存在。
+- 后续：本地验证看 `http://localhost:4180/` 的 Humans & Systems，Film Gallery 图标应位于 Conway 图标旁；`http://localhost:4180/project-css` 可单独检查图标尺寸与动效。
+
+### 2026-07-20
+
+- 类型：前台 / Film Gallery / Uncropped media + route rename
+- 改动：修复横向胶卷中的竖图裁切：将照片元素锁定到 `.film-gallery-negative` 的绝对 inset 尺寸，再由 `object-fit: contain` 完整缩放；公开 route 从 `/analog-tech` 改为 `/film-gallery`，同步首页与 footer 链接、SEO registry、sitemap、README、组件/数据命名和图片资源目录；旧 `/analog-tech` 进入后使用 `history.replaceState` 自动换成新地址，并应用新 route 的 SEO。
+- 原因：浏览器计算样式确认竖图 01/10 曾按原比例渲染为约 `479 × 724px`，超过约 `496px` 高的胶片框后被 `overflow: hidden` 裁切；用户同时要求 slug 改为 Film Gallery。
+- 影响：11 张横图、竖图与近方形图都完整显示；公开 canonical、sitemap 与站内入口统一为 `/film-gallery`，旧链接仍可无刷新兼容。
+- 验证：`npm run typecheck` 通过；默认 `npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.20s）；最终 `VITE_SITE_URL=https://edentan.site VITE_BASE=/ npm run build` 通过（✓ built in 1.15s）；生产 sitemap 仅包含 `/film-gallery`；本地 `/film-gallery` 与新图片资源返回 200；in-app browser 计算样式确认图片框为固定 `479 × 479px`、`object-fit: contain`，竖图不再超出父层；`git diff --check` 通过。
+- 后续：本地验证看 `http://localhost:4180/film-gallery`；旧 `http://localhost:4180/analog-tech` 打开后地址栏应自动变为新 slug。
+
+### 2026-07-20
+
+- 类型：前台 / Icon Prompt Studio / UX redesign
+- 改动：重做 `/icon-prompts` 的信息架构与视觉：将 12 段长列表改为 ETReportHub、Jiju、Friday Poker Club 三产品 sticky 切换器；每个方向加入 2×2 图标预览、简短图标清单、默认收起的完整生产 Prompt、单组复制和全组复制；补齐复制失败状态、旧浏览器 clipboard fallback、键盘焦点、dark mode、reduced transparency 与 `prefers-reduced-motion`。
+- 原因：旧页面像文档列表，视觉密度高且不方便快速比较和复制；用户要求结合 Emil Kowalski / Apple 式设计原则继续重做。
+- 影响：页面现在更像可操作的 Prompt Studio，一次只聚焦一个产品，图标方向可先扫视再展开细节，移动端也避免一次加载成超长文本墙。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.09s）；`git diff --check` 通过。
+- 后续：本地验证看 `http://localhost:4180/icon-prompts`，切换三个产品时应更新四组预览，Copy / Copy all 应提供即时文字反馈。
+
+### 2026-07-20
+
+- 类型：前台 / 首页 / Selected work CSS banners
+- 改动：将首页 `Selected work` 三张卡原本共用的圆形与十字线占位图，替换为三套独立 CSS banner：Edwin Dashboard 使用 dashboard window、KPI、bar chart 与趋势信号；Jiju 使用地图、道路、地点 pin、移动路线与宠物资料卡；Life as a Dataset 使用记录卡、时间轴、数据节点与循环轨迹。新增 `styles/css-art/home-selected-work-banners.css`、三个 React CSS art component、`home-selected-work-banner` registry category 与 getter，并在 `/project-css` 增加三张 banner 的集中检查区。
+- 原因：用户要求设计首页 Selected work 的三张 banner，让每个项目有清楚、不同的视觉识别。
+- 影响：首页三张 Selected work 卡现在分别表达数据判断、本地发现与人生记录，同时保持同一构图比例、实体物件动效、mobile 适配、light/dark 可读性和 `prefers-reduced-motion`。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.05s）；首页与 `/project-css` 均返回 200；registry/component/CSS 关键词检查通过；`git diff --check` 通过。
+- 后续：本地验证看 `http://localhost:4180/#work` 下方的 `02 · Selected work`；`http://localhost:4180/project-css` 可单独检查三套 banner 的比例与动效。
+
+### 2026-07-20
+
+- 类型：内容 / Film Gallery / 新增胶片照片
+- 改动：将用户提供的 `3.jpg`、`4.jpg`、`14.jpg`、`13.jpg` 按顺序加入 `/film-gallery`，编为第 12–15 格；新图以 1600px 长边、JPEG 82 质量输出，并补全中英文 alt/caption。页面胶卷数量改为根据照片数组自动显示。
+- 原因：用户要求把 4 张新照片加入 Film Gallery。
+- 影响：横向胶卷从 11 格增加到 15 格；新照片沿用 `object-fit: contain` 完整显示，不会被裁切。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.13s）；`git diff --check` 通过；第 12 与第 15 张资源已进入 `dist/film-gallery/`；本地页面与新图资源均返回 `200 OK`。
+- 后续：本地验证看 `http://localhost:4180/film-gallery`，向右滑到第 12–15 格。
+
+### 2026-07-20
+
+- 类型：内容 / Film Gallery / Camera & film notes
+- 改动：在 `/film-gallery` hero 与横向胶卷之间加入器材档案，标注 Konica Auto S2（01、02、06–11）、Rolleiflex Old Standard Model 621（03–05）、Zeiss Ikon Contessa 35（12–15），以及 Kodak Gold 200（01–13）、Kodak Gold 400（14–15）；Konica 型号使用用户提供的外部链接。
+- 原因：用户希望在画廊中 mention 拍摄使用的相机和胶卷。
+- 影响：访客可以根据 frame 编号快速对照拍摄器材；新区域使用双栏编辑式排版，mobile 改为单栏。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.04s）；`git diff --check` 通过；本地 `/film-gallery` 返回 `200 OK`；器材名称、frame 区间与样式关键词检查通过。
+- 后续：本地验证看 `http://localhost:4180/film-gallery`，器材档案应位于页面介绍和横向胶卷之间。
+
+### 2026-07-20
+
+- 类型：内容 / Film Gallery / Per-photo camera metadata
+- 改动：根据用户澄清，移除 hero 与胶卷之间的独立器材档案；改为在每张照片下方的 frame caption 直接显示对应相机与胶卷，格式为 `Camera · Film stock`；Konica Auto S2 在对应照片下保留用户提供的链接。
+- 原因：用户说明“加在照片下面”，而非独立设备介绍区。
+- 影响：每一格照片都能就地查看拍摄器材，不需要根据编号往上对照；长相机名在小屏幕上可自动换行。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.16s）；`git diff --check` 通过；本地 `/film-gallery` 返回 `200 OK`；关键词检查确认旧 `.film-gallery-gear` 区域已移除，新 `.film-gallery-frame-gear` 已写入每格 caption。
+- 后续：本地验证看 `http://localhost:4180/film-gallery`，每张照片下方应显示 frame 编号、相机和胶卷。
+
+### 2026-07-20
+
+- 类型：内容 / Film Gallery / Remove Konica link
+- 改动：移除每张对应照片下方 `Konica Auto S2` 的外部链接与 external-link icon，并清理不再使用的 caption 链接样式。
+- 原因：用户要求拿掉 Konica Auto 的 links。
+- 影响：`Konica Auto S2` 仍显示为器材资讯，但只是普通文字，不再可点击。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.13s）；`git diff --check` 通过；本地 `/film-gallery` 返回 `200 OK`；关键词检查确认 Google URL、`camera.href` 和器材 caption 链接样式均已移除。
+- 后续：本地验证看 `http://localhost:4180/film-gallery`，Konica Auto S2 不应有链接或外部链接图标。
+
+### 2026-07-20
+
+- 类型：内容 / 前台 / Brand Guide log reconciliation
+- 改动：结构化扫描并对照 3153 行 `log.md`、当前 tokens、CSS art registry 与页面实现，按“最后一次决定优先”更新 `/brand-guide`：把核心主张改为 `Knowledge should compound`，保留 `Build order from complexity` 作为 operating line；补入 900–1100px 内容岛、默认两栏、container-relative type、图片默认保留完整构图等现行版式规则。
+- 改动：重整色彩说明为 Mint / Pink 主题主色、Amber / Blue 系统辅助色、Dream Purple 行动色，并让 swatch 直接显示色彩名与用途；字体继续以 MiSans / MiSans VF 为主，JetBrains Mono 用于系统标签。
+- 改动：新增可见的 asset rules：app icon 使用 square + rounded framed surface，totem / sigil 保持透明底，project banner 使用稳定比例并解释项目，摄影默认 contain 且 metadata 放在图片下方；同步补入 CSS art registry、`styles/css-art` / `styles/pages` 分层、稳定 wrapper 几何、light/dark/reduced-motion 必须支持。
+- 改动：移除 Brand Guide hero 与 manifesto 的 linear/radial gradient，让页面本身符合“不用 background/card fade、glow 或 scan line”的规则；内容宽度从 1180px 收到 1100px，保留玻璃卡、半透明边线且不使用卡内色条。
+- 原因：用户要求 review 完整 log 并更新 Brand Guide；当前页面对首页知识品牌主张、最新资产系统与维护规则记录不足，且自身视觉与禁用渐层的规则矛盾。
+- 影响：`/brand-guide` 现在是可直接用于首页、项目页、图库、Wiki、互动工具、Story log 和 CSS art 维护的当前规范，并显示 `Last reconciled: 20 Jul 2026`。SEO description 与 README 路由说明已同步。
+- 验证：`npm run typecheck` 通过；最终 `npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.02s）；`git diff --check` 通过；本地 `/brand-guide` 返回 `200 OK`；核心主张、主题色、asset types、implementation rules、最后对齐日期与 900–1100px 关键词检查通过；`styles/pages/brand-guide.css` 已无 gradient 或已废弃的 tint/action 变量。
+- 后续：本地验证看 `http://localhost:4180/brand-guide`，重点看 hero、04 / Visual system、07 / Application 的 Asset types，以及 09 / Motion language 的 Current implementation rules。
+
+### 2026-07-20
+
+- 类型：前台 / Brand Guide / Core philosophy responsive cards
+- 改动：根据用户截图修正 `01 / Core philosophy` 的卡片排版：四张 principle card 从桌面强制四栏改为 2×2，六条 detail rule 从三栏改为两栏；principle card 加入 container-relative typography，标题使用 `word-break: keep-all` 与 `text-wrap: balance`，正文使用正常段落换行。
+- 原因：中等宽度下原四栏卡片过窄，中文标题和正文被压成一字一行，卡片外形也变成过窄的竖向胶囊。
+- 影响：Core philosophy 在 desktop 与中等宽度下保持两栏宽卡，900px 以下沿用单栏；中英文标题不再被拆成竖排。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.16s）；`git diff --check` 通过；本地 `/brand-guide` 返回 `200 OK`；CSS 关键词检查确认 principle grid 为两栏、detail grid 为两栏，container typography 与中文防竖排规则已生效。
+- 后续：本地验证看 `http://localhost:4180/brand-guide#brand-philosophy`，清晰 / 克制 / 层级 / 信任应显示为 2×2 宽卡，下方规则为两栏。
+
+### 2026-07-20
+
+- 类型：前台 / Brand Guide / Hero signature ratio
+- 改动：根据用户截图重做 hero 内 `Operating line` signature 的内部比例：卡片改为 container query 容器，图标列使用 4.75–7.5rem 容器相对尺寸，移除 220px 固定最小高度，内边距、gap、圆角和字号改为 cqw + clamp 缩放；`Build order from complexity.` 改为可控制的两行构图。
+- 原因：原 signature 在截图宽度下卡片过高、图标过大，文字仍用 viewport breakpoint 字号，导致 `complexity.` 溢出右边界，整体不再像横向 signature strip。
+- 影响：中等与桌面宽度保持紧凑横向比例，文字始终留在卡内；520px 以下才改为上下结构。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.13s）；`git diff --check` 通过；本地 `/brand-guide` 返回 `200 OK`；signature CSS 检查确认已移除固定 min-height，图标列、gap、padding、字号和两行文字结构均已更新。
+- 后续：本地验证看 `http://localhost:4180/brand-guide`，Operating line 应是紧凑横向卡，文字两行且不溢出。
+
+### 2026-07-20
+
+- 类型：前台 / Brand Guide / Remove centered island layout
+- 改动：根据用户截图移除 `/brand-guide` 整页的固定居中内容岛逻辑：删除 `--brand-max: 1100px` 和多处 `calc((100vw - var(--brand-max)) / 2)`，改用 `--brand-page-gutter: clamp(20px, 3vw, 48px)`；topbar、hero、signature、classification 和所有 section 均改为流体全宽。
+- 改动：同步修正 Brand Guide 内容中的旧规则：`Horizontal whitespace / Centered content islands / 900–1100px` 改为 fluid page gutters、使用可用宽度和 20–48px responsive gutter，避免页面与规范自相矛盾。
+- 原因：用户要求拿掉页面两边刻意放空的 logic；原实现会在大屏将 topbar 和主内容压在 1100px 居中岛内。
+- 影响：Brand Guide 现在只保留普通页面 gutter，内容、卡片和顶部控件可使用更多横向宽度；小屏 14px 覆盖仍保留。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.15s）；`git diff --check` 通过；本地 `/brand-guide` 返回 `200 OK`；关键词检查确认 topbar、hero、sections 已共用 `--brand-page-gutter`，signature 为 `max-width: none`，当前 App/CSS 已无 `brand-max`、`900–1100`、`Horizontal whitespace` 或 `Centered content islands` 残留。
+- 后续：本地验证看 `http://localhost:4180/brand-guide`，topbar 与页面 section 应从 20–48px gutter 开始，不再使用 1100px 居中内容岛。
+
+### 2026-07-20
+
+- 类型：前台 / 首页 / Remove Selected work
+- 改动：移除首页整段 `02 · Selected work`，包括标题、View all projects 链接、Edwin Dashboard / Jiju / Life as a Dataset 三张卡和对应的 `homeFeaturedProjects`、`projectHrefs`、banner getter 调用；清理 `styles/pages/home.css` 中只服务该 section 的 featured/project card 样式。
+- 改动：首页 About Eden 章节编号从 `03` 改为 `02`；Brand Guide 的 Home 用法从 `Systems and selected work after` 改为 `Systems and proof after`；内部 `/project-css` 的三套旧 banner 保留为 `Banner archive`，不再标记为首页 Selected work。
+- 原因：用户要求 remove `Selected work`。
+- 影响：首页现在从 manifesto 直接进入 About Eden，不再显示三张精选作品大卡；CSS banner 资产仍在 registry 和内部 archive 中保留，方便未来复用。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.11s）；`git diff --check` 通过；本地首页返回 `200 OK`；关键词检查确认首页组件与样式中已无 `02 · Selected work`、featured project 数据、getter、href mapping 或 project card 专属 class，且 About Eden 已更新为 `02`。
+- 后续：本地验证看 `http://localhost:4180/`，manifesto 下方应直接是 `02 · About Eden`。
+
+### 2026-07-20
+
+- 类型：前台 / 首页 / Banner size and ratio
+- 改动：将首页 12 张 work / field-note banner 从固定行高与不等跨栏的 mosaic，统一为 `16:9`；桌面使用四栏、900px 以下两栏、600px 以下单栏。容器最大宽度为 1480px，桌面满宽时单张约 361 × 203px；推荐源文件尺寸为 1600 × 900px。
+- 改动：移除 `eden-collage-1` 至 `eden-collage-12` 的逐卡定位 class、1180px 固定宽度位移和 mobile 特殊跨栏规则，让尺寸只由统一比例与响应式栏数决定。
+- 原因：用户指出这组 banner 缺少一致的 size 与 ratio；旧布局实际产生多种横宽比，视觉节奏不稳定。
+- 影响：首页 banner 现在大小一致，不会再出现同一排忽宽忽窄；各断点保持相同比例，只改变栏数。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.17s）；`git diff --check` 通过；本地首页返回 `200 OK`；关键词检查确认 `16 / 9`、4 / 2 / 1 栏规则存在，旧逐卡定位、固定行高与横向位移已移除。
+- 后续：本地验证看 `http://localhost:4180/#work`，12 张 banner 应全部保持相同 16:9 比例。
+
+### 2026-07-20
+
+- 类型：内容 / 首页 / Jiju banner
+- 改动：将用户提供的 `Adventure SEO.jpg` 裁切并输出为 `public/home-banners/jiju-adventure-seo.jpg`，尺寸统一为 1600 × 900px；首页 `Jiju AI Product` banner 从抽象占位图改为这张冒险猫图片，并补充中英文 alt、lazy loading、base path 解析与轻微 hover scale。
+- 原因：用户指定这张图作为 Jiju banner。
+- 影响：首页 work banner grid 的第二张卡现在使用真实 Jiju 视觉，同时保持统一 16:9 比例、圆角与 hover 信息层。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.16s）；`git diff --check` 通过；构建产物包含 1600 × 900px JPEG；本地图片 URL 返回 `200 OK`；组件、样式与 base path 关键词检查通过。
+- 后续：本地验证看 `http://localhost:4180/#work` 的第二张 `Jiju AI Product` banner。
+
+### 2026-07-20
+
+- 类型：内容 / 首页 / Jiju banner label
+- 改动：将首页第二张 banner 的标题从 `Jiju AI Product` 缩短为 `Jiju`，分类标签从 `AI` 改为 `Social App`。
+- 原因：用户要求使用更直接的产品名称，并明确 Jiju 的社交应用分类。
+- 影响：图片与 16:9 布局不变，只更新 banner 上的可见标题和标签。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.13s）；`git diff --check` 通过；本地首页返回 `200 OK`；关键词检查确认 Jiju banner 使用 `Jiju` 与 `Social App`，旧 `Jiju AI Product` 已无残留。
+- 后续：本地验证看 `http://localhost:4180/#work` 的第二张 banner。
+
+### 2026-07-20
+
+- 类型：前台 / 首页 / Jiju banner navigation
+- 改动：将整张 Jiju banner 改为链接，点击后进入 `/jiju-pet`；通过 base path helper 生成地址，并加入中英文 aria label、pointer cursor 与键盘 focus-visible 样式。其他 banner 继续保持非链接展示。
+- 原因：用户要求点击 Jiju banner 时导航到 Jiju 产品页。
+- 影响：鼠标、触控和键盘用户均可从首页 work grid 直接进入 Jiju。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.11s）；`git diff --check` 通过；本地 `/jiju-pet` 返回 `200 OK`；href、aria label 与 focus 样式关键词检查通过。
+- 后续：本地验证看 `http://localhost:4180/#work`，点击 Jiju banner 应进入 `http://localhost:4180/jiju-pet`。
+
+### 2026-07-20
+
+- 类型：内容 / 首页 / Friday Poker Club banner
+- 改动：将用户提供的 Friday Poker Club 图片转换为 `public/home-banners/friday-poker-club.jpg`，统一输出 1600 × 900px；在首页 work grid 的 Jiju 后新增 `Friday Poker Club` banner，标签为 `Social App`，补充中英文描述与 alt，并让整张卡点击进入 `/poker`。
+- 原因：用户要求加入这张 banner，并标注 Social app。
+- 影响：首页 work grid 新增一张真实产品视觉；继续沿用统一 16:9 尺寸、hover 信息层、base path 与键盘可访问链接逻辑。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.18s）；`git diff --check` 通过；构建产物包含 1600 × 900px JPEG；本地图片和 `/poker` 均返回 `200 OK`；标题、标签、href 与资源关键词检查通过。
+- 后续：本地验证看 `http://localhost:4180/#work`，Friday Poker Club 应紧跟 Jiju，点击后进入 `http://localhost:4180/poker`。
+
+### 2026-07-20
+
+- 类型：视觉 / 首页 / Banner tag and title colors
+- 改动：首页全部 work banner 的 tag 从半透明黑色统一改为固定 Mint Green `#7bdcb5`，深色文字确保对比；hover / mobile 可见标题统一改为 System Amber `#ffa340ed`。两种颜色在 light / dark mode 都保持不变，不跟随 Mint/Pink、Amber/Blue 的主题切换。
+- 原因：用户要求所有 tag 使用 mint green，title 使用 System Amber。
+- 影响：13 张 banner 的分类标签和标题拥有一致的品牌色层级，真实图片与占位视觉使用同一规则。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.22s）；`git diff --check` 通过；本地首页返回 `200 OK`；颜色关键词检查通过，旧半透明黑 tag 与 backdrop blur 已移除。
+- 后续：本地验证看 `http://localhost:4180/#work`，所有 tag 应为 Mint Green，标题 hover 后为 System Amber。
+
+### 2026-07-20
+
+- 类型：视觉 / 首页 / Remove banner tags
+- 改动：移除首页全部 banner tag，包括可见 label、`category` 数据字段和 `.eden-collage-label` 样式；description 从白色改为与 title 相同的 System Amber `#ffa340ed`，并将透明度调整为 0.86 以保留标题层级。
+- 原因：用户要求拿掉所有 tag，并将 description 改为 amber。
+- 影响：banner 视觉更简洁；hover / mobile 信息层只保留 System Amber 的 title 与 description，图片、16:9 比例和产品链接不变。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.15s）；`git diff --check` 通过；本地首页返回 `200 OK`；首页 collage 范围内的 tag DOM、category 数据和 tag CSS 残留检查通过，title / description 色值检查通过。
+- 后续：本地验证看 `http://localhost:4180/#work`，所有 banner 左上角不再显示 tag，底部 title 与 description 均为 System Amber。
+
+### 2026-07-20
+
+- 类型：视觉 / 首页 / Centered banner titles
+- 改动：将首页 banner 标题从 System Amber 改为白色，并把 reveal layer 改为覆盖整张卡、水平垂直居中；移除所有 description 数据、description DOM 与对应 CSS。hover 使用轻微 scale-in，mobile 继续常显标题。
+- 原因：用户要求 amber 换成白色、文字移到中间，并移除 description。
+- 影响：13 张 banner 现在只保留一个居中的白色标题，视觉信息更少；图片、16:9 比例与产品链接保持不变。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.15s）；`git diff --check` 通过；本地首页返回 `200 OK`；首页 collage 的 description、amber 与旧 description CSS 残留检查通过，居中与白色标题规则检查通过。
+- 后续：本地验证看 `http://localhost:4180/#work`，hover banner 时只应在正中央看到白色标题。
+
+### 2026-07-20
+
+- 类型：交互 / 首页 / Product banner CTA buttons
+- 改动：将 Jiju 和 Friday Poker Club banner 中央的产品标题替换为白色胶囊 CTA：Jiju 显示 `Learn more / 了解更多`，Friday Poker Club 显示 `Play now / 立即开玩`；按钮使用可复用 `.eden-collage-cta` 样式。整张 banner 仍是链接，目标分别为 `/jiju-pet` 与 `/poker`，避免嵌套 button 造成语义冲突。
+- 原因：用户要求参照截图，用 button 取代标题，并为两个产品使用不同 CTA。
+- 影响：两个真实产品 banner 现在更明确地提示可点击；其余非产品 banner 继续显示居中白色标题。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.16s）；`git diff --check` 通过；本地首页返回 `200 OK`；CTA 中英文、胶囊样式与 `/jiju-pet`、`/poker` 目标检查通过。
+- 后续：本地验证看 `http://localhost:4180/#work`，Jiju 应显示 Learn more，Friday Poker Club 应显示 Play now。
+
+### 2026-07-20
+
+- 类型：视觉 / 首页 / Refine banner CTA
+- 改动：收细 Jiju 与 Friday Poker Club 的 banner CTA：高度从 48px 降到 40px，左右 padding 从 24px 降到 19px，字号从 15px 降到 14px，字重从 760 降到 600；纯白底改为 92% 白，加入轻边线，并把阴影收至 `0 4px 14px / 11%`。
+- 原因：用户认为原按钮字体太粗、按钮视觉太重。
+- 影响：Learn more 与 Play now 保持清楚可点，但整体更轻、更克制，不再抢过 banner 图片。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.16s）；`git diff --check` 通过；本地首页返回 `200 OK`；CTA 新尺寸、字重与旧数值残留检查通过。
+- 后续：本地验证看 `http://localhost:4180/#work`，两个白色 CTA 应更小、更轻。
+
+### 2026-07-20
+
+- 类型：前台 / CSS art / Conway 16:9 banner
+- 改动：新增 `HomeConwayGameBanner` 与独立 `styles/css-art/home-conway-banner.css`，将 Conway 现有魔法阵 app icon 的视觉语言扩展为 16:9 scene：左侧生命棋盘和活细胞、移动 glider，右侧旋转魔法阵、节点、核心与 `B3 / S23` 规则标记；使用实体 transform / opacity 动效，不使用 gradient、glow 或 scan line。
+- 改动：补齐 dark mode 与 `prefers-reduced-motion`；注册为 `home-conway-game-banner`，加入 CSS manifest 与 CSS Art system 文档；首页 work grid 新增 Conway banner，整张卡点击进入 `/conways-game-of-life`；`/project-css` Banner archive 从 3 张更新为 4 张并同步说明。
+- 原因：用户要求根据 Conway's Game of Life 现有 CSS icon 创建相似的 16:9 CSS，并放到 banner。
+- 影响：首页现在有一张可复用、可维护的 Conway CSS banner；同一视觉可在 registry 与 `/project-css` 统一检查，不复制页面内 DOM/CSS。
+- 验证：`npm run typecheck` 通过；最终 `npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.14s）；`git diff --check` 通过；本地首页与 `/conways-game-of-life` 均返回 `200 OK`；component、registry、manifest、docs、16:9、dark mode、reduced motion 与无 gradient/glow/scan 关键词检查通过。
+- 后续：本地验证看 `http://localhost:4180/#work` 的 Conway banner；`http://localhost:4180/project-css` 可单独检查完整 CSS art。
+
+### 2026-07-20
+
+- 类型：前台 / CSS art / Film Gallery 16:9 banner
+- 改动：在现有 `film-gallery-icon.css` visual family 中新增 `HomeFilmGalleryBanner`：把方形 app icon 扩展为 16:9 横向胶卷，包含上下齿孔、三格不同取景、双卷轴与 `15 FRAMES` 标记；胶片条左右移动、卷轴旋转，继续使用实体 transform 动效且无 gradient、glow 或 scan line。
+- 改动：补齐 dark mode 与 `prefers-reduced-motion`；注册为 `home-film-gallery-banner` 并更新 CSS Art system 文档；首页 `Film Photography` 占位卡替换为 `Film Gallery` CSS banner，整张卡点击进入 `/film-gallery`；`/project-css` Banner archive 从 4 张更新为 5 张并同步说明。
+- 原因：用户要求 Film Gallery 也按 Conway 相同方式，从现有 app icon 创建 16:9 CSS banner。
+- 影响：首页现在使用可复用的 Film Gallery 实体 CSS art，不再是抽象占位；app icon 与 banner 共享同一 visual family 和维护文件。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.08s）；`git diff --check` 通过；本地首页与 `/film-gallery` 均返回 `200 OK`；component、registry、docs、16:9、dark mode、reduced motion 与无 gradient/glow/scan 关键词检查通过。
+- 后续：本地验证看 `http://localhost:4180/#work` 的 Film Gallery banner；`http://localhost:4180/project-css` 可单独检查胶卷动效与比例。
+
+### 2026-07-20
+
+- 类型：交互 / 首页 / All navigable banners use buttons
+- 改动：统一首页 banner reveal 规则：任何带 `href` 的 banner 都强制显示 `.eden-collage-cta` 胶囊 button，不再显示中央标题；若未来未提供 `ctaLabel`，自动 fallback 为 `Learn more / 了解更多`。Conway 新增 `Play now / 立即开玩`，Film Gallery 新增 `View gallery / 查看图库`；Jiju 与 Friday Poker Club 保持原 CTA。
+- 原因：用户要求全部导航型 banner 都改成与 Jiju、Friday Poker Club 相同的 button。
+- 影响：当前四个导航入口 Jiju、Friday Poker Club、Conway、Film Gallery 都使用统一按钮视觉；没有链接的展示型 banner 仍显示标题，避免假按钮。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.14s）；`git diff --check` 通过；本地首页返回 `200 OK`；四个 href、CTA 文案与基于 `item.href` 的强制 button 分支检查通过。
+- 后续：本地验证看 `http://localhost:4180/#work`，四个可点击 banner 中央都应显示胶囊 button。
+
+### 2026-07-20
+
+- 类型：内容 / 首页 / Jiju MP4 banner
+- 改动：将用户提供的 1280 × 720、10 秒 MP4 处理为网页资源 `public/home-banners/jiju-home-banner.mp4`：保留 H.264 / yuv420p / 24fps，移除音轨并加入 fast-start；首页 Jiju banner 从静态图片改为 muted、autoplay、loop、playsInline 视频。
+- 改动：新增可复用 `HomeCollageVideo`，监听 `prefers-reduced-motion`；减少动态效果时暂停并归零视频，同时 CSS 隐藏视频，显示原 Jiju 图片作为 poster / fallback。`Learn more`、整卡 `/jiju-pet` 链接与 16:9 布局保持不变。
+- 原因：用户要求用指定 MP4 替换 Jiju 首页 banner。
+- 影响：Jiju banner 现在使用动态视频；资源约 2.1MB，无音频，支持浏览器 inline autoplay 与 reduced-motion fallback。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.14s）；`git diff --check` 通过；生产构建包含 MP4；本地视频 URL 返回 `200 OK` 与 `video/mp4`；ffprobe 确认 1280 × 720 H.264、10 秒且无音轨；autoplay / muted / loop / playsInline / poster / reduced-motion 关键词检查通过。
+- 后续：本地验证看 `http://localhost:4180/#work`，Jiju 应自动循环播放视频；系统启用 Reduce Motion 时应显示原静态图。
+
+### 2026-07-21
+
+- 类型：内容 / 首页 / Diving Ocean MP4 banner
+- 改动：将用户提供的 `A_massive_towering_ocean_wave.mp4` 处理为 `public/home-banners/diving-ocean-banner.mp4`：保留 1280 × 720 H.264 原始视频流，移除音轨并加入 fast-start；从 0.5 秒抽取同尺寸 `diving-ocean-banner-poster.jpg`。首页 `Diving / Ocean` 占位 banner 改为视频，并沿用 `HomeCollageVideo` 的 muted / autoplay / loop / playsInline 与 reduced-motion fallback。
+- 原因：用户指定这段海浪视频作为 Diving Ocean banner。
+- 影响：Diving / Ocean 现在使用 10 秒循环海浪视频；资源约 2.7MB，poster 约 70KB。该卡没有独立目标 route，因此继续显示居中标题，不制造假按钮。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.11s）；`git diff --check` 通过；生产构建包含 MP4 与 poster；两条本地资源 URL 均返回 `200 OK`；ffprobe 确认视频无音轨；首页数据引用检查通过。
+- 后续：本地验证看 `http://localhost:4180/#work`，Diving / Ocean 应自动循环播放海浪；Reduce Motion 时显示静态 poster。
+
+### 2026-07-21
+
+- 类型：交互 / 首页 / Diving Ocean Watch now
+- 改动：将用户提供的 154MB、1280 × 720、HEVC 10-bit、60fps、116.8 秒 Pulau Kapas 原片转换为网页兼容的 `public/videos/pulau-kapas.mp4`：H.264 yuv420p、30fps、AAC 128kbps、fast-start，保留声音并压缩至约 23MB。
+- 改动：为 `Diving / Ocean` banner 新增 `Watch now / 立即观看` 胶囊 CTA；整张 banner 点击后导航到 `/videos/pulau-kapas.mp4`，使用浏览器原生播放器观看有声影片。banner 背景仍使用原先 10 秒静音海浪循环。
+- 原因：用户要求触发 Ocean banner 的 Watch now button 后观看指定 Pulau Kapas MP4。
+- 影响：Diving / Ocean 从展示型 banner 变成可观看入口，并自动遵循“所有可导航 banner 使用 button”的统一规则；原片不直接进入站点，降低兼容性与传输压力。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.16s）；`git diff --check` 通过；生产构建包含 Pulau Kapas MP4；本地视频 URL 返回 `200 OK` 与 `video/mp4`；ffprobe 确认 H.264 1280 × 720 / 30fps 与一条 AAC 音轨；Watch now 文案、href 与 aria label 检查通过。
+- 后续：本地验证看 `http://localhost:4180/#work`，Diving / Ocean 中央应显示 Watch now；点击后打开 Pulau Kapas 影片并可使用原生播放控制。
+
+### 2026-07-21
+
+- 类型：内容 / 首页 / ETReportHub MP4 banner
+- 改动：将用户提供的 `A_cinematic_photograph_c.mp4` 处理为 `public/home-banners/etreporthub-banner.mp4`：无损保留 1280 × 720 H.264 / 24fps 视频流，移除音轨并加入 fast-start；从 0.5 秒抽取同尺寸 `etreporthub-banner-poster.jpg`。
+- 改动：首页第一张 `Edwin Dashboard` 占位 banner 改为 `ETReportHub` 视频 banner，显示 `Learn more / 了解更多`，点击整张卡进入 `/etreporthub`；沿用 muted / autoplay / loop / playsInline 与 reduced-motion poster fallback。
+- 原因：用户指定该视频作为 ETReportHub banner。
+- 影响：首页 ETReportHub 现在使用约 2.4MB、10 秒动态产品视觉，并成为明确的产品入口；旧 Edwin Dashboard CSS banner 仍保留在 registry / `/project-css` archive，不影响资产复用。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.13s）；`git diff --check` 通过；生产构建包含 MP4 与 poster；本地视频和 `/etreporthub` 均返回 `200 OK`；ffprobe 确认视频无音轨；标题、CTA、href 与资源引用检查通过。
+- 后续：本地验证看 `http://localhost:4180/#work`，第一张 ETReportHub banner 应自动循环播放，点击 Learn more 进入产品页。
+
+### 2026-07-21
+
+- 类型：内容 / 首页 / Remove banners without material
+- 改动：移除首页 work grid 中 8 张没有真实图片、视频或 CSS Art 的抽象占位 banner：Data Visualization、Marketing Systems、Local AI / RAG、Life Operating System、Journaling Research、Travel、Music / Lyrics、Product Prototypes；同步清理它们不再使用的 graph / paper / terminal / map / journal / travel / music / prototype tone 样式。
+- 原因：用户要求 remove all un material banner。
+- 影响：首页只保留 6 张已有真实素材的 banner：ETReportHub、Jiju、Friday Poker Club、Conway's Game of Life、Diving / Ocean、Film Gallery。所有保留项都有图片、视频或注册 CSS Art，并且都有明确导航 CTA。
+- 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.13s）；`git diff --check` 通过；本地首页返回 `200 OK`；数据数量检查确认只剩 6 项，8 个旧标题与 8 组旧 tone class 均无残留；素材字段检查通过。
+- 后续：本地验证看 `http://localhost:4180/#work`，应只看到 6 张有真实素材的 banner。

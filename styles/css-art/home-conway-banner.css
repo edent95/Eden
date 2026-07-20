@@ -1,0 +1,276 @@
+/* Conway's Game of Life — 16:9 cellular automata banner. */
+
+.home-conway-banner {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16 / 9;
+  min-height: 0;
+  background: #10202a;
+  color: #7bdcb5;
+}
+
+.home-conway-banner span,
+.home-conway-banner i {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+.home-conway-board {
+  inset: 10% 38% 10% 5%;
+  overflow: hidden;
+  border: 1px solid rgb(123 220 181 / .42);
+  border-radius: 1rem;
+  background: #162c35;
+}
+
+.home-conway-grid-line {
+  background: rgb(123 220 181 / .16);
+}
+
+.home-conway-grid-line.line-v {
+  top: 0;
+  bottom: 0;
+  width: 1px;
+}
+
+.home-conway-grid-line.line-h {
+  right: 0;
+  left: 0;
+  height: 1px;
+}
+
+.home-conway-live-cell {
+  width: 8%;
+  aspect-ratio: 1;
+  border: 1px solid rgb(245 243 239 / .5);
+  border-radius: 20%;
+  background: #7bdcb5;
+  box-shadow: 0 3px 10px rgb(0 0 0 / .18);
+  animation: home-conway-cell-breathe 3.8s ease-in-out infinite;
+}
+
+.home-conway-live-cell.cell-1 { left: 12%; top: 18%; }
+.home-conway-live-cell.cell-2 { left: 22%; top: 30%; animation-delay: -.4s; }
+.home-conway-live-cell.cell-3 { left: 32%; top: 30%; animation-delay: -.8s; }
+.home-conway-live-cell.cell-4 { left: 32%; top: 42.5%; animation-delay: -1.2s; }
+.home-conway-live-cell.cell-5 { left: 42%; top: 55%; animation-delay: -1.6s; }
+.home-conway-live-cell.cell-6 { left: 52%; top: 42.5%; animation-delay: -2s; }
+.home-conway-live-cell.cell-7 { left: 62%; top: 55%; animation-delay: -2.4s; }
+.home-conway-live-cell.cell-8 { left: 72%; top: 67.5%; animation-delay: -2.8s; }
+.home-conway-live-cell.cell-9 { left: 72%; top: 42.5%; animation-delay: -3.2s; }
+.home-conway-live-cell.cell-10 { left: 82%; top: 30%; animation-delay: -3.6s; }
+.home-conway-live-cell.cell-11 { left: 52%; top: 67.5%; background: #ffa340; animation-delay: -1s; }
+.home-conway-live-cell.cell-12 { left: 22%; top: 67.5%; background: #ffa340; animation-delay: -2.2s; }
+
+.home-conway-sigil {
+  top: 50%;
+  right: 7%;
+  width: 29%;
+  aspect-ratio: 1;
+  transform: translateY(-50%);
+}
+
+.home-conway-ring {
+  border-radius: 50%;
+}
+
+.home-conway-ring.ring-outer {
+  inset: 0;
+  border: 2px solid rgb(123 220 181 / .74);
+  animation: home-conway-spin 18s linear infinite;
+}
+
+.home-conway-ring.ring-outer::before,
+.home-conway-ring.ring-outer::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 8%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #ffa340;
+  transform: translateY(-50%);
+}
+
+.home-conway-ring.ring-outer::before { left: -4%; }
+.home-conway-ring.ring-outer::after { right: -4%; }
+
+.home-conway-ring.ring-middle {
+  inset: 12%;
+  border: 1px dashed rgb(255 163 64 / .72);
+  animation: home-conway-spin-reverse 13s linear infinite;
+}
+
+.home-conway-ring.ring-inner {
+  inset: 27%;
+  border: 1px solid rgb(245 243 239 / .56);
+}
+
+.home-conway-axis {
+  top: 50%;
+  left: 10%;
+  width: 80%;
+  height: 1px;
+  background: rgb(123 220 181 / .48);
+  transform-origin: center;
+}
+
+.home-conway-axis.axis-y { transform: rotate(90deg); }
+
+.home-conway-diamond {
+  inset: 21%;
+  border: 1px solid rgb(123 220 181 / .62);
+  transform: rotate(45deg);
+  animation: home-conway-diamond-turn 16s linear infinite;
+}
+
+.home-conway-core {
+  inset: 41%;
+  border: 2px solid #10202a;
+  border-radius: 26%;
+  background: #7bdcb5;
+  box-shadow: 0 0 0 4px rgb(123 220 181 / .18);
+  animation: home-conway-core-pulse 3.2s ease-in-out infinite;
+}
+
+.home-conway-node {
+  width: 7%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f5f3ef;
+}
+
+.home-conway-node.node-a { left: 46.5%; top: 8%; }
+.home-conway-node.node-b { right: 8%; top: 46.5%; }
+.home-conway-node.node-c { left: 46.5%; bottom: 8%; }
+.home-conway-node.node-d { left: 8%; top: 46.5%; }
+
+.home-conway-orbit {
+  inset: 34%;
+  border: 1px solid rgb(255 163 64 / .7);
+  border-radius: 50%;
+  animation: home-conway-spin 6.8s linear infinite;
+}
+
+.home-conway-orbit i {
+  top: -8%;
+  left: 46%;
+  width: 12%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #ffa340;
+}
+
+.home-conway-glider {
+  left: 11%;
+  bottom: 15%;
+  width: 12%;
+  aspect-ratio: 1;
+  animation: home-conway-glider-drift 8s ease-in-out infinite;
+}
+
+.home-conway-glider i {
+  width: 27%;
+  aspect-ratio: 1;
+  border-radius: 22%;
+  background: #f5f3ef;
+}
+
+.home-conway-glider .glider-a { left: 36%; top: 0; }
+.home-conway-glider .glider-b { right: 0; top: 36%; }
+.home-conway-glider .glider-c { left: 0; bottom: 0; }
+.home-conway-glider .glider-d { left: 36%; bottom: 0; }
+.home-conway-glider .glider-e { right: 0; bottom: 0; }
+
+.home-conway-rule {
+  right: 7%;
+  bottom: 7%;
+  color: rgb(245 243 239 / .66);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: clamp(.48rem, 1.2vw, .72rem);
+  font-weight: 600;
+  letter-spacing: .16em;
+}
+
+:root[data-theme="dark"] .home-conway-banner {
+  background: #0b1118;
+}
+
+:root[data-theme="dark"] .home-conway-board {
+  border-color: rgb(220 111 130 / .42);
+  background: #151a22;
+}
+
+:root[data-theme="dark"] .home-conway-grid-line {
+  background: rgb(220 111 130 / .16);
+}
+
+:root[data-theme="dark"] .home-conway-live-cell,
+:root[data-theme="dark"] .home-conway-core {
+  background: #dc6f82;
+}
+
+:root[data-theme="dark"] .home-conway-live-cell.cell-11,
+:root[data-theme="dark"] .home-conway-live-cell.cell-12,
+:root[data-theme="dark"] .home-conway-ring.ring-outer::before,
+:root[data-theme="dark"] .home-conway-ring.ring-outer::after,
+:root[data-theme="dark"] .home-conway-orbit i {
+  background: #6fa4f0;
+}
+
+:root[data-theme="dark"] .home-conway-ring.ring-outer,
+:root[data-theme="dark"] .home-conway-diamond {
+  border-color: rgb(220 111 130 / .68);
+}
+
+:root[data-theme="dark"] .home-conway-ring.ring-middle,
+:root[data-theme="dark"] .home-conway-orbit {
+  border-color: rgb(111 164 240 / .72);
+}
+
+:root[data-theme="dark"] .home-conway-axis {
+  background: rgb(220 111 130 / .44);
+}
+
+@keyframes home-conway-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes home-conway-spin-reverse {
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes home-conway-diamond-turn {
+  to { transform: rotate(405deg); }
+}
+
+@keyframes home-conway-cell-breathe {
+  0%, 100% { opacity: .5; transform: scale(.84); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes home-conway-core-pulse {
+  0%, 100% { transform: scale(.82) rotate(0deg); }
+  50% { transform: scale(1) rotate(45deg); }
+}
+
+@keyframes home-conway-glider-drift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(78%, -42%, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-conway-ring,
+  .home-conway-diamond,
+  .home-conway-live-cell,
+  .home-conway-core,
+  .home-conway-orbit,
+  .home-conway-glider {
+    animation: none !important;
+  }
+}

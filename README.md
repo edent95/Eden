@@ -55,12 +55,13 @@ npm run preview
 ## 路由（当前）
 
 - `/` — 主页
-- `/jiju-pet` — Jiju.pet 构建叙事
+- `/jiju-pet` — Jiju 产品详情：可信宠物友好地点发现、宠物档案、到访记忆与社区资料
 - `/projects` — 当前 AI build systems 与产品系统
 - `/project-css` — Projects / Home / Interests CSS art 直达检查页（隐藏直达页；不进 sitemap）
+- `/icon-prompts` — ETReportHub / Jiju / Friday Poker Club 四宫格 icon prompt 复制页（隐藏直达页；不进 sitemap）
 - `/etreporthub` — ETReportHub 日报数据系统产品页
 - `/etreporthub-sales` — ETReportHub 售卖页与价格说明
-- `/poker` — Friday Poker Club 产品页与 story log
+- `/poker` — Friday Poker Club 产品详情：私人房间、邀请、买入、实时牌桌与 Build Notes
 - `/wiki` — 独立知识库总览，沉淀跨项目可复用 skills
 - `/wiki/vite` — Vite 构建技能笔记
 - `/wiki/background-music` — 背景音乐 UX 笔记
@@ -70,10 +71,10 @@ npm run preview
 - `/wiki/rag-flow` — Tag Registry 与 RAG flow 知识架构页
 - `/crm` — CRM Intelligence System 产品页
 - `/previous-projects` — 项目列表
-- `/analog-tech` — Film Gallery / 胶片图库
+- `/film-gallery` — Film Gallery / 胶片图库（旧 `/analog-tech` 会自动换到新地址）
 - `/life-os` — 人生 RPG 能力系统 / Life OS 角色档案页
 - `/life` — Life 视频页（隐藏直达页；不在首页入口，不进 sitemap，客户端 SEO 设为 noindex）
-- `/brand-guide` — Brand Guide：视觉、语气、版式与动效规则
+- `/brand-guide` — 持续与 `log.md` 对齐的 Brand Guide：核心主张、视觉、语气、版式、资产类型、动效与实现规则
 - `/topics` — Topic Market：一张卡一个问题和 icon，回答控件按问题类型变化（当前浏览器本地保存）
 - `/conways-game-of-life` — 256 elementary cellular automata rules explorer
 - `/archive/:slug` — 归档项目详情

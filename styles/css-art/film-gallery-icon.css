@@ -1,0 +1,411 @@
+/* Film Gallery framed app icon. */
+
+.film-app-icon {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 22%;
+  background: #eadfc9;
+  box-shadow:
+    0 18px 42px rgb(64 47 31 / 0.16),
+    inset 0 0 0 1px rgb(68 48 31 / 0.16),
+    inset 0 -16px 28px rgb(102 72 43 / 0.1);
+}
+
+.film-app-icon span,
+.film-app-icon i {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+.film-app-strip {
+  z-index: 1;
+  inset: 18% -12%;
+  border-radius: 0.5rem;
+  background: #211a15;
+  transform: rotate(-7deg);
+  animation: film-app-strip-shift 6.8s ease-in-out infinite;
+}
+
+.film-app-perforations {
+  left: 5%;
+  width: 12%;
+  height: 7%;
+  border-radius: 0.16rem;
+  background: #eadfc9;
+  box-shadow:
+    1.1rem 0 #eadfc9,
+    2.2rem 0 #eadfc9,
+    3.3rem 0 #eadfc9,
+    4.4rem 0 #eadfc9,
+    5.5rem 0 #eadfc9;
+}
+
+.film-app-perforations.perforations-top {
+  top: 7%;
+}
+
+.film-app-perforations.perforations-bottom {
+  bottom: 7%;
+}
+
+.film-app-frame {
+  z-index: 3;
+  left: 23%;
+  top: 25%;
+  width: 54%;
+  height: 50%;
+  overflow: hidden;
+  border: 3px solid #f8f0df;
+  border-radius: 0.55rem;
+  background: #7896a0;
+  box-shadow: 0 7px 16px rgb(0 0 0 / 0.26);
+}
+
+.film-app-sun {
+  right: 14%;
+  top: 14%;
+  width: 18%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #e8a955;
+  animation: film-app-sun-drift 5.8s ease-in-out infinite;
+}
+
+.film-app-horizon {
+  left: -8%;
+  width: 116%;
+  transform-origin: center bottom;
+}
+
+.film-app-horizon.horizon-back {
+  bottom: 23%;
+  height: 34%;
+  background: #536e72;
+  clip-path: polygon(0 76%, 18% 44%, 34% 65%, 55% 25%, 73% 58%, 100% 32%, 100% 100%, 0 100%);
+}
+
+.film-app-horizon.horizon-front {
+  bottom: -2%;
+  height: 41%;
+  background: #b96f4f;
+  clip-path: polygon(0 48%, 23% 66%, 44% 34%, 64% 61%, 82% 28%, 100% 52%, 100% 100%, 0 100%);
+}
+
+.film-app-reel {
+  z-index: 4;
+  bottom: 9%;
+  width: 22%;
+  aspect-ratio: 1;
+  border: 3px solid #31251d;
+  border-radius: 50%;
+  background: #d6c6aa;
+  box-shadow: 0 3px 8px rgb(40 28 19 / 0.22);
+  animation: film-app-reel-spin 6s linear infinite;
+}
+
+.film-app-reel.reel-left {
+  left: 9%;
+}
+
+.film-app-reel.reel-right {
+  right: 9%;
+  animation-direction: reverse;
+}
+
+.film-app-reel i {
+  left: 42%;
+  top: 11%;
+  width: 16%;
+  height: 34%;
+  border-radius: 999px;
+  background: #31251d;
+  transform-origin: 50% 115%;
+}
+
+.film-app-reel i:nth-child(2) {
+  transform: rotate(120deg);
+}
+
+.film-app-reel i:nth-child(3) {
+  transform: rotate(240deg);
+}
+
+.film-app-counter {
+  z-index: 5;
+  right: 42%;
+  bottom: 13%;
+  color: #f4ead8;
+  font-family: var(--font-mono);
+  font-size: clamp(0.52rem, 1.5vw, 0.72rem);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+:root[data-theme="dark"] .film-app-icon {
+  background: #2a2521;
+  box-shadow:
+    0 18px 42px rgb(0 0 0 / 0.32),
+    inset 0 0 0 1px rgb(234 223 201 / 0.18),
+    inset 0 -16px 28px rgb(0 0 0 / 0.18);
+}
+
+:root[data-theme="dark"] .film-app-perforations {
+  background: #d6c6aa;
+  box-shadow:
+    1.1rem 0 #d6c6aa,
+    2.2rem 0 #d6c6aa,
+    3.3rem 0 #d6c6aa,
+    4.4rem 0 #d6c6aa,
+    5.5rem 0 #d6c6aa;
+}
+
+:root[data-theme="dark"] .film-app-reel {
+  border-color: #15110e;
+  background: #a9977d;
+}
+
+@keyframes film-app-strip-shift {
+  0%, 100% { transform: translateX(-1.5%) rotate(-7deg); }
+  50% { transform: translateX(1.5%) rotate(-7deg); }
+}
+
+@keyframes film-app-reel-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes film-app-sun-drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .film-app-strip,
+  .film-app-reel,
+  .film-app-sun {
+    animation: none !important;
+  }
+}
+
+/* Film Gallery 16:9 banner — the app icon expanded into a moving film strip. */
+
+.film-gallery-banner {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16 / 9;
+  background: #e6dcc8;
+}
+
+.film-gallery-banner span,
+.film-gallery-banner i {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+.film-banner-strip {
+  z-index: 1;
+  inset: 12% -5%;
+  overflow: hidden;
+  border-radius: .8rem;
+  background: #211a15;
+  box-shadow: 0 16px 34px rgb(54 39 26 / .22);
+  animation: film-banner-strip-travel 7.5s ease-in-out infinite;
+}
+
+.film-banner-perforations {
+  right: 0;
+  left: 0;
+  height: 12%;
+}
+
+.film-banner-perforations.perforations-top { top: 4%; }
+.film-banner-perforations.perforations-bottom { bottom: 4%; }
+
+.film-banner-perforations i {
+  top: 0;
+  width: 4.2%;
+  height: 100%;
+  border-radius: .2rem;
+  background: #e6dcc8;
+}
+
+.film-banner-frame {
+  top: 20%;
+  bottom: 20%;
+  overflow: hidden;
+  width: 27%;
+  border: 3px solid #f8f0df;
+  border-radius: .6rem;
+  box-shadow: 0 7px 18px rgb(0 0 0 / .28);
+}
+
+.film-banner-frame.frame-a { left: 6.5%; background: #7f9ca5; }
+.film-banner-frame.frame-b { left: 36.5%; background: #b87955; }
+.film-banner-frame.frame-c { left: 66.5%; background: #536674; }
+
+.film-banner-sun {
+  right: 12%;
+  top: 12%;
+  width: 16%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #e9ad5d;
+  animation: film-banner-sun-drift 5.6s ease-in-out infinite;
+}
+
+.film-banner-horizon {
+  right: -7%;
+  left: -7%;
+  transform-origin: center bottom;
+}
+
+.film-banner-horizon.horizon-back {
+  bottom: 20%;
+  height: 42%;
+  background: #526d73;
+  clip-path: polygon(0 78%, 18% 38%, 37% 67%, 58% 24%, 76% 56%, 100% 28%, 100% 100%, 0 100%);
+}
+
+.film-banner-horizon.horizon-front {
+  bottom: -2%;
+  height: 45%;
+  background: #bd7655;
+  clip-path: polygon(0 44%, 22% 67%, 43% 31%, 65% 65%, 84% 30%, 100% 52%, 100% 100%, 0 100%);
+}
+
+.film-banner-arch {
+  top: 18%;
+  width: 22%;
+  height: 62%;
+  border: 4px solid #573c2e;
+  border-bottom: 0;
+  border-radius: 999px 999px 0 0;
+  background: #e0c49e;
+}
+
+.film-banner-arch.arch-a { left: 20%; }
+.film-banner-arch.arch-b { right: 20%; }
+
+.film-banner-floor {
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 26%;
+  background: #704937;
+}
+
+.film-banner-moon {
+  left: 17%;
+  top: 14%;
+  width: 14%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #f0d7a1;
+}
+
+.film-banner-roof {
+  right: -8%;
+  left: -8%;
+  transform-origin: center bottom;
+}
+
+.film-banner-roof.roof-back {
+  bottom: 17%;
+  height: 38%;
+  background: #394953;
+  clip-path: polygon(0 72%, 18% 46%, 38% 65%, 55% 34%, 76% 61%, 100% 38%, 100% 100%, 0 100%);
+}
+
+.film-banner-roof.roof-front {
+  bottom: -1%;
+  height: 36%;
+  background: #8c5e4a;
+  clip-path: polygon(0 48%, 23% 64%, 45% 34%, 67% 63%, 84% 28%, 100% 48%, 100% 100%, 0 100%);
+}
+
+.film-banner-reel {
+  z-index: 3;
+  bottom: 4.5%;
+  width: 11%;
+  aspect-ratio: 1;
+  border: 3px solid #31251d;
+  border-radius: 50%;
+  background: #cdbc9f;
+  box-shadow: 0 4px 10px rgb(48 33 22 / .22);
+  animation: film-banner-reel-spin 6.5s linear infinite;
+}
+
+.film-banner-reel.reel-left { left: 3%; }
+.film-banner-reel.reel-right { right: 3%; animation-direction: reverse; }
+
+.film-banner-reel > i {
+  left: 43%;
+  top: 12%;
+  width: 14%;
+  height: 34%;
+  border-radius: 999px;
+  background: #31251d;
+  transform-origin: 50% 112%;
+}
+
+.film-banner-reel > i:nth-child(2) { transform: rotate(120deg); }
+.film-banner-reel > i:nth-child(3) { transform: rotate(240deg); }
+
+.film-banner-counter {
+  z-index: 4;
+  left: 50%;
+  bottom: 5.5%;
+  color: #3b2d23;
+  font-family: var(--font-mono);
+  font-size: clamp(.48rem, 1.1vw, .7rem);
+  font-weight: 700;
+  letter-spacing: .12em;
+  transform: translateX(-50%);
+}
+
+:root[data-theme="dark"] .film-gallery-banner {
+  background: #29231f;
+}
+
+:root[data-theme="dark"] .film-banner-perforations i {
+  background: #b9a98e;
+}
+
+:root[data-theme="dark"] .film-banner-reel {
+  border-color: #0f0c0a;
+  background: #95856e;
+}
+
+:root[data-theme="dark"] .film-banner-counter {
+  color: #e5d8c3;
+}
+
+@keyframes film-banner-strip-travel {
+  0%, 100% { transform: translateX(-1.8%); }
+  50% { transform: translateX(1.8%); }
+}
+
+@keyframes film-banner-reel-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes film-banner-sun-drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(12%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .film-banner-strip,
+  .film-banner-reel,
+  .film-banner-sun {
+    animation: none !important;
+  }
+}
