@@ -7834,8 +7834,8 @@ const brandGuideRhythm = [
   {
     title: { en: 'Grids', zh: '网格' },
     copy: {
-      en: 'Two columns desktop. One column mobile.',
-      zh: '桌面两栏，手机一栏。',
+      en: 'Editorial grids use 2 / 1 columns. The Home media shelf uses 4 / 2 / 1.',
+      zh: '内容网格用 2 / 1 栏；首页媒体入口用 4 / 2 / 1 栏。',
     },
   },
   {
@@ -7925,6 +7925,22 @@ const brandGuideLayoutNumbers = [
     value: { en: '20–48px', zh: '20–48px' },
     label: { en: 'Responsive page gutter. No global content cap.', zh: '响应式页面边距，不限制整页最大宽度。' },
   },
+  {
+    value: { en: '16:9', zh: '16:9' },
+    label: { en: 'Home media banner aspect ratio.', zh: '首页媒体 banner 固定比例。' },
+  },
+  {
+    value: { en: '4 / 2 / 1', zh: '4 / 2 / 1' },
+    label: { en: 'Home media columns: desktop / tablet / mobile.', zh: '首页媒体栏数：桌面 / 平板 / 手机。' },
+  },
+  {
+    value: { en: '1480px', zh: '1480px' },
+    label: { en: 'Home media shelf maximum width.', zh: '首页媒体入口最大宽度。' },
+  },
+  {
+    value: { en: '40px', zh: '40px' },
+    label: { en: 'Home banner CTA minimum height.', zh: '首页 banner CTA 最小高度。' },
+  },
 ] as const;
 
 const brandGuideVoicePairs = [
@@ -7954,7 +7970,10 @@ const brandGuideVoicePairs = [
 const brandGuideUseCases = [
   {
     title: { en: 'Home', zh: 'Home' },
-    copy: { en: 'Thesis first. Systems and proof after.', zh: '先核心观点，再展开系统和证明。' },
+    copy: {
+      en: 'Lead with the point of view. Then use six material-backed 16:9 doors into products, systems, and lived work.',
+      zh: '先说清观点，再用 6 个有真实素材的 16:9 入口，带人进入产品、系统与真实经历。',
+    },
   },
   {
     title: { en: 'Projects', zh: 'Projects' },
@@ -7978,6 +7997,51 @@ const brandGuideUseCases = [
   },
 ] as const;
 
+const brandGuideHomeMediaRules = [
+  {
+    title: { en: 'Six live doors', zh: '6 个真实入口' },
+    copy: {
+      en: 'The current Home shelf contains six active destinations. Do not ship a placeholder card.',
+      zh: '当前首页有 6 个可进入的目标。没有真实素材，就不要上线 placeholder 卡片。',
+    },
+  },
+  {
+    title: { en: 'Material first', zh: '真实素材优先' },
+    copy: {
+      en: 'Use a real image, a prepared video, or registered CSS art. Each medium must carry the project on its own.',
+      zh: '使用真实图片、处理过的视频或已注册的 CSS art；每种媒介都必须能独立承载项目。',
+    },
+  },
+  {
+    title: { en: 'One responsive ratio', zh: '统一响应式比例' },
+    copy: {
+      en: 'Keep every card at 16:9. Use 4 / 2 / 1 columns, a 1480px cap, and 12px desktop gaps.',
+      zh: '所有卡片保持 16:9；使用 4 / 2 / 1 栏、1480px 上限与 12px 桌面间距。',
+    },
+  },
+  {
+    title: { en: 'Action replaces labels', zh: '行动取代标签' },
+    copy: {
+      en: 'Linked banners reveal one centered white CTA. No tag, title, or description sits on the banner surface.',
+      zh: '可点击 banner 只显示一个居中的白色 CTA；画面上不放 tag、title 或 description。',
+    },
+  },
+  {
+    title: { en: 'Loops stay quiet', zh: '循环视频保持安静' },
+    copy: {
+      en: 'Background videos are short, muted, looping, inline, and paired with a poster. Reduced motion falls back to the poster.',
+      zh: '背景视频要短、静音、循环、内联，并配 poster；reduced motion 时回到静态 poster。',
+    },
+  },
+  {
+    title: { en: 'Viewing is intentional', zh: '完整观看要主动触发' },
+    copy: {
+      en: 'Long-form video with sound opens from an explicit Watch now action. It never autoplays inside the shelf.',
+      zh: '带声音的完整影片由明确的“立即观看”触发，不在媒体入口中自动播放。',
+    },
+  },
+] as const;
+
 const brandGuideAssetRules = [
   {
     title: { en: 'App icons are framed', zh: 'App icon 有固定外框' },
@@ -7994,10 +8058,24 @@ const brandGuideAssetRules = [
     },
   },
   {
-    title: { en: 'Banners explain the project', zh: 'Banner 解释项目' },
+    title: { en: 'Home banners use real material', zh: '首页 Banner 使用真实素材' },
     copy: {
-      en: 'Give each project its own scene and stable ratio.',
-      zh: '每个项目有自己的场景和稳定比例。',
+      en: 'Use image, video, or registered CSS art in a stable 16:9 frame. No public placeholder.',
+      zh: '在稳定的 16:9 画框中使用图片、视频或已注册 CSS art；公开页不放 placeholder。',
+    },
+  },
+  {
+    title: { en: 'Video needs a fallback', zh: '视频必须有 fallback' },
+    copy: {
+      en: 'Every loop needs a poster and a reduced-motion state.',
+      zh: '每个循环视频都要有 poster 与 reduced-motion 状态。',
+    },
+  },
+  {
+    title: { en: 'CSS art comes from the registry', zh: 'CSS art 从 registry 取用' },
+    copy: {
+      en: 'Reuse the registered 16:9 component instead of copying its markup into Home.',
+      zh: '复用已注册的 16:9 component，不把内部 markup 复制进 Home。',
     },
   },
   {
@@ -8022,8 +8100,8 @@ const brandGuideCategories = [
     name: { en: 'Surface system', zh: '表层系统' },
     scope: { en: 'Build the page', zh: '用于页面搭建' },
     items: {
-      en: ['Theme colors', 'Typography', 'Asset types', 'Motion boundaries'],
-      zh: ['主题色', '字体层级', '资产类型', '动效边界'],
+      en: ['Theme colors', 'Typography', 'Home media system', 'Motion boundaries'],
+      zh: ['主题色', '字体层级', '首页媒体系统', '动效边界'],
     },
   },
   {
@@ -8121,9 +8199,44 @@ const brandGuideMotionRules = [
       zh: '支持 `prefers-reduced-motion`。',
     },
   },
+  {
+    title: { en: 'Hover is a quiet cue', zh: 'Hover 只做轻提示' },
+    copy: {
+      en: 'Media may scale to 1.025 while the centered CTA appears.',
+      zh: '媒体最多放大到 1.025，同时显示居中 CTA。',
+    },
+  },
+  {
+    title: { en: 'Loop video is background motion', zh: '循环视频属于背景动效' },
+    copy: {
+      en: 'Keep it silent and short. The content remains understandable from its poster.',
+      zh: '保持短且静音；只看 poster 也必须能理解内容。',
+    },
+  },
 ] as const;
 
 const brandGuideCssRules = [
+  {
+    title: { en: 'Material before entry', zh: '有素材才有入口' },
+    copy: {
+      en: 'A public Home banner requires an image, video, or registered CSS art asset.',
+      zh: '公开首页 banner 必须有图片、视频或已注册 CSS art 资产。',
+    },
+  },
+  {
+    title: { en: 'Navigable media gets a CTA', zh: '可导航媒体必须有 CTA' },
+    copy: {
+      en: 'Use one centered action pill and an accessible link label. Do not fake a button on a dead card.',
+      zh: '使用一个居中行动按钮与可访问 link label；不能在无链接卡片上伪装按钮。',
+    },
+  },
+  {
+    title: { en: 'Prepare video for the web', zh: '视频先为网页处理' },
+    copy: {
+      en: 'Use H.264, yuv420p, fast-start, muted background loops, and an explicit poster.',
+      zh: '使用 H.264、yuv420p、fast-start、静音背景循环与明确 poster。',
+    },
+  },
   {
     title: { en: 'No background or card fade', zh: '不要 background / card fade' },
     copy: {
@@ -8210,13 +8323,13 @@ const BrandGuideFullPage: React.FC<{
             </h1>
             <p className="brand-guide-hero-subtitle mx-auto mt-5">
               {isZh
-                ? '知识应该复利。'
-                : 'Knowledge should compound.'}
+                ? '理解人。建立系统。'
+                : 'Human, interpreted. Systems, built.'}
             </p>
             <p className="brand-guide-hero-copy mx-auto mt-5">
               {isZh
-                ? '把散落的工作，变成可复用的系统。'
-                : 'Turn scattered work into reusable systems.'}
+                ? '把复杂的人类行为与混乱现实，转化为真正有用的产品、数据与 AI 系统。'
+                : 'I turn complex human behavior and messy realities into useful products, data, and AI systems.'}
             </p>
             <div className="mt-7 flex flex-wrap justify-center gap-5">
               <a href="#brand-philosophy" className="brand-guide-cta">
@@ -8482,6 +8595,17 @@ const BrandGuideFullPage: React.FC<{
               ))}
             </div>
             <div className="brand-guide-rule-board mt-10">
+              <p className="brand-guide-kicker">{isZh ? '当前首页 / Home media system' : 'Current Home / Media system'}</p>
+              <div className="brand-guide-rule-grid mt-5">
+                {brandGuideHomeMediaRules.map((item) => (
+                  <article key={item.title.en} className="brand-guide-rule-card">
+                    <h3 className="font-display text-2xl font-bold tracking-tight">{item.title[language]}</h3>
+                    <p>{item.copy[language]}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+            <div className="brand-guide-rule-board mt-10">
               <p className="brand-guide-kicker">{isZh ? '视觉资产 / Asset types' : 'Visual assets / Asset types'}</p>
               <div className="brand-guide-rule-grid mt-5">
                 {brandGuideAssetRules.map((item) => (
@@ -8561,8 +8685,8 @@ const BrandGuideFullPage: React.FC<{
 
           <p className="pb-10 text-center text-xs text-stone-500">
             {isZh
-              ? '最后对齐：2026-07-20 · 以代码库和 log.md 为准。'
-              : 'Last reconciled: 20 Jul 2026 · Source: repo + log.md.'}
+              ? '最后对齐：2026-07-21 · 以当前首页、代码库和 log.md 为准。'
+              : 'Last reconciled: 21 Jul 2026 · Source: current Home + repo + log.md.'}
           </p>
         </div>
       </main>

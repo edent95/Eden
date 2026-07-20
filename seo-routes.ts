@@ -280,8 +280,8 @@ export const ROUTE_SEO: RouteSeo[] = [
       zh: 'Brand Guide | 视觉、语气、版式与动效规则',
     },
     desc: {
-      en: 'A living brand guide for a compounding knowledge system: thesis, layout, theme colors, typography, voice, visual assets, motion, and implementation rules.',
-      zh: '一份持续更新的 Brand Guide，整理知识复利主张、版式、主题色、字体、语气、视觉资产、动效和实现规则。',
+      en: 'A living guide for Eden\'s human-and-systems brand: thesis, layout, Home media, typography, voice, visual assets, motion, and implementation rules.',
+      zh: '一份持续更新的 Brand Guide，整理 Eden 的人与系统主张、版式、首页媒体、字体、语气、视觉资产、动效和实现规则。',
     },
   },
   {

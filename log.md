@@ -3369,3 +3369,14 @@
 - 影响：首页只保留 6 张已有真实素材的 banner：ETReportHub、Jiju、Friday Poker Club、Conway's Game of Life、Diving / Ocean、Film Gallery。所有保留项都有图片、视频或注册 CSS Art，并且都有明确导航 CTA。
 - 验证：`npm run typecheck` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.13s）；`git diff --check` 通过；本地首页返回 `200 OK`；数据数量检查确认只剩 6 项，8 个旧标题与 8 组旧 tone class 均无残留；素材字段检查通过。
 - 后续：本地验证看 `http://localhost:4180/#work`，应只看到 6 张有真实素材的 banner。
+
+### 2026-07-21
+
+- 类型：品牌系统 / Brand Guide / Reconcile with current Home
+- 改动：重新对照 `log.md` 与当前首页实现，更新 `/brand-guide` 首屏主张为 `Human, interpreted. Systems, built.` / `理解人。建立系统。`，并保留“Knowledge should compound”作为知识系统层原则，不再让旧知识主张代表整个首页品牌。
+- 改动：在 Application 新增 Current Home / Media system，记录首页当前 6 个真实素材入口、image / video / registered CSS art 三种媒介、16:9、4 / 2 / 1 栏、1480px 宽度上限、12px 间距、居中白色 CTA、无 tag / title / description、背景静音短循环与有声长片主动观看的分工；同步更新 Layout numbers、Asset types、Motion、Current implementation 与 Guide map。
+- 改动：将 `/brand-guide` SEO description 从单一“知识复利系统”改为当前的 Human + Systems 品牌与 Home media 规则，更新最后对齐日期为 2026-07-21。
+- 原因：用户要求 review log 和当前首页，并让 Brand Guide 反映已经落地的首页设计与交互规则。
+- 影响：Brand Guide 现在可以直接指导后续首页 banner 的素材准入、版式、CTA、视频、CSS art 与 reduced-motion 实现；页面主张、搜索摘要与当前首页一致。
+- 验证：`npx tsc --noEmit` 通过；`npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.18s）；本地 `/brand-guide` 返回 `200 OK`；主张、6 项入口、4 / 2 / 1、真实素材准入、更新日期与 SEO description 关键词检查通过。
+- 后续：本地验证看 `http://localhost:4180/brand-guide`，重点检查首屏主张、07 / Application 的 Current Home / Media system，以及 09 / Motion language 的实现规则。
