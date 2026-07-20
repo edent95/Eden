@@ -229,12 +229,6 @@ export const ROUTE_SEO: RouteSeo[] = [
     desc: { en: 'Why the value of a system is not automation itself, but making repeated confusion unnecessary.', zh: 'System 的价值不是 automation 本身，而是让同一种混乱不需要发生第二次。' },
   },
   {
-    path: '/notes/the-books-that-became-me',
-    priority: '0.7',
-    title: { en: 'The books that became part of me | Eden Tan', zh: '那些书最后变成了我 | Eden Tan' },
-    desc: { en: 'How books on habits, strategy, relationships, marketing, and work slowly became Eden Tan’s personal operating system.', zh: '习惯、策略、关系、营销与工作的书，怎样慢慢变成 Eden Tan 自己的 operating system。' },
-  },
-  {
     path: '/notes/judgment-is-not-more-information',
     priority: '0.7',
     title: { en: 'Judgment is not knowing more | Eden Tan', zh: '判断不是知道更多 | Eden Tan' },

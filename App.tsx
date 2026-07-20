@@ -10593,57 +10593,6 @@ type SiteEssayNote = {
 
 const siteEssayNotes: SiteEssayNote[] = [
   {
-    slug: 'the-books-that-became-me',
-    title: { en: 'The books that became part of me', zh: '那些书最后变成了我' },
-    summary: {
-      en: 'I was not shaped by one book. I took responsibility from one, strategy from another, and slowly turned them into my own operating system.',
-      zh: '我不是被某一本书塑造的。我从不同的书里拿走责任、边界、策略和价值，最后慢慢拼成自己的 operating system。',
-    },
-    category: { en: 'Reading & identity', zh: '阅读与自我' },
-    thesis: {
-      en: 'I learned to understand myself, read the rules, and build a system that can survive reality without betraying who I am.',
-      zh: '我学到的，是先看懂自己，再看懂规则；然后建立一套既不会背叛自己，也能在现实里持续运行的系统。',
-    },
-    sources: ['七个习惯', '孙子兵法', '厚黑学', '人性的弱点', '蔡康永的说话之道', '营销管理', '杜拉克- 行销与创新', 'Eden Book'],
-    sections: [
-      {
-        title: { en: 'The Seven Habits gave me a skeleton', zh: '《七个习惯》给了我骨架' },
-        paragraphs: {
-          en: ['The deepest influence was not a quote. It was the idea that a person can choose a response, define an ending, and build life around principles instead of circumstances.', 'That idea later became my obsession with integration. I do not just want to become more productive. I want the complicated parts of me to stop fighting and begin operating as one whole person.'],
-          zh: ['对我影响最深的，不是哪一句金句，而是一个人可以选择回应、先定义终点，再用原则而不是环境来安排自己。', '这后来变成了我对「整合」的执着。我不只是想变得更有效率。我想让自己复杂的部分不再互相打架，最后能够作为一个完整的人运行。'],
-        },
-      },
-      {
-        title: { en: 'Sun Tzu and Thick Black Theory taught me boundaries', zh: '《孙子兵法》和《厚黑学》教我边界' },
-        paragraphs: {
-          en: ['They taught me to read the field before investing myself: who sets the rules, what each person wants, what I might lose, and whether this battle deserves to become mine.', 'I did not keep the manipulative parts. What stayed was defensive strategy: leave an exit, do not confuse kindness with weakness, and do not place every relationship at the same level.'],
-          zh: ['它们让我在投入之前先看局：规则是谁定的、每个人想要什么、我可能失去什么，以及这一场到底值不值得成为我的战争。', '我没有留下操控别人的部分。真正留下来的，是防御型 strategy：为自己保留后路，不把善良变成软弱，也不再把所有关系放进同一个位置。'],
-        },
-      },
-      {
-        title: { en: 'Carnegie and Tsai taught me what it means to be received', zh: '卡耐基和蔡康永教我什么叫被接住' },
-        paragraphs: {
-          en: ['People want to feel important, understood, and respected. Communication is not only about saying the correct thing; it is also about giving another person somewhere to stand.', 'But my question has changed over time. It used to be: how do I understand people and make them comfortable? Now it is also: who is willing to understand me, and which relationship lets both people remain themselves?'],
-          zh: ['人想被重视、被理解、被尊重。沟通不只是把正确的话说出来，也要给对方一个接得住的位置。', '但我的问题后来变了。以前是：我怎样理解别人，让别人舒服？现在还多了一句：谁愿意理解我，哪一种关系能让两个人都不需要把自己弄丢？'],
-        },
-      },
-      {
-        title: { en: 'Marketing and Drucker changed how I see work', zh: 'Marketing 和杜拉克改变了我看工作的方式' },
-        paragraphs: {
-          en: ['Work stopped being only a job title. Value could come from judgment, structure, method, taste, and the ability to turn experience into something repeatable.', 'That is why I keep thinking in systems. I do not want to sell only time. I want every build to leave behind a clearer model, a reusable workflow, or a better way to decide.'],
-          zh: ['工作不再只是一个岗位。价值可以来自判断、结构、方法、品味，以及把经验变成可重复能力的整合力。', '所以我会一直想到 system。我不想只卖时间。我希望每一次 build 都留下更清楚的模型、可以复用的 workflow，或下一次更好的判断方式。'],
-        },
-      },
-      {
-        title: { en: 'The earliest theme was already mine', zh: '最早的母题，本来就是我的' },
-        paragraphs: {
-          en: ['Long before I could name these frameworks, Eden Book was already recording freedom, travel, love, loneliness, direction, and the fear of losing myself while adapting to the world.', 'The books gave language and structure to those questions. Experience decided which parts stayed. What remains now is not a reading list. It is a personal system: understand myself, understand the field, protect what matters, and turn what I live through into work that can last.'],
-          zh: ['在我会说这些 framework 之前，《Eden Book》已经在写自由、旅行、爱情、孤独、方向，还有为了适应世界而失去自己的恐惧。', '书只是给了这些问题语言和结构，经历才决定最后留下什么。现在留下来的已经不是一张阅读清单，而是一套自己的 system：看懂自己，看懂局，保护重要的东西，再把活过的经验变成可以留下来的作品。'],
-        },
-      },
-    ],
-  },
-  {
     slug: 'turn-chaos-into-systems',
     title: { en: 'Turn chaos into systems', zh: '把混乱变成系统' },
     summary: {

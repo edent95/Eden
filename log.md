@@ -16,6 +16,15 @@
 
 ## Entries
 
+### 2026-07-21 · Removed The books that became part of me note
+
+- 类型：内容 / Notes / Route removal
+- 改动：从公开 Notes 数据与 SEO route registry 移除《那些书最后变成了我》及 `/notes/the-books-that-became-me`。
+- 原因：用户要求删除这篇文章。
+- 影响：文章不再出现在 `/notes`，旧地址不再解析为公开文章，也不会进入 sitemap；其他 Notes 保持不变。
+- 验证：待本次 typecheck、build 与残留关键词检查完成。
+- 后续：无。
+
 ### 2026-07-21 · The books that became part of me article
 
 - 类型：内容 / Notes / 阅读影响 synthesis
