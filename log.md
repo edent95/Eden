@@ -3973,3 +3973,12 @@
 - 影响：390px mobile 使用 358px 单栏 banner，768px tablet 使用两栏；正常 motion 设置下 MP4 与 CSS art 均运行。系统启用 Reduce Motion 时继续显示静态 poster / 静态 CSS art，保留无障碍行为。
 - 验证：`npm run typecheck` 与 `npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.25s）；390 × 844 实测单栏宽 358px、视频进入视口后 `paused: false` 且时间持续推进、22 个 CSS animation 为 running、Conway ring transform 在 350ms 内变化；768px 实测两栏各 354px；console 0 error。
 - 后续：发布后如 iPhone 仍显示静态画面，检查系统 Accessibility → Motion → Reduce Motion 与 Low Power Mode；浏览器不能绕过这些系统级 autoplay 限制。
+
+### 2026-07-24 · Homepage banner column adjustment
+
+- 类型：响应式布局 / 首页 / Banner grid
+- 改动：将 600px 以下的 mobile banner grid 从一栏改为三栏，并恢复 601–900px tablet 原本沿用 desktop 四栏的布局；mobile 同步恢复 6px gap 与 8px 圆角。
+- 原因：用户希望手机一次显示三张 banner，同时让 tablet 回到改动前的原版排列。
+- 影响：首页 banner 现在为 desktop 4 栏、tablet 4 栏、mobile 3 栏；视频视口播放与 Safari muted 修复保持不变。
+- 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.22s）；390 × 844 实测为三栏、每张约 115.33px、6px gap，768 × 900 实测为四栏、每张 171px、12px gap；两者 `scrollWidth` 均等于 viewport，console 0 error。
+- 后续：无。
