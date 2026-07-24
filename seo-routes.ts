@@ -10,8 +10,8 @@ export type RouteSeo = {
 };
 
 export const HOME_TITLE: Record<SeoLanguage, string> = {
-  en: 'Eden Tan | Human, interpreted. Systems, built.',
-  zh: 'Eden Tan | 理解人，建立系统',
+  en: 'Eden Tan | Build systems from chaos.',
+  zh: 'Eden Tan | 从混乱中建立系统',
 };
 
 export const HOME_DESC: Record<SeoLanguage, string> = {

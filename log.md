@@ -3927,3 +3927,49 @@
 - 影响：Mobile 只显示 banner 素材，整张 card link 继续负责 tap 导航；Desktop 仍保留 mouse-over CTA。
 - 验证：390 × 844 响应式实测 reveal `display: none`，首张 banner 仍是可导航 `<a href="/etreporthub">`；`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.13s）。
 - 后续：无。
+
+### 2026-07-23
+
+- 类型：品牌文案 / 首页与 Brand Guide / Core thesis
+- 改动：将 `Human, interpreted. Systems, built.` 更新为 `Build systems from chaos.`；首页保留两行 Hero 排版，中文同步为 `从混乱中建立系统。`，并同步首页 SEO title、Open Graph 与 Twitter title。
+- 原因：用户希望品牌主张更直接地表达“从混乱中建立系统”。
+- 影响：首页、`/brand-guide` 与分享 metadata 使用同一核心主张；正文与其他内容不变。
+- 验证：`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.24s）；旧主张在实现文件中无残留。
+- 后续：无。
+
+### 2026-07-23
+
+- 类型：品牌文案 / 首页 / About Eden
+- 改动：完整替换首页 `About Eden` 英文自述，以 `Most people collect knowledge. I collect patterns.` 切入，展开跨领域 Pattern、复杂性作为 translation problem、AI 与产品实践，并以 `Because once you can see the system, you can change it.` 收尾；保留用户指定的重点句层级。
+- 原因：用户提供了新的英文个人介绍，希望更完整地表达从跨领域 Pattern 中提炼 System 的工作方向。
+- 影响：仅英文模式的 About 内容改变；中文版本、页面结构与其他区块不变。
+- 验证：`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.15s）；新开头、核心问题、`Transform chaos into systems.` 与结尾句均通过关键词检查，旧英文 About 开头无残留。
+- 后续：无。
+
+### 2026-07-23
+
+- 类型：排版优化 / 首页 / About Eden spacing
+- 改动：为英文 About 增加独立 spacing class，将标题到正文间距由 46px 收至 32px、一般段落间距由 24px 收至 10px、重点句上方间距由 32px 收至 18px。
+- 原因：新版英文自述包含较多短段落，沿用旧版长段落间距会产生多余留白。
+- 影响：英文 About 的阅读节奏更紧凑；中文 About 间距保持原样。
+- 验证：`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.10s）；英文专属 class 与三组 spacing override 均已命中。
+- 后续：无。
+
+### 2026-07-23
+
+- 类型：品牌文案 / 首页 / About Eden bilingual short version
+- 改动：将新版英文 About 从 14 个段落缩短为 6 个段落，保留 Pattern、跨领域共同结构、translation problem、技术定位与“看见系统才能改变”的主线；同步完成自然中文版本，并让中英文共用 compact spacing。
+- 原因：用户希望内容更短，并补齐中文版。
+- 影响：中英文 About 现在表达同一套内容结构，页面长度明显缩短；标题、照片与其他首页区块不变。
+- 验证：`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.14s）；中英文开头、结尾与共用 compact spacing class 均通过关键词检查。
+- 后续：无。
+
+### 2026-07-24 15:01
+
+- 类型：响应式修复 / 首页 / Mobile banner motion
+- 改动：将首页 banner grid 恢复为 900px 以下两栏、600px 以下一栏，避免视频与 CSS art 在手机上缩成约 85 × 48px 而难以辨认。
+- 改动：`HomeCollageVideo` 改为通过 `IntersectionObserver` 在进入视口时播放、离开视口或页面隐藏时暂停；同时显式设置 `muted` property、`defaultMuted` 与 HTML attribute，提高 iPhone Safari inline autoplay 的稳定性。
+- 原因：手机上的 banner 过小，且 Safari 可能拒绝尚未进入视口或没有初始 muted attribute 的 autoplay，导致 MP4 与 CSS art 看起来都没有动。
+- 影响：390px mobile 使用 358px 单栏 banner，768px tablet 使用两栏；正常 motion 设置下 MP4 与 CSS art 均运行。系统启用 Reduce Motion 时继续显示静态 poster / 静态 CSS art，保留无障碍行为。
+- 验证：`npm run typecheck` 与 `npm run build` 通过（✓ 2085 modules transformed，✓ built in 1.25s）；390 × 844 实测单栏宽 358px、视频进入视口后 `paused: false` 且时间持续推进、22 个 CSS animation 为 running、Conway ring transform 在 350ms 内变化；768px 实测两栏各 354px；console 0 error。
+- 后续：发布后如 iPhone 仍显示静态画面，检查系统 Accessibility → Motion → Reduce Motion 与 Low Power Mode；浏览器不能绕过这些系统级 autoplay 限制。

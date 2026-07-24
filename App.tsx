@@ -8968,8 +8968,8 @@ const BrandGuideFullPage: React.FC<{
             </h1>
             <p className="brand-guide-hero-subtitle mx-auto mt-5">
               {isZh
-                ? '理解人。建立系统。'
-                : 'Human, interpreted. Systems, built.'}
+                ? '从混乱中建立系统。'
+                : 'Build systems from chaos.'}
             </p>
             <p className="brand-guide-hero-copy mx-auto mt-5">
               {isZh
@@ -10617,21 +10617,55 @@ const HomeCollageVideo: React.FC<{ src: string; poster?: string }> = ({ src, pos
   const videoRef = React.useRef<HTMLVideoElement>(null);
 
   React.useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let isVisible = true;
+
+    // Safari checks both the muted property and the content attribute before
+    // allowing inline autoplay.
+    video.defaultMuted = true;
+    video.muted = true;
+    video.setAttribute('muted', '');
+
     const syncPlayback = () => {
-      const video = videoRef.current;
-      if (!video) return;
       if (motionQuery.matches) {
         video.pause();
         video.currentTime = 0;
         return;
       }
+      if (document.hidden || !isVisible) {
+        video.pause();
+        return;
+      }
       void video.play().catch(() => undefined);
     };
 
+    let visibilityObserver: IntersectionObserver | undefined;
+    if ('IntersectionObserver' in window) {
+      isVisible = false;
+      visibilityObserver = new IntersectionObserver(
+        ([entry]) => {
+          isVisible = entry?.isIntersecting ?? false;
+          syncPlayback();
+        },
+        { threshold: 0.15 },
+      );
+      visibilityObserver.observe(video);
+    }
+
     syncPlayback();
     motionQuery.addEventListener('change', syncPlayback);
-    return () => motionQuery.removeEventListener('change', syncPlayback);
+    video.addEventListener('canplay', syncPlayback);
+    document.addEventListener('visibilitychange', syncPlayback);
+
+    return () => {
+      visibilityObserver?.disconnect();
+      motionQuery.removeEventListener('change', syncPlayback);
+      video.removeEventListener('canplay', syncPlayback);
+      document.removeEventListener('visibilitychange', syncPlayback);
+    };
   }, []);
 
   return (
@@ -11749,7 +11783,7 @@ const App: React.FC = () => {
         <motion.section className="eden-hero eden-home-island" initial="initial" animate="animate" variants={staggerContainer}>
           <motion.p variants={fadeIn} className="eden-eyebrow">EDEN · HUMAN SYSTEMS & PRODUCT</motion.p>
           <motion.h1 variants={fadeIn}>
-            {isZh ? <><span>理解人</span><br /><span>建立系统</span></> : <><span>Human, interpreted.</span><br /><span>Systems, built.</span></>}
+            {isZh ? <><span>从混乱中</span><br /><span>建立系统</span></> : <><span>Build systems</span><br /><span>from chaos.</span></>}
           </motion.h1>
           <motion.p variants={fadeIn} className="eden-hero-copy">
             {isZh ? '我把复杂的人性、行为与现实问题，转化成可以被理解、验证和使用的数据、产品与 AI 系统。' : 'I turn complex human behavior and messy realities into useful products, data, and AI systems.'}
@@ -11810,7 +11844,31 @@ const App: React.FC = () => {
               loading="lazy"
             />
           </div>
-          <div className="eden-about-copy"><p className="eden-section-label">02 · About Eden</p><h2>{isZh ? <>嗨，我是 Eden</> : <>Hey, I’m Eden.</>}</h2><div className="eden-about-body">{isZh ? <><p>我不是一个很容易用职位介绍自己的人。Marketing、策划、管理、Dashboard、AI Product，这些我都做过，但好像没有一个 Title 可以完整解释我。</p><p>我比较像一个收集 Pattern 的人。工作哪里卡住？人为什么会做这个选择？关系为什么又回到同一个问题？甚至我自己为什么会重复某一种生活？我都会忍不住拆开来看。写日记、旅行、潜水、做 Product，都是我理解这个世界的方法。</p><p>我最擅长的，不是把同一件事重复做一百次。我比较会在一堆很乱的东西里面，找到那个真正的问题，然后重新排成一个可以运行的 System。以前我拿这份能力帮公司做 Growth。现在，我想拿它来 build 自己的 Product。</p><p className="eden-about-now"><strong>这个阶段，我已经没有很想再解释自己是谁。我比较想让做出来的东西回答。</strong></p></> : <><p>I am not easy to explain with a job title. I have worked across marketing, planning, management, dashboards, and AI products, but none of those titles fully explains me.</p><p>I am more like a collector of patterns. Where does work get stuck? Why do people make certain choices? Why do relationships circle back to the same problem? Why do I repeat certain versions of my own life? I cannot help taking these things apart. Journaling, traveling, diving, and building products are all ways I understand the world.</p><p>My strength is not doing the same thing a hundred times. It is finding the real problem inside a mess, then rearranging it into a system that can run. I used to apply that ability to helping companies grow. Now I want to use it to build products of my own.</p><p className="eden-about-now"><strong>At this stage, I am less interested in explaining who I am. I would rather let the work answer.</strong></p></>}</div></div>
+          <div className="eden-about-copy">
+            <p className="eden-section-label">02 · About Eden</p>
+            <h2>{isZh ? <>嗨，我是 Eden</> : <>Hey, I’m Eden.</>}</h2>
+            <div className="eden-about-body eden-about-body-compact">
+              {isZh ? (
+                <>
+                  <p>大多数人收集知识。我收集模式。</p>
+                  <p>我探索 AI、产品增长、营销、心理学、哲学和符号系统，是为了找到它们共同的结构。</p>
+                  <p>我相信，复杂往往只是一个翻译问题。我的工作，是把散落的想法整理成清晰的系统——通过软件、AI 智能体、文章，以及 Jiju 这样的产品。</p>
+                  <p>技术不是终点，而是一种语言，用来表达我们对现实更好的理解。</p>
+                  <p>我建立框架，帮助人们更清楚地看见自己、自己的事业和这个世界。</p>
+                  <p className="eden-about-now"><strong>因为一旦看见系统，你就能改变它。</strong></p>
+                </>
+              ) : (
+                <>
+                  <p>Most people collect knowledge. I collect patterns.</p>
+                  <p>I explore AI, product growth, marketing, psychology, philosophy, and symbolic systems to find the structures they share.</p>
+                  <p>I believe complexity is often a translation problem. My work turns scattered ideas into clear systems—through software, AI agents, essays, and products like Jiju.</p>
+                  <p>Technology is not the destination. It is a language for expressing better models of reality.</p>
+                  <p>I build frameworks that help people see themselves, their businesses, and the world more clearly.</p>
+                  <p className="eden-about-now"><strong>Because once you can see the system, you can change it.</strong></p>
+                </>
+              )}
+            </div>
+          </div>
         </section>
       </main>
 
