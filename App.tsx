@@ -10802,9 +10802,202 @@ type SiteEssayNote = {
     title: Record<Language, string>;
     paragraphs: Record<Language, string[]>;
   }>;
+  // Optional link back to the full original source page (served from public/).
+  originalSource?: { url: string; label: Record<Language, string> };
+  // Optional reference list. Paragraphs may embed [[n]] tokens that link to the
+  // matching reference id, and each reference renders a ↩ backlink to that spot.
+  references?: Array<{ id: string; url: string; label: Record<Language, string> }>;
 };
 
 const siteEssayNotes: SiteEssayNote[] = [
+  {
+    slug: 'carrian-case',
+    title: { en: 'An empire built on borrowed money: the Carrian case', zh: '一座建在借来的钱上的帝国：佳宁案' },
+    summary: {
+      en: 'In 1983 a body turned up in a Hong Kong banana grove—an auditor a Malaysian bank had sent to check the books. His death exposed the largest fraud Hong Kong had seen: a 200-company empire that looked like it could turn stone into gold, yet was almost hollow underneath.',
+      zh: '1983 年，香港大埔一片香蕉林里发现一具尸体，死者是马来西亚银行派来查账的核数师。他的死扯出当年香港最大的一场骗局——一个横跨两百多家公司、看起来点石成金的商业帝国，底下却几乎是空的。',
+    },
+    category: { en: 'Money & real value', zh: '钱与真实价值' },
+    thesis: {
+      en: 'Carrian punctures a mistake we make daily—treating "looks rich" as "is genuinely valuable." However glamorous the balance sheet, underneath there is either real output, or just borrowed money and other people\'s belief.',
+      zh: '佳宁戳破的是一个我们每天都在犯的错觉——把「看起来有钱」当成「真的有价值」；账面再风光，底下要么垫着真东西，要么只是借来的钱和大家的相信。',
+    },
+    sources: ['ICAC · 佳宁案纪录', '维基 · 陈松青', 'Cilisos · 裕民风波', 'UPI · 1987 审讯', 'SCMP · 律师溺亡'],
+    originalSource: {
+      url: 'carrian-case-full.html',
+      label: { en: 'Read the full original essay', zh: '阅读完整原文（白话版）' },
+    },
+    references: [
+      { id: '1', url: 'https://www.icac.org.hk/icac/landmarkcase/carrian/schi/index.html', label: { en: 'Hong Kong ICAC — the Carrian Group fraud. Records the 1980 Gammon House deal (~HK$998m in, ~HK$1.68bn resale), a share-price peak of HK$17.9 in Nov 1980, 200+ companies, the Jan 1983 suspension and Oct 1983 winding-up (Hong Kong\'s largest corporate failure then), a 17-year probe over ~HK$6.6bn with 4 million pages of evidence, and George Tan\'s 1996 guilty plea.', zh: '香港廉政公署（ICAC）《神话的幻灭——佳宁集团诈骗案》：记载 1980 年金门大厦交易（约 9.98 亿港元买入、约 16.8 亿港元转售）、1980 年 11 月股价见 17.9 港元高位、旗下逾 200 家公司、1983 年 1 月停牌、10 月清盘（当时香港最大公司倒闭案）、廉署专案 17 年涉款约 66 亿港元、证物 400 万页，以及陈松青 1996 年认罪。' } },
+      { id: '2', url: 'https://en.wikipedia.org/wiki/George_Tan', label: { en: 'George Tan Soon-gin (Wikipedia). Born 1933, civil-engineering background, bankrupt in Singapore in the 1960s, moved to Hong Kong in 1972; took over and renamed Carrian in the late 1970s; acquitted after a 19-month trial in 1987; pleaded guilty to conspiracy to defraud in 1996 over BMF secret loans (~US$238m), jailed 3 years, released 1998.', zh: '陈松青（George Tan Soon-gin），英文维基百科：1933 年生，土木工程背景，1960 年代在新加坡破产，1972 年赴港；1970 年代末接手并改名佳宁；1987 年经 19 个月审讯获判无罪；1996 年就约 2.38 亿美元裕民银行秘密贷款认串谋诈骗罪，判囚 3 年，1998 年获释。' } },
+      { id: '3', url: 'https://cilisos.my/how-the-mysterious-death-of-an-auditor-in-1983-lead-to-malaysias-first-banking-scandal/', label: { en: 'The Jalil Ibrahim killing and the BMF affair (Cilisos). Sent by Malaysia\'s Bumiputra bank in late 1982 to investigate loans to Carrian, Ibrahim was murdered in July 1983, his body found in a New Territories banana grove; BMF lent the Carrian group ~RM2.5bn; after the collapse Malaysia injected RM600m, then had Petronas buy 90% of Bumiputra for ~RM933m and absorb ~RM1.2bn of bad debt.', zh: '核数师 Jalil Ibrahim 命案与裕民银行（BMF）风波（Cilisos 综合报道）：他 1982 年底被马来西亚裕民银行派往香港调查对佳宁的贷款，1983 年 7 月遇害，尸体在新界香蕉园被发现；裕民财务借予佳宁系约 25 亿马币；崩盘后马来西亚政府先注资 6 亿马币，1984 年再由 Petronas 约 9.33 亿马币买下九成股权、吸收约 12 亿马币坏账。' } },
+      { id: '4', url: 'https://www.upi.com/Archives/1987/09/15/Hong-Kong-fraud-trial-thrown-out/4829558676800/', label: { en: 'UPI archive (1987) — the ~19-month Carrian fraud trial was thrown out by the judge, and Tan was acquitted at the time.', zh: 'UPI 档案（1987）：历时约 19 个月的佳宁诈骗审讯被法官叫停，陈松青当时获判无罪。' } },
+      { id: '5', url: 'https://www.scmp.com/article/35624/drowning-linked-carrian-probe', label: { en: 'South China Morning Post — a senior legal adviser close to Carrian was found drowned in his own pool, a death linked to the Carrian investigation.', zh: '南华早报（SCMP）：一名与佳宁关系密切的资深法律顾问被发现溺死于自家泳池，其死亡与佳宁案调查相关联。' } },
+    ],
+    sections: [
+      {
+        title: { en: 'A body in the banana grove', zh: '香蕉林里的尸体' },
+        paragraphs: {
+          en: ['In July 1983, Jalil Ibrahim, an auditor at Malaysia\'s Bumiputra bank, vanished in Hong Kong. Head office had sent him to find out one thing: why the Hong Kong subsidiary had lent so much money to a single company. He never finished—his body was found in a banana grove in Tai Po, a bathrobe cord around his neck[[3]].', 'Tracing the case back from that body, investigators in both places slowly saw the truth: the company that had borrowed those astronomical sums, the toast of the city, owed almost all of its glamour to borrowed money. The company was Carrian.'],
+          zh: ['1983 年 7 月，马来西亚裕民银行的核数师 Jalil Ibrahim 在香港失踪。总行派他来查一件事：香港的子公司为什么把那么多钱借给同一家公司。他没能查完——人们在大埔一片香蕉林里找到他的尸体，脖子上勒着一条浴袍带子[[3]]。', '顺着这具尸体往回查，两地的人才慢慢看清：那家借走天量资金、当时红得发紫的公司，风光几乎全是借来的。这家公司，叫佳宁。'],
+        },
+      },
+      {
+        title: { en: 'The man who seemed to turn stone into gold', zh: '那个「点石成金」的人' },
+        paragraphs: {
+          en: ['The lead was George Tan, born 1933, a civil engineer who ran construction in Singapore and Malaysia—going bankrupt once—before arriving in Hong Kong in 1972 as a mere project manager at a property firm[[2]]. He knew how to buy land cheap in a down market: once buying a plot for HK$2.5m and flipping it to the government for HK$6.2m within a year, building his first fortune and his name.', 'What made him an overnight legend was one building: in January 1980 Carrian bought Central\'s Gammon House for about HK$998m, then months later announced a resale for HK$1.68bn[[1]]. Nearly HK$700m of paper profit in months stunned the whole city. On that halo Carrian expanded wildly into shipping, tourism, insurance, property, and finance—over 200 companies at its peak, spanning the Asia-Pacific and North America.'],
+          zh: ['主角陈松青，1933 年生，土木工程背景，1960 年代在新马做工程、还破过产，1972 年到香港，起初只是地产公司的工程经理[[2]]。他懂得在楼市低迷时低价买地——曾用 250 万港元买地，一年内 620 万转手卖给政府，攒下第一桶金和名声。', '真正让他一夜封神的是一栋楼：1980 年 1 月，佳宁用约 9.98 亿港元买下中环金门大厦，几个月后宣布以 16.8 亿港元转手[[1]]。账面几个月赚近 7 亿，整个香港被镇住。借着这股光环，佳宁疯狂扩张到航运、旅游、保险、地产、金融，巅峰时旗下两百多家公司，横跨亚太和北美。'],
+        },
+      },
+      {
+        title: { en: 'Where did the money come from?', zh: '钱，到底从哪来？' },
+        paragraphs: {
+          en: ['The market kept guessing where Tan\'s money came from—a mysterious tycoon? An overseas syndicate? The truth was less romantic: most of it was borrowed. The heaviest line ran from Malaysia—Bumiputra Malaysia Finance (BMF), the Hong Kong arm of the state bank, lent the Carrian group about RM2.5bn[[3]].', 'That recolors the Gammon House legend: the "HK$700m in months" was largely borrowed money used to prop asset prices higher, layer by layer, as a show for the market. It looked like value creation but was mostly moving borrowed money around—a gleaming empire whose foundation was other people\'s money. As long as the money kept coming and the market kept believing, it kept turning.'],
+          zh: ['市场一直猜：陈松青的钱从哪来？神秘富豪，还是海外财团？真相没那么浪漫——绝大部分是借来的。借得最狠的一条线来自马来西亚裕民银行在港的子公司「裕民财务」（BMF），前后借给佳宁系约 25 亿马币[[3]]。', '于是金门大厦的神话味道就变了：所谓「几个月赚 7 亿」，很大程度是用一笔笔借来的钱把资产价格一层层垫高、做给市场看。它看起来在创造价值，其实大多数时候只是在搬运借来的钱——一座金光闪闪的帝国，地基却是别人的钱。只要钱一直借得到、市场一直相信，它就能一直转。'],
+        },
+      },
+      {
+        title: { en: 'The cracks, and the collapse on two shores', zh: '裂缝，与两地一起塌' },
+        paragraphs: {
+          en: ['But money is not borrowed forever, and markets do not believe forever. In 1982 Hong Kong property cooled, and uncertainty from the Sino-British talks over Hong Kong\'s future pushed asset prices down. For an empire living on "borrow new, prop assets," this was fatal: as buildings fell, collateral lost value, new money stopped coming, and old debts came due one by one[[1]].', 'Around the same time, Bumiputra\'s head office grew suspicious and sent auditor Ibrahim to investigate. He had just rejected a roughly US$4m loan Carrian urgently needed, and had written in his notes that the bank "has been used, exploited to make money for political purposes"[[3]]. Then came the opening scene. The case dragged in another strange death—a senior Carrian legal adviser found drowned in his own pool[[5]].', 'Carrian was suspended in January 1983 and wound up that October—Hong Kong\'s largest corporate collapse at the time, leaving almost nothing real behind. Malaysia was dragged under: about RM2.5bn turned to bad debt, pushing Bumiputra to the brink; the government injected RM600m, then in 1984 had Petronas buy 90% for about RM933m and absorb some RM1.2bn of bad loans[[3]]. A Hong Kong company\'s paper prosperity was, in the end, patched with Malaysian taxpayers\' money.'],
+          zh: ['但钱不会永远借得到，市场也不会永远相信。1982 年香港楼市转冷，加上中英关于香港前途谈判的不确定，资产价格下行。对一个靠「借新钱、垫高资产」活着的帝国，这是致命的：楼一跌，抵押品不值钱，新钱借不进来，旧债却一笔笔到期[[1]]。', '差不多同时，裕民总行起疑，派核数师 Ibrahim 来查。据披露，他遇害前刚否决一笔佳宁急需的、约 400 万美元的贷款，还在笔记里写下「这家银行一直被人利用，被用来为政治目的赚钱」[[3]]。然后就有了开头那一幕。命案还牵出另一桩离奇死亡——佳宁一位资深法律顾问被发现溺死在自家泳池[[5]]。', '1983 年 1 月佳宁停牌，10 月清盘，成为当时香港最大公司倒闭案，帝国几乎没留下真东西。真正被拖下水的是马来西亚：约 25 亿马币成坏账，把裕民银行推到破产边缘；政府先注资 6 亿马币，1984 年再让 Petronas 约 9.33 亿马币买下九成股份、吞约 12 亿马币坏账[[3]]。一家香港公司账面上的繁荣，最后用马来西亚纳税人的钱去填窟窿。'],
+        },
+      },
+      {
+        title: { en: 'Seventeen years for a three-year sentence—and the lesson', zh: '十七年换三年，以及它教我们的事' },
+        paragraphs: {
+          en: ['The ending is just as rueful. The ICAC probe ran 17 years, involved about HK$6.6bn, and produced four million pages of evidence[[1]]; the 19-month fraud trial in 1987 still collapsed when the judge halted it and Tan was acquitted[[4]]; only in 1996 did he admit two counts of conspiracy to defraud, drawing a three-year sentence, and he was out by 1998[[2]]. A fraud that toppled Hong Kong\'s largest company, nearly sank a national bank, and was indirectly tied to a killing cost its mastermind three years.', 'But what Carrian really punctures is a mistake we make daily: treating "looks rich" as "is genuinely valuable." That line of thinking is the same one running through [[note:what-is-wealth|What is wealth]] and [[note:modern-finance-ponzi|Is modern finance a Ponzi scheme]]—money is only a record; what matters is whether there is anything real underneath.', 'So Carrian leaves a plain, easily-forgotten question: the "wealth" in front of you—a company, a building, a person\'s net worth—what sits underneath it? Real things that were made, or just borrowed money and shared belief? Money can be faked, prices propped, confidence inflated; real value cannot. It was either produced, or it was not.'],
+          zh: ['结局同样让人唏嘘。廉署专案历时 17 年、涉款约 66 亿港元、证物四百万页[[1]]；1987 年那场打了 19 个月的诈骗审讯还是崩了，法官叫停，陈松青一度获判无罪[[4]]；直到 1996 年他才认了两项串谋诈骗罪，判囚三年，1998 年出狱[[2]]。搞垮香港最大公司、几乎拖垮一家国家银行、还间接连着一条人命的骗局，主谋最后蹲了三年。', '但佳宁真正戳破的，是一个我们每天都在犯的错觉：把「看起来有钱」当成「真的有价值」。这条思路和[[note:what-is-wealth|《财富到底是什么》]]、[[note:modern-finance-ponzi|《现代金融是庞氏骗局吗》]]是同一路——钱只是记录，真正重要的是底下有没有真东西。', '所以佳宁留下的是一个朴素又容易被忘记的问题：你眼前这份「财富」——一家公司、一栋楼、一个人的身家——底下垫着的，是真实做出来的东西，还是只是借来的钱和大家的相信？钱可以造假、价格可以垫高、信心可以吹起来，但真实价值不会：它要么被做出来了，要么没有。'],
+        },
+      },
+    ],
+  },
+  {
+    slug: 'modern-finance-ponzi',
+    title: { en: 'Is modern finance a Ponzi scheme?', zh: '现代金融是庞氏骗局吗' },
+    summary: {
+      en: '"Government debt, pensions, paper money—isn\'t this just a Ponzi scheme?" People say it every day. Rather than rush to agree or disagree, I first want to take the term "Ponzi scheme" apart and see it clearly.',
+      zh: '「国债、养老金、纸币……这不就是个庞氏骗局吗？」这句话每天都有人在说。我不急着反驳，也不急着附和，只想先把「庞氏骗局」这个词好好拆开看清楚。',
+    },
+    category: { en: 'Money & the future', zh: '钱与未来' },
+    thesis: {
+      en: 'By definition modern finance is not a Ponzi scheme—it only shares the "borrow new to repay old" trait. The sharper question is not "is it a scam" but "is debt growing faster than the real things the future can produce?"',
+      zh: '按定义，现代金融不是庞氏骗局——它只沾了「借新还旧」这一条；真正该问的不是「是不是骗局」，而是「债，是不是涨得比未来能做出的真东西还快」。',
+    },
+    sources: ['SEC · 庞氏骗局定义', 'Smithsonian · 庞氏本尊', 'Britannica · 麦道夫', 'ICAC · 佳宁案', '英格兰银行 · 货币创造', '美联储 · 大衰退'],
+    originalSource: {
+      url: 'modern-finance-ponzi-full.html',
+      label: { en: 'Read the full original essay', zh: '阅读完整原文（白话版）' },
+    },
+    references: [
+      { id: '1', url: 'https://www.investor.gov/protect-your-investments/fraud/types-fraud/ponzi-scheme', label: { en: 'SEC / Investor.gov — Ponzi Scheme. A fraud that pays earlier investors with money taken from newer ones; there is little or no real return, and it collapses once new money dries up or too many investors cash out.', zh: '美国证券交易委员会（SEC）/ Investor.gov《庞氏骗局》：拿新投资者的钱付给老投资者的骗局，几乎没有真实收益，一旦拉不到新人或大量赎回就会崩溃。' } },
+      { id: '2', url: 'https://www.smithsonianmag.com/history/in-ponzi-we-trust-64016168/', label: { en: 'Smithsonian Magazine — In Ponzi We Trust. Charles Ponzi\'s 1920 scheme promised 50% in 45 days via postal-coupon arbitrage; ~40,000 people gave him ~$15m in eight months; the real coupons were worth $61; investors recovered under 30 cents on the dollar.', zh: 'Smithsonian《In Ponzi We Trust》：庞氏 1920 年承诺「45 天回报 50%」，号称靠国际邮政票券套利；八个月募得约 1500 万美元，真实票券仅值 61 美元，投资者每美元拿回不到 30 美分。' } },
+      { id: '3', url: 'https://www.britannica.com/biography/Bernie-Madoff', label: { en: 'Encyclopædia Britannica — Bernie Madoff. About $65bn on paper, the largest Ponzi scheme in history, which collapsed amid concentrated redemptions during the 2008 crisis.', zh: '《大英百科》伯纳德·麦道夫：账面约 650 亿美元，史上最大庞氏骗局，2008 年危机中因集中赎回而崩溃。' } },
+      { id: '4', url: 'https://www.icac.org.hk/icac/landmarkcase/carrian/schi/index.html', label: { en: 'Hong Kong ICAC — the Carrian Group case. George Tan built a 200-company empire on bank loans and a fabricated property windfall; it collapsed in 1983 as Hong Kong\'s largest corporate failure then. Strictly corporate fraud, not a textbook Ponzi, but it shares the "glamorous surface, nothing real underneath" core.', zh: '香港廉政公署（ICAC）佳宁案：陈松青靠银行贷款与制造出的地产暴利假象撑起两百多家公司，1983 年崩盘，为当时香港最大公司破产案。严格说是公司诈骗而非标准庞氏，但共享「账面繁荣、底下无真实价值」的核心。' } },
+      { id: '5', url: 'https://www.bankofengland.co.uk/quarterly-bulletin/2014/q1/money-creation-in-the-modern-economy', label: { en: 'Bank of England — Money Creation in the Modern Economy (2014). A bank loan creates a matching deposit (new money), and that lending can fund real production and investment—the key difference from a Ponzi scheme.', zh: '英格兰银行《现代经济中的货币创造》（2014）：银行放贷会同时造出等额存款（新钱），而这些钱可以为真实的生产和投资出力——这正是它和庞氏骗局最不一样的地方。' } },
+      { id: '6', url: 'https://www.federalreservehistory.org/essays/great-recession-and-its-aftermath', label: { en: 'Federal Reserve History — The Great Recession and Its Aftermath. The 2007–2009 crisis turned on mass mortgage defaults and a collapse of trust between institutions—money and confidence seizing up, not "cash being less than debt."', zh: '美联储历史《大衰退及其余波》：2007–2009 危机核心是大量房贷违约加上金融机构彼此不再信任、资金一下子流不动——是钱和信心断掉，而非「现金少于债务」。' } },
+    ],
+    sections: [
+      {
+        title: { en: 'First, see what a Ponzi scheme actually is', zh: '先看清「庞氏骗局」长什么样' },
+        paragraphs: {
+          en: ['Boston, 1920. The Italian immigrant Charles Ponzi promised "50% profit in 45 days," claiming to arbitrage international postal reply coupons. Money poured in—about 40,000 people handed him roughly $15m in eight months[[2]]. But the business did not exist: the coupons were worth all of $61, and the "profits" early investors received were simply later investors\' principal. The moment the papers exposed it, the whole thing collapsed and people recovered under 30 cents on the dollar.', 'The U.S. securities regulator (SEC) puts it bluntly: a Ponzi scheme pays earlier investors with money taken from newer ones[[1]]. Broken down, it has three inseparable traits—returns come from later entrants rather than real earnings; nothing real is produced, so money just changes hands; and it must eventually collapse, because it needs ever more new money to survive.', 'Madoff, which blew up in 2008, is the textbook version—about $65bn on paper, the largest in history[[3]]. Hong Kong\'s 1980s [[note:carrian-case|Carrian affair]][[4]] was closer to corporate fraud, but shared the deadly trait: a glamorous surface with almost nothing real underneath, kept alive only by fresh borrowed money.'],
+          zh: ['1920 年的波士顿，意大利移民查尔斯·庞氏承诺「45 天翻回一半利润」，说靠买卖国际邮政票券套利。钱像潮水涌进来，八个月里约四万人交给他约 1500 万美元[[2]]。可那门生意根本不存在——事后清点，票券只值 61 美元，早来的人拿到的「利润」全是后来者的本金。报纸一戳破就当场塌掉，最后每一块钱拿回不到三毛。', '美国证券监管机构 SEC 的定义很干脆：庞氏骗局就是「拿新来的人的钱，去付给早来的人」的骗局[[1]]。拆细一点，它有三个缺一不可的特点——一、回报来自后面的人，不是真赚来的；二、背后没做出任何真东西，钱只在人之间转手；三、它迟早一定塌，因为需要的新钱只会越来越多。', '2008 年爆掉的麦道夫案是标准版本，账面约 650 亿美元，史上最大[[3]]；1980 年代香港的[[note:carrian-case|佳宁案]][[4]]则更像公司诈骗，但共享那个最要命的特征——账面风光，底下几乎没有真东西，全靠不断借来的新钱续命。'],
+        },
+      },
+      {
+        title: { en: 'Hold the three traits up against modern finance', zh: '把三条架到现代金融头上' },
+        paragraphs: {
+          en: ['Trait one—returns funded by later entrants—modern finance does resemble. Governments and banks routinely "borrow new to repay old," and pensions often pay one generation with the contributions of the next. The suspicion is not baseless.', 'But trait two decides it: is anything real produced? A Ponzi scheme produces nothing; modern lending can. A bank lends you a million, you build a factory, and the factory makes products and services that did not exist before—that extra value is genuinely made, not moved out of someone else\'s pocket[[5]]. A Ponzi only ever splits the same cake; lending can grow the cake—the same line I draw in [[note:what-is-wealth|What is wealth]]: money only keeps score, and the ability to meet needs is the real wealth.', 'Trait three—must it inevitably collapse? A Ponzi is a mathematical dead end, needing ever-faster inflows. The modern system has no deadline forcing all debt repaid at once: money keeps circulating, lending creates it and repayment destroys it, and governments still hold taxes, interest rates, and printing. It can break—but from money suddenly not flowing and confidence vanishing, not from arithmetic. 2008 was exactly that[[6]].'],
+          zh: ['第一条，回报靠后面的人的钱——这一条现代金融有点像。政府和银行常「借新还旧」，养老金也常是这一代交的钱直接发给上一代。所以怀疑的人，直觉不是没道理。', '但真正定输赢的是第二条：背后有没有做出真东西。庞氏骗局什么都没有；而现代借贷能做出真东西——银行借你 100 万建工厂，工厂产出原本不存在的产品和服务，这多出来的价值是被真正「做」出来的，不是从别人口袋里挪来的[[5]]。庞氏永远只在分同一块蛋糕，借贷有机会把蛋糕做大——这也是[[note:what-is-wealth|《财富到底是什么》]]里那条底层分界：钱只记账，能满足需求的能力才是财富。', '第三条，它是不是迟早一定塌？庞氏是算得出来的死局，需要新钱越来越快地涌入。现代体系没有「某天必须一次性还清所有债」这条死线：钱可以一直转，借贷造钱、还钱消钱，政府还有加税、调息、印钱等办法。它会出事，但原因不是算术，而是钱突然流不动、信心突然消失——2008 年就是这样[[6]]。'],
+        },
+      },
+      {
+        title: { en: 'The verdict—and a far more interesting "but"', zh: '结论，以及那个更有意思的「但是」' },
+        paragraphs: {
+          en: ['On all three, the answer is clear: strictly by definition, modern finance is not a Ponzi scheme. It only brushes trait one ("borrow new to repay old"); the decisive traits two and three do not hold.', 'But there is a "but" far more interesting than "scam or not": modern finance and a Ponzi share one weak point—both depend on the future. A Ponzi needs more newcomers to buy in; modern finance needs people to keep working, consuming, paying taxes, producing, and trusting the system. The difference is that the Ponzi\'s bet on the future is a fraud, while modern finance\'s is a real dependency. It does not lie or steal, but it does wager on one thing: that the future will produce more real things than today.'],
+          zh: ['三条比下来，答案清楚：认真按定义讲，现代金融不是庞氏骗局。它只沾了第一条「借新还旧」的边，而最要命的第二、第三条都不成立。', '但这里有个比「是不是骗局」有意思得多的「但是」：现代金融和庞氏骗局确实有一个共同的命门——都指望未来。庞氏指望未来有更多新人接盘；现代金融指望未来还有人工作、消费、纳税、生产，还愿意相信这套东西。差别是：庞氏的「指望未来」是骗局，现代金融的「指望未来」是一种真实的依赖——它不偷不骗，但确实押了一个宝：未来会比今天做出更多真东西。'],
+        },
+      },
+      {
+        title: { en: 'Why "it\'s a Ponzi scheme" is a lazy line', zh: '为什么「这是庞氏骗局」是句偷懒的话' },
+        paragraphs: {
+          en: ['That is why blurting "it\'s just a Ponzi scheme" is a trap: it is too easy to refute. The other side only has to say "borrowed money can build real things," "governments have tools," or "there is no arithmetic deadline," and your whole point collapses—sliding the debate from "what is wrong with this system" into a shouting match over "is it a scam," which you are bound to lose.', 'The sharper question: is our debt growing faster than the real things the future can produce? If borrowed money becomes factories, technology, and education, it holds; if it only pushes asset prices higher, covers spending, and pays interest on old debt, then debt compounds while real output lags—that is how bubbles inflate. This framing contains no "scam" at all, yet goes straight to the heart: the scarcity is not cash, but whether the future\'s real output can honor the promises made today.'],
+          zh: ['正因如此，张口就喊「这就是庞氏骗局」是个陷阱：它太好反驳了。对方只要说「借来的钱能做出真东西」「政府有的是办法」「它没有算术死线」，你整个论点就塌了，讨论会从「这个体系有什么毛病」滑向「它算不算骗局」的口水战——而这场架你注定输。', '更聪明的问法是：我们欠下的债，是不是正在涨得比未来能做出来的真东西还快？借来的钱若变成工厂、技术、教育，它撑得住；若只是把房价股价越推越高、填补花销、给旧债付利息，那债越滚越多、真东西却没跟上，泡沫就是这么吹起来的。这个问法一个「骗局」都没有，却直接戳到心脏：不是钱不够，而是未来能做出的真东西，够不够兑现今天许下的承诺。'],
+        },
+      },
+      {
+        title: { en: "Don't rush to slap on a label", zh: '别急着贴标签' },
+        paragraphs: {
+          en: ['"Ponzi scheme" is a label that stops thought—once applied, the discussion ends: believe or don\'t, no middle ground. The better move is the opposite: peel off the scary label, take the word apart, see what pieces it is made of, and check each against reality. Do that and you find modern finance is not a scam, but it does stand on one enormous assumption—that the future will be richer. That assumption is not a lie, but it is not a given either.', 'A Ponzi scheme cheats you of money; modern finance truly wagers on the future. So rather than "is it a scam," the question worth keeping is this: if what it stakes everything on is the belief that the future will produce more than today, does that belief still hold in an age of falling birth rates and AI rewriting how things get made?'],
+          zh: ['「庞氏骗局」是个会让人停止思考的标签，一贴上去讨论就结束了——要么信要么不信，没有中间地带。更值得做的恰恰相反：先撕下吓人的标签，把词拆开，看清它由哪几块拼成，再一块块对照现实。拆完你会发现：现代金融不是骗局，但它确实站在一个巨大的假设上——未来会更富有。这个假设不是谎话，但也不是天经地义。', '庞氏骗局骗的是钱，现代金融真正赌的是未来。所以比起「它是不是一场骗局」，更值得问：如果它押上的是「未来会比今天做出更多东西」这个信念，那在人越生越少、AI 又在改写整个生产方式的年代，这个信念还站得住吗？'],
+        },
+      },
+    ],
+  },
+  {
+    slug: 'what-is-wealth',
+    title: { en: 'What is wealth, really?', zh: '财富到底是什么' },
+    summary: {
+      en: 'Too many people are busy predicting bonds, AI, and house prices. I wanted to do something dumber: take the word "wealth" apart layer by layer, and see what is left at the very bottom.',
+      zh: '预测美债、AI、房价的人已经太多。我想做件更笨的事：把「财富」这个词一层层拆开，看看最底下到底剩下什么。',
+    },
+    category: { en: 'First principles', zh: '第一性原理' },
+    thesis: {
+      en: 'Money is not wealth—the ability to meet needs is. And the further out you look, wealth becomes how much future productive capacity you can control.',
+      zh: '钱不是财富，能满足需求的能力才是；越往未来，财富越等于你能控制多少未来的生产能力。',
+    },
+    sources: ['英格兰银行 · 货币创造', 'IIF 全球债务监测', 'Pew 全球生育趋势', 'NBER · Generative AI at Work', 'CBO / IMF 财政展望'],
+    originalSource: {
+      url: 'what-is-wealth-full.html',
+      label: { en: 'Read the full original essay', zh: '阅读完整原文（白话版）' },
+    },
+    references: [
+      { id: '1', url: 'https://www.bankofengland.co.uk/quarterly-bulletin/2014/q1/money-creation-in-the-modern-economy', label: { en: 'Bank of England — Money Creation in the Modern Economy (2014 Q1 Bulletin). A bank loan creates a matching deposit—new money—and repaying it destroys that money.', zh: '英格兰银行《现代经济中的货币创造》（2014 Q1 公报）：银行放贷会同时创造等额存款，也就是新钱；还贷则消灭这些钱。' } },
+      { id: '2', url: 'https://www.iif.com/Products/Global-Debt-Monitor', label: { en: 'IIF Global Debt Monitor — global debt reached a record ~$348tn by the end of 2025.', zh: 'IIF《全球债务监测》：截至 2025 年底，全球债务总额约 348 万亿美元，创历史新高。' } },
+      { id: '3', url: 'https://www.pewresearch.org/short-reads/2025/08/15/5-facts-about-global-fertility-trends/', label: { en: 'Pew Research Center — 5 facts about global fertility trends (2025). Replacement fertility is ~2.1 children per woman; most regions now sit below it.', zh: '皮尤研究中心《关于全球生育趋势的 5 个事实》（2025）：更替水平约为每名女性 2.1 个孩子，多数地区已低于此。' } },
+      { id: '4', url: 'https://www.federalreservehistory.org/essays/great-recession-and-its-aftermath', label: { en: 'Federal Reserve History — The Great Recession and Its Aftermath. The 2007–2009 crisis turned on subprime defaults and a collapse of trust between institutions.', zh: '美联储历史《大衰退及其余波》：2007–2009 危机核心是次贷违约，以及金融机构之间信任崩溃、银行间市场冻结。' } },
+      { id: '5', url: 'https://www.nber.org/papers/w31161', label: { en: 'Brynjolfsson, Li & Raymond — Generative AI at Work (NBER w31161). Measured ~14% average productivity gains for support agents; the "5×/10×" figure is my extrapolation, not the finding.', zh: 'Brynjolfsson、Li、Raymond《Generative AI at Work》（NBER w31161）：客服平均生产力约提升 14%；文中「放大 5 倍、10 倍」是我的推演，不是实测结论。' } },
+      { id: '6', url: 'https://www.cbo.gov/publication/61187', label: { en: 'CBO — The Long-Term Budget Outlook: 2025–2055. Aging and mandatory spending keep pushing public debt up; the IMF Fiscal Monitor tracks the same pressure.', zh: 'CBO《长期预算展望 2025–2055》：人口老龄化与强制性支出持续推高政府债务；IMF《财政监测》亦跟踪各国财政可持续性。' } },
+    ],
+    sections: [
+      {
+        title: { en: 'Assumption 1: money is wealth', zh: '假设一：钱，就是财富' },
+        paragraphs: {
+          en: ['Suppose only two people are left on Earth. You have $10bn; the other person has only clean water, enough food, and a solar panel. Who is richer? The answer is obvious—your $10bn is worth something for one reason only: someone else is still willing to trade real things for it. The moment that person leaves, the cash is just paper.', 'Money, taken apart, is only an agreed medium for keeping accounts. It cannot be eaten, drunk, or burned for power. Gold, dollars, yuan—all of it runs on belief. So wealth is not money; it is the ability to meet needs. Money is just the tool you use to trade for that ability. It records wealth, but it is not wealth itself.'],
+          zh: ['假设地球上只剩两个人。你有 100 亿美金，另一个人只有干净的水、够吃的食物和一块太阳能板。谁更有钱？答案很明显——你手上那 100 亿值钱，唯一的原因是「还有别人愿意拿东西跟你换」。那个人一走，钞票就只是一堆纸。', '钱拆开看，只是大家约定用来记账的交换媒介，本身不能吃、不能喝、不能发电。黄金、美元、人民币都一样，靠的是信念。所以财富的本质不是钱，而是能满足需求的能力。钱只是换这种能力时用的工具，它记录财富，却不是财富本身。'],
+        },
+      },
+      {
+        title: { en: 'Assumption 2: debt is just owing money', zh: '假设二：债务，就是欠钱' },
+        paragraphs: {
+          en: ['A modern bank loan mostly creates money from nothing: lending you 100 does not move it out of someone else\'s deposit—it is written into existence the moment the loan is made, and destroyed when you repay (the Bank of England says exactly this)[[1]]. Which raises the classic suspicion: the bank created 100 but wants 110 back, so where does the extra 10 come from? Is this a [[note:modern-finance-ponzi|Ponzi scheme]] waiting to blow up?', 'Half right, half wrong. The bank never has to print that 10: the same money changes hands many times a year, and when you borrow 100 to buy a machine that makes something worth 150, the extra value comes from labor, skill, energy, and demand—money just puts a price on it. So debt never borrows money; it borrows the future. Borrowing 100 today is a bet that you can produce more than 100 of real things later.', 'That is why the real danger is not "not enough cash to repay." Global debt reached roughly $348tn by the end of 2025[[2]], but the other end of every debt is someone\'s asset—repay it all at once and those assets vanish too. The system breaks when cash flow and confidence snap together, which is close to what happened in 2008[[4]].'],
+          zh: ['现代银行放贷基本是凭空创造钱——借你 100 不是从别人存款搬来的，而是在放贷那一刻记出来的，你还清时这笔钱又被消掉（英格兰银行自己就是这么解释的）[[1]]。于是有人怀疑：银行造了 100，却要你还 110，多出来的 10 从哪来？这会不会是迟早爆的[[note:modern-finance-ponzi|庞氏骗局]]？', '一半对，一半错。那个 10 不用银行再印：同一笔钱一年能转很多手，你借 100 买机器做出价值 150 的东西，多出来的价值是劳动、技术、能源和需求一起做出来的，钱只是给它标价。所以债务借的从来不是钱，是未来——你今天借 100，其实在赌未来能做出超过 100 的真东西。', '也因此，这套体系真正的危险不是「现金不够还债」。全球债务到 2025 年底已约 348 万亿美元[[2]]，但每一笔债的另一头都挂着某人的一笔资产，全部还清资产也会一起蒸发。它真正会爆的时刻，是现金流和信心一起断掉那一刻——2008 年就接近这样[[4]]。'],
+        },
+      },
+      {
+        title: { en: 'Assumption 3: growth is forever, and it runs on people', zh: '假设三：经济会一直涨，而且靠「人」' },
+        paragraphs: {
+          en: ['For thousands of years growth almost never lost, because it kept running the same chain: more people → more production → more consumption → more GDP. The whole credit system ultimately rests on there always being people to work, consume, pay taxes, and borrow. But if the birth rate stays below replacement (about 2.1 children per woman)[[3]] for a long time—fewer workers and borrowers, but more retirees and welfare spending[[6]]—does that chain start to loosen?', 'Don\'t rush the conclusion, because one variable can rewrite the whole chain—AI. We used to assume GDP ≈ people × productivity per person; if AI multiplies one person\'s output many times over[[5]], the formula becomes GDP ≈ people × (AI-amplified productivity). As long as the multiplier climbs faster than population falls, fewer people need not mean a weaker economy. So whether low birth rates break the system is an open question with no answer yet.', 'AI is two sides of one coin. Zoomed out, it may rescue growth; zoomed in, it tears open a gap: when one person can do the work of twenty, the other nineteen jobs disappear at the same moment. The pie has not shrunk, but the number of people who get a slice—who have income—has. The formula can save growth but not distribution, and it pushes an old question, buried under growth for centuries, back to center stage: how should wealth be divided?'],
+          zh: ['几千年来增长几乎没输过，因为它一直走同一条链：更多人 → 更多生产 → 更多消费 → 更多 GDP。整套信用体系，最后都押在「未来一直有人去工作、消费、纳税、借钱」上。可如果出生率长期低于更替水平（约每名女性 2.1 个）[[3]]，未来干活和借钱的人变少，退休与福利支出却越来越多[[6]]，这条链会不会松掉？', '别急着下结论，因为有个可能改写整条链的变量——AI。过去我们默认 GDP ≈ 人口 × 每个人的生产力；如果 AI 把一个人的生产力放大很多倍[[5]]，公式就变成 GDP ≈ 人口 ×（被 AI 放大的生产力）。只要倍数涨得比人口跌得快，人少就未必等于经济差。所以少子化会不会让系统崩，是个还没答案的开放问题。', 'AI 是一枚硬币的两面。往大了看，它可能救了增长；往小了看，它同时撕开一道口子：一个人能顶二十个人，剩下十九个人的工作也在同一刻没了。蛋糕没变小，但能分到蛋糕、也就是有收入的人变少了。这个公式救得了增长，救不了分配——它把一个被增长盖了几百年的老问题重新推到台面正中央：财富到底该怎么分。'],
+        },
+      },
+      {
+        title: { en: 'What counts as a real asset now', zh: '拆完之后：真正的资产是什么' },
+        paragraphs: {
+          en: ['Across history, the "unit of wealth" keeps upgrading: grain → gold → currency → credit → data → and maybe AI next. Each upgrade pushes the carrier of wealth one step closer to productive capacity itself. Follow that direction and future wealth may increasingly equal one thing: how much future productive capacity you can control.', 'Feel it another way: $10bn in cash versus a 100GW power plant, a million GPUs, or a million AI agents—which is worth more? Many AI companies have already answered with their actions; they are fighting over compute, not gold. Energy, compute, robots, AI, knowledge, organizational ability, trust, attention—these are the underlying assets. Money is just the tool that keeps their accounts afterward.', 'But there is a twist: if AI, robots, and energy all become nearly unlimited, the last truly scarce thing may circle back to people—not people as labor, but human experience, creation, trust, attention, and feeling. AI can copy almost everything, except actually living a life in your place.'],
+          zh: ['人类历史上，「财富的单位」一直在升级：粮食 → 黄金 → 货币 → 信用 → 数据 → 也许下一站是 AI。每升级一次，都是把财富的载体往「更接近生产能力本身」推一步。顺着看，未来的财富可能越来越等于一件事：你能控制多少未来的生产能力。', '换个方式感受：100 亿现金和一座 100GW 电厂、100 万块 GPU、100 万个 AI Agent 比，哪个更值钱？很多 AI 公司已经用行动回答——它们抢的是算力，不是黄金。能源、算力、机器人、AI、知识、组织能力、信任、注意力，这些才是底层资产，钱只是事后给它们记账的工具。', '但这里有个反转：如果未来 AI、机器人、能源都近乎无限，最后真正稀缺的，可能又回到「人」——不是当劳动力的人，而是人的体验、创造、信任、注意力和情感。因为 AI 几乎能复制一切，唯独没办法替你真正地活一辈子。'],
+        },
+      },
+      {
+        title: { en: 'A posture, not a prediction', zh: '结尾：一种姿态，而不是预测' },
+        paragraphs: {
+          en: ['I am not going to hand over a clean verdict that future wealth will definitely be energy or compute. Two kinds of things live in this essay and should be kept apart: some are facts (how money is created, how debt circulates, population trends), and some are my extrapolation (that future wealth may lean toward energy, compute, or AI). Blending the two is exactly why so much "future prediction" fails to survive time.', 'And what I care about was never "will it blow up," but "what new system will it become." Institutions rarely wait for a full collapse before changing; more often they adjust the rules bit by bit—through inflation, debt restructuring, taxes, welfare, and monetary policy—slowly redistributing the pressure. First principles is not a prediction machine. It is a posture: take something you thought you understood, break it down until it cannot be broken further, and ask what is left.'],
+          zh: ['我不打算给一个干脆的结论说未来财富一定是能源还是算力。文章里有两种东西要分清：有些是事实（货币怎么被造出来、债怎么转、人口趋势），有些是我的推演（未来财富可能更偏能源、算力或 AI）。把两者搅在一起，正是很多「预测未来」经不起时间检验的原因。', '而且我在意的从来不是「会不会爆」，而是「会变成什么样的新系统」。制度很少等到彻底崩了才改，它更常一点点调规则——靠通胀、债务重组、税制、福利、货币政策，把压力慢慢重新分出去。第一性原理不是预测机器，它是一种姿态：把你以为早就懂的东西拆到不能再拆，然后问一句——它还剩下什么。'],
+        },
+      },
+    ],
+  },
   {
     slug: 'turn-chaos-into-systems',
     title: { en: 'Turn chaos into systems', zh: '把混乱变成系统' },
@@ -11065,6 +11258,42 @@ const NotesPage: React.FC<{
   );
 };
 
+// Split an essay paragraph on inline tokens and render each one:
+//   [[n]]                     → a superscript citation that jumps to reference n
+//                               (and carries an id so the reference can link back).
+//   [[note:slug|display]]     → an internal link to another note (/notes/<slug>).
+// Plain text segments are returned unchanged.
+const renderEssayParagraph = (
+  text: string,
+  slug: string,
+  language: Language,
+  baseUrl: string,
+  seenCites: Set<string>,
+): React.ReactNode[] =>
+  text.split(/(\[\[(?:note:[^\]]+|\d+)\]\])/g).map((part, index) => {
+    const citeMatch = part.match(/^\[\[(\d+)\]\]$/);
+    if (citeMatch) {
+      const refId = citeMatch[1];
+      // A reference may be cited more than once; only the first occurrence carries
+      // the anchor id so ids stay unique and the reference's ↩ lands on first mention.
+      const isFirst = !seenCites.has(refId);
+      if (isFirst) seenCites.add(refId);
+      return (
+        <sup key={`cite-${index}`} className="notes-cite" {...(isFirst ? { id: `cite-${slug}-${refId}` } : {})}>
+          <a href={`#ref-${slug}-${refId}`} aria-label={language === 'zh' ? `参考资料 ${refId}` : `Reference ${refId}`}>{refId}</a>
+        </sup>
+      );
+    }
+    const linkMatch = part.match(/^\[\[note:([^|\]]+)\|([^\]]+)\]\]$/);
+    if (linkMatch) {
+      const [, targetSlug, label] = linkMatch;
+      return (
+        <a key={`link-${index}`} className="notes-inline-link" href={joinBasePath(baseUrl, `notes/${targetSlug}`)}>{label}</a>
+      );
+    }
+    return part;
+  });
+
 const SiteEssayNotePage: React.FC<{
   note: SiteEssayNote;
   homeHref: string;
@@ -11077,6 +11306,9 @@ const SiteEssayNotePage: React.FC<{
 }> = ({ note, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
   const notesHref = joinBasePath(baseUrl, 'notes');
+  // Tracks which reference numbers have been rendered, so repeated citations don't
+  // emit duplicate anchor ids. Fresh per render (and per language switch).
+  const citeSeen = new Set<string>();
 
   return (
     <div className="page-shell notes-article-page min-h-screen">
@@ -11106,6 +11338,17 @@ const SiteEssayNotePage: React.FC<{
             <div className="notes-article-sources" aria-label={isZh ? '来源书目' : 'Source books'}>
               {note.sources.map((source) => <span key={source}>{source}</span>)}
             </div>
+            {note.originalSource && (
+              <a
+                className="notes-source-original"
+                href={resolveAssetPath(baseUrl, note.originalSource.url)}
+                target="_blank"
+                rel="noopener"
+              >
+                {note.originalSource.label[language]}
+                <span aria-hidden> ↗</span>
+              </a>
+            )}
           </header>
 
           <article className="notes-article-body">
@@ -11120,13 +11363,35 @@ const SiteEssayNotePage: React.FC<{
                   <div>
                     <h2>{section.title[language]}</h2>
                     <div className="notes-article-points">
-                      {section.paragraphs[language].map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+                      {section.paragraphs[language].map((paragraph) => <p key={paragraph}>{renderEssayParagraph(paragraph, note.slug, language, baseUrl, citeSeen)}</p>)}
                     </div>
                   </div>
                 </section>
               ))}
             </div>
           </article>
+
+          {note.references && note.references.length > 0 && (
+            <section className="notes-article-references" aria-label={isZh ? '参考资料' : 'References'}>
+              <h2>{isZh ? '参考资料' : 'References'}</h2>
+              <ol>
+                {note.references.map((ref) => (
+                  <li key={ref.id} id={`ref-${note.slug}-${ref.id}`}>
+                    <span className="notes-ref-body">
+                      {ref.label[language]}{' '}
+                      <a className="notes-ref-link" href={ref.url} target="_blank" rel="noopener">{isZh ? '查看来源' : 'Source'} ↗</a>
+                    </span>
+                    <a className="notes-ref-back" href={`#cite-${note.slug}-${ref.id}`} aria-label={isZh ? '返回正文' : 'Back to text'}>↩</a>
+                  </li>
+                ))}
+              </ol>
+              <p className="notes-ref-note">
+                {isZh
+                  ? '以上是文章「事实」部分的来源。「推演」部分（未来财富更偏能源、算力或 AI）只是顺着逻辑的推测，不在此列。'
+                  : 'These are the sources for the factual claims. The extrapolations—future wealth leaning toward energy, compute, or AI—are my own reasoning, not cited here.'}
+              </p>
+            </section>
+          )}
 
           <footer className="notes-article-footer">
             <p>{isZh ? '继续阅读 Eden 的文章与 build notes' : "Keep reading Eden's essays and build notes"}</p>

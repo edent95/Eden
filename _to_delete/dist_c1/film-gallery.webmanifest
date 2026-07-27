@@ -1,0 +1,19 @@
+{
+  "name": "Film Gallery by Eden Tan",
+  "short_name": "Film Gallery",
+  "description": "Fifteen film photographs shot across three cameras and two Kodak film stocks.",
+  "start_url": "./film-gallery",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#171411",
+  "theme_color": "#171411",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "./film-gallery-app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

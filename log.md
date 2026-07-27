@@ -16,6 +16,63 @@
 
 ## Entries
 
+### 2026-07-27 · New Notes essay：佳宁案 / The Carrian case（含多处引用支持）
+
+- 类型：代码 / 内容 / Notes
+- 改动：`renderEssayParagraph()` 升级——同一引用编号被多处 `[[n]]` 引用时，只有首次出现携带 `id="cite-<slug>-<n>"`，后续不重复 id（避免重复 id、`↩` 稳定落到首次出现）。`SiteEssayNotePage` 每次渲染新建一个 `citeSeen` Set 传入。
+- 改动：在 `siteEssayNotes` 开头新增 `carrian-case` note（列表首位），5 个 section（香蕉林尸体 → 点石成金的人 → 钱从哪来 → 裂缝与崩塌 → 十七年换三年+教训），5 条来源引用（ICAC、维基陈松青、Cilisos 裕民风波、UPI 1987 审讯、SCMP 律师溺亡），category 为「钱与真实价值 / Money & real value」。
+- 改动：互链——佳宁 note 正文链到 `[[note:what-is-wealth]]` 与 `[[note:modern-finance-ponzi]]`；同时把《庞氏》note 里提到的「佳宁案 / Carrian affair」链到 `/notes/carrian-case`。三篇经济学随笔现在互相连成一张网。
+- 改动：`seo-routes.ts` 新增 `/notes/carrian-case` 路由；原文长文放到 `public/carrian-case-full.html`，note 的 originalSource 指向它。
+- 原因：用户上传《佳宁案》并要求加入，是《财富》《庞氏》的同系列第三篇。
+- 影响：`/notes` 首位为佳宁案，`/notes/carrian-case` 完整渲染（引用上标 [1]…[5] 可多次出现、参考资料 ↩、原文链接、互链、中英切换）。既有两篇未受影响（引用各只出现一次，行为不变）。
+- 验证：本次 `npm run build`；本地检查 `/notes/carrian-case` 引用跳转与互链、`/notes/modern-finance-ponzi` 里「佳宁案」可点。
+- 后续：无。
+
+### 2026-07-27 · 姊妹篇双向互链 + 通用文内 note 链接语法
+
+- 类型：代码 / 内容 / Notes
+- 改动：扩展 `App.tsx` 的 `renderEssayParagraph()`，除了原有的 `[[n]]` 引用标记，新增 `[[note:slug|显示文字]]` 语法，解析成指向 `/notes/<slug>` 的站内链接（`.notes-inline-link`）；函数新增 `baseUrl` 参数，调用处一并传入。
+- 改动：《财富到底是什么》第二段「这会不会是迟早爆的庞氏骗局？」里的「庞氏骗局 / Ponzi scheme」现链接到 `/notes/modern-finance-ponzi`；《现代金融是庞氏骗局吗》第二段结尾补一句，把「《财富到底是什么》/ What is wealth」链回 `/notes/what-is-wealth`。两篇双向互链。
+- 改动：`styles/pages/notes.css` 新增 `.notes-inline-link` 样式（accent 色、下划线、hover 加粗，含 reduced-motion 友好过渡）。
+- 原因：用户希望两篇姊妹篇正文互相跳转。
+- 影响：任何 note 之后都可用 `[[note:slug|文字]]` 直接做正文互链，无需改渲染逻辑；两篇经济学随笔现在正文可互跳。
+- 验证：本次 `npm run build`；本地检查 `/notes/what-is-wealth` 里「庞氏骗局」可点、`/notes/modern-finance-ponzi` 里「《财富到底是什么》」可点，中英皆可。
+- 后续：无。
+
+### 2026-07-27 · New Notes essay：现代金融是庞氏骗局吗 / Is modern finance a Ponzi scheme
+
+- 类型：内容 / Notes / synthesis essay
+- 改动：在 `App.tsx` 的 `siteEssayNotes` 开头新增一篇 essay note，slug 为 `modern-finance-ponzi`，置于 `what-is-wealth` 之前（列表首位）。含双语 title / summary / category（钱与未来 · Money & the future）/ thesis / sources，5 个 section（拆开庞氏定义 → 三条对照现代金融 → 结论与「但是」→ 为何「庞氏」是偷懒的话 → 别急着贴标签），并复用既有的 `references` + `[[n]]` 引用回链机制，标注 6 处来源（SEC 庞氏定义、Smithsonian 庞氏本尊、Britannica 麦道夫、ICAC 佳宁案、英格兰银行货币创造、美联储大衰退）。
+- 改动：在 `seo-routes.ts` 新增 `/notes/modern-finance-ponzi` 路由（双语 title / desc，priority 0.7），排在 `/notes/what-is-wealth` 之前。
+- 改动：把原文长文放到 `public/modern-finance-ponzi-full.html`（随站根提供，不进 React 路由），note 的 originalSource 指向它。
+- 原因：用户上传《现代金融是庞氏骗局吗》并要求「加这一篇」；它是《财富到底是什么》的姊妹篇，沿用同一套 synthesis-note + 引用体系收录。
+- 影响：`/notes` 列表首位为该文，`/notes/modern-finance-ponzi` 渲染完整文章页（引用上标 [1]…[6]、参考资料 ↩ 回链、原文链接、中英切换）；`http://localhost:4180/modern-finance-ponzi-full.html` 可打开完整原文。
+- 验证：本次 `npm run build`；本地检查 `/notes` 首位、`/notes/modern-finance-ponzi` 上标与回链、原文链接。
+- 后续：无。
+
+### 2026-07-27 · Notes essay 加引用回链、references 与原文链接
+
+- 类型：代码 / 内容 / Notes 数据模型
+- 改动：给 `SiteEssayNote` 类型新增两个可选字段 `originalSource`（链回原始来源页）与 `references`（带 URL 的引用列表）。段落文本支持 `[[n]]` 内联引用标记。
+- 改动：在 `App.tsx` 新增 `renderEssayParagraph()`，把段落里的 `[[n]]` 解析成上标 `[n]` 链接（带 `id="cite-<slug>-<n>"`，跳到 `#ref-<slug>-<n>`）；`SiteEssayNotePage` 新增 references 区块（每条 `id="ref-<slug>-<n>"`、外链来源、`↩` 回链到正文引用位置）与 hero 里的「阅读完整原文」链接。
+- 改动：为 `what-is-wealth` note 标注 6 处引用（英格兰银行货币创造、IIF 348T 债务、Pew 2.1 生育率、美联储 2008、NBER Generative AI at Work、CBO/IMF 财政），并补一句人口老龄化/福利支出以对应 CBO/IMF 引用。
+- 改动：把原文长文放到 `public/what-is-wealth-full.html`（随站根提供，不进 React 路由，与 `mnm11.html` 等一致），note 的 originalSource 指向它。
+- 改动：`styles/pages/notes.css` 新增 `.notes-cite`、`.notes-source-original`、`.notes-article-references` / `.notes-ref-*` 样式，含 `:target` 高亮、`scroll-margin-top` 与深浅色适配（沿用 `--notes-accent`）。
+- 原因：用户要求给这篇 note 加 backlinks（引用回链 + 链回原始来源页）与 references。
+- 影响：`/notes/what-is-wealth` 正文出现可点的 `[1]…[6]` 上标，底部有带外链和 `↩` 的参考资料表，hero 有原文链接；`http://localhost:4180/what-is-wealth-full.html` 可直接打开完整原文。其他 note 未加这些字段，行为不变（字段可选）。
+- 验证：本次 `npm run build`；本地 `http://localhost:4180/notes/what-is-wealth` 检查上标点击跳转、`↩` 回跳、原文链接与中英切换。
+- 后续：如果以后别的 note 也要引用，同一套字段与 `[[n]]` 语法可直接复用。
+
+### 2026-07-27 · New Notes essay：财富到底是什么 / What is wealth
+
+- 类型：内容 / Notes / synthesis essay
+- 改动：在 `App.tsx` 的 `siteEssayNotes` 数组开头新增一篇 essay note，slug 为 `what-is-wealth`，含双语 title / summary / category（第一性原理 · First principles）/ thesis / sources 与 5 个 section（钱不是财富、债务卖的是未来、增长-人口-AI、真正的资产、结尾姿态）。
+- 改动：在 `seo-routes.ts` 的 `/notes` 区块新增 `/notes/what-is-wealth` 路由条目（双语 title / desc，priority 0.7），排在 turn-chaos 之前。
+- 原因：用户把 `财富到底是什么白话版.html` 的长文加入个人 Notes；内容按站点既有 synthesis-note 格式（section + 双语段落）凝练收录，遵循 AGENTS.md「好输出应可归档回 wiki，而不是消失在聊天里」。
+- 影响：`/notes` 列表通过 `publishedNotes`（映射自 `siteEssayNotes`）自动出现该文并置顶；`/notes/what-is-wealth` 通过 `activeSiteEssay` 自动渲染文章页。原文的 URL 级引用（英格兰银行、IIF、Pew、NBER、CBO/IMF）因现有 note 数据模型无引用链接字段，仅以 `sources` 标签形式保留来源名，未保留超链接。
+- 验证：本次 `npm run build`；本地 `http://localhost:4180/notes` 应看到「财富到底是什么 / What is wealth, really?」置于列表首位，`http://localhost:4180/notes/what-is-wealth` 应渲染完整文章（中英可切换）。
+- 后续：若希望保留引用超链接，可考虑给 `SiteEssayNote` 增加可选 `references` 字段并在 `SiteEssayNotePage` 渲染。
+
 ### 2026-07-21 · Shared menu system across all pages
 
 - 类型：全站 UI / Shared menu bar

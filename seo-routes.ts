@@ -223,6 +223,24 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
   },
   {
+    path: '/notes/carrian-case',
+    priority: '0.7',
+    title: { en: 'An empire built on borrowed money: the Carrian case | Eden Tan', zh: '一座建在借来的钱上的帝国：佳宁案 | Eden Tan' },
+    desc: { en: 'The 1980s Carrian fraud as a case study in mistaking "looks rich" for "is genuinely valuable": a 200-company empire built on borrowed money, an auditor\'s murder, and a bank near collapse.', zh: '用 1980 年代佳宁案讲一个道理：把「看起来有钱」当成「真的有价值」的错觉——两百多家公司的帝国建在借来的钱上，一名核数师被杀，一家国家银行几近崩溃。' },
+  },
+  {
+    path: '/notes/modern-finance-ponzi',
+    priority: '0.7',
+    title: { en: 'Is modern finance a Ponzi scheme? | Eden Tan', zh: '现代金融是庞氏骗局吗 | Eden Tan' },
+    desc: { en: 'Taking the term "Ponzi scheme" apart against modern money and debt: it only shares one trait, and the sharper question is whether debt grows faster than the real things the future can produce.', zh: '把「庞氏骗局」拆开，逐条对照现代货币与债务：它只沾了一条，真正该问的是债务是否涨得比未来能做出的真东西还快。' },
+  },
+  {
+    path: '/notes/what-is-wealth',
+    priority: '0.7',
+    title: { en: 'What is wealth, really? | Eden Tan', zh: '财富到底是什么 | Eden Tan' },
+    desc: { en: 'A first-principles essay taking the word "wealth" apart: money is a ledger, debt sells the future, and wealth may become control over future productive capacity.', zh: '一篇第一性原理长文，把「财富」拆到底：钱只是记账，债务卖的是未来，而未来的财富可能等于你能控制多少生产能力。' },
+  },
+  {
     path: '/notes/turn-chaos-into-systems',
     priority: '0.7',
     title: { en: 'Turn chaos into systems | Eden Tan', zh: '把混乱变成系统 | Eden Tan' },
