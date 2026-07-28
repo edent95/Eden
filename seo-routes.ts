@@ -223,6 +223,18 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
   },
   {
+    path: '/notes/korea-2026-crash',
+    priority: '0.7',
+    title: { en: 'The "mad bull" hits a wall: Korea\'s 2026 market | Eden Tan', zh: '「疯牛」撞墙：韩国股市 2026 | Eden Tan' },
+    desc: { en: 'Korea\'s market nearly doubled then posted its largest monthly drop on record—while exports hit an all-time high the same month. A public lesson that price and value are not the same thing.', zh: '韩国股市半年翻倍后又创下史上最大单月跌幅，而同月出口却创新高。一堂关于「价格不等于价值」的公开课。' },
+  },
+  {
+    path: '/notes/mbi-case',
+    priority: '0.7',
+    title: { en: 'Old scam, new clothes: MBI and the coin that "only goes up" | Eden Tan', zh: '旧骗局，新外衣：MBI 与那枚「会一直涨」的币 | Eden Tan' },
+    desc: { en: 'Penang\'s MBI dressed a coin-and-recruit money game as an O2O tech company. The same three old questions that expose any Ponzi scheme cut straight through it—whatever the new crypto clothes.', zh: '槟城 MBI 把「虚拟币＋拉人头」的 money game 包装成 O2O 科技公司。戳穿任何庞氏骗局的三个老问题，照样一戳就破——不管外衣换成什么加密币新词。' },
+  },
+  {
     path: '/notes/carrian-case',
     priority: '0.7',
     title: { en: 'An empire built on borrowed money: the Carrian case | Eden Tan', zh: '一座建在借来的钱上的帝国：佳宁案 | Eden Tan' },

@@ -16,6 +16,29 @@
 
 ## Entries
 
+### 2026-07-27 · New Notes essay：韩国股市 2026 / Korea 2026 crash
+
+- 类型：内容 / Notes / synthesis essay
+- 改动：在 `siteEssayNotes` 开头新增 `korea-2026-crash` note（列表首位），5 个 section（同月两个数字 → 那头疯牛 → 撞墙与杠杆反噬 → 价格≠价值 → 比骗局更值得记住的一课），6 条来源引用（CNBC 熊市、Bloomberg KOSPI +100%、KED 黑色星期一、Bloomberg 出口新高、Eastern Herald 追缴潮、Motley Fool 迷因股），并用 `referencesNote` 标注「市场数字随行情变动、仅作梳理、不构成投资建议」。category 为「钱与真实价值」。
+- 改动：互链——正文把「佳宁」链到 `[[note:carrian-case]]`、「MBI」链到 `[[note:mbi-case]]`、「money game」链到 `[[note:modern-finance-ponzi]]`。五篇经济学随笔互链网继续扩展。
+- 改动：`seo-routes.ts` 新增 `/notes/korea-2026-crash`；原文放到 `public/korea-2026-crash-full.html`，originalSource 指向它。
+- 原因：用户上传《韩国股灾 2026》并要求加入，是系列第五篇——前四篇讲「假的价值」，这篇讲「真的价值配上过头的价格：别把价格当价值」。
+- 影响：`/notes` 首位为该文，`/notes/korea-2026-crash` 完整渲染（引用 [1]…[6] 多处可用、参考资料 ↩、原文链接、互链、中英切换）。
+- 验证：本次 `npm run build`；本地检查 `/notes/korea-2026-crash` 引用与互链、参考资料底部「不构成投资建议」说明。
+- 后续：无。
+
+### 2026-07-27 · New Notes essay：MBI 案 / MBI + 参考资料说明可按篇自定义
+
+- 类型：代码 / 内容 / Notes
+- 改动：给 `SiteEssayNote` 新增可选 `referencesNote` 字段；`SiteEssayNotePage` 参考资料底部说明改为「有 `referencesNote` 用它，否则用通用默认句」。此前那句写死成《财富》专属的「能源/算力」措辞、在所有篇都显示，现修正：《财富》改用 `referencesNote` 保留原措辞，庞氏/佳宁走通用默认。
+- 改动：在 `siteEssayNotes` 开头新增 `mbi-case` note（列表首位），5 个 section（招商会+MBI 是什么 → M Mall 那层皮 → 三个老问题一套现形 → 崩塌与追捕 → 皮换芯不变），4 条来源引用（The Edge、SCMP「Jho Low 2」、Bangkok Post 引渡、SCMP 跨境追赃），并用 `referencesNote` 加了一句司法程序/不作有罪定论的提醒。category 为「钱与真实价值」。
+- 改动：互链——MBI 正文链到 `[[note:carrian-case]]`（两处）与 `[[note:modern-finance-ponzi]]`。四篇经济学随笔的互链网进一步补全。
+- 改动：`seo-routes.ts` 新增 `/notes/mbi-case`；原文放到 `public/mbi-case-full.html`，originalSource 指向它。
+- 原因：用户上传《MBI》并要求加入，是《财富》《庞氏》《佳宁》同系列第四篇。
+- 影响：`/notes` 首位为 MBI，`/notes/mbi-case` 完整渲染；引用渲染器上一版已支持同源多处引用，MBI 的 [1][2] 多处引用正常。既有各篇不受影响（referencesNote 缺省走通用句）。
+- 验证：本次 `npm run build`；本地检查 `/notes/mbi-case` 引用与互链、各篇参考资料底部说明是否正确。
+- 后续：无。
+
 ### 2026-07-27 · New Notes essay：佳宁案 / The Carrian case（含多处引用支持）
 
 - 类型：代码 / 内容 / Notes

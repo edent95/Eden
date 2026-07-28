@@ -75,7 +75,7 @@
 .eden-placeholder-art i:nth-child(1) { width: 48%; aspect-ratio: 1; top: 16%; left: 12%; }
 .eden-placeholder-art i:nth-child(2) { width: 62%; height: 12%; right: -8%; bottom: 22%; transform: rotate(-12deg); }
 .eden-placeholder-art i:nth-child(3) { width: 22%; aspect-ratio: 1; right: 12%; top: 18%; border: 1px solid rgb(255 255 255 / .72); background: transparent; }
-.tone-ocean, .tone-sea { background: #176b87; }.tone-coral { background: #d76544; }.tone-film { background: #56524e; }
+.tone-ocean, .tone-sea { background: #176b87; }.tone-coral { background: #d76544; }.tone-film { background: #56524e; }.tone-wealth { background: #6b5836; }
 
 .eden-focus, .eden-about { padding-block: 112px; }
 .eden-focus > .eden-section-label { text-align: center; }

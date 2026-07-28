@@ -10567,6 +10567,16 @@ const homeCollageItems: Array<{
     ctaLabel: { en: 'Learn more', zh: '了解更多' },
   },
   {
+    title: 'What is Wealth',
+    tone: 'wealth',
+    image: 'home-banners/what-is-wealth-banner-poster.jpg',
+    video: 'home-banners/what-is-wealth-banner.mp4',
+    imageAlt: { en: 'US dollar bills drifting in slow motion onto dark marble against a warm golden background', zh: '美元纸币在暖金色光晕中缓缓飘落到深色大理石台面上' },
+    href: 'notes/what-is-wealth',
+    linkLabel: { en: 'Read the essay: What is wealth, really?', zh: '阅读文章：财富到底是什么' },
+    ctaLabel: { en: 'Read the essay', zh: '阅读文章' },
+  },
+  {
     title: 'Jiju',
     tone: 'coral',
     image: 'home-banners/jiju-adventure-seo.jpg',
@@ -10807,9 +10817,143 @@ type SiteEssayNote = {
   // Optional reference list. Paragraphs may embed [[n]] tokens that link to the
   // matching reference id, and each reference renders a ↩ backlink to that spot.
   references?: Array<{ id: string; url: string; label: Record<Language, string> }>;
+  // Optional note shown under the references. Falls back to a generic line.
+  referencesNote?: Record<Language, string>;
 };
 
 const siteEssayNotes: SiteEssayNote[] = [
+  {
+    slug: 'korea-2026-crash',
+    title: { en: 'The "mad bull" hits a wall: Korea\'s 2026 market, and the gap between price and value', zh: '「疯牛」撞墙：韩国股市 2026，一堂价格与价值的公开课' },
+    summary: {
+      en: 'In the first half of 2026 Korea had the best-performing market in the world, nearly doubling in six months—everyone was talking about getting rich. Then in July it hit a wall, posting its largest monthly drop on record. The strangest part: that same month, Korea\'s exports hit an all-time high.',
+      zh: '2026 上半年，韩国股市是全世界涨得最猛的市场，半年几乎翻倍，所有人都在聊财富自由。然后 7 月它一头撞墙——创下史上最大单月跌幅。最耐人寻味的是：同一个月，韩国的出口反而创了新高。',
+    },
+    category: { en: 'Money & real value', zh: '钱与真实价值' },
+    thesis: {
+      en: 'Price and value were never the same thing. Korea\'s chips, AI demand, and exports were all real—but price ran far ahead of value on emotion and leverage. The real business barely moved; what went wild was the price.',
+      zh: '价格和价值从来就不是一回事：韩国的芯片、AI、出口都是真的，可价格被情绪和杠杆推得远远跑在价值前面——真实的生意没怎么变，疯狂变化的一直是价格。',
+    },
+    sources: ['CNBC · 跌入熊市', 'Bloomberg · KOSPI +100%', 'KED · 黑色星期一', 'Bloomberg · 出口新高', 'Eastern Herald · 追缴潮', 'Motley Fool · 迷因股'],
+    originalSource: {
+      url: 'korea-2026-crash-full.html',
+      label: { en: 'Read the full original essay', zh: '阅读完整原文（白话版）' },
+    },
+    references: [
+      { id: '1', url: 'https://www.cnbc.com/2026/07/09/kospi-bear-territory-ai-samsung-skhynix-chipmakers.html', label: { en: 'CNBC (July 2026) — the KOSPI fell from the world\'s best-performing market into a bear market, led down by chip stocks (Samsung, SK Hynix), with circuit breakers tripped several times that year.', zh: 'CNBC（2026 年 7 月）：KOSPI 由全球表现最好的市场跌入熊市，芯片股（三星、SK 海力士）领跌，年内多次触发熔断。' } },
+      { id: '2', url: 'https://finance.yahoo.com/markets/world-indices/articles/south-koreas-kospi-surges-100-121544935.html', label: { en: 'Yahoo Finance / Bloomberg — South Korea\'s KOSPI surged ~100% in 2026 on a chip-stock rally, one of the best-performing markets that year.', zh: 'Yahoo Finance / Bloomberg：KOSPI 在 2026 年因芯片股大涨而近乎翻倍，为当年全球表现最好的股市之一。' } },
+      { id: '3', url: 'https://www.kedglobal.com/korean-stock-market/newsView/ked202607130010', label: { en: 'KED Global (July 13, 2026) — the KOSPI plunged nearly 9% in a day and slipped below 7,000 amid a chip rout; combined with other reports, July was the KOSPI\'s largest monthly drop on record (~23%).', zh: 'KED Global（2026 年 7 月 13 日）：7 月 13 日 KOSPI 单日重挫近 9%、跌破 7,000 点，芯片股与杠杆型 ETF 加剧跌势；结合多家报道，7 月为 KOSPI 史上最大单月跌幅（约 23%）。' } },
+      { id: '4', url: 'https://www.bloomberg.com/news/articles/2026-07-21/south-korea-s-early-exports-jump-to-july-record-on-ai-led-gains', label: { en: 'Bloomberg (July 21, 2026) — South Korea\'s early-July exports jumped to a record on AI-led demand.', zh: 'Bloomberg（2026 年 7 月 21 日）：韩国 7 月出口在 AI 相关需求带动下创同期新高。' } },
+      { id: '5', url: 'https://easternherald.com/2026/07/20/south-korea-margin-loans-retail-investors-kospi-crash/', label: { en: 'The Eastern Herald (July 2026) — about 1.2 million margin accounts faced calls and many retail investors were force-liquidated; other reports note the president\'s emergency intervention. Retail and liquidation figures vary by source.', zh: 'The Eastern Herald（2026 年 7 月）：约 120 万个融资（保证金）账户面临追缴，大量散户被强制平仓；另有报道称总统出面紧急干预。散户与强平数字各来源略有差异。' } },
+      { id: '6', url: 'https://www.fool.com/investing/2026/07/26/kospi-trading-like-a-meme-stock-sp-500-nasdaq-next/', label: { en: 'The Motley Fool (July 26, 2026) — commentary that the KOSPI was "trading like a meme stock," warning U.S. indexes could face similar risk.', zh: 'The Motley Fool（2026 年 7 月 26 日）：评论 KOSPI 的暴涨暴跌「像迷因股」，并提醒美股或面临类似风险。' } },
+    ],
+    referencesNote: {
+      en: 'These are the sources for the figures. Market numbers (daily/monthly moves, margin-call and forced-liquidation sizes) vary by source and shift with the market; this uses the more authoritative public reporting with dates. This is fact-gathering and reflection only, not investment advice.',
+      zh: '以上是文中数据的出处。市场数字（单日/单月涨跌、追缴与强平规模）不同来源略有出入，且随行情变动，本文取较权威公开报道并注明时点。本文只作事实梳理与观念探讨，不构成任何投资建议。',
+    },
+    sections: [
+      {
+        title: { en: 'Two numbers from the same month', zh: '同一个月的两个数字' },
+        paragraphs: {
+          en: ['Look at two numbers from the same month. In July 2026 Korea\'s stock market (the KOSPI) posted its largest monthly fall on record, down about 23%[[3]]. Also in July 2026, Korea\'s exports hit an all-time high[[4]].', 'A country\'s real business—exports—was booming, even setting records, while its share prices halved in the very same month. Set side by side, those two numbers are already a lesson.'],
+          zh: ['先看两个数字，它们发生在同一个月。2026 年 7 月，韩国股市（KOSPI）创下历史上最大单月跌幅，跌了约 23%[[3]]。也是在 2026 年 7 月，韩国的出口创下历史新高[[4]]。', '一个国家真实的生意（出口）红红火火、甚至创纪录，可它股票的价格却在同一个月腰斩式暴跌。这两个数字摆在一起，本身就是一堂课。'],
+        },
+      },
+      {
+        title: { en: 'The "mad bull"', zh: '那头「疯牛」' },
+        paragraphs: {
+          en: ['First, the mania before July. In 2026 the AI boom drove money worldwide toward chips, and Korea held Samsung and SK Hynix—the two most central suppliers of AI memory chips. Capital flooded in. The KOSPI surged, breaking 6,300 in February and nearly doubling in six months (up about 100%), the best-performing market in the world that year[[2]]; even Goldman Sachs was calling for new highs.', 'A familiar mood filled the market—"this time is different," "AI is the future," "get on board before it\'s too late." Many ordinary people put in not just their savings but borrowed money on leverage, hoping to multiply the gains. The bull earned a nickname: the "mad bull."'],
+          zh: ['先说 7 月之前的疯狂。2026 年，AI 热潮把全世界的钱往芯片上赶，而韩国手握三星和 SK 海力士——全球 AI 内存芯片最核心的两家供应商，资金像潮水一样涌进。KOSPI 一路狂飙，2 月破 6,300 点，半年里差不多翻了一倍（涨约 100%），成了当年全球表现最好的股市[[2]]，连高盛都在喊还会创新高。', '市场弥漫着熟悉的气氛——「这次不一样」「AI 是未来」「再不上车就晚了」。很多普通人不只把积蓄投进去，还借钱加杠杆，想让赚的钱再翻几倍。这头牛，被大家叫做「疯牛」（mad bull）。'],
+        },
+      },
+      {
+        title: { en: 'Hitting the wall, and the leverage backlash', zh: '撞墙，与杠杆的反噬' },
+        paragraphs: {
+          en: ['In July the bull hit the wall. Chip stocks pulled back hard—AI hype had pushed Samsung and SK Hynix valuations too high, so any tremor cut deep. On "Black Monday," July 13, the KOSPI plunged nearly 9% in a day and broke below 7,000[[3]]; the world\'s hottest market officially entered a bear market, down about 26% from its peak[[1]]. How fast? Korea\'s circuit breakers—which halt trading after a steep drop—were reportedly tripped as many as seven times that year, though a circuit breaker is normally a once-in-years event[[1]].', 'What turned the fall into a stampede was leverage. Anyone who had borrowed to buy in got a margin call once prices crossed a line—add cash now, or be force-sold. In this round, reportedly about 1.2 million margin accounts faced calls and around 360,000 retail investors were force-liquidated, wiped out[[5]]. Forced selling drove prices lower, and lower prices triggered still more forced selling—a downward death spiral, so out of control that even Korea\'s president stepped in with emergency intervention[[5]].', 'Leverage is double-edged: on the way up it makes you richer faster; on the way down it forces you out at the bottom, in the ugliest way. And here it shares a quiet trait with the scams we discussed before—what they amplify is never value, but price and emotion.'],
+          zh: ['7 月，牛撞墙了。芯片股大幅回调——AI 概念把三星、SK 海力士的估值推得太高，一旦风吹草动，跌起来同样凶。7 月 13 日「黑色星期一」，KOSPI 单日暴跌近 9%、跌破 7,000 点[[3]]；那个曾经全球最牛的市场正式跌进熊市，从高点算下来跌约 26%[[1]]。跌得多急？年内韩国股市的熔断机制据报道已被触发七次之多——而熔断本来是几年难得一见的极端事件[[1]]。', '真正把下跌变成踩踏的是杠杆。牛市里借钱买股票的人，一旦股价跌破某条线就会收到券商「追缴保证金」通知——马上补钱，不然强制卖出。据报道这一轮约有 120 万个融资账户面临追缴，约 36 万名散户被强制平仓、血本无归[[5]]。而强制卖出把股价砸得更低，更低又触发更多强制卖出——一个往下的死亡螺旋；跌势失控到连韩国总统都出面紧急干预[[5]]。', '杠杆是双刃剑：涨时让你赚得更快，跌时逼你在最低点、用最惨的方式离场。这一点，和我们之前聊过的那些骗局有个隐秘的共同点——它们放大的，都不是价值，而是价格和情绪。'],
+        },
+      },
+      {
+        title: { en: 'Back to those two numbers: price is not value', zh: '回到那两个数字：价格不等于价值' },
+        paragraphs: {
+          en: ['Back to the opening contrast. Same country, same month: it sells chips and does real business, genuinely making money, exports setting records—yet its share price halved at the same time. Why? Because price and value were never the same thing.', 'A company\'s real value is how much it actually earns and makes—usually slow to change. But its share price is set by something else: how much people are willing to pay for it right now. And that "willing" gets shoved around by emotion, leverage, and "is there anyone left to buy," so within weeks it can detach entirely from real value—detaching upward is a bubble, downward is panic. Korea got both: in the first half AI and exports were real, but price ran far ahead of value; in July the mood flipped and price crashed well below where it should have sat. The real business barely moved; what kept going wild was the price.'],
+          zh: ['回到开头那个对比。同一个国家、同一个月：它卖芯片、做生意，真的在赚钱，出口实打实创新高；可股票价格却在同一时间腰斩。为什么？因为价格和价值，从来就不是一回事。', '一家公司真实的价值，是它实实在在能赚多少钱、做出多少东西——变化通常缓慢。但股票的价格，由另一件事决定：此时此刻市场上的人愿意用多高的价钱买它。而这个「愿意」，被情绪、杠杆、「还有没有人接盘」推来推去，可以在几周内和真实价值完全脱节——往上脱节是泡沫，往下脱节是恐慌。韩国这次两头都占了：上半年 AI 和出口是真的，但价格被推得远远跑在价值前面；7 月情绪一转，价格又狠狠跌破本该有的位置。真实的生意没怎么变，疯狂变化的一直是价格。'],
+        },
+      },
+      {
+        title: { en: 'A lesson worth more than the scams', zh: '这堂课，比骗局更值得记住' },
+        paragraphs: {
+          en: ['I\'ve written about [[note:carrian-case|Carrian]] and [[note:mbi-case|MBI]]—those were outright fakes, nothing real underneath. Korea is different, and precisely because it is different, it is worth remembering more: here the chips are real, the AI demand is real, the companies genuinely make money. A perfectly legitimate market with strong fundamentals can still have its price inflated into a bubble, and still crash. With a scam you can at least screen by "is it fake"; but when the thing is real and the story is real, and only the price has been blown too far, most people cannot tell—they read "price is rising" as "value is rising," and pile in at the top, on leverage.', 'So whether you face a scam or a real-but-overheated market, what protects you is a variant of the same question: am I buying the solid value of this business, or just betting that "someone behind me will pay a higher price for my bag"? If the former, a short-term drop lets you sleep, because the value is still there. If the latter, you are playing something close to a [[note:modern-finance-ponzi|money game]]—your profit is the next person\'s money, and whether you get out whole depends on not being the last to hold the baton.', 'One more thing: this lesson is not only Korea\'s. As the same AI boom lifts U.S. stocks and tech shares worldwide, "price running far ahead of value" is worth keeping in mind at all times. Some analysts said outright that the KOSPI was "trading like a meme stock," and warned that another market could be next[[6]].'],
+          zh: ['我之前写过[[note:carrian-case|佳宁]]、写过[[note:mbi-case|MBI]]——那些是彻头彻尾的假东西，底下压根没有真实价值。韩国这次不一样，也正因为不一样，更值得记住：这里的芯片是真的、AI 需求是真的、公司是真赚钱的。一个完全正当、基本面很好的市场，价格照样能被吹成泡沫，也照样能崩。骗局你还能靠「它是不是假的」来识别；可当东西是真的、故事也是真的，唯一被吹过头的只是「价格」时，绝大多数人分不清——他们会把「价格在涨」直接当成「价值在涨」，然后在最高点加着杠杆冲进去。', '所以无论面对骗局，还是一个真实但过热的市场，能保护你的是同一个问题的变体：我现在买的，是这门生意实实在在的价值，还是只是在赌「后面有人愿意用更高的价钱接我的盘」？如果是前者，价格短期跌了你睡得着，因为价值还在；如果是后者，那你玩的本质上和[[note:modern-finance-ponzi|money game]]没差多少——你赚的是下一个人的钱，能不能全身而退，取决于你是不是最后一个接棒的人。', '顺便一句：这堂课不只是韩国的。当 AI 热潮同样在推高美股、推高全世界科技股时，「价格远远跑在价值前面」这件事值得每个人时时放在心里。有分析师直接说，韩国股市这阵子「炒得像迷因股」，还提醒——下一个可能就轮到别的市场[[6]]。'],
+        },
+      },
+    ],
+  },
+  {
+    slug: 'mbi-case',
+    title: { en: 'Old scam, new clothes: MBI and the coin that "only goes up"', zh: '旧骗局，新外衣：MBI 与那枚「会一直涨」的币' },
+    summary: {
+      en: 'A self-issued coin said to "only go up," a tangible online mall, and a line like "you\'ll regret missing this forever"—Penang\'s MBI pulled in the money of about two million people with this kit. Take it apart, though, and inside is a trick that has not changed in centuries.',
+      zh: '一枚自家发行、号称「只涨不跌」的虚拟币，一个看得见摸得着的线上商城，再加一句「错过这次你会后悔一辈子」——马来西亚槟城的 MBI，用这套东西吸走了大约两百万人的钱。可你把它拆开，里面装的是一个几百年都没变过的老套路。',
+    },
+    category: { en: 'Money & real value', zh: '钱与真实价值' },
+    thesis: {
+      en: 'The scam\'s outer clothes keep upgrading—postal coupons, property, crypto—but the core barely changes: pay old entrants with new ones\' money, nothing real underneath, kept alive by confidence and fresh cash.',
+      zh: '骗局的外衣一直在升级——邮票、地产、加密币，但内核几乎一模一样：拿新人的钱付旧人、底下没有真实价值、靠信心和新钱续命。',
+    },
+    sources: ['The Edge · MBI 案', 'SCMP · Jho Low 2', 'Bangkok Post · 引渡', 'SCMP · 跨境追赃'],
+    originalSource: {
+      url: 'mbi-case-full.html',
+      label: { en: 'Read the full original essay', zh: '阅读完整原文（白话版）' },
+    },
+    references: [
+      { id: '1', url: 'https://theedgemalaysia.com/node/787385', label: { en: 'The Edge Malaysia on the MBI case. MBI (Mobility Beyond Imagination) was founded in Penang around 2012 by Tedy Teow, running on a self-issued coin and the M Mall O2O marketplace; by ~2016 it had spread to China, Taiwan, Japan and New Zealand; in May 2017 Bank Negara seized it and froze accounts, recovering only ~RM177m; by 2025 the Ops Northern Star operation had seized or frozen ~RM6.6bn of related assets.', zh: '《The Edge Malaysia》关于 MBI 案：约 2012 年由张誉发在槟城创办，以自家虚拟币与 M Mall（O2O 商城）运作，2016 年前后扩张至中国、台湾、日本、新西兰；2017 年 5 月国行查封冻结账户，仅追回约 1.77 亿令吉；2025 年 Ops Northern Star 行动累计查扣冻结相关资产约 66 亿令吉。' } },
+      { id: '2', url: 'https://www.scmp.com/week-asia/people/article/3276381/how-tedy-teow-malaysian-fraudster-dubbed-jho-low-2-allegedly-swindled-millions', label: { en: 'South China Morning Post — how Tedy Teow, dubbed "Jho Low 2," allegedly swindled millions. Recounts an investor putting money in after a seminar, "millions of victims across Asia," and the nickname.', zh: '《South China Morning Post》：记述受害者在投资说明会后投入资金、「数百万受害者遍布亚洲」，以及张誉发被称为「Jho Low 2」。' } },
+      { id: '3', url: 'https://www.bangkokpost.com/thailand/general/2852908/thailand-extradites-malaysian-fugitive-to-china-over-us-14-billion-cryptocurrency-scam', label: { en: 'Bangkok Post — Thailand extradited Teow to China in August 2024, where he faces charges over a cryptocurrency pyramid scheme worth about US$14bn.', zh: '《Bangkok Post》：泰国 2024 年 8 月将张誉发引渡至中国，中方就一宗涉及约 140 亿美元的加密货币传销骗局对其提出指控。' } },
+      { id: '4', url: 'https://www.scmp.com/week-asia/people/article/3314016/us900-million-seized-china-helps-malaysia-dismantle-tedy-teows-scam-empire', label: { en: 'South China Morning Post — about US$900m seized as China helped Malaysia dismantle Teow\'s scam empire through cross-border cooperation.', zh: '《South China Morning Post》：报道中马跨境合作追赃，查扣资产约达 9 亿美元。' } },
+    ],
+    referencesNote: {
+      en: 'Reported figures vary by source (charged amounts, transaction flows, victims\' reported losses); this uses the more authoritative public reporting and gives ranges. Parts of the case remain before the courts—this piece explains the pattern and does not pronounce guilt on any living person.',
+      zh: '涉案金额因口径不同（起诉金额、交易流水、受害者报案损失）各方有差异，本文取较权威的公开报道并标明范围。案件部分仍在司法程序中，本文旨在解释套路，不对在世个人作有罪定论。',
+    },
+    sections: [
+      {
+        title: { en: 'A seminar, and what MBI was', zh: '一场招商大会，以及 MBI 是什么' },
+        paragraphs: {
+          en: ['In 2016, an investor named Randy Ang sat through an investment seminar. Speakers painted overnight riches—one said that if you followed along you would go "from driving an ordinary car to driving a Ferrari." Afterward he put in a five-figure sum[[2]]. The company was MBI, and you can guess the rest: the money was gone. Alongside him, an estimated two million people handed over their cash, across Malaysia and China.', 'MBI—Mobility Beyond Imagination—started in Penang around 2012, founded by Tedy Teow[[1]]. The mechanics, taken apart, are just three steps: you pay in for a "package," anywhere from a few thousand to hundreds of thousands; you receive a self-issued coin (often called GRC) said to only ever rise; and you recruit more people, earning more the larger your downline. By step three the red light should be on—isn\'t this just pyramid recruiting? It is. But what made MBI truly dangerous was the respectable-looking skin it wrapped around this.'],
+          zh: ['2016 年，投资者 Randy Ang 去听了一场投资说明会。台上讲师描绘一夜致富，有人说跟着做你会「从开普通车变成开法拉利」。会开完，他投进一笔五位数的钱[[2]]。他投的公司叫 MBI，后来的事你大概猜到了：钱没了。和他一起交钱的，据估计约有两百万人，遍布马来西亚和中国。', 'MBI 全名 Mobility Beyond Imagination，约 2012 年从槟城起家，创办人张誉发（Tedy Teow）[[1]]。玩法拆开只有三步：一、你交钱买「配套」，几千到几十万不等；二、你拿到一枚它自家发行的虚拟币（外界常提到 GRC），号称只涨不跌；三、你拉更多人进来，下线越多赚得越多。看到第三步就该亮红灯——这不就是拉人头传销吗？没错，但 MBI 真正害人的地方，是给它套了一层看起来很正当的皮。'],
+        },
+      },
+      {
+        title: { en: 'The skin was called M Mall', zh: '那层皮，叫 M Mall' },
+        paragraphs: {
+          en: ['If it were only a coin and recruiting, anyone slightly wary would walk. So MBI built M Mall—an online-to-offline shopping mall (they called it O2O). Its job was to answer the deadliest question: why is your coin worth anything? MBI\'s answer: because you can use it—spend the coin in M Mall, backed by real shops and real merchants, so the coin has "real value behind it."', 'This step is the soul of the whole scheme: dressing a recruit-and-coin money game as an "O2O tech company with a real business." It is exactly the move [[note:carrian-case|Carrian]] used—real property deals masking the fact that everything underneath was borrowed money—using a visible "real business" to blur a hollow core. But the mall could not hold up the coin: real trade in M Mall was tiny next to the flood of money pouring in. The coin "rose" not because the mall earned anything, but because there were always new people willing to buy in at a higher price.'],
+          zh: ['如果只是发币、拉人头，稍有警惕的人就会跑。所以 MBI 搭了一个 M Mall——线上线下打通的购物商城（他们叫 O2O）。它的作用是回答那个最要命的问题：你这枚币，凭什么值钱？MBI 的答案是：因为它能用——你能拿币在 M Mall 消费，我们背后有真实商城、真实商家，所以这币有「真实价值支撑」。', '这一步是整个骗局的灵魂：把一个「拉人头＋虚拟币」的 money game，包装成「有实体业务的 O2O 科技公司」。这和[[note:carrian-case|佳宁]]当年用真实的地产交易掩盖底下全是借来的钱，是一模一样的手法——用一个你看得见的「真生意」，模糊掉底下那个空洞的本质。但商城撑不起那枚币：M Mall 真实的买卖，跟外面涌进来的天量资金比小得可怜。币之所以「涨」，从来不是商城赚了钱，而是后面一直有新人愿意用更高的价格接盘。'],
+        },
+      },
+      {
+        title: { en: 'Hold up the three old questions, and it shows', zh: '拿三个老问题一套，就现形' },
+        paragraphs: {
+          en: ['In [[note:modern-finance-ponzi|Is modern finance a Ponzi scheme]] I laid out three old questions for telling whether something is a money game. Applied to MBI, it is almost a clean sweep. Where do returns come from? Early entrants\' "returns" come mainly from later entrants\' money. Is anything real there? The coin has no matching real value; M Mall cannot support its scale. Does it collapse if new money stops? The moment recruits dry up and everyone cashes out at once, the coin price and the whole pool crash.', 'Three for three. So however much it talks of "blockchain," "O2O," and "the digital economy," at its bones it is a money game. And it expanded startlingly: by around 2016 it had reached China, Taiwan, Japan, and New Zealand[[1]], with China worst hit and victims later estimated near two million—Teow was even nicknamed "Jho Low 2" by the press[[2]].'],
+          zh: ['我在[[note:modern-finance-ponzi|《现代金融，是一场庞氏骗局吗》]]里讲过判断一个东西是不是 money game 的三个老问题。套 MBI 几乎逐条命中：回报从哪来？早加入者的「回报」主要来自后加入者的钱。有没有真东西？那枚币背后没有对应的真实价值，M Mall 撑不起它的体量。断了新钱会崩吗？只要新人一停、大家一起套现，币价和整个盘子就崩。', '三条全中。所以不管它讲多少「区块链」「O2O」「数字经济」的新词，骨子里就是一场 money game。而它扩张惊人：2016 年前后触角已伸到中国、台湾、日本、新西兰[[1]]，重灾区是中国，受害者后来估计约两百万，张誉发也被媒体戏称为「Jho Low 2」、第二个刘特佐[[2]]。'],
+        },
+      },
+      {
+        title: { en: 'Collapse and the manhunt', zh: '崩塌与追捕' },
+        paragraphs: {
+          en: ['Paper cannot wrap fire, and neither can a crypto skin. In May 2017 Malaysia\'s central bank (Bank Negara) seized MBI and froze accounts—but the money had long scattered, and only about RM177m was recovered; MBI was placed on the central bank\'s financial alert list[[1]].', 'Teow fled to Thailand and kept operating. He was arrested there in July 2022 and extradited to China in August 2024—where the charges involve a crypto pyramid scheme worth some US$14bn[[3]]. Asset recovery continues: in 2025 the operation code-named Ops Northern Star had seized or frozen about RM6.6bn, and those arrested even included property tycoons with Datuk and Tan Sri titles; reports that year also said cross-border seizures, with China\'s help, reached about US$900m[[4]].'],
+          zh: ['纸包不住火，加密币的皮也一样。2017 年 5 月，马来西亚国家银行（Bank Negara）查封 MBI、冻结账户，但钱早已四散，只追回约 1.77 亿令吉，MBI 也被列入国行金融警示名单[[1]]。', '张誉发逃到泰国继续经营。2022 年 7 月在泰国被捕；2024 年 8 月被引渡到中国受审——中方指控涉及一个金额高达约 140 亿美元的加密货币传销骗局[[3]]。追赃仍在继续：2025 年代号 Ops Northern Star 的行动累计查扣冻结约 66 亿令吉，被捕者中甚至有拿督、丹斯里级的产业大亨；同年也有报道称在中国协助下跨境查扣资产约 9 亿美元[[4]]。'],
+        },
+      },
+      {
+        title: { en: 'The clothes keep changing; the core never does', zh: '皮一直在换，芯从来没变' },
+        paragraphs: {
+          en: ['Put MBI beside [[note:carrian-case|Carrian]], and even beside Charles Ponzi a century ago, and you see something scary and useful: the scam\'s clothes keep upgrading while the core barely changes. The clothes differ by era—Ponzi used postal coupons, Carrian used property, MBI used crypto and a mall; the core never moves—pay old entrants with new ones\' money, nothing real underneath, kept alive by confidence and fresh cash.', 'New clothes work so well because they exploit two very ordinary human traits: not understanding—crypto, blockchain, O2O; the less people grasp it, the easier they are cowed by "this is high tech, this is the future"—and fear of missing out—"everyone else is earning and only I haven\'t boarded," the best fuel any money game has. So protecting yourself is not about chasing new concepts and learning which coin is real (you never finish; tomorrow brings new words), but returning to the three oldest, plainest questions: is my return earned by the business or paid from newcomers\' money? Is there anything real behind it to support the value it claims? If no new people come tomorrow, does it still run?', 'These three need no blockchain knowledge and no ability to read a balance sheet, yet they cut through almost any money game—whatever the skin: stamps, property, or a coin that supposedly "only goes up." Because in the end, whether a coin keeps rising never depends on how lovely its story is, but on one cold thing: whether someone behind you will still take your bag at a higher price. When the buyers run out, the prettiest story cannot pay out a cent.'],
+          zh: ['把 MBI 和[[note:carrian-case|佳宁]]、甚至一百年前的查尔斯·庞氏摆在一起，你会看到一件挺可怕又挺有用的事：骗局的外衣一直在升级，内核几乎一模一样。外衣每个时代不同——庞氏用邮票票券、佳宁用地产、MBI 用加密币和商城；内核从来没变——拿新人的钱付旧人、底下没有真实价值、靠信心和新钱续命。', '新外衣特别好用，因为它利用两种最普通的人性：一是看不懂——加密币、区块链、O2O，越听不懂越容易被「这是高科技、是未来」唬住；二是怕错过——「别人都在赚，就我没上车」的焦虑，是所有 money game 最好的燃料。所以保护自己的方法不是去追新概念、学分辨哪个币真哪个假（那永远学不完，明天又有新词），而是回到那三个最老最土的问题：回报是生意真赚来的，还是后面新人的钱？背后有没有真东西撑起它宣称的价值？明天没有新人进来，它还转得下去吗？', '这三个问题不需要你懂区块链，也不需要你会看财报，却能戳穿几乎所有 money game——不管那层皮是邮票、地产，还是一枚号称「只会涨」的币。因为说到底，一枚币会不会一直涨，不取决于它讲了多动听的故事，而取决于一件很冷的事：后面还有没有人愿意用更高的价钱接你的盘。接盘的人没了，故事再漂亮也一分钱兑现不了。'],
+        },
+      },
+    ],
+  },
   {
     slug: 'carrian-case',
     title: { en: 'An empire built on borrowed money: the Carrian case', zh: '一座建在借来的钱上的帝国：佳宁案' },
@@ -10948,6 +11092,10 @@ const siteEssayNotes: SiteEssayNote[] = [
       zh: '钱不是财富，能满足需求的能力才是；越往未来，财富越等于你能控制多少未来的生产能力。',
     },
     sources: ['英格兰银行 · 货币创造', 'IIF 全球债务监测', 'Pew 全球生育趋势', 'NBER · Generative AI at Work', 'CBO / IMF 财政展望'],
+    referencesNote: {
+      en: 'These are the sources for the factual claims. The extrapolations—future wealth leaning toward energy, compute, or AI—are my own reasoning, not cited here.',
+      zh: '以上是文章「事实」部分的来源。「推演」部分（未来财富更偏能源、算力或 AI）只是顺着逻辑的推测，不在此列。',
+    },
     originalSource: {
       url: 'what-is-wealth-full.html',
       label: { en: 'Read the full original essay', zh: '阅读完整原文（白话版）' },
@@ -11386,9 +11534,11 @@ const SiteEssayNotePage: React.FC<{
                 ))}
               </ol>
               <p className="notes-ref-note">
-                {isZh
-                  ? '以上是文章「事实」部分的来源。「推演」部分（未来财富更偏能源、算力或 AI）只是顺着逻辑的推测，不在此列。'
-                  : 'These are the sources for the factual claims. The extrapolations—future wealth leaning toward energy, compute, or AI—are my own reasoning, not cited here.'}
+                {note.referencesNote
+                  ? note.referencesNote[language]
+                  : (isZh
+                    ? '以上是文章「事实」部分的来源；文中的判断与推演仅代表作者个人观点。'
+                    : 'These are the sources for the factual claims; any judgments and extrapolations are the author\'s own view.')}
               </p>
             </section>
           )}
