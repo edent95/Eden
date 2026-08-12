@@ -1,5 +1,15 @@
-const CACHE_NAME = 'eden-conway-v1';
-const APP_SHELL = ['./', './conways-game-of-life', './film-gallery', './conway.webmanifest', './conway-app-icon.svg', './film-gallery.webmanifest', './film-gallery-app-icon.svg'];
+const CACHE_NAME = 'eden-site-v2';
+const APP_SHELL = [
+  './',
+  './site.webmanifest',
+  './eden-app-icon.svg',
+  './conways-game-of-life',
+  './conway.webmanifest',
+  './conway-app-icon.svg',
+  './film-gallery',
+  './film-gallery.webmanifest',
+  './film-gallery-app-icon.svg',
+];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)));

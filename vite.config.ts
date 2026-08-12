@@ -95,7 +95,7 @@ export default defineConfig(({ mode }) => {
         name: 'web-app-manifest-with-base',
         transformIndexHtml(html) {
           if (html.includes('rel="manifest"')) return html;
-          const manifestScript = `<script>(function(){var isFilm=/\\/film-gallery\\/?$/.test(window.location.pathname);var file=isFilm?'film-gallery.webmanifest':'conway.webmanifest';var icon=isFilm?'film-gallery-app-icon.svg':'conway-app-icon.svg';var color=isFilm?'#171411':'#176b87';document.write('<link rel="manifest" href="${base}'+file+'"><meta name="theme-color" content="'+color+'"><link rel="apple-touch-icon" href="${base}'+icon+'">');})();</script>`;
+          const manifestScript = `<script>(function(){var p=window.location.pathname;var app=/\\/film-gallery\\/?$/.test(p)?{f:'film-gallery.webmanifest',i:'film-gallery-app-icon.svg',c:'#171411'}:/\\/conways-game-of-life\\/?$/.test(p)?{f:'conway.webmanifest',i:'conway-app-icon.svg',c:'#176b87'}:{f:'site.webmanifest',i:'eden-app-icon.svg',c:'#1c1917'};document.write('<link rel="manifest" href="${base}'+app.f+'"><meta name="theme-color" content="'+app.c+'"><link rel="apple-touch-icon" href="${base}'+app.i+'">');})();</script>`;
           return html.replace(
             '</head>',
             `    ${manifestScript}\n  </head>`,

@@ -4062,3 +4062,16 @@
 - 影响：首页 banner 现在为 desktop 4 栏、tablet 4 栏、mobile 3 栏；视频视口播放与 Safari muted 修复保持不变。
 - 验证：`npm run typecheck`、`npm run build` 与 `git diff --check` 通过（✓ 2085 modules transformed，✓ built in 1.22s）；390 × 844 实测为三栏、每张约 115.33px、6px gap，768 × 900 实测为四栏、每张 171px、12px gap；两者 `scrollWidth` 均等于 viewport，console 0 error。
 - 后续：无。
+
+### 2026-08-12 · PWA manifest 路由化（首页不再是 Conway）
+
+- 类型：PWA / 站点身份修复 / vite plugin + public assets
+- 改动：新增 `public/site.webmanifest`（`name: Eden Tan — Build systems from chaos.`、`short_name: Eden Tan`、`start_url: ./`、`theme_color: #1c1917`）与 `public/eden-app-icon.svg`（512 viewBox、maskable 安全区内的 E 标记）。
+- 改动：重写 `vite.config.ts` 的 `web-app-manifest-with-base` 注入脚本，从「只有 /film-gallery 特判、其余一律 conway」改为三段路由映射：`/film-gallery` → film manifest、`/conways-game-of-life` → conway manifest、其余全部路由（含 `/`）→ site manifest；`theme-color` 与 `apple-touch-icon` 同步按路由切换。
+- 改动：`public/sw.js` 的 `CACHE_NAME` 由 `eden-conway-v1` 升到 `eden-site-v2`，`APP_SHELL` 加入 `./site.webmanifest` 与 `./eden-app-icon.svg`。
+- 改动：`README.md` 路由段落补充 manifest 路由映射说明。
+- 原因：旧逻辑让首页及所有非 film 路由都挂 `conway.webmanifest`，其 `start_url` 为 `./conways-game-of-life`，导致从首页安装的 PWA 名字叫 Conway Life、图标是 Conway、打开直接进生命游戏，站点品牌身份被子项目覆盖。
+- 影响：首页安装出来的 app 现在是 Eden Tan 且 `start_url` 回到 `./`；Conway 与 Film Gallery 仍各自保留独立可安装身份；页面路由与 UI 无任何视觉改动。
+- 验证：`npx tsc --noEmit` 通过；`npx vite build --outDir dist_manifest_v2` 通过（✓ 2085 modules transformed，✓ built in 3.27s），产物 index.html 已注入三段映射脚本，`site.webmanifest` / `eden-app-icon.svg` 正确复制到产物根目录，`sw.js` 已带 `eden-site-v2`；node 模拟 9 条路径分流结果正确（`/` `/notes` `/poker` `/life-os` `/cellular-automata-lab` → site，`/conways-game-of-life[/]` → conway，`/film-gallery[/]` → film）。临时产物目录已移入 `_to_delete/dist_manifest_v2`（本环境无法直接删除文件）。
+- 注意：`dist/` 因 `.DS_Store` 权限问题无法在此环境重建，正式发布前需在本机跑一次 `npm run build`。
+- 后续：本机已安装的旧「Conway Life」PWA 需卸载后重新安装才能拿到新身份；浏览器端如仍看到旧 manifest，在 DevTools → Application 里 Unregister service worker 并清 cache storage。
