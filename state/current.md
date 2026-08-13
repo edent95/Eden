@@ -24,14 +24,14 @@ Last reviewed: 2026-08-14
 - Route and SEO metadata: `seo-routes.ts`.
 - Shared navigation: `HeaderControls` in `App.tsx` plus `styles/shared.css`.
 - CSS art inventory: `css-art.registry.ts` and `docs/css-art-system.md`.
-- Change history: append-only `log.md`; read only its recent tail unless older history is relevant.
+- Change history: `logs/index.md` plus append-only monthly `logs/YYYY-MM.md` archives.
 
 ## Known Structural Debt
 
-- `App.tsx` is large and still embeds Wiki/Notes content. The intended next architecture is Markdown under `wiki/`, compiled into site data.
-- `log.md` is large. A future migration should create a generated recent index and archive older entries by month without losing history.
+- Wiki and Notes content now lives under `wiki/` and compiles into `generated/content.ts`; `App.tsx` still contains large route components that can be split later.
+- Historical logs are split by month and indexed through generated `logs/index.md`; `log.md` remains a compatibility pointer.
 - `log 2.md` and `soul 2.md` are tracked legacy snapshots. They are not active sources of truth and should not be read or updated during normal work.
-- Branch protection must be enabled in GitHub settings so the `Eden Harness / verify` check is required before merge.
+- GitHub `main` branch protection requires the `verify` check, an up-to-date branch, resolved review conversations, and applies to administrators; force-push and branch deletion are disabled.
 
 ## Near-Term Harness Direction
 

@@ -16,7 +16,7 @@ Future agents working here should treat this file as the operating schema for ho
 This repo currently serves two related purposes:
 
 1. A front-end concept page for the `LLM Wiki` idea.
-2. A future schema/workflow home for an actual markdown-based LLM-maintained knowledge base.
+2. A markdown-based, LLM-maintained knowledge source compiled into the public Wiki and Notes routes.
 
 When editing this repo, preserve that positioning:
 
@@ -76,12 +76,15 @@ Future agents should reason with these three layers:
 - Source documents are the ground truth.
 - Do not modify raw sources.
 - If new source material is added later, treat it as ingest input, not editable wiki content.
+- Put commit-safe raw inputs under `raw/`; keep public full-text compatibility files in `public/` when an existing URL depends on them.
 
 ### 2. The Wiki
 
 - The wiki is a set of markdown pages maintained by the LLM.
 - Good outputs should be fileable back into the wiki instead of disappearing into chat history.
 - Prefer structured pages: overview, source summaries, entity pages, concept pages, comparisons, syntheses.
+- Editable public content lives in `wiki/pages/*.md` and `wiki/essays/*.md`.
+- Each public content file carries frontmatter plus a structured bilingual JSON payload. After editing it, run `npm run wiki:build`; never hand-edit `generated/content.ts`.
 
 ### 3. The Schema
 
@@ -90,7 +93,7 @@ Future agents should reason with these three layers:
 
 ## Standard Operations
 
-When the repo later grows into a full wiki system, default to these operations:
+For the current Wiki system, default to these operations:
 
 ### Ingest
 
@@ -103,7 +106,7 @@ Expected behavior:
 - Create or update a source summary page.
 - Update related topic/entity/concept pages.
 - Update `index.md`.
-- Append a dated entry to `log.md`.
+- Append a dated entry to the current `logs/YYYY-MM.md`, then regenerate `logs/index.md`.
 - Flag contradictions or superseded claims instead of silently overwriting them.
 
 ### Query
@@ -327,17 +330,19 @@ When adding, hiding, renaming, or changing a route:
 - If a route should be reachable but hidden from discovery, keep the React route but set `index: false` and `sitemap: false` in `seo-routes.ts`, then remove visible navigation/card entry points as needed.
 - Do not maintain separate ad hoc route lists in `vite.config.ts`, `seo.ts`, README, or page components without checking the registry first.
 
-## If The User Asks To Expand This Repo Into A Real Wiki
+## Current Wiki Structure
 
-The next likely scaffold should be:
+- `raw/`: immutable, commit-safe source inputs.
+- `wiki/pages/`: public `/wiki/:slug` Markdown sources.
+- `wiki/essays/`: public `/notes/:slug` Markdown sources.
+- `wiki/index.md`: human-readable content map.
+- `generated/content.ts`: compiler output consumed by React; never edit manually.
+- `scripts/wiki/build.mjs`: deterministic Markdown-to-TypeScript compiler.
+- `scripts/wiki/lint.mjs`: schema, citation, bilingual field, route, and cross-link checks.
 
-- `raw/` for immutable source files
-- `wiki/` for generated markdown pages
-- `wiki/index.md`
-- `wiki/log.md`
-- optional templates for source summaries, concepts, entities, and comparisons
-
-If implementing that scaffold, keep the directories simple and markdown-first.
+Keep future templates for source summaries, concepts, entities, and comparisons
+simple and markdown-first. Any schema expansion must update both the compiler and
+lint gate in the same change.
 
 ## Decision Standard
 
@@ -360,7 +365,7 @@ Before making changes, read these files first:
 1. `README.md` (current runnable project truth)
 2. `soul.md` (collaboration rules to reduce rework)
 3. `state/current.md` (current architecture, verification, and known risks)
-4. Only the recent tail of `log.md` by default (use older entries only when the task needs history)
+4. `logs/index.md` (open a monthly archive only when the task needs older detail)
 
 ### 2) Do not stop at single-page edits
 
@@ -385,14 +390,14 @@ same change rather than silently bypassing the gate.
 
 ### 4) Logging is mandatory
 
-Every real change must append a new entry to `log.md`, including:
+Every real change must append a new entry to the current `logs/YYYY-MM.md`, including:
 
 - what changed
 - why
 - impact
 - next step (if any)
 
-If there is no `log.md`, create it first and then append entries.
+After appending, run `npm run log:index`. `log.md` is now a stable pointer to the monthly archive and must not receive normal change entries.
 
 ### 5) Keep future-agent handoff durable
 

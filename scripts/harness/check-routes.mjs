@@ -9,10 +9,10 @@ const problems = [];
 function hasImplementedRoute(route) {
   if (route === '/') return true;
   if (route.startsWith('/notes/')) {
-    return app.includes(`slug: '${route.slice('/notes/'.length)}'`);
+    return exists(`wiki/essays/${route.slice('/notes/'.length)}.md`);
   }
   if (route.startsWith('/wiki/')) {
-    return app.includes(`slug: '${route.slice('/wiki/'.length)}'`);
+    return exists(`wiki/pages/${route.slice('/wiki/'.length)}.md`);
   }
   if (route.startsWith('/archive/')) {
     return app.includes(`slug: '${route.slice('/archive/'.length)}'`);
@@ -38,6 +38,22 @@ for (const route of ROUTE_SEO) {
   }
   if (!hasReadmeRoute(route.path)) {
     problems.push(`${route.path} is registered but not documented in README.md`);
+  }
+}
+
+const registeredPaths = new Set(ROUTE_SEO.map((route) => route.path));
+const allowedAliases = new Set(['/analog-tech']);
+for (const match of app.matchAll(/pathWithoutBase\s*===\s*'([^']+)'/g)) {
+  if (!registeredPaths.has(match[1]) && !allowedAliases.has(match[1])) {
+    problems.push(`${match[1]} is implemented in App.tsx but missing from seo-routes.ts`);
+  }
+}
+
+for (const [directory, prefix] of [['wiki/pages', '/wiki/'], ['wiki/essays', '/notes/']]) {
+  const marker = `${directory}/`;
+  for (const route of ROUTE_SEO.filter((entry) => entry.path.startsWith(prefix))) {
+    const expectedFile = `${marker}${route.path.slice(prefix.length)}.md`;
+    if (!exists(expectedFile)) problems.push(`${route.path} has no Markdown source ${expectedFile}`);
   }
 }
 
