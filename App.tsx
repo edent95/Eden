@@ -9325,7 +9325,9 @@ const homeCollageItems: Array<{
   {
     title: 'Film Gallery',
     tone: 'film',
-    cssArtProjectTitle: 'Film Gallery',
+    image: 'home-banners/film-gallery-banner-poster.jpg',
+    video: 'home-banners/film-gallery-banner.mp4',
+    imageAlt: { en: 'A vintage twin-lens reflex camera revealing film reels through its viewfinder', zh: '复古双反相机的取景器里映出转动的胶片卷轴' },
     href: 'film-gallery',
     linkLabel: { en: 'Open Film Gallery', zh: '打开 Film Gallery' },
     ctaLabel: { en: 'View gallery', zh: '查看图库' },

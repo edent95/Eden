@@ -4116,3 +4116,36 @@
 
 **下一步**
 - 发布后检查 GitHub Pages workflow 与首页、`/project`、`/penneys-game`、`/life-os`；Penney 全球榜仍需按 `docs/penney-leaderboard.md` 单独部署 Firebase database rules。
+
+## 2026-08-13 — 首页 Film Gallery banner 换成实拍影片
+
+**做了什么**
+- 将首页 `Film Gallery` 卡片从原本的 CSS film-strip 动画改成用户提供的 10 秒 16:9 双反相机实拍影片。
+- 新增 `public/home-banners/film-gallery-banner.mp4` 与静态 poster；首页继续使用现有的视口播放、静音循环、Safari inline autoplay 与 Reduce Motion fallback。
+- 补齐中英文画面替代文字；Film Gallery 页面、路由、CTA 与原有 CSS art app icon 保持不变。
+
+**为什么**
+- 用户希望以新的 `sec_video.mp4` 取代首页 Film Gallery banner，同时保持现有卡片交互与可访问性。
+
+**影响**
+- 只改变首页 Film Gallery 卡片的视觉素材；其他首页 banner 与 Film Gallery 产品页不变。
+- `npm run build`、`npm run typecheck` 与 `git diff --check` 通过（Vite ✓ 2089 modules transformed，✓ built in 1.16s）；生产包已包含新 MP4 与 poster。
+
+**下一步**
+- 无。
+
+## 2026-08-14 — 修复首页 mobile banner 被裁切
+
+**做了什么**
+- 将 600px 以下的首页 banner 从 `46vw` 横向 marquee 恢复为三栏静态网格，8 张卡片只渲染首组可见内容，按 `3 + 3 + 2` 排列。
+- 手机端使用与首页一致的 16px 左右留白、6px gap 与 8px 圆角；桌面与 tablet 继续保留原双行 marquee。
+
+**为什么**
+- 横向 marquee 重构覆盖了之前明确的 mobile 三栏规则，导致 iPhone 实际只显示约两张半，右侧卡片看起来被截断。
+
+**影响**
+- 手机端所有 banner 都能完整落在 viewport 内，Film Gallery 新视频也会作为最后一张卡正常显示；桌面交互不变。
+- `npm run build`、`npm run typecheck` 与 `git diff --check` 通过（Vite ✓ 2089 modules transformed，✓ built in 1.15s）。Playwright 在 390 × 844 viewport 实测为三栏（每张约 115.33px）、8 张卡按 `3 + 3 + 2` 排列，`scrollWidth` 与 viewport 同为 390px；Film Gallery 视频可见并正常播放，console 0 error。
+
+**下一步**
+- 无。
