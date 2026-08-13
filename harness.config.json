@@ -5,7 +5,7 @@
     "README.md",
     "soul.md",
     "state/current.md",
-    "log.md"
+    "logs/index.md"
   ],
   "sourcesOfTruth": {
     "routes": "seo-routes.ts",

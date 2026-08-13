@@ -76,7 +76,7 @@ npm run preview
 - `/notes/:slug` — Eden 原创 synthesis note 独立文章页
 - `/life-os` — 人生 RPG 能力系统 / Life OS 角色档案页
 - `/life` — Life 视频页（隐藏直达页；不在首页入口，不进 sitemap，客户端 SEO 设为 noindex）
-- `/brand-guide` — 持续与 `log.md` 对齐的 Brand Guide：核心主张、视觉、语气、版式、资产类型、动效与实现规则
+- `/brand-guide` — 持续与月度 change log 对齐的 Brand Guide：核心主张、视觉、语气、版式、资产类型、动效与实现规则
 - `/topics` — Topic Market：一张卡一个问题和 icon，回答控件按问题类型变化（当前浏览器本地保存）
 - `/conways-game-of-life` — 真正的二维 Conway B3/S23 互动生命棋盘
 - `/conways-game-of-life` 可通过页面内 `Install app / 安装 App` 安装为 standalone PWA；不支持安装提示的 Safari 会显示加入主画面 / Dock 指引
@@ -92,6 +92,7 @@ npm run preview
 
 - **验证：** Pull Request 触发 `.github/workflows/verify.yml`，必须通过统一 harness。
 - **发布：** `main` 推送触发 `.github/workflows/deploy.yml`；同一 workflow 先通过统一 harness，再把 `dist` 发布到 **GitHub Pages**。
+- **分支保护：** `main` 要求 `verify`、分支保持最新并解决 review conversations；管理员同样受保护，force-push 与删除已禁用。
 - **SPA 子路径：** `public/404.html` 与 `index.html` 内脚本解决 GitHub Pages 对深链/刷新的 404 问题。  
 - **分析：** `index.html` 内已嵌入 GA4（`gtag.js`），Measurement ID 在仓库中维护。  
 - **SEO 代码：** 见 `seo.ts`；构建产物含 `sitemap.xml`、`robots.txt`（在配置了站点 URL 时生成）。
@@ -104,11 +105,14 @@ npm run preview
 
 1. `AGENTS.md`  
 2. `soul.md`（若存在，协作习惯）  
-3. `log.md`（最近改动）  
+3. `state/current.md`（当前架构与已知风险）
+4. `logs/index.md`（最近改动；需要时才进入月度档案）
 
-有真实代码或文档变更时：更新实现 → 在 `log.md` 追加一条（改动 / 原因 / 影响 / 验证 / 后续）→ 执行 `npm run check`。
+有真实代码或文档变更时：更新实现 → 在当月 `logs/YYYY-MM.md` 追加一条（改动 / 原因 / 影响 / 验证 / 后续）→ 运行 `npm run log:index` → 执行 `npm run check`。
 
 `npm run check` 是唯一的完成闸门，会执行：本地 skill 路径检查、route/SEO/README 一致性、日志规则、Wiki 结构检查、CSS art 结构检查、单元测试、TypeScript、production build 与 built-site smoke checks。单独的 `npm run build` 只证明 Vite 可以产出文件，不代表任务完成。
+
+Wiki 与 Notes 的可编辑来源位于 `wiki/pages/`、`wiki/essays/`。修改 frontmatter 或结构化双语 payload 后运行 `npm run wiki:build`，生成的 `generated/content.ts` 必须一并提交；不要直接修改生成文件。
 
 CSS art 复用入口：先看 `css-art.registry.ts` 与 `docs/css-art-system.md`，组件统一从 `components/css-art` 复用，样式放在 `styles/css-art/`。
 
@@ -118,4 +122,4 @@ CSS 入口：`index.css` 只做 main import manifest。共享层为 `styles/toke
 
 ## 仓库说明
 
-- 本仓库在概念上也承载 **LLM Wiki** 相关约定，详见 `AGENTS.md` 中「项目身份」与标准操作。 portfolio 与 wiki 规划共用同一套日志与执行规则，避免行为漂移。
+- 本仓库同时承载可执行的 **LLM Wiki**：`wiki/` 是可编辑 Markdown source，`generated/content.ts` 是网站消费的编译结果，规则与操作见 `AGENTS.md`。Portfolio 与 Wiki 共用同一套日志和 harness，避免行为漂移。

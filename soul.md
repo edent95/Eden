@@ -18,7 +18,7 @@
 1. 改动前先确认目标页面和路由是否一致。
 2. 改动后运行 `npm run check`；它会执行项目 policy、测试、typecheck、production build 与产物 smoke checks。
 3. 告知用户可直接验证的本地地址（例如 `http://localhost:4180/...`）。
-4. 每次真实改动后都追加 `log.md`。
+4. 每次真实改动后都追加当月 `logs/YYYY-MM.md`，并运行 `npm run log:index` 更新 recent index。
 5. 若改动涉及文案，默认检查是否需要中英双语一致。
 6. 除非用户明确要求，不要再用截图作为前台验证；优先用构建、关键词检查、代码检查和本地 URL 说明。
 7. 若用户要求参考 Apple.com 的排版、字体大小、极简产品页或高级感布局，优先读取 `.agents/skills/apple-design/SKILL.md`，只使用高层设计逻辑，不复制 Apple 品牌或素材。
@@ -45,7 +45,7 @@
 - 是否把可复用 CSS art 登记进 `css-art.registry.ts`，并从 `components/css-art` 复用组件？
 - 如果是图腾 / sigil / glyph 类 CSS art，是否默认透明底，而不是做成固定底 app icon？
 - 是否把页面级 layout / typography / responsive CSS 放进 `styles/pages/`，并把可复用 card/panel/tag/CTA 数值放进 shared layer，而不是继续扩张 `index.css`？
-- 是否需要同步 `README.md`、`AGENTS.md`、`log.md`？
+- 是否需要同步 `README.md`、`AGENTS.md`、当月日志与 `logs/index.md`？
 - 页面名称、SEO 与实际实现是否描述同一个概念，而不是把相邻但不同的系统混在一起？
 - 是否把“本次完成标准”写清楚给用户（看哪里、看到什么）？
 - 如果是 Dan Koe-like 方向，是否先把页面核心 thesis、读者处境、Eden 的独特 lens、真实 proof 和下一步动作理清楚，而不是只改视觉或堆 slogan？
