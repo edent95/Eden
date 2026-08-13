@@ -28,6 +28,13 @@ Sitemap: ${siteBaseNoSlash}/sitemap.xml
 }
 
 /**
+ * One id per build, shared by the service worker cache name and the `__BUILD_ID__`
+ * the app prints at startup. Keeping them the same is the point: when a PWA looks
+ * stale, the id on the page tells you which deploy it is actually running.
+ */
+const BUILD_ID = process.env.GITHUB_SHA?.slice(0, 8) ?? Date.now().toString(36);
+
+/**
  * Rewrite `CACHE_NAME` in the built `sw.js` so the file's bytes change on every
  * deploy. Browsers decide whether a service worker is "new" by byte-comparing
  * the script, so without this the worker would never update — and the old
@@ -41,8 +48,7 @@ function stampServiceWorker(outDir: string) {
   } catch {
     return;
   }
-  const buildId = process.env.GITHUB_SHA?.slice(0, 8) ?? Date.now().toString(36);
-  const stamped = src.replace(/(const CACHE_NAME = ')[^']*(')/, `$1eden-site-${buildId}$2`);
+  const stamped = src.replace(/(const CACHE_NAME = ')[^']*(')/, `$1eden-site-${BUILD_ID}$2`);
   if (stamped === src) {
     throw new Error('stampServiceWorker: CACHE_NAME declaration not found in sw.js');
   }
@@ -93,6 +99,9 @@ export default defineConfig(({ mode }) => {
 
   return {
     base,
+    define: {
+      __BUILD_ID__: JSON.stringify(BUILD_ID),
+    },
     server: {
       port: 4180,
       strictPort: true,

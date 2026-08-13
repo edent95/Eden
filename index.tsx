@@ -13,12 +13,47 @@ if (!rootElement) {
   throw new Error("Could not find root element to mount to");
 }
 
+/**
+ * Which build is actually running.
+ *
+ * An installed PWA can sit on a stale build for days with no visible tell —
+ * iOS restores the previous page instead of navigating, so nothing about the
+ * screen says how old it is. Stamping the id onto <html> and the console makes
+ * "is this the deploy I just shipped?" answerable in seconds, and it matches
+ * the service worker's cache name for the same build.
+ */
+document.documentElement.dataset.build = __BUILD_ID__;
+console.info(`[eden] build ${__BUILD_ID__}`);
+
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>
 );
+
+/**
+ * Keep <meta name="theme-color"> on the page's real background.
+ *
+ * iOS paints the standalone status-bar strip with that meta tag, and the value
+ * injected at build time is a single static colour — so an installed app shows
+ * a dark stone bar above a light page whenever the site is in light mode. The
+ * theme toggle flips `data-theme` on <html>, so re-read the background there.
+ */
+const syncThemeColor = () => {
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (!meta) return;
+  const background = getComputedStyle(document.body).backgroundColor;
+  if (background && background !== 'transparent' && !background.startsWith('rgba(0, 0, 0, 0')) {
+    meta.setAttribute('content', background);
+  }
+};
+
+requestAnimationFrame(syncThemeColor);
+new MutationObserver(syncThemeColor).observe(document.documentElement, {
+  attributes: true,
+  attributeFilter: ['data-theme'],
+});
 
 /**
  * Service worker registration and update strategy.
