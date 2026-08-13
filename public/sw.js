@@ -18,6 +18,12 @@ const APP_SHELL = [
 // Cache Storage quota on iOS. Never route it through the worker.
 const MEDIA_PATTERN = /\.(mp4|m4v|mov|webm)$/i;
 
+// Vite writes every JS/CSS chunk into `assets/` with a content hash in the
+// filename, so one of these URLs always answers with the same bytes. Only
+// those are safe to serve cache-first; every other path keeps its URL across
+// deploys and has to be revalidated.
+const HASHED_ASSET_PATTERN = /\/assets\/[^/]+-[A-Za-z0-9_-]{8,}\.[a-z0-9]+$/;
+
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)));
   self.skipWaiting();
@@ -34,19 +40,42 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
+  const url = new URL(event.request.url);
+  const sameOrigin = url.origin === self.location.origin;
+
   // Let media go straight to the network so the browser keeps full control of
   // Range requests and partial responses.
-  if (MEDIA_PATTERN.test(new URL(event.request.url).pathname)) return;
+  if (MEDIA_PATTERN.test(url.pathname)) return;
 
+  // Documents are never written to the cache here. An HTML page names the
+  // hashed asset files of the deploy it came from, so a document cached on a
+  // previous deploy asks for chunks this cache no longer holds — which renders
+  // as a half-old page rather than an honest failure. The only cached HTML is
+  // the app shell that `install` fetches fresh for every worker version, so it
+  // can only ever pair with its own assets.
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request)
-        .then((response) => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+      fetch(event.request).catch(() =>
+        caches
+          .match(event.request, { cacheName: CACHE_NAME })
+          .then((cached) => cached || caches.match('./', { cacheName: CACHE_NAME })),
+      ),
+    );
+    return;
+  }
+
+  if (sameOrigin && HASHED_ASSET_PATTERN.test(url.pathname)) {
+    event.respondWith(
+      caches.match(event.request, { cacheName: CACHE_NAME }).then((cached) => {
+        if (cached) return cached;
+        return fetch(event.request).then((response) => {
+          if (response.ok) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+          }
           return response;
-        })
-        .catch(() => caches.match(event.request).then((cached) => cached || caches.match('./'))),
+        });
+      }),
     );
     return;
   }
@@ -54,12 +83,12 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        if (response.ok && new URL(event.request.url).origin === self.location.origin) {
+        if (response.ok && sameOrigin) {
           const copy = response.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
         }
         return response;
       })
-      .catch(() => caches.match(event.request)),
+      .catch(() => caches.match(event.request, { cacheName: CACHE_NAME })),
   );
 });
