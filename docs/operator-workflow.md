@@ -2,6 +2,8 @@
 
 这套操作层把仓库里的 Markdown 规则接到真正会执行、会失败、会反馈的命令上。目标不是取消 branch protection，而是让正确路径比直接 push `main` 更省事。
 
+第一次使用时也可以打开图形化操作菜单：`/operator-menu.html`。它提供闭环示意图、安全护栏、故障恢复和可复制命令；HTML 只负责解释与复制，不会从浏览器直接执行 shell 或绕过终端确认。
+
 ## 最短路径
 
 ```bash
@@ -77,4 +79,3 @@ Markdown / code changes
 - PR check 失败：PR 和工作分支都会保留；修复后再次运行同一个 `publish` 标题即可复用该 PR。
 - merge 后 deploy 失败：代码已经在 `main`，命令会返回非零并给出 Actions URL；修复应从新的任务分支走同一流程。
 - live check 失败：先打开 deploy URL 确认 Pages 已完成，再检查 DNS/CDN；不要绕过 branch protection 重推 `main`。
-

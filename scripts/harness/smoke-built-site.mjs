@@ -7,6 +7,7 @@ const problems = [];
 const required = [
   'dist/index.html',
   'dist/404.html',
+  'dist/operator-menu.html',
   'dist/sitemap.xml',
   'dist/robots.txt',
   'dist/site.webmanifest',
@@ -21,6 +22,7 @@ for (const file of required) {
 
 if (problems.length === 0) {
   const html = readFileSync(path.join(root, 'dist/index.html'), 'utf8');
+  const operatorMenu = readFileSync(path.join(root, 'dist/operator-menu.html'), 'utf8');
   const redirect = readFileSync(path.join(root, 'dist/404.html'), 'utf8');
   const sitemap = readFileSync(path.join(root, 'dist/sitemap.xml'), 'utf8');
   const assets = new Set(readdirSync(path.join(root, 'dist/assets')));
@@ -30,6 +32,9 @@ if (problems.length === 0) {
   }
   if (redirect.includes('__PATH_SEGMENTS_TO_KEEP__')) {
     problems.push('dist/404.html still contains its unresolved path placeholder');
+  }
+  for (const command of ['npm run task:new', 'npm run ready', 'npm run publish']) {
+    if (!operatorMenu.includes(command)) problems.push(`operator-menu.html is missing ${command}`);
   }
   for (const route of ROUTE_SEO.filter((entry) => entry.sitemap !== false)) {
     const expected = route.path === '/' ? 'https://edentan.site/' : `https://edentan.site${route.path}`;
