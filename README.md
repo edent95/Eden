@@ -55,6 +55,8 @@ npm run preview
 
 需要预览范围但不产生任何写入时运行 `npm run publish -- "提交标题" --dry-run`；自动化或 Agent 终端没有交互确认，必须在检查变更范围后显式加 `--yes`。只希望建立并验证 PR、不自动合并时加 `--no-merge`。完整说明见 [`docs/operator-workflow.md`](docs/operator-workflow.md)。
 
+给第一次使用的人，可打开图形化菜单：本地开发环境的 <http://localhost:4180/operator-menu.html>，或线上 <https://edentan.site/operator-menu.html>。页面用流程图解释闭环，并提供三条核心命令的一键复制。
+
 生产构建时若设置 `VITE_SITE_URL`（如 `https://edentan.site`），会用于站点地图、robots 与 `index.html` 内 OG 绝对地址，与线上域名一致时预览分享卡更准。
 
 ---
