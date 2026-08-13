@@ -27,7 +27,8 @@ dist-ssr
 .claude/
 
 # Throwaway verification build dirs (sandbox could not delete)
-dist_verify/
-dist_check_*/
-dist_chk*/
+# Tailwind v4 auto-detects sources and honours .gitignore, so any build output left
+# in the tree gets scanned as source and breaks the dev server. Keep this list wide.
+dist_*/
 verify_*/
+_to_delete/

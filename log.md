@@ -4075,3 +4075,44 @@
 - 验证：`npx tsc --noEmit` 通过；`npx vite build --outDir dist_manifest_v2` 通过（✓ 2085 modules transformed，✓ built in 3.27s），产物 index.html 已注入三段映射脚本，`site.webmanifest` / `eden-app-icon.svg` 正确复制到产物根目录，`sw.js` 已带 `eden-site-v2`；node 模拟 9 条路径分流结果正确（`/` `/notes` `/poker` `/life-os` `/cellular-automata-lab` → site，`/conways-game-of-life[/]` → conway，`/film-gallery[/]` → film）。临时产物目录已移入 `_to_delete/dist_manifest_v2`（本环境无法直接删除文件）。
 - 注意：`dist/` 因 `.DS_Store` 权限问题无法在此环境重建，正式发布前需在本机跑一次 `npm run build`。
 - 后续：本机已安装的旧「Conway Life」PWA 需卸载后重新安装才能拿到新身份；浏览器端如仍看到旧 manifest，在 DevTools → Application 里 Unregister service worker 并清 cache storage。
+
+## 2026-08-13 — 新增 /penneys-game（Penney's Game 硬币骗局）
+
+**做了什么**
+- 新路由 `/penneys-game`：闯关 + 筹码对赌混合玩法，中英双语。
+  - 战役 5 关：街头热身 → 被宰（你先选，庄家最优应对）→ 反杀（庄家先选，你要选最优）→ 四位大师（4 位序列）→ 通杀（3/4 位混合，要选对且赢）。每关有筹码下注、通关奖励与"这一关教会你什么"的结算文案。
+  - 排位「盲选大师赛」：通关第 4 关解锁，限时选出最优应对，错一次结束，每 3 题时间收紧 1 秒；成绩上全球排行榜。
+  - 实验室：通关第 3 关解锁，任意对局 + 1k/10k/100k 蒙特卡洛模拟，用来验证实测胜率收敛到精确概率。
+- `services/penneyGame.ts`：纯逻辑层。胜率用 Conway leading-numbers 公式精确计算（不是模拟），已与 20 万局蒙特卡洛交叉验证；口诀「对手 ABC → 选 (notB)+A+B」经暴力搜索确认对全部 8 个三位序列都是最优解。
+- `services/penneyLeaderboard.ts`：Firebase RTDB **REST** 客户端（匿名登录 + 刷新 token + 读写），**没有引入 firebase npm 包**，主 bundle 零增重。任何网络失败都降级为 localStorage 本地榜并在 UI 标注。
+- `components/PenneysGamePage.tsx` + `styles/pages/penneys-game.css` + `styles/css-art/penney-coins.css`（硬币物件与 app icon，已登记进 `css-art.registry.ts`，组件从 `components/css-art` 导出）。
+- 路由注册：`seo-routes.ts`（中英 title/desc，进 sitemap）、`App.tsx`（href / 路由分支 / `/project` app 货架新增一格）、`index.css` 两个 import、README 路由段。
+
+**为什么**
+- 用户要把之前的 Penney's Game 原型变成站上真正能玩的游戏，并且要闯关 + 对赌 + 全球排行榜。
+- 选 REST 而不是 Firebase SDK：静态站为一个路由背 ~100 kB gzip 不划算。
+
+**影响**
+- `npx tsc --noEmit` 通过；`vite build` 通过（2089 modules）。sitemap 已含 `https://edentan.site/penneys-game`。
+- `npm run build` 在本机会因为 `dist/.DS_Store` 删除权限报 EPERM（环境问题，不是代码问题）；用 `--outDir` 验证构建可绕开。
+
+**下一步**
+- 排行榜要真正跑起来，需要手动部署一次数据库规则：见 `docs/penney-leaderboard.md`，在 `poker-power-card` 里加 `penneyLeaderboard` 节点后 `firebase deploy --only database`。规则没部署之前页面会自动显示"本地榜"，不会报错。
+
+## 2026-08-13 — 产品页统一与本次生产发布
+
+**做了什么**
+- 新增可复用的 `ProductStorePage`，将 Jiju、ETReportHub、Friday Poker Club、Film Gallery 与 Life OS 收敛到同一套产品页结构、导航、FAQ、资料与 related products 呈现。
+- 新增 `/project` app shelf，并补齐 Life OS / Penney's Game CSS app icon、首页 Life OS 动态 banner 及对应 route/page styles；旧的独立 `life-os.css` 已由共享产品页样式替代。
+- 扩大临时构建目录忽略规则，避免 Tailwind v4 扫描遗留验证产物，并让 Vite dev watcher 同步忽略这些目录。
+
+**为什么**
+- 让多个产品详情页使用一致、可维护的产品展示骨架，同时把新增游戏与现有项目纳入同一发现入口。
+- 避免本地验证产物干扰开发服务器和 Tailwind source detection。
+
+**影响与验证**
+- 本次完整工作区将直接提交并推送 `main`，由 GitHub Pages workflow 发布到 `https://edentan.site`。
+- `npm run check` 与 `git diff --check` 通过（TypeScript 无错误，Vite ✓ 2089 modules transformed，✓ built in 1.20s）。
+
+**下一步**
+- 发布后检查 GitHub Pages workflow 与首页、`/project`、`/penneys-game`、`/life-os`；Penney 全球榜仍需按 `docs/penney-leaderboard.md` 单独部署 Firebase database rules。

@@ -78,6 +78,8 @@ npm run preview
 - `/topics` — Topic Market：一张卡一个问题和 icon，回答控件按问题类型变化（当前浏览器本地保存）
 - `/conways-game-of-life` — 真正的二维 Conway B3/S23 互动生命棋盘
 - `/conways-game-of-life` 可通过页面内 `Install app / 安装 App` 安装为 standalone PWA；不支持安装提示的 Safari 会显示加入主画面 / Dock 指引
+- `/penneys-game` — Penney's Game 硬币骗局：5 关筹码对赌战役、限时盲选排位赛与全球排行榜、自由对战实验室
+- `/penneys-game` 的胜率用 Conway leading-numbers 公式精确计算（`services/penneyGame.ts`）；排行榜走 Firebase RTDB REST，无新增 npm 依赖，规则与部署见 `docs/penney-leaderboard.md`
 - `/cellular-automata-lab` — 独立的 256 elementary cellular automata rules explorer
 - `/archive/:slug` — 归档项目详情
 - PWA manifest 按路由映射（`vite.config.ts` 的 `web-app-manifest-with-base`）：`/film-gallery` → `film-gallery.webmanifest`，`/conways-game-of-life` → `conway.webmanifest`，其余所有路由（含首页）→ `site.webmanifest`（Eden Tan，`start_url: ./`）

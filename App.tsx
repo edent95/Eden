@@ -6,6 +6,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { applyPageSeo } from './seo';
+import ProductStorePage from './components/ProductStorePage';
+import PenneysGamePage from './components/PenneysGamePage';
 import type { CssArtComponent } from './components/css-art/index';
 import {
   elementalIconCssArtItems,
@@ -23,9 +25,11 @@ import {
   HomeBaguaMirrorTotem,
   HomeGramophoneTotem,
   HomeJijuCatScene,
+  PenneyCoinCssIcon,
   ProjectsCrmCssIcon,
   ProjectsEtReportCssIcon,
   ProjectsJijuCssIcon,
+  ProjectsLifeOsCssIcon,
   ProjectsPokerCssIcon,
   WikiBackgroundMusicCssIcon,
   WikiButtonFeedbackCssIcon,
@@ -1998,431 +2002,6 @@ const lifeVideos = [
   },
 ];
 
-const lifeOsIcons = {
-  windInfiltration: '/life-os-icons/wind-infiltration.png',
-  abstractionEngine: '/life-os-icons/abstraction-engine.png',
-  humanPatternScan: '/life-os-icons/human-pattern-scan.png',
-  environmentalRewrite: '/life-os-icons/environmental-rewrite.png',
-  narrativeAlchemy: '/life-os-icons/narrative-alchemy.png',
-  controlledChaos: '/life-os-icons/controlled-chaos.png',
-  wandererInstinct: '/life-os-icons/wanderer-instinct.png',
-  antiRoutineSystem: '/life-os-icons/anti-routine-system.png',
-  socialMirror: '/life-os-icons/social-mirror.png',
-  patternMemory: '/life-os-icons/pattern-memory.png',
-  boredomDecay: '/life-os-icons/boredom-decay.png',
-  overInsight: '/life-os-icons/over-insight.png',
-  unfinishedQuestLoop: '/life-os-icons/unfinished-quest-loop.png',
-  authorityResistance: '/life-os-icons/authority-resistance.png',
-  systemDesign: '/life-os-icons/system-design.png',
-  ruleSetterPhase: '/life-os-icons/rule-setter-phase.png',
-} as const;
-
-const lifeOsActiveSkillIcons = {
-  galeclawSigil: '/life-os-icons/active-galeclaw-sigil.png',
-  moonCodexLoom: '/life-os-icons/active-moon-codex-loom.png',
-  catsEyeScan: '/life-os-icons/active-cats-eye-scan.png',
-  territoryRuneRewrite: '/life-os-icons/active-territory-rune-rewrite.png',
-  storyCauldronAlchemy: '/life-os-icons/active-story-cauldron-alchemy.png',
-  nineLivesChaosStep: '/life-os-icons/active-nine-lives-chaos-step.png',
-} as const;
-
-const lifeOsModuleIcons = {
-  softInfiltrationStyle: '/life-os-module-icons/soft-infiltration-style.png',
-  ruleSetterPhase: '/life-os-module-icons/rule-setter-phase.png',
-  explorerDrive: '/life-os-module-icons/explorer-drive.png',
-  lightBladeBuild: '/life-os-module-icons/light-blade-build.png',
-  bodyResponseEngine: '/life-os-module-icons/body-response-engine.png',
-  chaosCompressionEngine: '/life-os-module-icons/chaos-compression-engine.png',
-  wandererInstinct: '/life-os-module-icons/wanderer-instinct.png',
-  antiRoutineSystem: '/life-os-module-icons/anti-routine-system.png',
-  socialMirror: '/life-os-module-icons/social-mirror.png',
-  patternMemory: '/life-os-module-icons/pattern-memory.png',
-  boredomDecay: '/life-os-module-icons/boredom-decay.png',
-  overInsight: '/life-os-module-icons/over-insight.png',
-  unfinishedQuestLoop: '/life-os-module-icons/unfinished-quest-loop.png',
-  authorityResistance: '/life-os-module-icons/authority-resistance.png',
-} as const;
-
-const lifeOsBanners = {
-  passiveSkills: '/life-os-banners/passive-skills-cat-magic.png',
-  debuffs: '/life-os-banners/debuff-cat-magic.png',
-} as const;
-
-const lifeOsActiveSkillBanners = {
-  galeclawSigil: '/life-os-banners/active-galeclaw-sigil.png',
-  moonCodexLoom: '/life-os-banners/active-moon-codex-loom.png',
-  catsEyeScan: '/life-os-banners/active-cats-eye-scan.png',
-  territoryRuneRewrite: '/life-os-banners/active-territory-rune-rewrite.png',
-  storyCauldronAlchemy: '/life-os-banners/active-story-cauldron-alchemy.png',
-  nineLivesChaosStep: '/life-os-banners/active-nine-lives-chaos-step.png',
-} as const;
-
-const lifeOsSignalBanners = {
-  softInfiltrationStyle: '/life-os-signal-banners/soft-infiltration-style.png',
-  ruleSetterPhase: '/life-os-signal-banners/rule-setter-phase.png',
-  explorerDrive: '/life-os-signal-banners/explorer-drive.png',
-  lightBladeBuild: '/life-os-signal-banners/light-blade-build.png',
-  bodyResponseEngine: '/life-os-signal-banners/body-response-engine.png',
-  chaosCompressionEngine: '/life-os-signal-banners/chaos-compression-engine.png',
-} as const;
-
-const lifeOsGrowthRouteBanners = {
-  strategist: '/life-os-growth-routes/strategist-route.png',
-  creator: '/life-os-growth-routes/creator-route.png',
-  wanderer: '/life-os-growth-routes/wanderer-route.png',
-  architect: '/life-os-growth-routes/architect-route.png',
-} as const;
-
-const lifeRpgAttributes = [
-  { key: 'INS', label: { en: 'Insight', zh: '洞察力' }, value: 92, note: { en: 'Reads motives, lies, defenses, and relationship structure.', zh: '看穿动机、谎言、防御机制与关系结构。' } },
-  { key: 'STR', label: { en: 'Strategy', zh: '策略力' }, value: 90, note: { en: 'Changes the field through small moves and delayed positioning.', zh: '用小动作、小迭代与延迟布局改变局势。' } },
-  { key: 'EXP', label: { en: 'Expression', zh: '表达力' }, value: 87, note: { en: 'Turns complex thought into story, content, language, and brand.', zh: '把复杂思想转成故事、内容、语言和品牌。' } },
-  { key: 'FRE', label: { en: 'Freedom', zh: '自由欲' }, value: 95, note: { en: 'Needs movement, optionality, and non-traditional life routes.', zh: '强烈需要变化、选择权与非传统人生路线。' } },
-  { key: 'ADP', label: { en: 'Adaptability', zh: '适应力' }, value: 88, note: { en: 'Switches across new places, industries, systems, and people.', zh: '能快速切换新场景、新行业、新系统与新人群。' } },
-  { key: 'EXE', label: { en: 'Execution', zh: '启动力' }, value: 82, note: { en: 'Moves fast once the body and instinct give a response.', zh: '身体有回应时，能快速启动行动。' } },
-  { key: 'STA', label: { en: 'Stability', zh: '稳定度' }, value: 64, note: { en: 'Long maintenance and emotional balance require deliberate systems.', zh: '长期维护与情绪平衡需要刻意设计系统。' } },
-  { key: 'TRU', label: { en: 'Trust', zh: '社交信任' }, value: 52, note: { en: 'Trust grows slowly when too much hidden motive is visible.', zh: '看见太多隐藏动机时，信任建立会变慢。' } },
-] as const;
-
-const lifeRpgActiveSkills = [
-  {
-    icon: lifeOsActiveSkillIcons.galeclawSigil,
-    banner: lifeOsActiveSkillBanners.galeclawSigil,
-    name: { en: 'Galeclaw Sigil', zh: '风爪密印' },
-    level: 'S+',
-    type: { en: 'Veiled field-control spell', zh: '隐形场域控制法术' },
-    cost: { en: 'Patience + repeated paw-steps', zh: '耐心 + 反复轻爪步' },
-    effect: { en: 'Leaves quiet wind marks across a field until the room starts following a new route.', zh: '在场域里留下细小风印，直到环境开始按新的路线运行。' },
-    scene: { en: 'Long-term positioning, brand seeding, strategic relationships, product adoption.', zh: '长期布局、品牌渗透、策略关系、产品采用。' },
-    sideEffect: { en: 'Without a main quest, the cat keeps marking every corridor instead of finishing one path.', zh: '没有主线时，会一直标记新走廊，却没有走完其中一条路。' },
-    bannerCaption: { en: 'A wind-cat sigil for slow infiltration. The spell wins by changing the room before anyone notices.', zh: '风猫留下的渗透密印。不是硬碰，而是在别人察觉前改写场域。' },
-  },
-  {
-    icon: lifeOsActiveSkillIcons.moonCodexLoom,
-    banner: lifeOsActiveSkillBanners.moonCodexLoom,
-    name: { en: 'Moon-Codex Loom', zh: '月影法典织机' },
-    level: 'S',
-    type: { en: 'Arcane compression spell', zh: '奥术压缩法术' },
-    cost: { en: 'Confusion + quiet reading time', zh: '混乱资料 + 安静回看时间' },
-    effect: { en: 'Threads scattered signals, memories, and messy notes into one usable spell pattern.', zh: '把分散信号、记忆和混乱笔记织成一个可使用的法术图案。' },
-    scene: { en: 'Life OS, strategy writing, product systems, personal knowledge maps.', zh: 'Life OS、策略写作、产品系统、个人知识地图。' },
-    sideEffect: { en: 'The loom can keep weaving forever if no artifact is shipped.', zh: '如果没有交付物，织机会一直织下去，产出会被延迟。' },
-    bannerCaption: { en: 'The archive spell that turns loose fragments into a usable model.', zh: '把碎片织成模型的档案法术。混乱越多，越需要收束成一张图。' },
-  },
-  {
-    icon: lifeOsActiveSkillIcons.catsEyeScan,
-    banner: lifeOsActiveSkillBanners.catsEyeScan,
-    name: { en: "Cat's Eye Scan", zh: '猫眼动机扫描' },
-    level: 'S',
-    type: { en: 'Motive-reading spell', zh: '动机读取法术' },
-    cost: { en: 'Mental focus', zh: '精神专注' },
-    effect: { en: 'Reads motive, desire, defense, and hidden emotion through tiny behavioral tells.', zh: '从微小行为线索读取动机、欲望、防御和隐藏情绪。' },
-    scene: { en: 'Negotiation, people reading, relationship judgment, market analysis, content creation.', zh: '谈判、识人、关系判断、市场分析、内容创作。' },
-    sideEffect: { en: 'The eye can turn cold when it sees too many hidden motives.', zh: '看见太多隐藏动机时，猫眼会变冷，耐心下降。' },
-    bannerCaption: { en: 'A motive scan spell. It reads the room through posture, silence, desire, and defense.', zh: '读取动机的猫眼法术。它看姿态、沉默、欲望和防御。' },
-  },
-  {
-    icon: lifeOsActiveSkillIcons.territoryRuneRewrite,
-    banner: lifeOsActiveSkillBanners.territoryRuneRewrite,
-    name: { en: 'Territory Rune Rewrite', zh: '领地符文改写' },
-    level: 'S',
-    type: { en: 'Room-rule alteration spell', zh: '场域规则改写法术' },
-    cost: { en: 'Time and positioning', zh: '时间 + 布局' },
-    effect: { en: 'Changes the room by moving runes, routes, and incentives instead of forcing a collision.', zh: '通过移动符文、路线和诱因改变场域，而不是强行正面碰撞。' },
-    scene: { en: 'Workplace, brand promotion, business cooperation, community building, content seeding.', zh: '职场、品牌推广、商业合作、社群经营、内容渗透。' },
-    sideEffect: { en: 'With no win condition, the spell becomes endless map editing.', zh: '没有胜利条件时，会变成无止境改地图。' },
-    bannerCaption: { en: 'A tactical rune spell. Change the path, and the behavior follows.', zh: '战术符文法术。路线被改写后，行为也会跟着改变。' },
-  },
-  {
-    icon: lifeOsActiveSkillIcons.storyCauldronAlchemy,
-    banner: lifeOsActiveSkillBanners.storyCauldronAlchemy,
-    name: { en: 'Story Cauldron Alchemy', zh: '故事坩埚炼金' },
-    level: 'A+',
-    type: { en: 'Memory transmutation spell', zh: '记忆转化法术' },
-    cost: { en: 'Experience and emotion', zh: '经历 + 情绪' },
-    effect: { en: 'Boils pain, relationships, life events, and business observation into stories people can carry.', zh: '把痛苦、关系、人生事件和商业观察熬成别人能带走的故事。' },
-    scene: { en: 'Build notes, YouTube, personal site, brand content, philosophical writing.', zh: 'Blog、YouTube、个人网站、品牌内容、哲学表达。' },
-    sideEffect: { en: 'Too much heat makes the potion dramatic instead of useful.', zh: '火候太满时，内容会变戏剧化，而不是变有用。' },
-    bannerCaption: { en: 'A cauldron spell for turning lived experience into transmissible stories.', zh: '把真实经历熬成可传播故事的坩埚法术。' },
-  },
-  {
-    icon: lifeOsActiveSkillIcons.nineLivesChaosStep,
-    banner: lifeOsActiveSkillBanners.nineLivesChaosStep,
-    name: { en: 'Nine-Lives Chaos Step', zh: '九命混沌步' },
-    level: 'A',
-    type: { en: 'Risk-channeling movement spell', zh: '风险导流移动法术' },
-    cost: { en: 'Risk tolerance', zh: '风险承受力' },
-    effect: { en: 'Steps into unclear fields and turns danger, novelty, and speed into temporary power.', zh: '踏入不清楚的场域，把危险、新鲜感和速度转成短时间爆发力。' },
-    scene: { en: 'Travel, startup, new markets, new industries, gray-zone observation.', zh: '旅行、创业、开荒、新行业、新市场、灰区观察。' },
-    sideEffect: { en: 'The character may mistake danger for freedom when the storm feels alive.', zh: '当风暴让人觉得活着时，角色容易把危险误认成自由。' },
-    bannerCaption: { en: 'A movement spell for uncertain fields. Useful only when risk has a route.', zh: '进入不确定场域的移动法术。风险有路线时才有用。' },
-  },
-] as const;
-
-const lifeRpgPassiveSkills = [
-  {
-    icon: lifeOsModuleIcons.wandererInstinct,
-    name: { en: 'Wanderer Instinct', zh: '流浪者本能' },
-    trigger: { en: 'Entering a new place, crowd, or system.', zh: '进入新地方、新人群或新系统。' },
-    effect: { en: 'Adaptation speed rises. Exploration instinct activates.', zh: '适应速度提升，对陌生环境有天然探索欲。' },
-    risk: { en: 'Stable life can become boring too quickly.', zh: '稳定生活容易很快变得无聊。' },
-  },
-  {
-    icon: lifeOsModuleIcons.antiRoutineSystem,
-    name: { en: 'Anti-Routine System', zh: '反重复系统' },
-    trigger: { en: 'Fixed rules, repeated tasks, and low-meaning maintenance.', zh: '固定规则、重复任务与低意义维护。' },
-    effect: { en: 'Creativity rises when the character looks for a workaround.', zh: '寻找绕路方案时，创造力会上升。' },
-    risk: { en: 'Patience and long-term maintenance drop.', zh: '耐心与长期维护力下降。' },
-  },
-  {
-    icon: lifeOsModuleIcons.socialMirror,
-    name: { en: 'Social Mirror', zh: '社交镜像' },
-    trigger: { en: 'Different rooms, roles, cultures, or emotional tones.', zh: '不同场域、身份、文化或情绪气氛。' },
-    effect: { en: 'Expression shifts quickly. People often feel understood.', zh: '表达方式快速切换，容易让别人觉得被理解。' },
-    risk: { en: 'Too much switching can blur the self.', zh: '过度切换会导致自我感模糊。' },
-  },
-  {
-    icon: lifeOsModuleIcons.patternMemory,
-    name: { en: 'Pattern Memory', zh: '模式记忆' },
-    trigger: { en: 'Repeated relationship, business, or human behavior patterns.', zh: '重复出现的关系、商业或人性模式。' },
-    effect: { en: 'Next similar situation is judged faster.', zh: '下一次遇到相似场景时，判断速度提升。' },
-    risk: { en: 'May over-suspect people before they prove intent.', zh: '容易在对方证明意图前就过度怀疑。' },
-  },
-] as const;
-
-const lifeRpgDebuffs = [
-  {
-    icon: lifeOsModuleIcons.boredomDecay,
-    name: { en: 'Boredom Decay', zh: '无聊衰减' },
-    trigger: { en: 'Life repeats, work stops growing, or the project loses meaning.', zh: '生活太重复、工作没有成长、项目没有意义。' },
-    negative: { en: 'Action -40%. Emotional stability -30%. Escape impulse +50%.', zh: '行动力 -40%，情绪稳定 -30%，逃离冲动 +50%。' },
-    release: { en: 'Add a new challenge, environment, target, or stage upgrade.', zh: '加入新挑战、新环境、新目标或阶段性升级。' },
-    upgrade: { en: 'Long-term exploration power.', zh: '长期探索力。' },
-  },
-  {
-    icon: lifeOsModuleIcons.overInsight,
-    name: { en: 'Over Insight', zh: '过度洞察' },
-    trigger: { en: 'Too much is seen, but cannot be said directly.', zh: '看穿别人太多，但不能说出口。' },
-    negative: { en: 'Trust decreases. Social fatigue rises. The character cools down or pulls away.', zh: '信任感下降，社交疲劳增加，容易冷掉或疏离。' },
-    release: { en: 'Convert the insight into content, systems, consulting, or creation.', zh: '把洞察转成内容、系统、咨询或创作，而不是压在心里。' },
-    upgrade: { en: 'Human analysis power.', zh: '人性分析力。' },
-  },
-  {
-    icon: lifeOsModuleIcons.unfinishedQuestLoop,
-    name: { en: 'Unfinished Quest Loop', zh: '未完成任务循环' },
-    trigger: { en: 'Too many new plans open at the same time.', zh: '同时开启太多新计划。' },
-    negative: { en: 'Main quest progress drops. New-project excitement rises. Old-project maintenance drops.', zh: '主线任务进度下降，新项目兴奋度上升，旧项目维护力下降。' },
-    release: { en: 'Keep one main quest per stage. Move everything else into side quests.', zh: '每个阶段只保留一个主线任务，其他全部归类为支线。' },
-    upgrade: { en: 'Multi-line project management power.', zh: '多线项目管理力。' },
-  },
-  {
-    icon: lifeOsModuleIcons.authorityResistance,
-    name: { en: 'Authority Resistance', zh: '权威抗拒' },
-    trigger: { en: 'Being managed by low-competence authority or trapped in irrational rules.', zh: '被没能力的人管理，或被不合理制度控制。' },
-    negative: { en: 'Obedience drops. Rebellion rises. Creativity rises. Stable cooperation drops.', zh: '服从度下降，反骨值上升，创造力上升，稳定合作下降。' },
-    release: { en: 'Choose high-freedom environments or become a rule designer.', zh: '选择高自由度环境，或让自己成为规则制定者。' },
-    upgrade: { en: 'System reform power.', zh: '系统改革力。' },
-  },
-] as const;
-
-const lifeRpgSkillTrees = [
-  {
-    banner: lifeOsGrowthRouteBanners.strategist,
-    title: { en: 'The Strategist', zh: '策略师路线' },
-    path: { en: 'Insight -> positioning -> resource alignment -> rule design', zh: '洞察力 → 策略布局 → 资源整合 → 规则制定' },
-    directions: { en: 'Marketing strategy, brand consulting, business analysis, product planning, iGaming consulting.', zh: '营销策略、品牌顾问、商业分析、产品策划、iGaming 顾问。' },
-    risk: { en: 'Can over-read the field and delay direct action.', zh: '容易过度读局，延迟直接行动。' },
-  },
-  {
-    banner: lifeOsGrowthRouteBanners.creator,
-    title: { en: 'The Creator', zh: '创作者路线' },
-    path: { en: 'Experience -> point of view -> content system -> personal brand', zh: '个人经历 → 观点表达 → 内容系统 → 个人品牌' },
-    directions: { en: 'Build notes, YouTube, personal site, AI short video, philosophical essays.', zh: 'Blog、YouTube、个人网站、AI 短视频、哲学文章。' },
-    risk: { en: 'Emotion can make the story louder than the system.', zh: '情绪太满时，故事会盖过系统。' },
-  },
-  {
-    banner: lifeOsGrowthRouteBanners.wanderer,
-    title: { en: 'The Wanderer', zh: '流浪者路线' },
-    path: { en: 'Travel -> human observation -> cultural understanding -> worldview rebuild', zh: '旅行体验 → 人性观察 → 文化理解 → 世界观重构' },
-    directions: { en: 'Digital nomad life, long-term travel, cross-border living, experience-based content.', zh: '数字游民、长期旅行、跨国生活、体验型内容。' },
-    risk: { en: 'Freedom can become escape when the main quest is weak.', zh: '主线不清时，自由会变成逃离。' },
-  },
-  {
-    banner: lifeOsGrowthRouteBanners.architect,
-    title: { en: 'The Architect', zh: '系统架构者路线' },
-    path: { en: 'Messy data -> structure -> model -> product', zh: '混乱资料 → 结构化 → 模型化 → 产品化' },
-    directions: { en: 'Personality systems, RPG life maps, upgrade tools, personal operating systems.', zh: '人格系统、RPG 人生地图、升级工具、个人操作系统。' },
-    risk: { en: 'The model can keep expanding before the first usable version ships.', zh: '模型会不断扩张，拖慢第一个可用版本。' },
-  },
-] as const;
-
-const lifeRpgSources = [
-  { en: 'Player logs: repeated choices, environments, reactions, and unfinished quests.', zh: '玩家日志：重复选择、环境反应、行动惯性与未完成任务。' },
-  { en: 'Behavior loops: pressure triggers, boredom decay, trust patterns, and energy cost.', zh: '行为循环：压力触发、无聊衰减、信任模式与能量消耗。' },
-  { en: 'Energy pattern: what creates momentum, drains focus, or causes system overheating.', zh: '能量模式：什么会带来动能、消耗专注，或造成系统过热。' },
-  { en: 'Social pattern: how the character reads rooms, mirrors people, and protects trust.', zh: '社交模式：角色如何读懂场域、镜像人群，并保护信任。' },
-  { en: 'Money pattern: how concepts become offers, products, leverage, and value.', zh: '赚钱模式：概念如何转成报价、产品、杠杆和价值。' },
-  { en: 'Relationship pattern: attraction, distance, loyalty, fatigue, and boundary signals.', zh: '关系模式：吸引、距离、忠诚、疲劳和边界信号。' },
-  { en: 'Reality calibration: travel, work history, projects, relationships, and creator output.', zh: '现实校准：旅行、工作经历、项目、关系和创作输出。' },
-] as const;
-
-const lifeRpgDecodeSignals = [
-  {
-    icon: lifeOsModuleIcons.softInfiltrationStyle,
-    banner: lifeOsSignalBanners.softInfiltrationStyle,
-    emoji: '🌬️',
-    code: 'WIND-57',
-    title: { en: 'Soft Infiltration Style', zh: '轻量渗透型风格' },
-    signal: { en: 'Gentle infiltration, repeated small moves, environmental rewriting.', zh: '渗透、反复小动作、环境权重改写。' },
-    output: { en: 'Unlocks Wind Infiltration and strategic patience.', zh: '解锁风之渗透与策略耐心。' },
-  },
-  {
-    icon: lifeOsModuleIcons.ruleSetterPhase,
-    banner: lifeOsSignalBanners.ruleSetterPhase,
-    emoji: '👑',
-    code: 'PHASE-RULE',
-    title: { en: 'Rule-Setter Phase', zh: '规则制定阶段' },
-    signal: { en: 'The influence stage. Set rules, hold the main quest, move resources toward the core target.', zh: '影响力最强阶段。适合定规则、抓主线、把资源推向核心目标。' },
-    output: { en: 'Upgrades from wanderer mode to rule-designer mode.', zh: '从流浪者模式升级成规则制定者模式。' },
-  },
-  {
-    icon: lifeOsModuleIcons.explorerDrive,
-    banner: lifeOsSignalBanners.explorerDrive,
-    emoji: '5',
-    code: 'EXPLORE-05',
-    title: { en: 'Explorer Drive', zh: '探索驱动' },
-    signal: { en: 'Freedom, movement, experience, and high boredom sensitivity.', zh: '自由、变化、体验，以及很高的无聊敏感度。' },
-    output: { en: 'Boosts Freedom and Controlled Chaos. Lowers routine tolerance.', zh: '强化自由欲与可控混乱，降低重复耐受。' },
-  },
-  {
-    icon: lifeOsModuleIcons.lightBladeBuild,
-    banner: lifeOsSignalBanners.lightBladeBuild,
-    emoji: '🗡️',
-    code: 'BLADE-LIGHT',
-    title: { en: 'Light Blade Build', zh: '轻刃型配置' },
-    signal: { en: 'Pressure can sharpen the blade, but the character needs structure. Too much heat causes burnout.', zh: '压力能磨出锋利度，但角色需要结构承托。过热会导致系统烧干。' },
-    output: { en: 'Adds Rule Sense, pressure awareness, and the Overheat Pressure debuff.', zh: '加入规则嗅觉、压力感知与过热压力 Debuff。' },
-  },
-  {
-    icon: lifeOsModuleIcons.bodyResponseEngine,
-    banner: lifeOsSignalBanners.bodyResponseEngine,
-    emoji: '⚡',
-    code: 'BODY-YES',
-    title: { en: 'Body Response Engine', zh: '身体回应引擎' },
-    signal: { en: 'Energy works best after response. Forcing without a body yes drains the system.', zh: '等身体回应后行动最好。没有身体的 yes，硬做会消耗系统。' },
-    output: { en: 'Unlocks Response Mode. Execution activates after a real body yes.', zh: '解锁回应模式。真正有身体 yes 后，启动力才会启动。' },
-  },
-  {
-    icon: lifeOsModuleIcons.chaosCompressionEngine,
-    banner: lifeOsSignalBanners.chaosCompressionEngine,
-    emoji: '64-47',
-    code: 'ABSTRACT',
-    title: { en: 'Chaos Compression Engine', zh: '混乱压缩引擎' },
-    signal: { en: 'Confusion becomes insight after compression, reflection, and naming.', zh: '混乱经过压缩、回看和命名后，变成洞察。' },
-    output: { en: 'Unlocks Abstraction Engine and Narrative Alchemy.', zh: '解锁抽象整合引擎与故事炼金。' },
-  },
-] as const;
-
-const lifeRpgHiddenParameters = [
-  { key: 'BIZ', label: { en: 'Business Sense', zh: '商业嗅觉' }, value: 85, note: { en: 'Turns concepts into value, offers, products, and leverage.', zh: '把概念转成价值、报价、产品和杠杆。' } },
-  { key: 'CRT', label: { en: 'Creativity', zh: '创造力' }, value: 89, note: { en: 'Rebuilds messy experience into new content, systems, and expression.', zh: '把混乱经验重组为新内容、新系统和新表达。' } },
-  { key: 'RUT', label: { en: 'Routine Tolerance', zh: '重复耐受' }, value: 32, note: { en: 'Low tolerance for fixed loops without meaning or upgrade.', zh: '对没有意义或升级感的固定循环耐受低。' } },
-  { key: 'OBY', label: { en: 'System Obedience', zh: '制度服从' }, value: 38, note: { en: 'Obeys systems only when the logic, competence, and stakes make sense.', zh: '只有规则逻辑、能力和代价合理时，才愿意服从系统。' } },
-] as const;
-
-const lifeRpgQuestDirectives = [
-  { en: 'Primary command: turn scattered ability into one transmissible life system.', zh: '主指令：把分散能力收束成一个可传播的人生系统。' },
-  { en: 'Stage tactic: act like a background process that quietly changes the field.', zh: '阶段战术：像后台进程一样，持续且隐蔽地修改环境参数。' },
-  { en: 'Win condition: the target environment is reset and the strategy becomes visible.', zh: '胜利条件：目标环境参数被重置，策略可见性被迫提升。' },
-  { en: 'Risk warning: too many side quests will drain the main quest.', zh: '风险警告：支线任务太多，会削弱主线进度。' },
-] as const;
-
-const lifeRpgWorldPrinciples = [
-  {
-    emoji: '🌫️',
-    title: { en: 'Born from noise', zh: '从噪音中成形' },
-    body: {
-      en: 'This character did not begin in clean order. The early field was made of unclear signals, shifting rooms, desire, pressure, and unfinished patterns.',
-      zh: '这个角色不是从干净秩序里开始。早期场域里有模糊信号、变化的人群、欲望、压力，以及反复出现的未完成模式。',
-    },
-  },
-  {
-    emoji: '👁️',
-    title: { en: 'Weapon: pattern sight', zh: '武器：模式视野' },
-    body: {
-      en: 'The first weapon is not force. It is the ability to notice hidden motives, repeated behavior, weak structures, and the story underneath the surface.',
-      zh: '第一件武器不是蛮力，而是看见隐藏动机、重复行为、脆弱结构，以及表面之下的故事。',
-    },
-  },
-  {
-    emoji: '🜁',
-    title: { en: 'Element: Wind + Metal', zh: '元素：风 + 金' },
-    body: {
-      en: 'Wind opens the door into different worlds. Metal cuts chaos into shape. One moves. One structures. The build only works when both are active.',
-      zh: '风负责进入不同世界。金负责把混乱切成结构。一个负责流动，一个负责成形。两者同时启动时，角色才真正可用。',
-    },
-  },
-  {
-    emoji: '🧭',
-    title: { en: 'Main quest: usable maps', zh: '主线：做出可用地图' },
-    body: {
-      en: 'The mission is to turn human insight, business strategy, AI workflows, and lived chaos into systems other people can understand and use.',
-      zh: '主线任务是把人性洞察、商业策略、AI 工作流和真实混乱，转成别人也能理解和使用的系统。',
-    },
-  },
-] as const;
-
-const lifeRpgFormulaExamples = [
-  {
-    title: { en: 'Freedom Drive', zh: '自由探索欲' },
-    score: 95,
-    lines: {
-      en: [
-        'Explorer drive +15',
-        'Adventure hunger +15',
-        'Soft infiltration style +15',
-        'Creator playfield +10',
-        'Mutation loop +10',
-        'Real calibration: travel, job changes, risk appetite +20',
-        'Conflict correction: real-world constraints -5',
-      ],
-      zh: [
-        '探索驱动 +15',
-        '冒险饥饿感 +15',
-        '轻量渗透型风格 +15',
-        '创作者游乐场 +10',
-        '突变循环 +10',
-        '现实校准：旅行、换工作、冒险倾向 +20',
-        '冲突修正：现实约束 -5',
-      ],
-    },
-  },
-  {
-    title: { en: 'Stable Execution', zh: '稳定执行' },
-    score: 64,
-    lines: {
-      en: [
-        'Response engine +15',
-        'High-stakes discipline +15',
-        'Pressure buffer +10',
-        'Slow-build mode +10',
-        'Impatience shadow -15',
-        'Low routine tolerance -20',
-        'Real calibration: unfinished loops -10',
-      ],
-      zh: [
-        '回应引擎 +15',
-        '高压纪律 +15',
-        '压力缓冲 +10',
-        '慢速建造模式 +10',
-        '急躁阴影 -15',
-        '重复耐受低 -20',
-        '现实校准：三分钟热度 / 未完成循环 -10',
-      ],
-    },
-  },
-] as const;
-
 const previousProjectsData = [
   {
     title: {
@@ -3944,77 +3523,134 @@ const ProjectsFullPage: React.FC<{
   );
 };
 
+type ProductSibling = {
+  id: string;
+  name: string;
+  path: string;
+  iconLabel: string;
+  Icon: React.FC<{ label: string }>;
+  blurb: { en: string; zh: string };
+};
+
+/** Cross-links shown in the "You might also like" row on every product page. */
+const productSiblings: ProductSibling[] = [
+  {
+    id: 'life-os',
+    name: 'Life OS',
+    path: 'life-os',
+    iconLabel: 'Life OS CSS app icon',
+    Icon: ProjectsLifeOsCssIcon,
+    blurb: { en: 'Build the long-term base map first. Then ask about right now.', zh: '先建立长期底图，再问当下的问题。' },
+  },
+  {
+    id: 'etreporthub',
+    name: 'ETReportHub',
+    path: 'etreporthub',
+    iconLabel: 'ETReportHub CSS app icon',
+    Icon: ProjectsEtReportCssIcon,
+    blurb: { en: 'Turn daily Excel into clear operating decisions.', zh: '把每日 Excel 变成清楚的运营判断。' },
+  },
+  {
+    id: 'jiju',
+    name: 'Jiju',
+    path: 'jiju-pet',
+    iconLabel: 'Jiju CSS app icon',
+    Icon: ProjectsJijuCssIcon,
+    blurb: { en: 'Find places that truly work for you and your pet.', zh: '找到真正适合你和宠物一起去的地方。' },
+  },
+  {
+    id: 'poker',
+    name: 'Friday Poker Club',
+    path: 'poker',
+    iconLabel: 'Friday Poker Club CSS app icon',
+    Icon: ProjectsPokerCssIcon,
+    blurb: { en: 'No place to book. Just bring the crew back.', zh: '不用约地点。把那群人叫回来就好。' },
+  },
+];
+
+const productSiblingCards = (baseUrl: string, excludeId: string) =>
+  productSiblings
+    .filter((item) => item.id !== excludeId)
+    .map((item) => ({
+      href: joinBasePath(baseUrl, item.path),
+      name: item.name,
+      blurb: item.blurb,
+      icon: <item.Icon label={item.iconLabel} />,
+    }));
+
 const ETReportHubFullPage: React.FC<{
   homeHref: string;
   projectsHref: string;
   salesHref: string;
+  baseUrl: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
   themePreference: ThemePreference;
   theme: Theme;
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
-}> = ({ projectsHref, salesHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
+}> = ({ projectsHref, salesHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
-  const highlights = isZh
-    ? [
-        ['每天少做一遍', '上传 Transaction 与 Customer Excel，系统自动整理、去重并更新报表。'],
-        ['先看到哪里不对', '存款、提款、净存款、活跃会员和渠道变化集中在同一个判断界面。'],
-        ['找到值得跟进的人', '用风险、活跃度、存款时间和转化状态筛选会员，再导出给 CRM 行动。'],
-        ['保留熟悉的交付方式', '管理层仍然可以收到熟悉的 Excel；运营团队同时拥有更清楚的 Dashboard。'],
-      ]
-    : [
-        ['Do the daily work once', 'Upload Transaction and Customer Excel. The system cleans, reconciles, and refreshes the reports.'],
-        ['See what changed first', 'Deposits, withdrawals, net deposit, active members, and channel movement live in one decision surface.'],
-        ['Find people worth acting on', 'Filter members by risk, activity, deposit recency, and conversion status—then export the next CRM action.'],
-        ['Keep the familiar handoff', 'Management can still receive Excel while operators gain a clearer dashboard for daily review.'],
-      ];
-  const workflow = isZh
-    ? [['01', '上传', '拖入每日 Transaction 与最新 Customer 文件。'], ['02', '整理', '系统校验字段、匹配会员并避免重复计算。'], ['03', '判断', '从业绩、会员、渠道和趋势里找到异常与机会。'], ['04', '行动', '导出报表或 CRM 名单，让下一步有明确对象。']]
-    : [['01', 'Upload', 'Drop in the daily Transaction file and latest Customer export.'], ['02', 'Reconcile', 'The system checks fields, resolves members, and prevents double counting.'], ['03', 'Decide', 'Review performance, members, channels, and trends for signals that matter.'], ['04', 'Act', 'Export the report or CRM audience with a clear next action.']];
+  const demoUrl = 'https://edent95.github.io/daily-report-dashboard/demo/';
 
   return (
-    <div className="page-shell etreport-page etreport-product-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
-      <main className="px-5 py-8 md:px-8 md:py-10">
-        <div className="mx-auto max-w-6xl">
-          <div className="etreport-topbar flex flex-wrap items-center justify-between gap-3">
-            <a href={projectsHref} className="etreport-back-link inline-flex items-center gap-2 text-sm font-medium"><ArrowLeft size={16} />{isZh ? '返回主页' : 'Back home'}</a>
-            <HeaderControls language={language} setLanguage={setLanguage} themePreference={themePreference} theme={theme} setThemePreference={setThemePreference} />
-          </div>
-
-          <header className="etreport-store-hero">
-            <div className="etreport-store-icon"><ProjectsEtReportCssIcon label="ETReportHub CSS app icon" /></div>
-            <div className="etreport-store-intro"><p className="etreport-kicker">{isZh ? '数据分析 · 商业工具' : 'Data Analytics · Business Tool'}</p><h1>ETReportHub</h1><p className="etreport-store-tagline">{isZh ? '把每日 Excel 变成清楚的运营判断。' : 'Turn daily Excel into clear operating decisions.'}</p><p className="etreport-store-byline">{isZh ? '由 Eden Tan 设计与构建' : 'Designed and built by Eden Tan'}</p><div className="etreport-store-actions"><a href="https://edent95.github.io/daily-report-dashboard/demo/" target="_blank" rel="noopener noreferrer" className="etreport-store-get">{isZh ? '查看 Demo' : 'View demo'}</a></div></div>
-          </header>
-
-          <div className="etreport-store-facts"><div><UserRound aria-hidden="true" /><span>{isZh ? '适合' : 'Built for'}</span><strong>{isZh ? '运营团队' : 'Operations teams'}</strong></div><div><Download aria-hidden="true" /><span>{isZh ? '输入' : 'Input'}</span><strong>Excel</strong></div><div><Database aria-hidden="true" /><span>{isZh ? '存储' : 'Storage'}</span><strong>Local SQLite</strong></div><div><TrendingUp aria-hidden="true" /><span>{isZh ? '输出' : 'Output'}</span><strong>Dashboard + CRM</strong></div></div>
-
-          <section className="etreport-live-demo" aria-labelledby="etreport-live-demo-title">
-            <div className="etreport-live-demo-head">
-              <div><p className="etreport-kicker">Live demo</p><h2 id="etreport-live-demo-title">{isZh ? '直接体验 ETReportHub。' : 'Try ETReportHub right here.'}</h2></div>
-              <a href="https://edent95.github.io/daily-report-dashboard/demo/" target="_blank" rel="noopener noreferrer" className="etreport-text-cta">{isZh ? '在新标签打开' : 'Open in new tab'} <span aria-hidden>↗</span></a>
-            </div>
-            <div className="etreport-live-demo-frame">
-              <div className="etreport-live-demo-toolbar" aria-hidden="true"><span /><span /><span /><p>edent95.github.io/daily-report-dashboard/demo</p></div>
-              <iframe src="https://edent95.github.io/daily-report-dashboard/demo/" title={isZh ? 'ETReportHub 互动 Demo' : 'Interactive ETReportHub demo'} loading="lazy" />
-            </div>
-          </section>
-
-          <section className="etreport-app-description" id="overview">
-            <div className="etreport-app-prose"><p className="etreport-kicker">{isZh ? '产品简介' : 'Overview'}</p><h2>{isZh ? '报表不应该只是交差。它应该告诉你下一步做什么。' : 'A report should not just close the day. It should tell you what to do next.'}</h2><p>{isZh ? 'ETReportHub 是为每日依赖 Excel 的运营团队设计的数据系统。它把分散的交易与会员文件整理成统一、可重复检查的工作流，让团队不必每天重新复制公式、对数字和拼报表。' : 'ETReportHub is a data system for operations teams that still depend on daily Excel exports. It turns separate transaction and member files into one repeatable review workflow—without rebuilding formulas, reconciling numbers, and assembling reports every morning.'}</p><p>{isZh ? '重点不是多一个 Dashboard。重点是让团队更快知道：业绩哪里变了、哪些会员需要行动、哪个渠道正在失去效率，以及今天应该先处理什么。' : 'The point is not another dashboard. It is knowing sooner what changed, which members need action, where a channel is losing efficiency, and what the team should handle first.'}</p></div>
-          </section>
-
-          <section className="etreport-app-section"><p className="etreport-kicker">{isZh ? '核心能力' : 'Highlights'}</p><h2>{isZh ? '从每日文件，到可以行动的判断。' : 'From daily files to decisions you can act on.'}</h2><div className="etreport-app-feature-list">{highlights.map(([title, body], index) => { const Icon = [Download, TrendingUp, UserRound, SearchCheck][index]; return <article key={title}><span>0{index + 1}</span><Icon className="etreport-app-feature-icon" aria-hidden="true" /><div><h3>{title}</h3><p>{body}</p></div></article>; })}</div></section>
-
-          <section className="etreport-app-section"><p className="etreport-kicker">{isZh ? '每天怎么用' : 'Daily workflow'}</p><h2>{isZh ? '四步完成一次运营复盘。' : 'One operating review in four steps.'}</h2><div className="etreport-app-workflow">{workflow.map(([step, title, body], index) => { const Icon = [Download, Database, SearchCheck, Send][index]; return <article key={step}><div className="etreport-app-workflow-head"><Icon aria-hidden="true" /><span>{step}</span></div><h3>{title}</h3><p>{body}</p></article>; })}</div></section>
-
-          <section className="etreport-app-privacy"><div><Database className="etreport-app-section-icon" aria-hidden="true" /><p className="etreport-kicker">{isZh ? '数据边界' : 'Data boundary'}</p><h2>{isZh ? '你的数据，留在你的环境。' : 'Your data stays in your environment.'}</h2></div><p>{isZh ? 'ETReportHub 使用本地 SQLite 保存整理后的数据，并为私有部署设计。原始运营资料不需要为了看 Dashboard 而进入公共云端。权限、审计与导出仍然属于团队自己的工作边界。' : 'ETReportHub uses local SQLite and is designed for private deployment. Operational data does not need to enter a public cloud just to become visible in a dashboard. Access, audit, and exports remain inside the team’s own operating boundary.'}</p></section>
-
-          <section className="etreport-app-details"><h2><Layers aria-hidden="true" />{isZh ? '产品资料' : 'Information'}</h2><dl><div><dt>{isZh ? '类别' : 'Category'}</dt><dd>{isZh ? '商业智能与运营分析' : 'Business intelligence and operations analytics'}</dd></div><div><dt>{isZh ? '输入格式' : 'Input'}</dt><dd>Transaction / Customer Excel</dd></div><div><dt>{isZh ? '主要模块' : 'Modules'}</dt><dd>Performance · Members · Channels · Trends · CRM Export</dd></div><div><dt>{isZh ? '部署方式' : 'Deployment'}</dt><dd>{isZh ? '私有部署，本地数据库' : 'Private deployment with local database'}</dd></div><div><dt>{isZh ? '开发者' : 'Developer'}</dt><dd>Eden Tan</dd></div></dl></section>
-
-          <section className="etreport-app-final"><ProjectsEtReportCssIcon label="ETReportHub CSS app icon" /><div><h2>{isZh ? '让每日数据真正参与决策。' : 'Let daily data take part in the decision.'}</h2><p>{isZh ? '先打开公开 Demo，再看 ETReportHub 如何进入你的运营流程。' : 'Open the public demo, then see how ETReportHub fits your operating workflow.'}</p><div className="etreport-app-final-actions"><a href="https://edent95.github.io/daily-report-dashboard/demo/" target="_blank" rel="noopener noreferrer" className="etreport-store-get">{isZh ? '打开 Demo' : 'Open demo'}</a><a href={salesHref} className="etreport-text-cta">{isZh ? '查看上线方案' : 'View launch offer'} <span aria-hidden>›</span></a></div></div></section>
-        </div>
-      </main>
-    </div>
+    <ProductStorePage
+      isZh={isZh}
+      controls={<HeaderControls language={language} setLanguage={setLanguage} themePreference={themePreference} theme={theme} setThemePreference={setThemePreference} />}
+      backHref={projectsHref}
+      backLabel={{ en: 'Back home', zh: '返回主页' }}
+      icon={<ProjectsEtReportCssIcon label="ETReportHub CSS app icon" />}
+      name="ETReportHub"
+      kicker={{ en: 'Data analytics · Business tool', zh: '数据分析 · 商业工具' }}
+      tagline={{ en: 'Turn daily Excel into clear operating decisions.', zh: '把每日 Excel 变成清楚的运营判断。' }}
+      meta={{ en: 'Private deployment · Local SQLite · Excel in, decisions out', zh: '私有部署 · 本地 SQLite · Excel 进，判断出' }}
+      primary={{ href: demoUrl, external: true, label: { en: 'View demo', zh: '查看 Demo' } }}
+      secondary={{ href: salesHref, label: { en: 'Launch offer', zh: '上线方案' } }}
+      quickLinks={[
+        { href: '#overview', label: { en: 'Overview', zh: '产品简介' } },
+        { href: '#faq', label: { en: 'FAQ', zh: '常见问题' } },
+        { href: '#information', label: { en: 'Information', zh: '产品资料' } },
+      ]}
+      stage={{
+        src: demoUrl,
+        domain: 'edent95.github.io/daily-report-dashboard/demo',
+        title: { en: 'Interactive ETReportHub demo', zh: 'ETReportHub 互动 Demo' },
+        caption: { en: 'The public demo, running right here. Open it in a new tab for the full workspace.', zh: '公开 Demo 直接跑在这里。想看完整工作区，就在新标签打开。' },
+      }}
+      body={[
+        { kind: 'p', text: { en: 'ETReportHub is a data system for operations teams that still depend on daily Excel exports. It turns separate transaction and member files into one repeatable review workflow—without rebuilding formulas, reconciling numbers, and assembling reports every morning.', zh: 'ETReportHub 是为每日依赖 Excel 的运营团队设计的数据系统。它把分散的交易与会员文件整理成统一、可重复检查的工作流，让团队不必每天重新复制公式、对数字和拼报表。' } },
+        { kind: 'p', text: { en: 'The point is not another dashboard. It is knowing sooner what changed, which members need action, where a channel is losing efficiency, and what the team should handle first.', zh: '重点不是多一个 Dashboard。重点是让团队更快知道：业绩哪里变了、哪些会员需要行动、哪个渠道正在失去效率，以及今天应该先处理什么。' } },
+        { kind: 'h', text: { en: 'How it works', zh: '每天怎么用' } },
+        { kind: 'steps', items: [
+          { title: { en: 'Upload', zh: '上传' }, text: { en: 'Drop in the daily Transaction file and the latest Customer export.', zh: '拖入每日 Transaction 与最新 Customer 文件。' } },
+          { title: { en: 'Reconcile', zh: '整理' }, text: { en: 'The system checks fields, resolves members, and prevents double counting.', zh: '系统校验字段、匹配会员并避免重复计算。' } },
+          { title: { en: 'Decide', zh: '判断' }, text: { en: 'Review performance, members, channels, and trends for the signals that matter.', zh: '从业绩、会员、渠道和趋势里找到异常与机会。' } },
+          { title: { en: 'Act', zh: '行动' }, text: { en: 'Export the report or the CRM audience with a clear next action.', zh: '导出报表或 CRM 名单，让下一步有明确对象。' } },
+        ] },
+        { kind: 'h', text: { en: 'What it changes day to day', zh: '它每天改变了什么' } },
+        { kind: 'p', text: { en: 'The daily work happens once. Upload the Transaction and Customer Excel, and the system cleans, reconciles, and refreshes the reports instead of asking someone to redo it by hand.', zh: '每天的活只做一遍。上传 Transaction 与 Customer Excel，系统自动整理、去重并更新报表，而不是让人再手工做一次。' } },
+        { kind: 'p', text: { en: 'What changed comes first. Deposits, withdrawals, net deposit, active members, and channel movement live in one decision surface, so the morning starts with the difference rather than the data entry.', zh: '先看到哪里不对。存款、提款、净存款、活跃会员和渠道变化集中在同一个判断界面，早上从「差异」开始，而不是从「录入」开始。' } },
+        { kind: 'callout', label: { en: 'From report to action', zh: '从报表到行动' }, text: { en: 'Filter members by risk, activity, deposit recency, and conversion status—then export that exact list as the next CRM action instead of describing it in a meeting.', zh: '用风险、活跃度、存款时间和转化状态筛选会员，再把这份名单直接导出成下一个 CRM 动作，而不是在会议上口头描述。' } },
+        { kind: 'p', text: { en: 'The familiar handoff stays. Management can still receive the Excel they expect, while the operations team gets a clearer dashboard for the daily review. Nobody has to be retrained into a new ritual.', zh: '熟悉的交付方式保留下来。管理层仍然可以收到他们习惯的 Excel，运营团队同时拥有更清楚的 Dashboard。没有人需要被重新训练成另一套仪式。' } },
+        { kind: 'callout', tone: 'warning', label: { en: 'Data boundary', zh: '数据边界' }, text: { en: 'ETReportHub uses local SQLite and is designed for private deployment. Operational data does not need to enter a public cloud just to become visible in a dashboard. Access, audit, and exports remain inside the team’s own operating boundary.', zh: 'ETReportHub 使用本地 SQLite 保存整理后的数据，并为私有部署设计。原始运营资料不需要为了看 Dashboard 而进入公共云端。权限、审计与导出仍然属于团队自己的工作边界。' } },
+      ]}
+      faq={[
+        { q: { en: 'What files does it take?', zh: '它接受什么文件？' }, a: { en: 'The daily Transaction export and the latest Customer export, both as Excel. Those are the files most operations teams already produce, so nothing upstream has to change.', zh: '每日 Transaction 导出和最新 Customer 导出，都是 Excel。这些本来就是大多数运营团队已经在产出的文件，上游流程不用改。' } },
+        { q: { en: 'Where is my data stored?', zh: '数据存在哪里？' }, a: { en: 'In a local SQLite database inside your own deployment. Raw operational data does not have to leave your environment to become visible in a dashboard.', zh: '存在你自己部署环境里的本地 SQLite 数据库。原始运营数据不需要离开你的环境，就能在 Dashboard 上看到。' } },
+        { q: { en: 'Does it replace our Excel reports?', zh: '它会取代我们的 Excel 报表吗？' }, a: { en: 'Only if you want it to. Export back to Excel stays supported, so management keeps the format they know while the team reviews the dashboard.', zh: '除非你希望如此。导出回 Excel 仍然支持，管理层保留熟悉的格式，团队则看 Dashboard 做复盘。' } },
+        { q: { en: 'What happens if a member appears in two files?', zh: '同一个会员出现在两份文件里怎么办？' }, a: { en: 'The reconcile step matches members and prevents double counting, which is the part that usually breaks a hand-built spreadsheet.', zh: '整理步骤会匹配会员并避免重复计算——这恰好是手工表格最容易出错的地方。' } },
+        { q: { en: 'Can I try it before deploying?', zh: '可以先试再部署吗？' }, a: { en: 'Yes. The public demo above runs the real interface with sample data, so you can walk the workflow before any deployment conversation.', zh: '可以。上面的公开 Demo 用示例数据跑真实界面，你可以先走一遍流程，再谈部署。' } },
+        { q: { en: 'How do I get it running for my team?', zh: '怎么让我的团队用上？' }, a: { en: 'The launch offer page covers scope, deployment, and what a rollout looks like in practice.', zh: '上线方案页面写了范围、部署方式，以及实际推行会是什么样子。' } },
+      ]}
+      specs={[
+        [{ en: 'Category', zh: '类别' }, { en: 'Business intelligence and operations analytics', zh: '商业智能与运营分析' }],
+        [{ en: 'Input', zh: '输入格式' }, { en: 'Transaction / Customer Excel', zh: 'Transaction / Customer Excel' }],
+        [{ en: 'Modules', zh: '主要模块' }, { en: 'Performance · Members · Channels · Trends · CRM export', zh: '业绩 · 会员 · 渠道 · 趋势 · CRM 导出' }],
+        [{ en: 'Storage', zh: '存储' }, { en: 'Local SQLite', zh: '本地 SQLite' }],
+        [{ en: 'Deployment', zh: '部署方式' }, { en: 'Private deployment with local database', zh: '私有部署，本地数据库' }],
+        [{ en: 'Developer', zh: '开发者' }, { en: 'Eden Tan', zh: 'Eden Tan' }],
+      ]}
+      also={productSiblingCards(baseUrl, 'etreporthub')}
+    />
   );
 };
 
@@ -4968,46 +4604,76 @@ const ETReportHubSalesPage: React.FC<{
 const PokerFullPage: React.FC<{
   homeHref: string;
   projectsHref: string;
+  baseUrl: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
   themePreference: ThemePreference;
   theme: Theme;
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
-}> = ({ projectsHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
+}> = ({ projectsHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
   const playUrl = 'https://poker.edentan.site/';
   const installUrl = 'https://poker.edentan.site/?install=1';
-  const highlights = isZh
-    ? [['不用等到所有人都有空', '开一个房间，把链接丢进群里。有人晚到、有人重连，牌桌都应该接得住，而不是整局重来。'], ['像熟人局，不像线上赌场', '房主开桌、朋友买入、桌边聊天。界面保留真正需要的规则，但不加入催促下注或制造焦虑的机制。'], ['每个动作都要让人放心', '下注有没有成功、现在轮到谁、房间在等什么，都用清楚的状态回应。少一次误会，牌局就顺一点。'], ['记住人，不只记住牌', '我们不需要另一份战绩炫耀榜。真正值得保存的是谁说了什么、哪一刻全桌笑了，以及下一次为什么还想再来。']]
-    : [['Do not wait for everyone to be free', 'Open a room and drop the link in the group. Late arrivals and reconnects should be absorbed by the table—not force the whole night to restart.'], ['Feel like a home game, not a casino', 'The host starts, friends buy in, and the table keeps the conversation alive. It has the rules a real game needs without pressure mechanics designed to keep people betting.'], ['Every action should feel certain', 'A bet should confirm, the turn should be obvious, and the room should say what it is waiting for. Fewer misunderstandings make a better night.'], ['Remember the people, not only the cards', 'We do not need another leaderboard to flex. What deserves to stay is who said what, when the whole table laughed, and why everyone wants another game.']];
-  const workflow = isZh
-    ? [['01', '开房', '选择桌型和盲注，建立一个私人房间。'], ['02', '邀请', '把链接发给那群人，不需要安装。'], ['03', '买入', '选好筹码坐下，等待房主开局。'], ['04', '继续故事', '打完这一手，再把值得讲的瞬间留下。']]
-    : [['01', 'Host', 'Choose the table and stakes, then create a private room.'], ['02', 'Invite', 'Send one link to the crew. Nothing to install.'], ['03', 'Buy in', 'Choose the stack, take a seat, and wait for the host.'], ['04', 'Keep the story', 'Play the hand, then remember the moment worth retelling.']];
 
   return (
-    <div className="page-shell etreport-page etreport-product-page poker-store-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
-      <main className="px-5 py-8 md:px-8 md:py-10"><div className="mx-auto max-w-6xl">
-        <div className="etreport-topbar flex flex-wrap items-center justify-between gap-3"><a href={projectsHref} className="etreport-back-link inline-flex items-center gap-2 text-sm font-medium"><ArrowLeft size={16} />{isZh ? '返回主页' : 'Back home'}</a><HeaderControls language={language} setLanguage={setLanguage} themePreference={themePreference} theme={theme} setThemePreference={setThemePreference} /></div>
-
-        <header className="etreport-store-hero"><div className="etreport-store-icon"><ProjectsPokerCssIcon label="Friday Poker Club CSS app icon" /></div><div className="etreport-store-intro"><p className="etreport-kicker">{isZh ? '多人游戏 · 私人牌局' : 'Multiplayer Game · Private Table'}</p><h1>Friday Poker Club</h1><p className="etreport-store-tagline">{isZh ? '不用约地点。把那群人叫回来就好。' : 'No place to book. Just bring the crew back.'}</p><p className="etreport-store-byline">{isZh ? '由 Eden Tan 为自己的朋友局设计与构建' : 'Designed and built by Eden Tan for his own Friday crew.'}</p><div className="etreport-store-actions"><a href={playUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get">{isZh ? '开一局' : 'Open a table'}</a><a href={installUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get poker-store-install"><Download size={15} />{isZh ? '安装 App' : 'Install app'}</a></div></div></header>
-
-        <div className="etreport-store-facts"><div><UserRound aria-hidden="true" /><span>{isZh ? '模式' : 'Mode'}</span><strong>{isZh ? '私人多人局' : 'Private multiplayer'}</strong></div><div><Layers aria-hidden="true" /><span>{isZh ? '玩法' : 'Game'}</span><strong>Texas Hold’em</strong></div><div><GitBranch aria-hidden="true" /><span>{isZh ? '同步' : 'Realtime'}</span><strong>Firebase</strong></div><div><Play aria-hidden="true" /><span>{isZh ? '平台' : 'Platform'}</span><strong>{isZh ? '浏览器' : 'Web browser'}</strong></div></div>
-
-        <section className="etreport-live-demo" aria-labelledby="poker-live-title"><div className="etreport-live-demo-head"><div><p className="etreport-kicker">Live table</p><h2 id="poker-live-title">{isZh ? '直接打开牌桌。' : 'Open the table right here.'}</h2></div><a href={playUrl} target="_blank" rel="noopener noreferrer" className="etreport-text-cta">{isZh ? '在新标签打开' : 'Open in new tab'} <span aria-hidden>↗</span></a></div><div className="etreport-live-demo-frame"><div className="etreport-live-demo-toolbar" aria-hidden="true"><span /><span /><span /><p>poker.edentan.site</p></div><iframe src={playUrl} title={isZh ? 'Friday Poker Club 互动牌桌' : 'Interactive Friday Poker Club table'} loading="lazy" /></div></section>
-
-        <section className="etreport-app-description" id="poker-overview"><div className="etreport-app-prose"><p className="etreport-kicker">{isZh ? '为什么做这张桌' : 'Why this table exists'}</p><h2>{isZh ? '难的从来不是打牌。是让长大以后散在各处的人，再坐回同一张桌。' : 'Poker was never the hard part. Getting people with separate lives back around one table was.'}</h2><p>{isZh ? 'Friday Poker Club 起点很简单：我们还是想一起打牌，但不是每个周五都有人能提供地点，也不是每个人都想安装另一个游戏 App。于是我做了一张浏览器牌桌——开房、发链接、坐下，就可以开始。' : 'Friday Poker Club started with a simple problem: we still wanted to play, but not every Friday came with a host, a place, or the patience to install another game app. So I built a browser table—open a room, send the link, take a seat.'}</p><p>{isZh ? '我没有把它做成一个追求陌生人流量的扑克平台。它服务的是已经认识彼此的人。实时牌局只是结构；真正让人回来的是桌边的玩笑、失误、沉默和那些之后还会被提起的瞬间。' : 'I did not build it as a poker platform chasing strangers. It is for people who already know one another. Realtime play is the structure; the reason to return is the jokes, mistakes, silences, and moments that become part of the group later.'}</p></div></section>
-
-        <section className="etreport-app-section"><p className="etreport-kicker">{isZh ? '为熟人局做的选择' : 'Designed for private games'}</p><h2>{isZh ? '牌桌负责规则。那群人负责让晚上变得值得。' : 'The table handles the rules. The crew makes the night worth remembering.'}</h2><div className="etreport-app-feature-list">{highlights.map(([title, body], index) => { const Icon = [ExternalLink, UserRound, MessageSquare, Bookmark][index]; return <article key={title}><span>0{index + 1}</span><Icon className="etreport-app-feature-icon" aria-hidden="true" /><div><h3>{title}</h3><p>{body}</p></div></article>; })}</div></section>
-
-        <section className="etreport-app-section"><p className="etreport-kicker">{isZh ? '怎么玩' : 'How it works'}</p><h2>{isZh ? '四步让那群人重新坐到一起。' : 'Put the crew back at one table in four steps.'}</h2><div className="etreport-app-workflow">{workflow.map(([step, title, body], index) => { const Icon = [Plus, Send, UserRound, Clock3][index]; return <article key={step}><div className="etreport-app-workflow-head"><Icon aria-hidden="true" /><span>{step}</span></div><h3>{title}</h3><p>{body}</p></article>; })}</div></section>
-
-        <section className="etreport-app-privacy"><div><GitBranch className="etreport-app-section-icon" aria-hidden="true" /><p className="etreport-kicker">{isZh ? '这张桌的边界' : 'What this table will not become'}</p><h2>{isZh ? '私人房间，不是公开赌场。娱乐筹码，不是真钱系统。' : 'Private rooms, not a public casino. Play chips, never real money.'}</h2></div><p>{isZh ? '邀请链接决定谁能进来，房主决定何时开桌。Firebase 只负责让座位、动作和重连保持同步；语音永远可选，筹码没有现金价值，也没有充值或提现。系统可以记住牌局状态，但不应该把朋友之间的晚上变成公开表演或金钱交易。' : 'Invite links control who enters, and the host decides when the game begins. Firebase only keeps seats, actions, and reconnects in sync. Voice stays optional; chips have no cash value, deposit, or withdrawal. The system can remember table state without turning a night between friends into public performance or financial play.'}</p></section>
-
-        <section className="etreport-app-details"><h2><Layers aria-hidden="true" />{isZh ? '产品资料' : 'Information'}</h2><dl><div><dt>{isZh ? '类别' : 'Category'}</dt><dd>{isZh ? '私人多人游戏' : 'Private multiplayer game'}</dd></div><div><dt>{isZh ? '游戏' : 'Game'}</dt><dd>Texas Hold’em · 8/9 mini game</dd></div><div><dt>{isZh ? '主要模块' : 'Modules'}</dt><dd>Rooms · Invites · Buy-ins · Realtime table · Optional voice</dd></div><div><dt>{isZh ? '平台' : 'Platform'}</dt><dd>{isZh ? '响应式浏览器牌桌' : 'Responsive browser table'}</dd></div><div><dt>{isZh ? '开发者' : 'Developer'}</dt><dd>Eden Tan</dd></div></dl></section>
-
-        <section className="etreport-app-final"><ProjectsPokerCssIcon label="Friday Poker Club CSS app icon" /><div><h2>{isZh ? '把链接发回那个群。看看今晚谁会坐下。' : 'Send the link back to the group. See who takes a seat tonight.'}</h2><p>{isZh ? '不用准备场地，也不用把周五变成一场正式活动。先开一张桌，故事自然会来。' : 'No venue to prepare and no need to turn Friday into an event. Open the table first. The story can arrive on its own.'}</p><div className="etreport-app-final-actions"><a href={playUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get">{isZh ? '开一局' : 'Open a table'}</a><a href={installUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get poker-store-install"><Download size={15} />{isZh ? '安装 App' : 'Install app'}</a></div></div></section>
-      </div></main>
-    </div>
+    <ProductStorePage
+      isZh={isZh}
+      controls={<HeaderControls language={language} setLanguage={setLanguage} themePreference={themePreference} theme={theme} setThemePreference={setThemePreference} />}
+      backHref={projectsHref}
+      backLabel={{ en: 'Back home', zh: '返回主页' }}
+      icon={<ProjectsPokerCssIcon label="Friday Poker Club CSS app icon" />}
+      name="Friday Poker Club"
+      kicker={{ en: 'Multiplayer game · Private table', zh: '多人游戏 · 私人牌局' }}
+      tagline={{ en: 'No place to book. Just bring the crew back.', zh: '不用约地点。把那群人叫回来就好。' }}
+      meta={{ en: 'Free · Play chips only · Runs in any browser', zh: '免费 · 只有娱乐筹码 · 浏览器直接开局' }}
+      primary={{ href: playUrl, external: true, label: { en: 'Open a table', zh: '开一局' } }}
+      secondary={{ href: installUrl, external: true, icon: <Download size={16} />, label: { en: 'Install app', zh: '安装 App' } }}
+      quickLinks={[
+        { href: '#overview', label: { en: 'Overview', zh: '产品简介' } },
+        { href: '#faq', label: { en: 'FAQ', zh: '常见问题' } },
+        { href: '#information', label: { en: 'Information', zh: '产品资料' } },
+      ]}
+      stage={{
+        src: playUrl,
+        domain: 'poker.edentan.site',
+        title: { en: 'Interactive Friday Poker Club table', zh: 'Friday Poker Club 互动牌桌' },
+        caption: { en: 'This is the real table, running right here. Open it in a new tab to bring the crew in.', zh: '这就是真的牌桌，直接跑在这里。想叫人来，就在新标签打开。' },
+      }}
+      body={[
+        { kind: 'p', text: { en: 'Friday Poker Club started with a simple problem: we still wanted to play, but not every Friday came with a host, a place, or the patience to install another game app. So I built a browser table—open a room, send the link, take a seat.', zh: 'Friday Poker Club 起点很简单：我们还是想一起打牌，但不是每个周五都有人能提供地点，也不是每个人都想安装另一个游戏 App。于是我做了一张浏览器牌桌——开房、发链接、坐下，就可以开始。' } },
+        { kind: 'p', text: { en: 'I did not build it as a poker platform chasing strangers. It is for people who already know one another. Realtime play is the structure; the reason to return is the jokes, mistakes, silences, and moments that become part of the group later.', zh: '我没有把它做成一个追求陌生人流量的扑克平台。它服务的是已经认识彼此的人。实时牌局只是结构；真正让人回来的是桌边的玩笑、失误、沉默和那些之后还会被提起的瞬间。' } },
+        { kind: 'h', text: { en: 'How it works', zh: '怎么玩' } },
+        { kind: 'steps', items: [
+          { title: { en: 'Host', zh: '开房' }, text: { en: 'Choose the table and stakes, then create a private room.', zh: '选择桌型和盲注，建立一个私人房间。' } },
+          { title: { en: 'Invite', zh: '邀请' }, text: { en: 'Send one link to the crew. Nothing to install.', zh: '把链接发给那群人，不需要安装。' } },
+          { title: { en: 'Buy in', zh: '买入' }, text: { en: 'Choose the stack, take a seat, and wait for the host.', zh: '选好筹码坐下，等待房主开局。' } },
+          { title: { en: 'Keep the story', zh: '继续故事' }, text: { en: 'Play the hand, then remember the moment worth retelling.', zh: '打完这一手，再把值得讲的瞬间留下。' } },
+        ] },
+        { kind: 'h', text: { en: 'Designed for private games', zh: '为熟人局做的选择' } },
+        { kind: 'p', text: { en: 'You should not have to wait until everyone is free. Open a room and drop the link in the group. Late arrivals and reconnects get absorbed by the table instead of forcing the whole night to restart.', zh: '不用等到所有人都有空。开一个房间，把链接丢进群里。有人晚到、有人重连，牌桌都应该接得住，而不是整局重来。' } },
+        { kind: 'p', text: { en: 'It should feel like a home game, not a casino. The host starts, friends buy in, and the table keeps the conversation alive. It has the rules a real game needs without the pressure mechanics designed to keep people betting.', zh: '它应该像熟人局，不像线上赌场。房主开桌、朋友买入、桌边聊天。界面保留真正需要的规则，但不加入催促下注或制造焦虑的机制。' } },
+        { kind: 'callout', label: { en: 'Note', zh: '注意' }, text: { en: 'Every action should feel certain. A bet confirms, the turn is obvious, and the room says what it is waiting for. Fewer misunderstandings make a better night.', zh: '每个动作都要让人放心。下注有没有成功、现在轮到谁、房间在等什么，都用清楚的状态回应。少一次误会，牌局就顺一点。' } },
+        { kind: 'p', text: { en: 'And it should remember the people, not only the cards. We do not need another leaderboard to flex. What deserves to stay is who said what, when the whole table laughed, and why everyone wants another game.', zh: '它记住的应该是人，不只是牌。我们不需要另一份战绩炫耀榜。真正值得保存的是谁说了什么、哪一刻全桌笑了，以及下一次为什么还想再来。' } },
+        { kind: 'callout', tone: 'warning', label: { en: 'Play chips only', zh: '只有娱乐筹码' }, text: { en: 'Invite links control who enters, and the host decides when the game begins. Chips have no cash value, and there is no deposit or withdrawal. The system can remember table state without turning a night between friends into public performance or financial play.', zh: '邀请链接决定谁能进来，房主决定何时开桌。筹码没有现金价值，也没有充值或提现。系统可以记住牌局状态，但不应该把朋友之间的晚上变成公开表演或金钱交易。' } },
+      ]}
+      faq={[
+        { q: { en: 'Do I need to install anything?', zh: '需要安装什么吗？' }, a: { en: 'No. It runs in any modern browser—open the link and take a seat. If you would rather have it on your home screen, the Install app button adds it as a standalone app.', zh: '不需要。它跑在任何现代浏览器里——打开链接就能坐下。如果你想放到主屏幕，点「安装 App」就会变成独立应用。' } },
+        { q: { en: 'Is real money involved?', zh: '会牵涉真钱吗？' }, a: { en: 'Never. Chips are play chips with no cash value. There is no deposit, no withdrawal, and no payout of any kind.', zh: '完全不会。筹码是娱乐筹码，没有现金价值。没有充值、没有提现，也没有任何形式的派彩。' } },
+        { q: { en: 'Can strangers find my table?', zh: '陌生人会找到我的牌桌吗？' }, a: { en: 'No. Rooms are private and reachable only through the invite link you send. The host still decides when the hand actually begins.', zh: '不会。房间是私人的，只能通过你发出的邀请链接进入。何时真正开牌，仍然由房主决定。' } },
+        { q: { en: 'What happens if someone loses connection?', zh: '有人断线了会怎样？' }, a: { en: 'The table keeps its state. A player who drops can reopen the link and return to the same seat and stack instead of restarting the night.', zh: '牌桌会保留状态。掉线的人重新打开链接，就能回到原来的座位和筹码，而不是整晚重来。' } },
+        { q: { en: 'Is there voice chat?', zh: '有语音吗？' }, a: { en: 'Voice is optional. Some nights the group talks the whole way through; some nights nobody turns it on. The table works either way.', zh: '语音是可选的。有些晚上大家一路在聊，有些晚上没人开。牌桌两种情况都能用。' } },
+        { q: { en: 'What is it built with?', zh: '用什么做的？' }, a: { en: 'A responsive browser table with Firebase keeping seats, actions, and reconnects in sync. There are build notes in the wiki if you want the details.', zh: '一张响应式浏览器牌桌，用 Firebase 让座位、动作和重连保持同步。想看细节的话，wiki 里有开发笔记。' } },
+      ]}
+      specs={[
+        [{ en: 'Category', zh: '类别' }, { en: 'Private multiplayer game', zh: '私人多人游戏' }],
+        [{ en: 'Game', zh: '游戏' }, { en: 'Texas Hold’em · 8/9 mini game', zh: 'Texas Hold’em · 8/9 小游戏' }],
+        [{ en: 'Modules', zh: '主要模块' }, { en: 'Rooms · Invites · Buy-ins · Realtime table · Optional voice', zh: '房间 · 邀请 · 买入 · 实时牌桌 · 可选语音' }],
+        [{ en: 'Realtime', zh: '同步' }, { en: 'Firebase', zh: 'Firebase' }],
+        [{ en: 'Platform', zh: '平台' }, { en: 'Responsive browser table', zh: '响应式浏览器牌桌' }],
+        [{ en: 'Developer', zh: '开发者' }, { en: 'Eden Tan', zh: 'Eden Tan' }],
+      ]}
+      also={productSiblingCards(baseUrl, 'poker')}
+    />
   );
 };
 
@@ -7181,998 +6847,6 @@ const LifeFullPage: React.FC<{
   );
 };
 
-const LifeOsIcon: React.FC<{ src: string; alt: string; size?: 'sm' | 'md' | 'lg' }> = ({ src, alt, size = 'md' }) => {
-  const sizeClass = size === 'lg' ? 'h-16 w-16' : size === 'sm' ? 'h-10 w-10' : 'h-12 w-12';
-
-  return (
-    <img
-      src={src}
-      alt={alt}
-      loading="lazy"
-      className={`life-os-icon-frame ${sizeClass} flex-none rounded-xl object-cover shadow-sm ring-1 ring-eden-mint/15`}
-    />
-  );
-};
-
-const LifeOsBanner: React.FC<{
-  src: string;
-  alt: string;
-  label: string;
-  caption: string;
-  className?: string;
-}> = ({ src, alt, label, caption, className = '' }) => (
-  <figure className={`life-os-banner-frame relative mt-5 overflow-hidden rounded-xl shadow-sm ${className}`}>
-    <div className="aspect-[16/9] w-full sm:aspect-[8/3]">
-      <img src={src} alt={alt} loading="lazy" className="h-full w-full object-cover" />
-    </div>
-    <figcaption className="life-os-banner-caption absolute inset-x-0 bottom-0 px-3 pb-3 pt-12 sm:px-4 sm:pb-4 sm:pt-16">
-      <p className="font-mono text-[9px] uppercase tracking-[0.22em] text-eden-amber sm:text-[10px] sm:tracking-[0.28em]">{label}</p>
-      <p className="mt-1 text-xs leading-relaxed text-stone-800 sm:text-sm">{caption}</p>
-    </figcaption>
-  </figure>
-);
-
-const lifeRpgSignalVisualKeys = {
-  'WIND-57': 'wind',
-  'PHASE-RULE': 'rule',
-  'EXPLORE-05': 'explore',
-  'BLADE-LIGHT': 'blade',
-  'BODY-YES': 'body',
-  ABSTRACT: 'abstract',
-} as const;
-
-const getLifeRpgSignalVisualKey = (code: string) =>
-  lifeRpgSignalVisualKeys[code as keyof typeof lifeRpgSignalVisualKeys] ?? 'wind';
-
-const LifeRpgSignalCssIcon: React.FC<{
-  signal: (typeof lifeRpgDecodeSignals)[number];
-  label: string;
-}> = ({ signal, label }) => {
-  const visualKey = getLifeRpgSignalVisualKey(signal.code);
-
-  return (
-    <div className={`life-rpg-signal-css-icon life-rpg-signal-${visualKey}`} role="img" aria-label={label}>
-      <span className="life-rpg-signal-grid" />
-      <span className="life-rpg-signal-arc life-rpg-signal-arc-a" />
-      <span className="life-rpg-signal-arc life-rpg-signal-arc-b" />
-      <span className="life-rpg-signal-vector life-rpg-signal-vector-a" />
-      <span className="life-rpg-signal-vector life-rpg-signal-vector-b" />
-      <span className="life-rpg-signal-node life-rpg-signal-node-a" />
-      <span className="life-rpg-signal-node life-rpg-signal-node-b" />
-      <span className="life-rpg-signal-node life-rpg-signal-node-c" />
-      <span className="life-rpg-signal-icon-orbit" />
-      <span className="life-rpg-signal-icon-mark" />
-      <span className="life-rpg-signal-icon-core">{signal.emoji}</span>
-    </div>
-  );
-};
-
-const LifeRpgWindInfiltrationStrip: React.FC<{ label: string }> = ({ label }) => (
-  <div className="life-rpg-wind-strip" role="img" aria-label={label}>
-    <span className="life-rpg-wind-sea" />
-    <span className="life-rpg-wind-wave life-rpg-wind-wave-a" />
-    <span className="life-rpg-wind-wave life-rpg-wind-wave-b" />
-    <span className="life-rpg-wind-mountain life-rpg-wind-mountain-a" />
-    <span className="life-rpg-wind-mountain life-rpg-wind-mountain-b" />
-    <span className="life-rpg-wind-mountain-snow life-rpg-wind-mountain-snow-a" />
-    <span className="life-rpg-wind-mountain-snow life-rpg-wind-mountain-snow-b" />
-    <span className="life-rpg-wind-island" />
-    <span className="life-rpg-wind-beach" />
-    <span className="life-rpg-wind-palm life-rpg-wind-palm-a" />
-    <span className="life-rpg-wind-palm life-rpg-wind-palm-b" />
-    <span className="life-rpg-wind-cloud-face">
-      <span className="life-rpg-wind-cloud-highlight" />
-      <span className="life-rpg-wind-cloud-eye life-rpg-wind-cloud-eye-a" />
-      <span className="life-rpg-wind-cloud-eye life-rpg-wind-cloud-eye-b" />
-      <span className="life-rpg-wind-cloud-nose" />
-      <span className="life-rpg-wind-cloud-cheek life-rpg-wind-cloud-cheek-a" />
-      <span className="life-rpg-wind-cloud-cheek life-rpg-wind-cloud-cheek-b" />
-      <span className="life-rpg-wind-cloud-mouth" />
-    </span>
-    <span className="life-rpg-wind-cloud-puff life-rpg-wind-cloud-puff-a" />
-    <span className="life-rpg-wind-cloud-puff life-rpg-wind-cloud-puff-b" />
-    <span className="life-rpg-wind-cloud-puff life-rpg-wind-cloud-puff-c" />
-    <span className="life-rpg-wind-cloud-breath life-rpg-wind-cloud-breath-a" />
-    <span className="life-rpg-wind-cloud-breath life-rpg-wind-cloud-breath-b" />
-    <span className="life-rpg-wind-cloud-breath life-rpg-wind-cloud-breath-c" />
-    <span className="life-rpg-wind-spray life-rpg-wind-spray-a" />
-    <span className="life-rpg-wind-spray life-rpg-wind-spray-b" />
-  </div>
-);
-
-const LifeRpgRuleContractStrip: React.FC<{ label: string }> = ({ label }) => (
-  <div className="life-rpg-contract-strip" role="img" aria-label={label}>
-    <span className="life-rpg-contract-desk" />
-    <span className="life-rpg-contract-paper">
-      <span className="life-rpg-contract-line life-rpg-contract-line-a" />
-      <span className="life-rpg-contract-line life-rpg-contract-line-b" />
-      <span className="life-rpg-contract-line life-rpg-contract-line-c" />
-      <span className="life-rpg-contract-signature">
-        <span className="life-rpg-contract-sign-stroke life-rpg-contract-sign-stroke-a" />
-        <span className="life-rpg-contract-sign-stroke life-rpg-contract-sign-stroke-b" />
-        <span className="life-rpg-contract-sign-stroke life-rpg-contract-sign-stroke-c" />
-        <span className="life-rpg-contract-sign-stroke life-rpg-contract-sign-stroke-d" />
-      </span>
-    </span>
-    <span className="life-rpg-contract-pen" />
-    <span className="life-rpg-contract-stamp">
-      <span />
-    </span>
-    <span className="life-rpg-contract-seal" />
-  </div>
-);
-
-const LifeOsWindEyeSigil: React.FC<{ label: string }> = ({ label }) => (
-  <div className="life-os-wind-eye-sigil" role="img" aria-label={label}>
-    <span className="life-os-wind-eye-aura aura-a" />
-    <span className="life-os-wind-eye-aura aura-b" />
-    <span className="life-os-wind-eye-geometry geometry-a" />
-    <span className="life-os-wind-eye-geometry geometry-b" />
-    <span className="life-os-wind-eye-geometry geometry-c" />
-    <span className="life-os-wind-eye-orbit orbit-a" />
-    <span className="life-os-wind-eye-orbit orbit-b" />
-    <span className="life-os-wind-eye-tick tick-a" />
-    <span className="life-os-wind-eye-tick tick-b" />
-    <span className="life-os-wind-eye-tick tick-c" />
-    <span className="life-os-wind-eye-tick tick-d" />
-    <span className="life-os-wind-eye-blade blade-a" />
-    <span className="life-os-wind-eye-blade blade-b" />
-    <span className="life-os-wind-eye-blade blade-c" />
-    <span className="life-os-wind-eye-diamond diamond-a" />
-    <span className="life-os-wind-eye-diamond diamond-b" />
-    <span className="life-os-wind-eye-diamond diamond-c" />
-    <span className="life-os-wind-eye-thread thread-a" />
-    <span className="life-os-wind-eye-thread thread-b" />
-    <span className="life-os-wind-eye-thread thread-c" />
-    <span className="life-os-wind-eye-thread thread-d" />
-    <span className="life-os-wind-eye-core">
-      <span className="life-os-wind-eye-pupil" />
-    </span>
-    <span className="life-os-wind-eye-dot dot-a" />
-    <span className="life-os-wind-eye-dot dot-b" />
-    <span className="life-os-wind-eye-dot dot-c" />
-    <span className="life-os-wind-eye-dot dot-d" />
-    <span className="life-os-wind-eye-mote mote-a" />
-    <span className="life-os-wind-eye-mote mote-b" />
-    <span className="life-os-wind-eye-mote mote-c" />
-  </div>
-);
-
-const LifeOsHudShapes: React.FC<{ variant?: 'hero' | 'panel' }> = ({ variant = 'panel' }) => (
-  <div aria-hidden="true" className="life-os-hud-shapes pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
-    <span className="absolute left-4 top-4 h-8 w-8 border-l border-t border-eden-mint/35" />
-    <span className="absolute right-4 top-4 h-8 w-8 border-r border-t border-eden-amber/35" />
-    <span className="absolute bottom-4 left-4 h-8 w-8 border-b border-l border-eden-amber/25" />
-    <span className="absolute bottom-4 right-4 h-8 w-8 border-b border-r border-eden-mint/25" />
-    <span className="absolute left-8 bottom-8 h-px w-24 bg-gradient-to-r from-eden-mint/40 to-transparent" />
-    <span className="absolute right-10 top-10 h-14 w-px bg-gradient-to-b from-eden-amber/35 to-transparent" />
-    {variant === 'hero' && (
-      <>
-        <span className="absolute left-1/2 top-6 h-px w-40 -translate-x-1/2 bg-gradient-to-r from-transparent via-eden-mint/35 to-transparent" />
-        <span className="absolute bottom-8 right-28 hidden h-12 w-12 rotate-45 border border-eden-amber/20 lg:block" />
-        <span className="absolute left-10 top-1/2 grid -translate-y-1/2 grid-cols-1 gap-2">
-          <span className="h-1 w-6 bg-eden-mint/30" />
-          <span className="h-1 w-4 bg-eden-amber/30" />
-          <span className="h-1 w-8 bg-stone-300/50" />
-        </span>
-      </>
-    )}
-  </div>
-);
-
-const LifeOsDropDown: React.FC<{
-  id?: string;
-  index: string;
-  eyebrow: string;
-  title: string;
-  body: string;
-  children: React.ReactNode;
-}> = ({ id, index, eyebrow, title, body, children }) => (
-  <section id={id} className="life-os-chapter scroll-mt-8 py-16 sm:py-20 md:py-24">
-    <div className="mx-auto max-w-4xl text-center">
-      <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-stone-500 sm:text-xs">
-        {String(index).padStart(2, '0')} · {eyebrow}
-      </p>
-      <h2 className="mt-3 font-display text-[clamp(2rem,5vw,3.5rem)] font-semibold leading-[1.06] tracking-tight text-stone-900">
-        {title}
-      </h2>
-      <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-stone-600 sm:text-lg">
-        {body}
-      </p>
-    </div>
-    <div className="mt-10 sm:mt-14">
-      {children}
-    </div>
-  </section>
-);
-
-const LifeOsRadarPanel: React.FC<{
-  stats: ReadonlyArray<{ key: string; value: number }>;
-  ariaLabel: string;
-  centerPrimary: string;
-  centerSecondary: string;
-  theme: Theme;
-  tone?: 'mint' | 'amber';
-  compact?: boolean;
-  className?: string;
-}> = ({ stats, ariaLabel, centerPrimary, centerSecondary, theme, tone = 'mint', compact = false, className = '' }) => {
-  const isDarkTheme = theme === 'dark';
-  const center = 110;
-  const radius = 76;
-  const accent = tone === 'mint' ? 'rgb(123,220,181)' : 'rgb(255,163,64)';
-  const accentSoft = tone === 'mint' ? 'rgba(123,220,181,0.34)' : 'rgba(255,163,64,0.28)';
-  const gridFill = isDarkTheme ? 'rgba(255,255,255,0.025)' : 'rgba(28,25,23,0.025)';
-  const gridStroke = isDarkTheme ? 'rgba(214,211,209,0.22)' : 'rgba(87,83,78,0.2)';
-  const axisStroke = isDarkTheme ? 'rgba(214,211,209,0.18)' : 'rgba(87,83,78,0.16)';
-  const labelFill = isDarkTheme ? 'rgb(245,245,244)' : 'rgb(68,64,60)';
-  const centerFill = isDarkTheme ? 'rgba(28,25,23,0.86)' : 'rgba(255,255,255,0.78)';
-  const centerTextFill = isDarkTheme ? 'rgb(255,255,255)' : 'rgb(28,25,23)';
-  const centerSubFill = isDarkTheme ? 'rgb(214,211,209)' : 'rgb(120,113,108)';
-  const point = (index: number, value: number) => {
-    const angle = -Math.PI / 2 + (Math.PI * 2 * index) / stats.length;
-    const scaledRadius = (radius * value) / 100;
-    return `${center + Math.cos(angle) * scaledRadius},${center + Math.sin(angle) * scaledRadius}`;
-  };
-  const gridPoint = (index: number, scale: number) => point(index, scale);
-  const shapePoints = stats.map((stat, index) => point(index, stat.value)).join(' ');
-  const gradientId = `life-os-radar-${tone}-${stats.map((stat) => stat.key).join('-').toLowerCase()}`;
-
-  return (
-    <div className={`life-os-radar-frame relative mx-auto w-full ${compact ? 'max-w-[220px]' : 'max-w-[310px]'} overflow-hidden rounded-2xl p-2 shadow-inner sm:p-3 ${className}`}>
-      <div className="life-os-radar-grid absolute inset-0 bg-[size:18px_18px] opacity-45" />
-      <svg viewBox="0 0 220 220" role="img" aria-label={ariaLabel} className="relative h-auto w-full">
-        <defs>
-          <radialGradient id={gradientId} cx="50%" cy="50%" r="55%">
-            <stop offset="0%" stopColor={accentSoft} />
-            <stop offset="100%" stopColor="rgba(209,171,91,0.04)" />
-          </radialGradient>
-        </defs>
-        {[25, 50, 75, 100].map((scale) => (
-          <polygon
-            key={scale}
-            points={stats.map((_, index) => gridPoint(index, scale)).join(' ')}
-            fill={scale === 100 ? gridFill : 'none'}
-            stroke={gridStroke}
-            strokeWidth="1"
-          />
-        ))}
-        {stats.map((_, index) => (
-          <line
-            key={index}
-            x1={center}
-            y1={center}
-            x2={gridPoint(index, 100).split(',')[0]}
-            y2={gridPoint(index, 100).split(',')[1]}
-            stroke={axisStroke}
-            strokeWidth="1"
-          />
-        ))}
-        <polygon points={shapePoints} fill={`url(#${gradientId})`} stroke={accent} strokeWidth="2" />
-        {stats.map((stat, index) => {
-          const [x, y] = point(index, stat.value).split(',');
-          const [labelX, labelY] = gridPoint(index, 117).split(',');
-
-          return (
-            <g key={stat.key}>
-              <circle cx={x} cy={y} r="3.5" fill="rgb(209,171,91)" stroke="rgb(255,255,255)" strokeWidth="1" />
-              <text
-                x={labelX}
-                y={labelY}
-                textAnchor="middle"
-                dominantBaseline="middle"
-                fill={labelFill}
-                fontSize={compact ? '7' : '8'}
-                fontWeight="800"
-              >
-                {stat.key}
-              </text>
-            </g>
-          );
-        })}
-        <circle cx={center} cy={center} r={compact ? '21' : '24'} fill={centerFill} stroke="rgba(209,171,91,0.62)" />
-        <text x={center} y={center - 2} textAnchor="middle" fill={centerTextFill} fontSize={compact ? '15' : '17'} fontWeight="800">
-          {centerPrimary}
-        </text>
-        <text x={center} y={center + 13} textAnchor="middle" fill={centerSubFill} fontSize="7" letterSpacing="1.5">
-          {centerSecondary}
-        </text>
-      </svg>
-    </div>
-  );
-};
-
-const LifeOsFullPage: React.FC<{
-  homeHref: string;
-  language: Language;
-  setLanguage: React.Dispatch<React.SetStateAction<Language>>;
-  themePreference: ThemePreference;
-  theme: Theme;
-  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
-}> = ({ homeHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
-  const isZh = language === 'zh';
-  const powerScore = 86;
-  const birthDate = new Date(1995, 11, 5);
-  const maxLevel = 80;
-  const today = new Date();
-  const currentLevel =
-    today.getFullYear() -
-    birthDate.getFullYear() -
-    (today.getMonth() < birthDate.getMonth() ||
-    (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate())
-      ? 1
-      : 0);
-  const lifeOsGameMenu = [
-    {
-      href: '#life-os-character-file',
-      icon: '🃏',
-      code: '01',
-      title: isZh ? '角色档案' : 'Character File',
-      body: isZh ? '先看背景、身份和这套角色面板应该怎么阅读。' : 'Start with origin, identity, and how this character panel should be read.',
-      action: isZh ? '进入档案' : 'Enter file',
-      tone: 'amber',
-    },
-    {
-      href: '#life-os-stats-console',
-      icon: '📊',
-      code: '02',
-      title: isZh ? '数值控制台' : 'Stats Console',
-      body: isZh ? '再看核心属性、隐藏参数、玩家信号和主线任务。' : 'Then read core stats, hidden parameters, player signals, and the main quest.',
-      action: isZh ? '查看数值' : 'View stats',
-      tone: 'mint',
-    },
-    {
-      href: '#life-os-skill-codex',
-      icon: '🛠️',
-      code: '03',
-      title: isZh ? '技能图鉴' : 'Skill Codex',
-      body: isZh ? '主动技能、被动天赋和 Debuff 都在这里展开。' : 'Active spells, passive auras, and debuffs open here.',
-      action: isZh ? '打开技能' : 'Open skills',
-      tone: 'amber',
-    },
-    {
-      href: '#life-os-upgrade-path',
-      icon: '🌿',
-      code: '04',
-      title: isZh ? '升级路线' : 'Upgrade Path',
-      body: isZh ? '最后看成长路线、分数逻辑和这套系统的边界。' : 'Finish with growth routes, score logic, and the system boundary.',
-      action: isZh ? '查看路线' : 'View route',
-      tone: 'mint',
-    },
-  ];
-
-  return (
-    <div className="life-os-open-layout page-shell min-h-screen text-stone-800 selection:bg-eden-mint/30 selection:text-stone-900">
-      <main className="px-4 pb-16 pt-8 sm:px-6 md:px-8 md:py-16">
-        <div className="mx-auto max-w-6xl">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <a
-              href={homeHref}
-              className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-medium text-stone-700 shadow-sm backdrop-blur transition-colors hover:border-eden-mint/60 hover:text-stone-900"
-            >
-              <ArrowLeft size={16} />
-              {isZh ? '返回主页' : 'Back to Home'}
-            </a>
-            <HeaderControls
-              language={language}
-              setLanguage={setLanguage}
-              themePreference={themePreference}
-              theme={theme}
-              setThemePreference={setThemePreference}
-            />
-          </div>
-
-          <header className="life-os-editorial-hero py-16 text-center sm:py-20 md:py-24">
-            <p className="text-xs font-medium uppercase tracking-[0.18em] text-stone-500">
-              {isZh ? 'Life RPG Ability System' : 'Life RPG Ability System'}
-            </p>
-            <h1 className="mx-auto mt-4 max-w-4xl font-display text-[clamp(2.75rem,8vw,5rem)] font-semibold leading-[1.04] tracking-tight text-stone-900">
-              {isZh ? '风之解析者' : 'Wind Pattern Analyst'}
-            </h1>
-            <p className="mx-auto mt-4 max-w-3xl font-display text-[clamp(1.25rem,3vw,2rem)] leading-[1.18] text-stone-700">
-              {isZh
-                ? '把混乱经验转成可使用系统的 RPG 人生地图。'
-                : 'A Life RPG map for turning chaos into usable systems.'}
-            </p>
-            <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-3 text-base font-medium sm:text-lg">
-              <a href="#life-os-skill-codex" className="text-eden-mint transition-colors hover:text-stone-900">
-                {isZh ? '查看技能' : 'View skills'} &gt;
-              </a>
-              <a href="#life-os-upgrade-path" className="text-eden-amber transition-colors hover:text-stone-900">
-                {isZh ? '查看路线' : 'View routes'} &gt;
-              </a>
-            </div>
-            <figure className="mx-auto mt-12 max-w-3xl overflow-hidden rounded-[2rem] sm:mt-14">
-              <LifeOsWindEyeSigil label={isZh ? '风之眼图腾透明底 CSS 动画' : 'Transparent CSS animation of a wind-eye sigil'} />
-            </figure>
-            <div className="mx-auto mt-8 grid max-w-3xl grid-cols-2 gap-y-5 text-center sm:grid-cols-4">
-              {(isZh
-                ? [
-                    ['Level', `LV ${currentLevel} / ${maxLevel}`],
-                    ['Power', `${powerScore} / 100`],
-                    ['Class', '流浪策略师'],
-                    ['Element', '风 + 金'],
-                  ]
-                : [
-                    ['Level', `LV ${currentLevel} / ${maxLevel}`],
-                    ['Power', `${powerScore} / 100`],
-                    ['Class', 'Wandering Strategist'],
-                    ['Element', 'Wind + Metal'],
-                  ]
-              ).map(([label, value]) => (
-                <div key={label}>
-                  <p className="text-xs font-medium uppercase tracking-[0.14em] text-stone-500">{label}</p>
-                  <p className="mt-1 text-base font-medium text-stone-900 sm:text-lg">{value}</p>
-                </div>
-              ))}
-            </div>
-          </header>
-
-          <nav className="life-os-editorial-nav mx-auto grid max-w-4xl grid-cols-2 gap-x-4 gap-y-3 py-8 text-center text-sm font-medium sm:grid-cols-4 sm:py-10">
-            {lifeOsGameMenu.map((item) => (
-              <a key={item.href} href={item.href} className="text-stone-600 transition-colors hover:text-stone-900">
-                {item.title} &gt;
-              </a>
-            ))}
-          </nav>
-
-          <LifeOsDropDown
-            id="life-os-character-file"
-            index="01"
-            eyebrow={isZh ? '角色档案' : 'Character File'}
-            title={isZh ? '先读角色来源，再进入系统' : 'Read the character file before opening the system'}
-            body={isZh ? '这一章负责回答：这个角色是谁、从什么场域成形、这套页面应该怎么读。' : 'This chapter answers who the character is, what field shaped it, and how to read the interface.'}
-          >
-          <section className="motion-card relative mt-4 overflow-hidden rounded-2xl border border-stone-200 bg-white p-4 shadow-sm backdrop-blur sm:mt-6 sm:p-6">
-            <LifeOsHudShapes variant="hero" />
-            <div className="relative z-10">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500">
-                🎴 {isZh ? '角色序章' : 'Character Brief'}
-              </p>
-              <div className="mt-3 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
-                <div>
-                  <h2 className="font-display text-2xl font-bold text-stone-900 md:text-3xl">
-                    {isZh ? '风之解析者，不是从安稳路线里诞生的角色' : 'The Wind Pattern Analyst was not born from a stable route.'}
-                  </h2>
-                  <p className="mt-3 text-sm leading-relaxed text-stone-700">
-                    {isZh
-                      ? '背景不是稳定工作、固定路线和标准答案，而是长时间穿过复杂场域：商业增长的噪音、关系里的暗流、产品尚未成形的需求、以及生活里一再重复的模式。'
-                      : 'The background is not stable work, fixed routes, and standard answers. It is a long walk through complex fields: growth noise, social undercurrents, unformed product needs, and patterns that keep repeating in life.'}
-                  </p>
-                  <p className="mt-3 rounded-xl border border-eden-amber/30 bg-eden-amber/10 px-4 py-3 text-sm leading-relaxed text-stone-800">
-                    {isZh
-                      ? '主线不是逃离混乱，而是把混乱翻译成地图：让洞察变成策略，让经历变成系统，让看不见的人性模式，变成可以被使用、测试和传播的力量。'
-                      : 'The main quest is not to escape chaos. It is to translate chaos into maps: turn insight into strategy, experience into systems, and invisible human patterns into power that can be used, tested, and shared.'}
-                  </p>
-                  <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
-                    {(isZh
-                      ? [
-                          ['Entry', '混乱现场'],
-                          ['Weapon', '观察、命名、重组'],
-                          ['Element', 'Wind + Metal'],
-                          ['Output', '系统、内容、策略'],
-                        ]
-                      : [
-                          ['Entry', 'Noisy fields'],
-                          ['Weapon', 'Observe, name, rebuild'],
-                          ['Element', 'Wind + Metal'],
-                          ['Output', 'Systems, content, strategy'],
-                        ]
-                    ).map(([label, value]) => (
-                      <div key={label} className="rounded-xl border border-stone-200 bg-stone-50 px-3 py-2">
-                        <p className="font-mono text-[9px] uppercase tracking-wider text-stone-500">{label}</p>
-                        <p className="mt-1 font-semibold text-stone-900">{value}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="grid gap-3 md:grid-cols-2">
-                  {lifeRpgWorldPrinciples.map((principle) => (
-                    <article key={principle.title.en} className="rounded-xl border border-stone-200 bg-stone-50 p-4">
-                      <h3 className="font-display text-lg font-bold text-stone-900">
-                        {principle.emoji} {principle.title[language]}
-                      </h3>
-                      <p className="mt-2 text-sm leading-relaxed text-stone-700">{principle.body[language]}</p>
-                    </article>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-          </LifeOsDropDown>
-
-          <LifeOsDropDown
-            id="life-os-stats-console"
-            index="02"
-            eyebrow={isZh ? '数值控制台' : 'Stats Console'}
-            title={isZh ? '看懂角色如何运作' : 'Read how the character operates'}
-            body={isZh ? '这一章集中放 Loadout、玩家信号、隐藏参数、阶段指令、主线任务和 8 个核心属性。' : 'This chapter contains loadout, player signals, hidden parameters, stage directives, main quest, and eight core stats.'}
-          >
-          <section className="motion-card relative mt-4 overflow-hidden rounded-2xl border border-stone-200 bg-white p-4 shadow-sm backdrop-blur sm:mt-6 sm:p-6">
-            <LifeOsHudShapes variant="hero" />
-            <div className="relative z-10">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500">
-                🎮 {isZh ? '角色解码控制台' : 'Character Decode Console'}
-              </p>
-              <div className="mt-4 grid gap-4 sm:gap-5 lg:grid-cols-[0.9fr_1.25fr_0.85fr]">
-                <article className="rounded-2xl border border-eden-mint/25 bg-stone-50 p-4 sm:p-5">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
-                    🧾 {isZh ? '角色 Loadout' : 'Character Loadout'}
-                  </p>
-                  <figure className="life-os-loadout-css-frame mx-auto mt-4 max-w-[260px] lg:max-w-none">
-                    <LifeOsWindEyeSigil
-                      label={
-                        isZh
-                          ? '风之解析者角色 Loadout：风之眼图腾透明底 CSS 动画'
-                          : 'Wind Pattern Analyst loadout: transparent CSS animation of a wind-eye sigil'
-                      }
-                    />
-                  </figure>
-                  <h2 className="mt-4 font-display text-2xl font-bold text-stone-900 sm:text-3xl">
-                    {isZh ? '风之解析者' : 'Wind Pattern Analyst'}
-                  </h2>
-                  <p className="mt-3 text-sm leading-relaxed text-stone-700">
-                    {isZh
-                      ? '不是“被定义成什么”，而是一个以风的方式进入世界，用金属般的结构感切割混乱，把经验转成系统、内容和策略的角色。'
-                      : 'Not a fixed identity label. A character who enters through wind, cuts chaos with metal-like structure, and converts experience into systems, content, and strategy.'}
-                  </p>
-                  <div className="mt-4 grid gap-2 text-xs">
-                    {(isZh
-                      ? [
-                          ['Class', 'Wandering Strategist / 流浪策略师'],
-                          ['Element', 'Wind + Metal / 风 + 金'],
-                          ['Alignment', 'Chaotic Insightful / 混沌洞察型'],
-                          ['Main Quest', '把玩家日志、商业策略和人性洞察转成可使用的人生系统'],
-                        ]
-                      : [
-                          ['Class', 'Wandering Strategist'],
-                          ['Element', 'Wind + Metal'],
-                          ['Alignment', 'Chaotic Insightful'],
-                          ['Main Quest', 'Turn player logs, business strategy, and human insight into a usable life system'],
-                        ]
-                    ).map(([label, value]) => (
-                      <div key={label} className="rounded-xl border border-stone-200 bg-white px-3 py-2">
-                        <p className="font-mono text-[10px] uppercase tracking-wider text-stone-500">{label}</p>
-                        <p className="mt-1 font-medium text-stone-800">{value}</p>
-                      </div>
-                    ))}
-                  </div>
-                </article>
-
-                <article className="rounded-2xl border border-eden-amber/30 bg-eden-amber/10 p-4 sm:p-5">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
-                    🧩 {isZh ? '玩家信号 → RPG 模组' : 'Player Signals -> RPG Modules'}
-                  </p>
-                  <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-                    {lifeRpgDecodeSignals.map((signal) => (
-                      <div key={signal.code} className="life-rpg-signal-card overflow-hidden rounded-xl border border-stone-200 bg-white p-4">
-                        {signal.code === 'WIND-57' && (
-                          <LifeRpgWindInfiltrationStrip
-                            label={isZh ? '轻量渗透型风格：风吹过后渗透进结构' : 'Soft Infiltration Style: wind passes through and infiltrates the structure'}
-                          />
-                        )}
-                        {signal.code === 'PHASE-RULE' && (
-                          <LifeRpgRuleContractStrip
-                            label={isZh ? '规则制定阶段：签署规则契约' : 'Rule-Setter Phase: signing the rule contract'}
-                          />
-                        )}
-                        <div className="life-rpg-signal-card-head flex items-center gap-3">
-                          {signal.code !== 'WIND-57' && signal.code !== 'PHASE-RULE' && (
-                            <LifeRpgSignalCssIcon signal={signal} label={signal.title[language]} />
-                          )}
-                            <div>
-                              <h3 className="font-display text-base font-bold text-stone-900">{signal.title[language]}</h3>
-                              <p className="font-mono text-[10px] uppercase tracking-wider text-stone-500">{signal.code}</p>
-                            </div>
-                        </div>
-                        <p className="mt-3 text-xs leading-relaxed text-stone-600">📡 {signal.signal[language]}</p>
-                        <p className="mt-2 text-xs leading-relaxed text-stone-800">🔓 {signal.output[language]}</p>
-                      </div>
-                    ))}
-                  </div>
-                </article>
-
-                <article className="rounded-2xl border border-eden-mint/25 bg-eden-mint/10 p-3 sm:p-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
-                    🕹️ {isZh ? '隐藏参数' : 'Hidden Parameters'}
-                  </p>
-                  <div className="mt-3 grid gap-3">
-                    <LifeOsRadarPanel
-                      stats={lifeRpgHiddenParameters}
-                      ariaLabel={isZh ? '隐藏参数雷达图' : 'Hidden parameters radar chart'}
-                      centerPrimary="4"
-                      centerSecondary="PARAMS"
-                      theme={theme}
-                      tone="amber"
-                      compact
-                    />
-                    <div className="grid grid-cols-2 gap-2">
-                      {lifeRpgHiddenParameters.map((param) => (
-                        <div key={param.key} title={param.note[language]} className="rounded-xl border border-stone-200 bg-white px-2.5 py-2">
-                          <div className="flex items-center justify-between gap-2">
-                            <p className="font-mono text-[9px] uppercase tracking-wider text-stone-500">{param.key}</p>
-                            <p className="font-mono text-sm font-bold text-stone-900">{param.value}</p>
-                          </div>
-                          <p className="mt-1 truncate text-xs font-semibold text-stone-900">{param.label[language]}</p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </article>
-              </div>
-
-              <div className="mt-4 rounded-2xl border border-stone-200 bg-stone-50 p-4 sm:mt-5 sm:p-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-stone-500">
-                  🗺️ {isZh ? '当前阶段指令 · 规则制定期' : 'Current Stage Directive · Rule-Setter Phase'}
-                </p>
-                <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                  {lifeRpgQuestDirectives.map((directive, index) => (
-                    <div key={directive.en} className="rounded-xl border border-stone-200 bg-white p-3">
-                      <p className="font-mono text-[10px] uppercase tracking-wider text-stone-500">
-                        QUEST-{String(index + 1).padStart(2, '0')}
-                      </p>
-                      <p className="mt-2 text-xs leading-relaxed text-stone-700">{directive[language]}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="mt-4 grid gap-4 sm:mt-6 sm:gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-            <div className="motion-card relative overflow-hidden rounded-2xl border border-stone-200 bg-white p-4 shadow-sm backdrop-blur sm:p-6">
-              <LifeOsHudShapes />
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500">
-                🗺️ {isZh ? '主线任务' : 'Main Quest'}
-              </p>
-              <h2 className="mt-2 font-display text-2xl font-bold text-stone-900">
-                {isZh ? '把分散能力收束成一个可传播系统' : 'Turn scattered ability into a transmissible system'}
-              </h2>
-              <p className="mt-4 text-sm leading-relaxed text-stone-700">
-                {isZh
-                  ? '真正的问题不是没有能力，而是能力太分散。主线任务是把看穿人性、经历混乱、追求自由、探索世界和研究商业系统的能力，转化成别人能理解、使用和传播的人生系统。'
-                  : 'The real problem is not lack of ability. It is scattered ability. The main quest is to turn human insight, chaos experience, freedom seeking, world exploration, and business systems into a life system other people can understand, use, and share.'}
-              </p>
-            </div>
-
-            <div className="motion-card relative overflow-hidden rounded-2xl border border-stone-200 bg-white p-3 shadow-sm backdrop-blur sm:p-4">
-              <LifeOsHudShapes />
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500">
-                📊 {isZh ? '核心属性' : 'Core Stats'}
-              </p>
-              <div className="mt-3 grid gap-3 xl:grid-cols-[0.7fr_1.3fr]">
-                <LifeOsRadarPanel
-                  stats={lifeRpgAttributes}
-                  ariaLabel={isZh ? '核心属性雷达图' : 'Core stats radar chart'}
-                  centerPrimary="8"
-                  centerSecondary="CORE"
-                  theme={theme}
-                  tone="mint"
-                  compact
-                />
-                <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 xl:grid-cols-2">
-                  {lifeRpgAttributes.map((attr) => (
-                    <div key={attr.key} title={attr.note[language]} className="rounded-xl border border-stone-200 bg-stone-50 px-2.5 py-2">
-                      <div className="flex items-center justify-between gap-2">
-                        <p className="font-mono text-[9px] uppercase tracking-wider text-stone-500">{attr.key}</p>
-                        <p className="font-mono text-sm font-bold text-stone-900">{attr.value}</p>
-                      </div>
-                      <p className="mt-1 truncate text-xs font-semibold text-stone-900">{attr.label[language]}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-          </LifeOsDropDown>
-
-          <LifeOsDropDown
-            id="life-os-skill-codex"
-            index="03"
-            eyebrow={isZh ? '技能图鉴' : 'Skill Codex'}
-            title={isZh ? '打开技能、天赋和阴影档案' : 'Open spells, auras, and shadow files'}
-            body={isZh ? '这一章像手机游戏技能页：先看卡面，再点击展开完整技能说明。' : 'This chapter works like a mobile game skill page: card face first, full file on tap.'}
-          >
-          <section className="motion-card relative mt-4 overflow-hidden rounded-2xl border border-stone-200 bg-white p-4 shadow-sm backdrop-blur sm:mt-6 sm:p-6">
-            <LifeOsHudShapes />
-            <div className="relative z-10 flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500">
-                  🛠️ {isZh ? '主动技能' : 'Active Skills'}
-                </p>
-                <p className="mt-2 max-w-3xl text-sm leading-relaxed text-stone-700">
-                  {isZh
-                    ? '主动发动的技能。卡面显示等级、类型和技能图，点开后查看完整战斗说明。'
-                    : 'Castable skills. The card face shows rank, type, and art. Open it for the full combat file.'}
-                </p>
-              </div>
-              <div className="life-os-skill-tabs flex rounded-2xl p-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-stone-600">
-                {['Active', 'Passive', 'Shadow'].map((tab, index) => (
-                  <span
-                    key={tab}
-                    className={`rounded-xl px-2.5 py-1.5 ${index === 0 ? 'bg-eden-amber text-stone-950' : ''}`}
-                  >
-                    {tab}
-                  </span>
-                ))}
-              </div>
-            </div>
-            <div className="relative z-10 mt-4 grid gap-3 md:grid-cols-2">
-              {lifeRpgActiveSkills.map((skill) => (
-                <details
-                  key={skill.name.en}
-                  className="life-os-codex-card group overflow-hidden rounded-2xl border border-eden-amber/30 shadow-sm"
-                >
-                  <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                    <figure className="relative overflow-hidden">
-                      <img
-                        src={skill.banner}
-                        alt={isZh ? `${skill.name.zh} 技能横幅` : `${skill.name.en} skill banner`}
-                        loading="lazy"
-                        className="aspect-[16/9] w-full object-cover"
-                      />
-                      <div className="life-os-image-overlay absolute inset-0" />
-                      <div className="absolute left-3 top-3 flex items-center gap-2">
-                        <LifeOsIcon src={skill.icon} alt={skill.name[language]} size="sm" />
-                        <span className="rounded-lg border border-eden-amber/40 bg-eden-amber px-2 py-1 font-mono text-xs font-bold text-stone-950">
-                          {skill.level}
-                        </span>
-                      </div>
-                      <div className="life-os-active-skill-copy absolute inset-x-0 bottom-0 p-3">
-                        <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-eden-amber">
-                          {skill.level} ACTIVE SPELL
-                        </p>
-                        <h3 className="mt-1 font-display text-xl font-bold text-stone-900">✦ {skill.name[language]}</h3>
-                        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-stone-600">{skill.bannerCaption[language]}</p>
-                      </div>
-                    </figure>
-                    <div className="life-os-card-footer flex items-center justify-between gap-3 px-3 py-3 text-xs text-stone-600">
-                      <span className="uppercase tracking-wider">{skill.type[language]}</span>
-                      <span className="rounded-full border border-stone-300/60 px-2 py-1 font-mono text-[10px] text-stone-700 group-open:border-stone-600 group-open:bg-stone-800 group-open:text-stone-100">
-                        {isZh ? '展开' : 'Open'}
-                      </span>
-                    </div>
-                  </summary>
-                  <dl className="grid gap-2 border-t border-stone-200 bg-white p-3 text-sm sm:p-4">
-                    <div className="rounded-xl border border-stone-200 bg-stone-50 p-3"><dt className="text-stone-500">🔋 {isZh ? '消耗' : 'Cost'}</dt><dd className="mt-1 text-stone-800">{skill.cost[language]}</dd></div>
-                    <div className="rounded-xl border border-eden-mint/25 bg-eden-mint/10 p-3"><dt className="text-stone-500">✨ {isZh ? '效果' : 'Effect'}</dt><dd className="mt-1 text-stone-800">{skill.effect[language]}</dd></div>
-                    <div className="rounded-xl border border-stone-200 bg-stone-50 p-3"><dt className="text-stone-500">🎯 {isZh ? '适合场景' : 'Best used in'}</dt><dd className="mt-1 text-stone-700">{skill.scene[language]}</dd></div>
-                    <div className="rounded-xl border border-eden-amber/30 bg-eden-amber/10 p-3"><dt className="text-stone-500">⚠️ {isZh ? '副作用' : 'Side effect'}</dt><dd className="mt-1 text-stone-700">{skill.sideEffect[language]}</dd></div>
-                  </dl>
-                </details>
-              ))}
-            </div>
-          </section>
-
-          <section className="mt-4 grid gap-4 sm:mt-6 sm:gap-6 lg:grid-cols-2">
-            <div className="motion-card relative overflow-hidden rounded-2xl border border-stone-200 bg-white p-4 shadow-sm backdrop-blur sm:p-6">
-              <LifeOsHudShapes />
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500">
-                🌬️ {isZh ? '被动技能' : 'Passive Skills'}
-              </p>
-              <LifeOsBanner
-                src={lifeOsBanners.passiveSkills}
-                alt={isZh ? '猫主题复古魔法被动技能横幅' : 'Cat-themed vintage magic passive skills banner'}
-                label={isZh ? 'PASSIVE AURA FILE' : 'PASSIVE AURA FILE'}
-                caption={isZh ? '不需要刻意发动的能力。像熟睡的魔法猫，后台一直运行。' : 'Talents that do not need to be cast. Quiet background magic that keeps running.'}
-              />
-              <div className="mt-4 grid grid-cols-2 gap-3 sm:mt-5">
-                {lifeRpgPassiveSkills.map((skill) => (
-                  <details key={skill.name.en} className="life-os-codex-card group overflow-hidden rounded-2xl border border-eden-mint/25 shadow-sm">
-                    <summary className="cursor-pointer list-none p-3 text-center [&::-webkit-details-marker]:hidden">
-                      <div className="mx-auto w-fit rounded-2xl border border-eden-mint/25 bg-eden-mint/10 p-2">
-                        <LifeOsIcon src={skill.icon} alt={skill.name[language]} size="md" />
-                      </div>
-                      <h3 className="mt-3 font-display text-sm font-bold leading-tight text-stone-900 sm:text-base">🌬️ {skill.name[language]}</h3>
-                      <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.18em] text-eden-mint group-open:text-eden-amber">
-                        {isZh ? '被动常驻' : 'Passive Aura'}
-                      </p>
-                    </summary>
-                    <div className="border-t border-stone-200 bg-white p-3 text-xs leading-relaxed">
-                      <p className="text-stone-500">{isZh ? '触发' : 'Trigger'} · {skill.trigger[language]}</p>
-                      <p className="mt-2 text-stone-800">✨ {skill.effect[language]}</p>
-                      <p className="mt-2 rounded-lg border border-eden-amber/25 bg-eden-amber/10 px-2 py-1.5 text-stone-700">
-                        ⚠️ {isZh ? '隐藏风险' : 'Hidden risk'} · {skill.risk[language]}
-                      </p>
-                    </div>
-                  </details>
-                ))}
-              </div>
-            </div>
-
-            <div className="motion-card relative overflow-hidden rounded-2xl border border-stone-200 bg-white p-4 shadow-sm backdrop-blur sm:p-6">
-              <LifeOsHudShapes />
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500">
-                ⚠️ {isZh ? 'Debuff 阴影系统' : 'Debuff System'}
-              </p>
-              <LifeOsBanner
-                src={lifeOsBanners.debuffs}
-                alt={isZh ? '猫主题复古魔法 Debuff 阴影横幅' : 'Cat-themed vintage magic debuff shadow banner'}
-                label={isZh ? 'SHADOW CURSE FILE' : 'SHADOW CURSE FILE'}
-                caption={isZh ? '限制角色的阴影入口。不是失败，是等待解除和升级的诅咒。' : 'Shadow entries that limit the build. Not failure, but a curse waiting to be released and upgraded.'}
-              />
-              <div className="mt-4 grid gap-3 sm:mt-5">
-                {lifeRpgDebuffs.map((debuff) => (
-                  <details key={debuff.name.en} className="life-os-codex-card group overflow-hidden rounded-2xl border border-eden-amber/30 shadow-sm">
-                    <summary className="grid cursor-pointer grid-cols-[64px_1fr_auto] items-center gap-3 p-3 [&::-webkit-details-marker]:hidden">
-                      <LifeOsIcon src={debuff.icon} alt={debuff.name[language]} size="md" />
-                      <div className="min-w-0">
-                        <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-eden-amber">
-                          {isZh ? 'Shadow Debuff' : 'Shadow Debuff'}
-                        </p>
-                        <h3 className="mt-1 font-display text-base font-bold text-stone-900">🕳️ {debuff.name[language]}</h3>
-                      </div>
-                      <span className="rounded-full border border-stone-300/60 px-2 py-1 font-mono text-[10px] text-stone-600 group-open:border-stone-600 group-open:bg-stone-800 group-open:text-stone-100">
-                        !!
-                      </span>
-                    </summary>
-                    <div className="grid gap-2 border-t border-stone-200 bg-white p-3 text-xs leading-relaxed text-stone-700">
-                      <p className="rounded-lg border border-stone-200 bg-stone-50 px-2 py-1.5">{isZh ? '触发条件' : 'Trigger'} · {debuff.trigger[language]}</p>
-                      <p className="rounded-lg border border-stone-200 bg-stone-50 px-2 py-1.5">⚠️ {isZh ? '负面效果' : 'Negative effect'} · {debuff.negative[language]}</p>
-                      <p className="rounded-lg border border-eden-mint/25 bg-eden-mint/10 px-2 py-1.5">🔧 {isZh ? '解除方式' : 'Release'} · {debuff.release[language]}</p>
-                      <p className="rounded-lg border border-eden-amber/25 bg-eden-amber/10 px-2 py-1.5 text-stone-800">⬆️ {isZh ? '升级后转化' : 'Upgraded into'} · {debuff.upgrade[language]}</p>
-                    </div>
-                  </details>
-                ))}
-              </div>
-            </div>
-          </section>
-          </LifeOsDropDown>
-
-          <LifeOsDropDown
-            id="life-os-upgrade-path"
-            index="04"
-            eyebrow={isZh ? '升级路线' : 'Upgrade Path'}
-            title={isZh ? '决定下一步怎么升级' : 'Decide the next upgrade move'}
-            body={isZh ? '这一章放成长路线、数值逻辑和系统边界。重点不是贴标签，而是找到下一步。' : 'This chapter contains growth routes, score logic, and system boundaries. The point is not labels, but the next move.'}
-          >
-          <section className="motion-card relative mt-4 overflow-hidden rounded-2xl border border-stone-200 bg-white p-4 shadow-sm backdrop-blur sm:mt-6 sm:p-6">
-            <LifeOsHudShapes />
-            <div className="relative z-10 flex items-center justify-between gap-3">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500">
-                  🌿 {isZh ? '成长路线 Skill Tree' : 'Growth Routes Skill Tree'}
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-stone-700">
-                  {isZh ? '每条路线像手游升级线：上方是路线守护图，下方是可升级节点。' : 'Each route reads like a mobile RPG upgrade lane: guardian art first, upgrade nodes below.'}
-                </p>
-              </div>
-              <span className="life-os-route-badge hidden rounded-2xl px-3 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-stone-700 sm:inline-flex">
-                4 Routes
-              </span>
-            </div>
-            <div className="relative z-10 mt-4 grid gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-4">
-              {lifeRpgSkillTrees.map((tree) => (
-                <article key={tree.title.en} className="life-os-route-card overflow-hidden rounded-2xl border border-eden-mint/25 shadow-sm">
-                  <div className="life-os-route-art relative aspect-square overflow-hidden border-b border-eden-mint/20">
-                    <img
-                      src={tree.banner}
-                      alt={`${tree.title[language]} ${isZh ? '成长路线方形视觉' : 'growth route square banner'}`}
-                      className="h-full w-full object-cover object-center"
-                      loading="lazy"
-                    />
-                    <div className="life-os-route-overlay absolute inset-x-0 bottom-0 min-h-[72px] p-3">
-                      <p className="font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-eden-amber">
-                        {isZh ? 'SKILL TREE ROUTE' : 'SKILL TREE ROUTE'}
-                      </p>
-                      <h3 className="mt-1 font-display text-xl font-bold text-stone-900">🧭 {tree.title[language]}</h3>
-                    </div>
-                  </div>
-                  <div className="p-3 sm:p-4">
-                    <div className="relative ml-2 grid gap-3 border-l border-eden-mint/30 pl-4">
-                      {tree.path[language].split(isZh ? ' → ' : ' -> ').map((node, index, nodes) => (
-                        <div key={node} className="relative">
-                          <span
-                            className={`absolute -left-[23px] top-1.5 h-3 w-3 rounded-full border ${
-                              index === nodes.length - 1
-                                ? 'border-eden-amber bg-eden-amber shadow-[0_0_18px_rgba(255,163,64,0.6)]'
-                                : 'border-eden-mint bg-white shadow-[0_0_12px_rgba(123,220,181,0.35)]'
-                            }`}
-                          />
-                          <p className="font-mono text-[9px] uppercase tracking-[0.16em] text-stone-500">
-                            NODE-{String(index + 1).padStart(2, '0')}
-                          </p>
-                          <p className="mt-1 text-sm font-semibold text-stone-800">{node}</p>
-                        </div>
-                      ))}
-                    </div>
-                    <p className="mt-4 rounded-xl border border-stone-200 bg-stone-50 px-3 py-2 text-xs leading-relaxed text-stone-700">
-                      {tree.directions[language]}
-                    </p>
-                    <p className="mt-2 rounded-xl border border-eden-amber/30 bg-eden-amber/10 px-3 py-2 text-xs leading-relaxed text-eden-amber">
-                      ⚠️ {isZh ? '主要风险' : 'Main risk'} · {tree.risk[language]}
-                    </p>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section className="mt-4 grid gap-4 sm:mt-6 sm:gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-            <div className="motion-card relative overflow-hidden rounded-2xl border border-stone-200 bg-white p-4 shadow-sm backdrop-blur sm:p-6">
-              <LifeOsHudShapes />
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500">
-                📜 {isZh ? '玩家信号与数值转换逻辑' : 'Player Signals and Score Logic'}
-              </p>
-              <div className="mt-4 rounded-xl border border-eden-mint/25 bg-eden-mint/10 p-3 sm:p-4">
-                <p className="font-mono text-xs leading-relaxed text-stone-800 sm:text-sm">
-                  {isZh
-                    ? '能力分数 = 基础倾向 + 重复信号加权 + 现实校准 - 冲突修正'
-                    : 'Ability score = base tendency + repeated-signal weight + real-life calibration - conflict correction'}
-                </p>
-              </div>
-              <ul className="mt-4 space-y-3 text-sm leading-relaxed text-stone-700">
-                {lifeRpgSources.map((source) => (
-                  <li key={source.en} className="flex gap-2">
-                    <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-eden-mint" />
-                    <span>{source[language]}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-4 text-sm leading-relaxed text-stone-600">
-                {isZh
-                  ? '现实经历权重最高。所有抽象系统都必须经过真实选择、关系模式、赚钱方式、行动惯性和阶段变化校准。'
-                  : 'Real experience carries the highest weight. Every abstract system must be calibrated against real choices, relationship patterns, earning style, action inertia, and life stages.'}
-              </p>
-              <div className="mt-4 grid gap-3 sm:grid-cols-2 sm:gap-4">
-                {lifeRpgFormulaExamples.map((example) => (
-                  <article key={example.title.en} className="rounded-xl border border-eden-amber/30 bg-eden-amber/10 p-3 sm:p-4">
-                    <div className="flex items-center justify-between gap-3">
-                      <h3 className="font-display text-lg font-bold text-stone-900">🧮 {example.title[language]}</h3>
-                      <span className="font-mono text-lg font-bold text-stone-900">{example.score}/100</span>
-                    </div>
-                    <ul className="mt-3 space-y-1 text-xs leading-relaxed text-stone-600">
-                      {example.lines[language].map((line) => (
-                        <li key={line}>{line}</li>
-                      ))}
-                    </ul>
-                  </article>
-                ))}
-              </div>
-            </div>
-
-            <div className="motion-card relative overflow-hidden rounded-2xl border border-eden-amber/30 bg-white p-4 shadow-sm backdrop-blur sm:p-6">
-              <LifeOsHudShapes />
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500">
-                🔒 {isZh ? '免责声明' : 'Disclaimer'}
-              </p>
-              <h2 className="mt-2 font-display text-2xl font-bold text-stone-900">
-                {isZh ? '不是标签结论，是升级地图' : 'Not a label verdict. An upgrade map.'}
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-stone-700">
-                {isZh
-                  ? '这不是人格标签，也不是固定结论。它是一张帮助用户看懂自己如何运作的 RPG 地图。'
-                  : 'This is not a personality label or a fixed verdict. It is a RPG map for understanding how a character works.'}
-              </p>
-              <ul className="mt-4 space-y-2 text-sm leading-relaxed text-stone-700">
-                {(isZh
-                  ? [
-                      '不是为了证明任何结局。',
-                      '不是为了把人困在标签里。',
-                      '重点是看见初始属性、主线任务、隐藏 Debuff 和成长路线。',
-                      '最终问题不是“我是什么”，而是“下一步怎么升级”。',
-                    ]
-                  : [
-                      'It is not built to prove any fixed ending.',
-                      'It is not built to trap people inside a label.',
-                      'The focus is initial stats, main quests, hidden debuffs, and growth routes.',
-                      'The final question is not “what am I?” It is “what is the next upgrade move?”',
-                    ]
-                ).map((item) => (
-                  <li key={item} className="flex gap-2">
-                    <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-eden-amber" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
-          </LifeOsDropDown>
-        </div>
-      </main>
-    </div>
-  );
-};
-
 const brandGuidePrinciples = [
   {
     title: { en: 'Clarity', zh: '清晰' },
@@ -8849,6 +7523,79 @@ const brandGuideCssRules = [
   },
 ] as const;
 
+const LifeOsFullPage: React.FC<{
+  homeHref: string;
+  baseUrl: string;
+  language: Language;
+  setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
+  theme: Theme;
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ homeHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
+  const isZh = language === 'zh';
+  const appUrl = 'https://edent95.github.io/8g-master/';
+
+  return (
+    <ProductStorePage
+      isZh={isZh}
+      controls={<HeaderControls language={language} setLanguage={setLanguage} themePreference={themePreference} theme={theme} setThemePreference={setThemePreference} />}
+      backHref={homeHref}
+      backLabel={{ en: 'Back home', zh: '返回主页' }}
+      icon={<ProjectsLifeOsCssIcon label="Life OS CSS app icon" />}
+      name="Life OS"
+      kicker={{ en: 'Personal system · Self-knowledge', zh: '个人系统 · 自我认识' }}
+      tagline={{ en: 'Build the long-term base map first. Then ask about right now.', zh: '先建立长期底图，再问当下的问题。' }}
+      meta={{ en: 'Free · Runs in any browser · Chinese interface', zh: '免费 · 浏览器直接打开 · 中文界面' }}
+      primary={{ href: appUrl, external: true, label: { en: 'Open Life OS', zh: '打开 Life OS' } }}
+      quickLinks={[
+        { href: '#overview', label: { en: 'Overview', zh: '产品简介' } },
+        { href: '#faq', label: { en: 'FAQ', zh: '常见问题' } },
+        { href: '#information', label: { en: 'Information', zh: '产品资料' } },
+      ]}
+      stage={{
+        src: appUrl,
+        domain: 'edent95.github.io/8g-master',
+        title: { en: 'Interactive Life OS star map', zh: 'Life OS 互动星图' },
+        caption: { en: 'The live app, running right here. Open it in a new tab to build your own base map.', zh: '真实应用直接跑在这里。想建立自己的底图，就在新标签打开。' },
+      }}
+      body={[
+        { kind: 'p', text: { en: 'Most self-knowledge tools answer one question at a time, and every answer starts from zero. Life OS flips the order: it builds a long-term base map from your birth data first, then lets you ask situational questions against something that does not move.', zh: '大多数自我认识的工具都是一次回答一个问题，而且每次都从零开始。Life OS 把顺序倒过来：先用出生资料建立一张长期底图，之后所有当下的提问，都有一个不会晃动的参照。' } },
+        { kind: 'p', text: { en: 'The map is assembled by cross-reading several traditional systems—BaZi, I Ching hexagrams, elemental profiling, and tarot records—and surfacing where they agree. What you read is an element profile, a current phase, a confidence level, and an action strategy, each traceable back to the evidence behind it.', zh: '这张底图由多个传统系统交叉阅读组成——八字、易经卦象、元素画像、塔罗记录——并把它们互相重合的部分提上来。你看到的是元素画像、当前阶段、置信度和行动策略，每一条都能追回它背后的证据。' } },
+        { kind: 'h', text: { en: 'How it works', zh: '怎么使用' } },
+        { kind: 'steps', items: [
+          { title: { en: 'Build the base map', zh: '建立底图' }, text: { en: 'Enter birth date, time, and place. The system runs a time correction and generates your long-term profile.', zh: '输入出生日期、时间与地点。系统会做时间校正，并生成你的长期底图。' } },
+          { title: { en: 'Read the profile', zh: '读画像' }, text: { en: 'Element profile, main axes, current phase, and a stated confidence level—not a fixed identity label.', zh: '元素画像、主元素、当前阶段和明确标出的置信度——不是一个固定的身份标签。' } },
+          { title: { en: 'Ask about now', zh: '问当下' }, text: { en: 'Pick from question categories—self, timing, work, money, relationships, shadow, tactics—and read against the map.', zh: '从问题分类里选一个——自我、时机、事业、金钱、关系、阴影、当下战术——对着底图来读。' } },
+          { title: { en: 'Take the evidence with you', zh: '带走证据' }, text: { en: 'Copy the whole thing as a prompt pack and keep asking inside any AI agent you already use.', zh: '把整份资料复制成 prompt 包，拿到你已经在用的任何 AI agent 里继续问。' } },
+        ] },
+        { kind: 'h', text: { en: 'What makes it different', zh: '它和别的不一样在哪' } },
+        { kind: 'p', text: { en: 'It shows its work. Every conclusion sits on top of a visible evidence trail—which system said it, and how many of them agreed. When systems disagree, the confidence number drops instead of the disagreement quietly disappearing.', zh: '它把过程摊开。每一个结论上面都有一条可见的证据链——哪个系统说的、有几个系统同意。当系统之间不一致时，置信度会下降，而不是让分歧悄悄消失。' } },
+        { kind: 'callout', label: { en: 'A map, not a label', zh: '这是底图，不是标签' }, text: { en: 'The profile describes the way you most often operate right now—the combination you reach for by default. It is a current tendency, not a fixed identity, and it is meant to be re-read as your situation changes.', zh: '画像描述的是你现在最常用的运作方式，是你默认会伸手去拿的那个组合。它是当前的倾向，不是固定身份，也本来就该在处境改变时重新读一次。' } },
+        { kind: 'p', text: { en: 'It also refuses to lock you in. The Ask Agent panel packages your map and its evidence into a prompt you can paste anywhere, so the reading stays useful even outside this tool.', zh: '它也不想把你锁住。「问 Agent」会把你的底图和证据打包成一段可以贴到任何地方的 prompt，让这份阅读在这个工具之外依然有用。' } },
+        { kind: 'callout', tone: 'warning', label: { en: 'Not prediction', zh: '不是预测' }, text: { en: 'Life OS is a framing and reflection tool, not fortune telling. It does not forecast events, and nothing here should stand in for medical, legal, or financial advice. Read the output as a prompt for your own thinking, not a verdict.', zh: 'Life OS 是一个整理与反思的工具，不是算命。它不预测事件，也不应该拿来代替医疗、法律或财务上的专业意见。把输出当成让你自己继续想下去的提示，而不是判决。' } },
+      ]}
+      faq={[
+        { q: { en: 'Is this fortune telling?', zh: '这是算命吗？' }, a: { en: 'No. It compiles traditional systems into a readable profile with visible sources and a confidence level. It is built for reflection and framing—what tends to be true about how you operate—not for predicting what will happen.', zh: '不是。它把几个传统系统整理成一份可读、可溯源、带置信度的画像。它是拿来反思和整理的——关于你通常怎么运作——而不是拿来预测会发生什么。' } },
+        { q: { en: 'What information do I need to provide?', zh: '需要提供什么资料？' }, a: { en: 'Birth date, time, place, and gender. The more accurate the birth time, the more stable the corrected base map—the system applies a time correction before building anything.', zh: '出生日期、时间、地点和性别。出生时间越准，校正后的底图越稳——系统会先做时间校正，再开始生成。' } },
+        { q: { en: 'Why build a base map before asking questions?', zh: '为什么要先建底图再提问？' }, a: { en: 'A single question tends to get answered by whatever mood you are in that day. The base map is the part that does not move, so situational answers have something to be measured against.', zh: '单独一个问题，答案很容易被你当天的情绪带走。底图是不会动的那部分，当下的答案才有东西可以对照。' } },
+        { q: { en: 'What is the Ask Agent panel?', zh: '「问 Agent」是什么？' }, a: { en: 'It packages your profile and its underlying evidence into a copyable prompt. Paste it into whichever AI you already use and keep the conversation going there—the reading is not trapped inside this tool.', zh: '它把你的画像和背后的证据打包成一段可复制的 prompt。贴到你已经在用的任何 AI 里继续聊——这份阅读不会被困在这个工具里。' } },
+        { q: { en: 'Is the interface in Chinese?', zh: '界面是中文的吗？' }, a: { en: 'Yes. Life OS is currently a Chinese-language app, including the readings and the generated prompt packs.', zh: '是的。Life OS 目前是中文应用，包括阅读内容和生成的 prompt 包。' } },
+        { q: { en: 'Which systems does it read from?', zh: '它读的是哪些系统？' }, a: { en: 'BaZi, I Ching hexagrams, elemental profiling, and tarot records. Conclusions with agreement across several systems are weighted higher than anything a single system says alone.', zh: '八字、易经卦象、元素画像和塔罗记录。在多个系统之间重合的结论，权重会高于任何单一系统自己说的话。' } },
+      ]}
+      specs={[
+        [{ en: 'Category', zh: '类别' }, { en: 'Personal system and self-knowledge', zh: '个人系统与自我认识' }],
+        [{ en: 'Systems read', zh: '读取系统' }, { en: 'BaZi · I Ching · Element profile · Tarot records', zh: '八字 · 易经卦象 · 元素画像 · 塔罗记录' }],
+        [{ en: 'Modules', zh: '主要模块' }, { en: 'Star map · Base map · Ask · Records', zh: '星图 · 个人底图 · 提问 · 记录' }],
+        [{ en: 'Output', zh: '输出' }, { en: 'Element profile · Current phase · Action strategy · Agent prompt pack', zh: '元素画像 · 当前阶段 · 行动策略 · Agent prompt 包' }],
+        [{ en: 'Interface', zh: '界面语言' }, { en: 'Chinese', zh: '中文' }],
+        [{ en: 'Platform', zh: '平台' }, { en: 'Responsive web app', zh: '响应式 Web App' }],
+        [{ en: 'Developer', zh: '开发者' }, { en: 'Eden Tan', zh: 'Eden Tan' }],
+      ]}
+      also={productSiblingCards(baseUrl, 'life-os')}
+    />
+  );
+};
+
 const BrandGuideFullPage: React.FC<{
   homeHref: string;
   baseUrl: string;
@@ -9492,46 +8239,75 @@ const PreviousProjectsFullPage: React.FC<{
 
 const JijuPetFullPage: React.FC<{
   homeHref: string;
+  baseUrl: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
   themePreference: ThemePreference;
   theme: Theme;
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
-}> = ({ homeHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
+}> = ({ homeHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
   const jijuUrl = 'https://jiju.pet/';
   const jijuInstallUrl = 'https://jiju.pet/?install=1';
-  const highlights = isZh
-    ? [['发现', '用真实需求寻找地点，不只看星级。室内或户外、宠物政策、空间和现场体验都应该说清楚。'], ['信任', '地点资料、商家政策与社区记录互相验证，减少“到了才发现不适合”的落差。'], ['记忆', '为宠物建立真实档案，把去过的地方、共同经历和成长过程保存下来。'], ['社区', '让用户贡献地点、补充情况并记录 Sanctuary impact，让资料随着使用持续变好。']]
-    : [['Discovery', 'Find places through real needs, not ratings alone. Indoor or outdoor, pet policy, space, and on-site reality should be clear.'], ['Trust', 'Place details, merchant policies, and community records verify one another—reducing the gap between a listing and the real visit.'], ['Memory', 'Build a real profile for each pet and keep the places, shared experiences, and growth that happen over time.'], ['Community', 'Let people contribute places, update conditions, and record sanctuary impact so the knowledge improves through use.']];
-  const workflow = isZh
-    ? [['01', '发现', '按地点、宠物需求和真实场景开始探索。'], ['02', '确认', '先查看政策、空间、设施与社区记录。'], ['03', '到访', '带着更清楚的预期，完成一次真实出门。'], ['04', '记录', '留下回忆、补充资料，并帮助下一位宠物主人。']]
-    : [['01', 'Discover', 'Start with location, pet needs, and the real situation you are planning for.'], ['02', 'Check', 'Review policy, space, facilities, and community records before leaving.'], ['03', 'Visit', 'Arrive with clearer expectations and enjoy a real outing together.'], ['04', 'Remember', 'Save the memory, improve the listing, and help the next pet parent.']];
 
   return (
-    <div className="page-shell etreport-page etreport-product-page jiju-store-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
-      <main className="px-5 py-8 md:px-8 md:py-10"><div className="mx-auto max-w-6xl">
-        <div className="etreport-topbar flex flex-wrap items-center justify-between gap-3"><a href={homeHref} className="etreport-back-link inline-flex items-center gap-2 text-sm font-medium"><ArrowLeft size={16} />{isZh ? '返回主页' : 'Back to Home'}</a><HeaderControls language={language} setLanguage={setLanguage} themePreference={themePreference} theme={theme} setThemePreference={setThemePreference} /></div>
-
-        <header className="etreport-store-hero"><div className="etreport-store-icon"><ProjectsJijuCssIcon label="Jiju CSS app icon" /></div><div className="etreport-store-intro"><p className="etreport-kicker">{isZh ? '本地发现 · 宠物生活' : 'Local Discovery · Pet Life'}</p><h1>Jiju</h1><p className="etreport-store-tagline">{isZh ? '找到真正适合你和宠物一起去的地方。' : 'Find places that truly work for you and your pet.'}</p><p className="etreport-store-byline">{isZh ? '从 Penang 开始，由 Eden Tan 设计与构建' : 'Starting in Penang. Designed and built by Eden Tan.'}</p><div className="etreport-store-actions"><a href={jijuUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get">{isZh ? '打开 Jiju' : 'Open Jiju'}</a><a href={jijuInstallUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get jiju-store-install"><Download size={15} />{isZh ? '安装 App' : 'Install app'}</a><a href="#jiju-overview" className="etreport-text-cta">{isZh ? '了解产品' : 'Explore product'} <span aria-hidden>›</span></a></div></div></header>
-
-        <div className="etreport-store-facts"><div><MapPin aria-hidden="true" /><span>{isZh ? '起点' : 'Started'}</span><strong>Penang</strong></div><div><Search aria-hidden="true" /><span>{isZh ? '核心' : 'Core'}</span><strong>{isZh ? '地点发现' : 'Place discovery'}</strong></div><div><UserRound aria-hidden="true" /><span>{isZh ? '资料' : 'Profiles'}</span><strong>{isZh ? '宠物档案' : 'Real pet identity'}</strong></div><div><Bookmark aria-hidden="true" /><span>{isZh ? '记忆' : 'Memory'}</span><strong>{isZh ? '到访记录' : 'Visit records'}</strong></div></div>
-
-        <section className="etreport-live-demo" aria-labelledby="jiju-live-title"><div className="etreport-live-demo-head"><div><p className="etreport-kicker">Live site</p><h2 id="jiju-live-title">{isZh ? '直接探索 Jiju。' : 'Explore Jiju right here.'}</h2></div><a href={jijuUrl} target="_blank" rel="noopener noreferrer" className="etreport-text-cta">{isZh ? '在新标签打开' : 'Open in new tab'} <span aria-hidden>↗</span></a></div><div className="etreport-live-demo-frame"><div className="etreport-live-demo-toolbar" aria-hidden="true"><span /><span /><span /><p>jiju.pet</p></div><iframe src={jijuUrl} title={isZh ? 'Jiju 互动网站' : 'Interactive Jiju website'} loading="lazy" /></div></section>
-
-        <section className="etreport-app-description" id="jiju-overview"><div className="etreport-app-prose"><p className="etreport-kicker">{isZh ? '产品简介' : 'Overview'}</p><h2>{isZh ? 'Pet-friendly 不应该只是一个模糊标签。' : 'Pet-friendly should mean more than a vague label.'}</h2><p>{isZh ? 'Jiju 是一个围绕真实宠物生活建立的本地发现系统。它帮助宠物主人在出门前看懂地点政策、空间条件与实际体验，也让每次到访成为可以保存和回看的共同记忆。' : 'Jiju is a local discovery system built around real life with pets. It helps pet parents understand place policies, space, and lived experience before leaving—and gives every outing a place to be remembered.'}</p><p>{isZh ? '重点不是收集最多地点，而是让资料值得相信：这个地方是否真的欢迎宠物、适合哪种宠物、应该坐哪里，以及最近的情况有没有改变。' : 'The goal is not the largest directory. It is information worth trusting: whether a place genuinely welcomes pets, which pets it works for, where they can stay, and whether conditions have changed.'}</p></div></section>
-
-        <section className="etreport-app-section"><p className="etreport-kicker">{isZh ? '核心能力' : 'Highlights'}</p><h2>{isZh ? '从找到地点，到留下共同记忆。' : 'From finding a place to keeping the memory.'}</h2><div className="etreport-app-feature-list">{highlights.map(([title, body], index) => { const Icon = [Search, SearchCheck, Bookmark, UserRound][index]; return <article key={title}><span>0{index + 1}</span><Icon className="etreport-app-feature-icon" aria-hidden="true" /><div><h3>{title}</h3><p>{body}</p></div></article>; })}</div></section>
-
-        <section className="etreport-app-section"><p className="etreport-kicker">{isZh ? '怎么使用' : 'How it works'}</p><h2>{isZh ? '四步完成一次更放心的出门。' : 'A better outing in four simple steps.'}</h2><div className="etreport-app-workflow">{workflow.map(([step, title, body], index) => { const Icon = [Search, SearchCheck, MapPin, Bookmark][index]; return <article key={step}><div className="etreport-app-workflow-head"><Icon aria-hidden="true" /><span>{step}</span></div><h3>{title}</h3><p>{body}</p></article>; })}</div></section>
-
-        <section className="etreport-app-privacy"><div><UserRound className="etreport-app-section-icon" aria-hidden="true" /><p className="etreport-kicker">{isZh ? '信任边界' : 'Trust boundary'}</p><h2>{isZh ? '宠物是真实身份，不是内容道具。' : 'Pets are real identities, not content props.'}</h2></div><p>{isZh ? 'Jiju 的资料来自真实地点政策、用户贡献与实际到访记录。宠物档案、照片和社区互动需要清楚的权限边界；地点变动则应该被更新，而不是让旧资料一直误导下一次出门。' : 'Jiju combines real place policies, user contributions, and actual visit records. Pet profiles, photos, and community activity need clear permission boundaries, while changing place conditions should be updated instead of misleading the next visit.'}</p></section>
-
-        <section className="etreport-app-details"><h2><Layers aria-hidden="true" />{isZh ? '产品资料' : 'Information'}</h2><dl><div><dt>{isZh ? '类别' : 'Category'}</dt><dd>{isZh ? '本地发现与宠物生活' : 'Local discovery and pet life'}</dd></div><div><dt>{isZh ? '当前城市' : 'Current city'}</dt><dd>Penang, Malaysia</dd></div><div><dt>{isZh ? '主要模块' : 'Modules'}</dt><dd>Discovery · Place profiles · Pet profiles · Visits · Community</dd></div><div><dt>{isZh ? '平台' : 'Platform'}</dt><dd>{isZh ? '响应式 Web App' : 'Responsive web app'}</dd></div><div><dt>{isZh ? '开发者' : 'Developer'}</dt><dd>Eden Tan</dd></div></dl></section>
-
-        <section className="etreport-app-final"><ProjectsJijuCssIcon label="Jiju CSS app icon" /><div><h2>{isZh ? '下一次出门，先问 Jiju。' : 'For the next outing, ask Jiju first.'}</h2><p>{isZh ? '探索地点、确认真实条件，再和宠物一起留下新的记忆。' : 'Explore the place, check the real conditions, then make a new memory together.'}</p><div className="etreport-app-final-actions"><a href={jijuUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get">{isZh ? '打开 Jiju' : 'Open Jiju'}</a><a href={jijuInstallUrl} target="_blank" rel="noopener noreferrer" className="etreport-store-get jiju-store-install"><Download size={15} />{isZh ? '安装 App' : 'Install app'}</a></div></div></section>
-      </div></main>
-    </div>
+    <ProductStorePage
+      isZh={isZh}
+      controls={<HeaderControls language={language} setLanguage={setLanguage} themePreference={themePreference} theme={theme} setThemePreference={setThemePreference} />}
+      backHref={homeHref}
+      backLabel={{ en: 'Back home', zh: '返回主页' }}
+      icon={<ProjectsJijuCssIcon label="Jiju CSS app icon" />}
+      name="Jiju"
+      kicker={{ en: 'Local discovery · Pet life', zh: '本地发现 · 宠物生活' }}
+      tagline={{ en: 'Find places that truly work for you and your pet.', zh: '找到真正适合你和宠物一起去的地方。' }}
+      meta={{ en: 'Free · Starting in Penang · Runs in any browser', zh: '免费 · 从 Penang 开始 · 浏览器直接打开' }}
+      primary={{ href: jijuUrl, external: true, label: { en: 'Open Jiju', zh: '打开 Jiju' } }}
+      secondary={{ href: jijuInstallUrl, external: true, icon: <Download size={16} />, label: { en: 'Install app', zh: '安装 App' } }}
+      quickLinks={[
+        { href: '#overview', label: { en: 'Overview', zh: '产品简介' } },
+        { href: '#faq', label: { en: 'FAQ', zh: '常见问题' } },
+        { href: '#information', label: { en: 'Information', zh: '产品资料' } },
+      ]}
+      stage={{
+        src: jijuUrl,
+        domain: 'jiju.pet',
+        title: { en: 'Interactive Jiju website', zh: 'Jiju 互动网站' },
+        caption: { en: 'The live site, running right here. Open it in a new tab to search your own area.', zh: '真实网站直接跑在这里。想搜自己的区域，就在新标签打开。' },
+      }}
+      body={[
+        { kind: 'p', text: { en: 'Jiju is a local discovery system built around real life with pets. It helps pet parents understand place policies, space, and lived experience before leaving—and gives every outing a place to be remembered.', zh: 'Jiju 是一个围绕真实宠物生活建立的本地发现系统。它帮助宠物主人在出门前看懂地点政策、空间条件与实际体验，也让每次到访成为可以保存和回看的共同记忆。' } },
+        { kind: 'p', text: { en: 'The goal is not the largest directory. It is information worth trusting: whether a place genuinely welcomes pets, which pets it works for, where they can stay, and whether conditions have changed since the last visit.', zh: '目标不是收集最多地点，而是让资料值得相信：这个地方是否真的欢迎宠物、适合哪种宠物、应该坐哪里，以及最近的情况有没有改变。' } },
+        { kind: 'h', text: { en: 'How it works', zh: '怎么使用' } },
+        { kind: 'steps', items: [
+          { title: { en: 'Discover', zh: '发现' }, text: { en: 'Start with location, pet needs, and the real situation you are planning for.', zh: '按地点、宠物需求和真实场景开始探索。' } },
+          { title: { en: 'Check', zh: '确认' }, text: { en: 'Review policy, space, facilities, and community records before leaving.', zh: '先查看政策、空间、设施与社区记录。' } },
+          { title: { en: 'Visit', zh: '到访' }, text: { en: 'Arrive with clearer expectations and enjoy a real outing together.', zh: '带着更清楚的预期，完成一次真实出门。' } },
+          { title: { en: 'Remember', zh: '记录' }, text: { en: 'Save the memory, improve the listing, and help the next pet parent.', zh: '留下回忆、补充资料，并帮助下一位宠物主人。' } },
+        ] },
+        { kind: 'h', text: { en: 'What Jiju is built around', zh: 'Jiju 围绕什么建立' } },
+        { kind: 'p', text: { en: 'Discovery works through real needs, not ratings alone. Indoor or outdoor, pet policy, space, and the on-site reality should all be clear before you decide to go.', zh: '发现是用真实需求驱动的，不只看星级。室内或户外、宠物政策、空间和现场体验，都应该在你决定出门前就说清楚。' } },
+        { kind: 'p', text: { en: 'Trust comes from cross-checking. Place details, merchant policies, and community records verify one another, which reduces the gap between a listing and the real visit.', zh: '信任来自互相验证。地点资料、商家政策与社区记录彼此校对，减少「到了才发现不适合」的落差。' } },
+        { kind: 'callout', label: { en: 'Memory', zh: '记忆' }, text: { en: 'Each pet gets a real profile, so the places you visited, the experiences you shared, and how they grew over time all stay in one place.', zh: '每只宠物都有真实档案，把去过的地方、共同经历和成长过程都保存在同一个地方。' } },
+        { kind: 'p', text: { en: 'Community keeps it alive. People contribute places, update conditions, and record sanctuary impact, so the knowledge improves through use instead of aging quietly.', zh: '社区让它活着。用户贡献地点、补充情况并记录 Sanctuary impact，让资料随着使用持续变好，而不是慢慢过期。' } },
+        { kind: 'callout', tone: 'warning', label: { en: 'Trust boundary', zh: '信任边界' }, text: { en: 'Pets are real identities, not content props. Pet profiles, photos, and community activity need clear permission boundaries, and changing place conditions should be updated instead of misleading the next visit.', zh: '宠物是真实身份，不是内容道具。宠物档案、照片和社区互动需要清楚的权限边界；地点变动应该被更新，而不是让旧资料一直误导下一次出门。' } },
+      ]}
+      faq={[
+        { q: { en: 'Which city does Jiju cover?', zh: 'Jiju 覆盖哪个城市？' }, a: { en: 'It starts in Penang, Malaysia. Depth matters more than reach here—one city with information you can actually rely on is worth more than ten with thin listings.', zh: '目前从马来西亚 Penang 开始。这里深度比覆盖面重要——一个城市里可靠的资料，胜过十个城市的空壳列表。' } },
+        { q: { en: 'How is this different from a maps search?', zh: '和地图搜索有什么不同？' }, a: { en: 'A maps result tells you a place exists. Jiju tells you whether it works for your pet: the policy, the space, where they can sit, and what recent visitors actually found.', zh: '地图告诉你有这个地方。Jiju 告诉你它适不适合你的宠物：政策、空间、可以待在哪，以及最近去过的人实际看到什么。' } },
+        { q: { en: 'Do I need an account?', zh: '需要注册吗？' }, a: { en: 'You can browse and search without one. An account is for the parts that belong to you—pet profiles, saved places, and visit records.', zh: '浏览和搜索不需要。账号是为了那些属于你的部分——宠物档案、收藏地点和到访记录。' } },
+        { q: { en: 'Can I add or correct a place?', zh: '我可以新增或更正地点吗？' }, a: { en: 'Yes. Contributions are the point. A place that changed its policy is worth reporting, because the next pet parent is the one who benefits.', zh: '可以，贡献本来就是重点。地点改了政策就值得回报，因为下一个宠物主人会因此受益。' } },
+        { q: { en: 'Is there an app to install?', zh: '有 App 可以安装吗？' }, a: { en: 'Jiju is a responsive web app, so it works in any browser. The Install app button adds it to your home screen as a standalone app.', zh: 'Jiju 是响应式 Web App，任何浏览器都能用。点「安装 App」就会加到主屏幕，变成独立应用。' } },
+        { q: { en: 'What is Sanctuary impact?', zh: 'Sanctuary impact 是什么？' }, a: { en: 'It is a record of community contribution around rescue and shelter work, kept alongside the discovery data rather than treated as a separate campaign.', zh: '这是关于救助与收容工作的社区贡献记录，和发现数据放在一起，而不是当成另一场独立活动。' } },
+      ]}
+      specs={[
+        [{ en: 'Category', zh: '类别' }, { en: 'Local discovery and pet life', zh: '本地发现与宠物生活' }],
+        [{ en: 'Current city', zh: '当前城市' }, { en: 'Penang, Malaysia', zh: '马来西亚 Penang' }],
+        [{ en: 'Modules', zh: '主要模块' }, { en: 'Discovery · Place profiles · Pet profiles · Visits · Community', zh: '发现 · 地点档案 · 宠物档案 · 到访 · 社区' }],
+        [{ en: 'Platform', zh: '平台' }, { en: 'Responsive web app', zh: '响应式 Web App' }],
+        [{ en: 'Developer', zh: '开发者' }, { en: 'Eden Tan', zh: 'Eden Tan' }],
+      ]}
+      also={productSiblingCards(baseUrl, 'jiju')}
+    />
   );
 };
 
@@ -10480,6 +9256,16 @@ const homeCollageItems: Array<{
   ctaLabel?: HomeCopy;
 }> = [
   {
+    title: 'Life OS',
+    tone: 'starmap',
+    image: 'home-banners/life-os-banner-poster.jpg',
+    video: 'home-banners/life-os-banner.mp4',
+    imageAlt: { en: 'A lone figure standing inside a glowing rune circle on a mountain summit as a dragon descends through storm clouds', zh: '一个人站在山巅发光的符阵中，巨龙穿过风暴云层俯冲而下' },
+    href: 'life-os',
+    linkLabel: { en: 'Open the Life OS product page', zh: '打开 Life OS 产品页面' },
+    ctaLabel: { en: 'Learn more', zh: '了解更多' },
+  },
+  {
     title: 'ETReportHub',
     tone: 'ocean',
     image: 'home-banners/etreporthub-banner-poster.jpg',
@@ -10546,6 +9332,40 @@ const homeCollageItems: Array<{
   },
 ];
 
+/**
+ * The collage cards ride a compositor-driven marquee, and IntersectionObserver does not
+ * reliably recompute while a transform animation runs on the compositor — a card can
+ * slide fully into view without a single callback, which left its video paused forever.
+ * getBoundingClientRect does see the animated transform, so every collage video registers
+ * a sampler here and one shared rAF loop checks them at ~400ms intervals. rAF is the right
+ * clock for this: it stops on its own when the page is hidden (unlike setInterval, which
+ * merely gets throttled) and it is in step with the animation it is sampling.
+ */
+const collageVideoSamplers = new Set<() => void>();
+let collageSamplerFrame = 0;
+let collageSamplerLast = 0;
+
+const runCollageSamplers = (now: number) => {
+  collageSamplerFrame = window.requestAnimationFrame(runCollageSamplers);
+  if (now - collageSamplerLast < 400) return;
+  collageSamplerLast = now;
+  collageVideoSamplers.forEach((sample) => sample());
+};
+
+const registerCollageVideoSampler = (sample: () => void) => {
+  collageVideoSamplers.add(sample);
+  if (!collageSamplerFrame) {
+    collageSamplerFrame = window.requestAnimationFrame(runCollageSamplers);
+  }
+  return () => {
+    collageVideoSamplers.delete(sample);
+    if (collageVideoSamplers.size === 0 && collageSamplerFrame) {
+      window.cancelAnimationFrame(collageSamplerFrame);
+      collageSamplerFrame = 0;
+    }
+  };
+};
+
 const HomeCollageVideo: React.FC<{ src: string; poster?: string }> = ({ src, poster }) => {
   const videoRef = React.useRef<HTMLVideoElement>(null);
 
@@ -10554,7 +9374,6 @@ const HomeCollageVideo: React.FC<{ src: string; poster?: string }> = ({ src, pos
     if (!video) return;
 
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let isVisible = true;
 
     // Safari checks both the muted property and the content attribute before
     // allowing inline autoplay.
@@ -10562,39 +9381,31 @@ const HomeCollageVideo: React.FC<{ src: string; poster?: string }> = ({ src, pos
     video.muted = true;
     video.setAttribute('muted', '');
 
-    const syncPlayback = () => {
-      if (motionQuery.matches) {
-        video.pause();
-        video.currentTime = 0;
-        return;
-      }
-      if (document.hidden || !isVisible) {
-        video.pause();
-        return;
-      }
-      void video.play().catch(() => undefined);
+    const shouldPlay = () => {
+      if (motionQuery.matches || document.hidden) return false;
+      const rect = video.getBoundingClientRect();
+      // zero-sized means a stylesheet hid it, not that it scrolled away
+      if (rect.width === 0 || rect.height === 0) return false;
+      return rect.right > 0 && rect.left < window.innerWidth && rect.bottom > 0 && rect.top < window.innerHeight;
     };
 
-    let visibilityObserver: IntersectionObserver | undefined;
-    if ('IntersectionObserver' in window) {
-      isVisible = false;
-      visibilityObserver = new IntersectionObserver(
-        ([entry]) => {
-          isVisible = entry?.isIntersecting ?? false;
-          syncPlayback();
-        },
-        { threshold: 0.15 },
-      );
-      visibilityObserver.observe(video);
-    }
+    const syncPlayback = () => {
+      if (shouldPlay()) {
+        void video.play().catch(() => undefined);
+      } else if (!video.paused) {
+        video.pause();
+      }
+    };
 
     syncPlayback();
+    const unregister = registerCollageVideoSampler(syncPlayback);
     motionQuery.addEventListener('change', syncPlayback);
     video.addEventListener('canplay', syncPlayback);
+    // rAF stops while the page is hidden, so pausing has to be driven by the event
     document.addEventListener('visibilitychange', syncPlayback);
 
     return () => {
-      visibilityObserver?.disconnect();
+      unregister();
       motionQuery.removeEventListener('change', syncPlayback);
       video.removeEventListener('canplay', syncPlayback);
       document.removeEventListener('visibilitychange', syncPlayback);
@@ -10618,32 +9429,18 @@ const HomeCollageVideo: React.FC<{ src: string; poster?: string }> = ({ src, pos
   );
 };
 
-const HomeCollage: React.FC<{ language: Language; baseUrl: string }> = ({ language, baseUrl }) => (
-  <div className="eden-collage" aria-label={language === 'zh' ? 'Eden 的项目与生活观察拼贴' : "Eden's work and field-note collage"}>
-    {homeCollageItems.map((item) => {
-      const cssArt = item.cssArtProjectTitle ? getHomeSelectedWorkBannerByTitle(item.cssArtProjectTitle) : undefined;
-      const CssArt = cssArt?.Component;
-      const cardContent = (
+type HomeCollageItem = (typeof homeCollageItems)[number];
+
+const HomeCollageCard: React.FC<{ item: HomeCollageItem; language: Language; baseUrl: string; duplicate?: boolean }> = ({ item, language, baseUrl, duplicate = false }) => {
+  const cssArt = item.cssArtProjectTitle ? getHomeSelectedWorkBannerByTitle(item.cssArtProjectTitle) : undefined;
+  const CssArt = cssArt?.Component;
+  const cardContent = (
+    <>
+      {CssArt ? (
+        <CssArt label={cssArt?.label[language] ?? item.title} />
+      ) : item.video ? (
         <>
-          {CssArt ? (
-            <CssArt label={cssArt?.label[language] ?? item.title} />
-          ) : item.video ? (
-            <>
-              {item.image ? (
-                <img
-                  className="eden-collage-image"
-                  src={resolveAssetPath(baseUrl, item.image)}
-                  alt={item.imageAlt?.[language] ?? item.title}
-                  loading="lazy"
-                  decoding="async"
-                />
-              ) : null}
-              <HomeCollageVideo
-                src={resolveAssetPath(baseUrl, item.video)}
-                poster={item.image ? resolveAssetPath(baseUrl, item.image) : undefined}
-              />
-            </>
-          ) : item.image ? (
+          {item.image ? (
             <img
               className="eden-collage-image"
               src={resolveAssetPath(baseUrl, item.image)}
@@ -10651,78 +9448,81 @@ const HomeCollage: React.FC<{ language: Language; baseUrl: string }> = ({ langua
               loading="lazy"
               decoding="async"
             />
-          ) : (
-            <div className="eden-placeholder-art" aria-hidden="true"><i /><i /><i /></div>
-          )}
-          <div className="eden-collage-reveal">
-            {item.href ? (
-              <span className="eden-collage-cta">{item.ctaLabel?.[language] ?? (language === 'zh' ? '了解更多' : 'Learn more')}</span>
-            ) : (
-              <h3>{item.title}</h3>
-            )}
-          </div>
+          ) : null}
+          <HomeCollageVideo
+            src={resolveAssetPath(baseUrl, item.video)}
+            poster={item.image ? resolveAssetPath(baseUrl, item.image) : undefined}
+          />
         </>
-      );
-
-      return item.href ? (
-        <a
-          className={`eden-collage-card tone-${item.tone}`}
-          href={resolveAssetPath(baseUrl, item.href)}
-          aria-label={item.linkLabel?.[language] ?? item.title}
-          key={item.title}
-        >
-          {cardContent}
-        </a>
+      ) : item.image ? (
+        <img
+          className="eden-collage-image"
+          src={resolveAssetPath(baseUrl, item.image)}
+          alt={item.imageAlt?.[language] ?? item.title}
+          loading="lazy"
+          decoding="async"
+        />
       ) : (
-        <article className={`eden-collage-card tone-${item.tone}`} key={item.title} tabIndex={0}>
-          {cardContent}
-        </article>
-      );
-    })}
+        <div className="eden-placeholder-art" aria-hidden="true"><i /><i /><i /></div>
+      )}
+      <div className="eden-collage-reveal">
+        {item.href ? (
+          <span className="eden-collage-cta">{item.ctaLabel?.[language] ?? (language === 'zh' ? '了解更多' : 'Learn more')}</span>
+        ) : (
+          <h3>{item.title}</h3>
+        )}
+      </div>
+    </>
+  );
+
+  return item.href ? (
+    <a
+      className={`eden-collage-card tone-${item.tone}`}
+      href={resolveAssetPath(baseUrl, item.href)}
+      aria-label={item.linkLabel?.[language] ?? item.title}
+      tabIndex={duplicate ? -1 : undefined}
+    >
+      {cardContent}
+    </a>
+  ) : (
+    <article className={`eden-collage-card tone-${item.tone}`} tabIndex={duplicate ? -1 : 0}>
+      {cardContent}
+    </article>
+  );
+};
+
+/**
+ * One marquee row. The items are rendered twice so a -50% translate loops seamlessly.
+ * The duplicate run stays clickable — do NOT mark it `inert`, that removes it from hit
+ * testing and half the visible cards stop responding — it is only hidden from the
+ * accessibility tree and the tab order, so the real run is the one keyboard users reach.
+ * The drift pauses on hover and focus so cards can actually be clicked.
+ */
+const HomeCollageRow: React.FC<{
+  items: HomeCollageItem[];
+  language: Language;
+  baseUrl: string;
+  direction: 'left' | 'right';
+}> = ({ items, language, baseUrl, direction }) => (
+  <div className={`eden-collage-row eden-collage-row-${direction}`}>
+    <div className="eden-collage-track">
+      {[0, 1].map((run) => (
+        <div className="eden-collage-run" key={run} aria-hidden={run === 1 || undefined}>
+          {items.map((item) => (
+            <HomeCollageCard key={item.title} item={item} language={language} baseUrl={baseUrl} duplicate={run === 1} />
+          ))}
+        </div>
+      ))}
+    </div>
   </div>
 );
 
-const homeFocusAreas = [
-  {
-    title: 'Data & Decisions',
-    body: { en: 'I turn scattered data into clear commercial judgment—dashboards, user behavior, marketing performance, and decision systems.', zh: '把散乱数据转化成清楚的商业判断。Dashboard、用户行为、营销表现与决策系统。' },
-    cta: { en: 'View the work', zh: '查看作品' },
-    hrefKey: 'projects',
-  },
-  {
-    title: 'AI & Products',
-    body: { en: 'I build AI products with memory, context, and a real job to do—including Jiju, RAG, local AI, and personal knowledge systems.', zh: '构建拥有记忆、语境和真实用途的 AI 产品。包括 Jiju、RAG、local AI 与个人知识系统。' },
-    cta: { en: 'Enter the product lab', zh: '进入产品实验室' },
-    hrefKey: 'lab',
-  },
-  {
-    title: 'Humans & Systems',
-    body: { en: 'I study why people choose, approach, avoid, and change—using journals, relationships, technology, and lived experience.', zh: '研究人为什么选择、靠近、逃避与改变。用日记、关系、技术与真实经历寻找重复出现的结构。' },
-    cta: { en: 'Read the experiments', zh: '阅读实验记录' },
-    hrefKey: 'notes',
-  },
-];
-
-const HomeManifesto: React.FC<{ language: Language }> = ({ language }) => {
-  const isZh = language === 'zh';
-
-  return (
-    <section className="eden-manifesto" id="notes">
-      <div className="eden-manifesto-banner eden-home-island">
-        <div className="eden-manifesto-line eden-manifesto-line-primary">
-          <p>
-            {isZh ? '技术不应该替我们决定命运' : 'Technology should not decide who we are.'}
-          </p>
-        </div>
-        <div className="eden-manifesto-line eden-manifesto-line-accent">
-          <p>
-            {isZh ? '它应该帮助我们看清自己' : 'It should help us understand ourselves.'}
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-};
+const HomeCollage: React.FC<{ language: Language; baseUrl: string }> = ({ language, baseUrl }) => (
+  <div className="eden-collage" aria-label={language === 'zh' ? 'Eden 的项目与生活观察拼贴' : "Eden's work and field-note collage"}>
+    <HomeCollageRow items={homeCollageItems.slice(0, 4)} language={language} baseUrl={baseUrl} direction="left" />
+    <HomeCollageRow items={homeCollageItems.slice(4)} language={language} baseUrl={baseUrl} direction="right" />
+  </div>
+);
 
 type SiteEssayNote = {
   slug: string;
@@ -11556,6 +10356,136 @@ const iconPromptProductNotes: Record<string, string> = {
   poker: 'Private ritual · familiar crew · shared table moments',
 };
 
+type ProjectAppEntry = {
+  id: string;
+  name: string;
+  href: string;
+  caption: Record<Language, string>;
+  Icon: React.FC<{ label: string }>;
+};
+
+const ProjectHomePage: React.FC<{
+  homeHref: string;
+  jijuHref: string;
+  pokerHref: string;
+  etReportHubHref: string;
+  filmGalleryHref: string;
+  conwayHref: string;
+  penneyHref: string;
+  language: Language;
+  setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
+  theme: Theme;
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({
+  homeHref,
+  jijuHref,
+  pokerHref,
+  etReportHubHref,
+  filmGalleryHref,
+  conwayHref,
+  penneyHref,
+  language,
+  setLanguage,
+  themePreference,
+  theme,
+  setThemePreference,
+}) => {
+  const isZh = language === 'zh';
+  const projectApps: ProjectAppEntry[] = [
+    {
+      id: 'jiju',
+      name: 'Jiju',
+      href: jijuHref,
+      caption: { en: 'Local discovery', zh: '本地发现' },
+      Icon: ProjectsJijuCssIcon,
+    },
+    {
+      id: 'poker',
+      name: 'Friday Poker Club',
+      href: pokerHref,
+      caption: { en: 'Private table', zh: '私人牌局' },
+      Icon: ProjectsPokerCssIcon,
+    },
+    {
+      id: 'etreporthub',
+      name: 'ETReportHub',
+      href: etReportHubHref,
+      caption: { en: 'Daily data layer', zh: '每日数据层' },
+      Icon: ProjectsEtReportCssIcon,
+    },
+    {
+      id: 'film-gallery',
+      name: 'Film Gallery',
+      href: filmGalleryHref,
+      caption: { en: 'Film archive', zh: '胶片档案' },
+      Icon: FilmGalleryCssIcon,
+    },
+    {
+      id: 'conways-game-of-life',
+      name: "Conway's Game of Life",
+      href: conwayHref,
+      caption: { en: 'Cellular automata', zh: '细胞自动机' },
+      Icon: ProjectsCrmCssIcon,
+    },
+    {
+      id: 'penneys-game',
+      name: "Penney's Game",
+      href: penneyHref,
+      caption: { en: 'Non-transitive odds', zh: '非传递概率' },
+      Icon: PenneyCoinCssIcon,
+    },
+  ];
+
+  return (
+    <div className="page-shell project-home-page">
+      <nav className="project-home-nav" aria-label="Primary navigation">
+        <a href={homeHref} className="project-home-back inline-flex items-center gap-2 text-sm font-medium">
+          <ArrowLeft size={16} />
+          {isZh ? '返回主页' : 'Back home'}
+        </a>
+        <HeaderControls
+          language={language}
+          setLanguage={setLanguage}
+          themePreference={themePreference}
+          theme={theme}
+          setThemePreference={setThemePreference}
+        />
+      </nav>
+
+      <main className="project-home-main">
+        <header className="project-home-hero">
+          <p className="project-home-kicker">{isZh ? '作品 · Projects' : 'Work · Projects'}</p>
+          <h1>{isZh ? '打开任何一个 app。' : 'Open any app.'}</h1>
+          <p className="project-home-lede">
+            {isZh
+              ? '每一个图标都是一个真的做出来、还在跑的东西。点进去看它在解决什么问题。'
+              : 'Every icon is something real that got built and still runs. Tap one to see the problem it solves.'}
+          </p>
+        </header>
+
+        <section className="project-home-grid" aria-label={isZh ? '项目 app 列表' : 'Project apps'}>
+          {projectApps.map((app) => (
+            <a key={app.id} className="project-home-app" href={app.href} title={app.name}>
+              <span className="project-home-app-icon">
+                <app.Icon label={isZh ? `${app.name} CSS app 图标` : `${app.name} CSS app icon`} />
+              </span>
+              <span className="project-home-app-name">{app.name}</span>
+              <span className="project-home-app-caption">{app.caption[language]}</span>
+            </a>
+          ))}
+        </section>
+
+        <nav className="project-home-dock" aria-label={isZh ? '快捷入口' : 'Quick links'}>
+          <a href={homeHref} className="project-home-dock-link">{isZh ? '主页' : 'Home'}</a>
+          <a href={jijuHref} className="project-home-dock-link">{isZh ? '实验室' : 'Lab'}</a>
+          <a href={`${homeHref}#about`} className="project-home-dock-link">{isZh ? '关于' : 'About'}</a>
+        </nav>
+      </main>
+    </div>
+  );
+};
+
 const IconPromptsPage: React.FC<{ homeHref: string }> = ({ homeHref }) => {
   const [copied, setCopied] = React.useState<string | null>(null);
   const [activeProductId, setActiveProductId] = React.useState(iconPromptProducts[0].id);
@@ -11741,6 +10671,8 @@ const App: React.FC = () => {
   const brandGuideHref = joinBasePath(baseUrl, 'brand-guide');
   const topicsHref = joinBasePath(baseUrl, 'topics');
   const conwayHref = joinBasePath(baseUrl, 'conways-game-of-life');
+  const penneyHref = joinBasePath(baseUrl, 'penneys-game');
+  const projectHomeHref = joinBasePath(baseUrl, 'project');
   const cellularAutomataLabHref = joinBasePath(baseUrl, 'cellular-automata-lab');
   const homeSystemFiles: Array<{
     title: string;
@@ -11845,7 +10777,9 @@ const App: React.FC = () => {
   const isBrandGuideFullPage = pathWithoutBase === '/brand-guide';
   const isTopicsFullPage = pathWithoutBase === '/topics';
   const isConwayGameOfLifeFullPage = pathWithoutBase === '/conways-game-of-life';
+  const isPenneysGamePage = pathWithoutBase === '/penneys-game';
   const isCellularAutomataLabFullPage = pathWithoutBase === '/cellular-automata-lab';
+  const isProjectHomePage = pathWithoutBase === '/project';
   const isIconPromptsPage = pathWithoutBase === '/icon-prompts';
   const archivedWorkSlug = pathWithoutBase.startsWith('/archive/')
     ? pathWithoutBase.replace('/archive/', '')
@@ -11861,6 +10795,7 @@ const App: React.FC = () => {
     return (
       <JijuPetFullPage
         homeHref={homeHref}
+        baseUrl={baseUrl}
         language={language}
         setLanguage={setLanguage}
         themePreference={themePreference}
@@ -11904,6 +10839,7 @@ const App: React.FC = () => {
         homeHref={homeHref}
         projectsHref={projectsHref}
         salesHref={etReportHubSalesHref}
+        baseUrl={baseUrl}
         language={language}
         setLanguage={setLanguage}
         themePreference={themePreference}
@@ -11933,6 +10869,7 @@ const App: React.FC = () => {
       <PokerFullPage
         homeHref={homeHref}
         projectsHref={projectsHref}
+        baseUrl={baseUrl}
         language={language}
         setLanguage={setLanguage}
         themePreference={themePreference}
@@ -12020,6 +10957,7 @@ const App: React.FC = () => {
     return (
       <LifeOsFullPage
         homeHref={homeHref}
+        baseUrl={baseUrl}
         language={language}
         setLanguage={setLanguage}
         themePreference={themePreference}
@@ -12057,6 +10995,27 @@ const App: React.FC = () => {
     );
   }
 
+  if (isPenneysGamePage) {
+    return (
+      <PenneysGamePage
+        isZh={isZh}
+        homeHref={homeHref}
+        conwayHref={conwayHref}
+        controls={
+          <HeaderControls
+            language={language}
+            setLanguage={setLanguage}
+            themePreference={themePreference}
+            theme={theme}
+            setThemePreference={setThemePreference}
+            compactThemeOnSelection
+            compactLanguageOnSelection
+          />
+        }
+      />
+    );
+  }
+
   if (isConwayGameOfLifeFullPage) {
     return (
       <ConwayGameOfLifeFullPage
@@ -12085,6 +11044,25 @@ const App: React.FC = () => {
     );
   }
 
+  if (isProjectHomePage) {
+    return (
+      <ProjectHomePage
+        homeHref={homeHref}
+        jijuHref={fullPageHref}
+        pokerHref={pokerHref}
+        etReportHubHref={etReportHubHref}
+        filmGalleryHref={filmGalleryHref}
+        conwayHref={conwayHref}
+        penneyHref={penneyHref}
+        language={language}
+        setLanguage={setLanguage}
+        themePreference={themePreference}
+        theme={theme}
+        setThemePreference={setThemePreference}
+      />
+    );
+  }
+
   if (isIconPromptsPage) {
     return <IconPromptsPage homeHref={homeHref} />;
   }
@@ -12103,8 +11081,6 @@ const App: React.FC = () => {
       />
     );
   }
-
-  const focusHrefs: Record<string, string> = { projects: projectsHref, lab: fullPageHref, notes: filmGalleryHref };
 
   return (
     <div className="page-shell eden-home">
@@ -12127,52 +11103,14 @@ const App: React.FC = () => {
             {isZh ? '我把复杂的人性、行为与现实问题，转化成可以被理解、验证和使用的数据、产品与 AI 系统。' : 'I turn complex human behavior and messy realities into useful products, data, and AI systems.'}
           </motion.p>
           <motion.div variants={fadeIn} className="eden-hero-actions">
-            <a className="eden-button" href="#work">{isZh ? '探索我的作品' : 'Explore my work'}</a>
-            <a className="eden-text-link" href="#lab">{isZh ? '进入我的个人实验室' : 'Enter my personal lab'} <span>→</span></a>
+            <a className="eden-button" href={projectHomeHref}>{isZh ? '探索我的作品' : 'Explore my work'}</a>
+            <a className="eden-text-link" href={fullPageHref}>{isZh ? '进入我的个人实验室' : 'Enter my personal lab'} <span>→</span></a>
           </motion.div>
         </motion.section>
 
         <section className="eden-collage-section" id="work">
           <HomeCollage language={language} baseUrl={baseUrl} />
         </section>
-
-        <section className="eden-focus eden-home-island" id="lab">
-          <p className="eden-section-label">01 · {isZh ? '实践领域' : 'Ways of building'}</p>
-          <h2>{isZh ? '三边形战士' : <>One mind.<br />Three ways of building.</>}</h2>
-          <div className="eden-focus-grid">
-            {homeFocusAreas.map((area) => <article key={area.title}>
-              {area.hrefKey === 'projects' ? (
-                <div className="eden-focus-app-shelf">
-                  <a className="eden-focus-app-link" href={etReportHubHref} aria-label={isZh ? '进入 ETReportHub' : 'Enter ETReportHub'} title="ETReportHub">
-                    <ProjectsEtReportCssIcon label="ETReportHub CSS app icon" />
-                  </a>
-                </div>
-              ) : area.hrefKey === 'lab' ? (
-                <div className="eden-focus-app-shelf">
-                  <a className="eden-focus-app-link" href={focusHrefs[area.hrefKey]} aria-label={isZh ? '进入 Jiju 产品实验室' : 'Enter the Jiju product lab'} title="Jiju">
-                    <ProjectsJijuCssIcon label="Jiju CSS app icon" />
-                  </a>
-                  <a className="eden-focus-app-link" href={pokerHref} aria-label={isZh ? '进入 Friday Poker Club' : 'Enter Friday Poker Club'} title="Friday Poker Club">
-                    <ProjectsPokerCssIcon label="Friday Poker Club CSS app icon" />
-                  </a>
-                </div>
-              ) : (
-                <div className="eden-focus-app-shelf">
-                  <a className="eden-focus-app-link" href={filmGalleryHref} aria-label={isZh ? '进入 Film Gallery' : 'Enter Film Gallery'} title="Film Gallery">
-                    <FilmGalleryCssIcon label={isZh ? 'Film Gallery CSS app 图标' : 'Film Gallery CSS app icon'} />
-                  </a>
-                  <a className="eden-focus-app-link" href={conwayHref} aria-label={isZh ? "进入 Conway's Game of Life" : "Enter Conway's Game of Life"} title="Conway's Game of Life">
-                    <ProjectsCrmCssIcon label={isZh ? "Conway's Game of Life CSS app 图标" : "Conway's Game of Life CSS app icon"} />
-                  </a>
-                </div>
-              )}
-              <h3>{area.title}</h3>
-              <p>{area.body[language]}</p>
-            </article>)}
-          </div>
-        </section>
-
-        <HomeManifesto language={language} />
 
         <section className="eden-about eden-home-island" id="about">
           <div className="eden-about-photo">
@@ -12183,7 +11121,7 @@ const App: React.FC = () => {
             />
           </div>
           <div className="eden-about-copy">
-            <p className="eden-section-label">02 · About Eden</p>
+            <p className="eden-section-label">01 · About Eden</p>
             <h2>{isZh ? <>嗨，我是 Eden</> : <>Hey, I’m Eden.</>}</h2>
             <div className="eden-about-body eden-about-body-compact">
               {isZh ? (

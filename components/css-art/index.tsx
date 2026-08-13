@@ -431,6 +431,21 @@ export const ProjectsEtReportCssIcon: React.FC<{ label: string }> = ({ label }) 
   </div>
 );
 
+export const ProjectsLifeOsCssIcon: React.FC<{ label: string }> = ({ label }) => (
+  <div className="projects-card-icon projects-life-os-css-icon" role="img" aria-label={label}>
+    <span className="projects-life-os-orbit orbit-outer" />
+    <span className="projects-life-os-orbit orbit-middle" />
+    <span className="projects-life-os-orbit orbit-inner" />
+    <span className="projects-life-os-node node-a" />
+    <span className="projects-life-os-node node-b" />
+    <span className="projects-life-os-node node-c" />
+    <span className="projects-life-os-core">
+      <span className="projects-life-os-core-ring" />
+      <span className="projects-life-os-core-dot" />
+    </span>
+  </div>
+);
+
 export const ProjectsCrmCssIcon: React.FC<{ label: string }> = ({ label }) => (
   <div className="projects-card-icon projects-crm-css-icon" role="img" aria-label={label}>
     <span className="projects-crm-ring ring-outer" />
@@ -671,4 +686,14 @@ export const ElementWindCssIcon: CssArtComponent = ({ label }) => (
     <span className="wind-element-leaf leaf-a" />
     <span className="wind-element-leaf leaf-b" />
   </ElementIconFrame>
+);
+
+export const PenneyCoinCssIcon: CssArtComponent = ({ label }) => (
+  <div className="projects-card-icon penney-coin-css-icon" role="img" aria-label={label}>
+    <span className="penney-icon-coin coin-back" />
+    <span className="penney-icon-coin coin-front" />
+    <span className="penney-icon-mark mark-heads" />
+    <span className="penney-icon-mark mark-tails" />
+    <span className="penney-icon-arrow" />
+  </div>
 );

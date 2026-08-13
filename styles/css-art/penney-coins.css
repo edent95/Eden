@@ -1,0 +1,165 @@
+/*
+  Penney's Game coin family.
+
+  Two objects live here:
+  - .penney-coin        the playable coin chip used across the board, stream and pickers
+  - .penney-coin-css-icon  the framed app icon for the /project shelf and page hero
+
+  Motion sits on the coin itself (a single flip on arrival), never on a card or
+  page background. Both light and dark mode are explicit, and every animation is
+  disabled under prefers-reduced-motion.
+*/
+
+/* ------------------------------------------------------------------ */
+/* Playable coin chip                                                  */
+/* ------------------------------------------------------------------ */
+
+.penney-coin {
+  --penney-coin-size: 2rem;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--penney-coin-size);
+  height: var(--penney-coin-size);
+  flex: 0 0 auto;
+  border-radius: 50%;
+  border: 2px solid var(--theme-text-primary);
+  background: var(--theme-surface);
+  color: var(--theme-text-primary);
+  font-size: calc(var(--penney-coin-size) * 0.42);
+  font-weight: 700;
+  line-height: 1;
+  animation: penney-coin-land 260ms ease-out;
+}
+
+.penney-coin.is-small {
+  --penney-coin-size: 1.45rem;
+  border-width: 1.5px;
+}
+
+.penney-coin.is-heads {
+  background: var(--theme-text-primary);
+  color: var(--theme-surface);
+}
+
+.penney-coin-face {
+  position: relative;
+  z-index: 1;
+  transform: translateY(-0.02em);
+}
+
+/* Solid rings mark the winning window — no glow, no gradient. */
+.penney-coin.is-window-player {
+  outline: 2px solid var(--color-eden-mint);
+  outline-offset: 2px;
+}
+
+.penney-coin.is-window-cpu {
+  outline: 2px solid var(--color-eden-amber);
+  outline-offset: 2px;
+}
+
+@keyframes penney-coin-land {
+  0% {
+    transform: rotateY(180deg) scale(0.55);
+  }
+  70% {
+    transform: rotateY(0deg) scale(1.06);
+  }
+  100% {
+    transform: rotateY(0deg) scale(1);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Framed app icon                                                     */
+/* ------------------------------------------------------------------ */
+
+.penney-coin-css-icon {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.penney-coin-css-icon .penney-icon-coin {
+  position: absolute;
+  width: 42%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 2px solid var(--theme-text-primary);
+}
+
+.penney-coin-css-icon .coin-back {
+  top: 20%;
+  left: 14%;
+  background: var(--theme-surface);
+  animation: penney-icon-tilt 5.6s ease-in-out infinite;
+}
+
+.penney-coin-css-icon .coin-front {
+  top: 38%;
+  left: 44%;
+  background: var(--theme-text-primary);
+  animation: penney-icon-tilt 5.6s ease-in-out infinite 0.7s;
+}
+
+.penney-coin-css-icon .penney-icon-mark {
+  position: absolute;
+  border-radius: 2px;
+}
+
+.penney-coin-css-icon .mark-heads {
+  top: 35%;
+  left: 27%;
+  width: 16%;
+  height: 2px;
+  background: var(--theme-text-primary);
+}
+
+.penney-coin-css-icon .mark-tails {
+  top: 55%;
+  left: 57%;
+  width: 16%;
+  height: 2px;
+  background: var(--theme-surface);
+}
+
+/* The non-transitive loop: a solid arc that circles back on itself. */
+.penney-coin-css-icon .penney-icon-arrow {
+  position: absolute;
+  inset: 16%;
+  border-radius: 50%;
+  border: 2px solid var(--color-eden-mint);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  animation: penney-icon-orbit 9s linear infinite;
+}
+
+@keyframes penney-icon-tilt {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6%) rotate(-8deg);
+  }
+}
+
+@keyframes penney-icon-orbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .penney-coin,
+  .penney-coin-css-icon .coin-back,
+  .penney-coin-css-icon .coin-front,
+  .penney-coin-css-icon .penney-icon-arrow {
+    animation: none;
+  }
+}

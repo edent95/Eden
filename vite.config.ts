@@ -97,7 +97,7 @@ export default defineConfig(({ mode }) => {
       strictPort: true,
       host: 'localhost',
       watch: {
-        ignored: ['**/verify_*/**', '**/dist_chk_*/**'],
+        ignored: ['**/verify_*/**', '**/dist_*/**', '**/_to_delete/**'],
       },
     },
     plugins: [

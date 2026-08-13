@@ -20,6 +20,7 @@ import {
   MathPiOrbCssIcon,
   MathPrimeSigilCssIcon,
   MathVectorGateCssIcon,
+  PenneyCoinCssIcon,
   OfficeCalendarCssIcon,
   OfficeContractCssIcon,
   OfficeInboxCssIcon,
@@ -29,6 +30,7 @@ import {
   ProjectsCrmCssIcon,
   ProjectsEtReportCssIcon,
   ProjectsJijuCssIcon,
+  ProjectsLifeOsCssIcon,
   ProjectsPokerCssIcon,
   WikiBackgroundMusicCssIcon,
   WikiButtonFeedbackCssIcon,
@@ -133,6 +135,27 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
     copy: {
       en: 'The framed data-dashboard icon with animated bars and scan line.',
       zh: 'ETReportHub 使用的固定底数据仪表盘 app icon，包含动态 bar 和 scan line。',
+    },
+  },
+  {
+    id: 'projects-life-os',
+    title: 'Life OS',
+    projectTitle: 'Life OS',
+    category: 'project-icon',
+    sourceRoute: '/projects',
+    ratio: '1:1',
+    background: 'framed',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/projects-icons.css',
+    Component: ProjectsLifeOsCssIcon,
+    label: {
+      en: 'Life OS personal star map CSS app icon',
+      zh: 'Life OS 个人星图 CSS app 图标',
+    },
+    copy: {
+      en: 'The framed star-map icon: concentric orbits, drifting nodes, and one lit core.',
+      zh: 'Life OS 使用的固定底星图 app icon：同心轨道、漂移节点与一颗点亮的核心。',
     },
   },
   {
@@ -379,6 +402,26 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
     copy: {
       en: 'The transparent Bagua mirror totem used by the Home Interests Pattern Archive card.',
       zh: '主页 Interests 里 Pattern Archive 使用的透明底八卦镜图腾。',
+    },
+  },
+  {
+    id: 'penney-coin-hustle',
+    title: "Penney's Game",
+    category: 'project-icon',
+    sourceRoute: '/penneys-game',
+    ratio: '1:1',
+    background: 'framed',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/penney-coins.css',
+    Component: PenneyCoinCssIcon,
+    label: {
+      en: "Penney's Game coin CSS app icon",
+      zh: "Penney's Game 硬币 CSS app 图标",
+    },
+    copy: {
+      en: 'Two offset coins inside a rotating non-transitive arc, used by the /penneys-game hero and the Projects app shelf.',
+      zh: '两枚错位硬币加一道旋转的非传递弧线，用于 /penneys-game 页面 hero 与 Projects app 货架。',
     },
   },
   {

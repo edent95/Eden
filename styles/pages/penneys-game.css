@@ -1,0 +1,905 @@
+/*
+  /penneys-game — layout only.
+  Coin objects and their motion live in styles/css-art/penney-coins.css.
+  Menu system comes from styles/shared.css; this file sets content width and
+  page-local structure, per the Route CSS rules in AGENTS.md.
+*/
+
+.penney-page {
+  background: var(--theme-page);
+  color: var(--theme-text-primary);
+}
+
+.penney-main {
+  padding: 0 var(--editorial-page-padding) clamp(4rem, 9vw, 7rem);
+}
+
+.penney-shell {
+  width: min(100%, 1000px);
+  margin: 0 auto;
+}
+
+.penney-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.25rem;
+}
+
+.penney-back-link {
+  color: var(--theme-text-secondary);
+  transition: color 160ms ease;
+}
+
+.penney-back-link:hover {
+  color: var(--theme-text-primary);
+}
+
+/* ------------------------------------------------------------------ */
+/* Hero                                                                */
+/* ------------------------------------------------------------------ */
+
+.penney-hero {
+  padding: clamp(2.25rem, 6vw, 4rem) 0 clamp(1.25rem, 3vw, 2rem);
+}
+
+.penney-hero-identity {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(1rem, 3vw, 1.75rem);
+}
+
+.penney-hero-icon {
+  width: clamp(64px, 11vw, 92px);
+  flex: 0 0 auto;
+}
+
+.penney-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--theme-text-soft);
+  margin: 0 0 0.5rem;
+}
+
+.penney-title {
+  font-size: clamp(1.9rem, 4.4vw, 3rem);
+  line-height: 1.08;
+  margin: 0 0 0.75rem;
+}
+
+.penney-lede {
+  font-size: clamp(0.98rem, 1.5vw, 1.08rem);
+  line-height: 1.65;
+  color: var(--theme-text-secondary);
+  max-width: 62ch;
+  margin: 0;
+}
+
+.penney-stat-rail {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: clamp(1.5rem, 4vw, 2.25rem);
+}
+
+.penney-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--theme-border);
+  border-radius: 0.85rem;
+  background: var(--theme-surface);
+}
+
+.penney-stat-label {
+  font-size: 0.75rem;
+  color: var(--theme-text-soft);
+}
+
+.penney-stat-value {
+  font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------------ */
+/* Mode tabs                                                           */
+/* ------------------------------------------------------------------ */
+
+.penney-modes {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border: 1px solid var(--theme-border);
+  border-radius: 0.9rem;
+  background: var(--theme-surface-muted);
+  margin-bottom: 1rem;
+}
+
+.penney-mode-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 0;
+  background: transparent;
+  color: var(--theme-text-secondary);
+  font: inherit;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.65rem;
+  cursor: pointer;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.penney-mode-tab[aria-pressed='true'] {
+  background: var(--theme-surface);
+  color: var(--theme-text-primary);
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgb(28 25 23 / 0.12);
+}
+
+.penney-mode-tab:hover:not([aria-pressed='true']) {
+  color: var(--theme-text-primary);
+}
+
+/* ------------------------------------------------------------------ */
+/* Panels                                                              */
+/* ------------------------------------------------------------------ */
+
+.penney-panel {
+  border: 1px solid var(--theme-border);
+  border-radius: 1.1rem;
+  background: var(--theme-surface);
+  padding: clamp(1.1rem, 3vw, 1.75rem);
+  margin-bottom: 1rem;
+}
+
+/* Level rail — solid state chips, no gradients. */
+.penney-level-rail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0 0 1.25rem;
+  padding: 0;
+}
+
+.penney-level-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.85rem;
+  border: 1px solid var(--theme-border);
+  border-radius: 0.7rem;
+  background: var(--theme-surface-muted);
+  color: var(--theme-text-secondary);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: border-color 160ms ease, color 160ms ease;
+}
+
+.penney-level-chip:hover:not(:disabled) {
+  border-color: var(--theme-border-strong);
+  color: var(--theme-text-primary);
+}
+
+.penney-level-chip:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.penney-level-chip[aria-pressed='true'] {
+  border-color: var(--theme-text-primary);
+  color: var(--theme-text-primary);
+  font-weight: 600;
+}
+
+.penney-level-chip[data-state='cleared'] .penney-level-index {
+  color: var(--color-eden-mint);
+}
+
+.penney-level-index {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.penney-level-brief {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 15rem);
+  gap: 1.25rem;
+  align-items: start;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--theme-border);
+  margin-bottom: 1.25rem;
+}
+
+.penney-level-title {
+  font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.5rem;
+}
+
+.penney-level-text {
+  color: var(--theme-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 62ch;
+}
+
+.penney-level-goal {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--theme-border);
+  border-left: 3px solid var(--color-eden-mint);
+  border-radius: 0.75rem;
+  background: var(--theme-surface-muted);
+}
+
+.penney-goal-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--theme-text-soft);
+}
+
+.penney-goal-text {
+  font-size: 0.95rem;
+  color: var(--theme-text-primary);
+}
+
+.penney-goal-progress {
+  font-size: 1.35rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------------ */
+/* Betting                                                             */
+/* ------------------------------------------------------------------ */
+
+.penney-bet-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.penney-bet-label {
+  font-size: 0.8rem;
+  color: var(--theme-text-soft);
+  margin-right: 0.25rem;
+}
+
+.penney-bet-chip {
+  min-width: 3rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--theme-border);
+  border-radius: 0.6rem;
+  background: var(--theme-surface-muted);
+  color: var(--theme-text-secondary);
+  font: inherit;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: border-color 160ms ease, color 160ms ease;
+}
+
+.penney-bet-chip[aria-pressed='true'] {
+  border-color: var(--theme-text-primary);
+  color: var(--theme-text-primary);
+  font-weight: 600;
+}
+
+.penney-bet-chip.is-allin[aria-pressed='true'] {
+  border-color: var(--color-eden-amber);
+}
+
+.penney-bet-chip:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.penney-bet-note {
+  font-size: 0.8rem;
+  color: var(--theme-text-soft);
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------------ */
+/* Board, picker, stream                                               */
+/* ------------------------------------------------------------------ */
+
+.penney-board {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.penney-side {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 3.5rem;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--theme-border);
+  border-radius: 0.8rem;
+  background: var(--theme-surface-muted);
+}
+
+.penney-side.is-player {
+  border-left: 3px solid var(--color-eden-mint);
+}
+
+.penney-side.is-cpu {
+  border-left: 3px solid var(--color-eden-amber);
+}
+
+.penney-side-tag {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  min-width: 3rem;
+  flex: 0 0 auto;
+  color: var(--theme-text-secondary);
+}
+
+.penney-side.is-player .penney-side-tag {
+  color: var(--color-eden-mint);
+}
+
+.penney-side.is-cpu .penney-side-tag {
+  color: var(--color-eden-amber);
+}
+
+.penney-side-waiting {
+  font-size: 0.85rem;
+  color: var(--theme-text-soft);
+}
+
+.penney-side-odds {
+  margin-left: auto;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--theme-text-secondary);
+}
+
+.penney-sequence {
+  display: inline-flex;
+  gap: 0.25rem;
+  vertical-align: middle;
+}
+
+.penney-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
+  gap: 0.5rem;
+}
+
+.penney-picker.is-compact {
+  grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+}
+
+.penney-pick {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 0.4rem;
+  border: 1px solid var(--theme-border);
+  border-radius: 0.75rem;
+  background: var(--theme-surface-muted);
+  cursor: pointer;
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+
+.penney-pick:hover:not(:disabled) {
+  border-color: var(--theme-border-strong);
+  transform: translateY(-1px);
+}
+
+.penney-pick[aria-pressed='true'] {
+  border-color: var(--theme-text-primary);
+  box-shadow: inset 0 0 0 1px var(--theme-text-primary);
+}
+
+.penney-pick:disabled {
+  opacity: 0.32;
+  cursor: not-allowed;
+}
+
+.penney-stream {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  align-content: flex-start;
+  min-height: 3.5rem;
+  max-height: 11rem;
+  overflow-y: auto;
+  padding: 0.75rem;
+  border: 1px solid var(--theme-border);
+  border-radius: 0.8rem;
+  background: var(--theme-surface-muted);
+}
+
+.penney-result {
+  min-height: 1.75rem;
+  margin-top: 0.85rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.92rem;
+  color: var(--theme-text-secondary);
+}
+
+.penney-result .is-win {
+  color: var(--color-eden-mint);
+  font-weight: 600;
+}
+
+.penney-result .is-loss {
+  color: var(--color-eden-amber);
+  font-weight: 600;
+}
+
+.penney-hint-good {
+  color: var(--color-eden-mint);
+}
+
+.penney-hint-bad {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--theme-text-secondary);
+}
+
+.penney-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.penney-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.1rem;
+  border: 1px solid var(--theme-border);
+  border-radius: 0.7rem;
+  background: var(--theme-surface);
+  color: var(--theme-text-primary);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.penney-button:hover:not(:disabled) {
+  border-color: var(--theme-border-strong);
+}
+
+.penney-button.is-primary {
+  background: var(--theme-text-primary);
+  border-color: var(--theme-text-primary);
+  color: var(--theme-page);
+  font-weight: 600;
+}
+
+.penney-button.is-quiet {
+  background: transparent;
+  color: var(--theme-text-secondary);
+  font-size: 0.85rem;
+}
+
+.penney-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ------------------------------------------------------------------ */
+/* Clear / locked cards                                                */
+/* ------------------------------------------------------------------ */
+
+.penney-clear-card {
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--theme-border);
+  border-left: 3px solid var(--color-eden-mint);
+  border-radius: 0.85rem;
+  background: var(--theme-surface-muted);
+}
+
+.penney-clear-title {
+  font-size: 1.05rem;
+  font-weight: 650;
+  margin: 0 0 0.4rem;
+}
+
+.penney-clear-lesson {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--theme-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 62ch;
+}
+
+.penney-inline-odds {
+  font-variant-numeric: tabular-nums;
+  color: var(--theme-text-soft);
+}
+
+.penney-locked {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  border: 1px dashed var(--theme-border-strong);
+  border-radius: 0.85rem;
+  color: var(--theme-text-secondary);
+}
+
+.penney-locked p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Ranked                                                              */
+/* ------------------------------------------------------------------ */
+
+.penney-ranked-headline {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.penney-ranked-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--theme-border);
+  border-radius: 0.75rem;
+  background: var(--theme-surface-muted);
+}
+
+.penney-timer-track {
+  height: 0.5rem;
+  border-radius: 0.25rem;
+  background: var(--theme-surface-muted);
+  border: 1px solid var(--theme-border);
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.penney-timer-fill {
+  display: block;
+  height: 100%;
+  background: var(--color-eden-mint);
+  transition: width 100ms linear;
+}
+
+.penney-submit-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.9rem;
+}
+
+.penney-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.penney-field-label {
+  font-size: 0.75rem;
+  color: var(--theme-text-soft);
+}
+
+.penney-input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--theme-border);
+  border-radius: 0.6rem;
+  background: var(--theme-surface);
+  color: var(--theme-text-primary);
+  font: inherit;
+  font-size: 0.9rem;
+  min-width: 12rem;
+}
+
+.penney-input:focus-visible {
+  outline: 2px solid var(--theme-text-primary);
+  outline-offset: 1px;
+}
+
+.penney-leaderboard {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--theme-border);
+}
+
+.penney-leaderboard-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.penney-leaderboard-head h3 {
+  font-size: 1rem;
+  font-weight: 650;
+  margin: 0;
+}
+
+.penney-board-source {
+  font-size: 0.78rem;
+  color: var(--theme-text-soft);
+}
+
+.penney-leaderboard-head .penney-button {
+  margin-left: auto;
+}
+
+.penney-empty {
+  font-size: 0.9rem;
+  color: var(--theme-text-soft);
+  margin: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Tables                                                              */
+/* ------------------------------------------------------------------ */
+
+.penney-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.penney-table th,
+.penney-table td {
+  text-align: left;
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--theme-border);
+}
+
+.penney-table th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--theme-text-soft);
+  letter-spacing: 0.04em;
+}
+
+/* ------------------------------------------------------------------ */
+/* Lab                                                                 */
+/* ------------------------------------------------------------------ */
+
+.penney-lab-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.penney-seg {
+  display: inline-flex;
+  gap: 0.2rem;
+  padding: 0.2rem;
+  border: 1px solid var(--theme-border);
+  border-radius: 0.7rem;
+  background: var(--theme-surface-muted);
+}
+
+.penney-seg button {
+  border: 0;
+  background: transparent;
+  color: var(--theme-text-secondary);
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.penney-seg button[aria-pressed='true'] {
+  background: var(--theme-surface);
+  color: var(--theme-text-primary);
+  font-weight: 600;
+}
+
+.penney-lab-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.penney-lab-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.penney-lab-readout {
+  display: grid;
+  grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.penney-lab-figure {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--theme-border);
+  border-left: 3px solid var(--color-eden-mint);
+  border-radius: 0.8rem;
+  background: var(--theme-surface-muted);
+}
+
+.penney-lab-hero {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.penney-bars {
+  margin-top: 0.9rem;
+}
+
+.penney-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.85rem;
+}
+
+.penney-bar-name {
+  width: 3rem;
+  flex: 0 0 auto;
+  color: var(--theme-text-secondary);
+}
+
+.penney-bar-track {
+  display: block;
+  flex: 1;
+  height: 1rem;
+  border-radius: 0.25rem;
+  background: var(--theme-surface-muted);
+  border: 1px solid var(--theme-border);
+  overflow: hidden;
+}
+
+.penney-bar-fill {
+  display: block;
+  height: 100%;
+  transition: width 400ms ease;
+}
+
+.penney-bar-fill.is-player {
+  background: var(--color-eden-mint);
+}
+
+.penney-bar-fill.is-cpu {
+  background: var(--color-eden-amber);
+}
+
+.penney-bar-value {
+  width: 3.75rem;
+  text-align: right;
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.penney-lab-note {
+  font-size: 0.82rem;
+  color: var(--theme-text-soft);
+  margin: 0.5rem 0 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Strategy footer                                                     */
+/* ------------------------------------------------------------------ */
+
+.penney-strategy .penney-table {
+  margin-top: 1rem;
+}
+
+.penney-why {
+  margin-top: 1rem;
+}
+
+.penney-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--theme-border);
+}
+
+.penney-footer-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.85rem;
+  color: var(--theme-text-soft);
+  transition: color 160ms ease;
+}
+
+.penney-footer-link strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--theme-text-primary);
+}
+
+.penney-footer-link:hover strong {
+  color: var(--color-eden-mint);
+}
+
+/* ------------------------------------------------------------------ */
+/* Responsive                                                          */
+/* ------------------------------------------------------------------ */
+
+@media (max-width: 860px) {
+  .penney-level-brief,
+  .penney-lab-readout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .penney-stat-rail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .penney-hero-identity {
+    flex-direction: column;
+  }
+
+  .penney-lab-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .penney-modes {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .penney-bet-note {
+    margin-left: 0;
+    width: 100%;
+  }
+}

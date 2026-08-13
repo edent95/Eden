@@ -65,6 +65,18 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
   },
   {
+    path: '/project',
+    priority: '0.9',
+    title: {
+      en: 'Projects | Eden Tan',
+      zh: '作品 | Eden Tan',
+    },
+    desc: {
+      en: 'An app shelf of everything Eden Tan has built: Jiju, Friday Poker Club, ETReportHub, Film Gallery, and Conway’s Game of Life.',
+      zh: 'Eden Tan 做过的作品列表：Jiju、Friday Poker Club、ETReportHub、Film Gallery 以及 Conway’s Game of Life。',
+    },
+  },
+  {
     path: '/project-css',
     priority: '0.5',
     index: false,
@@ -294,12 +306,12 @@ export const ROUTE_SEO: RouteSeo[] = [
     path: '/life-os',
     priority: '0.8',
     title: {
-      en: 'Life OS RPG Character System | Eden Tan',
-      zh: '人生 RPG 能力系统 | Eden Tan',
+      en: 'Life OS | Build the long-term base map, then ask about now',
+      zh: 'Life OS | 先建立长期底图，再问当下的问题',
     },
     desc: {
-      en: 'A mystic-tech RPG character card, ability map, debuff system, and growth route for reading personality, experience, desire, shadow, and next upgrade moves.',
-      zh: '一个神秘科技风 RPG 角色卡、能力地图、Debuff 系统与成长路线，把人格、经历、欲望、阴影和下一步升级方式转成可读面板。',
+      en: 'A personal system that cross-reads BaZi, I Ching, elemental profiling, and tarot records into one traceable base map — element profile, current phase, action strategy, and a copyable agent prompt pack.',
+      zh: '一个把八字、易经、元素画像与塔罗记录交叉阅读成同一张可溯源底图的个人系统——元素画像、当前阶段、行动策略，以及可复制的 Agent prompt 包。',
     },
   },
   {
@@ -324,6 +336,18 @@ export const ROUTE_SEO: RouteSeo[] = [
     desc: {
       en: 'A lightweight topic market where each card is one question with one icon, and the answer control changes by question type.',
       zh: '一个轻量 topic market：一张卡一个问题和 icon，回答控件按问题类型变化。',
+    },
+  },
+  {
+    path: '/penneys-game',
+    priority: '0.6',
+    title: {
+      en: "Penney's Game | Non-transitive coin game with levels and a global leaderboard",
+      zh: "Penney's Game 硬币骗局 | 非传递性硬币游戏 · 闯关与全球排行榜",
+    },
+    desc: {
+      en: "Play Penney's Game: a five-level campaign with chip stakes, a timed Blind Master ranked mode with a global leaderboard, and a lab that runs any matchup against its exact Conway leading-numbers probability.",
+      zh: "玩 Penney's Game：五关筹码对赌战役、限时盲选排位赛与全球排行榜，以及可以把任意对局跑到 Conway leading-numbers 精确概率的实验室。",
     },
   },
   {
