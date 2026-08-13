@@ -4134,6 +4134,24 @@
 **下一步**
 - 无。
 
+## 2026-08-14 — 修复 iPhone banner 停止与异常背景
+
+**做了什么**
+- 将 marquee 的 hover / focus 暂停逻辑限制在真正支持 hover 的 fine-pointer 设备；触控设备强制维持 `animation-play-state: running`，避免 iOS Safari sticky hover 导致两排永久停住。
+- 移除 mobile 的 `padding + clip-path` 合成裁切层，改为真正 full-bleed 的透明 row；卡宽按 viewport 三等分计算。
+- Mobile 不再渲染只为 desktop hover CTA 服务的暗色渐层覆盖，保留原始 banner 画面颜色。
+
+**为什么**
+- iOS 会在触控后保留模拟 hover / focus 状态，原规则会持续暂停 track；同时 clip-path 与 transform 合成会产生不必要的黑色背景区与裁切接缝。
+
+**影响**
+- 手机 banner 与 desktop 一样持续左右移动，并直接铺到 viewport 两侧；卡片画面不再被额外压暗。Desktop hover 暂停与 CTA 效果不变。
+- `npm run check` 的 unit、TypeScript、production build 与 built-site smoke 全部通过（Vite ✓ 2089 modules transformed，✓ built in 1.23s）；本次文件的 `git diff --check` 通过。Playwright 在 390 × 844 viewport 实测两排均为 390px full-width、透明背景、无 clip / mask、卡宽 126px、overlay 不渲染，页面 `scrollWidth` 为 390px；一秒前后两排 transform 持续变化且 animation state 均为 running，console 0 error。
+- 全工作区 `git diff --check` 另被并行 harness 改动中 `README.md` 第 93–94 行的既有行尾空格挡住；本次未修改该组文件。
+
+**下一步**
+- 无。
+
 ## 2026-08-14 — 修复首页 mobile banner 并同步 desktop 动效
 
 **做了什么**
@@ -4149,3 +4167,14 @@
 
 **下一步**
 - 无。
+
+## 2026-08-14 00:54:26 +08 — Eden executable harness phase 1
+
+- 类型：流程 / CI / 测试 / 文档
+- 改动：新增 `harness.config.json`、`state/current.md`、`scripts/harness/*`、`scripts/wiki/lint.mjs`、Node 原生单元测试与 Pull Request `verify.yml`；`npm run check` 现在统一执行 skill、route、log、Wiki、CSS policy、Penney/PWA unit、TypeScript、production build 与 built-site smoke checks。部署 workflow 升级为 Node 22，并在上传 GitHub Pages artifact 前运行同一闸门。
+- 改动：修复 `AGENTS.md` / `soul.md` 中四个不存在的本地 skill 路径；三种沟通策略以内嵌规则为事实源，Apple interface reference 指向实际存在的 `.agents/skills/apple-design/SKILL.md`。补齐 README 缺失的 `/project`、`/jiju-revamp` 和真实 workflow 路径。
+- 改动：把 PWA manifest 路由选择抽成可测试的 `pwa-manifests.ts`，保持 Film Gallery、Conway 与默认 Eden manifest 的既有公开行为。
+- 原因：现有规则主要依赖 Agent 自觉遵守，且 skill、route、README、CI 已出现事实漂移；需要把客观规则变成失败时会阻止 PR 或部署的程序。
+- 影响：普通任务以 `npm run check` 作为单一 Done gate；PR 与 main 部署使用同一套事实检查。`log 2.md` 与 `soul 2.md` 暂保留为明确标注的 legacy snapshots，没有执行不可逆历史清理。Wiki Markdown 迁移和大型日志分档留待兼容性更充分的第二阶段。执行期间出现的并行 `styles/pages/home.css` mobile banner 修改不属于本 harness 改动，已原样保留且仍通过完整检查。
+- 验证：完整 `npm run check` 通过：5 组 policy gates、7 个 Node unit tests、TypeScript、Vite production build（✓ 2089 modules）与 built-site smoke checks 全部通过；production artifacts、assets、三个 manifests、GitHub Pages redirect 与 37 条 sitemap route 均通过检查。`git diff --check` 通过。
+- 后续：在 GitHub branch protection 中将 `Eden Harness / verify` 设为 required check；随后分阶段迁移 Wiki/Notes Markdown 与月度日志索引。

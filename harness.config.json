@@ -1,0 +1,31 @@
+{
+  "nodeVersion": 22,
+  "requiredStartupFiles": [
+    "AGENTS.md",
+    "README.md",
+    "soul.md",
+    "state/current.md",
+    "log.md"
+  ],
+  "sourcesOfTruth": {
+    "routes": "seo-routes.ts",
+    "cssArt": "css-art.registry.ts",
+    "agentRules": "AGENTS.md",
+    "currentState": "state/current.md"
+  },
+  "legacyFiles": [
+    "log 2.md",
+    "soul 2.md"
+  ],
+  "checks": [
+    "verify:skills",
+    "verify:routes",
+    "verify:log",
+    "verify:wiki",
+    "verify:css",
+    "test:unit",
+    "typecheck",
+    "build",
+    "test:smoke"
+  ]
+}

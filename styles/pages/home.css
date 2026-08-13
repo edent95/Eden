@@ -59,7 +59,6 @@
 .eden-collage-track { display: flex; width: max-content; will-change: transform; animation: eden-collage-drift-left 58s linear infinite; }
 .eden-collage-row-right .eden-collage-track { animation-name: eden-collage-drift-right; animation-duration: 68s; }
 .eden-collage-run { display: flex; flex: 0 0 auto; }
-.eden-collage-row:hover .eden-collage-track, .eden-collage-row:focus-within .eden-collage-track, .eden-collage-row:active .eden-collage-track { animation-play-state: paused; }
 @keyframes eden-collage-drift-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @keyframes eden-collage-drift-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 .eden-collage-card { position: relative; container-type: inline-size; display: block; flex: 0 0 clamp(220px, 30vw, 460px); margin-right: var(--eden-collage-gap); aspect-ratio: 16 / 9; overflow: hidden; border-radius: 16px; background: #d8d4cc; color: #fff; box-shadow: 0 18px 50px rgb(23 23 23 / .09); }
@@ -73,12 +72,15 @@
 .eden-collage-card:focus-visible :is(.eden-placeholder-art, .eden-collage-image, .eden-collage-video) { transform: scale(1.025); }
 
 @media (hover: hover) and (pointer: fine) {
+  .eden-collage-row:hover .eden-collage-track,
+  .eden-collage-row:focus-within .eden-collage-track { animation-play-state: paused; }
   .eden-collage-card:hover .eden-collage-reveal { opacity: 1; transform: scale(1); }
   .eden-collage-card:hover :is(.eden-placeholder-art, .eden-collage-image, .eden-collage-video) { transform: scale(1.025); }
 }
 
 @media (hover: none), (pointer: coarse) {
   .eden-collage-reveal { display: none; }
+  .eden-collage-track { animation-play-state: running !important; }
 }
 .eden-collage-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .55s cubic-bezier(.16,1,.3,1); }
 .eden-collage-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .55s cubic-bezier(.16,1,.3,1); }
@@ -148,17 +150,21 @@
   .eden-collage-section { padding: 0 0 80px; }
   .eden-collage { --eden-collage-gap: 6px; }
   .eden-collage-row {
-    padding-inline: 16px;
-    clip-path: inset(0 16px);
+    width: 100%;
+    margin-inline: 0;
+    padding-inline: 0;
+    clip-path: none;
     -webkit-mask-image: none;
     mask-image: none;
+    background: transparent;
   }
   .eden-collage-track { animation-duration: 28s; }
   .eden-collage-row-right .eden-collage-track { animation-duration: 32s; }
   .eden-collage-card {
-    flex-basis: calc((100vw - 44px) / 3);
+    flex-basis: calc((100vw - 12px) / 3);
     border-radius: 8px;
   }
+  .eden-collage-card::after { display: none; }
   .eden-collage-reveal { display: none; }
   .eden-focus, .eden-about { padding-block: 90px; }.eden-focus > h2, .eden-about h2 { font-size: 48px; }.eden-focus-grid { margin-top: 54px; }
   .eden-manifesto { padding: 64px 0; }.eden-manifesto-banner { border-radius: 20px; }.eden-manifesto-line { min-height: 180px; padding: 28px 24px; }.eden-manifesto-line p { font-size: clamp(34px, 10vw, 44px); }

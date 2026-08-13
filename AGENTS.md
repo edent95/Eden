@@ -134,14 +134,14 @@ Expected behavior:
 
 The user has defined three standing frameworks. Future agents should use them deliberately by scenario, not blend them carelessly.
 
-Local copies of these skills live inside this repository and should be treated as the project-local source of truth:
+The three mode definitions below are the project-local source of truth. Do not
+assume a similarly named global skill exists. For Apple-inspired interface and
+motion work, the repository-local specialist reference is:
 
-- `skills/cai-kang-yong-conversation/SKILL.md`
-- `skills/hou-hei-strategy/SKILL.md`
-- `skills/sun-tzu-strategy/SKILL.md`
-- `skills/apple-editorial-layout/SKILL.md`
+- `.agents/skills/apple-design/SKILL.md`
 
-If a future agent needs the detailed wording or reference files, read the local repo copies first instead of relying on anything under `~/.codex/skills`.
+Every repository-local `SKILL.md` path declared in this file is checked by
+`npm run verify:skills`.
 
 ### 1. Cai Kang-Yong Mode
 
@@ -224,7 +224,7 @@ Simple rule:
 
 ### 4. Apple Editorial Layout Skill
 
-Use `skills/apple-editorial-layout/SKILL.md` when the user asks for:
+Use `.agents/skills/apple-design/SKILL.md` when the user asks for:
 
 - Apple-like layout logic
 - premium minimalist product pages
@@ -359,7 +359,8 @@ Before making changes, read these files first:
 
 1. `README.md` (current runnable project truth)
 2. `soul.md` (collaboration rules to reduce rework)
-3. `log.md` (recent change history and context)
+3. `state/current.md` (current architecture, verification, and known risks)
+4. Only the recent tail of `log.md` by default (use older entries only when the task needs history)
 
 ### 2) Do not stop at single-page edits
 
@@ -373,10 +374,14 @@ If a request likely affects multiple pages/components/routes:
 
 After substantive edits:
 
-- run at least `npm run build`
+- run `npm run check` (the executable harness: policy checks, unit tests, typecheck, production build, and built-site smoke checks)
 - provide concrete local verification URL(s) to the user
 - explicitly state what the user should see
 - do not use screenshot verification unless the user explicitly asks for it; prefer build output, keyword checks, code checks, and local URL instructions
+
+The machine-enforced checks live under `scripts/harness/`, `scripts/wiki/`, and
+`.github/workflows/`. If prose and an executable gate disagree, fix both in the
+same change rather than silently bypassing the gate.
 
 ### 4) Logging is mandatory
 
@@ -393,7 +398,10 @@ If there is no `log.md`, create it first and then append entries.
 
 When workflow rules evolve, update both:
 
-- `soul.md` (collaboration behavior and anti-rework rules)
 - `AGENTS.md` (hard operational rules)
+- the relevant executable check or workflow
+
+Update `soul.md` only when the user's durable collaboration preference changes;
+do not duplicate technical policy there.
 
 Do not leave critical execution assumptions only in chat history.

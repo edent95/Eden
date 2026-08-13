@@ -56,6 +56,8 @@ npm run preview
 
 - `/` — 主页
 - `/jiju-pet` — Jiju 产品详情：可信宠物友好地点发现、宠物档案、到访记忆与社区资料
+- `/jiju-revamp` — Jiju 从宠物友好目录转向本地生活探索的平台提案
+- `/project` — Eden 已构建产品的 app shelf
 - `/project-css` — Projects / Home / Interests CSS art 直达检查页（隐藏直达页；不进 sitemap）
 - `/icon-prompts` — ETReportHub / Jiju / Friday Poker Club 四宫格 icon prompt 复制页（隐藏直达页；不进 sitemap）
 - `/etreporthub` — ETReportHub 日报数据系统产品页
@@ -88,7 +90,8 @@ npm run preview
 
 ## 部署与基础设施
 
-- **发布：** `main` 推送触发 `.github/workflows/deploy-pages.yml`（建 `dist` 并发布到 **GitHub Pages**）。  
+- **验证：** Pull Request 触发 `.github/workflows/verify.yml`，必须通过统一 harness。
+- **发布：** `main` 推送触发 `.github/workflows/deploy.yml`；同一 workflow 先通过统一 harness，再把 `dist` 发布到 **GitHub Pages**。
 - **SPA 子路径：** `public/404.html` 与 `index.html` 内脚本解决 GitHub Pages 对深链/刷新的 404 问题。  
 - **分析：** `index.html` 内已嵌入 GA4（`gtag.js`），Measurement ID 在仓库中维护。  
 - **SEO 代码：** 见 `seo.ts`；构建产物含 `sitemap.xml`、`robots.txt`（在配置了站点 URL 时生成）。
@@ -103,7 +106,9 @@ npm run preview
 2. `soul.md`（若存在，协作习惯）  
 3. `log.md`（最近改动）  
 
-有真实代码或文档变更时：更新实现 → 至少执行 `npm run build` 通过 → 在 `log.md` 追一条（改动 / 原因 / 影响 / 后续）。
+有真实代码或文档变更时：更新实现 → 在 `log.md` 追加一条（改动 / 原因 / 影响 / 验证 / 后续）→ 执行 `npm run check`。
+
+`npm run check` 是唯一的完成闸门，会执行：本地 skill 路径检查、route/SEO/README 一致性、日志规则、Wiki 结构检查、CSS art 结构检查、单元测试、TypeScript、production build 与 built-site smoke checks。单独的 `npm run build` 只证明 Vite 可以产出文件，不代表任务完成。
 
 CSS art 复用入口：先看 `css-art.registry.ts` 与 `docs/css-art-system.md`，组件统一从 `components/css-art` 复用，样式放在 `styles/css-art/`。
 
