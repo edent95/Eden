@@ -4134,18 +4134,18 @@
 **下一步**
 - 无。
 
-## 2026-08-14 — 修复首页 mobile banner 被裁切
+## 2026-08-14 — 修复首页 mobile banner 并同步 desktop 动效
 
 **做了什么**
-- 将 600px 以下的首页 banner 从 `46vw` 横向 marquee 恢复为三栏静态网格，8 张卡片只渲染首组可见内容，按 `3 + 3 + 2` 排列。
-- 手机端使用与首页一致的 16px 左右留白、6px gap 与 8px 圆角；桌面与 tablet 继续保留原双行 marquee。
+- 手机端继续使用与 desktop 相同的双行 marquee：上排向左、下排向右循环移动，不再降级成静态网格。
+- 每张卡片按一屏三张等比例缩放，使用 16px 左右安全留白、6px gap 与 8px 圆角；mobile 动画时长调整为 28 / 32 秒，保持接近 desktop 的移动观感。
 
 **为什么**
-- 横向 marquee 重构覆盖了之前明确的 mobile 三栏规则，导致 iPhone 实际只显示约两张半，右侧卡片看起来被截断。
+- 原 mobile `46vw` 卡宽只显示约两张半，右侧卡片看起来像意外被截断；用户希望手机保留 desktop 的完整动态 banner 体验。
 
 **影响**
-- 手机端所有 banner 都能完整落在 viewport 内，Film Gallery 新视频也会作为最后一张卡正常显示；桌面交互不变。
-- `npm run build`、`npm run typecheck` 与 `git diff --check` 通过（Vite ✓ 2089 modules transformed，✓ built in 1.15s）。Playwright 在 390 × 844 viewport 实测为三栏（每张约 115.33px）、8 张卡按 `3 + 3 + 2` 排列，`scrollWidth` 与 viewport 同为 390px；Film Gallery 视频可见并正常播放，console 0 error。
+- 手机端卡片按一屏三张的宽度缩放，并保留两排相反方向的自动滚动；边缘卡片像 desktop marquee 一样自然进入与离开画面。Film Gallery 新视频会随下排正常进入可视区；desktop 与 tablet 不变。
+- `npm run build`、`npm run typecheck` 与 `git diff --check` 通过（Vite ✓ 2089 modules transformed，✓ built in 1.18s）。Playwright 在 390 × 844 viewport 实测卡宽约 115.33px、两排动画分别为 28 / 32 秒、transform 持续变化，`scrollWidth` 与 viewport 同为 390px；Film Gallery 进入画面后正常播放，console 0 error。
 
 **下一步**
 - 无。

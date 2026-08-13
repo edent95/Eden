@@ -146,21 +146,17 @@
   .eden-home .header-language-label-short { display: inline; }
   .eden-hero { min-height: auto; padding: 104px 0 90px; }.eden-hero h1 { margin-top: 20px; font-size: clamp(52px, 16vw, 72px); }.eden-hero-copy { font-size: 17px; }.eden-hero-actions { flex-direction: column; gap: 18px; }
   .eden-collage-section { padding: 0 0 80px; }
-  .eden-collage {
-    --eden-collage-gap: 6px;
-    width: min(100% - 32px, 1080px);
-    margin-inline: auto;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .eden-collage { --eden-collage-gap: 6px; }
+  .eden-collage-row {
+    padding-inline: 16px;
+    clip-path: inset(0 16px);
+    -webkit-mask-image: none;
+    mask-image: none;
   }
-  .eden-collage-row,
-  .eden-collage-track,
-  .eden-collage-run { display: contents; }
-  .eden-collage-run[aria-hidden="true"] { display: none; }
+  .eden-collage-track { animation-duration: 28s; }
+  .eden-collage-row-right .eden-collage-track { animation-duration: 32s; }
   .eden-collage-card {
-    min-width: 0;
-    width: 100%;
-    margin-right: 0;
-    flex-basis: auto;
+    flex-basis: calc((100vw - 44px) / 3);
     border-radius: 8px;
   }
   .eden-collage-reveal { display: none; }
