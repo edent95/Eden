@@ -410,3 +410,14 @@ Update `soul.md` only when the user's durable collaboration preference changes;
 do not duplicate technical policy there.
 
 Do not leave critical execution assumptions only in chat history.
+
+### 6) Use the protected operator workflow
+
+For normal repository changes:
+
+1. Start from the default branch with `npm run task:new -- "task name"`.
+2. Make the scoped change and append the required monthly log entry.
+3. Run `npm run publish -- "commit title"`; it runs `ready` and the full harness before any commit or push.
+4. In a non-interactive Agent environment, inspect `git status --short` first and pass `--yes` explicitly. Never add `--yes` by habit.
+
+`publish` must never push the default branch directly. Keep GitHub branch protection and the required `verify` check enabled; the command exists to orchestrate that protected path, not bypass it. Use `--dry-run` for a no-write preview and `--no-merge` when human review should remain before merge. The executable behavior is documented in `docs/operator-workflow.md` and implemented under `scripts/workflow/`.

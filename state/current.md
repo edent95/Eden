@@ -8,13 +8,14 @@ Last reviewed: 2026-08-14
 - Local development runs at `http://localhost:4180` with a strict port.
 - Production deploys from `main` to GitHub Pages at `https://edentan.site`.
 - `seo-routes.ts` is the public route and SEO registry.
-- `App.tsx` still contains the route renderer plus the current hard-coded Wiki and Notes data.
+- Wiki and Notes content compiles from `wiki/` into `generated/content.ts`; `App.tsx` still contains the large route renderer.
 
 ## Required Verification
 
 - Use `npm run check` as the completion gate.
 - Pull requests run `.github/workflows/verify.yml`.
 - Main-branch deployment runs the same gate before uploading `dist`.
+- `npm run task:new` and `npm run publish` provide the protected operator path from work branch through PR, required checks, deployment, and live verification.
 - Production-only Firebase RTDB rules for Penney's Game remain outside this repository's deployment workflow; see `docs/penney-leaderboard.md`.
 
 ## Content And UI Sources Of Truth
@@ -37,5 +38,5 @@ Last reviewed: 2026-08-14
 
 1. Keep route, documentation, skill paths, Wiki metadata, CSS structure, and logs machine-checkable.
 2. Add regression tests when a bug or repeated Agent mistake is discovered.
-3. Move Wiki and Notes content out of `App.tsx` without changing public URLs.
+3. Use the phase-three operator commands for routine changes and improve them from observed failure cases.
 4. Split `App.tsx` by route only after the content model and route contracts are protected by tests.
