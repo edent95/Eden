@@ -42,11 +42,18 @@ npm run dev
 开发服务器固定 **<http://localhost:4180>**（`vite.config.ts` 中 `strictPort: true`），避免端口变化导致“改了但看不到”。
 
 ```bash
+npm run task:new -- "任务名"
+npm run ready
+npm run publish -- "提交标题"
 npm run typecheck
 npm run check
 npm run build
 npm run preview
 ```
+
+日常开发推荐只记两条：开始任务时运行 `task:new`，完成时运行 `publish`。`publish` 会自动执行 `ready`（生成 Wiki 与日志索引，再跑完整 harness），之后建立 PR、等待必需的 `verify`、squash merge、等待 Pages 部署并检查线上站点。它不会直接 push `main`。
+
+需要预览范围但不产生任何写入时运行 `npm run publish -- "提交标题" --dry-run`；自动化或 Agent 终端没有交互确认，必须在检查变更范围后显式加 `--yes`。只希望建立并验证 PR、不自动合并时加 `--no-merge`。完整说明见 [`docs/operator-workflow.md`](docs/operator-workflow.md)。
 
 生产构建时若设置 `VITE_SITE_URL`（如 `https://edentan.site`），会用于站点地图、robots 与 `index.html` 内 OG 绝对地址，与线上域名一致时预览分享卡更准。
 
@@ -92,6 +99,7 @@ npm run preview
 
 - **验证：** Pull Request 触发 `.github/workflows/verify.yml`，必须通过统一 harness。
 - **发布：** `main` 推送触发 `.github/workflows/deploy.yml`；同一 workflow 先通过统一 harness，再把 `dist` 发布到 **GitHub Pages**。
+- **操作入口：** `npm run task:new` 建安全工作分支，`npm run publish` 串联 ready、PR、verify、merge、deploy 与 live check。
 - **分支保护：** `main` 要求 `verify`、分支保持最新并解决 review conversations；管理员同样受保护，force-push 与删除已禁用。
 - **SPA 子路径：** `public/404.html` 与 `index.html` 内脚本解决 GitHub Pages 对深链/刷新的 404 问题。  
 - **分析：** `index.html` 内已嵌入 GA4（`gtag.js`），Measurement ID 在仓库中维护。  
