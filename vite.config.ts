@@ -26,6 +26,28 @@ Sitemap: ${siteBaseNoSlash}/sitemap.xml
   writeFileSync(path.join(outDir, 'robots.txt'), robots, 'utf8');
 }
 
+/**
+ * Rewrite `CACHE_NAME` in the built `sw.js` so the file's bytes change on every
+ * deploy. Browsers decide whether a service worker is "new" by byte-comparing
+ * the script, so without this the worker would never update — and the old
+ * cache entries would never be evicted by the `activate` handler.
+ */
+function stampServiceWorker(outDir: string) {
+  const swPath = path.join(outDir, 'sw.js');
+  let src: string;
+  try {
+    src = readFileSync(swPath, 'utf8');
+  } catch {
+    return;
+  }
+  const buildId = process.env.GITHUB_SHA?.slice(0, 8) ?? Date.now().toString(36);
+  const stamped = src.replace(/(const CACHE_NAME = ')[^']*(')/, `$1eden-site-${buildId}$2`);
+  if (stamped === src) {
+    throw new Error('stampServiceWorker: CACHE_NAME declaration not found in sw.js');
+  }
+  writeFileSync(swPath, stamped, 'utf8');
+}
+
 function resolvePublicSiteBase(env: Readonly<Record<string, string>>): string | null {
   const fromEnv = (env.VITE_SITE_URL as string | undefined)?.trim();
   if (fromEnv) {
@@ -150,6 +172,13 @@ export default defineConfig(({ mode }) => {
           }
           const out = html.replace('__PATH_SEGMENTS_TO_KEEP__', String(spaKeepSegments));
           writeFileSync(path.join(outDir, '404.html'), out, 'utf8');
+        },
+      },
+      {
+        name: 'service-worker-build-stamp',
+        closeBundle() {
+          if (mode !== 'production') return;
+          stampServiceWorker(path.resolve(__dirname, 'dist'));
         },
       },
     ],

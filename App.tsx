@@ -6265,10 +6265,6 @@ const ConwayGameOfLifeFullPage: React.FC<{
   const [isRunning, setIsRunning] = React.useState(() =>
     typeof window !== 'undefined' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches,
   );
-  const [installPrompt, setInstallPrompt] = React.useState<BeforeInstallPromptEvent | null>(null);
-  const [isInstalled, setIsInstalled] = React.useState(() =>
-    typeof window !== 'undefined' && window.matchMedia('(display-mode: standalone)').matches,
-  );
 
   React.useEffect(() => {
     const mobileMenuQuery = window.matchMedia('(max-width: 640px)');
@@ -6276,24 +6272,6 @@ const ConwayGameOfLifeFullPage: React.FC<{
     updateMobileMenu();
     mobileMenuQuery.addEventListener('change', updateMobileMenu);
     return () => mobileMenuQuery.removeEventListener('change', updateMobileMenu);
-  }, []);
-
-  React.useEffect(() => {
-    const captureInstallPrompt = (event: Event) => {
-      event.preventDefault();
-      setInstallPrompt(event as BeforeInstallPromptEvent);
-    };
-    const markInstalled = () => {
-      setIsInstalled(true);
-      setInstallPrompt(null);
-    };
-
-    window.addEventListener('beforeinstallprompt', captureInstallPrompt);
-    window.addEventListener('appinstalled', markInstalled);
-    return () => {
-      window.removeEventListener('beforeinstallprompt', captureInstallPrompt);
-      window.removeEventListener('appinstalled', markInstalled);
-    };
   }, []);
 
   React.useEffect(() => {
@@ -6317,46 +6295,6 @@ const ConwayGameOfLifeFullPage: React.FC<{
   };
 
   const population = board.reduce((total, isAlive) => total + (isAlive ? 1 : 0), 0);
-
-  const installWebApp = async () => {
-    if (isInstalled) return;
-    if (installPrompt) {
-      await installPrompt.prompt();
-      const choice = await installPrompt.userChoice;
-      if (choice.outcome === 'accepted') setIsInstalled(true);
-      setInstallPrompt(null);
-      return;
-    }
-
-    window.alert(
-      isZh
-        ? '如果浏览器没有弹出安装视窗：iPhone / iPad 请点分享，再选择「加入主画面」；Safari 桌面版请选择 File → Add to Dock。'
-        : 'If no install window appears: on iPhone or iPad, tap Share → Add to Home Screen. In desktop Safari, choose File → Add to Dock.',
-    );
-  };
-
-  const downloadOfflineVersion = () => {
-    const initialBoard = JSON.stringify(board.map((cell) => (cell ? 1 : 0)));
-    const offlineHtml = `<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Conway's Game of Life — Offline</title><style>
-:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#0c2026;color:#f5f3ef;font-family:system-ui,-apple-system,sans-serif}.app{width:min(1100px,100%);margin:auto;padding:clamp(18px,4vw,48px)}h1{font-size:clamp(36px,7vw,82px);line-height:.95;margin:0 0 14px}p{color:#b8c7c8}.bar{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin:24px 0}.bar button{border:0;border-radius:999px;background:#78d7b5;color:#0c2026;padding:10px 16px;font-weight:700;cursor:pointer}.bar button.alt{background:#243a40;color:#f5f3ef}.stats{margin-left:auto;font:600 13px ui-monospace,monospace}.grid{display:grid;grid-template-columns:repeat(36,1fr);aspect-ratio:3/2;border:1px solid #355057;border-radius:18px;overflow:hidden;background:#132b31}.cell{border:0;border-right:1px solid #1e3b42;border-bottom:1px solid #1e3b42;background:transparent;padding:0}.cell.on{background:#78d7b5}@media(max-width:600px){.app{padding:16px}.stats{width:100%;margin:4px 0 0}.grid{border-radius:10px}}
-</style></head><body><main class="app"><p>B3 / S23 · OFFLINE WEB APP</p><h1>Conway's Game of Life</h1><p>Click cells, run the simulation, and watch simple rules create unexpected life.</p><div class="bar"><button id="run">Run</button><button class="alt" id="step">Step</button><button class="alt" id="clear">Clear</button><button class="alt" id="random">Random</button><span class="stats" id="stats"></span></div><div class="grid" id="grid"></div></main><script>
-var cols=36,rows=24,board=${initialBoard},generation=${generation},timer=null,grid=document.getElementById('grid'),stats=document.getElementById('stats'),run=document.getElementById('run');
-function draw(){grid.innerHTML='';board.forEach(function(on,i){var b=document.createElement('button');b.className='cell'+(on?' on':'');b.setAttribute('aria-label','Cell '+(i+1));b.onclick=function(){board[i]=board[i]?0:1;draw()};grid.appendChild(b)});stats.textContent='Generation '+generation+' · Population '+board.reduce(function(a,b){return a+b},0)}
-function evolve(){board=board.map(function(alive,i){var r=Math.floor(i/cols),c=i%cols,n=0;for(var y=-1;y<=1;y++)for(var x=-1;x<=1;x++){if(!x&&!y)continue;var rr=r+y,cc=c+x;if(rr>=0&&rr<rows&&cc>=0&&cc<cols&&board[rr*cols+cc])n++}return alive?(n===2||n===3?1:0):(n===3?1:0)});generation++;draw()}
-run.onclick=function(){if(timer){clearInterval(timer);timer=null;run.textContent='Run'}else{timer=setInterval(evolve,240);run.textContent='Pause'}};document.getElementById('step').onclick=evolve;document.getElementById('clear').onclick=function(){board=board.map(function(){return 0});generation=0;draw()};document.getElementById('random').onclick=function(){board=board.map(function(){return Math.random()<.22?1:0});generation=0;draw()};draw();
-</script></body></html>`;
-    const file = new Blob([offlineHtml], { type: 'text/html;charset=utf-8' });
-    const url = URL.createObjectURL(file);
-    const anchor = document.createElement('a');
-    anchor.href = url;
-    anchor.download = 'conways-game-of-life-offline.html';
-    document.body.appendChild(anchor);
-    anchor.click();
-    anchor.remove();
-    URL.revokeObjectURL(url);
-  };
 
   return (
     <div className="page-shell conway-page conway-life-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
@@ -6395,21 +6333,6 @@ run.onclick=function(){if(timer){clearInterval(timer);timer=null;run.textContent
                     ? '几条简单规则，也能长出意想不到的生命。点亮细胞，然后看秩序自己出现。'
                     : 'Small rules. Unexpected life. Turn on a few cells, then watch order appear on its own.'}
                 </p>
-                <div className="conway-app-actions">
-                  <button
-                    type="button"
-                    className="conway-install-button"
-                    onClick={installWebApp}
-                    disabled={isInstalled}
-                  >
-                    <Plus size={15} />
-                    <span>{isInstalled ? (isZh ? '已安装' : 'Installed') : isZh ? '安装 App' : 'Install app'}</span>
-                  </button>
-                  <button type="button" className="conway-install-button conway-download-button" onClick={downloadOfflineVersion}>
-                    <Download size={15} />
-                    <span>{isZh ? '下载离线版' : 'Download offline'}</span>
-                  </button>
-                </div>
               </div>
             </div>
           </header>
