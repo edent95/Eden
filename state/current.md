@@ -7,6 +7,7 @@ Last reviewed: 2026-08-14
 - React 19 + TypeScript + Vite 6 static SPA.
 - Local development runs at `http://localhost:4180` with a strict port.
 - Production deploys from `main` to GitHub Pages at `https://edentan.site`.
+- Homepage Mini Coin Slot calls `penneyMiniApi`, a Node.js 22 Firebase Functions v2 endpoint in `asia-southeast1`; it atomically enforces 100 plays per IP per Malaysia day and owns leaderboard writes.
 - `seo-routes.ts` is the public route and SEO registry.
 - Wiki and Notes content compiles from `wiki/` into `generated/content.ts`; `App.tsx` still contains the large route renderer.
 
@@ -17,6 +18,7 @@ Last reviewed: 2026-08-14
 - Main-branch deployment runs the same gate before uploading `dist`.
 - `npm run task:new` and `npm run publish` provide the protected operator path from work branch through PR, required checks, deployment, and live verification.
 - Production-only Firebase RTDB rules for Penney's Game remain outside this repository's deployment workflow; see `docs/penney-leaderboard.md`.
+- Mini Coin Slot Functions source is tracked under `functions/`; `npm run check` syntax-checks it, while production deployment remains the explicit `npm run functions:deploy` step documented in `docs/penney-mini-arena.md`.
 
 ## Content And UI Sources Of Truth
 

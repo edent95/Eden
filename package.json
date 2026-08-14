@@ -21,8 +21,10 @@
     "verify": "npm run verify:skills && npm run verify:routes && npm run verify:log && npm run verify:wiki && npm run verify:css",
     "test:unit": "node --experimental-strip-types --test tests/unit/*.test.ts",
     "test:smoke": "node --experimental-strip-types scripts/harness/smoke-built-site.mjs",
+    "functions:check": "npm --prefix functions run check",
+    "functions:deploy": "firebase deploy --only functions --project poker-power-card-3abea",
     "harness:build": "VITE_BASE=/ VITE_SITE_URL=https://edentan.site vite build",
-    "harness:check": "npm run verify && npm run test:unit && npm run typecheck && npm run harness:build && npm run test:smoke",
+    "harness:check": "npm run verify && npm run test:unit && npm run typecheck && npm run functions:check && npm run harness:build && npm run test:smoke",
     "check": "npm run harness:check",
     "build": "vite build",
     "preview": "vite preview"
