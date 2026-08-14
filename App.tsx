@@ -9039,7 +9039,17 @@ const HomeCollageCard: React.FC<{ item: HomeCollageItem; language: Language; bas
 };
 
 /**
- * One marquee row. The items are rendered twice so a -50% translate loops seamlessly.
+ * One marquee row. The items are rendered twice so translating the track by exactly
+ * one run loops with no visible seam.
+ *
+ * That distance used to be written as `-50%`, which is correct per spec — a percentage
+ * translate resolves against the element's own border box, and the track is exactly two
+ * runs wide. iOS Safari does not agree: on a `width: max-content` flex track it resolves
+ * the percentage against the wrong box and lands on roughly 25px, so the marquee jitters
+ * in place instead of scrolling (measured on an iPhone: 25 distinct offsets over 23s,
+ * against 600 for an identical row animated in px). So measure one run and hand the
+ * keyframes a pixel distance through `--eden-run-shift`.
+ *
  * The duplicate run stays clickable — do NOT mark it `inert`, that removes it from hit
  * testing and half the visible cards stop responding — it is only hidden from the
  * accessibility tree and the tab order, so the real run is the one keyboard users reach.
@@ -9050,19 +9060,44 @@ const HomeCollageRow: React.FC<{
   language: Language;
   baseUrl: string;
   direction: 'left' | 'right';
-}> = ({ items, language, baseUrl, direction }) => (
-  <div className={`eden-collage-row eden-collage-row-${direction}`}>
-    <div className="eden-collage-track">
-      {[0, 1].map((run) => (
-        <div className="eden-collage-run" key={run} aria-hidden={run === 1 || undefined}>
-          {items.map((item) => (
-            <HomeCollageCard key={item.title} item={item} language={language} baseUrl={baseUrl} duplicate={run === 1} />
-          ))}
-        </div>
-      ))}
+}> = ({ items, language, baseUrl, direction }) => {
+  const trackRef = React.useRef<HTMLDivElement>(null);
+
+  React.useLayoutEffect(() => {
+    const track = trackRef.current;
+    const run = track?.firstElementChild;
+    if (!track || !run) return;
+
+    // A run's border box already includes each card's right margin, so its width is one
+    // whole run with gaps — exactly what `-50%` of the two-run track was meant to be.
+    const measure = () => {
+      track.style.setProperty('--eden-run-shift', `${run.getBoundingClientRect().width}px`);
+    };
+
+    measure();
+    if (typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', measure);
+      return () => window.removeEventListener('resize', measure);
+    }
+    const observer = new ResizeObserver(measure);
+    observer.observe(run);
+    return () => observer.disconnect();
+  }, [items.length]);
+
+  return (
+    <div className={`eden-collage-row eden-collage-row-${direction}`}>
+      <div className="eden-collage-track" ref={trackRef}>
+        {[0, 1].map((run) => (
+          <div className="eden-collage-run" key={run} aria-hidden={run === 1 || undefined}>
+            {items.map((item) => (
+              <HomeCollageCard key={item.title} item={item} language={language} baseUrl={baseUrl} duplicate={run === 1} />
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const HomeCollage: React.FC<{ language: Language; baseUrl: string }> = ({ language, baseUrl }) => (
   <div className="eden-collage" aria-label={language === 'zh' ? 'Eden 的项目与生活观察拼贴' : "Eden's work and field-note collage"}>
