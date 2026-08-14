@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Marquee probe</title>
+    <style>
+      /* Isolate the marquee recipe from the site so nothing else can be blamed.
+         Each row below removes exactly one property from the production recipe,
+         so whichever row moves on the device tells us what is stopping the rest. */
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: #f5f3ef;
+        color: #171717;
+        font: 13px/1.45 -apple-system, system-ui, sans-serif;
+        overflow-x: hidden;
+      }
+      #panel {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        padding: 10px 14px;
+        background: #171717;
+        color: #f5f3ef;
+        font-family: ui-monospace, "SF Mono", monospace;
+        font-size: 11px;
+        line-height: 1.5;
+      }
+      #panel b { color: #7ee2b8; }
+      h2 {
+        margin: 18px 14px 6px;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      h2 small { display: block; font-weight: 400; color: #6b6b6b; }
+      .readout {
+        margin: 0 14px 6px;
+        font-family: ui-monospace, "SF Mono", monospace;
+        font-size: 11px;
+        color: #176b87;
+      }
+
+      /* --- production recipe, copied from styles/pages/home.css --- */
+      .row { overflow: hidden; }
+      .track {
+        display: flex;
+        width: max-content;
+        will-change: transform;
+        animation: drift 8s linear infinite;
+      }
+      .run { display: flex; flex: 0 0 auto; }
+      .card {
+        position: relative;
+        container-type: inline-size;
+        display: block;
+        flex: 0 0 calc((100vw - 12px) / 3);
+        margin-right: 6px;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        border-radius: 8px;
+        background: #176b87;
+        box-shadow: 0 18px 50px rgb(23 23 23 / 0.09);
+      }
+      .card span {
+        position: absolute;
+        inset: auto 4px 4px auto;
+        color: #fff;
+        font-weight: 700;
+      }
+      .card video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      @keyframes drift {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
+      }
+
+      /* --- one variable removed per variant --- */
+      #v-b .card { container-type: normal; }
+      #v-c .track { will-change: auto; }
+      #v-e .track { animation-name: drift-px; }
+      @keyframes drift-px {
+        from { transform: translateX(0); }
+        to { transform: translateX(-600px); }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="panel">loading…</div>
+
+    <h2>A — production recipe, no video<small>colored cards + container-type + will-change + translateX(-50%)</small></h2>
+    <div class="row" id="v-a"><div class="track"></div></div>
+    <div class="readout" data-for="v-a"></div>
+
+    <h2>A2 — production recipe, with video<small>same as A, but each card holds an autoplaying muted mp4</small></h2>
+    <div class="row" id="v-a2"><div class="track"></div></div>
+    <div class="readout" data-for="v-a2"></div>
+
+    <h2>B — with video, container-type removed<small>drops `container-type: inline-size` from the cards</small></h2>
+    <div class="row" id="v-b"><div class="track"></div></div>
+    <div class="readout" data-for="v-b"></div>
+
+    <h2>C — with video, will-change removed<small>drops `will-change: transform` from the track</small></h2>
+    <div class="row" id="v-c"><div class="track"></div></div>
+    <div class="readout" data-for="v-c"></div>
+
+    <h2>E — with video, translate in px not %<small>animates to translateX(-600px) instead of -50%</small></h2>
+    <div class="row" id="v-e"><div class="track"></div></div>
+    <div class="readout" data-for="v-e"></div>
+
+    <script>
+      const VIDEOS = [
+        'home-banners/life-os-banner.mp4',
+        'home-banners/etreporthub-banner.mp4',
+        'home-banners/what-is-wealth-banner.mp4',
+        'home-banners/diving-ocean-banner.mp4',
+      ];
+      const base = new URL('./', location.href).href;
+
+      function buildRow(id, withVideo) {
+        const track = document.querySelector('#' + id + ' .track');
+        for (let run = 0; run < 2; run++) {
+          const el = document.createElement('div');
+          el.className = 'run';
+          for (let i = 0; i < 4; i++) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            if (withVideo) {
+              const v = document.createElement('video');
+              v.src = base + VIDEOS[i];
+              v.autoplay = true;
+              v.loop = true;
+              v.muted = true;
+              v.defaultMuted = true;
+              v.setAttribute('muted', '');
+              v.playsInline = true;
+              v.preload = 'metadata';
+              card.appendChild(v);
+              v.play().catch(() => {});
+            }
+            const label = document.createElement('span');
+            label.textContent = run + '-' + i;
+            card.appendChild(label);
+            el.appendChild(card);
+          }
+          track.appendChild(el);
+        }
+      }
+
+      buildRow('v-a', false);
+      buildRow('v-a2', true);
+      buildRow('v-b', true);
+      buildRow('v-c', true);
+      buildRow('v-e', true);
+
+      const ROWS = ['v-a', 'v-a2', 'v-b', 'v-c', 'v-e'];
+      const seen = {};
+      ROWS.forEach((id) => (seen[id] = new Set()));
+
+      function tx(id) {
+        const m = new DOMMatrixReadOnly(getComputedStyle(document.querySelector('#' + id + ' .track')).transform);
+        return m.m41;
+      }
+
+      let frames = 0;
+      const started = performance.now();
+
+      function q(s) {
+        return matchMedia(s).matches;
+      }
+
+      function tick() {
+        frames++;
+        ROWS.forEach((id) => {
+          const track = document.querySelector('#' + id + ' .track');
+          const cs = getComputedStyle(track);
+          const x = tx(id);
+          seen[id].add(Math.round(x));
+          const out = document.querySelector('.readout[data-for="' + id + '"]');
+          out.textContent =
+            'translateX=' + x.toFixed(1) + 'px  distinct=' + seen[id].size +
+            '  ' + (seen[id].size > 2 ? '✅ MOVING' : '❌ FROZEN') +
+            '  [name=' + cs.animationName + ' dur=' + cs.animationDuration +
+            ' state=' + cs.animationPlayState + ']';
+        });
+
+        const v = document.querySelector('#v-a2 video');
+        document.getElementById('panel').innerHTML =
+          '<b>viewport</b> ' + innerWidth + '×' + innerHeight + ' dpr=' + devicePixelRatio +
+          ' <b>standalone</b> ' + (q('(display-mode: standalone)') ? 'YES' : 'no') +
+          '<br><b>reduced-motion</b> ' + (q('(prefers-reduced-motion: reduce)') ? 'REDUCE' : 'no-preference') +
+          ' <b>hover:hover</b> ' + q('(hover: hover)') + ' <b>pointer:fine</b> ' + q('(pointer: fine)') +
+          ' <b>pointer:coarse</b> ' + q('(pointer: coarse)') +
+          '<br><b>max-width:600</b> ' + q('(max-width: 600px)') +
+          ' <b>getAnimations</b> ' + (document.getAnimations ? document.getAnimations().length : 'n/a') +
+          '<br><b>rAF frames</b> ' + frames + ' in ' + ((performance.now() - started) / 1000).toFixed(1) + 's' +
+          ' <b>video0</b> ' + (v ? (v.paused ? 'PAUSED' : 'playing') + ' t=' + v.currentTime.toFixed(1) : 'n/a') +
+          '<br><b>ua</b> ' + navigator.userAgent;
+
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    </script>
+  </body>
+</html>

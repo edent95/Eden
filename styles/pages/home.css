@@ -50,17 +50,23 @@
 
 .eden-collage-section { width: 100%; overflow: hidden; padding: 0 0 120px; }
 /* Two full-bleed marquee rows: the top drifts left, the bottom drifts right.
-   Each row holds two identical runs, so translating the track by exactly -50%
-   (one whole run, gaps included) loops with no visible seam. The gap lives on the
-   card's margin rather than a flex gap — a flex gap would sit between the two runs
-   as well and throw the -50% off by half a gap. */
+   Each row holds two identical runs, so translating the track by exactly one run
+   (gaps included) loops with no visible seam. The gap lives on the card's margin
+   rather than a flex gap — a flex gap would sit between the two runs as well and
+   throw the distance off by half a gap.
+
+   That distance is `--eden-run-shift`, measured in px by HomeCollageRow and set on
+   the track. It cannot be `-50%`: iOS Safari resolves a percentage translate on a
+   `width: max-content` flex track against the wrong box and lands on ~25px, which
+   reads as a completely motionless marquee. The 50% fallback below only matters if
+   the measurement never runs. */
 .eden-collage { --eden-collage-gap: 12px; width: 100%; display: grid; gap: var(--eden-collage-gap); }
 .eden-collage-row { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
 .eden-collage-track { display: flex; width: max-content; will-change: transform; animation: eden-collage-drift-left 58s linear infinite; }
 .eden-collage-row-right .eden-collage-track { animation-name: eden-collage-drift-right; animation-duration: 68s; }
 .eden-collage-run { display: flex; flex: 0 0 auto; }
-@keyframes eden-collage-drift-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-@keyframes eden-collage-drift-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+@keyframes eden-collage-drift-left { from { transform: translateX(0); } to { transform: translateX(calc(-1 * var(--eden-run-shift, 50%))); } }
+@keyframes eden-collage-drift-right { from { transform: translateX(calc(-1 * var(--eden-run-shift, 50%))); } to { transform: translateX(0); } }
 .eden-collage-card { position: relative; container-type: inline-size; display: block; flex: 0 0 clamp(220px, 30vw, 460px); margin-right: var(--eden-collage-gap); aspect-ratio: 16 / 9; overflow: hidden; border-radius: 16px; background: #d8d4cc; color: #fff; box-shadow: 0 18px 50px rgb(23 23 23 / .09); }
 .eden-collage-card[href] { cursor: pointer; }
 .eden-collage-card[href]:focus-visible { outline: 3px solid var(--eden-blue); outline-offset: 4px; }
