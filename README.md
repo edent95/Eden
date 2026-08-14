@@ -91,6 +91,7 @@ npm run preview
 - `/conways-game-of-life` 可通过页面内 `Install app / 安装 App` 安装为 standalone PWA；不支持安装提示的 Safari 会显示加入主画面 / Dock 指引
 - `/penneys-game` — Penney's Game 硬币骗局：5 关筹码对赌战役、限时盲选排位赛与全球排行榜、自由对战实验室
 - `/penneys-game` 的胜率用 Conway leading-numbers 公式精确计算（`services/penneyGame.ts`）；排行榜走 Firebase RTDB REST，无新增 npm 依赖，规则与部署见 `docs/penney-leaderboard.md`
+- 首页 `/#penney` 是不公开攻略的 Mini Coin Slot：服务端按 IP 每天发放 100 credits，记录 lifetime plays / wins / win rate，满 10 局后进入访客排行榜；API、隐私边界与部署方式见 `docs/penney-mini-arena.md`
 - `/cellular-automata-lab` — 独立的 256 elementary cellular automata rules explorer
 - `/archive/:slug` — 归档项目详情
 - PWA manifest 按路由映射（`vite.config.ts` 的 `web-app-manifest-with-base`）：`/film-gallery` → `film-gallery.webmanifest`，`/conways-game-of-life` → `conway.webmanifest`，其余所有路由（含首页）→ `site.webmanifest`（Eden Tan，`start_url: ./`）
@@ -101,6 +102,7 @@ npm run preview
 
 - **验证：** Pull Request 触发 `.github/workflows/verify.yml`，必须通过统一 harness。
 - **发布：** `main` 推送触发 `.github/workflows/deploy.yml`；同一 workflow 先通过统一 harness，再把 `dist` 发布到 **GitHub Pages**。
+- **Mini Coin Slot API：** Firebase Functions v2 的 `penneyMiniApi` 负责 IP HMAC、马来西亚时间每日 100 credits、服务端回合结果与访客排行榜；前端静态站不持有原始 IP，也不能直接写比赛记录。
 - **操作入口：** `npm run task:new` 建安全工作分支，`npm run publish` 串联 ready、PR、verify、merge、deploy 与 live check。
 - **分支保护：** `main` 要求 `verify`、分支保持最新并解决 review conversations；管理员同样受保护，force-push 与删除已禁用。
 - **SPA 子路径：** `public/404.html` 与 `index.html` 内脚本解决 GitHub Pages 对深链/刷新的 404 问题。  

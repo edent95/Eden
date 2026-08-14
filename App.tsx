@@ -10221,7 +10221,7 @@ const App: React.FC = () => {
           <HomeCollage language={language} baseUrl={baseUrl} />
         </section>
 
-        <HomePenneyGame isZh={isZh} penneyHref={penneyHref} />
+        <HomePenneyGame isZh={isZh} />
 
         <section className="eden-about eden-home-island" id="about">
           <div className="eden-about-photo">

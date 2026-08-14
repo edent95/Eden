@@ -195,49 +195,64 @@
 }
 
 /* ------------------------------------------------------------------ */
-/* Home Penney's Game — playable proof block, sits above 01 · About     */
-/* Layout only. The coin object and its landing motion come from        */
-/* styles/css-art/penney-coins.css.                                     */
+/* Home mini coin slot — daily IP arena and compact visitor board.    */
+/* Coin objects remain in styles/css-art/penney-coins.css.             */
 /* ------------------------------------------------------------------ */
 
-.eden-penney { padding-block: 112px; display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1fr); gap: clamp(44px, 6vw, 92px); align-items: center; }
+.eden-penney { padding-block: 112px; display: grid; grid-template-columns: minmax(0, .86fr) minmax(0, 1.14fr); gap: clamp(44px, 6vw, 84px); align-items: start; }
 .eden-penney h2 { margin-top: 18px; font-size: clamp(44px, 5vw, 64px); line-height: .98; letter-spacing: -.055em; font-weight: 760; }
-/* CJK glyphs are full-width; the display tracking used for Latin collides here. */
 .eden-penney h2.is-zh { line-height: 1.14; letter-spacing: -.01em; }
-.eden-penney-body { margin-top: 30px; max-width: 520px; }
+.eden-penney-body { margin-top: 30px; max-width: 510px; }
 .eden-penney-body p { color: color-mix(in srgb, var(--eden-ink) 68%, transparent); font-size: 17px; line-height: 1.7; }
 .eden-penney-body p + p { margin-top: 16px; }
 .eden-penney-thesis { margin-top: 22px !important; color: var(--eden-ink) !important; }
 .eden-penney-thesis strong { font-weight: 760; }
-.eden-penney-copy .eden-text-link { margin-top: 28px; }
 
-.eden-penney-board { padding: clamp(22px, 2.6vw, 34px); border: 1px solid color-mix(in srgb, var(--eden-ink) 12%, transparent); border-radius: 28px; background: var(--eden-panel); }
+.eden-penney-arena { padding: clamp(22px, 2.6vw, 34px); border: 1px solid color-mix(in srgb, var(--eden-ink) 12%, transparent); border-radius: 28px; background: var(--eden-panel); }
+.eden-penney-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.eden-penney-metrics > div { min-width: 0; padding: 14px 16px; border-radius: 18px; background: color-mix(in srgb, var(--eden-paper) 78%, transparent); }
+.eden-penney-metrics span, .eden-penney-name span, .eden-penney-ticket > span { display: block; color: color-mix(in srgb, var(--eden-ink) 52%, transparent); font-size: 10px; font-weight: 820; letter-spacing: .14em; text-transform: uppercase; }
+.eden-penney-metrics strong { display: inline-block; margin-top: 6px; color: var(--eden-ink); font-size: 28px; line-height: 1; }
+.eden-penney-metrics small { margin-left: 6px; color: color-mix(in srgb, var(--eden-ink) 45%, transparent); font-size: 11px; }
 
-.eden-penney-slots { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.eden-penney-slot { min-height: 92px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; border-radius: 18px; background: color-mix(in srgb, var(--eden-paper) 78%, transparent); }
-.eden-penney-slot-label { color: color-mix(in srgb, var(--eden-ink) 55%, transparent); font-size: 11px; font-weight: 820; letter-spacing: .16em; text-transform: uppercase; }
-.eden-penney-slot-empty { color: color-mix(in srgb, var(--eden-ink) 42%, transparent); font-size: 13px; }
+.eden-penney-name { margin-top: 14px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: center; }
+.eden-penney-name input { min-width: 0; height: 42px; padding: 0 14px; border: 1px solid color-mix(in srgb, var(--eden-ink) 14%, transparent); border-radius: 14px; background: color-mix(in srgb, var(--eden-paper) 78%, transparent); color: var(--eden-ink); font: inherit; font-size: 13px; }
+.eden-penney-name input:focus { outline: 3px solid color-mix(in srgb, var(--eden-blue) 32%, transparent); border-color: var(--eden-blue); }
 
-.eden-penney-odds { margin-top: 16px !important; display: flex; align-items: baseline; gap: 10px; color: color-mix(in srgb, var(--eden-ink) 58%, transparent); font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
-.eden-penney-odds strong { color: var(--eden-orange); font-size: 22px; letter-spacing: -.02em; }
-.eden-penney-odds-ratio { color: color-mix(in srgb, var(--eden-ink) 45%, transparent); font-family: var(--font-mono, ui-monospace, monospace); letter-spacing: .04em; text-transform: none; }
+.eden-penney-tickets { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.eden-penney-ticket { min-height: 82px; padding: 13px 14px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; border: 1px solid color-mix(in srgb, var(--eden-ink) 10%, transparent); border-radius: 18px; background: color-mix(in srgb, var(--eden-paper) 68%, transparent); }
+.eden-penney-ticket.is-player { border-top: 3px solid var(--eden-blue); }
+.eden-penney-ticket.is-house { border-top: 3px solid var(--eden-orange); }
+.eden-penney-ticket em { color: color-mix(in srgb, var(--eden-ink) 38%, transparent); font-family: var(--font-mono, ui-monospace, monospace); font-size: 16px; font-style: normal; letter-spacing: .16em; }
 
-.eden-penney-stream { margin-top: 18px; min-height: 40px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-.eden-penney-stream-empty { color: color-mix(in srgb, var(--eden-ink) 40%, transparent); font-size: 13px; }
-.eden-penney-status { margin-top: 12px !important; min-height: 22px; color: color-mix(in srgb, var(--eden-ink) 66%, transparent); font-size: 14px; line-height: 1.5; }
+.eden-penney-stream { margin-top: 14px; min-height: 54px; max-height: 104px; padding: 9px 11px; display: flex; flex-wrap: wrap; align-content: flex-start; align-items: center; gap: 6px; overflow: auto; border-radius: 15px; background: color-mix(in srgb, var(--eden-ink) 4%, transparent); }
+.eden-penney-stream > span:only-child:not(.penney-coin) { color: color-mix(in srgb, var(--eden-ink) 38%, transparent); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+.eden-penney-status { margin-top: 10px !important; min-height: 21px; color: color-mix(in srgb, var(--eden-ink) 64%, transparent); font-size: 13px; line-height: 1.5; }
 
-.eden-penney-picker { margin-top: 18px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
-.eden-penney-pick { display: flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 6px; border: 1px solid color-mix(in srgb, var(--eden-ink) 14%, transparent); border-radius: 18px; background: color-mix(in srgb, var(--eden-paper) 78%, transparent); cursor: pointer; transition: transform 200ms cubic-bezier(.2, .8, .2, 1), border-color 200ms ease; }
-.eden-penney-pick:hover { transform: translateY(-3px); border-color: var(--eden-blue); }
-.eden-penney-pick:focus-visible { outline: 3px solid color-mix(in srgb, var(--eden-blue) 70%, transparent); outline-offset: 3px; }
+.eden-penney-picker { margin-top: 14px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; }
+.eden-penney-picker button { min-width: 0; min-height: 46px; padding: 5px 2px; display: flex; align-items: center; justify-content: center; border: 1px solid color-mix(in srgb, var(--eden-ink) 12%, transparent); border-radius: 14px; background: color-mix(in srgb, var(--eden-paper) 74%, transparent); cursor: pointer; transition: transform 180ms cubic-bezier(.2, .8, .2, 1), border-color 180ms ease, background-color 180ms ease; }
+.eden-penney-picker button:hover:not(:disabled) { transform: translateY(-2px); border-color: var(--eden-blue); }
+.eden-penney-picker button.is-selected { border-color: var(--eden-blue); background: color-mix(in srgb, var(--eden-blue) 10%, var(--eden-paper)); }
+.eden-penney-picker button:focus-visible, .eden-penney-spin:focus-visible { outline: 3px solid color-mix(in srgb, var(--eden-blue) 58%, transparent); outline-offset: 3px; }
+.eden-penney-picker button:disabled { cursor: default; opacity: .62; }
 
-.eden-penney-actions { margin-top: 18px; display: flex; }
-.eden-penney-again { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 22px; border-radius: 999px; background: var(--eden-ink); color: var(--eden-paper); font-size: 13px; font-weight: 750; cursor: pointer; transition: transform 200ms cubic-bezier(.2, .8, .2, 1), background-color 200ms ease; }
-.eden-penney-again:hover:not(:disabled) { transform: translateY(-2px); background: var(--eden-blue); }
-.eden-penney-again:disabled { opacity: .42; cursor: default; }
+.eden-penney-spin { width: 100%; min-height: 48px; margin-top: 12px; border: 0; border-radius: 16px; background: var(--eden-ink); color: var(--eden-paper); font-size: 13px; font-weight: 800; letter-spacing: .04em; cursor: pointer; transition: transform 180ms cubic-bezier(.2, .8, .2, 1), background-color 180ms ease; }
+.eden-penney-spin:hover:not(:disabled) { transform: translateY(-2px); background: var(--eden-blue); }
+.eden-penney-spin:disabled { opacity: .42; cursor: default; }
+.eden-penney-qualify { margin-top: 10px !important; color: color-mix(in srgb, var(--eden-ink) 50%, transparent); font-size: 11px; text-align: center; }
 
-.eden-penney-tally { margin-top: 16px !important; padding-top: 14px; border-top: 1px solid color-mix(in srgb, var(--eden-ink) 12%, transparent); color: color-mix(in srgb, var(--eden-ink) 55%, transparent); font-size: 11px; font-weight: 820; letter-spacing: .16em; text-transform: uppercase; }
-.eden-penney-tally strong { color: var(--eden-ink); }
+.eden-penney-leaderboard { margin-top: 18px; padding-top: 16px; border-top: 1px solid color-mix(in srgb, var(--eden-ink) 11%, transparent); }
+.eden-penney-leaderboard-head { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
+.eden-penney-leaderboard-head strong { font-size: 13px; }
+.eden-penney-leaderboard-head span { color: color-mix(in srgb, var(--eden-ink) 44%, transparent); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
+.eden-penney-leaderboard ol { margin-top: 10px; display: grid; gap: 3px; }
+.eden-penney-leaderboard li { min-width: 0; min-height: 34px; padding: 0 9px; display: grid; grid-template-columns: 22px minmax(0, 1fr) auto 48px; gap: 8px; align-items: center; border-radius: 10px; color: color-mix(in srgb, var(--eden-ink) 66%, transparent); font-size: 11px; }
+.eden-penney-leaderboard li.is-you { background: color-mix(in srgb, var(--eden-blue) 10%, transparent); }
+.eden-penney-leaderboard li > span { color: color-mix(in srgb, var(--eden-ink) 38%, transparent); font-family: var(--font-mono, ui-monospace, monospace); }
+.eden-penney-leaderboard li strong { overflow: hidden; color: var(--eden-ink); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.eden-penney-leaderboard li em { color: color-mix(in srgb, var(--eden-ink) 45%, transparent); font-style: normal; }
+.eden-penney-leaderboard li b { color: var(--eden-orange); font-size: 12px; text-align: right; }
+.eden-penney-empty { margin-top: 12px !important; color: color-mix(in srgb, var(--eden-ink) 44%, transparent); font-size: 12px; }
 
 @media (max-width: 900px) {
   .eden-penney { grid-template-columns: 1fr; gap: 42px; }
@@ -248,8 +263,7 @@
   .eden-penney { padding-block: 90px; }
   .eden-penney h2 { font-size: 42px; }
   .eden-penney-body p { font-size: 16px; }
-  .eden-penney-board { border-radius: 20px; }
-  .eden-penney-slots { grid-template-columns: 1fr; }
-  .eden-penney-slot { min-height: auto; }
+  .eden-penney-arena { border-radius: 20px; }
   .eden-penney-picker { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .eden-penney-name { grid-template-columns: 1fr; gap: 8px; }
 }
