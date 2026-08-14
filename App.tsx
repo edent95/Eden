@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import { applyPageSeo } from './seo';
 import ProductStorePage from './components/ProductStorePage';
 import PenneysGamePage from './components/PenneysGamePage';
+import HomePenneyGame from './components/HomePenneyGame';
 import type { CssArtComponent } from './components/css-art/index';
 import {
   elementalIconCssArtItems,
@@ -10219,6 +10220,8 @@ const App: React.FC = () => {
         <section className="eden-collage-section" id="work">
           <HomeCollage language={language} baseUrl={baseUrl} />
         </section>
+
+        <HomePenneyGame isZh={isZh} penneyHref={penneyHref} />
 
         <section className="eden-about eden-home-island" id="about">
           <div className="eden-about-photo">

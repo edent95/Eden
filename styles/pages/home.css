@@ -193,3 +193,63 @@
   .eden-collage-row { overflow-x: auto; scrollbar-width: thin; }
   .eden-home *, .eden-home *::before, .eden-home *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
 }
+
+/* ------------------------------------------------------------------ */
+/* Home Penney's Game — playable proof block, sits above 01 · About     */
+/* Layout only. The coin object and its landing motion come from        */
+/* styles/css-art/penney-coins.css.                                     */
+/* ------------------------------------------------------------------ */
+
+.eden-penney { padding-block: 112px; display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1fr); gap: clamp(44px, 6vw, 92px); align-items: center; }
+.eden-penney h2 { margin-top: 18px; font-size: clamp(44px, 5vw, 64px); line-height: .98; letter-spacing: -.055em; font-weight: 760; }
+/* CJK glyphs are full-width; the display tracking used for Latin collides here. */
+.eden-penney h2.is-zh { line-height: 1.14; letter-spacing: -.01em; }
+.eden-penney-body { margin-top: 30px; max-width: 520px; }
+.eden-penney-body p { color: color-mix(in srgb, var(--eden-ink) 68%, transparent); font-size: 17px; line-height: 1.7; }
+.eden-penney-body p + p { margin-top: 16px; }
+.eden-penney-thesis { margin-top: 22px !important; color: var(--eden-ink) !important; }
+.eden-penney-thesis strong { font-weight: 760; }
+.eden-penney-copy .eden-text-link { margin-top: 28px; }
+
+.eden-penney-board { padding: clamp(22px, 2.6vw, 34px); border: 1px solid color-mix(in srgb, var(--eden-ink) 12%, transparent); border-radius: 28px; background: var(--eden-panel); }
+
+.eden-penney-slots { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.eden-penney-slot { min-height: 92px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; border-radius: 18px; background: color-mix(in srgb, var(--eden-paper) 78%, transparent); }
+.eden-penney-slot-label { color: color-mix(in srgb, var(--eden-ink) 55%, transparent); font-size: 11px; font-weight: 820; letter-spacing: .16em; text-transform: uppercase; }
+.eden-penney-slot-empty { color: color-mix(in srgb, var(--eden-ink) 42%, transparent); font-size: 13px; }
+
+.eden-penney-odds { margin-top: 16px !important; display: flex; align-items: baseline; gap: 10px; color: color-mix(in srgb, var(--eden-ink) 58%, transparent); font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.eden-penney-odds strong { color: var(--eden-orange); font-size: 22px; letter-spacing: -.02em; }
+.eden-penney-odds-ratio { color: color-mix(in srgb, var(--eden-ink) 45%, transparent); font-family: var(--font-mono, ui-monospace, monospace); letter-spacing: .04em; text-transform: none; }
+
+.eden-penney-stream { margin-top: 18px; min-height: 40px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.eden-penney-stream-empty { color: color-mix(in srgb, var(--eden-ink) 40%, transparent); font-size: 13px; }
+.eden-penney-status { margin-top: 12px !important; min-height: 22px; color: color-mix(in srgb, var(--eden-ink) 66%, transparent); font-size: 14px; line-height: 1.5; }
+
+.eden-penney-picker { margin-top: 18px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.eden-penney-pick { display: flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 6px; border: 1px solid color-mix(in srgb, var(--eden-ink) 14%, transparent); border-radius: 18px; background: color-mix(in srgb, var(--eden-paper) 78%, transparent); cursor: pointer; transition: transform 200ms cubic-bezier(.2, .8, .2, 1), border-color 200ms ease; }
+.eden-penney-pick:hover { transform: translateY(-3px); border-color: var(--eden-blue); }
+.eden-penney-pick:focus-visible { outline: 3px solid color-mix(in srgb, var(--eden-blue) 70%, transparent); outline-offset: 3px; }
+
+.eden-penney-actions { margin-top: 18px; display: flex; }
+.eden-penney-again { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 22px; border-radius: 999px; background: var(--eden-ink); color: var(--eden-paper); font-size: 13px; font-weight: 750; cursor: pointer; transition: transform 200ms cubic-bezier(.2, .8, .2, 1), background-color 200ms ease; }
+.eden-penney-again:hover:not(:disabled) { transform: translateY(-2px); background: var(--eden-blue); }
+.eden-penney-again:disabled { opacity: .42; cursor: default; }
+
+.eden-penney-tally { margin-top: 16px !important; padding-top: 14px; border-top: 1px solid color-mix(in srgb, var(--eden-ink) 12%, transparent); color: color-mix(in srgb, var(--eden-ink) 55%, transparent); font-size: 11px; font-weight: 820; letter-spacing: .16em; text-transform: uppercase; }
+.eden-penney-tally strong { color: var(--eden-ink); }
+
+@media (max-width: 900px) {
+  .eden-penney { grid-template-columns: 1fr; gap: 42px; }
+  .eden-penney-body { max-width: none; }
+}
+
+@media (max-width: 600px) {
+  .eden-penney { padding-block: 90px; }
+  .eden-penney h2 { font-size: 42px; }
+  .eden-penney-body p { font-size: 16px; }
+  .eden-penney-board { border-radius: 20px; }
+  .eden-penney-slots { grid-template-columns: 1fr; }
+  .eden-penney-slot { min-height: auto; }
+  .eden-penney-picker { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
