@@ -154,20 +154,29 @@
   .eden-home .header-language-label-short { display: inline; }
   .eden-hero { min-height: auto; padding: 104px 0 90px; }.eden-hero h1 { margin-top: 20px; font-size: clamp(52px, 16vw, 72px); }.eden-hero-copy { font-size: 17px; }.eden-hero-actions { flex-direction: column; gap: 18px; }
   .eden-collage-section { padding: 0 0 80px; }
-  .eden-collage { --eden-collage-gap: 6px; }
-  .eden-collage-row {
-    width: 100%;
-    margin-inline: 0;
-    padding-inline: 0;
-    clip-path: none;
-    -webkit-mask-image: none;
-    mask-image: none;
-    background: transparent;
+
+  /* Phones get a static 4-across grid instead of the marquee. The drift is a
+     desktop affordance: at this width a card is ~86px, so anything moving is
+     more noise than signal, and iOS Safari mis-resolves the track's animation
+     anyway. Collapsing row/track/run with `display: contents` promotes the
+     cards to grid items of `.eden-collage`, and the duplicate run — which only
+     exists to make the marquee loop seamlessly — is dropped. */
+  .eden-collage {
+    --eden-collage-gap: 6px;
+    width: min(100% - 32px, 1080px);
+    margin-inline: auto;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
-  .eden-collage-track { animation-duration: 28s; }
-  .eden-collage-row-right .eden-collage-track { animation-duration: 32s; }
+  .eden-collage-row,
+  .eden-collage-track,
+  .eden-collage-run { display: contents; }
+  .eden-collage-run[aria-hidden="true"] { display: none; }
+  .eden-collage-track { animation: none; }
   .eden-collage-card {
-    flex-basis: calc((100vw - 12px) / 3);
+    min-width: 0;
+    width: 100%;
+    margin-right: 0;
+    flex-basis: auto;
     border-radius: 8px;
   }
   .eden-collage-card::after { display: none; }
