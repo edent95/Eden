@@ -363,8 +363,8 @@ export const ROUTE_SEO: RouteSeo[] = [
       zh: "Conway's Game of Life | B3/S23 互动生命棋盘",
     },
     desc: {
-      en: "An interactive Conway's Game of Life board using B3/S23, with editable cells, live simulation, and classic Glider, R-pentomino, and Pulsar seeds.",
-      zh: '一个使用 B3/S23 的二维 Conway 生命棋盘，可编辑细胞、实时演化，并载入 Glider、R-pentomino 与 Pulsar 经典图案。',
+      en: "Play a B3/S23 Life board, then trace binary cells through 8 neighborhoods, 64 hexagrams, 256 rules, and Leibniz's I Ching bridge.",
+      zh: '先玩 B3/S23 二维生命棋盘，再沿着二元细胞走进八种邻域、六十四卦、256 条规则与莱布尼茨的《易经》桥梁。',
     },
   },
   {

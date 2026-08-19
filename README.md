@@ -87,7 +87,7 @@ npm run preview
 - `/life` — Life 视频页（隐藏直达页；不在首页入口，不进 sitemap，客户端 SEO 设为 noindex）
 - `/brand-guide` — 持续与月度 change log 对齐的 Brand Guide：核心主张、视觉、语气、版式、资产类型、动效与实现规则
 - `/topics` — Topic Market：一张卡一个问题和 icon，回答控件按问题类型变化（当前浏览器本地保存；noindex，不进 sitemap）
-- `/conways-game-of-life` — 真正的二维 Conway B3/S23 互动生命棋盘
+- `/conways-game-of-life` — 真正的二维 Conway B3/S23 互动生命棋盘，并从 0/1 细胞延伸到八种邻域、六十四卦、256 条 Elementary Rules 与莱布尼茨的历史桥梁
 - `/conways-game-of-life` 可通过页面内 `Install app / 安装 App` 安装为 standalone PWA；不支持安装提示的 Safari 会显示加入主画面 / Dock 指引
 - `/penneys-game` — Penney's Game 硬币骗局：5 关筹码对赌战役、限时盲选排位赛与全球排行榜、自由对战实验室
 - `/penneys-game` 的胜率用 Conway leading-numbers 公式精确计算（`services/penneyGame.ts`）；排行榜走 Firebase RTDB REST，无新增 npm 依赖，规则与部署见 `docs/penney-leaderboard.md`

@@ -5667,6 +5667,139 @@ const ConwayGameOfLifeFullPage: React.FC<{
               </a>
             </aside>
           </section>
+
+          <section className="conway-binary-essay" aria-labelledby="conway-binary-title">
+            <header className="conway-binary-header">
+              <p className="conway-kicker">{isZh ? '二元世界' : 'Binary worlds'}</p>
+              <h2 id="conway-binary-title" className="conway-binary-title font-display">
+                {isZh ? '两个符号，足以长出一个宇宙。' : 'Two symbols are enough to grow a universe.'}
+              </h2>
+              <p className="conway-binary-lead">
+                {isZh
+                  ? 'Conway 的棋盘把每个细胞压缩成一个判断：生或死。《易经》把每一爻压缩成阴或阳。它们不是同一套思想，却从同一种最小结构出发。'
+                  : "Conway's board compresses every cell into one decision: alive or dead. The I Ching compresses every line into yin or yang. They are not the same system, but they begin with the same minimal structure."}
+              </p>
+              <p className="conway-binary-thesis">
+                {isZh ? '真正互通的，不是解释，而是组合。' : 'What connects them is not interpretation, but combination.'}
+              </p>
+            </header>
+
+            <div className="conway-binary-chapter conway-binary-alphabet">
+              <div className="conway-binary-chapter-copy">
+                <p className="conway-binary-index">01 / {isZh ? '共同字母表' : 'Shared alphabet'}</p>
+                <h3>{isZh ? '底层编码的互通' : 'The common code underneath'}</h3>
+                <p>
+                  {isZh
+                    ? '在细胞自动机里，0 与 1 存储死亡和生存；在卦象里，断开的阴爻与连续的阳爻记录阴与阳。当一个位置只有两种可能，它承载的信息量就是一个 bit。'
+                    : 'In cellular automata, 0 and 1 store dead and alive. In the hexagrams, a broken yin line and an unbroken yang line record yin and yang. When one position has only two possibilities, it carries one bit of information.'}
+                </p>
+              </div>
+
+              <div className="conway-state-ledger" aria-label={isZh ? '二进制、细胞状态与阴阳的形式对应' : 'Formal pairing of binary, cell states, yin, and yang'}>
+                <div>
+                  <code>0</code>
+                  <span className="conway-state-cell" aria-hidden />
+                  <span className="conway-yao is-yin" aria-hidden />
+                  <span>{isZh ? '死亡 · 阴' : 'Dead · Yin'}</span>
+                </div>
+                <div>
+                  <code>1</code>
+                  <span className="conway-state-cell is-alive" aria-hidden />
+                  <span className="conway-yao is-yang" aria-hidden />
+                  <span>{isZh ? '生存 · 阳' : 'Alive · Yang'}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="conway-binary-chapter conway-binary-space">
+              <div className="conway-binary-chapter-copy">
+                <p className="conway-binary-index">02 / {isZh ? '状态空间' : 'State space'}</p>
+                <h3>{isZh ? '从 8 到 64，再到 256' : 'From 8 to 64, then 256'}</h3>
+                <p>
+                  {isZh
+                    ? '同一套二元组合，在不同问题里会长成不同的数学空间。八卦、六十四卦与 Elementary Cellular Automata 的规则表，在这里相遇。'
+                    : 'The same binary combinatorics grows into different mathematical spaces for different questions. This is where the trigrams, the 64 hexagrams, and Elementary Cellular Automata rule tables meet.'}
+                </p>
+              </div>
+
+              <div className="conway-power-grid">
+                <article>
+                  <strong>2<sup>3</sup> = 8</strong>
+                  <span>{isZh ? '三个输入' : 'Three inputs'}</span>
+                  <p>{isZh ? '左邻、自身、右邻各有 0 / 1 两态，组成 000—111 八种局部邻域。' : 'Left, self, and right each hold 0 or 1, producing eight local neighborhoods from 000 to 111.'}</p>
+                </article>
+                <article>
+                  <strong>2<sup>6</sup> = 64</strong>
+                  <span>{isZh ? '六个位置' : 'Six positions'}</span>
+                  <p>{isZh ? '上下两个三爻卦以 8 × 8 组合成六十四卦，也就是 64 个六位二元状态。' : 'Two three-line trigrams combine as 8 × 8 to form 64 hexagrams: 64 six-bit states.'}</p>
+                </article>
+                <article>
+                  <strong>2<sup>8</sup> = 256</strong>
+                  <span>{isZh ? '八个输出' : 'Eight outputs'}</span>
+                  <p>{isZh ? '规则表要为八种邻域各指定 0 或 1，因此共有 256 种 Elementary Rules。' : 'A rule table assigns 0 or 1 to each of eight neighborhoods, creating 256 Elementary Rules.'}</p>
+                </article>
+              </div>
+
+              <div className="conway-trigram-map" aria-label={isZh ? '八种三位二元状态与八卦的形式配对' : 'Formal pairing of eight three-bit states with the eight trigrams'}>
+                {I_CHING_TRIGRAMS.map((trigram) => (
+                  <div key={trigram.bits}>
+                    <code>{trigram.bits}</code>
+                    <strong aria-hidden>{trigram.symbol}</strong>
+                    <span>{trigram.name[language]} · {trigram.nature[language]}</span>
+                  </div>
+                ))}
+              </div>
+              <p className="conway-binary-note">
+                {isZh
+                  ? '这里采用阳 = 1、阴 = 0 的约定，展示的是形式上的一一配对。六十四卦描述的是 2⁶ 个状态；256 条 Elementary Rules 描述的是八种输入各自如何输出。两者共享组合数学，但不是同一种自动机。'
+                  : 'This uses yang = 1 and yin = 0 as a formal one-to-one pairing. The 64 hexagrams describe 2⁶ states; the 256 Elementary Rules describe how each of eight inputs produces an output. They share combinatorics, but they are not the same automaton.'}
+              </p>
+            </div>
+
+            <div className="conway-binary-chapter conway-leibniz-bridge">
+              <div className="conway-binary-chapter-copy">
+                <p className="conway-binary-index">03 / {isZh ? '历史桥梁' : 'Historical bridge'}</p>
+                <h3>{isZh ? '莱布尼茨看见了这次相遇' : 'Leibniz saw the systems meet'}</h3>
+                <p>
+                  {isZh
+                    ? '莱布尼茨不是从《易经》发明二进制：二进制在先，跨文化的辨认在后。白晋把邵雍体系中的伏羲六十四卦图寄给他；在阴 = 0、阳 = 1，并采用特定读爻方向时，六十四种组合可以读成 0—63。'
+                    : 'Leibniz did not invent binary from the I Ching: the binary system came first, and the cross-cultural recognition came later. Joachim Bouvet sent him the Fuxi hexagram diagram associated with Shao Yong; with yin = 0, yang = 1, and a particular reading direction, its 64 combinations can be read as 0–63.'}
+                </p>
+              </div>
+
+              <ol className="conway-bridge-timeline">
+                <li>
+                  <span>{isZh ? '此前' : 'Before'}</span>
+                  <p>{isZh ? '莱布尼茨已经形成只用 0 与 1 的二进制算术。' : 'Leibniz had already developed arithmetic using only 0 and 1.'}</p>
+                </li>
+                <li>
+                  <span>1701</span>
+                  <p>{isZh ? '白晋从北京寄来伏羲六十四卦图，并指出形式上的相似。' : 'Bouvet sent the Fuxi hexagram diagram from Beijing and pointed out the formal resemblance.'}</p>
+                </li>
+                <li>
+                  <span>1703</span>
+                  <p>{isZh ? '莱布尼茨在《二进制算术的阐释》中公开写下这条联系。' : 'Leibniz published the connection in his Explanation of Binary Arithmetic.'}</p>
+                </li>
+              </ol>
+
+              <div className="conway-bridge-caveat">
+                <p>
+                  {isZh
+                    ? '历史事实是：这场相遇确实发生过。更克制的结论是：它证明了两套符号系统可以共享二元结构，不证明《易经》预言了计算机，也不代表常用的文王卦序就是 0—63。'
+                    : 'The historical fact is that this encounter happened. The more careful conclusion is that two symbolic systems can share a binary structure—not that the I Ching predicted computers, or that the standard King Wen sequence is a 0–63 count.'}
+                </p>
+                <div className="conway-bridge-sources">
+                  <a href="https://philo-labo.fr/fichiers/Leibniz%20-%20Arithmetique%20binaire.pdf" target="_blank" rel="noreferrer">
+                    {isZh ? '莱布尼茨 1703 原文 ↗' : 'Leibniz’s 1703 paper ↗'}
+                  </a>
+                  <a href="https://www.leibniz-translations.com/fuxi" target="_blank" rel="noreferrer">
+                    {isZh ? '伏羲卦图通信译文 ↗' : 'Fuxi correspondence translation ↗'}
+                  </a>
+                  <a href={labHref}>{isZh ? '进入 256 Rules 实验室 →' : 'Open the 256 Rules Lab →'}</a>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </main>
     </div>

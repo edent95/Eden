@@ -91,6 +91,61 @@ function relatedRoutes(route: RouteSeo): RouteSeo[] {
 }
 
 export function getStaticRouteContent(route: RouteSeo, language: SeoLanguage): StaticRouteContent {
+  if (route.path === '/conways-game-of-life') {
+    return {
+      eyebrow: language === 'zh' ? 'B3 / S23 · 二元世界' : 'B3 / S23 · Binary worlds',
+      heading: displayTitle(route, language),
+      summary: route.desc[language],
+      thesis: language === 'zh'
+        ? '真正互通的，不是解释，而是组合：两个状态足以长出复杂系统。'
+        : 'What connects the systems is not interpretation, but combination: two states are enough to grow complexity.',
+      sections: language === 'zh' ? [
+        {
+          title: '底层编码的互通',
+          paragraphs: [
+            'Conway 的细胞只有死亡 0 与生存 1；卦象的每一爻只有阴与阳。它们不是同一套思想，但每个位置都从两个可能开始，承载一个 bit 的信息。',
+          ],
+        },
+        {
+          title: '从 8 到 64，再到 256',
+          paragraphs: [
+            '一维细胞自动机观察左邻、自身、右邻三个二元输入，因此有 2³ = 8 种局部邻域，可与八种三爻状态作形式配对。',
+            '上下两个三爻卦以 8 × 8 组合成 2⁶ = 64 个六爻状态；而规则表要为八种邻域各指定 0 或 1，因此产生 2⁸ = 256 条 Elementary Rules。两者共享组合数学，但不是同一种自动机。',
+          ],
+        },
+        {
+          title: '莱布尼茨的历史桥梁',
+          paragraphs: [
+            '二进制体系在先，跨文化辨认在后。白晋把邵雍体系中的伏羲六十四卦图寄给莱布尼茨；在阴 = 0、阳 = 1 和特定读爻方向下，六十四种组合可以读成 0—63。莱布尼茨在 1703 年的《二进制算术的阐释》中公开写下这条联系。',
+            '这证明两套符号系统可以共享二元结构，不证明《易经》预言了计算机，也不代表常用的文王卦序就是 0—63。',
+          ],
+        },
+      ] : [
+        {
+          title: 'The common code underneath',
+          paragraphs: [
+            "Conway's cells are dead 0 or alive 1; every hexagram line is yin or yang. They are not the same system of thought, but each position begins with two possibilities and carries one bit of information.",
+          ],
+        },
+        {
+          title: 'From 8 to 64, then 256',
+          paragraphs: [
+            'An elementary cellular automaton reads three binary inputs—left, self, and right—so it has 2³ = 8 local neighborhoods, which can be paired formally with eight three-line trigram states.',
+            'Two trigrams combine as 8 × 8 into 2⁶ = 64 six-line states. A rule table assigns 0 or 1 to each of eight neighborhoods, producing 2⁸ = 256 Elementary Rules. The systems share combinatorics, but they are not the same automaton.',
+          ],
+        },
+        {
+          title: "Leibniz's historical bridge",
+          paragraphs: [
+            "The binary system came first; the cross-cultural recognition came later. Bouvet sent Leibniz the Fuxi hexagram diagram associated with Shao Yong. With yin = 0, yang = 1, and a particular reading direction, its 64 combinations can be read as 0–63. Leibniz published the connection in his 1703 Explanation of Binary Arithmetic.",
+            'This shows that two symbolic systems can share a binary structure—not that the I Ching predicted computers, or that the standard King Wen sequence is a 0–63 count.',
+          ],
+        },
+      ],
+      related: relatedRoutes(route),
+    };
+  }
+
   if (route.path === '/wiki') {
     return {
       eyebrow: language === 'zh' ? '可复用构建知识' : 'Reusable build knowledge',
