@@ -57,10 +57,11 @@ normal visitors without requiring accounts or collecting email addresses.
 The production client currently uses the existing
 `asia-southeast1-poker-power-card-3abea.cloudfunctions.net/penneyMiniApi` endpoint
 as a narrowly scoped migration bridge. The new project's first Artifact Registry
-repository repeatedly returns `deadline_exceeded`, so switching the client now
-would turn the homepage game into a 404. This exception was explicitly approved
-on 2026-08-19; Firebase project selection, RTDB rules, the full-game leaderboard,
-the target Functions source, and all deploy commands remain on `eden-tan`.
+repository initially returned `deadline_exceeded`, but provisioning recovered on
+2026-08-19: `gcf-artifacts` now exists and the target Function is ACTIVE. GET returns
+200, preflight returns 204, both allow `https://eden-tan.com`, and the response reports
+the 100-credit contract plus the migrated leaderboard. The compatibility endpoint
+remains only until a separate protected client cutover passes production readback.
 
 The HMAC salt is stored in the `eden-tan` project's Secret Manager. Never write it
 to the repository. Preserving this secret during migration keeps existing visitor
@@ -83,9 +84,10 @@ A successful response reports `credits: 100` for a new IP and includes the publi
 leaderboard. A `POST` consumes a real production credit and creates or updates a row,
 so use it deliberately and remove any QA-only record after testing.
 
-Once the target GET and CORS checks pass, change the default URL in
+The target GET and CORS checks now pass. Change the default URL in
 `services/penneyMini.ts` to the target endpoint, run `npm run check`, publish that
-cutover, and only then remove the old Poker-project Function and data.
+cutover, verify the production bundle and live game, and only then remove the old
+Poker-project Function, Secret and `penneyMiniPlayers` data.
 
 The current Firebase dependency tree has a transitive moderate `uuid` advisory through
 the Admin SDK's unused Cloud Storage dependency. The mini API does not call UUID or
