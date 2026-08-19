@@ -4,6 +4,7 @@ import { ROUTE_SEO } from '../../seo-routes.ts';
 import { exists, fail, pass, root } from './lib.mjs';
 
 const problems = [];
+const expectedSiteUrl = 'https://eden-tan.com';
 const required = [
   'dist/index.html',
   'dist/404.html',
@@ -36,8 +37,11 @@ if (problems.length === 0) {
   for (const command of ['npm run task:new', 'npm run ready', 'npm run publish']) {
     if (!operatorMenu.includes(command)) problems.push(`operator-menu.html is missing ${command}`);
   }
+  if (!html.includes(`<meta property="og:image" content="${expectedSiteUrl}/og-image.jpg" />`)) {
+    problems.push(`index.html OG image does not use ${expectedSiteUrl}`);
+  }
   for (const route of ROUTE_SEO.filter((entry) => entry.sitemap !== false)) {
-    const expected = route.path === '/' ? 'https://edentan.site/' : `https://edentan.site${route.path}`;
+    const expected = route.path === '/' ? `${expectedSiteUrl}/` : `${expectedSiteUrl}${route.path}`;
     if (!sitemap.includes(`<loc>${expected}</loc>`)) {
       problems.push(`sitemap.xml is missing ${route.path}`);
     }

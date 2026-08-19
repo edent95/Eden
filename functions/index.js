@@ -23,6 +23,8 @@ if (getApps().length === 0) {
 const ipSalt = defineSecret('PENNEY_IP_SALT');
 const PLAYERS_NODE = 'penneyMiniPlayers';
 const allowedOrigins = [
+  'https://eden-tan.com',
+  'https://www.eden-tan.com',
   'https://edentan.site',
   'https://www.edentan.site',
   /^http:\/\/(localhost|127\.0\.0\.1):4180$/,

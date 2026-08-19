@@ -52,7 +52,7 @@ normal visitors without requiring accounts or collecting email addresses.
 - Runtime: Node.js 22, Cloud Functions v2
 - Function: `penneyMiniApi`
 - Endpoint: `https://asia-southeast1-poker-power-card-3abea.cloudfunctions.net/penneyMiniApi`
-- Allowed browser origins: `https://edentan.site`, `https://www.edentan.site`, and local port `4180`
+- Allowed browser origins: `https://eden-tan.com`, `https://www.eden-tan.com`, the transitional legacy origins `https://edentan.site` / `https://www.edentan.site`, and local port `4180`
 
 The HMAC salt is already stored in Secret Manager. Never write it to the repository.
 
@@ -65,7 +65,7 @@ npm run functions:deploy
 After deployment, verify without consuming a credit:
 
 ```bash
-curl -H 'Origin: https://edentan.site' \
+curl -H 'Origin: https://eden-tan.com' \
   https://asia-southeast1-poker-power-card-3abea.cloudfunctions.net/penneyMiniApi
 ```
 
