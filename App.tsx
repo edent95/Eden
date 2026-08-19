@@ -15,7 +15,6 @@ import ProductStorePage from './components/ProductStorePage';
 import type { CssArtComponent } from './components/css-art/index';
 import {
   elementalIconCssArtItems,
-  getHomeSelectedWorkBannerByTitle,
   getProjectCssArtByProjectTitle,
   homeInterestCssArtItems,
   homeSelectedWorkBannerItems,
@@ -8946,7 +8945,6 @@ const homeCollageItems: Array<{
   image?: string;
   video?: string;
   imageAlt?: HomeCopy;
-  cssArtProjectTitle?: string;
   href?: string;
   linkLabel?: HomeCopy;
   ctaLabel?: HomeCopy;
@@ -9003,7 +9001,12 @@ const homeCollageItems: Array<{
   {
     title: "Conway's Game of Life",
     tone: 'conway',
-    cssArtProjectTitle: "Conway's Game of Life",
+    image: 'home-banners/conway-bagua-pyramid-banner-poster.jpg',
+    video: 'home-banners/conway-bagua-pyramid-banner.mp4',
+    imageAlt: {
+      en: 'An ancient pyramid beneath a luminous Bagua formation as blue and gold lightning converges overhead',
+      zh: '古老金字塔上空浮现发光八卦阵，蓝金色闪电在云层中交汇',
+    },
     href: 'conways-game-of-life',
     linkLabel: { en: "Open Conway's Game of Life", zh: "打开 Conway's Game of Life" },
     ctaLabel: { en: 'Play now', zh: '立即开玩' },
@@ -9130,13 +9133,9 @@ const HomeCollageVideo: React.FC<{ src: string; poster?: string }> = ({ src, pos
 type HomeCollageItem = (typeof homeCollageItems)[number];
 
 const HomeCollageCard: React.FC<{ item: HomeCollageItem; language: Language; baseUrl: string; duplicate?: boolean }> = ({ item, language, baseUrl, duplicate = false }) => {
-  const cssArt = item.cssArtProjectTitle ? getHomeSelectedWorkBannerByTitle(item.cssArtProjectTitle) : undefined;
-  const CssArt = cssArt?.Component;
   const cardContent = (
     <>
-      {CssArt ? (
-        <CssArt label={cssArt?.label[language] ?? item.title} />
-      ) : item.video ? (
+      {item.video ? (
         <>
           {item.image ? (
             <img
