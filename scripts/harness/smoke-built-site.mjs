@@ -1,6 +1,6 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
-import { ROUTE_SEO } from '../../seo-routes.ts';
+import { canonicalRoutePath, ROUTE_SEO } from '../../seo-routes.ts';
 import { exists, fail, pass, root } from './lib.mjs';
 
 const problems = [];
@@ -16,6 +16,20 @@ const required = [
   'dist/conway.webmanifest',
   'dist/sw.js',
 ];
+
+function escapeHtml(value) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function routeArtifact(route) {
+  return route.path === '/'
+    ? 'dist/index.html'
+    : `dist/${route.path.slice(1)}/index.html`;
+}
 
 for (const file of required) {
   if (!exists(file)) problems.push(`Missing build artifact ${file}`);
@@ -40,8 +54,38 @@ if (problems.length === 0) {
   if (!html.includes(`<meta property="og:image" content="${expectedSiteUrl}/og-image.jpg" />`)) {
     problems.push(`index.html OG image does not use ${expectedSiteUrl}`);
   }
+  for (const route of ROUTE_SEO) {
+    const artifact = routeArtifact(route);
+    if (!exists(artifact)) {
+      problems.push(`Missing static route artifact ${artifact}`);
+      continue;
+    }
+    const routeHtml = readFileSync(path.join(root, artifact), 'utf8');
+    const canonical = `${expectedSiteUrl}${canonicalRoutePath(route.path)}`;
+    const expectedRobots = route.index === false
+      ? 'noindex, follow'
+      : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+    if (!routeHtml.includes('<html lang="en">') || routeHtml.includes('<html lang="en">>')) {
+      problems.push(`${artifact} has a malformed html element`);
+    }
+    if (!routeHtml.includes(`<title>${escapeHtml(route.title.en)}</title>`)) {
+      problems.push(`${artifact} has the wrong static title`);
+    }
+    if (!routeHtml.includes(`<meta name="description" content="${escapeHtml(route.desc.en)}" />`)) {
+      problems.push(`${artifact} has the wrong static description`);
+    }
+    if (!routeHtml.includes(`<meta name="robots" content="${expectedRobots}" />`)) {
+      problems.push(`${artifact} has the wrong static robots directive`);
+    }
+    if (!routeHtml.includes(`<link rel="canonical" href="${canonical}" />`)) {
+      problems.push(`${artifact} has the wrong canonical URL`);
+    }
+    if (!routeHtml.includes(`<meta property="og:url" content="${canonical}" />`)) {
+      problems.push(`${artifact} has the wrong static OG URL`);
+    }
+  }
   for (const route of ROUTE_SEO.filter((entry) => entry.sitemap !== false)) {
-    const expected = route.path === '/' ? `${expectedSiteUrl}/` : `${expectedSiteUrl}${route.path}`;
+    const expected = `${expectedSiteUrl}${canonicalRoutePath(route.path)}`;
     if (!sitemap.includes(`<loc>${expected}</loc>`)) {
       problems.push(`sitemap.xml is missing ${route.path}`);
     }

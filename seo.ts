@@ -7,7 +7,13 @@
  * a sensible no-JS fallback.
  */
 
-import { HOME_DESC, HOME_TITLE, PAGE_COPY, routeSeoForPath } from './seo-routes';
+import {
+  canonicalRoutePath,
+  HOME_DESC,
+  HOME_TITLE,
+  PAGE_COPY,
+  routeSeoForPath,
+} from './seo-routes';
 
 export type SeoLanguage = 'en' | 'zh';
 
@@ -173,7 +179,7 @@ export function applyPageSeo(
 ) {
   const { title, description } = getPageSeo(pathWithoutBase, language, activeArchived);
   const siteRoot = resolveSiteRootUrl();
-  const canonical = siteRoot ? joinPath(siteRoot, pathWithoutBase) : '';
+  const canonical = siteRoot ? joinPath(siteRoot, canonicalRoutePath(pathWithoutBase)) : '';
   const loc = language === 'zh' ? 'zh_CN' : 'en_US';
   const lang: SeoLanguage = language === 'zh' ? 'zh' : 'en';
   const ogImageAlt = OG_IMAGE_ALT[lang];
