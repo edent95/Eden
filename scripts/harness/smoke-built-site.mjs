@@ -17,6 +17,7 @@ const required = [
   'dist/sitemap.xml',
   'dist/robots.txt',
   'dist/site.webmanifest',
+  'dist/eden-home-app-icon.svg',
   'dist/film-gallery.webmanifest',
   'dist/conway.webmanifest',
   'dist/sw.js',

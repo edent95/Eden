@@ -10,7 +10,7 @@
   "orientation": "any",
   "icons": [
     {
-      "src": "./eden-app-icon.svg",
+      "src": "./eden-home-app-icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
