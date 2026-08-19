@@ -8,10 +8,10 @@ Eden 的个人站：单页式 React 应用，多路由、中英双语，用于�
 
 | 环境 | URL |
 |------|-----|
-| 自定义域（主） | <https://edentan.site> |
+| 自定义域（主） | <https://eden-tan.com> |
 | GitHub Pages 默认 | <https://edent95.github.io/Eden/>（当前 CI 以自定义域为优先，**未**为这条 URL 单独构建，见下） |
 
-**Base 路径：** GitHub Actions 在构建时设置 `VITE_BASE=/` 与 `VITE_SITE_URL=https://edentan.site`，使资源与路由以**域名根**为基准（`https://edentan.site/assets/...`）。若你**不设** `VITE_BASE`，本仓库的默认是 `/<仓库名>/`（适合只用 `user.github.io/Repo/`、不用自定义域）。**同一套构建不能同时**兼容「仅子路径」与「仅根域」；以自定义域为主时，请用主域名访问。若从旧版缓存里仍看到请求 `/Eden/assets/...` 的 404，强刷或清缓存即可。
+**Base 路径：** GitHub Actions 在构建时设置 `VITE_BASE=/` 与 `VITE_SITE_URL=https://eden-tan.com`，使资源与路由以**域名根**为基准（`https://eden-tan.com/assets/...`）。若你**不设** `VITE_BASE`，本仓库的默认是 `/<仓库名>/`（适合只用 `user.github.io/Repo/`、不用自定义域）。**同一套构建不能同时**兼容「仅子路径」与「仅根域」；以自定义域为主时，请用主域名访问。若从旧版缓存里仍看到请求 `/Eden/assets/...` 的 404，强刷或清缓存即可。
 
 ---
 
@@ -55,9 +55,9 @@ npm run preview
 
 需要预览范围但不产生任何写入时运行 `npm run publish -- "提交标题" --dry-run`；自动化或 Agent 终端没有交互确认，必须在检查变更范围后显式加 `--yes`。只希望建立并验证 PR、不自动合并时加 `--no-merge`。完整说明见 [`docs/operator-workflow.md`](docs/operator-workflow.md)。
 
-给第一次使用的人，可打开图形化菜单：本地开发环境的 <http://localhost:4180/operator-menu.html>，或线上 <https://edentan.site/operator-menu.html>。页面用流程图解释闭环，并提供三条核心命令的一键复制。
+给第一次使用的人，可打开图形化菜单：本地开发环境的 <http://localhost:4180/operator-menu.html>，或线上 <https://eden-tan.com/operator-menu.html>。页面用流程图解释闭环，并提供三条核心命令的一键复制。
 
-生产构建时若设置 `VITE_SITE_URL`（如 `https://edentan.site`），会用于站点地图、robots 与 `index.html` 内 OG 绝对地址，与线上域名一致时预览分享卡更准。
+生产构建时若设置 `VITE_SITE_URL`（如 `https://eden-tan.com`），会用于站点地图、robots 与 `index.html` 内 OG 绝对地址，与线上域名一致时预览分享卡更准。
 
 ---
 

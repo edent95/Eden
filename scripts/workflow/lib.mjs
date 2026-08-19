@@ -1,6 +1,6 @@
 import { spawnSync } from 'node:child_process';
 
-export const DEFAULT_SITE_URL = 'https://edentan.site';
+export const DEFAULT_SITE_URL = 'https://eden-tan.com';
 
 export function command(commandName, args, options = {}) {
   const result = spawnSync(commandName, args, {
@@ -191,4 +191,3 @@ export function extractWorkflowRun(listJson, headSha) {
   const runs = JSON.parse(listJson || '[]');
   return runs.find((run) => run.headSha === headSha) ?? null;
 }
-

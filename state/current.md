@@ -1,12 +1,12 @@
 # Current Project State
 
-Last reviewed: 2026-08-14
+Last reviewed: 2026-08-19
 
 ## Runtime
 
 - React 19 + TypeScript + Vite 6 static SPA.
 - Local development runs at `http://localhost:4180` with a strict port.
-- Production deploys from `main` to GitHub Pages at `https://edentan.site`.
+- Production deploys from `main` to GitHub Pages at `https://eden-tan.com`.
 - Homepage Mini Coin Slot calls `penneyMiniApi`, a Node.js 22 Firebase Functions v2 endpoint in `asia-southeast1`; it atomically enforces 100 plays per IP per Malaysia day and owns leaderboard writes.
 - `seo-routes.ts` is the public route and SEO registry.
 - Wiki and Notes content compiles from `wiki/` into `generated/content.ts`; `App.tsx` still contains the large route renderer.
