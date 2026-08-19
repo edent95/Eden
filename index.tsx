@@ -25,6 +25,10 @@ if (!rootElement) {
 document.documentElement.dataset.build = __BUILD_ID__;
 console.info(`[eden] build ${__BUILD_ID__}`);
 
+// Production route files contain a complete, readable static document for
+// crawlers and no-JS visitors. The interactive app replaces that equivalent
+// fallback after JavaScript loads; clearing first avoids hydration mismatch noise.
+rootElement.replaceChildren();
 const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>

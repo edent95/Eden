@@ -8,9 +8,9 @@
  */
 
 import {
-  canonicalRoutePath,
   HOME_DESC,
   HOME_TITLE,
+  localizedCanonicalRoutePath,
   PAGE_COPY,
   routeSeoForPath,
 } from './seo-routes';
@@ -73,6 +73,17 @@ function setLinkRel(rel: string, href: string) {
   el.setAttribute('href', href);
 }
 
+function setAlternateLink(hreflang: string, href: string) {
+  let el = document.querySelector<HTMLLinkElement>(`link[rel="alternate"][hreflang="${hreflang}"]`);
+  if (!el) {
+    el = document.createElement('link');
+    el.rel = 'alternate';
+    el.hreflang = hreflang;
+    document.head.appendChild(el);
+  }
+  el.href = href;
+}
+
 /**
  * Root URL including trailing slash, e.g. `https://user.github.io/Eden/`
  */
@@ -127,10 +138,10 @@ function homeJsonLd(siteRoot: string) {
 let jsonLdNode: HTMLScriptElement | null = null;
 
 function setOrRemoveJsonLd(home: boolean, siteRoot: string) {
-  if (jsonLdNode && jsonLdNode.parentNode) {
-    jsonLdNode.remove();
-    jsonLdNode = null;
+  if (!jsonLdNode) {
+    jsonLdNode = document.querySelector<HTMLScriptElement>('#eden-site-json-ld');
   }
+  if (jsonLdNode && jsonLdNode.parentNode) return;
   if (!home) return;
   const el = document.createElement('script');
   el.type = 'application/ld+json';
@@ -179,7 +190,8 @@ export function applyPageSeo(
 ) {
   const { title, description } = getPageSeo(pathWithoutBase, language, activeArchived);
   const siteRoot = resolveSiteRootUrl();
-  const canonical = siteRoot ? joinPath(siteRoot, canonicalRoutePath(pathWithoutBase)) : '';
+  const canonicalPath = localizedCanonicalRoutePath(pathWithoutBase, language);
+  const canonical = siteRoot ? joinPath(siteRoot, canonicalPath) : '';
   const loc = language === 'zh' ? 'zh_CN' : 'en_US';
   const lang: SeoLanguage = language === 'zh' ? 'zh' : 'en';
   const ogImageAlt = OG_IMAGE_ALT[lang];
@@ -210,6 +222,9 @@ export function applyPageSeo(
   if (canonical) {
     setMetaProperty('og:url', canonical);
     setLinkRel('canonical', canonical);
+    setAlternateLink('en', joinPath(siteRoot, localizedCanonicalRoutePath(pathWithoutBase, 'en')));
+    setAlternateLink('zh-Hans', joinPath(siteRoot, localizedCanonicalRoutePath(pathWithoutBase, 'zh')));
+    setAlternateLink('x-default', joinPath(siteRoot, localizedCanonicalRoutePath(pathWithoutBase, 'en')));
   }
   if (ogImage) {
     setMetaName('twitter:image', ogImage);

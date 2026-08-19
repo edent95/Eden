@@ -6,9 +6,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { applyPageSeo } from './seo';
+import {
+  localizedCanonicalRoutePath,
+  routeSeoForPath,
+  stripLocaleFromRoutePath,
+} from './seo-routes';
 import ProductStorePage from './components/ProductStorePage';
-import PenneysGamePage from './components/PenneysGamePage';
-import HomePenneyGame from './components/HomePenneyGame';
 import type { CssArtComponent } from './components/css-art/index';
 import {
   elementalIconCssArtItems,
@@ -73,6 +76,9 @@ import { siteEssayNotes, wikiEntries } from './generated/content';
 type Language = 'en' | 'zh';
 type Theme = 'light' | 'dark';
 type ThemePreference = Theme | 'auto';
+
+const PenneysGamePage = React.lazy(() => import('./components/PenneysGamePage'));
+const HomePenneyGame = React.lazy(() => import('./components/HomePenneyGame'));
 
 type BeforeInstallPromptEvent = Event & {
   prompt: () => Promise<void>;
@@ -1879,6 +1885,12 @@ const normalizePath = (value: string) => {
 const joinBasePath = (base: string, path: string) => {
   const safeBase = base.endsWith('/') ? base : `${base}/`;
   const safePath = path.replace(/^\/+/, '');
+  const logicalRoute = `/${safePath}`.replace(/\/+$/, '') || '/';
+  const onChineseRoute = typeof window !== 'undefined'
+    && /(?:^|\/)zh(?:\/|$)/.test(window.location.pathname);
+  if (onChineseRoute && routeSeoForPath(logicalRoute)) {
+    return logicalRoute === '/' ? `${safeBase}zh/` : `${safeBase}zh/${safePath}`;
+  }
   return `${safeBase}${safePath}`;
 };
 
@@ -1911,6 +1923,11 @@ const readStoredLanguage = (): Language | null => {
     // ignore (private mode, storage disabled, etc.)
   }
   return null;
+};
+
+const readUrlLanguage = (): Language | null => {
+  if (typeof window === 'undefined') return null;
+  return /(?:^|\/)zh(?:\/|$)/.test(window.location.pathname) ? 'zh' : null;
 };
 
 const resolveThemeFromLocalTime = (date = new Date()): Theme => {
@@ -9726,7 +9743,7 @@ const IconPromptsPage: React.FC<{ homeHref: string }> = ({ homeHref }) => {
 };
 
 const App: React.FC = () => {
-  const [language, setLanguage] = React.useState<Language>(() => readStoredLanguage() ?? 'en');
+  const [language, setLanguageState] = React.useState<Language>(() => readUrlLanguage() ?? readStoredLanguage() ?? 'en');
   const [themePreference, setThemePreference] = React.useState<ThemePreference>(() => readStoredThemePreference());
   const [autoTheme, setAutoTheme] = React.useState<Theme>(() => resolveThemeFromLocalTime());
 
@@ -9768,7 +9785,20 @@ const App: React.FC = () => {
 
   const isZh = language === 'zh';
   const baseUrl = import.meta.env.BASE_URL || '/';
-  const homeHref = baseUrl;
+  const setLanguage = React.useCallback<React.Dispatch<React.SetStateAction<Language>>>((nextValue) => {
+    const nextLanguage = typeof nextValue === 'function' ? nextValue(language) : nextValue;
+    setLanguageState(nextLanguage);
+    const basePath = normalizePath(baseUrl);
+    const current = normalizePath(window.location.pathname);
+    const relative = basePath !== '/' && current.startsWith(basePath)
+      ? normalizePath(current.slice(basePath.length))
+      : current;
+    const logical = stripLocaleFromRoutePath(relative).path;
+    const localized = localizedCanonicalRoutePath(logical, nextLanguage);
+    const destination = basePath === '/' ? localized : `${basePath}${localized}`;
+    window.location.assign(`${destination}${window.location.search}${window.location.hash}`);
+  }, [baseUrl, language]);
+  const homeHref = joinBasePath(baseUrl, '');
   const fullPageHref = joinBasePath(baseUrl, 'jiju-pet');
   const projectsHref = homeHref;
   const etReportHubHref = joinBasePath(baseUrl, 'etreporthub');
@@ -9851,10 +9881,11 @@ const App: React.FC = () => {
       ];
   const currentPath = typeof window !== 'undefined' ? normalizePath(window.location.pathname) : '/';
   const normalizedBase = normalizePath(baseUrl);
-  const pathWithoutBase =
+  const pathWithOptionalLocale =
     normalizedBase !== '/' && currentPath.startsWith(normalizedBase)
       ? normalizePath(currentPath.slice(normalizedBase.length))
       : currentPath;
+  const pathWithoutBase = stripLocaleFromRoutePath(pathWithOptionalLocale).path;
 
   React.useEffect(() => {
     if (pathWithoutBase !== '/analog-tech') return;
@@ -10106,22 +10137,24 @@ const App: React.FC = () => {
 
   if (isPenneysGamePage) {
     return (
-      <PenneysGamePage
-        isZh={isZh}
-        homeHref={homeHref}
-        conwayHref={conwayHref}
-        controls={
-          <HeaderControls
-            language={language}
-            setLanguage={setLanguage}
-            themePreference={themePreference}
-            theme={theme}
-            setThemePreference={setThemePreference}
-            compactThemeOnSelection
-            compactLanguageOnSelection
-          />
-        }
-      />
+      <React.Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
+        <PenneysGamePage
+          isZh={isZh}
+          homeHref={homeHref}
+          conwayHref={conwayHref}
+          controls={
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+              compactThemeOnSelection
+              compactLanguageOnSelection
+            />
+          }
+        />
+      </React.Suspense>
     );
   }
 
@@ -10221,7 +10254,9 @@ const App: React.FC = () => {
           <HomeCollage language={language} baseUrl={baseUrl} />
         </section>
 
-        <HomePenneyGame isZh={isZh} />
+        <React.Suspense fallback={<section className="min-h-64" aria-busy="true" />}>
+          <HomePenneyGame isZh={isZh} />
+        </React.Suspense>
 
         <section className="eden-about eden-home-island" id="about">
           <div className="eden-about-photo">

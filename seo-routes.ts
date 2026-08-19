@@ -9,6 +9,9 @@ export type RouteSeo = {
   desc: Record<SeoLanguage, string>;
 };
 
+/** All route HTML was materially regenerated on this date. Update when SEO-visible content changes. */
+export const SITE_CONTENT_LASTMOD = '2026-08-19';
+
 export const HOME_TITLE: Record<SeoLanguage, string> = {
   en: 'Eden Tan | Build systems from chaos.',
   zh: 'Eden Tan | 从混乱中建立系统',
@@ -48,7 +51,7 @@ export const ROUTE_SEO: RouteSeo[] = [
       zh: 'Jiju | 值得相信的宠物友好地点发现',
     },
     desc: {
-      en: 'Discover genuinely pet-friendly places, check real policies and conditions, keep pet profiles and visit memories, and contribute trusted local context with Jiju.',
+      en: 'Discover genuinely pet-friendly places, verify real policies, save pet profiles and visit memories, and add trusted local context with Jiju.',
       zh: '用 Jiju 发现真正宠物友好的地点，确认真实政策与现场条件，保存宠物档案和到访记忆，并共同补充可信的本地资料。',
     },
   },
@@ -60,7 +63,7 @@ export const ROUTE_SEO: RouteSeo[] = [
       zh: 'Jiju.pet 转型提案 | 从宠物友好到本地生活探索',
     },
     desc: {
-      en: 'A revamp proposal turning Jiju.pet from a pet-friendly directory into a local discovery platform: scene-based search, real-life filters, and a larger market — by Eden Tan.',
+      en: 'A proposal to turn Jiju.pet into a local discovery platform with scene-based search, real-life filters, and a larger market.',
       zh: 'Jiju.pet 从宠物友好目录转型为本地生活探索平台的提案：按场景搜索、真实生活筛选、更大市场——Eden Tan。',
     },
   },
@@ -98,7 +101,7 @@ export const ROUTE_SEO: RouteSeo[] = [
       zh: 'ETReportHub | Eden Tan 的日报数据系统',
     },
     desc: {
-      en: 'ETReportHub is an iGaming daily-report data system that turns Transaction and Customer Excel files into KPI, member, channel, trend, brand comparison, and CRM-ready workflows.',
+      en: 'ETReportHub turns Transaction and Customer Excel files into KPI, member, channel, trend, brand comparison, and CRM-ready workflows.',
       zh: 'ETReportHub 是 iGaming 日报数据系统，把 Transaction 与 Customer Excel 转成 KPI、会员、渠道、趋势、品牌对比和可接 CRM 的工作流。',
     },
   },
@@ -134,7 +137,7 @@ export const ROUTE_SEO: RouteSeo[] = [
       zh: 'Eden 知识库 | 可复用构建技能',
     },
     desc: {
-      en: 'A personal knowledge base for reusable build skills across Eden projects: Vite, background music, button feedback, Firebase lifetime storage, and product judgment.',
+      en: 'A personal knowledge base for reusable build skills: Vite, feedback, Firebase persistence, audio UX, RAG, and product judgment.',
       zh: 'Eden 的个人知识库，沉淀跨项目可复用构建技能：Vite、背景音乐、按钮反馈、Firebase lifetime storage 和产品判断。',
     },
   },
@@ -237,32 +240,32 @@ export const ROUTE_SEO: RouteSeo[] = [
   {
     path: '/notes/korea-2026-crash',
     priority: '0.7',
-    title: { en: 'The "mad bull" hits a wall: Korea\'s 2026 market | Eden Tan', zh: '「疯牛」撞墙：韩国股市 2026 | Eden Tan' },
-    desc: { en: 'Korea\'s market nearly doubled then posted its largest monthly drop on record—while exports hit an all-time high the same month. A public lesson that price and value are not the same thing.', zh: '韩国股市半年翻倍后又创下史上最大单月跌幅，而同月出口却创新高。一堂关于「价格不等于价值」的公开课。' },
+    title: { en: 'Korea\'s 2026 market crash | Eden Tan', zh: '「疯牛」撞墙：韩国股市 2026 | Eden Tan' },
+    desc: { en: 'Korea\'s market nearly doubled, then suffered a record monthly fall while exports hit a high—a lesson in why price and value differ.', zh: '韩国股市半年翻倍后又创下史上最大单月跌幅，而同月出口却创新高。一堂关于「价格不等于价值」的公开课。' },
   },
   {
     path: '/notes/mbi-case',
     priority: '0.7',
-    title: { en: 'Old scam, new clothes: MBI and the coin that "only goes up" | Eden Tan', zh: '旧骗局，新外衣：MBI 与那枚「会一直涨」的币 | Eden Tan' },
-    desc: { en: 'Penang\'s MBI dressed a coin-and-recruit money game as an O2O tech company. The same three old questions that expose any Ponzi scheme cut straight through it—whatever the new crypto clothes.', zh: '槟城 MBI 把「虚拟币＋拉人头」的 money game 包装成 O2O 科技公司。戳穿任何庞氏骗局的三个老问题，照样一戳就破——不管外衣换成什么加密币新词。' },
+    title: { en: 'MBI and the coin that “only goes up” | Eden Tan', zh: '旧骗局，新外衣：MBI 与那枚「会一直涨」的币 | Eden Tan' },
+    desc: { en: 'How Penang\'s MBI dressed a coin-and-recruit money game as an O2O tech company—and the three questions that expose a Ponzi scheme.', zh: '槟城 MBI 把「虚拟币＋拉人头」的 money game 包装成 O2O 科技公司。戳穿任何庞氏骗局的三个老问题，照样一戳就破——不管外衣换成什么加密币新词。' },
   },
   {
     path: '/notes/carrian-case',
     priority: '0.7',
-    title: { en: 'An empire built on borrowed money: the Carrian case | Eden Tan', zh: '一座建在借来的钱上的帝国：佳宁案 | Eden Tan' },
-    desc: { en: 'The 1980s Carrian fraud as a case study in mistaking "looks rich" for "is genuinely valuable": a 200-company empire built on borrowed money, an auditor\'s murder, and a bank near collapse.', zh: '用 1980 年代佳宁案讲一个道理：把「看起来有钱」当成「真的有价值」的错觉——两百多家公司的帝国建在借来的钱上，一名核数师被杀，一家国家银行几近崩溃。' },
+    title: { en: 'The Carrian fraud case | Eden Tan', zh: '一座建在借来的钱上的帝国：佳宁案 | Eden Tan' },
+    desc: { en: 'The Carrian fraud as a lesson in mistaking “looks rich” for real value: a borrowed-money empire, an auditor\'s murder, and a bank in crisis.', zh: '用 1980 年代佳宁案讲一个道理：把「看起来有钱」当成「真的有价值」的错觉——两百多家公司的帝国建在借来的钱上，一名核数师被杀，一家国家银行几近崩溃。' },
   },
   {
     path: '/notes/modern-finance-ponzi',
     priority: '0.7',
     title: { en: 'Is modern finance a Ponzi scheme? | Eden Tan', zh: '现代金融是庞氏骗局吗 | Eden Tan' },
-    desc: { en: 'Taking the term "Ponzi scheme" apart against modern money and debt: it only shares one trait, and the sharper question is whether debt grows faster than the real things the future can produce.', zh: '把「庞氏骗局」拆开，逐条对照现代货币与债务：它只沾了一条，真正该问的是债务是否涨得比未来能做出的真东西还快。' },
+    desc: { en: 'A first-principles comparison of Ponzi schemes, modern money, and debt—and whether debt grows faster than future productive capacity.', zh: '把「庞氏骗局」拆开，逐条对照现代货币与债务：它只沾了一条，真正该问的是债务是否涨得比未来能做出的真东西还快。' },
   },
   {
     path: '/notes/what-is-wealth',
     priority: '0.7',
     title: { en: 'What is wealth, really? | Eden Tan', zh: '财富到底是什么 | Eden Tan' },
-    desc: { en: 'A first-principles essay taking the word "wealth" apart: money is a ledger, debt sells the future, and wealth may become control over future productive capacity.', zh: '一篇第一性原理长文，把「财富」拆到底：钱只是记账，债务卖的是未来，而未来的财富可能等于你能控制多少生产能力。' },
+    desc: { en: 'A first-principles essay on wealth: money is a ledger, debt sells the future, and wealth may mean control over productive capacity.', zh: '一篇第一性原理长文，把「财富」拆到底：钱只是记账，债务卖的是未来，而未来的财富可能等于你能控制多少生产能力。' },
   },
   {
     path: '/notes/turn-chaos-into-systems',
@@ -310,7 +313,7 @@ export const ROUTE_SEO: RouteSeo[] = [
       zh: 'Life OS | 先建立长期底图，再问当下的问题',
     },
     desc: {
-      en: 'A personal system that cross-reads BaZi, I Ching, elemental profiling, and tarot records into one traceable base map — element profile, current phase, action strategy, and a copyable agent prompt pack.',
+      en: 'A personal system that cross-reads BaZi, I Ching, elemental profiles, and tarot into a traceable base map and action strategy.',
       zh: '一个把八字、易经、元素画像与塔罗记录交叉阅读成同一张可溯源底图的个人系统——元素画像、当前阶段、行动策略，以及可复制的 Agent prompt 包。',
     },
   },
@@ -329,6 +332,8 @@ export const ROUTE_SEO: RouteSeo[] = [
   {
     path: '/topics',
     priority: '0.7',
+    index: false,
+    sitemap: false,
     title: {
       en: 'Topic Market | Question board for Eden',
       zh: 'Topic Market | Eden 的问题市场',
@@ -342,11 +347,11 @@ export const ROUTE_SEO: RouteSeo[] = [
     path: '/penneys-game',
     priority: '0.6',
     title: {
-      en: "Penney's Game | Non-transitive coin game with levels and a global leaderboard",
+      en: "Penney's Game | Non-transitive coin game",
       zh: "Penney's Game 硬币骗局 | 非传递性硬币游戏 · 闯关与全球排行榜",
     },
     desc: {
-      en: "Play Penney's Game: a five-level campaign with chip stakes, a timed Blind Master ranked mode with a global leaderboard, and a lab that runs any matchup against its exact Conway leading-numbers probability.",
+      en: "Play Penney's Game through five levels, a timed ranked mode, a global leaderboard, and a lab with exact Conway leading-numbers probability.",
       zh: "玩 Penney's Game：五关筹码对赌战役、限时盲选排位赛与全球排行榜，以及可以把任意对局跑到 Conway leading-numbers 精确概率的实验室。",
     },
   },
@@ -358,7 +363,7 @@ export const ROUTE_SEO: RouteSeo[] = [
       zh: "Conway's Game of Life | B3/S23 互动生命棋盘",
     },
     desc: {
-      en: "An interactive two-dimensional Conway's Game of Life board using B3/S23, with editable cells, live simulation, and classic Glider, R-pentomino, and Pulsar seeds.",
+      en: "An interactive Conway's Game of Life board using B3/S23, with editable cells, live simulation, and classic Glider, R-pentomino, and Pulsar seeds.",
       zh: '一个使用 B3/S23 的二维 Conway 生命棋盘，可编辑细胞、实时演化，并载入 Glider、R-pentomino 与 Pulsar 经典图案。',
     },
   },
@@ -431,6 +436,22 @@ export function normalizeRoutePath(path: string): string {
 export function canonicalRoutePath(path: string): string {
   const normalized = normalizeRoutePath(path);
   return normalized === '/' ? '/' : `${normalized}/`;
+}
+
+export function localizedCanonicalRoutePath(path: string, language: SeoLanguage): string {
+  const canonical = canonicalRoutePath(path);
+  return language === 'zh'
+    ? canonical === '/' ? '/zh/' : `/zh${canonical}`
+    : canonical;
+}
+
+export function stripLocaleFromRoutePath(path: string): { path: string; language: SeoLanguage } {
+  const normalized = normalizeRoutePath(path);
+  if (normalized === '/zh') return { path: '/', language: 'zh' };
+  if (normalized.startsWith('/zh/')) {
+    return { path: normalizeRoutePath(normalized.slice(3)), language: 'zh' };
+  }
+  return { path: normalized, language: 'en' };
 }
 
 export function routeSeoForPath(path: string): RouteSeo | undefined {
