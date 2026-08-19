@@ -47,14 +47,24 @@ normal visitors without requiring accounts or collecting email addresses.
 
 ## Runtime and deploy
 
-- Firebase project: `poker-power-card-3abea`
+- Target Firebase project: `eden-tan`
 - Region: `asia-southeast1`
 - Runtime: Node.js 22, Cloud Functions v2
 - Function: `penneyMiniApi`
-- Endpoint: `https://asia-southeast1-poker-power-card-3abea.cloudfunctions.net/penneyMiniApi`
+- Target endpoint: `https://asia-southeast1-eden-tan.cloudfunctions.net/penneyMiniApi`
 - Allowed browser origins: `https://eden-tan.com`, `https://www.eden-tan.com`, the transitional legacy origins `https://edentan.site` / `https://www.edentan.site`, and local port `4180`
 
-The HMAC salt is already stored in Secret Manager. Never write it to the repository.
+The production client currently uses the existing
+`asia-southeast1-poker-power-card-3abea.cloudfunctions.net/penneyMiniApi` endpoint
+as a narrowly scoped migration bridge. The new project's first Artifact Registry
+repository repeatedly returns `deadline_exceeded`, so switching the client now
+would turn the homepage game into a 404. This exception was explicitly approved
+on 2026-08-19; Firebase project selection, RTDB rules, the full-game leaderboard,
+the target Functions source, and all deploy commands remain on `eden-tan`.
+
+The HMAC salt is stored in the `eden-tan` project's Secret Manager. Never write it
+to the repository. Preserving this secret during migration keeps existing visitor
+HMAC identifiers stable without exposing or storing raw IP addresses.
 
 ```bash
 npm install --prefix functions
@@ -66,12 +76,16 @@ After deployment, verify without consuming a credit:
 
 ```bash
 curl -H 'Origin: https://eden-tan.com' \
-  https://asia-southeast1-poker-power-card-3abea.cloudfunctions.net/penneyMiniApi
+  https://asia-southeast1-eden-tan.cloudfunctions.net/penneyMiniApi
 ```
 
 A successful response reports `credits: 100` for a new IP and includes the public
 leaderboard. A `POST` consumes a real production credit and creates or updates a row,
 so use it deliberately and remove any QA-only record after testing.
+
+Once the target GET and CORS checks pass, change the default URL in
+`services/penneyMini.ts` to the target endpoint, run `npm run check`, publish that
+cutover, and only then remove the old Poker-project Function and data.
 
 The current Firebase dependency tree has a transitive moderate `uuid` advisory through
 the Admin SDK's unused Cloud Storage dependency. The mini API does not call UUID or
