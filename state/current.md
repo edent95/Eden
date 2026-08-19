@@ -8,7 +8,7 @@ Last reviewed: 2026-08-19
 - Local development runs at `http://localhost:4180` with a strict port.
 - Production deploys from `main` to GitHub Pages at `https://eden-tan.com`.
 - Eden-owned Firebase configuration, RTDB, Auth, rules, leaderboard and target Functions source live in the dedicated `eden-tan` project and must not share a sibling product project's backend.
-- Homepage Mini Coin Slot calls `penneyMiniApi`, a Node.js 22 Firebase Functions v2 endpoint in `asia-southeast1`; it atomically enforces 100 plays per IP per Malaysia day and owns leaderboard writes. Google Artifact Registry provisioning recovered on 2026-08-19 and the dedicated `eden-tan` Function is now ACTIVE with GET, preflight CORS, 100-credit and leaderboard verification complete. Production still retains the existing Poker-project endpoint as an explicitly approved compatibility bridge until a separate protected cutover publishes the client URL change; remove the bridge and old resources only after that production readback succeeds.
+- Homepage Mini Coin Slot calls the dedicated `eden-tan` `penneyMiniApi`, a Node.js 22 Firebase Functions v2 endpoint in `asia-southeast1`; it atomically enforces 100 plays per IP per Malaysia day and owns leaderboard writes. Google Artifact Registry provisioning recovered on 2026-08-19, and GET, preflight CORS, the 100-credit contract and the migrated leaderboard have been verified. The previous Poker-project runtime is not an active target and may only be removed after production readback confirms the new client bundle.
 - `seo-routes.ts` is the public route and SEO registry；`seo-prerender.ts` 负责把 registry 与编译后的 Wiki/Notes 内容转成静态正文、主题集群链接与结构化数据。
 - Wiki and Notes content compiles from `wiki/` into `generated/content.ts`; `App.tsx` still contains the large route renderer.
 - Sitemap 同时列出英文与中文 canonical URL，包含 reciprocal hreflang、x-default 与 `SITE_CONTENT_LASTMOD`；修改 SEO 可见内容时必须同步更新该日期。
@@ -19,7 +19,7 @@ Last reviewed: 2026-08-19
 - Pull requests run `.github/workflows/verify.yml`.
 - Main-branch deployment runs the same gate before uploading `dist`.
 - `npm run task:new` and `npm run publish` provide the protected operator path from work branch through PR, required checks, deployment, and live verification.
-- Firebase project selection and RTDB rules are tracked in `.firebaserc` and `database.rules.json`; `npm run verify:firebase` rejects Poker-project references everywhere except the single documented Mini API compatibility endpoint.
+- Firebase project selection and RTDB rules are tracked in `.firebaserc` and `database.rules.json`; `npm run verify:firebase` rejects Poker-project references from every active Firebase target, including the Mini API client.
 - Mini Coin Slot Functions source is tracked under `functions/`; `npm run check` syntax-checks it, while production deployment remains the explicit `npm run firebase:deploy` step documented in `docs/penney-mini-arena.md`.
 
 ## Content And UI Sources Of Truth

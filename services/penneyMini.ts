@@ -2,9 +2,7 @@ import type { Face, Sequence } from './penneyGame';
 
 const MINI_API_URL = (
   (import.meta.env.VITE_PENNEY_MINI_API_URL as string | undefined) ??
-  // Temporary migration bridge: keep the public game available while the new
-  // eden-tan project's Artifact Registry provisioning is blocked by Google.
-  'https://asia-southeast1-poker-power-card-3abea.cloudfunctions.net/penneyMiniApi'
+  'https://asia-southeast1-eden-tan.cloudfunctions.net/penneyMiniApi'
 ).replace(/\/$/, '');
 
 const REQUEST_TIMEOUT_MS = 10_000;
