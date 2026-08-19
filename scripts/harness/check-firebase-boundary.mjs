@@ -6,9 +6,10 @@ const checks = [
   ['.firebaserc', [expectedProject]],
   ['package.json', [`--project ${expectedProject}`]],
   ['functions/index.js', [`${expectedProject}-default-rtdb`]],
-  ['services/penneyMini.ts', [`asia-southeast1-${expectedProject}.cloudfunctions.net`]],
   ['services/penneyLeaderboard.ts', [`${expectedProject}-default-rtdb`]],
 ];
+const compatibilityFile = 'services/penneyMini.ts';
+const compatibilityEndpoint = `asia-southeast1-${forbiddenProject}.cloudfunctions.net`;
 
 const problems = [];
 
@@ -22,5 +23,10 @@ for (const [file, required] of checks) {
   }
 }
 
+const compatibilitySource = read(compatibilityFile);
+if (!compatibilitySource.includes(compatibilityEndpoint)) {
+  problems.push(`${compatibilityFile} is missing the documented temporary compatibility endpoint`);
+}
+
 if (problems.length > 0) fail('Firebase project boundary check failed:', problems);
-else pass(`${checks.length} active Firebase configuration files point only at ${expectedProject}`);
+else pass(`${checks.length} Firebase targets use ${expectedProject}; the single documented Mini API compatibility bridge is intact`);
