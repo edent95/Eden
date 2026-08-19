@@ -5,7 +5,7 @@ const CACHE_NAME = 'eden-site-dev';
 const APP_SHELL = [
   './',
   './site.webmanifest',
-  './eden-app-icon.svg',
+  './eden-home-app-icon.svg',
   './conways-game-of-life',
   './conway.webmanifest',
   './conway-app-icon.svg',
