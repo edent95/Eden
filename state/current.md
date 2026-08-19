@@ -4,12 +4,13 @@ Last reviewed: 2026-08-19
 
 ## Runtime
 
-- React 19 + TypeScript + Vite 6 client-rendered app；production build 会按 `seo-routes.ts` 为每个已登记 route 生成真实目录 HTML，GitHub Pages 深链不再依赖 404 fallback。
+- React 19 + TypeScript + Vite 6 progressive app；production build 会按 `seo-routes.ts` 为每个已登记 route 生成英文与 `/zh/` 中文目录 HTML，服务器响应直接含真实正文、静态内链、breadcrumbs、JSON-LD、canonical 与 hreflang，React 再接管互动。
 - Local development runs at `http://localhost:4180` with a strict port.
 - Production deploys from `main` to GitHub Pages at `https://eden-tan.com`.
 - Homepage Mini Coin Slot calls `penneyMiniApi`, a Node.js 22 Firebase Functions v2 endpoint in `asia-southeast1`; it atomically enforces 100 plays per IP per Malaysia day and owns leaderboard writes.
-- `seo-routes.ts` is the public route and SEO registry.
+- `seo-routes.ts` is the public route and SEO registry；`seo-prerender.ts` 负责把 registry 与编译后的 Wiki/Notes 内容转成静态正文、主题集群链接与结构化数据。
 - Wiki and Notes content compiles from `wiki/` into `generated/content.ts`; `App.tsx` still contains the large route renderer.
+- Sitemap 同时列出英文与中文 canonical URL，包含 reciprocal hreflang、x-default 与 `SITE_CONTENT_LASTMOD`；修改 SEO 可见内容时必须同步更新该日期。
 
 ## Required Verification
 
@@ -32,6 +33,7 @@ Last reviewed: 2026-08-19
 ## Known Structural Debt
 
 - Wiki and Notes content now lives under `wiki/` and compiles into `generated/content.ts`; `App.tsx` still contains large route components that can be split later.
+- `PenneysGamePage` 与首页 Penney 模块已使用 lazy chunk；其余大型 route 仍集中在 `App.tsx`，主 bundle 还可继续按 route 拆分。当前环境没有 Chrome DevTools performance trace，不能把 bundle 优化当成真实 LCP / INP / CLS 实测。
 - Historical logs are split by month and indexed through generated `logs/index.md`; `log.md` remains a compatibility pointer.
 - `log 2.md` and `soul 2.md` are tracked legacy snapshots. They are not active sources of truth and should not be read or updated during normal work.
 - GitHub `main` branch protection requires the `verify` check, an up-to-date branch, resolved review conversations, and applies to administrators; force-push and branch deletion are disabled.

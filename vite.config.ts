@@ -4,17 +4,40 @@ import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { OG_IMAGE_FILE, OG_IMAGE_HEIGHT, OG_IMAGE_WIDTH } from './seo';
-import { canonicalRoutePath, ROUTE_SEO, type RouteSeo } from './seo-routes';
+import {
+  localizedCanonicalRoutePath,
+  ROUTE_SEO,
+  SITE_CONTENT_LASTMOD,
+  type RouteSeo,
+  type SeoLanguage,
+} from './seo-routes';
+import {
+  buildStaticBreadcrumbs,
+  buildStaticJsonLd,
+  getStaticRouteContent,
+  languageAlternateUrl,
+  routeOutputPath,
+} from './seo-prerender';
 import { createPwaManifestInjectionScript } from './pwa-manifests';
 
 function generateSitemapAndRobots(outDir: string, siteBaseNoSlash: string) {
   const sitemapRoutes = ROUTE_SEO.filter((route) => route.sitemap !== false);
-  const lines = sitemapRoutes.map(({ path: p, priority }) => {
-    const loc = `${siteBaseNoSlash}${canonicalRoutePath(p)}`;
-    return `  <url><loc>${loc}</loc><changefreq>monthly</changefreq><priority>${priority}</priority></url>`;
-  });
+  const lines = sitemapRoutes.flatMap((route) => (['en', 'zh'] as const).map((language) => {
+    const loc = languageAlternateUrl(route, language, siteBaseNoSlash);
+    const en = languageAlternateUrl(route, 'en', siteBaseNoSlash);
+    const zh = languageAlternateUrl(route, 'zh', siteBaseNoSlash);
+    return `  <url>
+    <loc>${loc}</loc>
+    <lastmod>${SITE_CONTENT_LASTMOD}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>${route.priority}</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="${en}" />
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="${zh}" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="${en}" />
+  </url>`;
+  }));
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${lines.join('\n')}
 </urlset>
 `;
@@ -59,14 +82,66 @@ function upsertCanonical(html: string, href: string): string {
   return pattern.test(html) ? html.replace(pattern, tag) : html.replace('</head>', `    ${tag}\n  </head>`);
 }
 
-function renderRouteHtml(shell: string, route: RouteSeo, siteBaseNoSlash: string | null): string {
-  const title = route.title.en;
-  const description = route.desc.en;
+function upsertAlternate(html: string, hreflang: string, href: string): string {
+  const tag = `<link rel="alternate" hreflang="${escapeHtml(hreflang)}" href="${escapeHtml(href)}" />`;
+  const pattern = new RegExp(`<link\\s+[^>]*\\bhreflang=["']${escapeRegExp(hreflang)}["'][^>]*>`, 'i');
+  return pattern.test(html) ? html.replace(pattern, tag) : html.replace('</head>', `    ${tag}\n  </head>`);
+}
+
+function renderStaticBody(route: RouteSeo, language: SeoLanguage, siteBaseNoSlash: string): string {
+  const content = getStaticRouteContent(route, language);
+  const breadcrumbs = buildStaticBreadcrumbs(route, language, siteBaseNoSlash);
+  const breadcrumbHtml = breadcrumbs.map((item, index) => {
+    const current = index === breadcrumbs.length - 1;
+    return current
+      ? `<span aria-current="page">${escapeHtml(item.name)}</span>`
+      : `<a href="${escapeHtml(item.url)}">${escapeHtml(item.name)}</a>`;
+  }).join('<span aria-hidden="true"> / </span>');
+  const sections = content.sections.map((section) => `
+      <section>
+        <h2>${escapeHtml(section.title)}</h2>
+        ${section.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('\n        ')}
+      </section>`).join('');
+  const related = content.related.map((entry) => {
+    const href = languageAlternateUrl(entry, language, siteBaseNoSlash);
+    return `<li><a href="${escapeHtml(href)}">${escapeHtml(entry.title[language].split(' | ')[0])}</a></li>`;
+  }).join('');
+  const relatedTitle = language === 'zh' ? '相关页面' : 'Related pages';
+  const skipLabel = language === 'zh' ? '跳到正文' : 'Skip to content';
+
+  return `<div id="root">
+    <div class="seo-prerender">
+      <a class="seo-prerender-skip" href="#seo-main">${skipLabel}</a>
+      <nav aria-label="Breadcrumb">${breadcrumbHtml}</nav>
+      <main id="seo-main">
+        <header>
+          <p class="seo-prerender-eyebrow">${escapeHtml(content.eyebrow)}</p>
+          <h1>${escapeHtml(content.heading)}</h1>
+          <p class="seo-prerender-summary">${escapeHtml(content.summary)}</p>
+          ${content.thesis ? `<blockquote>${escapeHtml(content.thesis)}</blockquote>` : ''}
+        </header>${sections}
+        <nav aria-labelledby="seo-related-title">
+          <h2 id="seo-related-title">${relatedTitle}</h2>
+          <ul>${related}</ul>
+        </nav>
+      </main>
+    </div>
+  </div>`;
+}
+
+function renderRouteHtml(
+  shell: string,
+  route: RouteSeo,
+  language: SeoLanguage,
+  siteBaseNoSlash: string | null,
+): string {
+  const title = route.title[language];
+  const description = route.desc[language];
   const robots = route.index === false
     ? 'noindex, follow'
     : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
   let html = shell
-    .replace(/<html\b[^>]*>/i, '<html lang="en">')
+    .replace(/<html\b[^>]*>/i, `<html lang="${language === 'zh' ? 'zh-Hans' : 'en'}">`)
     .replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(title)}</title>`);
 
   for (const [attribute, key, value] of [
@@ -76,15 +151,24 @@ function renderRouteHtml(shell: string, route: RouteSeo, siteBaseNoSlash: string
     ['name', 'twitter:description', description],
     ['property', 'og:title', title],
     ['property', 'og:description', description],
-    ['property', 'og:locale', 'en_US'],
+    ['property', 'og:locale', language === 'zh' ? 'zh_CN' : 'en_US'],
   ] as const) {
     html = upsertMeta(html, attribute, key, value);
   }
 
   if (siteBaseNoSlash) {
-    const canonical = `${siteBaseNoSlash}${canonicalRoutePath(route.path)}`;
+    const canonical = `${siteBaseNoSlash}${localizedCanonicalRoutePath(route.path, language)}`;
     html = upsertMeta(html, 'property', 'og:url', canonical);
     html = upsertCanonical(html, canonical);
+    html = upsertAlternate(html, 'en', languageAlternateUrl(route, 'en', siteBaseNoSlash));
+    html = upsertAlternate(html, 'zh-Hans', languageAlternateUrl(route, 'zh', siteBaseNoSlash));
+    html = upsertAlternate(html, 'x-default', languageAlternateUrl(route, 'en', siteBaseNoSlash));
+    const jsonLd = JSON.stringify(buildStaticJsonLd(route, language, siteBaseNoSlash)).replace(/</g, '\\u003c');
+    const fallbackCss = `<style id="seo-prerender-style">
+      .seo-prerender{max-width:920px;margin:0 auto;padding:32px 24px 80px;color:#292524;font:17px/1.75 system-ui,-apple-system,sans-serif}.seo-prerender a{color:inherit;text-decoration-thickness:1px;text-underline-offset:3px}.seo-prerender nav{font-size:14px;color:#57534e}.seo-prerender header{padding:72px 0 40px}.seo-prerender-eyebrow{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}.seo-prerender h1{max-width:780px;margin:12px 0 20px;font-size:clamp(2.5rem,7vw,5.5rem);line-height:.98;letter-spacing:-.05em}.seo-prerender-summary{max-width:720px;font-size:clamp(1.1rem,2vw,1.35rem)}.seo-prerender blockquote{margin:32px 0;padding-left:20px;border-left:3px solid #34d399;font-size:1.2rem}.seo-prerender section{padding:28px 0;border-top:1px solid #e7e5e4}.seo-prerender h2{font-size:1.45rem}.seo-prerender section p{max-width:760px}.seo-prerender ul{padding-left:20px}.seo-prerender-skip{position:absolute;left:-9999px}.seo-prerender-skip:focus{left:16px;top:16px;background:#fff;padding:8px 12px}@media(prefers-color-scheme:dark){.seo-prerender{color:#e7e5e4}.seo-prerender nav{color:#a8a29e}.seo-prerender section{border-color:#44403c}}
+    </style>`;
+    html = html.replace('</head>', `    ${fallbackCss}\n    <script id="eden-site-json-ld" type="application/ld+json">${jsonLd}</script>\n  </head>`);
+    html = html.replace('<div id="root"></div>', renderStaticBody(route, language, siteBaseNoSlash));
   }
 
   return html;
@@ -95,12 +179,11 @@ function generateStaticRouteHtml(outDir: string, siteBaseNoSlash: string | null)
   const shell = readFileSync(shellPath, 'utf8');
 
   for (const route of ROUTE_SEO) {
-    const relativeOutput = route.path === '/'
-      ? 'index.html'
-      : path.join(route.path.slice(1), 'index.html');
-    const outputPath = path.join(outDir, relativeOutput);
-    mkdirSync(path.dirname(outputPath), { recursive: true });
-    writeFileSync(outputPath, renderRouteHtml(shell, route, siteBaseNoSlash), 'utf8');
+    for (const language of ['en', 'zh'] as const) {
+      const outputPath = path.join(outDir, routeOutputPath(route, language));
+      mkdirSync(path.dirname(outputPath), { recursive: true });
+      writeFileSync(outputPath, renderRouteHtml(shell, route, language, siteBaseNoSlash), 'utf8');
+    }
   }
 }
 

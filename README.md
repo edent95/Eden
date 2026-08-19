@@ -1,6 +1,6 @@
 # Eden — Portfolio
 
-Eden 的个人站：单页式 React 应用，多路由、中英双语，用于展示经历、项目归档、Jiju.pet 与构建叙事。**当前这版**已包含 SEO（meta、sitemap、JSON-LD、OG 图）、Google Analytics、GitHub Pages 部署，以及活动推广用的独立静态 HTML 页面。
+Eden 的个人站：React 互动应用，多路由、中英双语，用于展示经历、项目归档、Jiju.pet 与构建叙事。**当前这版**会为每条 route 生成带真实正文、内链、面包屑、JSON-LD 与 hreflang 的静态 HTML，再由 React 接管互动；同时包含 Google Analytics、GitHub Pages 部署，以及活动推广用的独立静态 HTML 页面。
 
 ---
 
@@ -86,7 +86,7 @@ npm run preview
 - `/life-os` — 人生 RPG 能力系统 / Life OS 角色档案页
 - `/life` — Life 视频页（隐藏直达页；不在首页入口，不进 sitemap，客户端 SEO 设为 noindex）
 - `/brand-guide` — 持续与月度 change log 对齐的 Brand Guide：核心主张、视觉、语气、版式、资产类型、动效与实现规则
-- `/topics` — Topic Market：一张卡一个问题和 icon，回答控件按问题类型变化（当前浏览器本地保存）
+- `/topics` — Topic Market：一张卡一个问题和 icon，回答控件按问题类型变化（当前浏览器本地保存；noindex，不进 sitemap）
 - `/conways-game-of-life` — 真正的二维 Conway B3/S23 互动生命棋盘
 - `/conways-game-of-life` 可通过页面内 `Install app / 安装 App` 安装为 standalone PWA；不支持安装提示的 Safari 会显示加入主画面 / Dock 指引
 - `/penneys-game` — Penney's Game 硬币骗局：5 关筹码对赌战役、限时盲选排位赛与全球排行榜、自由对战实验室
@@ -105,9 +105,9 @@ npm run preview
 - **Mini Coin Slot API：** Firebase Functions v2 的 `penneyMiniApi` 负责 IP HMAC、马来西亚时间每日 100 credits、服务端回合结果与访客排行榜；前端静态站不持有原始 IP，也不能直接写比赛记录。
 - **操作入口：** `npm run task:new` 建安全工作分支，`npm run publish` 串联 ready、PR、verify、merge、deploy 与 live check。
 - **分支保护：** `main` 要求 `verify`、分支保持最新并解决 review conversations；管理员同样受保护，force-push 与删除已禁用。
-- **Route HTML：** production build 会依据 `seo-routes.ts` 为每个 route 生成真实的 `<route>/index.html`，让 GitHub Pages 深链以 `200` 返回并提供 route-specific title、description、robots、canonical 与 OG URL；`public/404.html` 只保留给 registry 之外的未知路径作 SPA fallback。
+- **Route HTML：** production build 会依据 `seo-routes.ts` 为每个 route 生成英文 `<route>/index.html` 与中文 `/zh/<route>/index.html`。服务器响应直接包含真实 H1、Wiki/Notes 正文、主题集群内链、面包屑、页面类型 JSON-LD、canonical 与 hreflang；React 加载后接管等价互动页面。`public/404.html` 只保留给 registry 之外的未知路径作 SPA fallback。
 - **分析：** `index.html` 内已嵌入 GA4（`gtag.js`），Measurement ID 在仓库中维护。  
-- **SEO 代码：** 见 `seo.ts`；构建产物含 `sitemap.xml`、`robots.txt`（在配置了站点 URL 时生成）。
+- **SEO 代码：** route metadata 在 `seo-routes.ts`，静态正文与 schema 在 `seo-prerender.ts`，客户端同步在 `seo.ts`；构建产物含双语 alternate 与真实 `lastmod` 的 `sitemap.xml`、`robots.txt`（在配置了站点 URL 时生成）。
 
 ---
 

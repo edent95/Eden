@@ -1,4 +1,4 @@
-import { ROUTE_SEO } from '../../seo-routes.ts';
+import { ROUTE_SEO, SITE_CONTENT_LASTMOD } from '../../seo-routes.ts';
 import { exists, fail, pass, read } from './lib.mjs';
 
 const app = read('App.tsx');
@@ -33,12 +33,22 @@ for (const route of ROUTE_SEO) {
   if (route.index === false && route.sitemap !== false) {
     problems.push(`${route.path} is noindex but is still eligible for the sitemap`);
   }
+  if (route.title.en.length > 60) {
+    problems.push(`${route.path} English title exceeds 60 characters (${route.title.en.length})`);
+  }
+  if (route.desc.en.length > 160) {
+    problems.push(`${route.path} English description exceeds 160 characters (${route.desc.en.length})`);
+  }
   if (!hasImplementedRoute(route.path)) {
     problems.push(`${route.path} is registered but no matching App.tsx route/data entry was found`);
   }
   if (!hasReadmeRoute(route.path)) {
     problems.push(`${route.path} is registered but not documented in README.md`);
   }
+}
+
+if (!/^\d{4}-\d{2}-\d{2}$/.test(SITE_CONTENT_LASTMOD)) {
+  problems.push('SITE_CONTENT_LASTMOD must be an ISO date');
 }
 
 const registeredPaths = new Set(ROUTE_SEO.map((route) => route.path));
