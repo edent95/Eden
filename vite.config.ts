@@ -1,16 +1,16 @@
-import { readFileSync, writeFileSync } from 'fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'fs';
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { OG_IMAGE_FILE, OG_IMAGE_HEIGHT, OG_IMAGE_WIDTH } from './seo';
-import { ROUTE_SEO } from './seo-routes';
+import { canonicalRoutePath, ROUTE_SEO, type RouteSeo } from './seo-routes';
 import { createPwaManifestInjectionScript } from './pwa-manifests';
 
 function generateSitemapAndRobots(outDir: string, siteBaseNoSlash: string) {
   const sitemapRoutes = ROUTE_SEO.filter((route) => route.sitemap !== false);
   const lines = sitemapRoutes.map(({ path: p, priority }) => {
-    const loc = p === '/' ? `${siteBaseNoSlash}/` : `${siteBaseNoSlash}${p}`;
+    const loc = `${siteBaseNoSlash}${canonicalRoutePath(p)}`;
     return `  <url><loc>${loc}</loc><changefreq>monthly</changefreq><priority>${priority}</priority></url>`;
   });
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -25,6 +25,83 @@ Allow: /
 Sitemap: ${siteBaseNoSlash}/sitemap.xml
 `;
   writeFileSync(path.join(outDir, 'robots.txt'), robots, 'utf8');
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function upsertMeta(
+  html: string,
+  attribute: 'name' | 'property',
+  key: string,
+  content: string,
+): string {
+  const tag = `<meta ${attribute}="${escapeHtml(key)}" content="${escapeHtml(content)}" />`;
+  const pattern = new RegExp(
+    `<meta\\s+[^>]*\\b${attribute}=["']${escapeRegExp(key)}["'][^>]*>`,
+    'i',
+  );
+  return pattern.test(html) ? html.replace(pattern, tag) : html.replace('</head>', `    ${tag}\n  </head>`);
+}
+
+function upsertCanonical(html: string, href: string): string {
+  const tag = `<link rel="canonical" href="${escapeHtml(href)}" />`;
+  const pattern = /<link\s+[^>]*\brel=["']canonical["'][^>]*>/i;
+  return pattern.test(html) ? html.replace(pattern, tag) : html.replace('</head>', `    ${tag}\n  </head>`);
+}
+
+function renderRouteHtml(shell: string, route: RouteSeo, siteBaseNoSlash: string | null): string {
+  const title = route.title.en;
+  const description = route.desc.en;
+  const robots = route.index === false
+    ? 'noindex, follow'
+    : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+  let html = shell
+    .replace(/<html\b[^>]*>/i, '<html lang="en">')
+    .replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(title)}</title>`);
+
+  for (const [attribute, key, value] of [
+    ['name', 'description', description],
+    ['name', 'robots', robots],
+    ['name', 'twitter:title', title],
+    ['name', 'twitter:description', description],
+    ['property', 'og:title', title],
+    ['property', 'og:description', description],
+    ['property', 'og:locale', 'en_US'],
+  ] as const) {
+    html = upsertMeta(html, attribute, key, value);
+  }
+
+  if (siteBaseNoSlash) {
+    const canonical = `${siteBaseNoSlash}${canonicalRoutePath(route.path)}`;
+    html = upsertMeta(html, 'property', 'og:url', canonical);
+    html = upsertCanonical(html, canonical);
+  }
+
+  return html;
+}
+
+function generateStaticRouteHtml(outDir: string, siteBaseNoSlash: string | null) {
+  const shellPath = path.join(outDir, 'index.html');
+  const shell = readFileSync(shellPath, 'utf8');
+
+  for (const route of ROUTE_SEO) {
+    const relativeOutput = route.path === '/'
+      ? 'index.html'
+      : path.join(route.path.slice(1), 'index.html');
+    const outputPath = path.join(outDir, relativeOutput);
+    mkdirSync(path.dirname(outputPath), { recursive: true });
+    writeFileSync(outputPath, renderRouteHtml(shell, route, siteBaseNoSlash), 'utf8');
+  }
 }
 
 /**
@@ -156,6 +233,16 @@ export default defineConfig(({ mode }) => {
     <meta name="twitter:image:alt" content="${altAttr}" />
 `;
           return html.replace('</head>', `${block}\n  </head>`);
+        },
+      },
+      {
+        name: 'static-route-html',
+        writeBundle() {
+          if (mode !== 'production') return;
+          generateStaticRouteHtml(
+            path.resolve(__dirname, 'dist'),
+            resolvePublicSiteBase(env),
+          );
         },
       },
       {

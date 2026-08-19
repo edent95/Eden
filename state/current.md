@@ -4,7 +4,7 @@ Last reviewed: 2026-08-19
 
 ## Runtime
 
-- React 19 + TypeScript + Vite 6 static SPA.
+- React 19 + TypeScript + Vite 6 client-rendered app；production build 会按 `seo-routes.ts` 为每个已登记 route 生成真实目录 HTML，GitHub Pages 深链不再依赖 404 fallback。
 - Local development runs at `http://localhost:4180` with a strict port.
 - Production deploys from `main` to GitHub Pages at `https://eden-tan.com`.
 - Homepage Mini Coin Slot calls `penneyMiniApi`, a Node.js 22 Firebase Functions v2 endpoint in `asia-southeast1`; it atomically enforces 100 plays per IP per Malaysia day and owns leaderboard writes.
