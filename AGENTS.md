@@ -269,6 +269,7 @@ If this voice evolves, update both `/brand-guide` section 06 and this block.
 
 When editing the concept site or future UI:
 
+- Treat `.firebaserc` as the Firebase project source of truth. Eden-owned Functions, Realtime Database rules, leaderboards, and visitor data must use the dedicated `eden-tan` project; never point active configuration back to Poker or another sibling product project. Keep `npm run verify:firebase` aligned with this boundary when Firebase files change.
 - Treat `HeaderControls` and the global menu rules in `styles/shared.css` as the navigation source of truth for every page. Compact-on-selection is the component default; sticky translucent surface, quiet divider, borderless Theme/Language controls, smooth transition, and mobile sizing belong to the shared layer. Route CSS may set content width and back destination only; do not copy or redefine the core menu system in page files.
 - Keep the visual direction intentional and distinctive.
 - Do not revert to generic SaaS gradients or default startup aesthetics.

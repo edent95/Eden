@@ -47,14 +47,16 @@ normal visitors without requiring accounts or collecting email addresses.
 
 ## Runtime and deploy
 
-- Firebase project: `poker-power-card-3abea`
+- Firebase project: `eden-tan`
 - Region: `asia-southeast1`
 - Runtime: Node.js 22, Cloud Functions v2
 - Function: `penneyMiniApi`
-- Endpoint: `https://asia-southeast1-poker-power-card-3abea.cloudfunctions.net/penneyMiniApi`
+- Endpoint: `https://asia-southeast1-eden-tan.cloudfunctions.net/penneyMiniApi`
 - Allowed browser origins: `https://eden-tan.com`, `https://www.eden-tan.com`, the transitional legacy origins `https://edentan.site` / `https://www.edentan.site`, and local port `4180`
 
-The HMAC salt is already stored in Secret Manager. Never write it to the repository.
+The HMAC salt is stored in the `eden-tan` project's Secret Manager. Never write it
+to the repository. Preserving this secret during migration keeps existing visitor
+HMAC identifiers stable without exposing or storing raw IP addresses.
 
 ```bash
 npm install --prefix functions
@@ -66,7 +68,7 @@ After deployment, verify without consuming a credit:
 
 ```bash
 curl -H 'Origin: https://eden-tan.com' \
-  https://asia-southeast1-poker-power-card-3abea.cloudfunctions.net/penneyMiniApi
+  https://asia-southeast1-eden-tan.cloudfunctions.net/penneyMiniApi
 ```
 
 A successful response reports `credits: 100` for a new IP and includes the public

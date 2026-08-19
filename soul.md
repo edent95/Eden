@@ -33,6 +33,7 @@
 16. 页面名称、SEO 名称与实际运行模型必须是同一个概念；不要因为两个系统同属一个领域就混用名字。若两套功能都值得保留，拆成独立路由，并在页面内明确互链。
 17. 所有页面统一使用 `HeaderControls` + `styles/shared.css` 的最新版 menu system：sticky translucent background、细分隔线、无 Theme/Language 外框、compact-on-selection（现在是 `HeaderControls` 全局默认）与一致的 mobile 紧凑布局。页面文件只决定内容宽度与返回目标，不得再复制或重新定义 menu 的核心视觉与交互。
 18. 首页 Penney 区块是 discovery-first 的 Mini Coin Slot，不应直接写出「先选必输」、最优应对、胜率公式或赔率。让访客通过有限 credits、个人胜率和排行榜自己观察规律；完整版策略解释与首页竞技入口保持信息层级分离。
+19. Eden 网站自己的 Firebase、Functions、排行榜和访客数据必须放在独立的 `eden-tan` 项目；不要为了省事复用 Poker 或其他产品项目的后端。
 
 ## 防返工清单（执行前自检）
 

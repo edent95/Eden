@@ -22,9 +22,8 @@ keeps one leaderboard row instead of creating a new one every visit.
 
 ## Configuration
 
-Defaults point at the existing `poker-power-card-3abea` project (same owner,
-separate database node, no overlap with the poker app's data). Override per
-environment with:
+Defaults point at the dedicated `eden-tan` Firebase project. Eden website data
+must not be placed in sibling product projects. Override per environment with:
 
 ```
 VITE_PENNEY_FIREBASE_API_KEY=...
@@ -34,14 +33,10 @@ VITE_PENNEY_FIREBASE_DATABASE_URL=https://<project>-default-rtdb.<region>.fireba
 Firebase web config values are public by design — the security boundary is the
 database rules below, not the key.
 
-## Required database rules
+## Database rules
 
-**This is the one step that has to be run by hand.** Until it is deployed, reads
-return nothing and writes are rejected, and the page falls back to a local-only
-board (it says so in the UI — it never breaks).
-
-Add this node to `database.rules.json` in the Firebase project, alongside the
-existing `users` / `rooms` / `roomSummaries` nodes:
+The production rules are tracked in this repository's `database.rules.json`.
+The leaderboard node is public to read, while writes require an anonymous user:
 
 ```json
 "penneyLeaderboard": {
@@ -59,11 +54,10 @@ existing `users` / `rooms` / `roomSummaries` nodes:
 }
 ```
 
-Then deploy from the repo that owns the rules file:
+Deploy from this repository:
 
 ```bash
-cd ../poker-power-card
-firebase deploy --only database
+firebase deploy --only database --project eden-tan
 ```
 
 What the rules buy:
@@ -73,8 +67,8 @@ What the rules buy:
 - a score can only ever be **raised**, so replaying a worse run cannot overwrite a better one
 - name capped at 16 characters, score and streak range-checked, no extra keys accepted
 
-Anonymous auth is already enabled in `poker-power-card-3abea` (the poker app uses
-`signInAnonymously`), so no console change is needed there.
+Anonymous Authentication must remain enabled in the `eden-tan` Firebase project.
+The browser identity belongs only to this website and is not shared with Poker.
 
 ## Failure behaviour
 

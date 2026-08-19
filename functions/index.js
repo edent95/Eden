@@ -16,7 +16,7 @@ import {
 
 if (getApps().length === 0) {
   initializeApp({
-    databaseURL: 'https://poker-power-card-3abea-default-rtdb.asia-southeast1.firebasedatabase.app',
+    databaseURL: 'https://eden-tan-default-rtdb.asia-southeast1.firebasedatabase.app',
   });
 }
 

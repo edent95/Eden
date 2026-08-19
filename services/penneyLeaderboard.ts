@@ -19,11 +19,11 @@
 
 const FIREBASE_API_KEY =
   (import.meta.env.VITE_PENNEY_FIREBASE_API_KEY as string | undefined) ??
-  'AIzaSyC6VWsNc8wyVocmUG1HKxk9CSibgD4sec0';
+  'AIzaSyDaD7G0Wg1rTzFrYdWoy-1a951XwQEg8ck';
 
 const FIREBASE_DATABASE_URL = (
   (import.meta.env.VITE_PENNEY_FIREBASE_DATABASE_URL as string | undefined) ??
-  'https://poker-power-card-3abea-default-rtdb.asia-southeast1.firebasedatabase.app'
+  'https://eden-tan-default-rtdb.asia-southeast1.firebasedatabase.app'
 ).replace(/\/$/, '');
 
 const LEADERBOARD_NODE = 'penneyLeaderboard';
