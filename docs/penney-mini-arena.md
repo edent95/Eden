@@ -85,6 +85,11 @@ After any endpoint change, run `npm run check`, publish through the protected
 workflow, and verify the production bundle plus live GET/CORS behavior before
 retiring the previous runtime resources.
 
+The dedicated cutover completed on 2026-08-19. Production readback found the new
+endpoint across the deployed JavaScript chunks and no Poker-project reference;
+the old `penneyMiniApi`, `PENNEY_IP_SALT`, `penneyMiniPlayers`, and
+`penneyLeaderboard` resources were then permanently removed from the Poker project.
+
 The current Firebase dependency tree has a transitive moderate `uuid` advisory through
 the Admin SDK's unused Cloud Storage dependency. The mini API does not call UUID or
 Cloud Storage code. Recheck `npm audit --prefix functions --omit=dev` when Firebase
