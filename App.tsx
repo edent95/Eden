@@ -897,7 +897,7 @@ const aiProjectSystems: AiProjectSystem[] = [
       zh: '实时同步、房间状态、清楚行动 UI、降低主持人解释成本和游戏流程结构。',
     },
     href: 'poker',
-    external: 'https://poker.edentan.site/',
+    external: 'https://poker.eden-tan.com/',
   },
   {
     eyebrow: { en: 'AI Build System', zh: 'AI 构建系统' },
@@ -4158,8 +4158,8 @@ const PokerFullPage: React.FC<{
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
 }> = ({ projectsHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
-  const playUrl = 'https://poker.edentan.site/';
-  const installUrl = 'https://poker.edentan.site/?install=1';
+  const playUrl = 'https://poker.eden-tan.com/';
+  const installUrl = 'https://poker.eden-tan.com/?install=1';
 
   return (
     <ProductStorePage
@@ -4181,7 +4181,7 @@ const PokerFullPage: React.FC<{
       ]}
       stage={{
         src: playUrl,
-        domain: 'poker.edentan.site',
+        domain: 'poker.eden-tan.com',
         title: { en: 'Interactive Friday Poker Club table', zh: 'Friday Poker Club 互动牌桌' },
         caption: { en: 'This is the real table, running right here. Open it in a new tab to bring the crew in.', zh: '这就是真的牌桌，直接跑在这里。想叫人来，就在新标签打开。' },
       }}
@@ -4234,7 +4234,7 @@ const PokerLegacyFullPage: React.FC<{
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
 }> = ({ homeHref, projectsHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
-  const playUrl = 'https://poker.edentan.site/';
+  const playUrl = 'https://poker.eden-tan.com/';
   const wikiHref = joinBasePath(baseUrl, 'wiki');
 
   return (
@@ -4404,12 +4404,12 @@ const PokerLegacyFullPage: React.FC<{
               </h2>
               <p>
                 {isZh
-                  ? 'poker.edentan.site 一点就进。单人桌秒开，公开桌等人到齐房主点开始。筹码是假的，赢了别太得意——故事才是真的。'
-                  : 'poker.edentan.site, one click and you’re in. Solo tables start instantly, public ones start when the crew shows up. The chips are fake — don’t get too smug. The stories are what stick.'}
+                  ? 'poker.eden-tan.com 一点就进。单人桌秒开，公开桌等人到齐房主点开始。筹码是假的，赢了别太得意——故事才是真的。'
+                  : 'poker.eden-tan.com, one click and you’re in. Solo tables start instantly, public ones start when the crew shows up. The chips are fake — don’t get too smug. The stories are what stick.'}
               </p>
               <div className="mt-7 flex flex-wrap gap-5">
                 <a href={playUrl} target="_blank" rel="noopener noreferrer" className="etreport-text-cta">
-                  {isZh ? '打开 poker.edentan.site' : 'Open poker.edentan.site'} <ExternalLink size={15} />
+                  {isZh ? '打开 poker.eden-tan.com' : 'Open poker.eden-tan.com'} <ExternalLink size={15} />
                 </a>
                 <a href={projectsHref} className="etreport-text-cta etreport-text-cta-muted">
                   {isZh ? '回主页' : 'Back home'} <span aria-hidden>›</span>
