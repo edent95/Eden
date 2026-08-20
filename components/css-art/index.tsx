@@ -431,6 +431,23 @@ export const ProjectsEtReportCssIcon: React.FC<{ label: string }> = ({ label }) 
   </div>
 );
 
+export const ProjectsDrRacingCssIcon: React.FC<{ label: string }> = ({ label }) => (
+  <div className="projects-card-icon projects-drracing-css-icon" role="img" aria-label={label}>
+    <span className="projects-drracing-dial" />
+    <span className="projects-drracing-tick tick-a" />
+    <span className="projects-drracing-tick tick-b" />
+    <span className="projects-drracing-tick tick-c" />
+    <span className="projects-drracing-tick tick-d" />
+    <span className="projects-drracing-tick tick-e" />
+    <span className="projects-drracing-redline" />
+    <span className="projects-drracing-needle" />
+    <span className="projects-drracing-hub" />
+    <span className="projects-drracing-speedline line-a" />
+    <span className="projects-drracing-speedline line-b" />
+    <span className="projects-drracing-speedline line-c" />
+  </div>
+);
+
 export const ProjectsLifeOsCssIcon: React.FC<{ label: string }> = ({ label }) => (
   <div className="projects-card-icon projects-life-os-css-icon" role="img" aria-label={label}>
     <span className="projects-life-os-orbit orbit-outer" />

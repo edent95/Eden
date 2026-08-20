@@ -28,6 +28,7 @@ import {
   OfficeTeamBoardCssIcon,
   OfficeWorkflowCssIcon,
   ProjectsCrmCssIcon,
+  ProjectsDrRacingCssIcon,
   ProjectsEtReportCssIcon,
   ProjectsJijuCssIcon,
   ProjectsLifeOsCssIcon,
@@ -114,6 +115,27 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
     copy: {
       en: 'The framed table-and-pocket-aces icon used by the poker project card.',
       zh: 'Friday Poker Club project card 使用的固定底牌桌和对 A app icon。',
+    },
+  },
+  {
+    id: 'projects-dr-racing',
+    title: 'Dr Racing',
+    projectTitle: 'Dr Racing',
+    category: 'project-icon',
+    sourceRoute: '/projects',
+    ratio: '1:1',
+    background: 'framed',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/projects-icons.css',
+    Component: ProjectsDrRacingCssIcon,
+    label: {
+      en: 'Dr Racing dashboard CSS app icon',
+      zh: 'Dr Racing 仪表台 CSS app 图标',
+    },
+    copy: {
+      en: 'The framed rev-counter icon with a sweeping needle and speed lines.',
+      zh: 'Dr Racing 使用的固定底转速表 app icon，包含摆动指针与速度线。',
     },
   },
   {
