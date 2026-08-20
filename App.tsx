@@ -9054,6 +9054,16 @@ const homeCollageItems: Array<{
     ctaLabel: { en: 'Learn more', zh: '了解更多' },
   },
   {
+    title: 'Dr Racing',
+    tone: 'racing',
+    image: 'home-banners/dr-racing-banner-poster.jpg',
+    video: 'home-banners/dr-racing-banner.mp4',
+    imageAlt: { en: 'Two motorcycle riders accelerating through city traffic', zh: '两名摩托车骑士在城市车流中加速前进' },
+    href: 'dr-racing',
+    linkLabel: { en: 'Open the Dr Racing product page', zh: '打开 Dr Racing 产品页面' },
+    ctaLabel: { en: 'Learn more', zh: '了解更多' },
+  },
+  {
     title: 'What is Wealth',
     tone: 'wealth',
     image: 'home-banners/what-is-wealth-banner-poster.jpg',
@@ -10489,7 +10499,6 @@ const App: React.FC = () => {
           </motion.p>
           <motion.div variants={fadeIn} className="eden-hero-actions">
             <a className="eden-button" href={projectHomeHref}>{isZh ? '探索我的作品' : 'Explore my work'}</a>
-            <a className="eden-text-link" href={fullPageHref}>{isZh ? '进入我的个人实验室' : 'Enter my personal lab'} <span>→</span></a>
           </motion.div>
         </motion.section>
 
