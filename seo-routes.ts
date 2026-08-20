@@ -118,6 +118,18 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
   },
   {
+    path: '/dr-racing',
+    priority: '0.8',
+    title: {
+      en: 'Dr Racing | Motorcycle Loan Dashboard by Eden Tan',
+      zh: 'Dr Racing | Eden Tan 的摩托车贷款仪表台',
+    },
+    desc: {
+      en: 'Dr Racing runs a motorcycle dealership\u2019s loan pipeline: applications, bank rounds, reject codes, leads, WhatsApp tracking, and commissions in one dashboard.',
+      zh: 'Dr Racing 是摩托车行的贷款运营系统：申请、银行轮次、reject code、leads、WhatsApp 追踪与佣金，全部放进同一个仪表台。',
+    },
+  },
+  {
     path: '/poker',
     priority: '0.8',
     title: {
