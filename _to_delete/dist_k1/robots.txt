@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-# Production builds with VITE_SITE_URL or GITHUB_REPOSITORY also emit sitemap.xml and a robots.txt that includes Sitemap:.

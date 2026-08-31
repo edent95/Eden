@@ -7312,7 +7312,7 @@ const LifeOsFullPage: React.FC<{
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
 }> = ({ homeHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
-  const appUrl = 'https://edent95.github.io/8g-master/';
+  const appUrl = 'https://edent95.github.io/LifeOs/';
 
   return (
     <ProductStorePage
@@ -7333,7 +7333,7 @@ const LifeOsFullPage: React.FC<{
       ]}
       stage={{
         src: appUrl,
-        domain: 'edent95.github.io/8g-master',
+        domain: 'edent95.github.io/LifeOs',
         title: { en: 'Interactive Life OS star map', zh: 'Life OS 互动星图' },
         caption: { en: 'The live app, running right here. Open it in a new tab to build your own base map.', zh: '真实应用直接跑在这里。想建立自己的底图，就在新标签打开。' },
       }}
@@ -9977,6 +9977,35 @@ const IconPromptsPage: React.FC<{ homeHref: string }> = ({ homeHref }) => {
   );
 };
 
+const DelayedAboutProfileVideo: React.FC<{
+  baseUrl: string;
+  label: string;
+}> = ({ baseUrl, label }) => {
+  const videoRef = React.useRef<HTMLVideoElement>(null);
+
+  React.useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const timeoutId = window.setTimeout(() => {
+      void videoRef.current?.play().catch(() => undefined);
+    }, 15_000);
+
+    return () => window.clearTimeout(timeoutId);
+  }, []);
+
+  return (
+    <video
+      ref={videoRef}
+      src={joinBasePath(baseUrl, 'videos/eden-profile-joker-laugh.mp4')}
+      poster={joinBasePath(baseUrl, 'images/eden-environmental-portrait.jpg')}
+      aria-label={label}
+      preload="metadata"
+      muted
+      playsInline
+    />
+  );
+};
+
 const App: React.FC = () => {
   const [language, setLanguageState] = React.useState<Language>(() => readUrlLanguage() ?? readStoredLanguage() ?? 'en');
   const [themePreference, setThemePreference] = React.useState<ThemePreference>(() => readStoredThemePreference());
@@ -10512,10 +10541,9 @@ const App: React.FC = () => {
 
         <section className="eden-about eden-home-island" id="about">
           <div className="eden-about-photo">
-            <img
-              src={joinBasePath(baseUrl, 'images/eden-environmental-portrait.jpg')}
-              alt={isZh ? 'Eden 在暖色室内空间中的胶片环境人像' : 'Film portrait of Eden in a warm interior space'}
-              loading="lazy"
+            <DelayedAboutProfileVideo
+              baseUrl={baseUrl}
+              label={isZh ? 'Eden 的漫画 Joker 变身短片' : "Eden's comic Joker transformation video"}
             />
           </div>
           <div className="eden-about-copy">

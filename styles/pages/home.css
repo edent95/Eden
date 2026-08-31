@@ -122,7 +122,7 @@
 
 .eden-about { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(50px, 8vw, 110px); align-items: center; }
 .eden-about-photo { position: relative; min-height: 680px; overflow: hidden; border-radius: 18px; background: #607b82; color: rgb(255 255 255 / .78); }
-.eden-about-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 53% center; }
+.eden-about-photo video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 53% center; }
 .eden-about-copy h2 { font-size: clamp(48px, 5.5vw, 70px); }.eden-about-body { margin-top: 46px; max-width: 540px; }.eden-about-body p { color: color-mix(in srgb, var(--eden-ink) 68%, transparent); font-size: 18px; line-height: 1.78; }.eden-about-body p + p { margin-top: 24px; }
 .eden-about-body .eden-about-now { margin-top: 32px; color: var(--eden-ink); }
 .eden-about-body-compact { margin-top: 32px; }
@@ -183,7 +183,7 @@
   .eden-collage-reveal { display: none; }
   .eden-focus, .eden-about { padding-block: 90px; }.eden-focus > h2, .eden-about h2 { font-size: 48px; }.eden-focus-grid { margin-top: 54px; }
   .eden-manifesto { padding: 64px 0; }.eden-manifesto-banner { border-radius: 20px; }.eden-manifesto-line { min-height: 180px; padding: 28px 24px; }.eden-manifesto-line p { font-size: clamp(34px, 10vw, 44px); }
-  .eden-about-photo { width: 84px; height: 84px; min-height: 84px; justify-self: start; border-radius: 20px; }.eden-about-photo img { object-position: 53% 60%; }.eden-about { gap: 42px; }.eden-about-body p { font-size: 16px; }
+  .eden-about-photo { width: 84px; height: 84px; min-height: 84px; justify-self: start; border-radius: 20px; }.eden-about-photo video { object-position: 53% 60%; }.eden-about { gap: 42px; }.eden-about-body p { font-size: 16px; }
   .eden-footer > div, .eden-footer-links { flex-direction: column; }.eden-footer-links { gap: 14px; }
 }
 
