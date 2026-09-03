@@ -271,6 +271,23 @@ export default defineConfig(({ mode }) => {
       },
     },
     plugins: [
+      {
+        name: 'hwayik-dev-entry',
+        configureServer(server) {
+          server.middlewares.use((req, res, next) => {
+            const requestPath = req.url?.split('?', 1)[0];
+            if (requestPath === '/hwayik') {
+              res.statusCode = 307;
+              res.setHeader('Location', '/hwayik/');
+              res.end();
+              return;
+            }
+            if (requestPath !== '/hwayik/') return next();
+            res.setHeader('Content-Type', 'text/html; charset=utf-8');
+            res.end(readFileSync(path.join(__dirname, 'public/hwayik/index.html'), 'utf8'));
+          });
+        },
+      },
       react(),
       tailwindcss(),
       {

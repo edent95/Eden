@@ -391,6 +391,11 @@ same change rather than silently bypassing the gate.
 
 ### 4) Logging is mandatory
 
+**Log entry headings must be level-2 and start with a full date**: `## YYYY-MM-DD`
+(a timestamp or title may follow, e.g. `## 2026-09-01 16:41:07 +08`). An entry whose
+heading does not start with a date — or that uses `###` — is invisible to the external
+log aggregator (the personal project dashboard) and will be dropped silently.
+
 Every real change must append a new entry to the current `logs/YYYY-MM.md`, including:
 
 - what changed

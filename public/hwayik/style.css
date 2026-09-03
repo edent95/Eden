@@ -1,0 +1,120 @@
+:root { --ink: #1f211c; --paper: #f4f0e7; --red: #9d2a21; --line: #d8d0c1; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; }
+a { color: inherit; text-decoration: none; }
+img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.section { width: min(1120px, calc(100% - 40px)); margin: 0 auto; padding: 112px 0; }
+.eyebrow { margin: 0 0 14px; color: var(--red); font-size: 12px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+h1, h2, h3, p { margin-top: 0; }
+h2 { margin-bottom: 22px; font-family: "Songti SC", "Noto Serif SC", serif; font-size: clamp(36px, 5vw, 64px); font-weight: 500; letter-spacing: -.04em; line-height: 1.08; }
+.hero { position: relative; min-height: 92svh; color: white; background: linear-gradient(90deg, rgba(12,14,12,.75) 0%, rgba(12,14,12,.48) 43%, rgba(12,14,12,.08) 78%), url('images/nanao.jpg') center/cover; }
+.hero nav { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; width: min(1280px, calc(100% - 40px)); margin: 0 auto; padding: 28px 0; border-bottom: 1px solid rgba(255,255,255,.35); }
+.brand { display: flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .06em; }
+.brand img { width: 42px; height: 42px; object-fit: contain; }
+nav div { display: flex; gap: 30px; font-size: 14px; }
+.hero-copy { position: relative; z-index: 1; width: min(1280px, calc(100% - 40px)); margin: 0 auto; padding: 18vh 0 90px; }
+.hero h1 { max-width: 780px; margin-bottom: 28px; font-family: "Songti SC", "Noto Serif SC", serif; font-size: clamp(66px, 10vw, 132px); font-weight: 500; letter-spacing: -.07em; line-height: .94; }
+.lead { max-width: 610px; color: rgba(255,255,255,.86); font-size: 18px; line-height: 1.8; }
+.facts { display: flex; gap: 18px; margin-top: 40px; }
+.facts span { padding-right: 24px; border-right: 1px solid rgba(255,255,255,.35); font-size: 13px; letter-spacing: .08em; }
+.facts b { margin-right: 6px; font-size: 22px; }
+.hero-caption { position: absolute; right: 24px; bottom: 22px; margin: 0; font-size: 12px; letter-spacing: .12em; }
+.intro { display: grid; grid-template-columns: .7fr 1.7fr 1fr; gap: 44px; align-items: start; }
+.intro p:last-child { color: #66665f; font-size: 17px; line-height: 1.85; }
+.gallery { display: grid; grid-template-columns: 1.45fr 1fr; grid-template-rows: 330px 330px; gap: 10px; padding: 0 10px; }
+.gallery figure { position: relative; margin: 0; overflow: hidden; }
+.gallery-main { grid-row: 1 / 3; }
+.gallery img { transition: transform .6s ease; }
+.gallery figure:hover img { transform: scale(1.025); }
+figcaption { position: absolute; inset: auto 0 0; display: flex; align-items: end; justify-content: space-between; padding: 38px 24px 20px; color: white; background: linear-gradient(transparent, rgba(0,0,0,.65)); }
+figcaption b { font-family: "Songti SC", serif; font-size: 22px; }
+figcaption span { font-size: 12px; letter-spacing: .12em; }
+.section-head { display: grid; grid-template-columns: 1.6fr .8fr; gap: 40px; align-items: end; margin-bottom: 56px; }
+.section-head p:last-child { color: #6a6962; line-height: 1.7; }
+.timeline { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+.timeline li { display: grid; grid-template-columns: 180px 1fr; gap: 36px; padding: 28px 0; border-bottom: 1px solid var(--line); }
+.day { display: flex; align-items: baseline; gap: 18px; }
+.day b { color: var(--red); font-family: Georgia, serif; font-size: 28px; font-style: italic; font-weight: 400; }
+.day span { color: #77736b; font-size: 12px; }
+.timeline h3 { margin-bottom: 8px; font-family: "Songti SC", serif; font-size: 25px; font-weight: 600; }
+.timeline p { max-width: 700px; margin-bottom: 0; color: #65645e; line-height: 1.75; }
+.feature-photo { position: relative; height: min(68vw, 760px); min-height: 470px; }
+.feature-photo::after { position: absolute; inset: 0; content: ''; background: linear-gradient(transparent 35%, rgba(0,0,0,.65)); }
+.feature-photo blockquote { position: absolute; z-index: 1; left: 50%; bottom: 9%; width: min(920px, calc(100% - 40px)); margin: 0; color: white; font-family: "Songti SC", serif; font-size: clamp(30px, 5vw, 64px); line-height: 1.35; transform: translateX(-50%); }
+.info { padding-bottom: 130px; }
+.flight-card { display: grid; grid-template-columns: .75fr 1.5fr; gap: 1px; margin-bottom: 92px; background: var(--line); border: 1px solid var(--line); }
+.airline { display: grid; place-items: center; gap: 22px; padding: 42px; background: #fff; text-align: center; }
+.airline img { width: min(250px, 100%); height: 140px; object-fit: contain; }
+.airline span { color: #696761; font-size: 12px; letter-spacing: .08em; }
+.flights { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); }
+.flights > div { display: grid; grid-template-columns: 92px 1fr; gap: 14px 18px; align-content: center; padding: 36px; background: var(--paper); }
+.flights span { grid-column: 1 / 3; margin-bottom: 8px; color: var(--red); font-size: 12px; font-weight: 700; letter-spacing: .12em; }
+.flights b { font-family: Georgia, serif; font-size: 18px; }
+.flights i { color: #64625c; font-size: 14px; font-style: normal; line-height: 1.5; }
+.hotels-head { margin-bottom: 30px; }
+.hotels-head h3 { margin: 0; font-family: "Songti SC", serif; font-size: clamp(30px, 4vw, 48px); font-weight: 500; }
+.hotel-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.hotel-grid figure { position: relative; height: 360px; margin: 0; overflow: hidden; }
+.hotel-grid figcaption { padding: 80px 24px 22px; }
+.hotel-grid figcaption div { display: grid; gap: 7px; }
+.hotel-grid figcaption span { font-size: 11px; letter-spacing: .12em; }
+.hotel-grid figcaption b { font-size: 21px; }
+.general { border-top: 1px solid var(--line); }
+.general-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.general article { min-height: 245px; padding: 28px; background: var(--paper); }
+.general article > span { color: var(--red); font-family: Georgia, serif; font-size: 13px; font-style: italic; }
+.general h3 { margin: 48px 0 14px; font-family: "Songti SC", serif; font-size: 23px; }
+.general article p { margin: 0; color: #66645e; font-size: 14px; line-height: 1.75; }
+.agency { padding: 100px 20px; color: #eee8dd; background: #24251f; }
+.agency-inner { width: min(1120px, 100%); margin: 0 auto; }
+.agency-title { display: grid; grid-template-columns: 110px 1fr; gap: 32px; align-items: center; padding-bottom: 50px; border-bottom: 1px solid #484940; }
+.agency-title img { width: 110px; height: 110px; object-fit: contain; }
+.agency-title h2 { margin-bottom: 12px; color: white; font-size: clamp(34px, 4.5vw, 56px); }
+.agency-title > div > p:last-child { margin: 0; color: #aead9f; font-size: 13px; letter-spacing: .08em; }
+.agency-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 1px; margin-top: 1px; background: #484940; }
+.agency-grid > * { padding: 38px; background: #24251f; }
+.agency address { display: grid; grid-template-columns: 150px 1fr; gap: 18px 24px; font-style: normal; }
+.agency address span, .leader span { color: #9c9c91; font-size: 11px; letter-spacing: .12em; }
+.agency address p { margin: 0; line-height: 1.8; }
+.agency a { color: white; }
+.leader { display: flex; flex-direction: column; align-items: flex-start; }
+.leader h3 { margin: 22px 0 6px; font-family: Georgia, serif; font-size: 28px; font-weight: 400; }
+.leader > a { color: #ef4a3d; font-size: 22px; font-weight: 700; }
+.leader small { margin-top: 24px; color: #9c9c91; }
+footer { display: flex; align-items: center; justify-content: space-between; gap: 30px; padding: 38px max(20px, calc((100% - 1120px)/2)); color: #ece4d5; background: #24251f; }
+footer { border-top: 1px solid #484940; }
+footer div { display: flex; align-items: center; gap: 14px; }
+footer p { margin: 0; color: #aaa89f; font-size: 12px; line-height: 1.7; }
+footer div p b { color: white; font-size: 14px; }
+.footer-logo { width: 48px; height: 48px; object-fit: contain; }
+@media (max-width: 760px) {
+  .section { padding: 78px 0; }
+  .hero { min-height: 760px; }
+  .hero-copy { padding-top: 130px; }
+  .hero h1 { font-size: clamp(58px, 18vw, 86px); }
+  nav div { gap: 18px; }
+  .intro { display: block; }
+  .intro h2 { margin-top: 28px; }
+  .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: 430px 220px; }
+  .gallery-main { grid-column: 1 / 3; grid-row: 1; }
+  figcaption { display: block; padding-inline: 16px; }
+  figcaption b { font-size: 17px; }
+  figcaption span { display: none; }
+  .section-head { display: block; margin-bottom: 36px; }
+  .timeline li { grid-template-columns: 1fr; gap: 14px; }
+  .feature-photo { min-height: 560px; }
+  .flight-card, .flights { grid-template-columns: 1fr; }
+  .flights > div { min-height: 250px; }
+  .hotel-grid { grid-template-columns: 1fr; }
+  .hotel-grid figure { height: 300px; }
+  .general-grid { grid-template-columns: 1fr; }
+  .general article { min-height: 210px; }
+  .agency-title { grid-template-columns: 72px 1fr; gap: 18px; }
+  .agency-title img { width: 72px; height: 72px; }
+  .agency-grid { grid-template-columns: 1fr; }
+  .agency address { grid-template-columns: 1fr; gap: 8px; }
+  .agency address p + span { margin-top: 20px; }
+  footer { align-items: flex-start; flex-direction: column; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .gallery img { transition: none; } }
