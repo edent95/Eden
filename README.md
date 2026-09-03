@@ -19,7 +19,7 @@ Eden 的个人站：React 互动应用，多路由、中英双语，用于展示
 
 - 对外展示：主页、时间线、品牌指南、图库、Life 视频区、项目归档与详情页。
 - 技术叙事：`/jiju-pet` 等长文区块说明 0→1 构建方法。
-- 运营侧静态页：`public/mnm11.html` 与 `public/Promotion Page.html`（Vite 会挂到与 `index` 同级的站根 URL）由主站链出，不参与 React 路由。本地需 `http://localhost:4180/mnm11.html` 等形式访问，勿放在仓库根（dev 不提供服务）。
+- 运营侧静态页：`public/mnm11.html`、`public/Promotion Page.html` 与 `public/hwayik/`（Vite 会原样发布到站根 URL）独立于 React 路由。本地用 `http://localhost:4180/mnm11.html` 或 `http://localhost:4180/hwayik/` 访问，勿放在仓库根（dev 不提供服务）。
 
 ---
 
@@ -72,6 +72,7 @@ npm run preview
 - `/etreporthub` — ETReportHub 日报数据系统产品页
 - `/etreporthub-sales` — ETReportHub 售卖页与价格说明
 - `/dr-racing` — Dr Racing 摩托车贷款仪表台产品页，内嵌公开 Demo
+- `/hwayik/` — 华益旅游「彭氏祭祖 · 潮汕九日行」独立客户旅行手册
 - `/poker` — Friday Poker Club 产品详情：私人房间、邀请、买入、实时牌桌与 Build Notes
 - `/wiki` — 独立知识库总览，沉淀跨项目可复用 skills
 - `/wiki/vite` — Vite 构建技能笔记
