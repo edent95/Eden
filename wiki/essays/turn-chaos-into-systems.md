@@ -2,7 +2,7 @@
 id: turn-chaos-into-systems
 type: essay
 route: /notes/turn-chaos-into-systems
-order: 6
+order: 7
 status: published
 ---
 

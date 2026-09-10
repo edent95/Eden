@@ -2,7 +2,7 @@
 id: what-is-wealth
 type: essay
 route: /notes/what-is-wealth
-order: 5
+order: 6
 status: published
 ---
 

@@ -576,6 +576,362 @@ export const wikiEntries = [
 
 export const siteEssayNotes: SiteEssayNoteData[] = [
   {
+    "slug": "personal-brand-positioning",
+    "title": {
+      "en": "Personal brand positioning: one page, not one slogan",
+      "zh": "如何建立个人品牌定位：用一页整理经验、受众与主张"
+    },
+    "summary": {
+      "en": "Personal brand positioning fails when it stops at a slogan. This is the one-page sheet I use—experience, audience, claim, exclusions—and my own filled version.",
+      "zh": "个人品牌定位卡住，通常是因为它停在一句 slogan。这是我在用的一页定位表：经验、受众、主张、排除项，以及我自己填好的那一版。"
+    },
+    "category": {
+      "en": "Personal brand",
+      "zh": "个人品牌"
+    },
+    "thesis": {
+      "en": "Positioning is not a sentence you write. It is a set of tradeoffs you can check against real work.",
+      "zh": "定位不是写出来的一句话，是一组可以拿真实工作去检验的取舍。"
+    },
+    "sources": [
+      "个人站点从作品集改成知识归档的过程",
+      "LLM Wiki",
+      "项目构建记录"
+    ],
+    "sections": [
+      {
+        "title": {
+          "en": "The blank page is not a writing problem",
+          "zh": "「不知道写什么」通常不是写作问题"
+        },
+        "paragraphs": {
+          "en": [
+            "Most people asking how to do personal brand positioning do not have a writing problem. They can write. They just do not know which of the twenty things they could say is the one worth saying repeatedly.",
+            "A slogan does not fix that. \"I help people grow\" survives on a bio line and dies the moment you have to choose next week's topic. Positioning is only useful if it can end an argument you keep having with yourself."
+          ],
+          "zh": [
+            "会问「个人品牌定位怎么做」的人，大多数不是写不出东西。他们写得出来。卡住的是：能讲的有二十件事，不知道哪一件值得一直讲下去。",
+            "一句 slogan 解决不了这个。「我帮助别人成长」放在简介里可以活，但一到要决定下周写什么就没用了。定位有没有价值，看它能不能替你结束一次反复出现的内部争论。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "The one-page sheet: four fields",
+          "zh": "一页定位表：四个字段"
+        },
+        "paragraphs": {
+          "en": [
+            "The sheet has four fields and fits on one page on purpose. Experience: what you have actually done, with evidence. Audience: who is stuck in a situation your experience speaks to. Claim: the position you are willing to defend. Exclusions: what you will not write, even when it would perform well.",
+            "The first three are easy to write and hard to keep honest. The fourth is the one most people skip, and it is the one that does the real work."
+          ],
+          "zh": [
+            "这张表只有四个字段，刻意压在一页里。经验：你真的做过什么，有什么证据。受众：谁正卡在你的经验能回答的处境里。主张：你愿意为之辩护的立场。排除项：哪些东西你不写，即使写了会有流量。",
+            "前三个容易写，难在诚实。第四个大多数人会跳过，而它才是真正在干活的那一栏。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Experience: write evidence, not adjectives",
+          "zh": "经验：写证据，不写形容词"
+        },
+        "paragraphs": {
+          "en": [
+            "Fill this field with things that exist outside your own description of them: a product that shipped, a system someone else runs on, a decision you made and can still explain, a mistake whose cost you remember.",
+            "\"Ten years of marketing experience\" is not evidence, it is a duration. \"I built the daily reporting system a team works from, and I can show what it decides\" is evidence, because a reader can ask one follow-up question and you will have an answer."
+          ],
+          "zh": [
+            "这一栏只填在你自己的描述之外也存在的东西：真的上线的产品、别人每天在用的系统、你做过并且现在还解释得清楚的判断、一个你还记得代价的错误。",
+            "「十年营销经验」不是证据，那是时长。「我做过一个团队每天在用的日报数据系统，我能说清楚它替谁做了什么决定」才是证据——因为读者可以追问一句，而你答得上来。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Audience: a situation, not a demographic",
+          "zh": "受众：写处境，不写人群标签"
+        },
+        "paragraphs": {
+          "en": [
+            "\"Creators\" and \"small business owners\" are labels, and labels do not tell you what to write. A situation does: someone with three years of scattered notes and no finished article; someone whose portfolio reads like a resume and gets no reply; someone publishing every week whom nobody remembers.",
+            "If you cannot write down the sentence that person would type into a search box, this field is not finished yet."
+          ],
+          "zh": [
+            "「创作者」「小企业主」是标签，标签不会告诉你写什么。处境会：一个人有三年零散笔记，但一篇成文都没有；一个人的作品集读起来像简历，投出去没有回音；一个人每周都在发，但没人记得他讲过什么。",
+            "如果你写不出这个人会在搜索框里打的那句话，这一栏就还没写完。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Claim: something a reasonable person could reject",
+          "zh": "主张：必须可以被合理反对"
+        },
+        "paragraphs": {
+          "en": [
+            "A claim is a position, not a description. \"Knowledge should compound\" is a claim, because a reasonable person can disagree: most notes are disposable, and that is fine.",
+            "If nobody can sensibly disagree with your sentence, it is not positioning, it is a category name. Test it by writing the strongest objection underneath. If no objection exists, rewrite the claim."
+          ],
+          "zh": [
+            "主张是一个立场，不是一句描述。「知识应该复利」是主张，因为一个讲道理的人可以反对：大部分笔记本来就是一次性的，用完就丢也没问题。",
+            "如果没有人能合理地反对你那句话，那它不是定位，只是一个类目名称。检验方法很简单：在它下面写出最强的反对意见。写不出反对，就重写主张。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Exclusions are where positioning actually happens",
+          "zh": "排除项决定了这张表能不能用"
+        },
+        "paragraphs": {
+          "en": [
+            "Exclusions turn a nice sentence into a working filter, and they cost something: every line deletes topics that would have performed well.",
+            "Mine are specific. I do not write self-help. I do not write income or lifestyle claims. I do not publish numbers I cannot verify. I do not promise a weekly cadence I have not proven I can hold. Each line closed a door that was open, and each line makes the next topic decision faster."
+          ],
+          "zh": [
+            "排除项是把一句好听的话变成可用筛子的那一栏。它是有代价的：每写一条，就删掉一批本来会有流量的题目。",
+            "我自己的排除项很具体：不写心灵成长；不写收入与生活方式叙事；不放我无法核实的数字；在没有证明自己能稳定更新之前，不承诺周更。每一条都关掉了一扇本来开着的门，也让下一次选题决定变快。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "My own filled sheet",
+          "zh": "我自己那一页"
+        },
+        "paragraphs": {
+          "en": [
+            "Experience: AI workflows, an LLM-maintained knowledge base, and products I actually built—a daily reporting system, a pet-friendly place discovery app, a private poker room, a motorcycle loan dashboard. Audience: people turning scattered work and notes into content that can be found and reused. Claim: scattered work only becomes valuable once it is turned into structure that compounds.",
+            "The tradeoff behind it is visible on this site. It used to run like a portfolio: profile first, projects as proof, a resume rhythm. It now runs like an archive: essays and wiki pages first, projects sitting underneath as evidence. That change cost me the easiest thing to say about myself—a job title—and it is the reason the writing now has somewhere to accumulate."
+          ],
+          "zh": [
+            "经验：AI 工作流、一个由 LLM 维护的知识库，以及我真的做过的产品——日报数据系统、宠物友好地点发现 app、私人扑克房、摩托车贷款仪表台。受众：正在把零散工作和笔记，变成能被搜到、能被复用的内容的人。主张：零散的工作只有被变成会累积的结构，才开始有价值。",
+            "背后的取舍在这个站点上看得见。它以前的跑法是作品集：先讲人，项目当佐证，节奏像简历。现在的跑法是归档：essay 和 wiki 页在前，项目沉在下面当证据。这个改动让我失去了介绍自己时最好用的那句话——一个职位名称——但也正因为这样，写出来的东西才有地方累积。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Three tests before you use it",
+          "zh": "怎么检验这一页是否成立"
+        },
+        "paragraphs": {
+          "en": [
+            "First: can the sheet produce ten topics in ten minutes? If not, the audience field is still a label. Second: does every topic point at something you can show? If not, the experience field is adjectives. Third: does the sheet reject anything? If it accepts every idea you like, the exclusions are decoration.",
+            "Keep the page, date it, and rewrite it when the work changes—not when you get bored of the wording. Positioning that moves with your mood is not a position."
+          ],
+          "zh": [
+            "第一：这张表能不能在十分钟内产出十个选题？不能，说明受众那栏还停在标签。第二：每个选题能不能指向一个你拿得出来的东西？不能，说明经验那栏写的是形容词。第三：这张表有没有拒绝掉任何东西？如果你喜欢的想法它全都放行，排除项就只是装饰。",
+            "把这一页留着，写上日期，等真实工作变了再改——不是等你自己看腻了措辞才改。会随心情改的定位，不是定位。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Where this goes next",
+          "zh": "下一个问题"
+        },
+        "paragraphs": {
+          "en": [
+            "The problem after positioning is supply: you know what you stand for and still have nothing specific to write on Tuesday. That is a separate job—building a topic bank out of real projects rather than out of inspiration.",
+            "For the reasoning underneath this page: [[note:turn-chaos-into-systems|turning chaos into systems]] is about why structure beats effort, and [[note:win-before-you-fight|winning before you fight]] is about choosing which battlefield deserves the work at all."
+          ],
+          "zh": [
+            "定位之后的问题是供给：你知道自己站在哪，星期二还是不知道具体写什么。那是另一件事——从真实项目里建一个选题库，而不是等灵感。",
+            "想看这一页底下的推理：[[note:turn-chaos-into-systems|《把混乱变成系统》]]讲的是为什么结构比努力更有用，[[note:win-before-you-fight|《先胜后战》]]讲的是哪个战场值得你用力。"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "slug": "content-pillars-from-real-projects",
+    "title": {
+      "en": "Nothing to write? Build a topic bank from real projects",
+      "zh": "个人品牌不知道写什么？从真实项目建立内容选题库"
+    },
+    "summary": {
+      "en": "Content pillars for personal branding should be counted out of work you already finished, not invented in advance. Here is the extraction process, with a real example.",
+      "zh": "个人品牌的内容支柱，应该从你已经做完的工作里数出来，而不是事先想出来。这是我用的提取流程，附一个可以点开验证的真实例子。"
+    },
+    "category": {
+      "en": "Content system",
+      "zh": "内容系统"
+    },
+    "thesis": {
+      "en": "You are not short of ideas. You are short of a way to get topics out of work you already finished.",
+      "zh": "你缺的不是灵感，是把已经做完的工作变成选题的方法。"
+    },
+    "sources": [
+      "Friday Poker Club 构建记录",
+      "LLM Wiki",
+      "项目决定复盘"
+    ],
+    "references": [
+      {
+        "id": "1",
+        "url": "https://eden-tan.com/wiki/background-music",
+        "label": {
+          "en": "Background music changes the room — a note produced by the poker room build",
+          "zh": "《Background music 会改变一个房间》——扑克房项目产出的笔记"
+        }
+      },
+      {
+        "id": "2",
+        "url": "https://eden-tan.com/wiki/button-feedback",
+        "label": {
+          "en": "Click button feedback is part of trust — a note produced by the same build",
+          "zh": "《按钮反馈，本来就是系统的一部分》——同一个项目产出的笔记"
+        }
+      },
+      {
+        "id": "3",
+        "url": "https://eden-tan.com/wiki/firebase-lifetime-storage",
+        "label": {
+          "en": "Firebase lifetime storage as table memory — a note produced by the same build",
+          "zh": "《用 Firebase 留住牌桌的记忆》——同一个项目产出的笔记"
+        }
+      }
+    ],
+    "referencesNote": {
+      "en": "These are the three notes the poker room build actually produced, linked as evidence rather than as outside sources.",
+      "zh": "以上三条是扑克房项目真实产出的笔记，列在这里是作为证据，不是外部引用来源。"
+    },
+    "sections": [
+      {
+        "title": {
+          "en": "Not an inspiration problem, an extraction problem",
+          "zh": "「不知道写什么」是提取问题，不是灵感问题"
+        },
+        "paragraphs": {
+          "en": [
+            "People with nothing to write usually have plenty of material. They shipped things, fixed things, and changed their minds about things. What they lack is a way to get topics out of work that is already finished.",
+            "So they go looking for inspiration instead, and inspiration produces topics disconnected from anything they can prove. That is why the writing tends to stall around the fourth post: the first three came from opinion, and opinion runs out faster than work does."
+          ],
+          "zh": [
+            "写不出东西的人，通常不缺素材。他们做完过东西、修过问题、中途改过主意。缺的是把「已经做完的工作」变成选题的方法。",
+            "于是他们转去找灵感，而灵感产出的选题，和自己能证明的东西没有关系。这就是为什么很多人写到第四篇就卡住：前三篇靠观点，而观点比工作先用完。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Content pillars are counted, not invented",
+          "zh": "内容支柱是数出来的，不是想出来的"
+        },
+        "paragraphs": {
+          "en": [
+            "Most advice on content pillars for personal branding tells you to choose three to five in advance and then fill them. For anyone who has actually done work, that order is backwards. Pillars chosen in advance describe who you would like to be. Pillars counted afterwards describe what you can already defend.",
+            "Write out everything you built or ran in the past two years, then look at what keeps reappearing across projects. The repeated things are your pillars. You did not have to guess, and you will not have to maintain a pillar you cannot supply."
+          ],
+          "zh": [
+            "大部分关于个人品牌内容规划的建议，都是先选三到五个内容支柱，再往里填。对真的做过事的人来说，这个顺序是反的。事先选的支柱描述的是你想成为谁；事后数出来的支柱描述的是你现在就能辩护的东西。",
+            "把过去两年做过或还在运营的东西全列出来，然后看什么在不同项目之间反复出现。反复出现的那几件就是你的支柱。不需要猜，也不会留下一个你根本供不上货的栏目。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Break a project into decisions, not features",
+          "zh": "把项目拆成决定，不是拆成功能"
+        },
+        "paragraphs": {
+          "en": [
+            "A feature list produces bad topics. \"We added a leaderboard\" is not something a stranger searches for, argues with, or remembers.",
+            "A decision list produces good ones, because every real decision carries a reason, a rejected alternative, and a cost. \"How much of the strategy should a game reveal on the homepage\" is a decision: it has two defensible answers, and whichever one you took, you can explain what it cost you."
+          ],
+          "zh": [
+            "功能清单产出的是烂选题。「我们加了排行榜」没有陌生人会搜、会反对，也不会被记住。",
+            "决定清单产出的是好选题，因为每一个真实的决定都带着理由、被否决的替代方案和代价。「首页那个游戏应该公开多少策略」就是一个决定：它有两个都站得住的答案，而不管你选了哪一个，你都能说清楚代价。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Three questions that turn a decision into a topic",
+          "zh": "三个问题，把决定变成选题"
+        },
+        "paragraphs": {
+          "en": [
+            "For each decision, ask three things: what was the alternative, what did choosing cost, and what would I now tell someone standing at the same fork. The third answer is the article. The first two are the evidence that makes it worth reading.",
+            "If you cannot name the alternative, it was not a decision—it was a default. Defaults make thin writing, because there is nothing underneath them to explain."
+          ],
+          "zh": [
+            "对每一个决定问三句：当时的替代方案是什么？选了之后付出什么代价？现在遇到同样岔路的人，我会跟他说什么？第三句的答案是文章，前两句是让它值得读的证据。",
+            "如果你说不出替代方案，那它就不是决定，只是默认选项。默认选项写出来的东西很薄，因为底下没有东西可以解释。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "A real example: one poker room, three notes",
+          "zh": "真实例子：一个扑克房，产出三条笔记"
+        },
+        "paragraphs": {
+          "en": [
+            "I built a private poker room for a weekly game. The topics it produced were not about poker. They came from the moments the build forced a decision.",
+            "Whether to allow optional background music turned into a note about whether sound makes a browser table feel like a room people are actually in[[1]]. What a button should say after a click—pressed, pending, accepted, blocked, failed—turned into a note about how a realtime interface earns trust[[2]]. And keeping the record after the night ended turned storage into table memory[[3]].",
+            "One project, three reusable notes, and not one of them sits in the category the project belongs to. That is the normal yield: the project is the source, not the subject. If your topics all still carry the project's own name, you have stopped one step too early."
+          ],
+          "zh": [
+            "我做过一个私人扑克房，给每周固定的牌局用。它产出的选题没有一个是关于扑克的，全部来自构建过程中被迫做决定的那些时刻。",
+            "「要不要允许可开关的背景音乐」变成了一条关于「声音会不会让一张浏览器牌桌像一个真的有人在场的房间」的笔记[[1]]。「按钮在点击之后该说什么」——按下、等待、接受、阻挡、失败——变成了一条关于「realtime interface 怎么建立信任」的笔记[[2]]。而「牌局结束之后要不要留下记录」，让存储变成了牌桌的记忆[[3]]。",
+            "一个项目，三条可复用的笔记，没有一条落在这个项目本来的类目里。这是正常产出：项目是来源，不是题目。如果你抽出来的选题名字里还带着项目本身的名称，说明你少走了一步。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "What the topic bank actually holds",
+          "zh": "选题库里该放什么"
+        },
+        "paragraphs": {
+          "en": [
+            "Five fields per row, no more: the topic written as a reader's question, the project it came from, the evidence you can show, the pillar it falls under, and one line on why it is worth writing.",
+            "The evidence column is what keeps the bank honest. A row with an empty evidence cell is not a topic yet—it is an opinion waiting for work to back it up. Leave it in the bank if you like, but do not let it jump the queue ahead of rows that can be proven."
+          ],
+          "zh": [
+            "每一行五个字段，不要更多：用读者提问的方式写下的选题、它来自哪个项目、你能拿出的证据、它属于哪个支柱、一句话说明为什么值得写。",
+            "证据那一栏是让整个库保持诚实的关键。证据栏空着的行还不是选题，那是一个还没有工作支撑的观点。想留着可以，但不要让它插队排到那些拿得出证据的行前面。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "When to delete a row",
+          "zh": "什么时候该删掉一个选题"
+        },
+        "paragraphs": {
+          "en": [
+            "Delete a topic when the evidence has gone stale, when you no longer believe your own answer, or when it only interests people who already know you. The last one is the trap: inside-baseball topics feel productive to write and reach nobody new.",
+            "A bank that only grows is a hoard. It should lose rows at roughly the rate it gains them. Once it holds more than you could ever write, it has stopped being a tool for choosing."
+          ],
+          "zh": [
+            "三种情况该删：证据已经过期、你自己不再相信那个答案、或者它只对已经认识你的人有意思。第三种最危险——圈内话题写起来很有产出感，但触达不到任何新的人。",
+            "只增不减的选题库是囤积。它应该以接近新增的速度掉行。一旦它装的东西多到你这辈子都写不完，它就不再是一个帮你做选择的工具了。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Where this goes next",
+          "zh": "下一个问题"
+        },
+        "paragraphs": {
+          "en": [
+            "Positioning tells you what belongs to you; the topic bank tells you what to write on Tuesday. If the bank keeps producing rows that fit under no pillar at all, the problem is upstream—go back to [[note:personal-brand-positioning|the one-page positioning sheet]] rather than inventing a sixth pillar to hold them.",
+            "The bank is itself a small system, and it obeys the same rule as every other one: it is only worth building if it removes a decision you would otherwise make from scratch every week. [[note:turn-chaos-into-systems|Turning chaos into systems]] is the longer version of that argument."
+          ],
+          "zh": [
+            "定位告诉你什么东西属于你，选题库告诉你星期二该写什么。如果这个库不断产出放不进任何支柱的行，问题在上游——回去看[[note:personal-brand-positioning|那一页定位表]]，而不是再发明第六个支柱来装它们。",
+            "选题库本身也是一个小系统，它服从和其他系统一样的规则：只有当它省掉了一个你本来每周都要从头做一次的决定，它才值得建。[[note:turn-chaos-into-systems|《把混乱变成系统》]]是这个论点的完整版。"
+          ]
+        }
+      }
+    ]
+  },
+  {
     "slug": "korea-2026-crash",
     "title": {
       "en": "The \"mad bull\" hits a wall: Korea's 2026 market, and the gap between price and value",

@@ -13,6 +13,8 @@ This directory is the editable, Markdown-first content source for the public Wik
 
 ## Essays
 
+- [Personal brand positioning: one page, not one slogan](essays/personal-brand-positioning.md) — `/notes/personal-brand-positioning`
+- [Nothing to write? Build a topic bank from real projects](essays/content-pillars-from-real-projects.md) — `/notes/content-pillars-from-real-projects`
 - [The "mad bull" hits a wall: Korea's 2026 market, and the gap between price and value](essays/korea-2026-crash.md) — `/notes/korea-2026-crash`
 - [Old scam, new clothes: MBI and the coin that "only goes up"](essays/mbi-case.md) — `/notes/mbi-case`
 - [An empire built on borrowed money: the Carrian case](essays/carrian-case.md) — `/notes/carrian-case`

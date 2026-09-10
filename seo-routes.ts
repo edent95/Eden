@@ -10,7 +10,7 @@ export type RouteSeo = {
 };
 
 /** All route HTML was materially regenerated on this date. Update when SEO-visible content changes. */
-export const SITE_CONTENT_LASTMOD = '2026-08-19';
+export const SITE_CONTENT_LASTMOD = '2026-09-09';
 
 export const HOME_TITLE: Record<SeoLanguage, string> = {
   en: 'Eden Tan | Build systems from chaos.',
@@ -248,6 +248,18 @@ export const ROUTE_SEO: RouteSeo[] = [
       en: 'Published essays and build notes by Eden Tan on products, AI, human behavior, and turning messy realities into useful systems.',
       zh: 'Eden Tan 发布的文章与构建笔记，关于产品、AI、人的行为，以及怎样把混乱慢慢变成可用的系统。',
     },
+  },
+  {
+    path: '/notes/personal-brand-positioning',
+    priority: '0.7',
+    title: { en: 'Personal brand positioning | Eden Tan', zh: '如何建立个人品牌定位 | Eden Tan' },
+    desc: { en: 'A one-page personal brand positioning sheet—experience, audience, claim, exclusions—with the tradeoffs behind my own filled version.', zh: '一页式个人品牌定位表：经验、受众、主张、排除项，附我自己填好的那一版和背后的取舍。' },
+  },
+  {
+    path: '/notes/content-pillars-from-real-projects',
+    priority: '0.7',
+    title: { en: 'Content pillars from real projects | Eden Tan', zh: '从真实项目建立内容选题库 | Eden Tan' },
+    desc: { en: 'Count your content pillars out of finished work instead of inventing them: break projects into decisions, and turn each decision into a topic.', zh: '内容支柱应该从做完的工作里数出来，而不是事先想出来：把项目拆成决定，再把每个决定变成选题。' },
   },
   {
     path: '/notes/korea-2026-crash',

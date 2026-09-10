@@ -2,7 +2,7 @@
 id: korea-2026-crash
 type: essay
 route: /notes/korea-2026-crash
-order: 1
+order: 2
 status: published
 ---
 

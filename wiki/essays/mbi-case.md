@@ -2,7 +2,7 @@
 id: mbi-case
 type: essay
 route: /notes/mbi-case
-order: 2
+order: 3
 status: published
 ---
 

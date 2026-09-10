@@ -2,7 +2,7 @@
 id: human-nature-is-a-design-condition
 type: essay
 route: /notes/human-nature-is-a-design-condition
-order: 8
+order: 9
 status: published
 ---
 

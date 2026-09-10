@@ -2,7 +2,7 @@
 id: win-before-you-fight
 type: essay
 route: /notes/win-before-you-fight
-order: 9
+order: 10
 status: published
 ---
 

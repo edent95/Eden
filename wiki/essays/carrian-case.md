@@ -2,7 +2,7 @@
 id: carrian-case
 type: essay
 route: /notes/carrian-case
-order: 3
+order: 4
 status: published
 ---
 
