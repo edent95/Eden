@@ -391,19 +391,43 @@ same change rather than silently bypassing the gate.
 
 ### 4) Logging is mandatory
 
-**Log entry headings must be level-2 and start with a full date**: `## YYYY-MM-DD`
-(a timestamp or title may follow, e.g. `## 2026-09-01 16:41:07 +08`). An entry whose
-heading does not start with a date — or that uses `###` — is invisible to the external
-log aggregator (the personal project dashboard) and will be dropped silently.
 
-Every real change must append a new entry to the current `logs/YYYY-MM.md`, including:
+Entries live in the **current month's** `logs/YYYY-MM.md`. The root `log.md` is a stable
+pointer to the monthly archive and must not receive normal change entries.
 
-- what changed
-- why
-- impact
-- next step (if any)
+```bash
+npm run log:append < entry.md   # appends to logs/<current MYT month>.md; the ID and the `## date` heading are assigned by the script
+npm run log:check               # duplicate IDs + day headings run oldest → newest
+npm run log:index               # regenerate logs/index.md — the log gate checks this
+```
 
-After appending, run `npm run log:index`. `log.md` is now a stable pointer to the monthly archive and must not receive normal change entries.
+**Three hard rules — breaking them does not error, it fails silently:**
+
+1. **Always append with the script. Never "read the whole file → concatenate → write it back".**
+   Measured with two processes writing 40 entries each: read-modify-write landed 18/80
+   (**62 entries silently eaten**); `fs.appendFileSync` (O_APPEND) landed 80/80.
+2. **Order is oldest → newest; new entries go at the end of the month file.** That is what
+   makes O_APPEND work. Writing newest-first forces read-modify-write, which is rule 1's trap.
+3. **`## YYYY-MM-DD` day headings are written by the script — never by hand.** The external
+   dashboard aggregates **by `##` day**; an entry with no day heading is dropped silently.
+   `scripts/harness/log-append.mjs` picks the month with **Asia/Kuala_Lumpur**, matching
+   `check-log.mjs` — using a different timezone would write into last month's file while the
+   gate looks at this month's.
+
+**Format:** a `## YYYY-MM-DD` day heading, then `### [E-YYYY-MM-DD-NN] Title` entries carrying
+the seven rag-v1 fields — `type` `scope` `impact` `changed` `ripples` `verified` `keywords`.
+Of those, **`ripples` is the most valuable and the one most often left empty**:
+
+> After this change, **whose assumptions broke**? **Who must change with it**?
+> **Who will get burned next time for not knowing this**?
+> If you cannot answer, write "none" — do not leave it blank.
+
+`npm run verify:log` accepts **both** rag-v1 and the pre-2026-09 five-field Chinese shape
+(改动 / 原因 / 影响 / 验证 / 后续), so the existing history in `logs/` stays valid.
+History is **not** backfilled — only new entries follow rag-v1.
+
+Each `###` entry is recalled on its own by retrieval, without the surrounding context — so
+repeat the subject and never write "it / the above / that thing earlier".
 
 ### 5) Keep future-agent handoff durable
 

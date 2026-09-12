@@ -3,6 +3,7 @@ project: Eden
 title: eden
 status: todo
 updated: '2026-08-31'
+log_format: rag-v1
 log_includes:
   - logs/2026-*.md
 ---

@@ -14,6 +14,8 @@
     "verify:skills": "node scripts/harness/check-skill-paths.mjs",
     "verify:routes": "node --experimental-strip-types scripts/harness/check-routes.mjs",
     "log:index": "node scripts/harness/build-log-index.mjs",
+    "log:append": "node scripts/harness/log-append.mjs",
+    "log:check": "node scripts/harness/log-append.mjs --check",
     "verify:log": "node scripts/harness/check-log.mjs && node scripts/harness/build-log-index.mjs --check",
     "wiki:build": "node scripts/wiki/build.mjs",
     "verify:wiki": "node scripts/wiki/lint.mjs && node scripts/wiki/build.mjs --check",
