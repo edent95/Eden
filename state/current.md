@@ -1,6 +1,6 @@
 # Current Project State
 
-Last reviewed: 2026-08-19
+Last reviewed: 2026-09-14
 
 ## Runtime
 
@@ -9,9 +9,10 @@ Last reviewed: 2026-08-19
 - Production deploys from `main` to GitHub Pages at `https://eden-tan.com`.
 - Eden-owned Firebase configuration, RTDB, Auth, rules, leaderboard and target Functions source live in the dedicated `eden-tan` project and must not share a sibling product project's backend.
 - Homepage Mini Coin Slot calls the dedicated `eden-tan` `penneyMiniApi`, a Node.js 22 Firebase Functions v2 endpoint in `asia-southeast1`; it atomically enforces 100 plays per IP per Malaysia day and owns leaderboard writes. Google Artifact Registry provisioning recovered on 2026-08-19, and GET, preflight CORS, the 100-credit contract and the migrated leaderboard have been verified. After production readback confirmed the new client bundle, the previous Poker-project Function, Secret and Eden-owned RTDB nodes were permanently removed.
-- `seo-routes.ts` is the public route and SEO registry；`seo-prerender.ts` 负责把 registry 与编译后的 Wiki/Notes 内容转成静态正文、主题集群链接与结构化数据。
+- `seo-routes.ts` is the public route and SEO registry（含每个 route 的 `datePublished` / `dateModified` 与 `og` 分享图家族）；`seo-static-content.ts` 保存产品页、工具页与归档页的独立双语静态正文；`seo-prerender.ts` 负责把 registry、静态正文与编译后的 Wiki/Notes 内容转成静态正文、主题集群链接、逐 route 日期与结构化数据。
 - Wiki and Notes content compiles from `wiki/` into `generated/content.ts`; `App.tsx` still contains the large route renderer.
-- Sitemap 同时列出英文与中文 canonical URL，包含 reciprocal hreflang、x-default 与 `SITE_CONTENT_LASTMOD`；修改 SEO 可见内容时必须同步更新该日期。
+- Sitemap 同时列出英文与中文 canonical URL，包含 reciprocal hreflang 与 x-default；`lastmod` 逐 route 计算（Wiki/Notes 来自 Markdown frontmatter `published` / `updated`，其余来自 registry），`SITE_CONTENT_LASTMOD` 只作首页日期与兜底，且必须不早于任何 route 的 `dateModified`（`verify:routes` 会检查）。改一个页面的可抓取内容时，更新那个 route 或那篇 Markdown 的日期，而不是全站日期。
+- 未登记路径由 `App.tsx` 的 `NotFoundPage` 渲染并由 `seo.ts` 标为 `noindex`；`robots.txt` 对 `/?p=` SPA shim 加了 `Disallow`。
 
 ## Required Verification
 

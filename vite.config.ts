@@ -16,6 +16,10 @@ import {
   buildStaticJsonLd,
   getStaticRouteContent,
   languageAlternateUrl,
+  routeDates,
+  routeLastmod,
+  routeOgImage,
+  routeOgType,
   routeOutputPath,
 } from './seo-prerender';
 import { createPwaManifestInjectionScript } from './pwa-manifests';
@@ -28,7 +32,7 @@ function generateSitemapAndRobots(outDir: string, siteBaseNoSlash: string) {
     const zh = languageAlternateUrl(route, 'zh', siteBaseNoSlash);
     return `  <url>
     <loc>${loc}</loc>
-    <lastmod>${SITE_CONTENT_LASTMOD}</lastmod>
+    <lastmod>${routeLastmod(route)}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>${route.priority}</priority>
     <xhtml:link rel="alternate" hreflang="en" href="${en}" />
@@ -42,8 +46,12 @@ ${lines.join('\n')}
 </urlset>
 `;
   writeFileSync(path.join(outDir, 'sitemap.xml'), xml, 'utf8');
+  // `/?p=<path>` is the GitHub Pages 404 → SPA shim. It answers 200 with the homepage
+  // shell, so keep crawlers off that query form; the clean paths carry the real HTML.
   const robots = `User-agent: *
 Allow: /
+Disallow: /*?p=
+Disallow: /*&p=
 
 Sitemap: ${siteBaseNoSlash}/sitemap.xml
 `;
@@ -152,13 +160,25 @@ function renderRouteHtml(
     ['property', 'og:title', title],
     ['property', 'og:description', description],
     ['property', 'og:locale', language === 'zh' ? 'zh_CN' : 'en_US'],
+    ['property', 'og:type', routeOgType(route)],
   ] as const) {
     html = upsertMeta(html, attribute, key, value);
   }
 
   if (siteBaseNoSlash) {
     const canonical = `${siteBaseNoSlash}${localizedCanonicalRoutePath(route.path, language)}`;
+    const ogImage = routeOgImage(route, language, siteBaseNoSlash);
     html = upsertMeta(html, 'property', 'og:url', canonical);
+    html = upsertMeta(html, 'property', 'og:image', ogImage.url);
+    html = upsertMeta(html, 'property', 'og:image:alt', ogImage.alt);
+    html = upsertMeta(html, 'name', 'twitter:image', ogImage.url);
+    html = upsertMeta(html, 'name', 'twitter:image:alt', ogImage.alt);
+    if (routeOgType(route) === 'article') {
+      const dates = routeDates(route);
+      html = upsertMeta(html, 'property', 'article:published_time', dates.published);
+      html = upsertMeta(html, 'property', 'article:modified_time', dates.modified);
+      html = upsertMeta(html, 'property', 'article:author', `${siteBaseNoSlash}/`);
+    }
     html = upsertCanonical(html, canonical);
     html = upsertAlternate(html, 'en', languageAlternateUrl(route, 'en', siteBaseNoSlash));
     html = upsertAlternate(html, 'zh-Hans', languageAlternateUrl(route, 'zh', siteBaseNoSlash));

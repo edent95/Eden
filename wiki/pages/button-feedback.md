@@ -3,6 +3,8 @@ id: button-feedback
 type: wiki
 route: /wiki/button-feedback
 order: 3
+published: 2026-06-24
+updated: 2026-08-14
 status: published
 ---
 

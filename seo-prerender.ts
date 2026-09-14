@@ -1,7 +1,9 @@
 import { siteEssayNotes, wikiEntries } from './generated/content.ts';
+import { ROUTE_STATIC_COPY } from './seo-static-content.ts';
 import {
   canonicalRoutePath,
   localizedCanonicalRoutePath,
+  OG_IMAGES,
   ROUTE_SEO,
   SITE_CONTENT_LASTMOD,
   type RouteSeo,
@@ -40,15 +42,8 @@ const CLUSTERS: Array<{ prefix?: string; paths: string[] }> = [
   },
 ];
 
+/** Fallback context for routes with neither Markdown content nor an entry in `ROUTE_STATIC_COPY` (noindex utility pages). */
 const GENERIC_CONTEXT: Record<string, Localized> = {
-  '/': {
-    en: 'This site connects product systems, build evidence, essays, and a durable knowledge base. The recurring work is turning scattered inputs into structures people can understand and use.',
-    zh: '这个网站把产品系统、构建证据、文章与可持续维护的知识库连在一起。反复出现的工作，是把散乱输入变成可以理解、验证和使用的结构。',
-  },
-  '/project': {
-    en: 'The work spans local discovery, private social play, operations data, personal systems, and interactive experiments. Each build is documented as a system rather than a decorative portfolio tile.',
-    zh: '这些作品覆盖本地发现、熟人互动、运营数据、个人系统与互动实验。每个项目都按真实系统来记录，而不是只做成装饰性的作品卡片。',
-  },
   '/wiki': {
     en: 'The Wiki keeps reusable build knowledge outside chat history. Each page records a thesis, practical rules, failure modes, and the project evidence behind it.',
     zh: 'Wiki 把可复用的构建知识留在聊天记录之外。每一页都保留核心判断、实用规则、失败模式与背后的项目证据。',
@@ -88,6 +83,60 @@ function relatedRoutes(route: RouteSeo): RouteSeo[] {
     .map((path) => ROUTE_SEO.find((entry) => entry.path === path))
     .filter((entry): entry is RouteSeo => Boolean(entry) && entry.index !== false)
     .slice(0, 5);
+}
+
+export type RouteDates = { published: string; modified: string };
+
+function contentDatesFor(route: RouteSeo): RouteDates | undefined {
+  if (route.path.startsWith('/wiki/')) {
+    const entry = wikiEntries.find((item) => item.slug === route.path.slice('/wiki/'.length));
+    return entry ? { published: entry.datePublished, modified: entry.dateModified } : undefined;
+  }
+  if (route.path.startsWith('/notes/')) {
+    const entry = siteEssayNotes.find((item) => item.slug === route.path.slice('/notes/'.length));
+    return entry ? { published: entry.datePublished, modified: entry.dateModified } : undefined;
+  }
+  return undefined;
+}
+
+function latestIsoDate(dates: string[], fallback: string): string {
+  return dates.reduce((latest, date) => (date > latest ? date : latest), fallback);
+}
+
+/**
+ * Freshness per route, so sitemap `lastmod` and JSON-LD dates are driven by content:
+ * - Wiki / Notes articles: frontmatter `published` / `updated` from the Markdown source.
+ * - `/wiki` and `/notes` hubs: modified = the newest child article.
+ * - Homepage: modified = `SITE_CONTENT_LASTMOD` (the site-level regeneration date).
+ * - Everything else: the registry's own `datePublished` / `dateModified`, falling back to
+ *   `SITE_CONTENT_LASTMOD` when a route has no date of its own.
+ */
+export function routeDates(route: RouteSeo): RouteDates {
+  const fromContent = contentDatesFor(route);
+  if (fromContent) return fromContent;
+  const published = route.datePublished ?? SITE_CONTENT_LASTMOD;
+  if (route.path === '/wiki') {
+    return { published, modified: latestIsoDate(wikiEntries.map((entry) => entry.dateModified), published) };
+  }
+  if (route.path === '/notes') {
+    return { published, modified: latestIsoDate(siteEssayNotes.map((entry) => entry.dateModified), published) };
+  }
+  if (route.path === '/') return { published, modified: SITE_CONTENT_LASTMOD };
+  return { published, modified: route.dateModified ?? SITE_CONTENT_LASTMOD };
+}
+
+export function routeLastmod(route: RouteSeo): string {
+  return routeDates(route).modified;
+}
+
+/** Notes and Wiki articles are `article` for Open Graph; every other route stays `website`. */
+export function routeOgType(route: RouteSeo): 'article' | 'website' {
+  return route.path.startsWith('/notes/') || route.path.startsWith('/wiki/') ? 'article' : 'website';
+}
+
+export function routeOgImage(route: RouteSeo, language: SeoLanguage, siteBase: string) {
+  const image = OG_IMAGES[route.og ?? 'site'];
+  return { file: image.file, url: `${siteBase}/${image.file}`, alt: image.alt[language] };
 }
 
 export function getStaticRouteContent(route: RouteSeo, language: SeoLanguage): StaticRouteContent {
@@ -210,6 +259,21 @@ export function getStaticRouteContent(route: RouteSeo, language: SeoLanguage): S
     };
   }
 
+  const copy = ROUTE_STATIC_COPY[route.path];
+  if (copy) {
+    return {
+      eyebrow: copy.eyebrow[language],
+      heading: displayTitle(route, language),
+      summary: route.desc[language],
+      thesis: copy.thesis?.[language],
+      sections: copy.sections.map((section) => ({
+        title: section.title[language],
+        paragraphs: section.paragraphs.map((paragraph) => paragraph[language]),
+      })),
+      related: relatedRoutes(route),
+    };
+  }
+
   const context = GENERIC_CONTEXT[route.path]?.[language] ?? (
     language === 'zh'
       ? '这页记录一个真实项目、工具或工作系统：它解决什么问题、怎样形成，以及它与其他构建和知识页面之间的关系。'
@@ -257,13 +321,14 @@ function breadcrumbItems(route: RouteSeo, language: SeoLanguage, siteBase: strin
 export function buildStaticJsonLd(route: RouteSeo, language: SeoLanguage, siteBase: string) {
   const content = getStaticRouteContent(route, language);
   const canonical = `${siteBase}${localizedCanonicalRoutePath(route.path, language)}`;
-  const image = `${siteBase}/og-image.jpg`;
+  const image = routeOgImage(route, language, siteBase).url;
+  const dates = routeDates(route);
   const person = {
     '@type': 'Person',
     '@id': `${siteBase}/#eden-tan`,
     name: 'Eden Tan',
     url: `${siteBase}/`,
-    image,
+    image: `${siteBase}/${OG_IMAGES.site.file}`,
     jobTitle: 'Systems Architect & Digital Strategist',
     sameAs: [
       'https://github.com/edent95',
@@ -283,7 +348,10 @@ export function buildStaticJsonLd(route: RouteSeo, language: SeoLanguage, siteBa
   if (route.path === '/') {
     graph.push(
       { '@type': 'WebSite', '@id': `${siteBase}/#website`, name: 'Eden Tan', url: `${siteBase}/`, inLanguage: ['en', 'zh-Hans'] },
-      { '@type': 'ProfilePage', '@id': canonical, url: canonical, name: content.heading, description: content.summary, mainEntity: person, dateModified: SITE_CONTENT_LASTMOD },
+      {
+        '@type': 'ProfilePage', '@id': canonical, url: canonical, name: content.heading, description: content.summary,
+        mainEntity: person, datePublished: dates.published, dateModified: dates.modified,
+      },
       person,
     );
   } else if (route.path.startsWith('/notes/')) {
@@ -291,20 +359,22 @@ export function buildStaticJsonLd(route: RouteSeo, language: SeoLanguage, siteBa
       '@type': 'BlogPosting', '@id': `${canonical}#article`, url: canonical,
       headline: content.heading, description: content.summary, image,
       author: { '@id': person['@id'] }, publisher: { '@id': person['@id'] },
-      dateModified: SITE_CONTENT_LASTMOD, inLanguage: language === 'zh' ? 'zh-Hans' : 'en',
+      datePublished: dates.published, dateModified: dates.modified,
+      inLanguage: language === 'zh' ? 'zh-Hans' : 'en',
     }, person);
   } else if (route.path.startsWith('/wiki/')) {
     graph.push({
       '@type': 'TechArticle', '@id': `${canonical}#article`, url: canonical,
       headline: content.heading, description: content.summary, image,
-      author: { '@id': person['@id'] }, dateModified: SITE_CONTENT_LASTMOD,
+      author: { '@id': person['@id'] }, datePublished: dates.published, dateModified: dates.modified,
       inLanguage: language === 'zh' ? 'zh-Hans' : 'en',
     }, person);
   } else {
     graph.push({
       '@type': route.path === '/film-gallery' ? 'ImageGallery' : 'WebPage',
       '@id': canonical, url: canonical, name: content.heading, description: content.summary,
-      image, dateModified: SITE_CONTENT_LASTMOD, inLanguage: language === 'zh' ? 'zh-Hans' : 'en',
+      image, datePublished: dates.published, dateModified: dates.modified,
+      inLanguage: language === 'zh' ? 'zh-Hans' : 'en',
       author: { '@id': person['@id'] },
     }, person);
   }

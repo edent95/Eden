@@ -1,11 +1,14 @@
 ---
 project: Eden
 title: eden
-status: todo
-updated: '2026-08-31'
+status: done
+updated: '2026-09-14'
 log_format: rag-v1
 log_includes:
   - logs/2026-*.md
+progress: 0
+tags: []
+milestones: []
 ---
 # Change Log
 

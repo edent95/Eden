@@ -3,6 +3,8 @@ id: turn-chaos-into-systems
 type: essay
 route: /notes/turn-chaos-into-systems
 order: 7
+published: 2026-07-21
+updated: 2026-08-14
 status: published
 ---
 

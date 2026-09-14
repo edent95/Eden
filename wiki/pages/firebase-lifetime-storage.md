@@ -3,6 +3,8 @@ id: firebase-lifetime-storage
 type: wiki
 route: /wiki/firebase-lifetime-storage
 order: 4
+published: 2026-06-24
+updated: 2026-08-14
 status: published
 ---
 

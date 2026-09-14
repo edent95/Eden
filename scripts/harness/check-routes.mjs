@@ -1,4 +1,5 @@
-import { ROUTE_SEO, SITE_CONTENT_LASTMOD } from '../../seo-routes.ts';
+import { OG_IMAGES, ROUTE_SEO, SITE_CONTENT_LASTMOD } from '../../seo-routes.ts';
+import { ROUTE_STATIC_COPY } from '../../seo-static-content.ts';
 import { exists, fail, pass, read } from './lib.mjs';
 
 const app = read('App.tsx');
@@ -47,8 +48,44 @@ for (const route of ROUTE_SEO) {
   }
 }
 
-if (!/^\d{4}-\d{2}-\d{2}$/.test(SITE_CONTENT_LASTMOD)) {
+const isoDate = /^\d{4}-\d{2}-\d{2}$/;
+if (!isoDate.test(SITE_CONTENT_LASTMOD)) {
   problems.push('SITE_CONTENT_LASTMOD must be an ISO date');
+}
+
+for (const route of ROUTE_SEO) {
+  const isContentRoute = route.path.startsWith('/wiki/') || route.path.startsWith('/notes/');
+  for (const field of ['datePublished', 'dateModified']) {
+    if (route[field] !== undefined && !isoDate.test(route[field])) {
+      problems.push(`${route.path} ${field} must be an ISO date`);
+    }
+  }
+  if (isContentRoute && (route.datePublished || route.dateModified)) {
+    problems.push(`${route.path} takes its dates from Markdown frontmatter; remove datePublished/dateModified from the registry`);
+  }
+  if (!isContentRoute && !route.datePublished) {
+    problems.push(`${route.path} needs a datePublished in seo-routes.ts`);
+  }
+  if (route.datePublished && route.dateModified && route.dateModified < route.datePublished) {
+    problems.push(`${route.path} dateModified is earlier than datePublished`);
+  }
+  if (route.dateModified && route.dateModified > SITE_CONTENT_LASTMOD) {
+    problems.push(`${route.path} dateModified ${route.dateModified} is newer than SITE_CONTENT_LASTMOD ${SITE_CONTENT_LASTMOD}; bump the site date`);
+  }
+  if (route.og && !OG_IMAGES[route.og]) problems.push(`${route.path} references unknown share image ${route.og}`);
+  const hasOwnStaticBody = ['/wiki', '/notes', '/conways-game-of-life'].includes(route.path);
+  if (!isContentRoute && !hasOwnStaticBody && route.index !== false && !ROUTE_STATIC_COPY[route.path]) {
+    problems.push(`${route.path} is indexable but has no entry in seo-static-content.ts`);
+  }
+}
+
+for (const [key, image] of Object.entries(OG_IMAGES)) {
+  if (!exists(`public/${image.file}`)) problems.push(`share image ${key} is missing public/${image.file}`);
+}
+for (const routePath of Object.keys(ROUTE_STATIC_COPY)) {
+  if (!ROUTE_SEO.some((route) => route.path === routePath)) {
+    problems.push(`seo-static-content.ts has copy for unregistered route ${routePath}`);
+  }
 }
 
 const registeredPaths = new Set(ROUTE_SEO.map((route) => route.path));

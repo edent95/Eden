@@ -3,6 +3,8 @@ id: rag-flow
 type: wiki
 route: /wiki/rag-flow
 order: 6
+published: 2026-06-24
+updated: 2026-08-14
 status: published
 ---
 

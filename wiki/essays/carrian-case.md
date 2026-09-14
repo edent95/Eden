@@ -3,6 +3,8 @@ id: carrian-case
 type: essay
 route: /notes/carrian-case
 order: 4
+published: 2026-07-27
+updated: 2026-08-14
 status: published
 ---
 

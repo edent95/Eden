@@ -3,6 +3,8 @@ id: mbi-case
 type: essay
 route: /notes/mbi-case
 order: 3
+published: 2026-07-29
+updated: 2026-08-14
 status: published
 ---
 

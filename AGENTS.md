@@ -330,6 +330,9 @@ When adding, hiding, renaming, or changing a route:
 - Keep the route name, visible title, SEO copy, and implemented model conceptually identical. Do not conflate adjacent systems under one familiar name; if both systems remain useful, split them into explicit routes and cross-link them.
 - If a route should be reachable but hidden from discovery, keep the React route but set `index: false` and `sitemap: false` in `seo-routes.ts`, then remove visible navigation/card entry points as needed.
 - Do not maintain separate ad hoc route lists in `vite.config.ts`, `seo.ts`, README, or page components without checking the registry first.
+- Every indexable non-Markdown route needs its own bilingual static body in `seo-static-content.ts`, mirroring what the React page actually renders (modules, numbers, section order). When a product page's substance changes, update that entry and bump the route's `dateModified` in `seo-routes.ts` in the same change.
+- Freshness is per route, not sitewide: Wiki/Notes dates live in Markdown frontmatter (`published` / `updated`), other routes in `seo-routes.ts` (`datePublished` / `dateModified`). `SITE_CONTENT_LASTMOD` is only the homepage date and the fallback, and it must be at least as new as every route's `dateModified`.
+- Share images are route families in `OG_IMAGES` (`public/og/*.jpg`, 1200×630); pick an existing family via `og:` before adding a new file.
 
 ## Current Wiki Structure
 
