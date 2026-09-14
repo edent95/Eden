@@ -394,7 +394,6 @@ same change rather than silently bypassing the gate.
 
 ### 4) Logging is mandatory
 
-
 Entries live in the **current month's** `logs/YYYY-MM.md`. The root `log.md` is a stable
 pointer to the monthly archive and must not receive normal change entries.
 

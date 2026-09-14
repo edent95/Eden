@@ -4714,14 +4714,13 @@ const createSkillDraftFromWikiEntry = (entry: WikiEntry, language: Language, sou
 const WikiPage: React.FC<{
   entry?: WikiEntry;
   homeHref: string;
-  projectsHref: string;
   baseUrl: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
   themePreference: ThemePreference;
   theme: Theme;
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
-}> = ({ entry, homeHref, projectsHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
+}> = ({ entry, homeHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
   const wikiHref = joinBasePath(baseUrl, 'wiki');
   const notesHref = joinBasePath(baseUrl, 'notes');
@@ -5007,7 +5006,7 @@ const WikiPage: React.FC<{
                     : 'Each note keeps what was learned, why it matters, and how to reuse it. Original sources stay intact; the LLM maintains the wiki. Checked methods can become executable skills.'}</p>
                   <div className="wiki-footer-links">
                     <a className="wiki-text-link" href={notesHref}>{isZh ? '阅读 Notes' : 'Read Notes'} <ArrowUpRight size={16} aria-hidden="true" /></a>
-                    <a className="wiki-text-link" href={projectsHref}>{isZh ? '探索项目' : 'Explore projects'} <ArrowUpRight size={16} aria-hidden="true" /></a>
+                    <a className="wiki-text-link" href={joinBasePath(baseUrl, 'project')}>{isZh ? '探索项目' : 'Explore projects'} <ArrowUpRight size={16} aria-hidden="true" /></a>
                   </div>
                 </div>
               </div>
@@ -10330,7 +10329,6 @@ const App: React.FC = () => {
       <WikiPage
         entry={activeWikiEntry}
         homeHref={homeHref}
-        projectsHref={projectsHref}
         baseUrl={baseUrl}
         language={language}
         setLanguage={setLanguage}

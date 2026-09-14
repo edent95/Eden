@@ -110,7 +110,7 @@
   .wiki-index-page .wiki-skill-library-grid { grid-template-columns: minmax(0, 1fr); }
   .wiki-colophon { gap: 24px; margin-top: 40px; }
   .wiki-main { padding-bottom: 64px; }
-  .wiki-hero h1 { letter-spacing: -.04em; }
+  .wiki-hero h1 { font-size: clamp(28px, 9vw, 40px); letter-spacing: -.04em; }
 }
 
 @media (prefers-reduced-motion: reduce) {

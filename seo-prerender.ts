@@ -205,10 +205,15 @@ export function getStaticRouteContent(route: RouteSeo, language: SeoLanguage): S
       thesis: language === 'zh'
         ? '把从项目中学到的东西整理成可复用、可查证、可继续维护的知识。'
         : 'Turn lessons from real projects into reusable, verifiable, maintainable knowledge.',
-      sections: wikiEntries.map((entry) => ({
+      sections: [...wikiEntries.map((entry) => ({
         title: entry.title[language],
         paragraphs: [entry.summary[language], entry.thesis[language]],
-      })),
+      })), {
+        title: language === 'zh' ? '做过的事，留下可用的东西。' : 'Keep what the work teaches you.',
+        paragraphs: [language === 'zh'
+          ? '每篇笔记保留学到了什么、为什么重要、下次怎么复用。原始资料保持不变，Wiki 由 LLM 持续整理，经过检查的方法再成为可执行的 Skill。'
+          : 'Each note keeps what was learned, why it matters, and how to reuse it. Original sources stay intact; the LLM maintains the wiki. Checked methods can become executable skills.'],
+      }],
       related: ROUTE_SEO.filter((entry) => entry.path.startsWith('/wiki/') && entry.index !== false),
     };
   }
