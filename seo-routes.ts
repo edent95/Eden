@@ -229,6 +229,7 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/wiki',
+    dateModified: '2026-09-14',
     datePublished: '2026-06-24',
     priority: '0.7',
     title: {

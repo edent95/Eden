@@ -197,9 +197,11 @@ export function getStaticRouteContent(route: RouteSeo, language: SeoLanguage): S
 
   if (route.path === '/wiki') {
     return {
-      eyebrow: language === 'zh' ? '可复用构建知识' : 'Reusable build knowledge',
-      heading: displayTitle(route, language),
-      summary: route.desc[language],
+      eyebrow: 'EDEN / WIKI',
+      heading: language === 'zh' ? '让经验，成为下一次的起点。' : 'A little wiser. With every build.',
+      summary: language === 'zh'
+        ? '构建时遇到的问题，解决后留下的方法。把散落在项目里的经验，整理成可以反复使用的知识。'
+        : 'Problems met while building. Methods kept after solving them. A growing collection of knowledge to carry into the next project.',
       thesis: language === 'zh'
         ? '把从项目中学到的东西整理成可复用、可查证、可继续维护的知识。'
         : 'Turn lessons from real projects into reusable, verifiable, maintainable knowledge.',
