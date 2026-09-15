@@ -16,10 +16,19 @@ function parseMarkdown(file) {
       return [line.slice(0, separator).trim(), line.slice(separator + 1).trim()];
     }),
   );
+  const data = JSON.parse(payloadMatch[1]);
+  // Content-driven freshness: the frontmatter carries the real publish/update dates,
+  // and the compiler copies them onto the payload so JSON-LD and the sitemap can use them.
+  for (const [key, field] of [['published', 'datePublished'], ['updated', 'dateModified']]) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(metadata[key] ?? '')) {
+      throw new Error(`${path.relative(root, file)} frontmatter needs an ISO ${key}: date`);
+    }
+    data[field] = metadata[key];
+  }
   return {
     file,
     metadata,
-    data: JSON.parse(payloadMatch[1]),
+    data,
   };
 }
 
@@ -43,6 +52,8 @@ export type SiteEssayNoteData = {
   summary: Record<'en' | 'zh', string>;
   category: Record<'en' | 'zh', string>;
   thesis: Record<'en' | 'zh', string>;
+  datePublished: string;
+  dateModified: string;
   sources: string[];
   sections: Array<{
     title: Record<'en' | 'zh', string>;

@@ -7,6 +7,8 @@ export type SiteEssayNoteData = {
   summary: Record<'en' | 'zh', string>;
   category: Record<'en' | 'zh', string>;
   thesis: Record<'en' | 'zh', string>;
+  datePublished: string;
+  dateModified: string;
   sources: string[];
   sections: Array<{
     title: Record<'en' | 'zh', string>;
@@ -137,7 +139,9 @@ export const wikiEntries = [
           ]
         }
       }
-    ]
+    ],
+    "datePublished": "2026-06-24",
+    "dateModified": "2026-08-14"
   },
   {
     "slug": "background-music",
@@ -194,7 +198,9 @@ export const wikiEntries = [
           ]
         }
       }
-    ]
+    ],
+    "datePublished": "2026-06-24",
+    "dateModified": "2026-08-14"
   },
   {
     "slug": "button-feedback",
@@ -251,7 +257,9 @@ export const wikiEntries = [
           ]
         }
       }
-    ]
+    ],
+    "datePublished": "2026-06-24",
+    "dateModified": "2026-08-14"
   },
   {
     "slug": "firebase-lifetime-storage",
@@ -308,7 +316,9 @@ export const wikiEntries = [
           ]
         }
       }
-    ]
+    ],
+    "datePublished": "2026-06-24",
+    "dateModified": "2026-08-14"
   },
   {
     "slug": "skills",
@@ -463,7 +473,9 @@ export const wikiEntries = [
           ]
         }
       }
-    ]
+    ],
+    "datePublished": "2026-06-24",
+    "dateModified": "2026-08-14"
   },
   {
     "slug": "rag-flow",
@@ -570,7 +582,9 @@ export const wikiEntries = [
           ]
         }
       }
-    ]
+    ],
+    "datePublished": "2026-06-24",
+    "dateModified": "2026-08-14"
   }
 ] as const;
 
@@ -747,7 +761,9 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
           ]
         }
       }
-    ]
+    ],
+    "datePublished": "2026-07-29",
+    "dateModified": "2026-08-14"
   },
   {
     "slug": "mbi-case",
@@ -901,7 +917,9 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
           ]
         }
       }
-    ]
+    ],
+    "datePublished": "2026-07-29",
+    "dateModified": "2026-08-14"
   },
   {
     "slug": "carrian-case",
@@ -1062,7 +1080,9 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
           ]
         }
       }
-    ]
+    ],
+    "datePublished": "2026-07-27",
+    "dateModified": "2026-08-14"
   },
   {
     "slug": "modern-finance-ponzi",
@@ -1232,7 +1252,9 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
           ]
         }
       }
-    ]
+    ],
+    "datePublished": "2026-07-27",
+    "dateModified": "2026-08-14"
   },
   {
     "slug": "what-is-wealth",
@@ -1407,7 +1429,9 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
           ]
         }
       }
-    ]
+    ],
+    "datePublished": "2026-07-27",
+    "dateModified": "2026-08-14"
   },
   {
     "slug": "turn-chaos-into-systems",
@@ -1481,7 +1505,9 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
           ]
         }
       }
-    ]
+    ],
+    "datePublished": "2026-07-21",
+    "dateModified": "2026-08-14"
   },
   {
     "slug": "judgment-is-not-more-information",
@@ -1555,7 +1581,9 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
           ]
         }
       }
-    ]
+    ],
+    "datePublished": "2026-07-21",
+    "dateModified": "2026-08-14"
   },
   {
     "slug": "human-nature-is-a-design-condition",
@@ -1629,7 +1657,9 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
           ]
         }
       }
-    ]
+    ],
+    "datePublished": "2026-07-21",
+    "dateModified": "2026-08-14"
   },
   {
     "slug": "win-before-you-fight",
@@ -1703,6 +1733,8 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
           ]
         }
       }
-    ]
+    ],
+    "datePublished": "2026-07-21",
+    "dateModified": "2026-08-14"
   }
 ];

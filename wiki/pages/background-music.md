@@ -3,6 +3,8 @@ id: background-music
 type: wiki
 route: /wiki/background-music
 order: 2
+published: 2026-06-24
+updated: 2026-08-14
 status: published
 ---
 

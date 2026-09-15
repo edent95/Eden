@@ -106,9 +106,10 @@ npm run preview
 - **Mini Coin Slot API：** Firebase Functions v2 的 `penneyMiniApi` 负责 IP HMAC、马来西亚时间每日 100 credits、服务端回合结果与访客排行榜；前端静态站不持有原始 IP，也不能直接写比赛记录。
 - **操作入口：** `npm run task:new` 建安全工作分支，`npm run publish` 串联 ready、PR、verify、merge、deploy 与 live check。
 - **分支保护：** `main` 要求 `verify`、分支保持最新并解决 review conversations；管理员同样受保护，force-push 与删除已禁用。
-- **Route HTML：** production build 会依据 `seo-routes.ts` 为每个 route 生成英文 `<route>/index.html` 与中文 `/zh/<route>/index.html`。服务器响应直接包含真实 H1、Wiki/Notes 正文、主题集群内链、面包屑、页面类型 JSON-LD、canonical 与 hreflang；React 加载后接管等价互动页面。`public/404.html` 只保留给 registry 之外的未知路径作 SPA fallback。
+- **Route HTML：** production build 会依据 `seo-routes.ts` 为每个 route 生成英文 `<route>/index.html` 与中文 `/zh/<route>/index.html`。服务器响应直接包含真实 H1、正文、主题集群内链、面包屑、页面类型 JSON-LD、canonical 与 hreflang；React 加载后接管等价互动页面。Wiki/Notes 正文来自 `generated/content.ts`；产品页、工具页与归档页的静态正文来自 `seo-static-content.ts`（每个可索引 route 一段独立双语正文，`verify:routes` 与 `test:smoke` 会拒绝缺失或重复模板）。`public/404.html` 只保留给 registry 之外的未知路径作 SPA fallback；`/?p=` shim 落到未登记路径时由 `NotFoundPage` 渲染并标 `noindex`，`robots.txt` 同时 `Disallow: /*?p=`。
+- **Freshness 与分享图：** `sitemap.xml` 的 `lastmod` 与 JSON-LD 的 `datePublished` / `dateModified` 按 route 计算（`seo-prerender.ts` 的 `routeDates`）：Wiki/Notes 取 Markdown frontmatter 的 `published` / `updated`，`/wiki` 与 `/notes` 取最新子页，其余 route 取 `seo-routes.ts` 里的 `datePublished` / `dateModified`，`SITE_CONTENT_LASTMOD` 只作首页与兜底。分享图按 route 家族映射（`seo-routes.ts` 的 `OG_IMAGES`，文件在 `public/og/`，1200×630），Notes/Wiki 的 `og:type` 为 `article` 并带 `article:published_time`。
 - **分析：** `index.html` 内已嵌入 GA4（`gtag.js`），Measurement ID 在仓库中维护。  
-- **SEO 代码：** route metadata 在 `seo-routes.ts`，静态正文与 schema 在 `seo-prerender.ts`，客户端同步在 `seo.ts`；构建产物含双语 alternate 与真实 `lastmod` 的 `sitemap.xml`、`robots.txt`（在配置了站点 URL 时生成）。
+- **SEO 代码：** route metadata、日期与分享图在 `seo-routes.ts`，非内容 route 的静态正文在 `seo-static-content.ts`，正文装配、日期解析与 schema 在 `seo-prerender.ts`，客户端同步在 `seo.ts`；构建产物含双语 alternate 与逐 route `lastmod` 的 `sitemap.xml`、`robots.txt`（在配置了站点 URL 时生成）。
 
 ---
 

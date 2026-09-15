@@ -330,6 +330,9 @@ When adding, hiding, renaming, or changing a route:
 - Keep the route name, visible title, SEO copy, and implemented model conceptually identical. Do not conflate adjacent systems under one familiar name; if both systems remain useful, split them into explicit routes and cross-link them.
 - If a route should be reachable but hidden from discovery, keep the React route but set `index: false` and `sitemap: false` in `seo-routes.ts`, then remove visible navigation/card entry points as needed.
 - Do not maintain separate ad hoc route lists in `vite.config.ts`, `seo.ts`, README, or page components without checking the registry first.
+- Every indexable non-Markdown route needs its own bilingual static body in `seo-static-content.ts`, mirroring what the React page actually renders (modules, numbers, section order). When a product page's substance changes, update that entry and bump the route's `dateModified` in `seo-routes.ts` in the same change.
+- Freshness is per route, not sitewide: Wiki/Notes dates live in Markdown frontmatter (`published` / `updated`), other routes in `seo-routes.ts` (`datePublished` / `dateModified`). `SITE_CONTENT_LASTMOD` is only the homepage date and the fallback, and it must be at least as new as every route's `dateModified`.
+- Share images are route families in `OG_IMAGES` (`public/og/*.jpg`, 1200×630); pick an existing family via `og:` before adding a new file.
 
 ## Current Wiki Structure
 
@@ -391,19 +394,42 @@ same change rather than silently bypassing the gate.
 
 ### 4) Logging is mandatory
 
-**Log entry headings must be level-2 and start with a full date**: `## YYYY-MM-DD`
-(a timestamp or title may follow, e.g. `## 2026-09-01 16:41:07 +08`). An entry whose
-heading does not start with a date — or that uses `###` — is invisible to the external
-log aggregator (the personal project dashboard) and will be dropped silently.
+Entries live in the **current month's** `logs/YYYY-MM.md`. The root `log.md` is a stable
+pointer to the monthly archive and must not receive normal change entries.
 
-Every real change must append a new entry to the current `logs/YYYY-MM.md`, including:
+```bash
+npm run log:append < entry.md   # appends to logs/<current MYT month>.md; the ID and the `## date` heading are assigned by the script
+npm run log:check               # duplicate IDs + day headings run oldest → newest
+npm run log:index               # regenerate logs/index.md — the log gate checks this
+```
 
-- what changed
-- why
-- impact
-- next step (if any)
+**Three hard rules — breaking them does not error, it fails silently:**
 
-After appending, run `npm run log:index`. `log.md` is now a stable pointer to the monthly archive and must not receive normal change entries.
+1. **Always append with the script. Never "read the whole file → concatenate → write it back".**
+   Measured with two processes writing 40 entries each: read-modify-write landed 18/80
+   (**62 entries silently eaten**); `fs.appendFileSync` (O_APPEND) landed 80/80.
+2. **Order is oldest → newest; new entries go at the end of the month file.** That is what
+   makes O_APPEND work. Writing newest-first forces read-modify-write, which is rule 1's trap.
+3. **`## YYYY-MM-DD` day headings are written by the script — never by hand.** The external
+   dashboard aggregates **by `##` day**; an entry with no day heading is dropped silently.
+   `scripts/harness/log-append.mjs` picks the month with **Asia/Kuala_Lumpur**, matching
+   `check-log.mjs` — using a different timezone would write into last month's file while the
+   gate looks at this month's.
+
+**Format:** a `## YYYY-MM-DD` day heading, then `### [E-YYYY-MM-DD-NN] Title` entries carrying
+the seven rag-v1 fields — `type` `scope` `impact` `changed` `ripples` `verified` `keywords`.
+Of those, **`ripples` is the most valuable and the one most often left empty**:
+
+> After this change, **whose assumptions broke**? **Who must change with it**?
+> **Who will get burned next time for not knowing this**?
+> If you cannot answer, write "none" — do not leave it blank.
+
+`npm run verify:log` accepts **both** rag-v1 and the pre-2026-09 five-field Chinese shape
+(改动 / 原因 / 影响 / 验证 / 后续), so the existing history in `logs/` stays valid.
+History is **not** backfilled — only new entries follow rag-v1.
+
+Each `###` entry is recalled on its own by retrieval, without the surrounding context — so
+repeat the subject and never write "it / the above / that thing earlier".
 
 ### 5) Keep future-agent handoff durable
 

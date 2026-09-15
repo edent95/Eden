@@ -39,6 +39,12 @@ for (const file of files) {
   const expectedRoute = type === 'essay' ? `/notes/${id}` : `/wiki/${id}`;
   if (route !== expectedRoute) problems.push(`${relative} route must be ${expectedRoute}`);
   if (!order) problems.push(`${relative} has no numeric order`);
+  const published = frontmatter[1].match(/^published:\s*(\S+)\s*$/m)?.[1];
+  const updated = frontmatter[1].match(/^updated:\s*(\S+)\s*$/m)?.[1];
+  const isoDate = /^\d{4}-\d{2}-\d{2}$/;
+  if (!published || !isoDate.test(published)) problems.push(`${relative} needs an ISO published: date in frontmatter`);
+  if (!updated || !isoDate.test(updated)) problems.push(`${relative} needs an ISO updated: date in frontmatter`);
+  if (published && updated && updated < published) problems.push(`${relative} updated (${updated}) is earlier than published (${published})`);
 
   const payloadMatch = source.match(/```json\n([\s\S]*?)\n```/);
   if (!payloadMatch) {

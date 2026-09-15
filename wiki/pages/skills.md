@@ -3,6 +3,8 @@ id: skills
 type: wiki
 route: /wiki/skills
 order: 5
+published: 2026-06-24
+updated: 2026-08-14
 status: published
 ---
 

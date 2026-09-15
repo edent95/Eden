@@ -2,7 +2,9 @@
 id: what-is-wealth
 type: essay
 route: /notes/what-is-wealth
-order: 5
+order: 6
+published: 2026-07-27
+updated: 2026-08-14
 status: published
 ---
 

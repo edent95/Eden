@@ -11,9 +11,11 @@ import {
   HOME_DESC,
   HOME_TITLE,
   localizedCanonicalRoutePath,
+  OG_IMAGES,
   PAGE_COPY,
   routeSeoForPath,
 } from './seo-routes';
+import { routeDates, routeOgType } from './seo-prerender';
 
 export type SeoLanguage = 'en' | 'zh';
 
@@ -23,15 +25,9 @@ type ArchivedWork = {
   summary: { en: string; zh: string };
 };
 
-export const OG_IMAGE_FILE = 'og-image.jpg' as const;
+export const OG_IMAGE_FILE = OG_IMAGES.site.file;
 export const OG_IMAGE_WIDTH = 1200;
 export const OG_IMAGE_HEIGHT = 630;
-
-/** Shown with og / twitter; keep stable for a single shared OG art file. */
-const OG_IMAGE_ALT: Record<SeoLanguage, string> = {
-  en: 'Eden Tan — Systems Architect and Digital Strategist; portfolio share preview (1200×630).',
-  zh: 'Eden Tan 个人站分享预览图：系统架构与数字战略（1200×630）。',
-};
 
 /** Max length for meta description (search snippets). */
 const DESC_MAX = 160;
@@ -61,6 +57,10 @@ function setMetaProperty(prop: string, content: string) {
     document.head.appendChild(el);
   }
   el.setAttribute('content', content);
+}
+
+function removeMetaProperty(prop: string) {
+  document.querySelector(`meta[property="${prop}"]`)?.remove();
 }
 
 function setLinkRel(rel: string, href: string) {
@@ -177,7 +177,10 @@ export function getPageSeo(
     return { title: copy.title[lang], description: trimDesc(copy.desc[lang]) };
   }
 
-  return { title: HOME_TITLE[lang], description: trimDesc(HOME_DESC[lang]) };
+  return {
+    title: lang === 'zh' ? '页面不存在 | Eden Tan' : 'Page not found | Eden Tan',
+    description: lang === 'zh' ? '这个路径没有对应的页面。' : 'There is no page at this path.',
+  };
 }
 
 /**
@@ -194,15 +197,22 @@ export function applyPageSeo(
   const canonical = siteRoot ? joinPath(siteRoot, canonicalPath) : '';
   const loc = language === 'zh' ? 'zh_CN' : 'en_US';
   const lang: SeoLanguage = language === 'zh' ? 'zh' : 'en';
-  const ogImageAlt = OG_IMAGE_ALT[lang];
-  const routeSeo = activeArchived ? undefined : routeSeoForPath(pathWithoutBase);
+  const routeSeo = routeSeoForPath(pathWithoutBase);
+  const isHome = !pathWithoutBase || pathWithoutBase === '/';
+  // Unregistered paths render the not-found view; keep them out of the index so the
+  // `/?p=` SPA shim can never turn a typo into an indexable copy of the homepage.
   const robots =
-    routeSeo?.index === false
+    routeSeo?.index === false || (!routeSeo && !isHome)
       ? 'noindex, follow'
       : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+  // Same per-route share image and type the static route HTML carries, so the
+  // client sync never downgrades an article back to the sitewide image.
+  const ogImageFamily = OG_IMAGES[routeSeo?.og ?? 'site'];
+  const ogImageAlt = ogImageFamily.alt[lang];
+  const ogType = routeSeo ? routeOgType(routeSeo) : 'website';
   const ogImage =
     siteRoot
-      ? new URL(OG_IMAGE_FILE, siteRoot).href
+      ? new URL(ogImageFamily.file, siteRoot).href
       : '';
 
   document.title = title;
@@ -214,7 +224,17 @@ export function applyPageSeo(
   setMetaName('twitter:title', title);
   setMetaName('twitter:description', description);
 
-  setMetaProperty('og:type', 'website');
+  setMetaProperty('og:type', ogType);
+  if (routeSeo && ogType === 'article' && siteRoot) {
+    const dates = routeDates(routeSeo);
+    setMetaProperty('article:published_time', dates.published);
+    setMetaProperty('article:modified_time', dates.modified);
+    setMetaProperty('article:author', siteRoot);
+  } else {
+    for (const prop of ['article:published_time', 'article:modified_time', 'article:author']) {
+      removeMetaProperty(prop);
+    }
+  }
   setMetaProperty('og:title', title);
   setMetaProperty('og:description', description);
   setMetaProperty('og:site_name', 'Eden Tan');
@@ -236,9 +256,7 @@ export function applyPageSeo(
     setMetaProperty('og:image:alt', ogImageAlt);
   }
 
-  const isHome =
-    (!pathWithoutBase || pathWithoutBase === '/') && !activeArchived;
   if (siteRoot) {
-    setOrRemoveJsonLd(isHome, siteRoot);
+    setOrRemoveJsonLd(isHome && !activeArchived, siteRoot);
   }
 }

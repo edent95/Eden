@@ -28,6 +28,7 @@
 @import "./styles/pages/jiju-pet.css";
 @import "./styles/pages/life.css";
 @import "./styles/pages/poker.css";
+@import "./styles/pages/wiki.css";
 @import "./styles/pages/product-page.css";
 @import "./styles/pages/film-gallery.css";
 @import "./styles/pages/brand-guide.css";
@@ -36,3 +37,4 @@
 @import "./styles/pages/icon-prompts.css";
 @import "./styles/pages/project.css";
 @import "./styles/pages/penneys-game.css";
+@import "./styles/pages/not-found.css";

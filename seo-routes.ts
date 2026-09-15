@@ -1,5 +1,9 @@
 export type SeoLanguage = 'en' | 'zh';
 
+export type OgImageKey =
+  | 'site' | 'jiju' | 'etreporthub' | 'dr-racing' | 'poker' | 'film-gallery'
+  | 'life-os' | 'conway' | 'notes' | 'notes-finance';
+
 export type RouteSeo = {
   path: string;
   priority: string;
@@ -7,10 +11,69 @@ export type RouteSeo = {
   sitemap?: boolean;
   title: Record<SeoLanguage, string>;
   desc: Record<SeoLanguage, string>;
+  /**
+   * Route-level freshness. Wiki and Notes routes take their dates from the Markdown
+   * frontmatter instead (see `seo-prerender.ts`), so they leave these unset.
+   * `dateModified` is the last date the crawlable content of that route changed.
+   */
+  datePublished?: string;
+  dateModified?: string;
+  /** Share image family; defaults to `site` (`og-image.jpg`). Files live in `public/og/`. */
+  og?: OgImageKey;
 };
 
-/** All route HTML was materially regenerated on this date. Update when SEO-visible content changes. */
-export const SITE_CONTENT_LASTMOD = '2026-08-19';
+/**
+ * Fallback freshness date for routes without their own `dateModified`, and the
+ * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
+ */
+export const SITE_CONTENT_LASTMOD = '2026-09-15';
+
+/** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
+export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
+  site: {
+    file: 'og-image.jpg',
+    alt: {
+      en: 'Eden Tan — Systems Architect and Digital Strategist; portfolio share preview (1200×630).',
+      zh: 'Eden Tan 个人站分享预览图：系统架构与数字战略（1200×630）。',
+    },
+  },
+  jiju: {
+    file: 'og/jiju.jpg',
+    alt: { en: 'Jiju: a cat explorer with a map and compass in a lantern-lit alley.', zh: 'Jiju：提灯小巷里拿着地图与罗盘的探险猫。' },
+  },
+  etreporthub: {
+    file: 'og/etreporthub.jpg',
+    alt: { en: 'ETReportHub daily report dashboard banner.', zh: 'ETReportHub 日报数据系统横幅。' },
+  },
+  'dr-racing': {
+    file: 'og/dr-racing.jpg',
+    alt: { en: 'Dr Racing motorcycle loan dashboard banner.', zh: 'Dr Racing 摩托车贷款仪表台横幅。' },
+  },
+  poker: {
+    file: 'og/poker.jpg',
+    alt: { en: 'Friday Poker Club: a private browser Hold’em table.', zh: 'Friday Poker Club：熟人局的浏览器德州牌桌。' },
+  },
+  'film-gallery': {
+    file: 'og/film-gallery.jpg',
+    alt: { en: 'Film Gallery: Kodak Gold film photographs by Eden Tan.', zh: 'Film Gallery：Eden Tan 的 Kodak Gold 胶片照片。' },
+  },
+  'life-os': {
+    file: 'og/life-os.jpg',
+    alt: { en: 'Life OS: a long-term personal base map banner.', zh: 'Life OS：长期个人底图横幅。' },
+  },
+  conway: {
+    file: 'og/conway.jpg',
+    alt: { en: 'Conway’s Game of Life and the bagua pyramid banner.', zh: 'Conway 生命游戏与八卦金字塔横幅。' },
+  },
+  notes: {
+    file: 'og/notes.jpg',
+    alt: { en: 'Eden Tan, photographed on film — Notes and essays.', zh: '胶片里的 Eden Tan：Notes 与文章。' },
+  },
+  'notes-finance': {
+    file: 'og/notes-finance.jpg',
+    alt: { en: 'Falling banknotes — essays on money, debt, and value.', zh: '飘落的钞票：关于钱、债务与价值的文章。' },
+  },
+};
 
 export const HOME_TITLE: Record<SeoLanguage, string> = {
   en: 'Eden Tan | Build systems from chaos.',
@@ -25,12 +88,14 @@ export const HOME_DESC: Record<SeoLanguage, string> = {
 export const ROUTE_SEO: RouteSeo[] = [
   {
     path: '/',
+    datePublished: '2026-04-15',
     priority: '1',
     title: HOME_TITLE,
     desc: HOME_DESC,
   },
   {
     path: '/icon-prompts',
+    datePublished: '2026-07-21',
     priority: '0.1',
     index: false,
     sitemap: false,
@@ -45,6 +110,9 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/jiju-pet',
+    datePublished: '2026-06-03',
+    dateModified: '2026-09-14',
+    og: 'jiju',
     priority: '0.8',
     title: {
       en: 'Jiju | Trusted pet-friendly local discovery',
@@ -57,6 +125,9 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/jiju-revamp',
+    datePublished: '2026-06-29',
+    dateModified: '2026-09-14',
+    og: 'jiju',
     priority: '0.7',
     title: {
       en: 'Jiju.pet revamp | From pet-friendly to local discovery',
@@ -69,6 +140,8 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/project',
+    datePublished: '2026-08-13',
+    dateModified: '2026-09-14',
     priority: '0.9',
     title: {
       en: 'Projects | Eden Tan',
@@ -81,6 +154,7 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/project-css',
+    datePublished: '2026-06-24',
     priority: '0.5',
     index: false,
     sitemap: false,
@@ -95,6 +169,9 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/etreporthub',
+    datePublished: '2026-06-05',
+    dateModified: '2026-09-14',
+    og: 'etreporthub',
     priority: '0.8',
     title: {
       en: 'ETReportHub | Daily Report OS by Eden Tan',
@@ -107,6 +184,9 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/etreporthub-sales',
+    datePublished: '2026-06-05',
+    dateModified: '2026-09-14',
+    og: 'etreporthub',
     priority: '0.8',
     title: {
       en: 'ETReportHub Pricing | RM4,890 launch package',
@@ -119,6 +199,9 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/dr-racing',
+    datePublished: '2026-08-20',
+    dateModified: '2026-09-14',
+    og: 'dr-racing',
     priority: '0.8',
     title: {
       en: 'Dr Racing | Motorcycle Loan Dashboard by Eden Tan',
@@ -131,6 +214,9 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/poker',
+    datePublished: '2026-06-05',
+    dateModified: '2026-09-14',
+    og: 'poker',
     priority: '0.8',
     title: {
       en: 'Friday Poker Club | Browser Hold’em table host by Eden Tan',
@@ -143,6 +229,8 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/wiki',
+    dateModified: '2026-09-14',
+    datePublished: '2026-06-24',
     priority: '0.7',
     title: {
       en: 'Eden Knowledge Base | Reusable build skills',
@@ -155,6 +243,7 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/wiki/vite',
+    og: 'poker',
     priority: '0.6',
     title: {
       en: 'Practical Vite Skills | Friday Poker Club',
@@ -167,6 +256,7 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/wiki/background-music',
+    og: 'poker',
     priority: '0.6',
     title: {
       en: 'Background Music UX | Friday Poker Club',
@@ -179,6 +269,7 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/wiki/button-feedback',
+    og: 'poker',
     priority: '0.6',
     title: {
       en: 'Button Feedback UX | Friday Poker Club',
@@ -191,6 +282,7 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/wiki/firebase-lifetime-storage',
+    og: 'poker',
     priority: '0.6',
     title: {
       en: 'Firebase Lifetime Storage | Friday Poker Club',
@@ -203,6 +295,7 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/wiki/skills',
+    og: 'poker',
     priority: '0.6',
     title: {
       en: 'Friday Poker Club Skills Map | Eden Tan',
@@ -227,6 +320,9 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/film-gallery',
+    datePublished: '2026-07-21',
+    dateModified: '2026-09-14',
+    og: 'film-gallery',
     priority: '0.8',
     title: {
       en: 'Film Gallery | Eden Tan',
@@ -239,6 +335,7 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/notes',
+    datePublished: '2026-07-21',
     priority: '0.8',
     title: {
       en: 'Notes | Essays and build notes by Eden Tan',
@@ -251,60 +348,70 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/notes/korea-2026-crash',
+    og: 'notes-finance',
     priority: '0.7',
     title: { en: 'Korea\'s 2026 market crash | Eden Tan', zh: '「疯牛」撞墙：韩国股市 2026 | Eden Tan' },
     desc: { en: 'Korea\'s market nearly doubled, then suffered a record monthly fall while exports hit a high—a lesson in why price and value differ.', zh: '韩国股市半年翻倍后又创下史上最大单月跌幅，而同月出口却创新高。一堂关于「价格不等于价值」的公开课。' },
   },
   {
     path: '/notes/mbi-case',
+    og: 'notes-finance',
     priority: '0.7',
     title: { en: 'MBI and the coin that “only goes up” | Eden Tan', zh: '旧骗局，新外衣：MBI 与那枚「会一直涨」的币 | Eden Tan' },
     desc: { en: 'How Penang\'s MBI dressed a coin-and-recruit money game as an O2O tech company—and the three questions that expose a Ponzi scheme.', zh: '槟城 MBI 把「虚拟币＋拉人头」的 money game 包装成 O2O 科技公司。戳穿任何庞氏骗局的三个老问题，照样一戳就破——不管外衣换成什么加密币新词。' },
   },
   {
     path: '/notes/carrian-case',
+    og: 'notes-finance',
     priority: '0.7',
     title: { en: 'The Carrian fraud case | Eden Tan', zh: '一座建在借来的钱上的帝国：佳宁案 | Eden Tan' },
     desc: { en: 'The Carrian fraud as a lesson in mistaking “looks rich” for real value: a borrowed-money empire, an auditor\'s murder, and a bank in crisis.', zh: '用 1980 年代佳宁案讲一个道理：把「看起来有钱」当成「真的有价值」的错觉——两百多家公司的帝国建在借来的钱上，一名核数师被杀，一家国家银行几近崩溃。' },
   },
   {
     path: '/notes/modern-finance-ponzi',
+    og: 'notes-finance',
     priority: '0.7',
     title: { en: 'Is modern finance a Ponzi scheme? | Eden Tan', zh: '现代金融是庞氏骗局吗 | Eden Tan' },
     desc: { en: 'A first-principles comparison of Ponzi schemes, modern money, and debt—and whether debt grows faster than future productive capacity.', zh: '把「庞氏骗局」拆开，逐条对照现代货币与债务：它只沾了一条，真正该问的是债务是否涨得比未来能做出的真东西还快。' },
   },
   {
     path: '/notes/what-is-wealth',
+    og: 'notes-finance',
     priority: '0.7',
     title: { en: 'What is wealth, really? | Eden Tan', zh: '财富到底是什么 | Eden Tan' },
     desc: { en: 'A first-principles essay on wealth: money is a ledger, debt sells the future, and wealth may mean control over productive capacity.', zh: '一篇第一性原理长文，把「财富」拆到底：钱只是记账，债务卖的是未来，而未来的财富可能等于你能控制多少生产能力。' },
   },
   {
     path: '/notes/turn-chaos-into-systems',
+    og: 'notes',
     priority: '0.7',
     title: { en: 'Turn chaos into systems | Eden Tan', zh: '把混乱变成系统 | Eden Tan' },
     desc: { en: 'Why the value of a system is not automation itself, but making repeated confusion unnecessary.', zh: 'System 的价值不是 automation 本身，而是让同一种混乱不需要发生第二次。' },
   },
   {
     path: '/notes/judgment-is-not-more-information',
+    og: 'notes',
     priority: '0.7',
     title: { en: 'Judgment is not knowing more | Eden Tan', zh: '判断不是知道更多 | Eden Tan' },
     desc: { en: 'More data does not automatically create better decisions. Judgment begins by deciding what matters.', zh: '更多 data 不会自动带来更好的决定。判断从决定什么才重要开始。' },
   },
   {
     path: '/notes/human-nature-is-a-design-condition',
+    og: 'notes',
     priority: '0.7',
     title: { en: 'Human nature is a design condition | Eden Tan', zh: '人性不是借口，是设计条件 | Eden Tan' },
     desc: { en: 'Good products and systems are designed for real human behavior, not ideal users.', zh: '好的产品与系统应该设计在真实人性上，而不是只适合理想中的用户。' },
   },
   {
     path: '/notes/win-before-you-fight',
+    og: 'notes',
     priority: '0.7',
     title: { en: 'Win before you fight | Eden Tan', zh: '先胜后战 | Eden Tan' },
     desc: { en: 'Strategy is deciding which battlefield deserves your effort before entering it.', zh: 'Strategy 是在行动之前先决定，哪个 battlefield 值得你用力。' },
   },
   {
     path: '/life',
+    datePublished: '2026-06-03',
     priority: '0.8',
     index: false,
     sitemap: false,
@@ -319,6 +426,9 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/life-os',
+    datePublished: '2026-06-03',
+    dateModified: '2026-09-15',
+    og: 'life-os',
     priority: '0.8',
     title: {
       en: 'Life OS | Build the long-term base map, then ask about now',
@@ -331,6 +441,8 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/brand-guide',
+    datePublished: '2026-06-03',
+    dateModified: '2026-09-14',
     priority: '0.8',
     title: {
       en: 'Brand Guide | Visual, voice, layout, and motion rules',
@@ -343,6 +455,7 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/topics',
+    datePublished: '2026-06-29',
     priority: '0.7',
     index: false,
     sitemap: false,
@@ -357,6 +470,8 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/penneys-game',
+    datePublished: '2026-08-13',
+    dateModified: '2026-09-14',
     priority: '0.6',
     title: {
       en: "Penney's Game | Non-transitive coin game",
@@ -369,6 +484,9 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/conways-game-of-life',
+    datePublished: '2026-06-05',
+    dateModified: '2026-08-19',
+    og: 'conway',
     priority: '0.8',
     title: {
       en: "Conway's Game of Life | Interactive B3/S23 Life Board",
@@ -381,6 +499,9 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/cellular-automata-lab',
+    datePublished: '2026-07-21',
+    dateModified: '2026-09-14',
+    og: 'conway',
     priority: '0.7',
     title: {
       en: 'Cellular Automata Lab | 256 Elementary Rules',
@@ -393,6 +514,8 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/archive/11-bonus-key-combo-builder',
+    datePublished: '2026-06-03',
+    dateModified: '2026-09-14',
     priority: '0.7',
     title: {
       en: '1+1 Bonus Key Combo Builder | Eden Tan',
@@ -405,6 +528,8 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/archive/atlantis-ui-ux-prototype',
+    datePublished: '2026-06-03',
+    dateModified: '2026-09-14',
     priority: '0.7',
     title: {
       en: 'Atlantis Website UI/UX Prototype | Eden Tan',
@@ -417,6 +542,8 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/archive/soccerking-project',
+    datePublished: '2026-06-03',
+    dateModified: '2026-09-14',
     priority: '0.7',
     title: {
       en: 'Soccerking Social Content Project | Eden Tan',

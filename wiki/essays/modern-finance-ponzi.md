@@ -2,7 +2,9 @@
 id: modern-finance-ponzi
 type: essay
 route: /notes/modern-finance-ponzi
-order: 4
+order: 5
+published: 2026-07-27
+updated: 2026-08-14
 status: published
 ---
 

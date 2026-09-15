@@ -2,7 +2,9 @@
 id: judgment-is-not-more-information
 type: essay
 route: /notes/judgment-is-not-more-information
-order: 7
+order: 8
+published: 2026-07-21
+updated: 2026-08-14
 status: published
 ---
 

@@ -53,6 +53,8 @@ import {
   Layers,
   MapPin,
   ArrowLeft,
+  ArrowUpRight,
+  ArrowDownRight,
   ArrowRight,
   Clock3,
   Copy,
@@ -4712,15 +4714,13 @@ const createSkillDraftFromWikiEntry = (entry: WikiEntry, language: Language, sou
 const WikiPage: React.FC<{
   entry?: WikiEntry;
   homeHref: string;
-  projectsHref: string;
-  pokerHref: string;
   baseUrl: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
   themePreference: ThemePreference;
   theme: Theme;
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
-}> = ({ entry, homeHref, projectsHref, pokerHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
+}> = ({ entry, homeHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
   const wikiHref = joinBasePath(baseUrl, 'wiki');
   const notesHref = joinBasePath(baseUrl, 'notes');
@@ -4750,9 +4750,9 @@ const WikiPage: React.FC<{
         <main className="notes-article-main">
           <div className="notes-article-island">
             <div className="notes-topbar">
-              <a href={notesHref} className="notes-back-link">
+              <a href={wikiHref} className="notes-back-link">
                 <ArrowLeft size={17} />
-                {isZh ? '返回 Notes' : 'Back to Notes'}
+                {isZh ? '返回知识库' : 'Back to Wiki'}
               </a>
               <HeaderControls
                 language={language}
@@ -4806,13 +4806,13 @@ const WikiPage: React.FC<{
   }
 
   return (
-    <div className="page-shell etreport-page poker-page wiki-page poker-wiki-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
-      <main className="px-5 py-8 md:px-8 md:py-10">
-        <div className="mx-auto max-w-5xl">
+    <div className={`page-shell wiki-page min-h-screen ${entry ? "etreport-page poker-page poker-wiki-page" : "wiki-index-page"}`}>
+      <main className="wiki-main px-5 py-8 md:px-8 md:py-10">
+        <div className="wiki-island mx-auto max-w-5xl">
           <div className="etreport-topbar flex flex-wrap items-center justify-between gap-3">
-            <a href={pokerHref} className="etreport-back-link inline-flex items-center gap-2 text-sm font-medium">
+            <a href={entry ? wikiHref : homeHref} className="wiki-back-link inline-flex items-center gap-2 text-sm font-medium">
               <ArrowLeft size={16} />
-              {isZh ? '返回 Poker page' : 'Back to Poker page'}
+              {entry ? (isZh ? '返回知识库' : 'Back to Wiki') : (isZh ? '返回首页' : 'Back home')}
             </a>
             <HeaderControls
               language={language}
@@ -4823,31 +4823,15 @@ const WikiPage: React.FC<{
             />
           </div>
 
-          <header className="etreport-hero poker-wiki-hero py-16 text-center md:py-24">
-            <p className="etreport-kicker mx-auto">
-              {entry ? entry.eyebrow[language] : isZh ? 'Eden Knowledge Base' : 'Eden Knowledge Base'}
+          <header className="wiki-hero">
+            <p className="wiki-eyebrow">{entry ? entry.eyebrow[language] : 'EDEN / WIKI'}</p>
+            <h1>{entry ? entry.title[language] : isZh ? <>让经验，<br />成为下一次的起点。</> : <>A little wiser.<br />With every build.</>}</h1>
+            <p className="wiki-hero-copy">
+              {entry ? entry.summary[language] : isZh
+                ? '构建时遇到的问题，解决后留下的方法。把散落在项目里的经验，整理成可以反复使用的知识。'
+                : 'Problems met while building. Methods kept after solving them. A growing collection of knowledge to carry into the next project.'}
             </p>
-            <h1 className="etreport-title mx-auto mt-5 font-display font-bold tracking-tight">
-              {entry ? entry.title[language] : isZh ? '把项目经验做成可复用知识库。' : 'Turning project experience into reusable knowledge.'}
-            </h1>
-            <p className="etreport-subtitle mx-auto mt-5">
-              {entry
-                ? entry.summary[language]
-                : isZh
-                  ? '这里记录多个项目里真正可复用的东西：Vite 构建经验、声音体验、按钮反馈、Firebase lifetime storage，以及这些东西如何变成 skills。'
-                  : 'A place for reusable knowledge across projects: Vite build practice, sound experience, button feedback, Firebase lifetime storage, and the skills behind them.'}
-            </p>
-            <div className="mt-7 flex flex-wrap justify-center gap-5">
-              <a href={wikiHref} className="etreport-text-cta">
-                {isZh ? '知识库总览' : 'Knowledge index'} <span aria-hidden>›</span>
-              </a>
-              <a href={projectsHref} className="etreport-text-cta etreport-text-cta-muted">
-                {isZh ? '回主页' : 'Back home'} <span aria-hidden>›</span>
-              </a>
-              <a href={homeHref} className="etreport-text-cta etreport-text-cta-muted">
-                {isZh ? '回主页' : 'Back home'} <span aria-hidden>›</span>
-              </a>
-            </div>
+            {!entry && <a className="wiki-text-link" href="#wiki-library">{isZh ? '浏览知识库' : 'Explore the library'} <ArrowDownRight size={17} aria-hidden="true" /></a>}
           </header>
 
           {entry ? (
@@ -4993,30 +4977,38 @@ const WikiPage: React.FC<{
               )}
             </article>
           ) : (
-            <section className="etreport-section pb-20">
-              <div className="poker-wiki-index-panel">
-                <div>
-                  <p className="etreport-kicker">{isZh ? 'Wiki operating model' : 'Wiki operating model'}</p>
-                  <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
-                    {isZh ? '从一次 build，变成长期记忆。' : 'From one build into long-term memory.'}
-                  </h2>
-                </div>
-                <p>
-                  {isZh
-                    ? '这不是把项目写成展示页，而是把“学到什么、为什么重要、下次怎么复用”存成可回看的页面。以后每个项目都可以这样变成自己的知识库。'
-                    : 'This is not just a project showcase. It stores what was learned, why it matters, and how to reuse it next time. Every future project can become part of the same personal knowledge base.'}
-                </p>
+            <section className="wiki-library" id="wiki-library" aria-labelledby="wiki-library-title">
+              <div className="wiki-library-heading">
+                <h2 id="wiki-library-title">{isZh ? '构建中的知识' : 'Knowledge from the work'}</h2>
+                <span>{String(wikiEntries.length).padStart(2, '0')} {isZh ? '篇笔记' : 'notes'}</span>
               </div>
-              <div className="poker-wiki-grid mt-12">
-                {wikiEntries.map((item) => (
-                  <a key={item.slug} href={joinBasePath(baseUrl, `wiki/${item.slug}`)} className={`poker-wiki-card ${getWikiToneClassName(item.slug)}`}>
-                    <WikiEntryVisual entry={item} language={language} />
-                    <span className="poker-wiki-eyebrow">{item.eyebrow[language]}</span>
-                    <h3 className="poker-wiki-card-title">{item.title[language]}</h3>
+              <div className="wiki-entry-grid">
+                {wikiEntries.map((item, index) => (
+                  <a key={item.slug} href={joinBasePath(baseUrl, `wiki/${item.slug}`)} className="wiki-entry">
+                    <div className="wiki-entry-meta">
+                      <span>{String(index + 1).padStart(2, '0')} / {item.eyebrow[language]}</span>
+                      <div className="wiki-entry-icon" aria-hidden="true"><WikiEntryVisual entry={item} language={language} /></div>
+                    </div>
+                    <h3>{item.title[language]}</h3>
                     <p>{item.summary[language]}</p>
-                    <span className="poker-wiki-link">{isZh ? '打开笔记' : 'Open note'} <span aria-hidden>›</span></span>
+                    <span className="wiki-entry-link">{isZh ? '阅读笔记' : 'Read note'} <ArrowUpRight size={17} aria-hidden="true" /></span>
                   </a>
                 ))}
+              </div>
+              <div className="wiki-colophon">
+                <div>
+                  <p className="wiki-eyebrow">{isZh ? '持续积累' : 'A growing body of knowledge'}</p>
+                  <h2>{isZh ? '做过的事，留下可用的东西。' : 'Keep what the work teaches you.'}</h2>
+                </div>
+                <div>
+                  <p>{isZh
+                    ? '每篇笔记保留学到了什么、为什么重要、下次怎么复用。原始资料保持不变，Wiki 由 LLM 持续整理，经过检查的方法再成为可执行的 Skill。'
+                    : 'Each note keeps what was learned, why it matters, and how to reuse it. Original sources stay intact; the LLM maintains the wiki. Checked methods can become executable skills.'}</p>
+                  <div className="wiki-footer-links">
+                    <a className="wiki-text-link" href={notesHref}>{isZh ? '阅读 Notes' : 'Read Notes'} <ArrowUpRight size={16} aria-hidden="true" /></a>
+                    <a className="wiki-text-link" href={joinBasePath(baseUrl, 'project')}>{isZh ? '探索项目' : 'Explore projects'} <ArrowUpRight size={16} aria-hidden="true" /></a>
+                  </div>
+                </div>
               </div>
               {isSkillsIndex && skillDrafts.length > 0 && (
                 <div className="wiki-skill-library">
@@ -7312,7 +7304,7 @@ const LifeOsFullPage: React.FC<{
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
 }> = ({ homeHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
-  const appUrl = 'https://edent95.github.io/LifeOs/';
+  const appUrl = 'https://life-os-eden95.web.app/';
 
   return (
     <ProductStorePage
@@ -7333,7 +7325,7 @@ const LifeOsFullPage: React.FC<{
       ]}
       stage={{
         src: appUrl,
-        domain: 'edent95.github.io/LifeOs',
+        domain: 'life-os-eden95.web.app',
         title: { en: 'Interactive Life OS star map', zh: 'Life OS 互动星图' },
         caption: { en: 'The live app, running right here. Open it in a new tab to build your own base map.', zh: '真实应用直接跑在这里。想建立自己的底图，就在新标签打开。' },
       }}
@@ -9847,6 +9839,37 @@ const ProjectHomePage: React.FC<{
   );
 };
 
+/**
+ * Unknown paths used to fall through to the homepage, which made every typo a soft 404
+ * (200 + homepage HTML + homepage canonical). GitHub Pages already serves a real 404 for
+ * clean unregistered paths; this view covers the `/?p=` SPA shim and in-app navigation.
+ */
+const NotFoundPage: React.FC<{ homeHref: string; baseUrl: string; language: Language; pathWithoutBase: string }> = ({
+  homeHref,
+  baseUrl,
+  language,
+  pathWithoutBase,
+}) => (
+  <div className="page-shell not-found-page">
+    <main className="not-found-island">
+      <p className="not-found-kicker">404</p>
+      <h1>{language === 'zh' ? '这个页面不存在' : 'This page does not exist'}</h1>
+      <p className="not-found-path">{pathWithoutBase}</p>
+      <p>
+        {language === 'zh'
+          ? '路径可能拼错了，或者这一页已经移走。下面几个入口可以继续。'
+          : 'The path may be misspelled, or the page has moved. These entry points still work.'}
+      </p>
+      <ul className="not-found-links">
+        <li><a href={homeHref}>{language === 'zh' ? '主页' : 'Home'}</a></li>
+        <li><a href={joinBasePath(baseUrl, 'project')}>{language === 'zh' ? '作品' : 'Projects'}</a></li>
+        <li><a href={joinBasePath(baseUrl, 'notes')}>Notes</a></li>
+        <li><a href={joinBasePath(baseUrl, 'wiki')}>Wiki</a></li>
+      </ul>
+    </main>
+  </div>
+);
+
 const IconPromptsPage: React.FC<{ homeHref: string }> = ({ homeHref }) => {
   const [copied, setCopied] = React.useState<string | null>(null);
   const [activeProductId, setActiveProductId] = React.useState(iconPromptProducts[0].id);
@@ -10192,6 +10215,7 @@ const App: React.FC = () => {
     : '';
   const activeArchivedWork = archivedWorks.find((item) => item.slug === archivedWorkSlug);
   const seoPath = pathWithoutBase === '/analog-tech' ? '/film-gallery' : pathWithoutBase;
+  const isHomePath = pathWithoutBase === '' || pathWithoutBase === '/';
 
   React.useEffect(() => {
     applyPageSeo(seoPath, language, activeArchivedWork);
@@ -10305,8 +10329,6 @@ const App: React.FC = () => {
       <WikiPage
         entry={activeWikiEntry}
         homeHref={homeHref}
-        projectsHref={projectsHref}
-        pokerHref={pokerHref}
         baseUrl={baseUrl}
         language={language}
         setLanguage={setLanguage}
@@ -10504,6 +10526,10 @@ const App: React.FC = () => {
         setThemePreference={setThemePreference}
       />
     );
+  }
+
+  if (!isHomePath && !routeSeoForPath(pathWithoutBase)) {
+    return <NotFoundPage homeHref={homeHref} baseUrl={baseUrl} language={language} pathWithoutBase={pathWithoutBase} />;
   }
 
   return (
