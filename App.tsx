@@ -7304,7 +7304,7 @@ const LifeOsFullPage: React.FC<{
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
 }> = ({ homeHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
-  const appUrl = 'https://edent95.github.io/LifeOs/';
+  const appUrl = 'https://life-os-eden95.web.app/';
 
   return (
     <ProductStorePage
@@ -7325,7 +7325,7 @@ const LifeOsFullPage: React.FC<{
       ]}
       stage={{
         src: appUrl,
-        domain: 'edent95.github.io/LifeOs',
+        domain: 'life-os-eden95.web.app',
         title: { en: 'Interactive Life OS star map', zh: 'Life OS 互动星图' },
         caption: { en: 'The live app, running right here. Open it in a new tab to build your own base map.', zh: '真实应用直接跑在这里。想建立自己的底图，就在新标签打开。' },
       }}
