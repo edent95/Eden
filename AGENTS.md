@@ -254,7 +254,7 @@ Operating rule:
 
 ### Story Style (for any story log: poker table, life, everyday moments)
 
-Defined in `/brand-guide` section `06 / Story style`. Reference implementation: `/poker` Story log. Rules:
+Defined in `/brand-guide` section `09 / Story content`. Reference implementation: `/poker` Story log. Rules:
 
 - Log the moment, not the score. Record what is worth retelling, not wins/brags.
 - Only what really happened. Polish pacing and imagery, never invent events.

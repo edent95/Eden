@@ -23,6 +23,10 @@ import {
   projectCssArtItems,
 } from './css-art.registry';
 import {
+  EngravedBorder,
+  EngravedEye,
+  EngravedHatchScale,
+  EngravedRosette,
   FilmGalleryCssIcon,
   HomeArchiveEvolutionTotem,
   HomeBaguaMirrorTotem,
@@ -6636,8 +6640,8 @@ const brandGuidePrinciples = [
   {
     title: { en: 'Depth', zh: '层级' },
     copy: {
-      en: 'Use size, space, and real visuals.',
-      zh: '用尺寸、留白和真实视觉。',
+      en: 'Use size, space, and line density.',
+      zh: '用尺寸、留白和线条疏密。',
     },
   },
   {
@@ -6799,6 +6803,58 @@ const brandGuideAccent = [
   },
 ] as const;
 
+const brandGuideEngravedRules = [
+  {
+    title: { en: 'Tone comes from line density', zh: '明暗来自线的疏密' },
+    copy: {
+      en: 'Paper, single hatch, cross hatch, dense cross hatch. No soft gradients for shading.',
+      zh: '留白、单向排线、交叉排线、加密交叉排线；不用柔和渐变做阴影。',
+    },
+  },
+  {
+    title: { en: 'Order comes from guilloché', zh: '秩序来自扭索纹' },
+    copy: {
+      en: 'Offset ring families, rosettes, and chain borders give every piece a symmetric, continuous frame.',
+      zh: '偏心环纹、玫瑰饰和链状花边，让每张图都有对称、连续的外框。',
+    },
+  },
+  {
+    title: { en: 'One ink per piece', zh: '一张图一种墨' },
+    copy: {
+      en: 'Ink green, rose brown, bronze, violet, teal, or indigo on a pale paper. Dark theme turns the plate dark and the lines bronze gold.',
+      zh: '墨绿、玫瑰棕、古铜、紫、青或靛蓝，配浅色纸；深色主题换成深色版面、古铜金线。',
+    },
+  },
+  {
+    title: { en: 'Golden ratio placement', zh: '黄金比例定位' },
+    copy: {
+      en: 'Put the focal symbol on a 38.2% / 61.8% line and let a Fibonacci spiral converge on it. Radii grow by 1.618.',
+      zh: '主体落在 38.2% / 61.8% 线上，斐波那契螺旋收敛到它；半径按 1.618 递增。',
+    },
+  },
+  {
+    title: { en: 'Symbols, not people', zh: '画符号，不画人' },
+    copy: {
+      en: 'Use objects and ancient symbols such as the Eye of Horus, lotus, ankh, scales, or scarab. No faces, no text inside the art.',
+      zh: '用器物与古代符号，例如荷鲁斯之眼、莲花、安卡、天平、圣甲虫；不画脸，图里不放文字。',
+    },
+  },
+  {
+    title: { en: 'Double rules frame everything', zh: '一切都用双线框住' },
+    copy: {
+      en: 'Cards, medals, and tickets use an outer hairline, a paper gap, and an inner hairline.',
+      zh: '卡片、圆章、票券都用「外细线 + 纸色间隔 + 内细线」。',
+    },
+  },
+] as const;
+
+const brandGuideEngravedSpecimens = [
+  { id: 'hatch', tone: 'ink', title: { en: 'Hatching scale', zh: '排线明暗阶' }, copy: { en: 'Four steps of tone from line density alone.', zh: '只靠线的疏密做出四档明暗。' } },
+  { id: 'rosette', tone: 'rose', title: { en: 'Guilloché rosette', zh: '扭索纹玫瑰' }, copy: { en: 'Offset rings turning slowly around a double-rule medal.', zh: '偏心环纹围着双线圆章慢慢转。' } },
+  { id: 'eye', tone: 'bronze', title: { en: 'Engraved symbol', zh: '凹版符号' }, copy: { en: 'The Eye of Horus drawn with hatching and rules only.', zh: '只用排线与双线画成的荷鲁斯之眼。' } },
+  { id: 'border', tone: 'indigo', title: { en: 'Banknote border', zh: '钞票花边' }, copy: { en: 'Chain border, corner rosettes, and a golden-rectangle construction.', zh: '链状花边、角饰玫瑰与黄金矩形构造线。' } },
+] as const;
+
 const brandGuideTypography = [
   {
     name: 'MiSans',
@@ -6847,8 +6903,8 @@ const brandGuideRhythm = [
   {
     title: { en: 'Grids', zh: '网格' },
     copy: {
-      en: 'Editorial grids use 2 / 1 columns. The Home media shelf uses 4 / 2 / 1.',
-      zh: '内容网格用 2 / 1 栏；首页媒体入口用 4 / 2 / 1 栏。',
+      en: 'Editorial grids use 2 / 1 columns. The Home media collage uses two drifting rows.',
+      zh: '内容网格用 2 / 1 栏；首页媒体拼贴用两行反向漂移。',
     },
   },
   {
@@ -6943,12 +6999,20 @@ const brandGuideLayoutNumbers = [
     label: { en: 'Home media banner aspect ratio.', zh: '首页媒体 banner 固定比例。' },
   },
   {
-    value: { en: '4 / 2 / 1', zh: '4 / 2 / 1' },
-    label: { en: 'Home media columns: desktop / tablet / mobile.', zh: '首页媒体栏数：桌面 / 平板 / 手机。' },
+    value: { en: '4 + 5', zh: '4 + 5' },
+    label: { en: 'Home collage: two rows drifting in opposite directions.', zh: '首页拼贴：两行，反向漂移。' },
   },
   {
-    value: { en: '1480px', zh: '1480px' },
-    label: { en: 'Home media shelf maximum width.', zh: '首页媒体入口最大宽度。' },
+    value: { en: '220–460px', zh: '220–460px' },
+    label: { en: 'Home collage card width (clamp 30vw), 12px gap, 16px radius.', zh: '首页拼贴卡片宽度（clamp 30vw），间距 12px，圆角 16px。' },
+  },
+  {
+    value: { en: '1 : 1.618', zh: '1 : 1.618' },
+    label: { en: 'Golden ratio for engraved art: focal point on the 38.2% / 61.8% lines.', zh: '凹版插画的黄金比例：主体落在 38.2% / 61.8% 线上。' },
+  },
+  {
+    value: { en: '0.16–0.2cqi', zh: '0.16–0.2cqi' },
+    label: { en: 'Engraved hatch line width; scales with the art container.', zh: '凹版排线线宽，随画框缩放。' },
   },
   {
     value: { en: '40px', zh: '40px' },
@@ -6984,8 +7048,8 @@ const brandGuideUseCases = [
   {
     title: { en: 'Home', zh: 'Home' },
     copy: {
-      en: 'Lead with the point of view. Then use six material-backed 16:9 doors into products, systems, and lived work.',
-      zh: '先说清观点，再用 6 个有真实素材的 16:9 入口，带人进入产品、系统与真实经历。',
+      en: 'Lead with the point of view. Then a drifting collage of nine material-backed 16:9 doors into products, systems, and lived work.',
+      zh: '先说清观点，再用 9 个有真实素材、缓慢漂移的 16:9 入口，带人进入产品、系统与真实经历。',
     },
   },
   {
@@ -7012,10 +7076,10 @@ const brandGuideUseCases = [
 
 const brandGuideHomeMediaRules = [
   {
-    title: { en: 'Six live doors', zh: '6 个真实入口' },
+    title: { en: 'Nine live doors', zh: '9 个真实入口' },
     copy: {
-      en: 'The current Home shelf contains six active destinations. Do not ship a placeholder card.',
-      zh: '当前首页有 6 个可进入的目标。没有真实素材，就不要上线 placeholder 卡片。',
+      en: 'The Home collage holds nine active destinations. Do not ship a placeholder card.',
+      zh: '首页拼贴有 9 个可进入的目标。没有真实素材，就不要上线 placeholder 卡片。',
     },
   },
   {
@@ -7026,36 +7090,43 @@ const brandGuideHomeMediaRules = [
     },
   },
   {
-    title: { en: 'One responsive ratio', zh: '统一响应式比例' },
+    title: { en: 'Two rows, opposite drift', zh: '两行，反向漂移' },
     copy: {
-      en: 'Keep every card at 16:9. Use 4 / 2 / 1 columns, a 1480px cap, and 12px desktop gaps.',
-      zh: '所有卡片保持 16:9；使用 4 / 2 / 1 栏、1480px 上限与 12px 桌面间距。',
+      en: 'Four cards on top, five below, drifting left and right on a 58s loop. Every card stays 16:9.',
+      zh: '上行 4 张、下行 5 张，一左一右以 58 秒循环漂移；所有卡片保持 16:9。',
+    },
+  },
+  {
+    title: { en: 'Hover and focus pause', zh: '悬停与聚焦即暂停' },
+    copy: {
+      en: 'The drift stops on hover or keyboard focus so a card can be read and clicked. Reduced motion shows a still row.',
+      zh: '鼠标悬停或键盘聚焦时停止漂移，卡片才读得清、点得到；reduced motion 时整行静止。',
     },
   },
   {
     title: { en: 'Action replaces labels', zh: '行动取代标签' },
     copy: {
-      en: 'Linked banners reveal one centered white CTA. No tag, title, or description sits on the banner surface.',
-      zh: '可点击 banner 只显示一个居中的白色 CTA；画面上不放 tag、title 或 description。',
+      en: 'Linked cards reveal one centered white CTA. No tag, title, or description sits on the card surface.',
+      zh: '可点击卡片只显示一个居中的白色 CTA；画面上不放 tag、title 或 description。',
     },
   },
   {
-    title: { en: 'Loops stay quiet', zh: '循环视频保持安静' },
+    title: { en: 'Videos play only when visible', zh: '视频只在可见时播放' },
     copy: {
-      en: 'Background videos are short, muted, looping, inline, and paired with a poster. Reduced motion falls back to the poster.',
-      zh: '背景视频要短、静音、循环、内联，并配 poster；reduced motion 时回到静态 poster。',
-    },
-  },
-  {
-    title: { en: 'Viewing is intentional', zh: '完整观看要主动触发' },
-    copy: {
-      en: 'Long-form video with sound opens from an explicit Watch now action. It never autoplays inside the shelf.',
-      zh: '带声音的完整影片由明确的“立即观看”触发，不在媒体入口中自动播放。',
+      en: 'Loops are short, muted, inline, and paired with a poster. They pause once they drift out of view.',
+      zh: '循环视频要短、静音、内联并配 poster；漂出视口后暂停。',
     },
   },
 ] as const;
 
 const brandGuideAssetRules = [
+  {
+    title: { en: 'Engraving is the illustration default', zh: '插画默认用凹版语言' },
+    copy: {
+      en: 'Icons, product art, and in-app illustrations use the engraved line language. No photo-real renders, no people.',
+      zh: '图标、产品插画与应用内插图默认用凹版线条语言；不用写实渲染，不画人。',
+    },
+  },
   {
     title: { en: 'App icons are framed', zh: 'App icon 有固定外框' },
     copy: {
@@ -7113,8 +7184,8 @@ const brandGuideCategories = [
     name: { en: 'Surface system', zh: '表层系统' },
     scope: { en: 'Build the page', zh: '用于页面搭建' },
     items: {
-      en: ['Theme colors', 'Typography', 'Home media system', 'Motion boundaries'],
-      zh: ['主题色', '字体层级', '首页媒体系统', '动效边界'],
+      en: ['Theme colors', 'Engraved line language', 'Typography', 'Home media system', 'Motion boundaries'],
+      zh: ['主题色', '凹版线条语言', '字体层级', '首页媒体系统', '动效边界'],
     },
   },
   {
@@ -7199,10 +7270,10 @@ const brandGuideMotionRules = [
     },
   },
   {
-    title: { en: 'No ambient background motion', zh: '不做背景氛围动效' },
+    title: { en: 'Ambient motion is slow and mechanical', zh: '环境动效只能慢、像机械' },
     copy: {
-      en: 'No drifting glow, scan line, or card fade.',
-      zh: '不用漂移 glow、扫描线或 card fade。',
+      en: 'Allowed: the Home collage drift and engraved ornaments turning once every 30s or slower. Never glow, scan lines, or card fades.',
+      zh: '允许：首页拼贴漂移、凹版纹饰 30 秒以上转一圈。不用 glow、扫描线或 card fade。',
     },
   },
   {
@@ -7229,6 +7300,13 @@ const brandGuideMotionRules = [
 ] as const;
 
 const brandGuideCssRules = [
+  {
+    title: { en: 'Draw engraved lines with gradients', zh: '凹版线条用渐变画' },
+    copy: {
+      en: 'Hatching, rings, and rules come from repeating gradients and box-shadow, never border colours. Line widths use cqi so the art scales.',
+      zh: '排线、环纹与双线用 repeating gradient 与 box-shadow 画，不写 border 颜色；线宽用 cqi，画面随容器缩放。',
+    },
+  },
   {
     title: { en: 'Material before entry', zh: '有素材才有入口' },
     copy: {
@@ -7260,8 +7338,8 @@ const brandGuideCssRules = [
   {
     title: { en: 'Solid category language', zh: '分类用实色系统' },
     copy: {
-      en: 'Use rails, dots, chips, and borders.',
-      zh: '用线、点、chip、border。',
+      en: 'Use rails, dots, chips, and double rules. One ink per category.',
+      zh: '用线、点、chip 和双线；一个分类一种墨色。',
     },
   },
   {
@@ -7598,9 +7676,48 @@ const BrandGuideFullPage: React.FC<{
             </div>
           </section>
 
+          <section id="brand-engraved" className="brand-guide-section py-16 md:py-24">
+            <div className="brand-guide-section-head">
+              <p className="brand-guide-kicker">{isZh ? '05 / Engraved line language' : '05 / Engraved line language'}</p>
+              <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
+                {isZh ? '用线条说话。' : 'Let the lines speak.'}
+              </h2>
+              <p className="brand-guide-section-copy">
+                {isZh
+                  ? '插画与图标默认用钞票凹版语言：排线做明暗，扭索纹做秩序，单色，黄金比例。'
+                  : 'Illustrations and icons default to money engraving: hatching for tone, guilloché for order, one ink, golden ratio.'}
+              </p>
+            </div>
+            <div className="brand-guide-engraved-grid mt-12">
+              {brandGuideEngravedSpecimens.map((item) => {
+                const Specimen = item.id === 'hatch' ? EngravedHatchScale
+                  : item.id === 'rosette' ? EngravedRosette
+                    : item.id === 'eye' ? EngravedEye
+                      : EngravedBorder;
+                return (
+                  <article key={item.id} className="brand-guide-engraved-card">
+                    <Specimen label={item.title[language]} tone={item.tone} />
+                    <div>
+                      <h3 className="font-display text-2xl font-bold tracking-tight">{item.title[language]}</h3>
+                      <p>{item.copy[language]}</p>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+            <div className="brand-guide-rule-grid mt-8">
+              {brandGuideEngravedRules.map((item) => (
+                <article key={item.title.en} className="brand-guide-rule-card">
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.title[language]}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
           <section className="brand-guide-section py-16 md:py-24">
             <div className="brand-guide-section-head">
-              <p className="brand-guide-kicker">{isZh ? '05 / Type and rhythm' : '05 / Type and rhythm'}</p>
+              <p className="brand-guide-kicker">{isZh ? '06 / Type and rhythm' : '06 / Type and rhythm'}</p>
               <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
                 {isZh ? '少用字体变化。' : 'Keep type simple.'}
               </h2>
@@ -7634,7 +7751,7 @@ const BrandGuideFullPage: React.FC<{
 
           <section id="brand-voice" className="brand-guide-section py-16 md:py-24">
             <div className="brand-guide-section-head">
-              <p className="brand-guide-kicker">{isZh ? '06 / Voice' : '06 / Voice'}</p>
+              <p className="brand-guide-kicker">{isZh ? '07 / Voice' : '07 / Voice'}</p>
               <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
                 {isZh ? '说清楚能帮什么。' : 'Make the help clear.'}
               </h2>
@@ -7662,7 +7779,7 @@ const BrandGuideFullPage: React.FC<{
 
           <section className="brand-guide-section py-16 md:py-24">
             <div className="brand-guide-section-head">
-              <p className="brand-guide-kicker">{isZh ? '07 / Application' : '07 / Application'}</p>
+              <p className="brand-guide-kicker">{isZh ? '08 / Application' : '08 / Application'}</p>
               <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
                 {isZh ? '每页都要清楚。' : 'Every page must be clear.'}
               </h2>
@@ -7706,7 +7823,7 @@ const BrandGuideFullPage: React.FC<{
 
           <section id="brand-story" className="brand-guide-section py-16 md:py-24">
             <div className="brand-guide-section-head">
-              <p className="brand-guide-kicker">{isZh ? '08 / Story content' : '08 / Story content'}</p>
+              <p className="brand-guide-kicker">{isZh ? '09 / Story content' : '09 / Story content'}</p>
               <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
                 {isZh ? '故事写真实时刻。' : 'Stories record real moments.'}
               </h2>
@@ -7738,7 +7855,7 @@ const BrandGuideFullPage: React.FC<{
 
           <section id="brand-motion" className="brand-guide-section py-16 md:py-24">
             <div className="brand-guide-section-head">
-              <p className="brand-guide-kicker">{isZh ? '09 / Motion language' : '09 / Motion language'}</p>
+              <p className="brand-guide-kicker">{isZh ? '10 / Motion language' : '10 / Motion language'}</p>
               <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
                 {isZh ? '动效要轻。' : 'Motion stays light.'}
               </h2>
@@ -7771,8 +7888,8 @@ const BrandGuideFullPage: React.FC<{
 
           <p className="pb-10 text-center text-xs text-stone-500">
             {isZh
-              ? '最后对齐：2026-07-21 · 以当前首页、代码库和 log.md 为准。'
-              : 'Last reconciled: 21 Jul 2026 · Source: current Home + repo + log.md.'}
+              ? '最后对齐：2026-09-17 · 以当前首页、代码库和 logs/ 为准。'
+              : 'Last reconciled: 17 Sep 2026 · Source: current Home + repo + logs/.'}
           </p>
         </div>
       </main>
