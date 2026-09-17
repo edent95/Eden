@@ -1,0 +1,241 @@
+/* =============================================================
+   Engraved line language — money engraving / intaglio specimens
+   Used by the brand guide (section "Engraved line language").
+   Rules: tone comes from hatching density, order from guilloché,
+   frames are double rules, one ink per piece, no people.
+   Lines are drawn with gradients / box-shadow (never border colors).
+   ============================================================= */
+
+.engraved-art {
+  --en-ink: #1f4d38;
+  --en-paper: #f7f0de;
+  --en-ink-2: color-mix(in srgb, var(--en-ink) 60%, transparent);
+  --en-ink-3: color-mix(in srgb, var(--en-ink) 28%, transparent);
+  --en-w: 0.18cqi;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  container-type: inline-size;
+  border-radius: 14px;
+  background:
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--en-ink) 5%, transparent) 0 0.1cqi, transparent 0.1cqi 0.5cqi),
+    var(--en-paper);
+  box-shadow:
+    inset 0 0 0 1px var(--en-ink-3),
+    inset 0 0 0 6px var(--en-paper),
+    inset 0 0 0 7px var(--en-ink-2);
+}
+
+.engraved-art span { position: absolute; display: block; box-sizing: border-box; }
+
+.engraved-tone-ink { --en-ink: #1f4d38; --en-paper: #f7f0de; }
+.engraved-tone-rose { --en-ink: #6b2440; --en-paper: #f8ebea; }
+.engraved-tone-bronze { --en-ink: #6b4a1e; --en-paper: #f7efdc; }
+.engraved-tone-violet { --en-ink: #4a3591; --en-paper: #eeeefa; }
+.engraved-tone-teal { --en-ink: #0f5752; --en-paper: #e9f3ee; }
+.engraved-tone-indigo { --en-ink: #22407a; --en-paper: #eaf0f8; }
+
+/* --en-line is the stroke colour: the tone ink on paper, bronze gold on the dark plate. */
+.engraved-art { --en-line: var(--en-ink); }
+:root[data-theme="dark"] .engraved-art {
+  --en-paper: color-mix(in srgb, var(--en-ink) 22%, #070a09);
+  --en-line: #d9b56f;
+  --en-ink-2: color-mix(in srgb, #d9b56f 60%, transparent);
+  --en-ink-3: color-mix(in srgb, #d9b56f 26%, transparent);
+}
+
+/* ---- Hatching scale ---- */
+.engraved-hatch-scale { aspect-ratio: 16 / 9; }
+.engraved-hatch-step { top: 22%; bottom: 22%; width: 17%; border-radius: 6px; box-shadow: inset 0 0 0 1.5px var(--en-line); }
+.engraved-hatch-step.step-0 { left: 8%; }
+.engraved-hatch-step.step-1 { left: 31%; background: repeating-linear-gradient(45deg, var(--en-line) 0 var(--en-w), transparent var(--en-w) 1.4cqi); }
+.engraved-hatch-step.step-2 {
+  left: 54%;
+  background:
+    repeating-linear-gradient(45deg, var(--en-line) 0 var(--en-w), transparent var(--en-w) 1.1cqi),
+    repeating-linear-gradient(-45deg, var(--en-line) 0 var(--en-w), transparent var(--en-w) 1.1cqi);
+}
+.engraved-hatch-step.step-3 {
+  left: 77%;
+  background:
+    repeating-linear-gradient(45deg, var(--en-line) 0 0.28cqi, transparent 0.28cqi 0.7cqi),
+    repeating-linear-gradient(-45deg, var(--en-line) 0 0.28cqi, transparent 0.28cqi 0.7cqi),
+    repeating-linear-gradient(0deg, var(--en-ink-2) 0 var(--en-w), transparent var(--en-w) 0.7cqi);
+}
+
+/* ---- Guilloché rosette ---- */
+.engraved-rosette { aspect-ratio: 16 / 9; }
+.engraved-rosette-rays {
+  left: calc(50% - 44cqi); top: calc(50% - 44cqi); width: 88cqi; height: 88cqi;
+  border-radius: 50%;
+  background: repeating-conic-gradient(var(--en-ink-3) 0 0.4deg, transparent 0.4deg 3deg);
+  -webkit-mask: radial-gradient(closest-side, transparent 30%, black 40%, transparent 90%);
+  mask: radial-gradient(closest-side, transparent 30%, black 40%, transparent 90%);
+  animation: engraved-spin-back 240s linear infinite;
+}
+.engraved-rosette-rings {
+  left: calc(50% - 21cqi); top: calc(50% - 21cqi); width: 42cqi; height: 42cqi;
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(circle at 50% 44%, transparent 0 0.9cqi, var(--en-ink-2) 0.9cqi 1.1cqi),
+    repeating-radial-gradient(circle at 44% 53%, transparent 0 0.9cqi, var(--en-ink-2) 0.9cqi 1.1cqi),
+    repeating-radial-gradient(circle at 56% 53%, transparent 0 0.9cqi, var(--en-ink-2) 0.9cqi 1.1cqi);
+  -webkit-mask: radial-gradient(closest-side, transparent 38.2%, black 42%, black 92%, transparent 100%);
+  mask: radial-gradient(closest-side, transparent 38.2%, black 42%, black 92%, transparent 100%);
+  animation: engraved-spin 90s linear infinite;
+}
+.engraved-rosette-medal {
+  left: calc(50% - 8cqi); top: calc(50% - 8cqi); width: 16cqi; height: 16cqi;
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle, var(--en-ink-3) 0 var(--en-w), transparent var(--en-w) 0.8cqi), var(--en-paper);
+  box-shadow: inset 0 0 0 0.35cqi var(--en-line), 0 0 0 0.9cqi var(--en-paper), 0 0 0 1.1cqi var(--en-ink-2);
+}
+.engraved-rosette-core {
+  left: calc(50% - 3cqi); top: calc(50% - 3cqi); width: 6cqi; height: 6cqi;
+  background:
+    repeating-linear-gradient(45deg, var(--en-line) 0 var(--en-w), transparent var(--en-w) 0.6cqi),
+    var(--en-paper);
+  box-shadow: inset 0 0 0 0.3cqi var(--en-line);
+  transform: rotate(45deg);
+}
+
+/* ---- Eye of Horus ---- */
+.engraved-eye { aspect-ratio: 16 / 9; }
+.engraved-eye-frame {
+  left: calc(50% - 20cqi); top: calc(50% - 20cqi); width: 40cqi; height: 40cqi;
+  border-radius: 50%;
+  background: repeating-conic-gradient(var(--en-ink-3) 0 0.6deg, transparent 0.6deg 6deg);
+  -webkit-mask: radial-gradient(closest-side, transparent 86%, black 87%);
+  mask: radial-gradient(closest-side, transparent 86%, black 87%);
+  animation: engraved-spin 120s linear infinite;
+}
+.engraved-eye-brow {
+  left: 30%; top: 18%; width: 38%; height: 40%;
+  border-radius: 50%;
+  background:
+    radial-gradient(farthest-side, transparent 80%, var(--en-line) 80% 83%, transparent 83% 96%, var(--en-line) 96%),
+    repeating-linear-gradient(65deg, var(--en-line) 0 var(--en-w), transparent var(--en-w) 0.6cqi);
+  -webkit-mask: radial-gradient(farthest-side, transparent 80%, black 80%);
+  mask: radial-gradient(farthest-side, transparent 80%, black 80%);
+  clip-path: polygon(0 0, 100% 0, 100% 16%, 70% 12%, 30% 20%, 0 34%);
+}
+.engraved-eye-lid,
+.engraved-eye-white {
+  clip-path: polygon(0% 50%, 12% 28%, 25% 13%, 37% 3%, 50% 0%, 62% 3%, 75% 13%, 87% 28%, 100% 50%, 87% 65%, 75% 79%, 62% 88%, 50% 92%, 37% 88%, 25% 79%, 12% 65%);
+}
+.engraved-eye-lid {
+  left: 28%; top: 33%; width: 40%; height: 26%;
+  background:
+    repeating-linear-gradient(35deg, var(--en-line) 0 0.24cqi, transparent 0.24cqi 0.55cqi),
+    repeating-linear-gradient(-35deg, var(--en-line) 0 0.24cqi, transparent 0.24cqi 0.55cqi);
+}
+.engraved-eye-white {
+  left: 30.5%; top: 36.5%; width: 35%; height: 19%;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(-4deg, var(--en-ink-3) 0 var(--en-w), transparent var(--en-w) 0.6cqi),
+    var(--en-paper);
+}
+.engraved-eye-iris {
+  left: calc(46% - 4.6cqi); top: calc(50% - 4.6cqi); width: 9.2cqi; height: 9.2cqi;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, var(--en-line) 0 30%, var(--en-paper) 30% 38%, transparent 38%),
+    repeating-conic-gradient(var(--en-line) 0 1.6deg, transparent 1.6deg 7deg),
+    var(--en-paper);
+  box-shadow: inset 0 0 0 0.3cqi var(--en-line);
+  animation: engraved-look 9s ease-in-out infinite;
+}
+.engraved-eye-tail {
+  left: 67%; top: 45%; width: 13%; height: 3.2%;
+  background: repeating-linear-gradient(0deg, var(--en-line) 0 var(--en-w), transparent var(--en-w) 0.5cqi);
+  box-shadow: inset 0 0 0 0.25cqi var(--en-line);
+  transform: rotate(-3deg);
+}
+.engraved-eye-drop {
+  left: 40%; top: 57%; width: 2.4%; height: 24%;
+  background: repeating-linear-gradient(90deg, var(--en-line) 0 var(--en-w), transparent var(--en-w) 0.5cqi);
+  box-shadow: inset 0 0 0 0.25cqi var(--en-line);
+  transform: skewX(6deg);
+}
+.engraved-eye-stem {
+  left: 46%; top: 55%; width: 1.3cqi; height: calc(10.7% + 0.2cqi);
+  background: repeating-linear-gradient(-30deg, var(--en-line) 0 var(--en-w), transparent var(--en-w) 0.55cqi);
+  box-shadow: inset 0.2cqi 0 0 var(--en-line), inset -0.2cqi 0 0 var(--en-line);
+}
+.engraved-eye-curl-end {
+  left: calc(46% + 3.95cqi); top: calc(65.7% - 4.05cqi); width: 8.1cqi; height: 8.1cqi;
+  border-radius: 50%;
+  background:
+    radial-gradient(farthest-side, transparent 50%, var(--en-line) 50% 57%, transparent 57% 92%, var(--en-line) 92%),
+    repeating-linear-gradient(-30deg, var(--en-line) 0 var(--en-w), transparent var(--en-w) 0.55cqi);
+  -webkit-mask: radial-gradient(farthest-side, transparent 50%, black 50%);
+  mask: radial-gradient(farthest-side, transparent 50%, black 50%);
+  clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+}
+.engraved-eye-curl {
+  left: 46%; top: calc(65.7% - 6cqi); width: 12cqi; height: 12cqi;
+  border-radius: 50%;
+  background:
+    radial-gradient(farthest-side, transparent 78%, var(--en-line) 78% 83%, transparent 83% 94%, var(--en-line) 94%),
+    repeating-linear-gradient(-30deg, var(--en-line) 0 var(--en-w), transparent var(--en-w) 0.55cqi);
+  -webkit-mask: radial-gradient(farthest-side, transparent 78%, black 78%);
+  mask: radial-gradient(farthest-side, transparent 78%, black 78%);
+  clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+}
+
+/* ---- Banknote border ---- */
+.engraved-border { aspect-ratio: 16 / 9; }
+.engraved-border-band {
+  left: 5cqi; right: 5cqi; height: 5cqi;
+  background:
+    radial-gradient(circle, transparent 1.5cqi, var(--en-line) 1.5cqi 1.72cqi, transparent 1.72cqi 2.1cqi, var(--en-ink-2) 2.1cqi 2.25cqi, transparent 2.25cqi) 0 50% / 3.4cqi 5cqi repeat-x,
+    radial-gradient(circle, transparent 1.5cqi, var(--en-line) 1.5cqi 1.72cqi, transparent 1.72cqi 2.1cqi, var(--en-ink-2) 2.1cqi 2.25cqi, transparent 2.25cqi) 1.7cqi 50% / 3.4cqi 5cqi repeat-x,
+    var(--en-paper);
+  box-shadow: inset 0 0.25cqi 0 var(--en-line), inset 0 -0.25cqi 0 var(--en-line);
+  animation: engraved-band 14s linear infinite;
+}
+.engraved-border-band.top { top: 4cqi; }
+.engraved-border-band.bottom { bottom: 4cqi; animation-direction: reverse; }
+.engraved-border-corner {
+  width: 11cqi; height: 11cqi;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, var(--en-line) 0 10%, transparent 10% 18%, var(--en-line) 18% 21%, transparent 21%),
+    repeating-conic-gradient(var(--en-line) 0 3deg, transparent 3deg 15deg),
+    var(--en-paper);
+  box-shadow: 0 0 0 0.4cqi var(--en-paper), 0 0 0 0.6cqi var(--en-line);
+  animation: engraved-spin 40s linear infinite;
+}
+.engraved-border-corner.c1 { left: 2cqi; top: 1cqi; }
+.engraved-border-corner.c2 { right: 2cqi; top: 1cqi; animation-direction: reverse; }
+.engraved-border-corner.c3 { left: 2cqi; bottom: 1cqi; animation-direction: reverse; }
+.engraved-border-corner.c4 { right: 2cqi; bottom: 1cqi; }
+/* Golden rectangle construction: squares + spiral quarter arcs, drawn with box-shadow */
+.engraved-border-golden {
+  left: calc(50% - 25.9cqi); top: calc(50% - 8cqi); width: 51.8cqi; height: 32cqi;
+  background:
+    linear-gradient(90deg, transparent calc(61.8% - 0.1cqi), var(--en-ink-2) calc(61.8% - 0.1cqi) calc(61.8% + 0.1cqi), transparent calc(61.8% + 0.1cqi)),
+    linear-gradient(0deg, transparent calc(38.2% - 0.1cqi), var(--en-ink-2) calc(38.2% - 0.1cqi) calc(38.2% + 0.1cqi), transparent calc(38.2% + 0.1cqi)) right / 38.2% 100% no-repeat,
+    radial-gradient(circle 32cqi at 100% 100%, transparent 31.7cqi, var(--en-line) 31.7cqi 32cqi, transparent 32cqi) 0 0 / 61.8% 100% no-repeat,
+    radial-gradient(circle 19.78cqi at 0 100%, transparent 19.5cqi, var(--en-line) 19.5cqi 19.78cqi, transparent 19.78cqi) 100% 0 / 38.2% 61.8% no-repeat,
+    radial-gradient(circle 12.22cqi at 0 0, transparent 11.96cqi, var(--en-line) 11.96cqi 12.22cqi, transparent 12.22cqi) 100% 100% / 23.6% 38.2% no-repeat;
+  box-shadow: inset 0 0 0 0.15cqi var(--en-ink-2);
+  transform: translateY(-4cqi);
+}
+
+@keyframes engraved-spin { to { transform: rotate(360deg); } }
+@keyframes engraved-spin-back { to { transform: rotate(-360deg); } }
+@keyframes engraved-band { from { background-position: 0 50%, 1.7cqi 50%, 0 0; } to { background-position: 6.8cqi 50%, 8.5cqi 50%, 0 0; } }
+@keyframes engraved-look {
+  0%, 20%, 100% { transform: translateX(0); }
+  35%, 45% { transform: translateX(-1.2cqi); }
+  60%, 70% { transform: translateX(1cqi); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .engraved-art,
+  .engraved-art * {
+    animation: none !important;
+  }
+}

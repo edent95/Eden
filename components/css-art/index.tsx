@@ -714,3 +714,57 @@ export const PenneyCoinCssIcon: CssArtComponent = ({ label }) => (
     <span className="penney-icon-arrow" />
   </div>
 );
+
+/* ---- Engraved line language specimens (brand guide, 2026-09-17) ---- */
+
+export type EngravedTone = 'ink' | 'rose' | 'bronze' | 'violet' | 'teal' | 'indigo';
+
+/** Four-step hatching scale: paper → single hatch → cross hatch → dense cross hatch. */
+export const EngravedHatchScale: React.FC<{ label: string; tone?: EngravedTone }> = ({ label, tone = 'ink' }) => (
+  <div className={`engraved-art engraved-hatch-scale engraved-tone-${tone}`} role="img" aria-label={label}>
+    <span className="engraved-hatch-step step-0" />
+    <span className="engraved-hatch-step step-1" />
+    <span className="engraved-hatch-step step-2" />
+    <span className="engraved-hatch-step step-3" />
+  </div>
+);
+
+/** Guilloché rosette: three offset ring families rotating slowly, with a double-rule medal. */
+export const EngravedRosette: React.FC<{ label: string; tone?: EngravedTone }> = ({ label, tone = 'ink' }) => (
+  <div className={`engraved-art engraved-rosette engraved-tone-${tone}`} role="img" aria-label={label}>
+    <span className="engraved-rosette-rays" />
+    <span className="engraved-rosette-rings" />
+    <span className="engraved-rosette-medal" />
+    <span className="engraved-rosette-core" />
+  </div>
+);
+
+/** Eye of Horus drawn only with hatching and double rules. */
+export const EngravedEye: React.FC<{ label: string; tone?: EngravedTone }> = ({ label, tone = 'ink' }) => (
+  <div className={`engraved-art engraved-eye engraved-tone-${tone}`} role="img" aria-label={label}>
+    <span className="engraved-eye-frame" />
+    <span className="engraved-eye-brow" />
+    <span className="engraved-eye-lid" />
+    <span className="engraved-eye-white">
+      <span className="engraved-eye-iris" />
+    </span>
+    <span className="engraved-eye-tail" />
+    <span className="engraved-eye-drop" />
+    <span className="engraved-eye-stem" />
+    <span className="engraved-eye-curl" />
+    <span className="engraved-eye-curl-end" />
+  </div>
+);
+
+/** Banknote-style border: guilloché chain, scalloped inner rule, corner rosettes. */
+export const EngravedBorder: React.FC<{ label: string; tone?: EngravedTone }> = ({ label, tone = 'ink' }) => (
+  <div className={`engraved-art engraved-border engraved-tone-${tone}`} role="img" aria-label={label}>
+    <span className="engraved-border-band top" />
+    <span className="engraved-border-band bottom" />
+    <span className="engraved-border-corner c1" />
+    <span className="engraved-border-corner c2" />
+    <span className="engraved-border-corner c3" />
+    <span className="engraved-border-corner c4" />
+    <span className="engraved-border-golden" />
+  </div>
+);

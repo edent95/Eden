@@ -987,3 +987,25 @@
     font-size: clamp(2rem, 10.5vw, 3rem);
   }
 }
+
+/* ---- 05 / Engraved line language (2026-09-17) ---- */
+.brand-guide-engraved-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.brand-guide-engraved-card {
+  display: grid;
+  gap: 16px;
+  padding: 16px;
+  border-radius: var(--brand-radius-md);
+  background: var(--brand-soft);
+}
+
+.brand-guide-engraved-card h3 { color: var(--brand-ink); }
+.brand-guide-engraved-card p { margin-top: 6px; color: var(--brand-muted); }
+
+@media (max-width: 720px) {
+  .brand-guide-engraved-grid { grid-template-columns: 1fr; }
+}
