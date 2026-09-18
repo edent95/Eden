@@ -32,6 +32,7 @@ import {
   ProjectsEtReportCssIcon,
   ProjectsJijuCssIcon,
   ProjectsLifeOsCssIcon,
+  ProjectsMiyaCssIcon,
   ProjectsPokerCssIcon,
   WikiBackgroundMusicCssIcon,
   WikiButtonFeedbackCssIcon,
@@ -178,6 +179,27 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
     copy: {
       en: 'The framed star-map icon: concentric orbits, drifting nodes, and one lit core.',
       zh: 'Life OS 使用的固定底星图 app icon：同心轨道、漂移节点与一颗点亮的核心。',
+    },
+  },
+  {
+    id: 'projects-miya',
+    title: 'MiYa',
+    projectTitle: 'MiYa',
+    category: 'project-icon',
+    sourceRoute: '/projects',
+    ratio: '1:1',
+    background: 'framed',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/projects-icons.css',
+    Component: ProjectsMiyaCssIcon,
+    label: {
+      en: 'MiYa heart CSS app icon',
+      zh: 'MiYa 心形 CSS app 图标',
+    },
+    copy: {
+      en: 'The framed red heart icon for MiYa, the on-device iOS health report; the heart beats once per cycle.',
+      zh: 'MiYa（本机 iOS 健康报告）使用的固定底红色心形 app icon，心形按节拍跳动。',
     },
   },
   {

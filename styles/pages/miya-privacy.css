@@ -1,0 +1,389 @@
+/* /project/miya — MiYa (iOS) privacy policy + support page. Nav reuses .project-home-nav from project.css. */
+
+.miya-privacy-page {
+  --miya-accent: #d61e42;
+  --miya-accent-wash: #fdeff2;
+  min-height: 100vh;
+  background: var(--theme-page);
+  color: var(--theme-text-primary);
+}
+
+:root[data-theme="dark"] .miya-privacy-page {
+  --miya-accent: #ff6480;
+  --miya-accent-wash: #2a171c;
+}
+
+.miya-privacy-main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 7vw, 4.5rem) clamp(1rem, 5vw, 2rem) clamp(4rem, 9vw, 6.5rem);
+  font-size: 1rem;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+}
+
+.miya-privacy-hero {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--theme-border);
+}
+
+.miya-privacy-mark {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.miya-privacy-mark-icon {
+  flex: none;
+  color: var(--miya-accent);
+}
+
+.miya-privacy-mark-name {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 680;
+  font-size: 1.1rem;
+  letter-spacing: 0.01em;
+}
+
+.miya-privacy-mark-kind {
+  padding-left: 0.7rem;
+  border-left: 1px solid var(--theme-border);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--theme-text-soft);
+}
+
+.miya-privacy-kicker {
+  margin-top: 2rem;
+  font-size: 0.72rem;
+  font-weight: 620;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--theme-text-soft);
+}
+
+.miya-privacy-hero h1 {
+  margin-top: 0.75rem;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 720;
+  font-size: clamp(2.1rem, 7vw, 3.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.miya-privacy-standfirst {
+  margin-top: 1.1rem;
+  max-width: 36rem;
+  font-size: clamp(1.02rem, 1.8vw, 1.15rem);
+  color: var(--theme-text-secondary);
+}
+
+.miya-privacy-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.75rem;
+  margin-top: 1.25rem;
+  font-size: 0.84rem;
+  color: var(--theme-text-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.miya-privacy-meta div {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.miya-privacy-meta dt {
+  font-weight: 620;
+  color: var(--theme-text-secondary);
+}
+
+.miya-privacy-support-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--miya-accent);
+  border-radius: 999px;
+  color: var(--miya-accent);
+  font-size: 0.9rem;
+  font-weight: 620;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.miya-privacy-support-link:hover {
+  transform: translateY(-2px);
+}
+
+.miya-privacy-claim {
+  margin-top: 2.5rem;
+  padding: 1.4rem 1.4rem 1.2rem;
+  border-left: 3px solid var(--miya-accent);
+  background: var(--miya-accent-wash);
+}
+
+.miya-privacy-claim p {
+  font-size: 1.12rem;
+  line-height: 1.7;
+  color: var(--theme-text-primary);
+}
+
+.miya-privacy-claim .miya-privacy-claim-fine {
+  margin-top: 0.75rem;
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--theme-text-secondary);
+}
+
+.miya-privacy-flow-figure {
+  margin: 2.25rem 0 0;
+}
+
+.miya-privacy-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+}
+
+.miya-privacy-flow li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.85rem 0.85rem 0.75rem;
+  border: 1px solid var(--theme-border);
+  background: var(--theme-surface);
+}
+
+.miya-privacy-flow-label {
+  font-size: 0.94rem;
+  font-weight: 620;
+}
+
+.miya-privacy-flow-note {
+  font-size: 0.76rem;
+  line-height: 1.5;
+  color: var(--theme-text-soft);
+}
+
+.miya-privacy-flow li.is-stop {
+  border-style: dashed;
+  background: transparent;
+}
+
+.miya-privacy-flow li.is-stop .miya-privacy-flow-label {
+  color: var(--theme-text-soft);
+  text-decoration: line-through;
+  text-decoration-color: var(--miya-accent);
+  text-decoration-thickness: 1px;
+}
+
+.miya-privacy-flow-figure figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.84rem;
+  color: var(--theme-text-soft);
+}
+
+.miya-privacy-section {
+  margin-top: 3rem;
+  scroll-margin-top: 5rem;
+}
+
+.miya-privacy-section h2 {
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-border) 60%, transparent);
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.4rem;
+  font-weight: 680;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.miya-privacy-section h3 {
+  margin: 1.6rem 0 0.4rem;
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.miya-privacy-section p {
+  margin: 0 0 1rem;
+  color: var(--theme-text-secondary);
+}
+
+.miya-privacy-section p:last-child {
+  margin-bottom: 0;
+}
+
+.miya-privacy-section strong {
+  color: var(--theme-text-primary);
+  font-weight: 700;
+}
+
+.miya-privacy-section ul {
+  margin: 0 0 1rem;
+  padding-left: 1.15rem;
+  list-style: disc;
+  color: var(--theme-text-secondary);
+}
+
+.miya-privacy-section li {
+  margin-bottom: 0.4rem;
+}
+
+.miya-privacy-section li::marker {
+  color: var(--miya-accent);
+}
+
+.miya-privacy-section code {
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+  background: var(--theme-surface-muted);
+  color: var(--theme-text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+}
+
+.miya-privacy-main a:focus-visible {
+  outline: 2px solid var(--miya-accent);
+  outline-offset: 3px;
+}
+
+.miya-privacy-table-scroll {
+  margin: 0 0 1rem;
+  overflow-x: auto;
+}
+
+.miya-privacy-table-scroll table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.94rem;
+}
+
+.miya-privacy-table-scroll th,
+.miya-privacy-table-scroll td {
+  padding: 0.65rem 1rem 0.65rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-border) 60%, transparent);
+  text-align: left;
+  vertical-align: top;
+}
+
+.miya-privacy-table-scroll th {
+  border-bottom-color: var(--theme-border);
+  font-size: 0.72rem;
+  font-weight: 620;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--theme-text-soft);
+}
+
+.miya-privacy-table-scroll td:first-child {
+  width: 45%;
+  padding-right: 1.5rem;
+  font-weight: 560;
+  color: var(--theme-text-primary);
+}
+
+.miya-privacy-table-scroll td:last-child {
+  color: var(--theme-text-secondary);
+}
+
+.miya-privacy-contact {
+  padding: 1.6rem 1.5rem 1.4rem;
+  border: 1px solid var(--theme-border);
+  border-top: 3px solid var(--miya-accent);
+  background: var(--theme-surface);
+}
+
+.miya-privacy-contact h2 {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.miya-privacy-email {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0.25rem 0 1.4rem;
+  padding: 0.75rem 1.15rem;
+  border-radius: 999px;
+  background: var(--miya-accent);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 650;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.miya-privacy-email:hover {
+  transform: translateY(-2px);
+}
+
+:root[data-theme="dark"] .miya-privacy-email {
+  color: #1b1417;
+}
+
+.miya-privacy-contact-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 3rem;
+  margin: 0 0 1.25rem;
+}
+
+.miya-privacy-contact-list dt {
+  margin-bottom: 0.2rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--theme-text-soft);
+}
+
+.miya-privacy-contact-list dd {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.miya-privacy-contact-list a {
+  color: var(--miya-accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.miya-privacy-section .miya-privacy-footnote {
+  font-size: 0.84rem;
+  color: var(--theme-text-soft);
+}
+
+@media (max-width: 640px) {
+  .miya-privacy-flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .miya-privacy-contact {
+    padding: 1.3rem 1rem 1.1rem;
+  }
+
+  .miya-privacy-table-scroll td:first-child {
+    width: 42%;
+    padding-right: 0.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .miya-privacy-support-link,
+  .miya-privacy-email {
+    transition: none;
+  }
+
+  .miya-privacy-support-link:hover,
+  .miya-privacy-email:hover {
+    transform: none;
+  }
+}

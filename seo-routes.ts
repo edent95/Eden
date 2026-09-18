@@ -26,7 +26,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-09-15';
+export const SITE_CONTENT_LASTMOD = '2026-09-18';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -141,7 +141,7 @@ export const ROUTE_SEO: RouteSeo[] = [
   {
     path: '/project',
     datePublished: '2026-08-13',
-    dateModified: '2026-09-14',
+    dateModified: '2026-09-18',
     priority: '0.9',
     title: {
       en: 'Projects | Eden Tan',
@@ -150,6 +150,20 @@ export const ROUTE_SEO: RouteSeo[] = [
     desc: {
       en: 'An app shelf of everything Eden Tan has built: Jiju, Friday Poker Club, ETReportHub, Film Gallery, and Conway’s Game of Life.',
       zh: 'Eden Tan 做过的作品列表：Jiju、Friday Poker Club、ETReportHub、Film Gallery 以及 Conway’s Game of Life。',
+    },
+  },
+  {
+    path: '/project/miya',
+    datePublished: '2026-09-18',
+    dateModified: '2026-09-18',
+    priority: '0.6',
+    title: {
+      en: 'MiYa Privacy Policy | Eden Tan',
+      zh: 'MiYa 隐私政策 | Eden Tan',
+    },
+    desc: {
+      en: 'MiYa for iOS privacy policy and support: no data collected, Health data is read and kept on your device only. Contact d.tytern@gmail.com.',
+      zh: 'MiYa iOS 版隐私政策与技术支持：不收集任何数据，健康数据只在你的设备上读取和保存。联系邮箱 d.tytern@gmail.com。',
     },
   },
   {

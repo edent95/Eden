@@ -398,6 +398,14 @@ export const ProjectsJijuCssIcon: React.FC<{ label: string }> = ({ label }) => (
   </div>
 );
 
+export const ProjectsMiyaCssIcon: CssArtComponent = ({ label }) => (
+  <div className="projects-card-icon projects-miya-css-icon" role="img" aria-label={label}>
+    <span className="projects-miya-ring" />
+    <span className="projects-miya-heart" />
+    <span className="projects-miya-pulse" />
+  </div>
+);
+
 export const ProjectsPokerCssIcon: React.FC<{ label: string }> = ({ label }) => (
   <div className="projects-card-icon projects-poker-css-icon" role="img" aria-label={label}>
     <span className="projects-poker-table" />

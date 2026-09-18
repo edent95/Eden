@@ -316,7 +316,7 @@ function breadcrumbItems(route: RouteSeo, language: SeoLanguage, siteBase: strin
     if (route.path !== '/wiki') items.push({ name: 'Wiki', url: `${siteBase}${localizedCanonicalRoutePath('/wiki', language)}` });
   } else if (route.path.startsWith('/notes/') || route.path === '/notes') {
     if (route.path !== '/notes') items.push({ name: 'Notes', url: `${siteBase}${localizedCanonicalRoutePath('/notes', language)}` });
-  } else if (route.path.startsWith('/archive/')) {
+  } else if (route.path.startsWith('/archive/') || route.path.startsWith('/project/')) {
     items.push({ name: language === 'zh' ? '作品' : 'Projects', url: `${siteBase}${localizedCanonicalRoutePath('/project', language)}` });
   }
   if (route.path !== '/') {

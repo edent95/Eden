@@ -37,6 +37,7 @@ import {
   ProjectsDrRacingCssIcon,
   ProjectsEtReportCssIcon,
   ProjectsJijuCssIcon,
+  ProjectsMiyaCssIcon,
   ProjectsLifeOsCssIcon,
   ProjectsPokerCssIcon,
   WikiBackgroundMusicCssIcon,
@@ -84,6 +85,7 @@ type Theme = 'light' | 'dark';
 type ThemePreference = Theme | 'auto';
 
 const PenneysGamePage = React.lazy(() => import('./components/PenneysGamePage'));
+const MiyaPrivacyPage = React.lazy(() => import('./components/MiyaPrivacyPage'));
 const HomePenneyGame = React.lazy(() => import('./components/HomePenneyGame'));
 
 type BeforeInstallPromptEvent = Event & {
@@ -9834,6 +9836,7 @@ const ProjectHomePage: React.FC<{
   filmGalleryHref: string;
   conwayHref: string;
   penneyHref: string;
+  miyaHref: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
   themePreference: ThemePreference;
@@ -9848,6 +9851,7 @@ const ProjectHomePage: React.FC<{
   filmGalleryHref,
   conwayHref,
   penneyHref,
+  miyaHref,
   language,
   setLanguage,
   themePreference,
@@ -9904,6 +9908,13 @@ const ProjectHomePage: React.FC<{
       href: penneyHref,
       caption: { en: 'Non-transitive odds', zh: '非传递概率' },
       Icon: PenneyCoinCssIcon,
+    },
+    {
+      id: 'miya',
+      name: 'MiYa',
+      href: miyaHref,
+      caption: { en: 'On-device health', zh: '本机健康报告' },
+      Icon: ProjectsMiyaCssIcon,
     },
   ];
 
@@ -10217,6 +10228,7 @@ const App: React.FC = () => {
   const conwayHref = joinBasePath(baseUrl, 'conways-game-of-life');
   const penneyHref = joinBasePath(baseUrl, 'penneys-game');
   const projectHomeHref = joinBasePath(baseUrl, 'project');
+  const miyaHref = joinBasePath(baseUrl, 'project/miya');
   const cellularAutomataLabHref = joinBasePath(baseUrl, 'cellular-automata-lab');
   const homeSystemFiles: Array<{
     title: string;
@@ -10326,6 +10338,7 @@ const App: React.FC = () => {
   const isPenneysGamePage = pathWithoutBase === '/penneys-game';
   const isCellularAutomataLabFullPage = pathWithoutBase === '/cellular-automata-lab';
   const isProjectHomePage = pathWithoutBase === '/project';
+  const isMiyaPrivacyPage = pathWithoutBase === '/project/miya';
   const isIconPromptsPage = pathWithoutBase === '/icon-prompts';
   const archivedWorkSlug = pathWithoutBase.startsWith('/archive/')
     ? pathWithoutBase.replace('/archive/', '')
@@ -10617,12 +10630,33 @@ const App: React.FC = () => {
         filmGalleryHref={filmGalleryHref}
         conwayHref={conwayHref}
         penneyHref={penneyHref}
+        miyaHref={miyaHref}
         language={language}
         setLanguage={setLanguage}
         themePreference={themePreference}
         theme={theme}
         setThemePreference={setThemePreference}
       />
+    );
+  }
+
+  if (isMiyaPrivacyPage) {
+    return (
+      <React.Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
+        <MiyaPrivacyPage
+          language={language}
+          projectsHref={projectHomeHref}
+          controls={
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
+          }
+        />
+      </React.Suspense>
     );
   }
 
