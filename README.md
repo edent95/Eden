@@ -67,6 +67,7 @@ npm run preview
 - `/jiju-pet` — Jiju 产品详情：可信宠物友好地点发现、宠物档案、到访记忆与社区资料
 - `/jiju-revamp` — Jiju 从宠物友好目录转向本地生活探索的平台提案
 - `/project` — Eden 已构建产品的 app shelf
+- `/project/miya` — MiYa（iOS 本机健康报告）隐私政策兼技术支持页，中英双语（`/zh/project/miya/` 为中文版）；App Store Connect 的 Privacy Policy URL 与 Support URL 都指向这里，正文同时预渲染成静态 HTML，不开 JS 也能完整阅读
 - `/project-css` — Projects / Home / Interests CSS art 直达检查页（隐藏直达页；不进 sitemap）
 - `/icon-prompts` — ETReportHub / Jiju / Friday Poker Club 四宫格 icon prompt 复制页（隐藏直达页；不进 sitemap）
 - `/etreporthub` — ETReportHub 日报数据系统产品页

@@ -96,6 +96,11 @@ function upsertAlternate(html: string, hreflang: string, href: string): string {
   return pattern.test(html) ? html.replace(pattern, tag) : html.replace('</head>', `    ${tag}\n  </head>`);
 }
 
+/** Turn plain email addresses in already-escaped static copy into mailto links (e.g. the MiYa support address). */
+function linkifyEmails(escaped: string): string {
+  return escaped.replace(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g, (email) => `<a href="mailto:${email}">${email}</a>`);
+}
+
 function renderStaticBody(route: RouteSeo, language: SeoLanguage, siteBaseNoSlash: string): string {
   const content = getStaticRouteContent(route, language);
   const breadcrumbs = buildStaticBreadcrumbs(route, language, siteBaseNoSlash);
@@ -108,7 +113,7 @@ function renderStaticBody(route: RouteSeo, language: SeoLanguage, siteBaseNoSlas
   const sections = content.sections.map((section) => `
       <section>
         <h2>${escapeHtml(section.title)}</h2>
-        ${section.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('\n        ')}
+        ${section.paragraphs.map((paragraph) => `<p>${linkifyEmails(escapeHtml(paragraph))}</p>`).join('\n        ')}
       </section>`).join('');
   const related = content.related.map((entry) => {
     const href = languageAlternateUrl(entry, language, siteBaseNoSlash);

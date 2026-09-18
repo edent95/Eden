@@ -1,4 +1,4 @@
-/* Projects CSS art: Jiju, Friday Poker Club, ETReportHub, and CRM Intelligence System icons. */
+/* Projects CSS art: Jiju, Friday Poker Club, ETReportHub, CRM Intelligence System, and MiYa icons. */
 
 .projects-card-icon {
   width: 100%;
@@ -1398,5 +1398,102 @@
   .projects-drracing-speedline {
     animation: none;
     opacity: 0.4;
+  }
+}
+
+/* MiYa: framed red app tile, one white heart that beats, one pulse ring. */
+.projects-miya-css-icon {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #d61e42;
+  box-shadow:
+    0 18px 50px rgb(28 25 23 / 0.14),
+    inset 0 0 0 1px rgb(255 255 255 / 0.24);
+}
+
+.projects-miya-ring,
+.projects-miya-heart,
+.projects-miya-pulse {
+  position: absolute;
+}
+
+.projects-miya-ring {
+  left: 50%;
+  top: 50%;
+  width: 72%;
+  aspect-ratio: 1;
+  border: 1px solid rgb(255 255 255 / 0.28);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.projects-miya-heart {
+  left: 50%;
+  top: 55%;
+  width: 28%;
+  aspect-ratio: 1;
+  background: #ffffff;
+  border-radius: 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+  animation: projects-miya-heart-beat 2.4s ease-in-out infinite;
+}
+
+.projects-miya-heart::before,
+.projects-miya-heart::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.projects-miya-heart::before {
+  left: -50%;
+  top: 0;
+}
+
+.projects-miya-heart::after {
+  left: 0;
+  top: -50%;
+}
+
+.projects-miya-pulse {
+  left: 18%;
+  right: 18%;
+  bottom: 16%;
+  height: 2px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.55);
+  transform-origin: left center;
+  animation: projects-miya-pulse-sweep 2.4s ease-in-out infinite;
+}
+
+:root[data-theme="dark"] .projects-miya-css-icon {
+  box-sizing: border-box;
+  border: 1px solid #7a1c30;
+  background: #b0183a;
+  box-shadow: 0 18px 50px rgb(0 0 0 / 0.26);
+}
+
+@keyframes projects-miya-heart-beat {
+  0%, 60%, 100% { transform: translate(-50%, -50%) rotate(45deg) scale(1); }
+  12% { transform: translate(-50%, -50%) rotate(45deg) scale(1.14); }
+  24% { transform: translate(-50%, -50%) rotate(45deg) scale(0.98); }
+  34% { transform: translate(-50%, -50%) rotate(45deg) scale(1.08); }
+}
+
+@keyframes projects-miya-pulse-sweep {
+  0% { transform: scaleX(0); opacity: 0; }
+  20% { opacity: 1; }
+  70% { transform: scaleX(1); opacity: 0.8; }
+  100% { transform: scaleX(1); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projects-miya-heart,
+  .projects-miya-pulse {
+    animation: none !important;
   }
 }

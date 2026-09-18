@@ -1,4 +1,5 @@
 import type { SeoLanguage } from './seo-routes.ts';
+import { MIYA_PRIVACY, miyaPlainText, type MiyaBlock } from './components/miya-privacy-content.ts';
 
 type Localized = Record<SeoLanguage, string>;
 
@@ -10,13 +11,84 @@ export type StaticRouteCopy = {
 
 const L = (en: string, zh: string): Localized => ({ en, zh });
 
+/** Flatten the structured MiYa policy (lists, table, sub-headings) into static paragraphs. */
+function miyaBlockParagraphs(block: MiyaBlock): Localized[] {
+  const plain = (value: Localized): Localized => ({ en: miyaPlainText(value.en), zh: miyaPlainText(value.zh) });
+  switch (block.kind) {
+    case 'p':
+    case 'h3':
+      return [plain(block.text)];
+    case 'ul':
+      return block.items.map((item) => plain({ en: `• ${item.en}`, zh: `• ${item.zh}` }));
+    case 'table':
+      return block.rows.map(([category, use]) => ({
+        en: `${category.en}: ${use.en}`,
+        zh: `${category.zh}：${use.zh}`,
+      }));
+    default:
+      return [];
+  }
+}
+
+/** Static body for /project/miya, generated from the same copy the React page renders. */
+function miyaStaticCopy(): StaticRouteCopy {
+  const page = MIYA_PRIVACY;
+  const meta = page.meta;
+  return {
+    eyebrow: page.kicker,
+    thesis: page.claim,
+    sections: [
+      {
+        title: L('Privacy Policy at a glance', '隐私政策概览'),
+        paragraphs: [
+          page.standfirst,
+          {
+            en: meta.map((item) => `${item.label.en}: ${item.value.en}`).join(' · '),
+            zh: meta.map((item) => `${item.label.zh}：${item.value.zh}`).join(' · '),
+          },
+          page.claimFine,
+        ],
+      },
+      {
+        title: page.flowTitle,
+        paragraphs: [
+          {
+            en: page.flow.map((node) => `${node.label.en} (${node.note.en})`).join(' → '),
+            zh: page.flow.map((node) => `${node.label.zh}（${node.note.zh}）`).join(' → '),
+          },
+          page.flowCaption,
+        ],
+      },
+      ...page.sections.map((section) => ({
+        title: section.title,
+        paragraphs: section.blocks.flatMap(miyaBlockParagraphs),
+      })),
+      {
+        title: page.contact.title,
+        paragraphs: [
+          page.contact.intro,
+          ...page.contact.details.map((item) => ({
+            en: `${item.label.en}: ${item.value.en}`,
+            zh: `${item.label.zh}：${item.value.zh}`,
+          })),
+          page.contact.footer,
+        ],
+      },
+    ],
+  };
+}
+
 /**
  * Hand-written static body copy for routes whose substance lives in React data
  * rather than in `wiki/`. Every fact here mirrors what the live page renders
  * (product modules, numbers, section order); keep the two in step when a page changes.
  * Wiki and Notes routes do not appear here: their body comes from `generated/content.ts`.
+ * `/project/miya` is the exception: it is generated from `components/miya-privacy-content.ts`,
+ * the same copy the React page renders, so the policy text cannot drift.
  */
 export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
+  '/project/miya': miyaStaticCopy(),
+
   '/': {
     eyebrow: L('Eden Tan', 'Eden Tan'),
     thesis: L(
@@ -57,7 +129,7 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
     ),
     sections: [
       {
-        title: L('Seven apps on the shelf', '货架上的七个 app'),
+        title: L('Eight apps on the shelf', '货架上的八个 app'),
         paragraphs: [
           L(
             'Jiju is local discovery for people with pets, starting in Penang. Friday Poker Club is a private browser Hold’em table for a fixed crew. ETReportHub is the daily data layer that turns Transaction and Customer Excel files into operating decisions. Dr Racing runs a motorcycle dealership’s loan pipeline from lead to delivery.',
@@ -66,6 +138,10 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
           L(
             'Film Gallery is an archive of fifteen film frames from three cameras. Conway’s Game of Life is an interactive B3/S23 board that extends into 256 elementary rules and the I Ching. Penney’s Game turns a non-transitive coin hustle into five levels, a ranked mode, and a probability lab.',
             'Film Gallery 是三台相机拍下的十五格胶片档案。Conway’s Game of Life 是互动的 B3/S23 棋盘，并延伸到 256 条一维规则与《易经》。Penney’s Game 把一个非传递性的硬币骗局做成五个关卡、排位模式与概率实验室。',
+          ),
+          L(
+            'MiYa is an iOS app that turns the health data your Apple Watch and iPhone already recorded into a browsable report, entirely on the device; its privacy policy and support page lives at /project/miya.',
+            'MiYa 是一个 iOS app，把 Apple Watch 和 iPhone 已经记录的健康数据在本机整理成可翻看的报告；它的隐私政策与技术支持页在 /project/miya。',
           ),
         ],
       },
