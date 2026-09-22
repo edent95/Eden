@@ -16,7 +16,8 @@ function hasImplementedRoute(route) {
     return exists(`wiki/pages/${route.slice('/wiki/'.length)}.md`);
   }
   if (route.startsWith('/archive/')) {
-    return app.includes(`slug: '${route.slice('/archive/'.length)}'`);
+    // Archived work entries moved out of App.tsx into app/archive.tsx during the split.
+    return read('app/archive.tsx').includes(`slug: '${route.slice('/archive/'.length)}'`);
   }
   if (route.startsWith('/igaming/cases/')) {
     return read('components/igaming-cases-content.ts').includes(`slug: '${route.slice('/igaming/cases/'.length)}'`);
