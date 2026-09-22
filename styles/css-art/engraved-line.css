@@ -528,6 +528,152 @@
   box-shadow: inset 0 0 0 0.25cqi var(--en-line);
 }
 
+/* ---- /igaming hero plate: a banknote face behind the hero copy ----
+   Fills its positioned parent (no aspect ratio). Focus sits on the upper golden
+   band (50%, 38.2%); rays, rosette and both φ rings (23.6 → 38.2) centre on it.
+   The rosette keeps its middle open so the headline stays on clean paper. */
+.engraved-ig-plate {
+  --fx: 50%;
+  --fy: 38.2%;
+  --en-foil: color-mix(in srgb, #c9a44c 72%, var(--en-line));
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 18px;
+  box-shadow: none;
+  background: none;
+}
+:root[data-theme="dark"] .engraved-ig-plate { --en-foil: #f2cf7a; }
+.engraved-ig-plate-paper {
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(75% 60% at 50% 45%, transparent 55%, color-mix(in srgb, var(--en-line) 10%, transparent) 100%),
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--en-line) 5%, transparent) 0 0.08cqi, transparent 0.08cqi 0.45cqi),
+    var(--en-paper);
+  box-shadow:
+    inset 0 0 0 0.12cqi var(--en-ink-2),
+    inset 0 0 0 0.7cqi var(--en-paper),
+    inset 0 0 0 0.82cqi var(--en-ink-3);
+}
+.engraved-ig-plate-rays {
+  left: calc(var(--fx) - 60cqi); top: calc(var(--fy) - 60cqi); width: 120cqi; height: 120cqi;
+  border-radius: 50%;
+  background: repeating-conic-gradient(var(--en-ink-3) 0 0.3deg, transparent 0.3deg 3deg);
+  -webkit-mask: radial-gradient(closest-side, transparent 30%, black 42%, transparent 72%);
+  mask: radial-gradient(closest-side, transparent 30%, black 42%, transparent 72%);
+  opacity: 0.7;
+  animation: engraved-spin-back 240s linear infinite;
+}
+.engraved-ig-plate-rosette {
+  left: calc(var(--fx) - 30cqi); top: calc(var(--fy) - 30cqi); width: 60cqi; height: 60cqi;
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(circle at 50% 44%, transparent 0 0.9cqi, var(--en-ink-3) 0.9cqi 1.05cqi),
+    repeating-radial-gradient(circle at 44% 53%, transparent 0 0.9cqi, var(--en-ink-3) 0.9cqi 1.05cqi),
+    repeating-radial-gradient(circle at 56% 53%, transparent 0 0.9cqi, var(--en-ink-3) 0.9cqi 1.05cqi);
+  -webkit-mask: radial-gradient(closest-side, transparent 52%, black 62%, black 80%, transparent 100%);
+  mask: radial-gradient(closest-side, transparent 52%, black 62%, black 80%, transparent 100%);
+  opacity: 0.8;
+  animation: engraved-spin 120s linear infinite;
+}
+.engraved-ig-plate-ring {
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 0.1cqi var(--en-ink-3);
+}
+.engraved-ig-plate-ring::after {
+  content: ""; position: absolute; inset: -0.9cqi; border-radius: 50%;
+  background: repeating-conic-gradient(var(--en-ink-2) 0 0.5deg, transparent 0.5deg 6deg);
+  -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 0.8cqi), black calc(100% - 0.8cqi));
+  mask: radial-gradient(closest-side, transparent calc(100% - 0.8cqi), black calc(100% - 0.8cqi));
+  opacity: 0.6;
+}
+.engraved-ig-plate-ring.r1 { left: calc(var(--fx) - 23.6cqi); top: calc(var(--fy) - 23.6cqi); width: 47.2cqi; height: 47.2cqi; animation: engraved-spin 150s linear infinite; }
+.engraved-ig-plate-ring.r2 { left: calc(var(--fx) - 38.2cqi); top: calc(var(--fy) - 38.2cqi); width: 76.4cqi; height: 76.4cqi; opacity: 0.6; animation: engraved-spin-back 200s linear infinite; }
+.engraved-ig-plate-golden {
+  inset: 3cqi 4cqi;
+  --t: 0.05cqi;
+  background:
+    linear-gradient(90deg, transparent calc(38.2% - var(--t)), var(--en-ink-3) 0 calc(38.2% + var(--t)), transparent 0),
+    linear-gradient(90deg, transparent calc(61.8% - var(--t)), var(--en-ink-3) 0 calc(61.8% + var(--t)), transparent 0),
+    linear-gradient(0deg, transparent calc(38.2% - var(--t)), var(--en-ink-3) 0 calc(38.2% + var(--t)), transparent 0),
+    linear-gradient(0deg, transparent calc(61.8% - var(--t)), var(--en-ink-3) 0 calc(61.8% + var(--t)), transparent 0);
+  opacity: 0.55;
+}
+/* Guilloché bands inside the top and bottom edges */
+.engraved-ig-plate-band {
+  left: 3.2cqi; right: 3.2cqi; height: 1.9cqi;
+  background:
+    radial-gradient(circle, transparent 0.55cqi, var(--en-ink-2) 0.55cqi 0.63cqi, transparent 0.63cqi 0.78cqi, var(--en-ink-3) 0.78cqi 0.84cqi, transparent 0.84cqi) 0 50% / 1.3cqi 1.9cqi repeat-x,
+    radial-gradient(circle, transparent 0.55cqi, var(--en-ink-2) 0.55cqi 0.63cqi, transparent 0.63cqi 0.78cqi, var(--en-ink-3) 0.78cqi 0.84cqi, transparent 0.84cqi) 0.65cqi 50% / 1.3cqi 1.9cqi repeat-x;
+  box-shadow: inset 0 0.1cqi 0 var(--en-ink-2), inset 0 -0.1cqi 0 var(--en-ink-2);
+}
+.engraved-ig-plate-band.top { top: 1.5cqi; }
+.engraved-ig-plate-band.bottom { bottom: 1.5cqi; }
+.engraved-ig-plate-corner {
+  width: 4.2cqi; height: 4.2cqi;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, var(--en-foil) 0 14%, transparent 15% 22%, var(--en-line) 22% 26%, transparent 27%),
+    repeating-conic-gradient(var(--en-line) 0 3deg, transparent 3deg 15deg),
+    var(--en-paper);
+  box-shadow: 0 0 0 0.25cqi var(--en-paper), 0 0 0 0.35cqi var(--en-ink-2);
+  animation: engraved-spin 40s linear infinite;
+}
+.engraved-ig-plate-corner.c1 { left: 1.1cqi; top: 0.35cqi; }
+.engraved-ig-plate-corner.c2 { right: 1.1cqi; top: 0.35cqi; animation-direction: reverse; }
+.engraved-ig-plate-corner.c3 { left: 1.1cqi; bottom: 0.35cqi; animation-direction: reverse; }
+.engraved-ig-plate-corner.c4 { right: 1.1cqi; bottom: 0.35cqi; }
+
+/* Phone width: keep paper, frame, rosette; drop rays, construction lines and corner rosettes */
+@container (max-width: 520px) {
+  .engraved-ig-plate .engraved-ig-plate-rays,
+  .engraved-ig-plate .engraved-ig-plate-golden,
+  .engraved-ig-plate .engraved-ig-plate-corner { display: none; }
+  .engraved-ig-plate-rosette { left: calc(var(--fx) - 45cqi); top: calc(var(--fy) - 45cqi); width: 90cqi; height: 90cqi; }
+}
+
+/* ---- /igaming seal: a transparent guilloché medallion with a foil star (closing mark) ---- */
+.engraved-ig-seal {
+  --en-foil: color-mix(in srgb, #c9a44c 72%, var(--en-line));
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: none;
+  box-shadow: none;
+}
+:root[data-theme="dark"] .engraved-ig-seal { --en-foil: #f2cf7a; }
+.engraved-ig-seal-rim {
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-conic-gradient(var(--en-line) 0 1deg, transparent 1deg 7.5deg);
+  -webkit-mask: radial-gradient(closest-side, transparent 86%, black 87%);
+  mask: radial-gradient(closest-side, transparent 86%, black 87%);
+  animation: engraved-spin 90s linear infinite;
+}
+.engraved-ig-seal-rosette {
+  inset: 11%;
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(circle at 50% 44%, transparent 0 3cqi, var(--en-ink-2) 3cqi 3.8cqi),
+    repeating-radial-gradient(circle at 44% 53%, transparent 0 3cqi, var(--en-ink-2) 3cqi 3.8cqi),
+    repeating-radial-gradient(circle at 56% 53%, transparent 0 3cqi, var(--en-ink-2) 3cqi 3.8cqi);
+  -webkit-mask: radial-gradient(closest-side, transparent 38%, black 46%, black 100%);
+  mask: radial-gradient(closest-side, transparent 38%, black 46%, black 100%);
+  box-shadow: inset 0 0 0 1.4cqi var(--en-line), 0 0 0 3.4cqi transparent;
+  animation: engraved-spin-back 120s linear infinite;
+}
+.engraved-ig-seal-ring {
+  inset: 7%;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1cqi var(--en-ink-2);
+}
+.engraved-ig-seal-star {
+  left: 30.9%; top: 30.9%; width: 38.2%; height: 38.2%;
+  background: var(--en-foil);
+  clip-path: polygon(50% 0%, 53.4% 41.7%, 71.9% 28.1%, 58.3% 46.6%, 100% 50%, 58.3% 53.4%, 71.9% 71.9%, 53.4% 58.3%, 50% 100%, 46.6% 58.3%, 28.1% 71.9%, 41.7% 53.4%, 0% 50%, 41.7% 46.6%, 28.1% 28.1%, 46.6% 41.7%);
+  animation: engraved-spin 60s linear infinite;
+}
+
 /* ---- /igaming "game floor" card art: 16:9, subject centred, one small loop each ---- */
 .engraved-floor {
   --fx: 50%;

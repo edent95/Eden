@@ -40,8 +40,11 @@ export type IGamingRelation = { label: IGamingLocalized; body: IGamingLocalized 
 /** A simple table: `head` is the column labels, each row's first cell is the row header. */
 export type IGamingTable = { head: IGamingLocalized[]; rows: IGamingLocalized[][] };
 
+/** Route of the full starter pack; `/igaming` itself is the key-points page. */
+export const IGAMING_FULL_PATH = 'igaming/full';
+
 export const IGAMING_PAGE = {
-  kicker: L('iGaming · Starter pack', 'iGaming · 入门包'),
+  kicker: L('iGaming · Full starter pack', 'iGaming · 完整版入门包'),
   unlocked: L(
     'You got here by finishing ten rounds of the Mini Coin Slot. You have seen the house win. This is how the house actually runs.',
     '你是玩满十局 Mini Coin Slot 才走到这里的。你已经见过庄家赢，这一页讲庄家实际上怎么运作。',
@@ -694,5 +697,115 @@ export const IGAMING_PAGE = {
     b2b: L('Engraved pair of meshing gears with 21 and 13 teeth', '21 齿与 13 齿两个咬合的凹版齿轮'),
     troubleshooting: L('Engraved compass rose with a needle searching for north', '指针来回寻找北方的凹版罗盘'),
   },
+  sealLabel: L('Engraved guilloché seal with a gold star', '带金色星芒的凹版扭索纹印章'),
+  back: L('Back to key points', '返回重点版'),
+};
+
+
+/* ======================================================================
+ * `/igaming` — key points. Six sections, three points each, every one
+ * opening into the matching section of the full starter pack.
+ * ====================================================================== */
+
+export type IGamingSummarySection = {
+  /** Anchor id of the matching section on the full page. */
+  id: 'starter' | 'promotions' | 'workflow' | 'reporting' | 'b2b' | 'troubleshooting';
+  banner: 'table' | 'chips' | 'loop' | 'ledger' | 'gears' | 'compass';
+  number: string;
+  title: IGamingLocalized;
+  line: IGamingLocalized;
+  points: IGamingCallout[];
+};
+
+export const IGAMING_SUMMARY = {
+  kicker: L('iGaming · Key points', 'iGaming · 重点版'),
+  claim: IGAMING_PAGE.claim,
+  standfirst: L(
+    'Six ideas that explain how an iGaming business actually runs. Each one opens into the full starter pack if you want the detail.',
+    '六个重点，讲清楚一门 iGaming 生意实际上怎么运作。想看细节，每一节都能点进完整版。',
+  ),
+  openFull: L('Open the full starter pack', '打开完整版'),
+  readSection: L('Read this section', '看这一节完整版'),
+  sections: [
+    {
+      id: 'starter',
+      banner: 'table',
+      number: '01',
+      title: L('Starter pack', '入门包'),
+      line: L('Who sits at the table, and where the money goes.', '谁在桌上，钱往哪里走。'),
+      points: [
+        { title: L('Operator owns the player', 'Operator 拥有玩家'), body: L('Providers own the games; aggregators, platforms, and payments sit in between.', 'Provider 拥有游戏；aggregator、平台和支付夹在中间。') },
+        { title: L('Deposit ≠ turnover ≠ GGR', '存款 ≠ 流水 ≠ GGR'), body: L('The same deposit of 100 can be bet until turnover reaches 500.', '同一笔 100 的存款，可以反复下注到流水 500。') },
+        { title: L('The edge is built in', '优势是内建的'), body: L('RTP 96% means 4% of all bets stays with the house over time.', 'RTP 96% 表示长期来看所有投注的 4% 留给庄家。') },
+      ],
+    },
+    {
+      id: 'promotions',
+      banner: 'chips',
+      number: '02',
+      title: L('Promotions', '促销类型'),
+      line: L('Know whose money it is.', '先知道是谁的钱。'),
+      points: [
+        { title: L('Providers buy play', 'Provider 买的是游戏被玩'), body: L('Tournaments, cash drops, free rounds, and placement deals for their games.', '锦标赛、随机掉落、免费局，以及换置顶位的合作。') },
+        { title: L('Operators buy loyalty', 'Operator 买的是留下来'), body: L('Welcome bonus, reload, rebate, referral, and VIP tiers.', '首存奖金、续存、返水、推荐奖励和 VIP 等级。') },
+        { title: L('Read it with the bonus ratio', '一定对着奖金比例看'), body: L('Good deposits can hide expensive bonus. Never read one without the other.', '好看的存款可能藏着昂贵的奖金。两个数字永远一起看。') },
+      ],
+    },
+    {
+      id: 'workflow',
+      banner: 'loop',
+      number: '03',
+      title: L('My workflow', '我的工作流程'),
+      line: L('Every decision traces back to a number someone can check.', '每个决定都要能追溯到一个别人查得到的数字。'),
+      points: [
+        { title: L('Daily report', '每日报表'), body: L('Export, clean, then start from what changed since yesterday.', '导出、清洗，然后从「和昨天比哪里变了」开始。') },
+        { title: L('Campaign launch', '活动上线'), body: L('Terms support can quote, daily claim tracking, then keep, change, or kill.', '条款写到客服能照念，每天盯申领，最后保留、调整或砍掉。') },
+        { title: L('CRM loop', 'CRM 循环'), body: L('Segment, export the exact list, act, and measure it in the next report.', '分群、导出确切名单、执行，下一份日报就看结果。') },
+      ],
+    },
+    {
+      id: 'reporting',
+      banner: 'ledger',
+      number: '04',
+      title: L('Reporting', '报表'),
+      line: L('The daily report is the operation’s memory.', '日报是整个运营的记忆。'),
+      points: [
+        { title: L('Withdrawals are negative', '提款是负数'), body: L('So net deposit is deposit plus withdrawal, and that is not a bug.', '所以净存款是存款加提款，这不是 bug。') },
+        { title: L('Merge before you count', '先合并，再数人'), body: L('Resolve duplicate IDs and keep every brand separate, or growth is inflated.', '先合并重复账号、各品牌分开算，否则增长会被高估。') },
+        { title: L('A drop starts the investigation', '数字掉了只是起点'), body: L('Turnover, actives, FTD, channels, games, bonus cost: check before you conclude.', '流水、活跃、FTD、渠道、游戏、奖金成本，查完再下结论。') },
+      ],
+    },
+    {
+      id: 'b2b',
+      banner: 'gears',
+      number: '05',
+      title: L('The B2B side', 'B2B 这一边'),
+      line: L('Signed does not mean live.', '签约不等于上线。'),
+      points: [
+        { title: L('Discovery before demo', '先了解，再 demo'), body: L('Ask about markets, goals, stack, and gaps before showing anything.', '先问市场、目标、技术栈和缺口，再决定要不要演示。') },
+        { title: L('The client is several people', '「客户」是好几个人'), body: L('Owner, product, marketing, ops, tech, and finance each need a different demo.', '老板、产品、营销、运营、技术、财务，每个人要看的 demo 都不同。') },
+        { title: L('The contract defines reality', '合同才定义现实'), body: L('Integration, promotions, and account growth turn it into a live business.', '对接、促销和客户经营，才把它变成在跑的生意。') },
+      ],
+    },
+    {
+      id: 'troubleshooting',
+      banner: 'compass',
+      number: '06',
+      title: L('When a number moves', '数字动了怎么办'),
+      line: L('Search by symptom, not by terminology.', '按症状查，而不是按术语查。'),
+      points: [
+        { title: L('FTD dropped', 'FTD 掉了'), body: L('Traffic → registration → KYC → deposit attempts → success rate → PSP.', '流量 → 注册 → KYC → 存款尝试 → 成功率 → PSP。') },
+        { title: L('Game will not launch', '游戏打不开'), body: L('Game ID → currency → market → provider → maintenance → integration.', '游戏 ID → 币种 → 市场 → provider → 维护 → 对接。') },
+        { title: L('Know who owns it', '先知道归谁管'), body: L('Route to the owner with evidence, then communicate without guessing.', '带着证据找到负责人，沟通时不要猜。') },
+      ],
+    },
+  ] as IGamingSummarySection[],
+  fullTitle: L('Want the whole table?', '想看整张台面？'),
+  fullBody: L(
+    'The full starter pack has every role, term, promotion, workflow step, B2B checklist, troubleshooting path, and playbook behind these six points.',
+    '完整版里有这六个重点背后的所有角色、术语、促销、工作流程、B2B 清单、排查路径和 playbook。',
+  ),
+  closingTitle: IGAMING_PAGE.closingTitle,
+  closingBody: IGAMING_PAGE.closingBody,
   back: L('Back to home', '返回首页'),
 };

@@ -87,6 +87,7 @@ type ThemePreference = Theme | 'auto';
 const PenneysGamePage = React.lazy(() => import('./components/PenneysGamePage'));
 const MiyaPrivacyPage = React.lazy(() => import('./components/MiyaPrivacyPage'));
 const IGamingPage = React.lazy(() => import('./components/IGamingPage'));
+const IGamingSummaryPage = React.lazy(() => import('./components/IGamingSummaryPage'));
 const HomePenneyGame = React.lazy(() => import('./components/HomePenneyGame'));
 
 type BeforeInstallPromptEvent = Event & {
@@ -10241,6 +10242,7 @@ const App: React.FC = () => {
   const miyaHref = joinBasePath(baseUrl, 'project/miya');
   const lifeOsHref = joinBasePath(baseUrl, 'life-os');
   const igamingHref = joinBasePath(baseUrl, 'igaming');
+  const igamingFullHref = joinBasePath(baseUrl, 'igaming/full');
   const cellularAutomataLabHref = joinBasePath(baseUrl, 'cellular-automata-lab');
   const homeSystemFiles: Array<{
     title: string;
@@ -10352,6 +10354,7 @@ const App: React.FC = () => {
   const isProjectHomePage = pathWithoutBase === '/project';
   const isMiyaPrivacyPage = pathWithoutBase === '/project/miya';
   const isIGamingPage = pathWithoutBase === '/igaming';
+  const isIGamingFullPage = pathWithoutBase === '/igaming/full';
   const isIconPromptsPage = pathWithoutBase === '/icon-prompts';
   const archivedWorkSlug = pathWithoutBase.startsWith('/archive/')
     ? pathWithoutBase.replace('/archive/', '')
@@ -10654,22 +10657,23 @@ const App: React.FC = () => {
     );
   }
 
-  if (isIGamingPage) {
+  if (isIGamingPage || isIGamingFullPage) {
+    const igamingControls = (
+      <HeaderControls
+        language={language}
+        setLanguage={setLanguage}
+        themePreference={themePreference}
+        theme={theme}
+        setThemePreference={setThemePreference}
+      />
+    );
     return (
       <React.Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
-        <IGamingPage
-          language={language}
-          homeHref={homeHref}
-          controls={
-            <HeaderControls
-              language={language}
-              setLanguage={setLanguage}
-              themePreference={themePreference}
-              theme={theme}
-              setThemePreference={setThemePreference}
-            />
-          }
-        />
+        {isIGamingFullPage ? (
+          <IGamingPage language={language} backHref={igamingHref} controls={igamingControls} />
+        ) : (
+          <IGamingSummaryPage language={language} homeHref={homeHref} fullHref={igamingFullHref} controls={igamingControls} />
+        )}
       </React.Suspense>
     );
   }
