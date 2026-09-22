@@ -277,6 +277,44 @@
   .eden-penney h2 { font-size: 42px; }
   .eden-penney-body p { font-size: 16px; }
   .eden-penney-arena { border-radius: 20px; }
-  .eden-penney-picker { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .eden-penney-name { grid-template-columns: 1fr; gap: 8px; }
+}
+
+/* Phone: the arena was 1390px tall on a 390px screen — more than a screen and a half.
+   The eight tickets stay a 4-column board (two rows, not four), and every block loses
+   the padding and type size it only needed on desktop. Tap targets stay at 44px. */
+@media (max-width: 520px) {
+  .eden-penney { padding-block: 64px; gap: 28px; }
+  .eden-penney h2 { font-size: 34px; }
+  .eden-penney-body { margin-top: 20px; }
+  .eden-penney-body p { font-size: 15px; line-height: 1.62; }
+  .eden-penney-body p + p { margin-top: 12px; }
+  .eden-penney-thesis { margin-top: 16px !important; }
+
+  .eden-penney-arena { padding: 16px; }
+  .eden-penney-metrics { gap: 8px; }
+  .eden-penney-metrics > div { padding: 10px 12px; border-radius: 14px; }
+  .eden-penney-metrics strong { margin-top: 4px; font-size: 22px; }
+  .eden-penney-metrics small { margin-left: 4px; font-size: 10px; white-space: nowrap; }
+
+  .eden-penney-name { margin-top: 10px; }
+  .eden-penney-name input { height: 40px; }
+
+  .eden-penney-tickets { margin-top: 10px; gap: 8px; }
+  .eden-penney-ticket { min-height: 64px; padding: 10px 11px; gap: 6px; border-radius: 14px; }
+  .eden-penney-ticket em { font-size: 14px; }
+
+  .eden-penney-stream { margin-top: 10px; min-height: 44px; max-height: 84px; }
+  .eden-penney-status { margin-top: 8px !important; font-size: 12px; }
+
+  .eden-penney-picker { margin-top: 10px; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+  .eden-penney-picker button { min-height: 44px; padding: 4px 1px; border-radius: 12px; }
+  .eden-penney-picker .penney-coin.is-small { --penney-coin-size: 1.15rem; }
+
+  .eden-penney-spin { margin-top: 10px; min-height: 46px; }
+  .eden-penney-unlock { margin-top: 10px; padding: 10px 12px; }
+
+  .eden-penney-leaderboard { margin-top: 14px; padding-top: 12px; }
+  .eden-penney-leaderboard ol { margin-top: 8px; }
+  .eden-penney-leaderboard li { min-height: 30px; grid-template-columns: 18px minmax(0, 1fr) auto 42px; gap: 6px; }
 }
