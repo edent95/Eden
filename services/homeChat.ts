@@ -21,7 +21,8 @@ const CHAT_DATABASE_URL = (
 
 const CHAT_NODE = 'homeChatMessages';
 const CHAT_NAME_KEY = 'eden.home.chat.name.v1';
-const REQUEST_TIMEOUT_MS = 10_000;
+// A cold homeChatApi instance took ~9s (once >15s) to answer the first send after idling.
+const REQUEST_TIMEOUT_MS = 25_000;
 
 export const CHAT_HISTORY_SIZE = 40;
 export const CHAT_MAX_LENGTH: number = MAX_MESSAGE_LENGTH;
