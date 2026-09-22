@@ -9221,7 +9221,7 @@ const homeCollageItems: Array<{
     tone: 'sea',
     image: 'home-banners/diving-ocean-banner-poster.jpg',
     video: 'home-banners/diving-ocean-banner.mp4',
-    imageAlt: { en: 'A massive ocean wave rising above the sea', zh: '海面上升起的巨大浪潮' },
+    imageAlt: { en: 'A first-person dive through a coral reef among rising bubbles, arriving at an octopus DJ spinning records beneath neon light', zh: '第一人称潜入珊瑚礁，穿过上升的气泡，来到在霓虹灯下打碟的章鱼 DJ 面前' },
     href: 'videos/pulau-kapas.mp4',
     linkLabel: { en: 'Watch the Pulau Kapas ocean film', zh: '观看 Pulau Kapas 海洋影片' },
     ctaLabel: { en: 'Watch now', zh: '立即观看' },
