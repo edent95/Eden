@@ -91,7 +91,7 @@
 }
 
 :root[data-theme="dark"] .ring-teal-800\/\[0\.05\] {
-  --tw-ring-color: rgb(220 111 130 / 0.18) !important;
+  --tw-ring-color: rgb(242 140 56 / 0.18) !important;
 }
 
 :root[data-theme="dark"] .from-stone-50\/70 {

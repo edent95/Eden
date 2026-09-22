@@ -30,7 +30,7 @@
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --color-eden-mint: #dc6f82;
+  --color-eden-mint: #f28c38;
   --color-eden-amber: #6fa4f0e6;
   --theme-page: #141211;
   --theme-surface: #1f1b19;
@@ -41,9 +41,9 @@
   --theme-text-primary: #f5f5f4;
   --theme-text-secondary: #d6d3d1;
   --theme-text-soft: #a8a29e;
-  --theme-accent-teal: rgb(255 170 182 / 0.92);
+  --theme-accent-teal: rgb(255 190 138 / 0.92);
   --theme-accent-amber: rgb(171 205 255 / 0.92);
-  --theme-mint-glow: 220 111 130;
+  --theme-mint-glow: 242 140 56;
   --theme-amber-rim: 111 164 240;
   --theme-background-texture: none;
   --theme-background-lights: none;

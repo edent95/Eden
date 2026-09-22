@@ -202,17 +202,17 @@
 }
 
 :root[data-theme="dark"] .home-conway-board {
-  border-color: rgb(220 111 130 / .42);
+  border-color: rgb(242 140 56 / .42);
   background: #151a22;
 }
 
 :root[data-theme="dark"] .home-conway-grid-line {
-  background: rgb(220 111 130 / .16);
+  background: rgb(242 140 56 / .16);
 }
 
 :root[data-theme="dark"] .home-conway-live-cell,
 :root[data-theme="dark"] .home-conway-core {
-  background: #dc6f82;
+  background: #f28c38;
 }
 
 :root[data-theme="dark"] .home-conway-live-cell.cell-11,
@@ -225,7 +225,7 @@
 
 :root[data-theme="dark"] .home-conway-ring.ring-outer,
 :root[data-theme="dark"] .home-conway-diamond {
-  border-color: rgb(220 111 130 / .68);
+  border-color: rgb(242 140 56 / .68);
 }
 
 :root[data-theme="dark"] .home-conway-ring.ring-middle,
@@ -234,7 +234,7 @@
 }
 
 :root[data-theme="dark"] .home-conway-axis {
-  background: rgb(220 111 130 / .44);
+  background: rgb(242 140 56 / .44);
 }
 
 @keyframes home-conway-spin {

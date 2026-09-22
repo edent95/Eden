@@ -31,7 +31,7 @@
   --ep-line: #303034;
   --ep-paper: #050505;
   --ep-soft: #161617;
-  --ep-primary: #dc6f82;
+  --ep-primary: #f28c38;
   --ep-primary-hover: #f18498;
   --ep-primary-text: #220d12;
   --ep-primary-outline: #ff9aaa;
@@ -168,7 +168,7 @@
 }
 
 .ep-get-ghost:hover { background: rgb(123 220 181 / 0.12); }
-:root[data-theme="dark"] .ep-get-ghost:hover { background: rgb(220 111 130 / 0.16); }
+:root[data-theme="dark"] .ep-get-ghost:hover { background: rgb(242 140 56 / 0.16); }
 
 /* ---------- hero ---------- */
 

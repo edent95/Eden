@@ -25,7 +25,7 @@
   --brand-paper: #050505;
   --brand-soft: #161617;
   --brand-deep: #000000;
-  --brand-primary: #dc6f82;
+  --brand-primary: #f28c38;
   --brand-primary-hover: #f18498;
   --brand-primary-text: #220d12;
   --brand-primary-outline: #ff9aaa;
@@ -172,7 +172,7 @@
 }
 
 :root[data-theme="dark"] .brand-guide-cta-muted:hover {
-  background: rgb(220 111 130 / 0.16);
+  background: rgb(242 140 56 / 0.16);
   color: var(--brand-primary-outline);
 }
 
