@@ -5,7 +5,10 @@
   background-color: var(--theme-page) !important;
 }
 
-:root[data-theme="dark"] .bg-white {
+/* The header Theme/Language toggles are borderless shells around their own pills
+   (see styles/shared.css). Without this exclusion the dark `.bg-white` override wins
+   on specificity and paints a card behind them — visible as a box around the toggle. */
+:root[data-theme="dark"] .bg-white:not(.header-theme-toggle):not(.header-language-toggle) {
   background-color: var(--theme-surface) !important;
 }
 

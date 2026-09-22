@@ -26,9 +26,10 @@
   --brand-soft: #161617;
   --brand-deep: #000000;
   --brand-primary: #f28c38;
-  --brand-primary-hover: #f18498;
+  /* Hover/outline follow the orange primary; the old pink pair clashed with it. */
+  --brand-primary-hover: #e07c2c;
   --brand-primary-text: #220d12;
-  --brand-primary-outline: #ff9aaa;
+  --brand-primary-outline: #ffab66;
 }
 
 .brand-guide-page main {
