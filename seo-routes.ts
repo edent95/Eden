@@ -327,7 +327,7 @@ export const ROUTE_SEO: RouteSeo[] = [
   {
     path: '/poker',
     datePublished: '2026-06-05',
-    dateModified: '2026-09-14',
+    dateModified: '2026-09-23',
     og: 'poker',
     priority: '0.8',
     title: {
@@ -335,8 +335,8 @@ export const ROUTE_SEO: RouteSeo[] = [
       zh: 'Friday Poker Club | Eden Tan 的浏览器德州牌桌主机',
     },
     desc: {
-      en: 'A browser Hold’em table for private games: create a room, invite the crew, buy in, play in realtime, and keep the stories that happen around the table.',
-      zh: '为熟人局设计的浏览器德州牌桌：创建房间、邀请朋友、买入、实时开局，并留下那群人在桌边发生的故事。',
+      en: 'A browser Hold’em table for a private crew: nine seats, blinds and buy-ins, six mini games, party games, and a chip tracker for real-card nights.',
+      zh: '为熟人局做的浏览器德州牌桌：九个座位、盲注与买入、六个小游戏、派对游戏，还能给真牌局记筹码。只有娱乐筹码。',
     },
   },
   {
