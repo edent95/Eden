@@ -11,6 +11,7 @@ import {
   isSequence,
   publicPlayer,
   resolveRound,
+  defaultNameFor,
   sanitizeName,
 } from './penney-mini-core.js';
 
@@ -40,8 +41,6 @@ const readClientIp = (request) => {
 const playerIdFor = (request) =>
   createHmac('sha256', ipSalt.value()).update(readClientIp(request)).digest('hex');
 
-const fallbackNameFor = (playerId) => `visitor-${playerId.slice(0, 4)}`;
-
 const readBoard = async (currentDay, currentPlayerId) => {
   const snapshot = await getDatabase().ref(PLAYERS_NODE).get();
   return buildLeaderboard(snapshot.val(), currentDay, currentPlayerId);
@@ -68,7 +67,7 @@ export const penneyMiniApi = onRequest(
       const currentDay = dayKey();
       const playerId = playerIdFor(request);
       const playerRef = getDatabase().ref(`${PLAYERS_NODE}/${playerId}`);
-      const fallbackName = fallbackNameFor(playerId);
+      const fallbackName = defaultNameFor(playerId);
 
       if (request.method === 'GET') {
         const [playerSnapshot, leaderboard] = await Promise.all([

@@ -2,9 +2,11 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   DAILY_CREDITS,
+  DEFAULT_NAMES,
   applyRound,
   buildLeaderboard,
   dayKey,
+  defaultNameFor,
   houseResponse,
   publicPlayer,
   resolveRound,
@@ -60,4 +62,31 @@ test('leaderboard requires ten plays and ranks by win rate', () => {
   );
   assert.deepEqual(board.map((entry) => entry.name), ['Finder', 'Steady']);
   assert.equal(board[0]?.isYou, true);
+});
+
+test('default board names come from the everyday name pool and replace legacy visitor aliases', () => {
+  assert.equal(DEFAULT_NAMES.length, 39);
+  assert.equal(new Set(DEFAULT_NAMES).size, DEFAULT_NAMES.length);
+  const id = 'a1b2c3d4e5f6';
+  assert.equal(defaultNameFor(id), defaultNameFor(id));
+  assert.ok(DEFAULT_NAMES.includes(defaultNameFor(id)));
+
+  const day = '2026-09-22';
+  assert.equal(publicPlayer({ name: 'visitor-a1b2', plays: 3 }, day, 'Ben').name, 'Ben');
+  assert.equal(publicPlayer({ name: 'visitor', plays: 3 }, day, 'Ben').name, 'Ben');
+  assert.equal(publicPlayer({ name: 'Mei', plays: 3 }, day, 'Ben').name, 'Mei');
+
+  const board = buildLeaderboard({ [id]: { name: 'visitor-a1b2', plays: 10, wins: 5, day } }, day);
+  assert.equal(board[0].name, defaultNameFor(id));
+});
+
+test('hidden players stay off the public board, even after they play again', () => {
+  const day = '2026-09-22';
+  const hidden = { name: 'x', plays: 20, wins: 15, day, hidden: true };
+  const board = buildLeaderboard({ a: hidden, b: { name: 'y', plays: 10, wins: 1, day } }, day);
+  assert.deepEqual(board.map((entry) => entry.name), ['y']);
+
+  const next = applyRound({ player: hidden, winner: 'player', name: 'x', currentDay: day, now: 1 });
+  assert.equal(next?.hidden, true);
+  assert.equal(applyRound({ player: { plays: 1, day }, winner: 'house', name: 'z', currentDay: day, now: 1 })?.hidden, undefined);
 });
