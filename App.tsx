@@ -10719,15 +10719,21 @@ const App: React.FC = () => {
 
       <main>
         <motion.section className="eden-hero eden-home-island" initial="initial" animate="animate" variants={staggerContainer}>
-          <motion.p variants={fadeIn} className="eden-eyebrow">EDEN · HUMAN SYSTEMS & PRODUCT</motion.p>
+          <motion.p variants={fadeIn} className="eden-eyebrow">{isZh ? '啊不然请我吃饭也可以' : 'EDEN · HUMAN SYSTEMS & PRODUCT'}</motion.p>
           <motion.h1 variants={fadeIn}>
-            {isZh ? <><span>从混乱中</span><br /><span>建立系统</span></> : <><span>Build systems</span><br /><span>from chaos.</span></>}
+            {isZh ? (
+              <span className="eden-hero-beat">
+                {Array.from('屌撚㞗閪𨶙').map((char, index) => (
+                  <span key={char} style={{ '--beat': index } as React.CSSProperties}>{char}</span>
+                ))}
+              </span>
+            ) : <><span>Build systems</span><br /><span>from chaos.</span></>}
           </motion.h1>
           <motion.p variants={fadeIn} className="eden-hero-copy">
-            {isZh ? '我把复杂的人性、行为与现实问题，转化成可以被理解、验证和使用的数据、产品与 AI 系统。' : 'I turn complex human behavior and messy realities into useful products, data, and AI systems.'}
+            {isZh ? '我冇錢，可唔可以請我做嘢？' : 'I turn complex human behavior and messy realities into useful products, data, and AI systems.'}
           </motion.p>
           <motion.div variants={fadeIn} className="eden-hero-actions">
-            <a className="eden-button" href={projectHomeHref}>{isZh ? '探索我的作品' : 'Explore my work'}</a>
+            <a className="eden-button" href={projectHomeHref}>{isZh ? '看看下，可能我们可以一起赚更多的钱' : 'Explore my work'}</a>
           </motion.div>
         </motion.section>
 

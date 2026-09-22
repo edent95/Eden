@@ -187,6 +187,14 @@
   .eden-footer > div, .eden-footer-links { flex-direction: column; }.eden-footer-links { gap: 14px; }
 }
 
+/* zh hero: five characters land one per beat */
+.eden-hero-beat { display: inline-flex; letter-spacing: 0; }
+.eden-hero-beat > span { display: inline-block; animation: eden-hero-beat .42s cubic-bezier(.2, 1.4, .4, 1) both; animation-delay: calc(.35s + var(--beat) * .32s); }
+@keyframes eden-hero-beat {
+  from { opacity: 0; transform: translateY(.35em) scale(.6); }
+  to { opacity: 1; transform: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .eden-collage-video { display: none; }
   /* the blanket animation:none below stops the drift, so let people scroll the row themselves */
