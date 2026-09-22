@@ -5,6 +5,30 @@ export const MAX_NAME_LENGTH = 16;
 
 const FACE_PATTERN = /^[HT]{3}$/;
 
+/**
+ * Default board names: everyday Malaysian names, picked from the hashed player
+ * id so the same visitor keeps the same name. Duplicates on the board are fine.
+ */
+export const DEFAULT_NAMES = [
+  'Ben', 'Patrick', 'Lim', 'Tan', 'Teh', 'Albert', '静怡', '俊杰', 'Jason', 'Kee',
+  'Wong', 'Ong', 'Chong', 'Ng', 'Lee', 'Goh', 'Kelvin', 'Alvin', 'Jacky', 'Vincent',
+  'Eric', 'Daniel', 'Melvin', 'Desmond', 'Winnie', 'Michelle', 'Jessica', 'Carmen', '伟杰', '嘉欣',
+  '家豪', '志明', '春娇', '美玲', '子轩', '欣怡', '振华', 'Ah Beng', 'Ah Lian',
+];
+
+export const defaultNameFor = (playerId) => {
+  const seed = Number.parseInt(String(playerId ?? '').slice(0, 8), 16);
+  return DEFAULT_NAMES[(Number.isFinite(seed) ? seed : 0) % DEFAULT_NAMES.length];
+};
+
+/** Names the server used to hand out (`visitor`, `visitor-1a2b`) count as unset. */
+const LEGACY_AUTO_NAME = /^visitor(-[0-9a-f]{4})?$/;
+
+const chosenName = (value) => {
+  const name = sanitizeName(value);
+  return LEGACY_AUTO_NAME.test(name) ? '' : name;
+};
+
 export const isSequence = (value) => typeof value === 'string' && FACE_PATTERN.test(value);
 
 export const sanitizeName = (value) =>
@@ -56,7 +80,7 @@ export const resolveRound = (playerSequence, nextFace = () => (Math.random() < 0
   throw new Error('round-did-not-resolve');
 };
 
-export const normalizePlayer = (value, currentDay, fallbackName = 'visitor') => {
+export const normalizePlayer = (value, currentDay, fallbackName = DEFAULT_NAMES[0]) => {
   const source = value && typeof value === 'object' ? value : {};
   const plays = Math.max(0, Math.floor(Number(source.plays) || 0));
   const wins = Math.min(plays, Math.max(0, Math.floor(Number(source.wins) || 0)));
@@ -66,13 +90,15 @@ export const normalizePlayer = (value, currentDay, fallbackName = 'visitor') => 
     : 0;
 
   return {
-    name: sanitizeName(source.name) || fallbackName,
+    name: chosenName(source.name) || fallbackName,
     plays,
     wins,
     winRate: plays > 0 ? wins / plays : 0,
     day: currentDay,
     dailyUsed,
     updatedAt: Math.max(0, Math.floor(Number(source.updatedAt) || 0)),
+    // Set by hand in the database to keep a player off the public board; survives later rounds.
+    ...(source.hidden === true ? { hidden: true } : {}),
   };
 };
 
@@ -84,7 +110,7 @@ export const applyRound = ({ player, winner, name, currentDay, now }) => {
   const wins = current.wins + (winner === 'player' ? 1 : 0);
   return {
     ...current,
-    name: sanitizeName(name) || current.name,
+    name: chosenName(name) || current.name,
     plays,
     wins,
     winRate: wins / plays,
@@ -93,7 +119,7 @@ export const applyRound = ({ player, winner, name, currentDay, now }) => {
   };
 };
 
-export const publicPlayer = (value, currentDay, fallbackName = 'visitor') => {
+export const publicPlayer = (value, currentDay, fallbackName = DEFAULT_NAMES[0]) => {
   const player = normalizePlayer(value, currentDay, fallbackName);
   return {
     name: player.name,
@@ -108,7 +134,8 @@ export const publicPlayer = (value, currentDay, fallbackName = 'visitor') => {
 
 export const buildLeaderboard = (players, currentDay, currentPlayerId = '') =>
   Object.entries(players && typeof players === 'object' ? players : {})
-    .map(([id, value]) => ({ id, ...publicPlayer(value, currentDay) }))
+    .filter(([, value]) => !(value && typeof value === 'object' && value.hidden === true))
+    .map(([id, value]) => ({ id, ...publicPlayer(value, currentDay, defaultNameFor(id)) }))
     .filter((entry) => entry.ranked)
     .sort((a, b) => b.winRate - a.winRate || b.wins - a.wins || b.plays - a.plays || a.name.localeCompare(b.name))
     .slice(0, LEADERBOARD_SIZE)

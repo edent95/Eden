@@ -10769,16 +10769,16 @@ const App: React.FC = () => {
           </div>
           <div className="eden-about-copy">
             <p className="eden-section-label">01 · About Eden</p>
-            <h2>{isZh ? <>嗨，我是 Eden</> : <>Hey, I’m Eden.</>}</h2>
+            <h2>{isZh ? <>蛋散一条</> : <>Hey, I’m Eden.</>}</h2>
             <div className="eden-about-body eden-about-body-compact">
               {isZh ? (
                 <>
-                  <p>大多数人收集知识。我收集模式。</p>
-                  <p>我探索 AI、产品增长、营销、心理学、哲学和符号系统，是为了找到它们共同的结构。</p>
-                  <p>我相信，复杂往往只是一个翻译问题。我的工作，是把散落的想法整理成清晰的系统——通过软件、AI 智能体、文章，以及 Jiju 这样的产品。</p>
-                  <p>技术不是终点，而是一种语言，用来表达我们对现实更好的理解。</p>
-                  <p>我建立框架，帮助人们更清楚地看见自己、自己的事业和这个世界。</p>
-                  <p className="eden-about-now"><strong>因为一旦看见系统，你就能改变它。</strong></p>
+                  <p>别人收 Pokémon card，我收皮。</p>
+                  <p>AI、营销、心理学、哲学、Ang Kong system，我都略懂一二。你问我懂来做什么？懂了就不再被别人做9自己咯。</p>
+                  <p>我觉得很多事情不是复杂，是没人讲清楚。我就是那个讲清楚的人：写软件、搞 AI、写文章，还做了 Jiju。做了那么多，还是冇錢。</p>
+                  <p>技术不是终点，是我吃饭的家伙。问题是饭还没吃到。</p>
+                  <p>你的公司乱到自己都看不懂？拿来给我，我帮你画出来，顺便帮你看清楚你自己。</p>
+                  <p className="eden-about-now"><strong>看得清系统，就改得了系统。看得清人，就搞人。</strong></p>
                 </>
               ) : (
                 <>

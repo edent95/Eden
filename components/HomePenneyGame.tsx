@@ -29,7 +29,7 @@ const FLIP_INTERVAL_MS = 135;
 const QUALIFYING_PLAYS = 10;
 
 const EMPTY_PLAYER: MiniPlayer = {
-  name: 'visitor',
+  name: 'Ah Beng',
   plays: 0,
   wins: 0,
   winRate: 0,
@@ -195,25 +195,25 @@ const HomePenneyGame: React.FC<HomePenneyGameProps> = ({ isZh, igamingHref }) =>
   return (
     <section className="eden-penney eden-home-island" id="penney">
       <div className="eden-penney-copy">
-        <p className="eden-section-label">{t('Daily arena · Mini Coin Slot', '每日擂台 · Mini Coin Slot')}</p>
+        <p className="eden-section-label">{t('Daily arena · Mini Coin Slot', '每日擂台 · 劝你不要玩')}</p>
         <h2 className={isZh ? 'is-zh' : undefined}>
-          {isZh ? <>每天 100 枚。<br />看你能赢多少。</> : <>100 credits.<br />Make them count.</>}
+          {isZh ? <>是男人你就第一名</> : <>100 credits.<br />Make them count.</>}
         </h2>
         <div className="eden-penney-body">
           <p>
             {t(
               'Choose a three-coin ticket. The house locks its own ticket after yours. Spin until either pattern lands first.',
-              '选一张三枚硬币票。庄家会在你之后锁定自己的票面。持续 spin，谁的图案先出现，谁就赢。',
+              '你先选三枚硬币。一直 spin，谁的图案先出来谁赢。',
             )}
           </p>
           <p>
             {t(
               'Credits reset every midnight. Your record stays. Play ten rounds to enter the public board.',
-              'Credit 每天午夜补满，个人战绩会保留。玩满十局，就会进入公开排行榜。',
+              '每天午夜送你 100 枚，输光了明天再来。战绩我帮你记住，玩满十局就挂上排行榜给大家看。',
             )}
           </p>
           <p className="eden-penney-thesis">
-            <strong>{t('No tutorial. No disclosed odds. Just outcomes.', '没有攻略，不公布赔率，只记录结果。')}</strong>
+            <strong>{t('No tutorial. No disclosed odds. Just outcomes.', '第一名的话就算你厉害')}</strong>
           </p>
         </div>
       </div>
@@ -237,7 +237,7 @@ const HomePenneyGame: React.FC<HomePenneyGameProps> = ({ isZh, igamingHref }) =>
           <input
             value={name}
             maxLength={16}
-            placeholder="visitor"
+            placeholder="Ah Beng"
             onChange={(event) => persistName(event.target.value)}
           />
         </label>
