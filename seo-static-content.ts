@@ -91,9 +91,43 @@ function igamingStaticCopy(): StaticRouteCopy {
     thesis: page.claim,
     sections: [
       { title: page.kicker, paragraphs: [page.standfirst] },
-      { title: page.leaksTitle, paragraphs: page.leaks.map((leak) => titled(leak.title, leak.body)) },
-      { title: page.servicesTitle, paragraphs: page.services.map((service) => titled(service.title, service.body)) },
-      { title: page.processTitle, paragraphs: page.process.map((item) => titled(item.title, item.body)) },
+      {
+        title: page.starterTitle,
+        paragraphs: [
+          page.starterLead,
+          ...page.roles.map((item) => titled(item.title, item.body)),
+          ...page.floor.map((item) => titled(item.title, item.body)),
+          ...page.terms.map((item) => titled({ en: item.term, zh: item.term }, item.body)),
+          ...page.money.map((item) => titled(item.title, item.body)),
+        ],
+      },
+      {
+        title: page.promotionsTitle,
+        paragraphs: [
+          page.promotionsLead,
+          ...page.providerPromos.map((item) => titled(item.title, item.body)),
+          ...page.operatorPromos.map((item) => titled(item.title, item.body)),
+        ],
+      },
+      {
+        title: page.workflowTitle,
+        paragraphs: [
+          page.workflowLead,
+          ...page.flows.map((flow) => ({
+            en: `${flow.title.en} (${flow.when.en}): ${flow.steps.map((step) => step.title.en).join(' → ')}.`,
+            zh: `${flow.title.zh}（${flow.when.zh}）：${flow.steps.map((step) => step.title.zh).join(' → ')}。`,
+          })),
+        ],
+      },
+      {
+        title: page.reportingTitle,
+        paragraphs: [
+          page.reportingLead,
+          ...page.metrics.map((metric) => titled(metric.name, metric.definition)),
+          ...page.traps.map((item) => titled(item.title, item.body)),
+        ],
+      },
+      { title: page.closingTitle, paragraphs: [page.closingBody] },
     ],
   };
 }

@@ -217,12 +217,12 @@ export const ROUTE_SEO: RouteSeo[] = [
     dateModified: '2026-09-22',
     priority: '0.7',
     title: {
-      en: 'iGaming Operator Systems | Eden Tan',
-      zh: 'iGaming 运营系统 | Eden Tan',
+      en: 'iGaming Starter Pack | Eden Tan',
+      zh: 'iGaming 入门包 | Eden Tan',
     },
     desc: {
-      en: 'Systems for iGaming operators and aggregators: daily reporting and CRM data, campaign and bonus tooling, server-trusted mini games, and campaign pages.',
-      zh: 'Eden Tan 给 iGaming operator 与 aggregator 做系统：日报数据与 CRM、活动与奖金工具、由服务端把关的小游戏，以及活动页。',
+      en: 'An iGaming starter pack: who runs a casino, the game floor, RTP and GGR, provider promotions, and the daily reporting and CRM workflow behind it.',
+      zh: 'iGaming 入门包：谁在经营线上娱乐场、有哪些游戏、RTP 与 GGR、provider 常见促销，以及背后的日报与 CRM 工作流程。',
     },
   },
   {
