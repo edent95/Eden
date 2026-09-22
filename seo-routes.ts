@@ -217,12 +217,26 @@ export const ROUTE_SEO: RouteSeo[] = [
     dateModified: '2026-09-23',
     priority: '0.7',
     title: {
-      en: 'iGaming Starter Pack | Eden Tan',
-      zh: 'iGaming 入门包 | Eden Tan',
+      en: 'iGaming Starter Pack: Key Points | Eden Tan',
+      zh: 'iGaming 入门包：重点版 | Eden Tan',
     },
     desc: {
-      en: 'An iGaming starter pack: who runs a casino, RTP and GGR, promotions, daily reporting and CRM, the B2B side from deal to go-live, and troubleshooting.',
-      zh: 'iGaming 入门包：谁在经营线上娱乐场、有哪些游戏、RTP 与 GGR、常见促销、日报与 CRM 工作流程、B2B 从签约到上线，以及按症状排查。',
+      en: 'Six key points on how an iGaming business runs: roles and money, promotions, daily workflow, reporting, the B2B side, and troubleshooting.',
+      zh: '六个重点讲清楚 iGaming 生意怎么运作：角色与资金、促销、日常工作流程、报表、B2B，以及按症状排查。每一节都能点进完整版。',
+    },
+  },
+  {
+    path: '/igaming/full',
+    datePublished: '2026-09-23',
+    dateModified: '2026-09-23',
+    priority: '0.6',
+    title: {
+      en: 'iGaming Starter Pack: Full Guide | Eden Tan',
+      zh: 'iGaming 入门包：完整版 | Eden Tan',
+    },
+    desc: {
+      en: 'The full iGaming starter pack: who runs a casino, RTP and GGR, promotions, daily reporting and CRM, the B2B side from deal to go-live, and troubleshooting.',
+      zh: 'iGaming 完整版入门包：谁在经营线上娱乐场、有哪些游戏、RTP 与 GGR、常见促销、日报与 CRM 工作流程、B2B 从签约到上线，以及按症状排查。',
     },
   },
   {

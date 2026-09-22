@@ -72,7 +72,8 @@ npm run preview
 - `/icon-prompts` — ETReportHub / Jiju / Friday Poker Club 四宫格 icon prompt 复制页（隐藏直达页；不进 sitemap）
 - `/etreporthub` — ETReportHub 日报数据系统产品页
 - `/etreporthub-sales` — ETReportHub 售卖页与价格说明
-- `/igaming` — iGaming 入门包：行业角色、游戏类型、术语、资金流、provider 与 operator 促销类型、每日报表 / 活动上线 / CRM 工作流程与报表指标（不放联系方式、不链接过往项目）；首页 Mini Coin Slot 玩满 10 局后出现入口（带 `?from=coin-slot` 时显示解锁提示）
+- `/igaming` — iGaming 入门包重点版：六节各三个重点（入门包、促销、工作流程、报表、B2B、排查），每节可跳到完整版对应位置（不放联系方式、不链接过往项目）；首页 Mini Coin Slot 玩满 10 局后出现入口（带 `?from=coin-slot` 时显示解锁提示）
+- `/igaming/full` — iGaming 入门包完整版：行业角色、游戏类型、术语、资金流、风控合规、provider 与 operator 促销、每日报表 / 活动上线 / CRM 工作流程与报表指标、B2B（签约到上线与客户经营）、按症状排查与 playbook；返回键回到 `/igaming` 重点版
 - `/dr-racing` — Dr Racing 摩托车贷款仪表台产品页，内嵌公开 Demo
 - `/poker` — Friday Poker Club 产品详情：私人房间、邀请、买入、实时牌桌与 Build Notes
 - `/wiki` — 独立知识库总览，沉淀跨项目可复用 skills

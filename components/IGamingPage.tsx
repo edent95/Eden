@@ -2,8 +2,6 @@ import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import {
   IGAMING_PAGE,
-  IGAMING_UNLOCK_PARAM,
-  IGAMING_UNLOCK_VALUE,
   type IGamingCallout,
   type IGamingCard,
   type IGamingFlow,
@@ -12,29 +10,32 @@ import {
   type IGamingTable,
   type IGamingTerm,
 } from './igaming-content';
-import { IGamingEngravedBanner, IGamingFloorArt } from './css-art/index';
+import { IGamingEngravedBanner, IGamingFloorArt, IGamingHeroPlate, IGamingSeal } from './css-art/index';
 
 type Lang = 'en' | 'zh';
 
 /**
- * `/igaming` — an iGaming starter pack: roles, game floor, terms, money flow,
- * provider and operator promotions, Eden's reporting / campaign / CRM workflow,
- * the daily-report metrics, the B2B side, and symptom-first troubleshooting. The homepage Mini Coin Slot links here after a
- * visitor's tenth round; the page is also public and indexed. Copy lives in
- * `igaming-content.ts` and is prerendered too. No contact details and no links to
- * past projects, by the owner's request.
+ * `/igaming/full` — the full iGaming starter pack: roles, game floor, terms, money
+ * flow, provider and operator promotions, Eden's reporting / campaign / CRM
+ * workflow, the daily-report metrics, the B2B side, and symptom-first
+ * troubleshooting. `/igaming` is the key-points page (`IGamingSummaryPage`) that
+ * links into each section here; the back link returns there. Public and indexed.
+ * Copy lives in `igaming-content.ts` and is prerendered too. No contact details and
+ * no links to past projects, by the owner's request.
  */
 const IGamingPage: React.FC<{
   language: Lang;
-  homeHref: string;
+  backHref: string;
   controls: React.ReactNode;
-}> = ({ language, homeHref, controls }) => {
+}> = ({ language, backHref, controls }) => {
   const t = (value: IGamingLocalized) => value[language];
   const page = IGAMING_PAGE;
-  const [unlocked, setUnlocked] = React.useState(false);
 
+  // This page is a lazy chunk, so the browser's own jump to `#section` (from the
+  // key-points page) runs before the section exists. Redo it once on mount.
   React.useEffect(() => {
-    setUnlocked(new URLSearchParams(window.location.search).get(IGAMING_UNLOCK_PARAM) === IGAMING_UNLOCK_VALUE);
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    if (id) document.getElementById(id)?.scrollIntoView();
   }, []);
 
   const cards = (items: IGamingCard[], className: string) => (
@@ -141,7 +142,7 @@ const IGamingPage: React.FC<{
   return (
     <div className={`igaming-page${language === 'zh' ? ' is-zh' : ''}`}>
       <nav className="project-home-nav" aria-label="Primary navigation">
-        <a href={homeHref} className="project-home-back igaming-back">
+        <a href={backHref} className="project-home-back igaming-back">
           <ArrowLeft size={16} aria-hidden="true" />
           {t(page.back)}
         </a>
@@ -150,7 +151,7 @@ const IGamingPage: React.FC<{
 
       <main className="igaming-main">
         <header className="igaming-hero">
-          {unlocked ? <p className="igaming-unlocked">{t(page.unlocked)}</p> : null}
+          <IGamingHeroPlate />
           <p className="igaming-kicker">{t(page.kicker)}</p>
           <h1>{t(page.claim)}</h1>
           <p className="igaming-standfirst">{t(page.standfirst)}</p>
@@ -325,6 +326,7 @@ const IGamingPage: React.FC<{
         </section>
 
         <section className="igaming-closing" aria-labelledby="igaming-closing">
+          <div className="igaming-seal"><IGamingSeal label={t(page.sealLabel)} /></div>
           <h2 id="igaming-closing">{t(page.closingTitle)}</h2>
           <p>{t(page.closingBody)}</p>
         </section>

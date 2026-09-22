@@ -875,6 +875,47 @@ export const IGamingTableBanner: CssArtComponent = ({ label }) => <IGamingEngrav
 export const IGamingChipsBanner: CssArtComponent = ({ label }) => <IGamingEngravedBanner label={label} variant="chips" />;
 export const IGamingLoopBanner: CssArtComponent = ({ label }) => <IGamingEngravedBanner label={label} variant="loop" />;
 export const IGamingLedgerBanner: CssArtComponent = ({ label }) => <IGamingEngravedBanner label={label} variant="ledger" />;
+/**
+ * Banknote face behind the /igaming hero copy. Absolutely fills its positioned
+ * parent; decorative, so it is hidden from assistive tech unless a label is given.
+ */
+export const IGamingHeroPlate: React.FC<{ label?: string }> = ({ label }) => (
+  <div
+    className="engraved-art engraved-ig-plate engraved-tone-ink"
+    {...(label ? { role: 'img', 'aria-label': label } : { 'aria-hidden': true })}
+  >
+    <span className="engraved-ig-plate-paper" />
+    <span className="engraved-ig-plate-rays" />
+    <span className="engraved-ig-plate-ring r2" />
+    <span className="engraved-ig-plate-rosette" />
+    <span className="engraved-ig-plate-ring r1" />
+    <span className="engraved-ig-plate-golden" />
+    <span className="engraved-ig-plate-band top" />
+    <span className="engraved-ig-plate-band bottom" />
+    <span className="engraved-ig-plate-corner c1" />
+    <span className="engraved-ig-plate-corner c2" />
+    <span className="engraved-ig-plate-corner c3" />
+    <span className="engraved-ig-plate-corner c4" />
+  </div>
+);
+
+/** Transparent guilloché medallion with a foil eight-point star; the /igaming closing mark. */
+export const IGamingSeal: React.FC<{ label: string }> = ({ label }) => (
+  <div className="engraved-art engraved-ig-seal engraved-tone-ink" role="img" aria-label={label}>
+    <span className="engraved-ig-seal-rim" />
+    <span className="engraved-ig-seal-ring" />
+    <span className="engraved-ig-seal-rosette" />
+    <span className="engraved-ig-seal-star" />
+  </div>
+);
+
+export const IGamingHeroPlateArt: CssArtComponent = ({ label }) => (
+  <div style={{ position: 'relative', aspectRatio: '16 / 9', isolation: 'isolate', containerType: 'inline-size' }}>
+    <IGamingHeroPlate label={label} />
+  </div>
+);
+export const IGamingSealArt: CssArtComponent = ({ label }) => <IGamingSeal label={label} />;
+
 export const IGamingGearsBanner: CssArtComponent = ({ label }) => <IGamingEngravedBanner label={label} variant="gears" />;
 export const IGamingCompassBanner: CssArtComponent = ({ label }) => <IGamingEngravedBanner label={label} variant="compass" />;
 
