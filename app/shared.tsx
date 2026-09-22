@@ -199,3 +199,9 @@ export const HeaderControls: React.FC<{
     <LanguageToggle language={language} setLanguage={setLanguage} compactOnSelection={compactLanguageOnSelection} />
   </div>
 );
+
+/** Resolve a public asset path against the deployed base URL. */
+export const resolveAssetPath = (base: string, value: string) => {
+  if (/^(?:[a-z]+:)?\/\//i.test(value)) return value;
+  return joinBasePath(base, value);
+};
