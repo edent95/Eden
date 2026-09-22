@@ -1520,30 +1520,6 @@ const pokerAvatarGuide = [
   },
 ] as const;
 
-const pokerStoryIntro = {
-  en: 'Not a scoreboard. Just the nights worth remembering — a wedding, a brutal river, and a $5 side-pot that ended like a movie.',
-  zh: '不是战绩榜，只是几个值得记住的夜晚——一场婚礼、一条狠 river，还有一局 5 块起手、像电影一样收尾的散钱平分。',
-} as const;
-
-const pokerStories = [
-  {
-    date: '2024-05-26',
-    title: { en: 'Cap married Shield', zh: '团长娶了阿盾' },
-    body: {
-      en: 'Before any of this was a poker night, it was a wedding. Cap married Shield — the loudest loyalty and the steadiest calm, same name on the same day. Ever since, the crew has had a married couple at its center, and every game is really just an excuse to get the same people back to the same table.',
-      zh: '在这群人变成牌局之前，先有了一场婚礼。团长娶了阿盾——最响的义气配最稳的安静，同一天签下同一个名字。从那以后，桌子正中央就坐着一对夫妻；说到底，后来每一场牌，都只是把同一群人重新喊回同一张桌的理由。',
-    },
-  },
-  {
-    date: '2026-05-28',
-    title: { en: 'The river that turned twice', zh: 'river 上反转两次的那夜' },
-    body: {
-      en: 'All night the river belonged to Lucky — the last card kept saving him. Then the board gave him a straight, and he shoved all-in against Prince’s three Aces. For one second Lucky had won. Then the river paired the board and turned those Aces into a full house — the hand was lifted right out of his hands. By the end, Gambler, Lucky, and Prince each sat on their own stack: three players, one quiet stand-off. Closing scene — Drifter wandered over with $5, pulled Prince into a side-pot split, and walked away $40 up.',
-      zh: '整晚的 river 都站在罩仔这边——最后一张牌总在救他。后来桌面给了他一个顺子，他直接 all-in 推向太子手里的三条 A。有那么一秒，罩仔已经赢了。然后 river 把桌面配成对子，把那三条 A 变成葫芦——到手的牌被生生抬走。到最后，赌仔、罩仔、太子各坐一摞筹码：三家鼎立，安静对峙。收尾一幕——浪子揣着 5 块钱晃过来，把太子拉进一局散钱平分，转身就多赚了 40 块。',
-    },
-  },
-] as const;
-
 
 const lifeVideos = [
   {
@@ -4490,29 +4466,6 @@ const PokerLegacyFullPage: React.FC<{
                   </div>
                 </article>
               ))}
-            </div>
-          </section>
-
-          <section id="story" className="etreport-section py-16 md:py-24">
-            <div className="poker-story-panel">
-              <div className="poker-story-head">
-                <p className="etreport-kicker">{isZh ? 'Story log' : 'Story log'}</p>
-                <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
-                  {isZh ? '在这张桌上发生过的故事。' : 'Stories that happened at this table.'}
-                </h2>
-                <p className="poker-story-intro">{pokerStoryIntro[language]}</p>
-              </div>
-              <div className="poker-story-list">
-                {pokerStories.map((item) => (
-                  <article key={item.date} className="poker-story-item">
-                    <p className="poker-story-date">{item.date}</p>
-                    <h3 className="poker-story-title font-display text-2xl font-bold tracking-tight md:text-3xl">
-                      {item.title[language]}
-                    </h3>
-                    <p className="poker-story-body">{item.body[language]}</p>
-                  </article>
-                ))}
-              </div>
             </div>
           </section>
 
