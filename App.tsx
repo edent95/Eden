@@ -908,8 +908,8 @@ const aiProjectSystems: AiProjectSystem[] = [
     status: { en: 'Prototype', zh: '原型中' },
     role: { en: 'Browser table host', zh: '浏览器牌桌主机' },
     summary: {
-      en: 'A browser Hold’em table for private games — room codes, invite links, blinds, buy-ins, a shared pot, and table voice if you want it.',
-      zh: '给熟人桌用的浏览器德州牌桌——房间口令、邀请链接、盲注、买入、共享底池，想开语音就开。',
+      en: 'A browser Hold’em table for a private crew — nine seats, blinds and buy-ins, six mini games, party games, and a chip tracker for the nights you deal real cards.',
+      zh: '给熟人局用的浏览器德州牌桌——九个座位、盲注与买入、六个小游戏、派对游戏，真牌局还能帮你记筹码。',
     },
     system: {
       en: 'Realtime sync, room state, clear action UI, host overhead reduction, game-flow structure.',
@@ -1517,30 +1517,6 @@ const pokerAvatarGuide = [
     intro: {
       en: 'The Shameless Drifter does not live by normal rules. While others chase money, status, and structure, he somehow turns freedom into a lifestyle. He has no serious title, no heavy image, and almost no shame. But that is exactly his power. He can turn a table into a stage, a drink into an opportunity, and a joke into survival. He may not look like a winner on paper. But somehow, people still envy the way he lives.',
       zh: 'The Shameless Drifter 不按普通规则生活。别人追钱、身份和稳定结构，他却 somehow 把自由活成了一种生活方式。他没有很正式的 title，没有沉重的人设，也几乎没有什么脸皮。但这正是他的力量。他可以把一张桌子变成舞台，把一杯酒变成机会，把一个笑话变成生存方式。他在纸面上看起来可能不像赢家，但偏偏有人会羡慕他那种活法。',
-    },
-  },
-] as const;
-
-const pokerStoryIntro = {
-  en: 'Not a scoreboard. Just the nights worth remembering — a wedding, a brutal river, and a $5 side-pot that ended like a movie.',
-  zh: '不是战绩榜，只是几个值得记住的夜晚——一场婚礼、一条狠 river，还有一局 5 块起手、像电影一样收尾的散钱平分。',
-} as const;
-
-const pokerStories = [
-  {
-    date: '2024-05-26',
-    title: { en: 'Cap married Shield', zh: '团长娶了阿盾' },
-    body: {
-      en: 'Before any of this was a poker night, it was a wedding. Cap married Shield — the loudest loyalty and the steadiest calm, same name on the same day. Ever since, the crew has had a married couple at its center, and every game is really just an excuse to get the same people back to the same table.',
-      zh: '在这群人变成牌局之前，先有了一场婚礼。团长娶了阿盾——最响的义气配最稳的安静，同一天签下同一个名字。从那以后，桌子正中央就坐着一对夫妻；说到底，后来每一场牌，都只是把同一群人重新喊回同一张桌的理由。',
-    },
-  },
-  {
-    date: '2026-05-28',
-    title: { en: 'The river that turned twice', zh: 'river 上反转两次的那夜' },
-    body: {
-      en: 'All night the river belonged to Lucky — the last card kept saving him. Then the board gave him a straight, and he shoved all-in against Prince’s three Aces. For one second Lucky had won. Then the river paired the board and turned those Aces into a full house — the hand was lifted right out of his hands. By the end, Gambler, Lucky, and Prince each sat on their own stack: three players, one quiet stand-off. Closing scene — Drifter wandered over with $5, pulled Prince into a side-pot split, and walked away $40 up.',
-      zh: '整晚的 river 都站在罩仔这边——最后一张牌总在救他。后来桌面给了他一个顺子，他直接 all-in 推向太子手里的三条 A。有那么一秒，罩仔已经赢了。然后 river 把桌面配成对子，把那三条 A 变成葫芦——到手的牌被生生抬走。到最后，赌仔、罩仔、太子各坐一摞筹码：三家鼎立，安静对峙。收尾一幕——浪子揣着 5 块钱晃过来，把太子拉进一局散钱平分，转身就多赚了 40 块。',
     },
   },
 ] as const;
@@ -4282,9 +4258,9 @@ const PokerFullPage: React.FC<{
       backLabel={{ en: 'Back home', zh: '返回主页' }}
       icon={<ProjectsPokerCssIcon label="Friday Poker Club CSS app icon" />}
       name="Friday Poker Club"
-      kicker={{ en: 'Multiplayer game · Private table', zh: '多人游戏 · 私人牌局' }}
+      kicker={{ en: 'Multiplayer game · Table for the crew', zh: '多人游戏 · 给那群人的牌桌' }}
       tagline={{ en: 'No place to book. Just bring the crew back.', zh: '不用约地点。把那群人叫回来就好。' }}
-      meta={{ en: 'Free · Play chips only · Runs in any browser', zh: '免费 · 只有娱乐筹码 · 浏览器直接开局' }}
+      meta={{ en: 'Free · Play chips only · Browser or installed app · Chinese and English', zh: '免费 · 只有娱乐筹码 · 浏览器或安装成 App · 中英双语' }}
       primary={{ href: playUrl, external: true, label: { en: 'Open a table', zh: '开一局' } }}
       secondary={{ href: installUrl, external: true, icon: <Download size={16} />, label: { en: 'Install app', zh: '安装 App' } }}
       quickLinks={[
@@ -4299,36 +4275,43 @@ const PokerFullPage: React.FC<{
         caption: { en: 'This is the real table, running right here. Open it in a new tab to bring the crew in.', zh: '这就是真的牌桌，直接跑在这里。想叫人来，就在新标签打开。' },
       }}
       body={[
-        { kind: 'p', text: { en: 'Friday Poker Club started with a simple problem: we still wanted to play, but not every Friday came with a host, a place, or the patience to install another game app. So I built a browser table—open a room, send the link, take a seat.', zh: 'Friday Poker Club 起点很简单：我们还是想一起打牌，但不是每个周五都有人能提供地点，也不是每个人都想安装另一个游戏 App。于是我做了一张浏览器牌桌——开房、发链接、坐下，就可以开始。' } },
-        { kind: 'p', text: { en: 'I did not build it as a poker platform chasing strangers. It is for people who already know one another. Realtime play is the structure; the reason to return is the jokes, mistakes, silences, and moments that become part of the group later.', zh: '我没有把它做成一个追求陌生人流量的扑克平台。它服务的是已经认识彼此的人。实时牌局只是结构；真正让人回来的是桌边的玩笑、失误、沉默和那些之后还会被提起的瞬间。' } },
-        { kind: 'h', text: { en: 'How it works', zh: '怎么玩' } },
+        { kind: 'p', text: { en: 'Friday Poker Club started with a simple problem: we still wanted to play, but not every Friday came with a host, a place, or the patience to install another game app. So I built a browser table — open a room, send the link, take a seat.', zh: 'Friday Poker Club 起点很简单：我们还是想一起打牌，但不是每个周五都有人能提供地点，也不是每个人都想安装另一个游戏 App。于是我做了一张浏览器牌桌——开房、发链接、坐下，就可以开始。' } },
+        { kind: 'p', text: { en: 'It is not a poker platform chasing strangers. It is for people who already know each other, and it has grown to cover the whole night: Hold’em when everyone wants a proper game, six mini games when they do not, party games when nobody wants to think, and a chip tracker for the nights you are dealing real cards at a real table.', zh: '它不是一个追着陌生人跑的扑克平台，服务的是本来就认识的人。它现在覆盖的是一整个晚上：想正经打就开德州，不想就玩六个小游戏，都不想动脑就玩派对游戏；要是当晚是用真牌在真桌子上打，它还能当记筹码的那个人。' } },
+        { kind: 'h', text: { en: 'What is on the table', zh: '桌上有什么' } },
         { kind: 'steps', items: [
-          { title: { en: 'Host', zh: '开房' }, text: { en: 'Choose the table and stakes, then create a private room.', zh: '选择桌型和盲注，建立一个私人房间。' } },
-          { title: { en: 'Invite', zh: '邀请' }, text: { en: 'Send one link to the crew. Nothing to install.', zh: '把链接发给那群人，不需要安装。' } },
-          { title: { en: 'Buy in', zh: '买入' }, text: { en: 'Choose the stack, take a seat, and wait for the host.', zh: '选好筹码坐下，等待房主开局。' } },
-          { title: { en: 'Keep the story', zh: '继续故事' }, text: { en: 'Play the hand, then remember the moment worth retelling.', zh: '打完这一手，再把值得讲的瞬间留下。' } },
+          { title: { en: 'Texas Hold’em', zh: '德州扑克' }, text: { en: 'Up to nine seats, blinds at 2/4/10/20, a $50 minimum buy-in, all-in and side pots handled properly, an optional nine-second action clock, and practice bots when you are short a player.', zh: '最多九个座位，盲注 2/4/10/20，最低买入 $50，全下与边池都算得对，可选的 9 秒行动倒数，人不够时还能加练习机器人。' } },
+          { title: { en: 'Six mini games', zh: '六个小游戏' }, text: { en: '8/9, Niu Niu, Chinese Poker, Blackjack, Penney’s Game with its own leaderboard, and Wheel of Changes — an I Ching–themed solo slot with its own practice chips.', zh: '8/9、牛牛、十三水、21 点、有自己排行榜的硬币骗局，以及大衍之轮——一个易经主题的单人转盘，用它自己的练习筹码。' } },
+          { title: { en: 'Party games', zh: '派对游戏' }, text: { en: 'Prompt cards, Ring of Fire, Number Bomb and 6-7-8 — one phone passed around, or an online room. No buy-in, and they never touch your chips.', zh: '提示卡、国王杯、数字炸弹和 6-7-8——一支手机轮着传，或者开线上房。不用买入，也不会动到你的筹码。' } },
+          { title: { en: 'Visual Chip', zh: '实体牌局记筹码' }, text: { en: 'For the nights you deal physical cards: the app tracks stacks, bets, the pot and the settlement, so nobody has to do the maths at the end of the night.', zh: '给那些用真牌开的晚上：app 负责记筹码、下注、底池和最后的结算，散场时不用再有人算数。' } },
         ] },
-        { kind: 'h', text: { en: 'Designed for private games', zh: '为熟人局做的选择' } },
-        { kind: 'p', text: { en: 'You should not have to wait until everyone is free. Open a room and drop the link in the group. Late arrivals and reconnects get absorbed by the table instead of forcing the whole night to restart.', zh: '不用等到所有人都有空。开一个房间，把链接丢进群里。有人晚到、有人重连，牌桌都应该接得住，而不是整局重来。' } },
-        { kind: 'p', text: { en: 'It should feel like a home game, not a casino. The host starts, friends buy in, and the table keeps the conversation alive. It has the rules a real game needs without the pressure mechanics designed to keep people betting.', zh: '它应该像熟人局，不像线上赌场。房主开桌、朋友买入、桌边聊天。界面保留真正需要的规则，但不加入催促下注或制造焦虑的机制。' } },
-        { kind: 'callout', label: { en: 'Note', zh: '注意' }, text: { en: 'Every action should feel certain. A bet confirms, the turn is obvious, and the room says what it is waiting for. Fewer misunderstandings make a better night.', zh: '每个动作都要让人放心。下注有没有成功、现在轮到谁、房间在等什么，都用清楚的状态回应。少一次误会，牌局就顺一点。' } },
-        { kind: 'p', text: { en: 'And it should remember the people, not only the cards. We do not need another leaderboard to flex. What deserves to stay is who said what, when the whole table laughed, and why everyone wants another game.', zh: '它记住的应该是人，不只是牌。我们不需要另一份战绩炫耀榜。真正值得保存的是谁说了什么、哪一刻全桌笑了，以及下一次为什么还想再来。' } },
-        { kind: 'callout', tone: 'warning', label: { en: 'Play chips only', zh: '只有娱乐筹码' }, text: { en: 'Invite links control who enters, and the host decides when the game begins. Chips have no cash value, and there is no deposit or withdrawal. The system can remember table state without turning a night between friends into public performance or financial play.', zh: '邀请链接决定谁能进来，房主决定何时开桌。筹码没有现金价值，也没有充值或提现。系统可以记住牌局状态，但不应该把朋友之间的晚上变成公开表演或金钱交易。' } },
+        { kind: 'h', text: { en: 'Designed for a crew, not a casino', zh: '为熟人局做的选择' } },
+        { kind: 'p', text: { en: 'You should not have to wait until everyone is free. Open a room and drop the link in the group. Late arrivals and reconnects get absorbed by the table: seats and stacks persist, and a dropped player reopens the link and sits back down instead of restarting the night.', zh: '不用等到所有人都有空。开一个房间，把链接丢进群里。有人晚到、有人掉线，牌桌都接得住：座位和筹码都留着，掉线的人重开链接就坐回原位，不用整晚重来。' } },
+        { kind: 'p', text: { en: 'The wallet is part of the fun, not the pressure. Chips are play chips, top-ups are free, and the Player Record keeps lifetime buy-ins, today’s result and a session history you can filter by table type — the record exists so the group can argue about it, not so anyone can cash out.', zh: '钱包是乐趣的一部分，不是压力。筹码是娱乐筹码，补充免费，玩家资金记录会留下累计买入、当日输赢和可按桌型筛选的对局历史——这些记录是让大家互相吐槽用的，不是拿来兑现的。' } },
+        { kind: 'callout', label: { en: 'Only play with people you know', zh: '只跟认识的人玩' }, text: { en: 'Table state syncs straight between the players’ browsers, which keeps it fast and free but also means a determined player could read the table data. That is fine among friends and not fine with strangers, so the table is built for a crew that already trusts each other.', zh: '牌局状态直接在各人的浏览器之间同步，所以又快又不花钱，但也意味着一个存心的人能读到牌桌数据。这在熟人之间没问题，跟陌生人就有问题，所以这张桌子是为本来就互相信任的一群人做的。' } },
+        { kind: 'p', text: { en: 'The table also has the boring parts that make a night work: in-table chat and optional voice, report and block, nickname and chat filtering, account deletion in the app, and a public legal page. Nothing there is exciting. All of it matters the first time it is needed.', zh: '牌桌也有那些不好玩但必要的东西：桌内聊天与可选语音、举报与屏蔽、昵称和聊天过滤、在 app 内直接删除账号，以及一个公开的法律页面。这些都不精彩，但第一次需要用到的时候，它们很重要。' } },
+        { kind: 'callout', tone: 'warning', label: { en: 'Play chips only', zh: '只有娱乐筹码' }, text: { en: 'Chips have no cash value. There is no deposit, no withdrawal, no payout and nothing to buy. Top-ups are free and unlimited, because the point is the night, not the money.', zh: '筹码没有现金价值。没有充值、没有提现、没有派彩，也没有任何东西可买。补充筹码免费且无限，因为重点是那个晚上，不是钱。' } },
       ]}
       faq={[
-        { q: { en: 'Do I need to install anything?', zh: '需要安装什么吗？' }, a: { en: 'No. It runs in any modern browser—open the link and take a seat. If you would rather have it on your home screen, the Install app button adds it as a standalone app.', zh: '不需要。它跑在任何现代浏览器里——打开链接就能坐下。如果你想放到主屏幕，点「安装 App」就会变成独立应用。' } },
-        { q: { en: 'Is real money involved?', zh: '会牵涉真钱吗？' }, a: { en: 'Never. Chips are play chips with no cash value. There is no deposit, no withdrawal, and no payout of any kind.', zh: '完全不会。筹码是娱乐筹码，没有现金价值。没有充值、没有提现，也没有任何形式的派彩。' } },
-        { q: { en: 'Can strangers find my table?', zh: '陌生人会找到我的牌桌吗？' }, a: { en: 'No. Rooms are private and reachable only through the invite link you send. The host still decides when the hand actually begins.', zh: '不会。房间是私人的，只能通过你发出的邀请链接进入。何时真正开牌，仍然由房主决定。' } },
-        { q: { en: 'What happens if someone loses connection?', zh: '有人断线了会怎样？' }, a: { en: 'The table keeps its state. A player who drops can reopen the link and return to the same seat and stack instead of restarting the night.', zh: '牌桌会保留状态。掉线的人重新打开链接，就能回到原来的座位和筹码，而不是整晚重来。' } },
-        { q: { en: 'Is there voice chat?', zh: '有语音吗？' }, a: { en: 'Voice is optional. Some nights the group talks the whole way through; some nights nobody turns it on. The table works either way.', zh: '语音是可选的。有些晚上大家一路在聊，有些晚上没人开。牌桌两种情况都能用。' } },
-        { q: { en: 'What is it built with?', zh: '用什么做的？' }, a: { en: 'A responsive browser table with Firebase keeping seats, actions, and reconnects in sync. There are build notes in the wiki if you want the details.', zh: '一张响应式浏览器牌桌，用 Firebase 让座位、动作和重连保持同步。想看细节的话，wiki 里有开发笔记。' } },
+        { q: { en: 'Do I need to install anything?', zh: '需要安装什么吗？' }, a: { en: 'No. It runs in any modern browser — open the link and take a seat. If you would rather keep it on your home screen, the Install app button adds it as a standalone app.', zh: '不需要。它跑在任何现代浏览器里——打开链接就能坐下。想放到主屏幕的话，点「安装 App」就会变成独立应用。' } },
+        { q: { en: 'Do I need an account?', zh: '需要注册吗？' }, a: { en: 'No. You can enter as a guest. Signing in with Google keeps your chips, avatar and record across devices, and guest progress merges into the account when you do. Account deletion is in the app.', zh: '不用。可以直接以访客进入。用 Google 登录能让筹码、头像和记录跨设备保留，访客的进度会在登录时并进账号。删除账号的入口在 app 里。' } },
+        { q: { en: 'Is real money involved?', zh: '会牵涉真钱吗？' }, a: { en: 'Never. Chips are play chips with no cash value: no deposit, no withdrawal, no payout, no purchases. Top-ups are free.', zh: '完全不会。筹码是娱乐筹码，没有现金价值：没有充值、没有提现、没有派彩，也没有内购。补充筹码免费。' } },
+        { q: { en: 'Can strangers join my table?', zh: '陌生人会进我的牌桌吗？' }, a: { en: 'Be aware that they can. While a table is active it is listed in the shared lobby, and there is no room password, so anyone in the app can sit down. The invite link is the convenient way in for your crew, not a lock on the door — treat the table as a room with the door open.', zh: '有可能，要知道这一点。牌桌活跃期间会列在公共大厅里，也没有房间密码，所以 app 里的任何人都可以坐下。邀请链接是方便自己人进来的入口，不是门锁——把它当成一间没锁门的房间。' } },
+        { q: { en: 'What happens if someone loses connection?', zh: '有人断线了会怎样？' }, a: { en: 'The table keeps its state. A player who drops reopens the link and returns to the same seat and stack. An optional nine-second clock can auto-fold someone who is away, and a table with nobody active clears itself after ten minutes.', zh: '牌桌会保留状态。掉线的人重新打开链接，就回到原来的座位和筹码。可选的 9 秒倒数会让离开的人自动弃牌；十分钟没人活动的牌桌会自己清掉。' } },
+        { q: { en: 'Is there voice or chat?', zh: '有语音和聊天吗？' }, a: { en: 'Both, and both live inside the table — there is no lobby open mic. Voice is peer to peer and optional; some nights the group talks the whole way through, some nights nobody turns it on.', zh: '都有，而且都在牌桌里——大厅没有开放麦。语音是点对点的，可选：有些晚上大家一路在聊，有些晚上没人开。' } },
+        { q: { en: 'Can it run a table with real cards?', zh: '能用在真牌局上吗？' }, a: { en: 'Yes, that is what Visual Chip mode is for. You deal physical cards at a physical table and the app tracks stacks, bets, the pot and the final settlement.', zh: '可以，这就是「实体牌局记筹码」的用途。你们用真牌在真桌上打，app 负责记筹码、下注、底池和最后结算。' } },
+        { q: { en: 'What is it built with?', zh: '用什么做的？' }, a: { en: 'React and TypeScript on the front, Firebase Realtime Database keeping seats, actions and reconnects in sync, and WebRTC for table voice. It is installable as a PWA and fully bilingual.', zh: '前端是 React 与 TypeScript，Firebase Realtime Database 让座位、动作和重连保持同步，桌内语音走 WebRTC。可以安装成 PWA，界面中英双语。' } },
       ]}
       specs={[
-        [{ en: 'Category', zh: '类别' }, { en: 'Private multiplayer game', zh: '私人多人游戏' }],
-        [{ en: 'Game', zh: '游戏' }, { en: 'Texas Hold’em · 8/9 mini game', zh: 'Texas Hold’em · 8/9 小游戏' }],
-        [{ en: 'Modules', zh: '主要模块' }, { en: 'Rooms · Invites · Buy-ins · Realtime table · Optional voice', zh: '房间 · 邀请 · 买入 · 实时牌桌 · 可选语音' }],
-        [{ en: 'Realtime', zh: '同步' }, { en: 'Firebase', zh: 'Firebase' }],
-        [{ en: 'Platform', zh: '平台' }, { en: 'Responsive browser table', zh: '响应式浏览器牌桌' }],
+        [{ en: 'Category', zh: '类别' }, { en: 'Multiplayer game for a private crew', zh: '熟人局多人游戏' }],
+        [{ en: 'Main game', zh: '主要游戏' }, { en: 'Texas Hold’em, cash-game style (no tournament structure)', zh: '德州扑克，现金局形式（没有锦标赛结构）' }],
+        [{ en: 'Also on the table', zh: '其他玩法' }, { en: '8/9 · Niu Niu · Chinese Poker · Blackjack · Penney’s Game · Wheel of Changes · four party games · Visual Chip tracker', zh: '8/9 · 牛牛 · 十三水 · 21 点 · 硬币骗局 · 大衍之轮 · 四个派对游戏 · 实体牌局记筹码' }],
+        [{ en: 'Table limits', zh: '牌桌参数' }, { en: 'Up to 9 seats (4 for Chinese Poker) · blinds 2/4/10/20 · buy-in from $50 · all-in and side pots · optional 9s action clock', zh: '最多 9 座（十三水 4 座）· 盲注 2/4/10/20 · 买入从 $50 起 · 支持全下与边池 · 可选 9 秒行动倒数' }],
+        [{ en: 'Joining', zh: '进入方式' }, { en: 'Invite link or the shared lobby list; guest entry or Google sign-in; no room password', zh: '邀请链接或公共大厅列表；可访客进入或用 Google 登录；没有房间密码' }],
+        [{ en: 'At the table', zh: '桌内功能' }, { en: 'Chat · optional peer-to-peer voice · report and block · practice bots · host transfer · in-table rebuy', zh: '聊天 · 可选点对点语音 · 举报与屏蔽 · 练习机器人 · 转让房主 · 桌内补码' }],
+        [{ en: 'Record', zh: '记录' }, { en: 'Wallet, lifetime buy-in, daily result, and session history filtered by table type', zh: '钱包、累计买入、当日输赢，以及可按桌型筛选的对局历史' }],
+        [{ en: 'Money', zh: '金钱' }, { en: 'Play chips only · free unlimited top-ups · no deposit, withdrawal or purchases', zh: '只有娱乐筹码 · 免费无限补充 · 没有充值、提现或内购' }],
+        [{ en: 'Realtime', zh: '同步' }, { en: 'Firebase Realtime Database; WebRTC for voice', zh: 'Firebase Realtime Database；语音走 WebRTC' }],
+        [{ en: 'Platform', zh: '平台' }, { en: 'Mobile-first browser table, installable as a PWA, Chinese and English', zh: '移动优先的浏览器牌桌，可安装为 PWA，中英双语' }],
         [{ en: 'Developer', zh: '开发者' }, { en: 'Eden Tan', zh: 'Eden Tan' }],
       ]}
       also={productSiblingCards(baseUrl, 'poker')}
@@ -4484,29 +4467,6 @@ const PokerLegacyFullPage: React.FC<{
                   </div>
                 </article>
               ))}
-            </div>
-          </section>
-
-          <section id="story" className="etreport-section py-16 md:py-24">
-            <div className="poker-story-panel">
-              <div className="poker-story-head">
-                <p className="etreport-kicker">{isZh ? 'Story log' : 'Story log'}</p>
-                <h2 className="font-display text-4xl font-bold tracking-tight md:text-6xl">
-                  {isZh ? '在这张桌上发生过的故事。' : 'Stories that happened at this table.'}
-                </h2>
-                <p className="poker-story-intro">{pokerStoryIntro[language]}</p>
-              </div>
-              <div className="poker-story-list">
-                {pokerStories.map((item) => (
-                  <article key={item.date} className="poker-story-item">
-                    <p className="poker-story-date">{item.date}</p>
-                    <h3 className="poker-story-title font-display text-2xl font-bold tracking-tight md:text-3xl">
-                      {item.title[language]}
-                    </h3>
-                    <p className="poker-story-body">{item.body[language]}</p>
-                  </article>
-                ))}
-              </div>
             </div>
           </section>
 

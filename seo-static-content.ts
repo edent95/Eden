@@ -582,50 +582,62 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
   },
 
   '/poker': {
-    eyebrow: L('Multiplayer game · Private table', '多人游戏 · 私人牌局'),
+    eyebrow: L('Multiplayer game · Table for the crew', '多人游戏 · 给那群人的牌桌'),
     thesis: L(
       'No place to book. Just bring the crew back.',
       '不用约地点。把那群人叫回来就好。',
     ),
     sections: [
       {
-        title: L('How it works', '怎么玩'),
+        title: L('What is on the table', '桌上有什么'),
         paragraphs: [
           L(
-            'Host a room, invite the crew with a link, buy in, and play. Friday Poker Club is a Texas Hold’em table that runs in any browser, plus an 8/9 mini game for the nights when a full table is not there. Rooms are private and invite-only, and the host starts the hand.',
-            '开房、用链接邀请朋友、买入、开局。Friday Poker Club 是在任何浏览器里都能跑的德州牌桌，另外有一个 8/9 小游戏，给人不齐的晚上。房间私密、只凭邀请进入，由房主发牌开局。',
+            'Texas Hold’em in cash-game form: up to nine seats, blinds at 2/4/10/20, a $50 minimum buy-in, all-in and side pots, an optional nine-second action clock, and practice bots when the table is short.',
+            '德州扑克，现金局形式：最多九座、盲注 2/4/10/20、最低买入 $50、支持全下与边池、可选 9 秒行动倒数，人不够时可以加练习机器人。',
           ),
           L(
-            'Play chips only: there is no cash value, no deposit, and no withdrawal. The product is the shared room, not a stake.',
-            '只有游戏筹码：没有现金价值，没有充值，也没有提现。产品是那间大家一起在的房间，不是赌注。',
+            'Six mini games sit next to it — 8/9, Niu Niu, Chinese Poker, Blackjack, Penney’s Game with its own leaderboard, and Wheel of Changes — plus four party games that need no buy-in, and a Visual Chip mode that tracks stacks, bets, pot and settlement while you deal physical cards.',
+            '旁边还有六个小游戏——8/9、牛牛、十三水、21 点、有自己排行榜的硬币骗局，以及大衍之轮——加上四个不用买入的派对游戏，还有一个「实体牌局记筹码」模式：你们用真牌打，它记筹码、下注、底池和结算。',
           ),
         ],
       },
       {
-        title: L('Designed for private games', '为熟人局做的选择'),
+        title: L('How joining works', '怎么进来'),
         paragraphs: [
           L(
-            'Five modules: Rooms, Invites, Buy-ins, Realtime table, and optional voice. Firebase keeps the table in sync, so a dropped connection returns a player to the same seat with the same stack instead of a fresh login.',
-            '五个模块：房间、邀请、买入、实时牌桌与可选语音。Firebase 负责同步，掉线后回到同一个座位、同一份筹码，而不是重新登录。',
+            'Open a room, send the invite link, buy in and sit down. Guest entry works without an account; signing in with Google keeps chips, avatar and record across devices. While a table is active it is also listed in the shared lobby and there is no room password, so the invite link is the convenient way in, not a lock on the door.',
+            '开房、发邀请链接、买入、坐下。可以直接访客进入；用 Google 登录能让筹码、头像和记录跨设备保留。牌桌活跃期间也会列在公共大厅里，而且没有房间密码，所以邀请链接是方便自己人进来的入口，不是门锁。',
           ),
           L(
-            'The build notes behind it are in the Wiki: practical Vite skills, Firebase as lifetime table memory, button feedback states for realtime play, and why optional background music changes the feel of a shared room.',
-            '它背后的构建笔记在 Wiki：实用 Vite 技能、把 Firebase 当牌桌长期记忆、实时对局的按钮反馈状态，以及为什么可选的背景音乐会改变共享房间的感觉。',
+            'Seats and stacks persist, so a dropped player reopens the link and returns to the same seat instead of restarting the night. Tables with nobody active clear themselves after ten minutes.',
+            '座位和筹码都留着，掉线的人重开链接就回到原位，不用整晚重来。十分钟没人活动的牌桌会自己清掉。',
           ),
         ],
       },
       {
-        title: L('The crew and the stories', '那群人与那些故事'),
+        title: L('Built for a crew, not a casino', '为熟人局，不是赌场'),
         paragraphs: [
           L(
-            'The table exists for a fixed crew who have played together for years, and the story log records the nights worth retelling: the moment, not the score. Stories follow the site’s story style: only what really happened, short nicknames, people first and cards second.',
-            '这张桌子是给一群一起打了好几年的固定朋友；故事日志记录值得再讲一遍的那些夜晚：记时刻，不记比分。故事遵守网站的 story style：只写真实发生的事、用短昵称、人在牌前面。',
+            'Chips are play chips: no cash value, no deposit, no withdrawal, no purchases, and free unlimited top-ups. The Player Record keeps lifetime buy-ins, the day’s result and a session history filtered by table type, so the group has something to argue about.',
+            '筹码是娱乐筹码：没有现金价值、没有充值提现、没有内购，补充免费且无限。玩家资金记录保留累计买入、当日输赢和可按桌型筛选的对局历史，让大家有得互相吐槽。',
+          ),
+          L(
+            'Table state syncs directly between the players’ browsers, which is fast and free but readable by a determined player, so the table is built for people who already trust each other. In-table chat and optional peer-to-peer voice, report and block, nickname and chat filtering, in-app account deletion and a public legal page cover the rest.',
+            '牌局状态直接在各人的浏览器之间同步，快且不花钱，但存心的人能读到，所以这张桌子是给本来就互相信任的人用的。其余部分由桌内聊天与可选点对点语音、举报与屏蔽、昵称和聊天过滤、app 内删除账号，以及一个公开的法律页面来覆盖。',
+          ),
+        ],
+      },
+      {
+        title: L('Where it runs', '在哪里运行'),
+        paragraphs: [
+          L(
+            'A mobile-first browser table at poker.eden-tan.com, installable as a PWA, in Chinese and English. React and TypeScript on the front, Firebase Realtime Database for seats, actions and reconnects, WebRTC for table voice.',
+            'poker.eden-tan.com 上一张移动优先的浏览器牌桌，可安装为 PWA，界面中英双语。前端是 React 与 TypeScript，座位、动作与重连由 Firebase Realtime Database 同步，桌内语音走 WebRTC。',
           ),
         ],
       },
     ],
   },
-
   '/film-gallery': {
     eyebrow: L('15 frames · 3 cameras · 2 film stocks', '15 格 · 3 台相机 · 2 种胶卷'),
     thesis: L(
