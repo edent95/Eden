@@ -91,6 +91,7 @@ const IGamingPage = React.lazy(() => import('./components/IGamingPage'));
 const IGamingSummaryPage = React.lazy(() => import('./components/IGamingSummaryPage'));
 const IGamingCasesPage = React.lazy(() => import('./components/IGamingCasesPage'));
 const HomePenneyGame = React.lazy(() => import('./components/HomePenneyGame'));
+const HomeLiveChat = React.lazy(() => import('./components/HomeLiveChat'));
 
 type BeforeInstallPromptEvent = Event & {
   prompt: () => Promise<void>;
@@ -10841,6 +10842,10 @@ const App: React.FC = () => {
       </main>
 
       <footer className="eden-footer"><div className="eden-home-island"><div><strong>EDEN</strong><p>Building systems for people, products, and uncertain futures.</p></div><div className="eden-footer-links"><a href="mailto:hello@edentan.site">Email</a><a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/edent95" target="_blank" rel="noreferrer">GitHub</a><a href={notesHref}>Notes</a></div></div></footer>
+
+      <React.Suspense fallback={null}>
+        <HomeLiveChat isZh={isZh} />
+      </React.Suspense>
     </div>
   );
 };
