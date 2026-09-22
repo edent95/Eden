@@ -240,6 +240,76 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
   },
   {
+    path: '/igaming/cases',
+    datePublished: '2026-09-23',
+    dateModified: '2026-09-23',
+    priority: '0.6',
+    title: {
+      en: 'iGaming Field Notes | Eden Tan',
+      zh: 'iGaming 实战案例 | Eden Tan',
+    },
+    desc: {
+      en: 'Anonymised iGaming case studies from operator-side and provider-side work: the problem, the investigation, what got built, and what each case does not prove.',
+      zh: '来自 operator 与 provider 两边工作的匿名 iGaming 案例：问题是什么、怎么排查、做了什么，以及每个案例不能证明什么。',
+    },
+  },
+  {
+    path: '/igaming/cases/ftd-growth',
+    datePublished: '2026-09-23',
+    dateModified: '2026-09-23',
+    priority: '0.6',
+    title: {
+      en: 'Case: +120% Month-on-Month FTD | Eden Tan',
+      zh: '案例：首存月环比 +120% | Eden Tan',
+    },
+    desc: {
+      en: 'An operator-side case study: layered promotion mechanics, automated free spins and behavioural triggers applied to the registration-to-first-deposit funnel.',
+      zh: 'Operator 这边的案例：促销机制分层、自动发免费局与行为触发，套在从注册到首存那一段漏斗上。',
+    },
+  },
+  {
+    path: '/igaming/cases/new-market-localisation',
+    datePublished: '2026-09-23',
+    dateModified: '2026-09-23',
+    priority: '0.6',
+    title: {
+      en: 'Case: Localisation Is Not Translation | Eden Tan',
+      zh: '案例：本地化不是翻译 | Eden Tan',
+    },
+    desc: {
+      en: 'Taking an iGaming brand into a new market: payments, local community, acquisition, promotions, operations and data, and why payments is checked first.',
+      zh: '把一个 iGaming 品牌带进新市场：支付、本地社群、获客、促销、运营与数据，以及为什么先查支付。',
+    },
+  },
+  {
+    path: '/igaming/cases/provider-promotion-at-scale',
+    datePublished: '2026-09-23',
+    dateModified: '2026-09-23',
+    priority: '0.6',
+    title: {
+      en: 'Case: One Promotion, 50+ Operators | Eden Tan',
+      zh: '案例：一个活动，50+ operator | Eden Tan',
+    },
+    desc: {
+      en: 'Provider-side coordination at scale: the fields that must align per operator, why it becomes a tracker, and why provider and operator watch different things.',
+      zh: 'Provider 这边的规模化协调：每个 operator 要对齐哪些字段、为什么最后一定变成一张表，以及两边在看的其实不是同一件事。',
+    },
+  },
+  {
+    path: '/igaming/cases/operator-to-provider',
+    datePublished: '2026-09-23',
+    dateModified: '2026-09-23',
+    priority: '0.6',
+    title: {
+      en: 'Case: From Operator to Provider | Eden Tan',
+      zh: '案例：从 operator 到 provider | Eden Tan',
+    },
+    desc: {
+      en: 'What changes when your customer stops being the player and becomes the operator: discovery, the signed-to-performing gap, and where both sides overlap.',
+      zh: '当客户从玩家变成 operator，什么变了：需求了解方式、从签约到有表现之间的落差，以及两边真正重叠的地方。',
+    },
+  },
+  {
     path: '/dr-racing',
     datePublished: '2026-08-20',
     dateModified: '2026-09-14',

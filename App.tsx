@@ -79,6 +79,7 @@ import {
 } from 'lucide-react';
 
 import { siteEssayNotes, wikiEntries } from './generated/content';
+import { IGAMING_CASES as igamingCases } from './components/igaming-cases-content';
 
 type Language = 'en' | 'zh';
 type Theme = 'light' | 'dark';
@@ -88,6 +89,7 @@ const PenneysGamePage = React.lazy(() => import('./components/PenneysGamePage'))
 const MiyaPrivacyPage = React.lazy(() => import('./components/MiyaPrivacyPage'));
 const IGamingPage = React.lazy(() => import('./components/IGamingPage'));
 const IGamingSummaryPage = React.lazy(() => import('./components/IGamingSummaryPage'));
+const IGamingCasesPage = React.lazy(() => import('./components/IGamingCasesPage'));
 const HomePenneyGame = React.lazy(() => import('./components/HomePenneyGame'));
 
 type BeforeInstallPromptEvent = Event & {
@@ -10243,6 +10245,7 @@ const App: React.FC = () => {
   const lifeOsHref = joinBasePath(baseUrl, 'life-os');
   const igamingHref = joinBasePath(baseUrl, 'igaming');
   const igamingFullHref = joinBasePath(baseUrl, 'igaming/full');
+  const igamingCasesHref = joinBasePath(baseUrl, 'igaming/cases');
   const cellularAutomataLabHref = joinBasePath(baseUrl, 'cellular-automata-lab');
   const homeSystemFiles: Array<{
     title: string;
@@ -10355,6 +10358,11 @@ const App: React.FC = () => {
   const isMiyaPrivacyPage = pathWithoutBase === '/project/miya';
   const isIGamingPage = pathWithoutBase === '/igaming';
   const isIGamingFullPage = pathWithoutBase === '/igaming/full';
+  const isIGamingCasesPage = pathWithoutBase === '/igaming/cases';
+  const igamingCaseSlug = pathWithoutBase.startsWith('/igaming/cases/')
+    ? pathWithoutBase.replace('/igaming/cases/', '')
+    : '';
+  const activeIGamingCase = igamingCases.find((item) => item.slug === igamingCaseSlug);
   const isIconPromptsPage = pathWithoutBase === '/icon-prompts';
   const archivedWorkSlug = pathWithoutBase.startsWith('/archive/')
     ? pathWithoutBase.replace('/archive/', '')
@@ -10657,6 +10665,30 @@ const App: React.FC = () => {
     );
   }
 
+  if (isIGamingCasesPage || activeIGamingCase) {
+    return (
+      <React.Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
+        <IGamingCasesPage
+          language={language}
+          caseSlug={activeIGamingCase?.slug}
+          igamingHref={igamingHref}
+          casesHref={igamingCasesHref}
+          fullHref={igamingFullHref}
+          etReportHubHref={etReportHubHref}
+          controls={
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
+          }
+        />
+      </React.Suspense>
+    );
+  }
+
   if (isIGamingPage || isIGamingFullPage) {
     const igamingControls = (
       <HeaderControls
@@ -10672,7 +10704,13 @@ const App: React.FC = () => {
         {isIGamingFullPage ? (
           <IGamingPage language={language} backHref={igamingHref} controls={igamingControls} />
         ) : (
-          <IGamingSummaryPage language={language} homeHref={homeHref} fullHref={igamingFullHref} controls={igamingControls} />
+          <IGamingSummaryPage
+            language={language}
+            homeHref={homeHref}
+            fullHref={igamingFullHref}
+            casesHref={igamingCasesHref}
+            controls={igamingControls}
+          />
         )}
       </React.Suspense>
     );

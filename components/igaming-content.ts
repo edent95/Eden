@@ -725,6 +725,11 @@ export const IGAMING_SUMMARY = {
     '六个重点，讲清楚一门 iGaming 生意实际上怎么运作。想看细节，每一节都能点进完整版。',
   ),
   openFull: L('Open the full starter pack', '打开完整版'),
+  openCases: L('Read the field notes', '看实战案例'),
+  casesLine: L(
+    'Or read the anonymised case studies: what these ideas looked like in the actual work.',
+    '或者看匿名实战案例：这些道理在真实工作里长什么样。',
+  ),
   readSection: L('Read this section', '看这一节完整版'),
   sections: [
     {

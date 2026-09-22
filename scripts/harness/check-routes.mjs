@@ -18,12 +18,16 @@ function hasImplementedRoute(route) {
   if (route.startsWith('/archive/')) {
     return app.includes(`slug: '${route.slice('/archive/'.length)}'`);
   }
+  if (route.startsWith('/igaming/cases/')) {
+    return read('components/igaming-cases-content.ts').includes(`slug: '${route.slice('/igaming/cases/'.length)}'`);
+  }
   return app.includes(`pathWithoutBase === '${route}'`);
 }
 
 function hasReadmeRoute(route) {
   if (route.startsWith('/notes/')) return readme.includes('`/notes/:slug`');
   if (route.startsWith('/archive/')) return readme.includes('`/archive/:slug`');
+  if (route.startsWith('/igaming/cases/')) return readme.includes('`/igaming/cases/:slug`');
   return readme.includes(`\`${route}\``);
 }
 

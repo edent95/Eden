@@ -1,6 +1,7 @@
 import type { SeoLanguage } from './seo-routes.ts';
 import { MIYA_PRIVACY, miyaPlainText, type MiyaBlock } from './components/miya-privacy-content.ts';
 import { IGAMING_PAGE, IGAMING_SUMMARY } from './components/igaming-content.ts';
+import { IGAMING_CASES, IGAMING_CASES_INDEX, type CaseBlock, type IGamingCase } from './components/igaming-cases-content.ts';
 
 type Localized = Record<SeoLanguage, string>;
 
@@ -79,6 +80,73 @@ function miyaStaticCopy(): StaticRouteCopy {
   };
 }
 
+/** Static body for one /igaming/cases/:slug field note, from the same copy the page renders. */
+function igamingCaseStaticCopy(study: IGamingCase): StaticRouteCopy {
+  const join = (cells: Localized[], en: string, zh: string): Localized => ({
+    en: cells.map((cell) => cell.en).join(en),
+    zh: cells.map((cell) => cell.zh).join(zh),
+  });
+  const titled = (title: Localized, body: Localized): Localized => ({
+    en: `${title.en}: ${body.en}`,
+    zh: `${title.zh}：${body.zh}`,
+  });
+  const fromBlock = (item: CaseBlock): Localized[] => {
+    switch (item.kind) {
+      case 'p':
+      case 'h':
+        return [item.text];
+      case 'callout':
+        return [titled(item.title, item.body)];
+      case 'path':
+        return [join(item.steps, ' → ', ' → ')];
+      case 'chain':
+      case 'cards':
+        return item.items.map((entry) => titled(entry.title, entry.body));
+      case 'table':
+        return item.rows.map((row) => join(row, ' — ', ' — '));
+      case 'list':
+        return item.items;
+      case 'stat':
+        return [{
+          en: `${item.value} — ${item.label.en}. ${item.note.en}`,
+          zh: `${item.value} —— ${item.label.zh}。${item.note.zh}`,
+        }];
+      default:
+        return [];
+    }
+  };
+  return {
+    eyebrow: IGAMING_CASES_INDEX.kicker,
+    thesis: study.shortTitle,
+    sections: [
+      {
+        title: study.title,
+        paragraphs: [study.standfirst, study.anonymisation, join(study.tags, ' · ', ' · ')],
+      },
+      { title: { en: 'The case', zh: '案例' }, paragraphs: study.blocks.flatMap(fromBlock) },
+      { title: { en: 'What it taught me', zh: '学到什么' }, paragraphs: study.lessons },
+      { title: { en: 'What this case does not prove', zh: '这个案例不能证明什么' }, paragraphs: [study.limits] },
+    ],
+  };
+}
+
+/** Static body for the /igaming/cases index. */
+function igamingCasesIndexStaticCopy(): StaticRouteCopy {
+  const page = IGAMING_CASES_INDEX;
+  return {
+    eyebrow: page.kicker,
+    thesis: page.claim,
+    sections: [
+      { title: page.kicker, paragraphs: [page.standfirst, page.rule.body] },
+      ...IGAMING_CASES.map((study) => ({
+        title: study.shortTitle,
+        paragraphs: [study.standfirst, study.limits],
+      })),
+      { title: page.moreTitle, paragraphs: [page.moreBody] },
+    ],
+  };
+}
+
 /** Static body for /igaming (key points), generated from the same copy the React page renders. */
 function igamingSummaryStaticCopy(): StaticRouteCopy {
   const page = IGAMING_SUMMARY;
@@ -97,7 +165,7 @@ function igamingSummaryStaticCopy(): StaticRouteCopy {
           })),
         ],
       })),
-      { title: page.fullTitle, paragraphs: [page.fullBody] },
+      { title: page.fullTitle, paragraphs: [page.fullBody, page.casesLine] },
       { title: page.closingTitle, paragraphs: [page.closingBody] },
     ],
   };
@@ -221,7 +289,7 @@ function igamingStaticCopy(): StaticRouteCopy {
  * rather than in `wiki/`. Every fact here mirrors what the live page renders
  * (product modules, numbers, section order); keep the two in step when a page changes.
  * Wiki and Notes routes do not appear here: their body comes from `generated/content.ts`.
- * `/project/miya`, `/igaming` and `/igaming/full` are the exceptions: they are generated from
+ * `/project/miya`, `/igaming`, `/igaming/full` and the `/igaming/cases` pages are the exceptions: they are generated from
  * `components/miya-privacy-content.ts` / `components/igaming-content.ts`, the same copy
  * the React pages render, so the static text cannot drift.
  */
@@ -229,6 +297,8 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
   '/project/miya': miyaStaticCopy(),
   '/igaming': igamingSummaryStaticCopy(),
   '/igaming/full': igamingStaticCopy(),
+  '/igaming/cases': igamingCasesIndexStaticCopy(),
+  ...Object.fromEntries(IGAMING_CASES.map((study) => [`/igaming/cases/${study.slug}`, igamingCaseStaticCopy(study)])),
 
   '/': {
     eyebrow: L('Eden Tan', 'Eden Tan'),

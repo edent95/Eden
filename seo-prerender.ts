@@ -39,7 +39,8 @@ const CLUSTERS: Array<{ prefix?: string; paths: string[] }> = [
   { prefix: '/notes/', paths: ['/notes', '/wiki', '/notes/turn-chaos-into-systems'] },
   // /igaming (key points) and /igaming/full link to each other and back to the homepage only:
   // the owner wants no past projects linked from them.
-  { paths: ['/igaming', '/igaming/full', '/'] },
+  { prefix: '/igaming/cases/', paths: ['/igaming/cases', '/igaming', '/igaming/full'] },
+  { paths: ['/igaming', '/igaming/full', '/igaming/cases', '/'] },
   {
     paths: ['/penneys-game', '/conways-game-of-life', '/cellular-automata-lab', '/wiki/rag-flow'],
   },
