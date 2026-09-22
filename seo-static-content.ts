@@ -181,15 +181,15 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
     eyebrow: L('Work · Projects', '作品 · Projects'),
     thesis: L(
       'Every icon is something real that got built and still runs.',
-      '每一个图标都是一个真的做出来、还在跑的东西。',
+      '都是用心做的',
     ),
     sections: [
       {
-        title: L('Eight apps on the shelf', '货架上的八个 app'),
+        title: L('Nine apps on the shelf', '货架上的九个 app'),
         paragraphs: [
           L(
-            'Jiju is local discovery for people with pets, starting in Penang. Friday Poker Club is a private browser Hold’em table for a fixed crew. ETReportHub is the daily data layer that turns Transaction and Customer Excel files into operating decisions. Dr Racing runs a motorcycle dealership’s loan pipeline from lead to delivery.',
-            'Jiju 是从 Penang 起步、给养宠物的人用的本地发现工具。Friday Poker Club 是给固定一群人开的浏览器德州牌桌。ETReportHub 是把 Transaction 与 Customer Excel 变成运营判断的每日数据层。Dr Racing 是摩托车行从 lead 到交车的贷款流水线。',
+            'Jiju is local discovery for people with pets, starting in Penang. Friday Poker Club is a private browser Hold’em table for a fixed crew. ETReportHub is the daily data layer that turns Transaction and Customer Excel files into operating decisions. Life OS cross-reads BaZi, I Ching, elemental profiles, and tarot into one traceable long-term base map, then answers questions about right now against it. Dr Racing runs a motorcycle dealership’s loan pipeline from lead to delivery.',
+            'Jiju 是从 Penang 起步、给养宠物的人用的本地发现工具。Friday Poker Club 是给固定一群人开的浏览器德州牌桌。ETReportHub 是把 Transaction 与 Customer Excel 变成运营判断的每日数据层。Life OS 把八字、易经、元素画像与塔罗交叉阅读成一张可溯源的长期底图，再对着它回答当下的问题。Dr Racing 是摩托车行从 lead 到交车的贷款流水线。',
           ),
           L(
             'Film Gallery is an archive of fifteen film frames from three cameras. Conway’s Game of Life is an interactive B3/S23 board that extends into 256 elementary rules and the I Ching. Penney’s Game turns a non-transitive coin hustle into five levels, a ranked mode, and a probability lab.',
