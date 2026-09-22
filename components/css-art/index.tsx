@@ -779,19 +779,21 @@ export const EngravedBorder: React.FC<{ label: string; tone?: EngravedTone }> = 
 
 /* ---- iGaming section banners (/igaming, 2026-09-22) ---- */
 
-export type IGamingBannerVariant = 'table' | 'chips' | 'loop' | 'ledger';
+export type IGamingBannerVariant = 'table' | 'chips' | 'loop' | 'ledger' | 'gears' | 'compass';
 
 const IGAMING_BANNER_TONE: Record<IGamingBannerVariant, EngravedTone> = {
   table: 'ink',
   chips: 'bronze',
   loop: 'teal',
   ledger: 'indigo',
+  gears: 'violet',
+  compass: 'rose',
 };
 
 /**
  * 16:5 engraved plate for one /igaming section. The subject sits on the golden
  * point; each variant carries one maths motif (37-pocket wheel, φ-scaled chips,
- * lemniscate loop, Fibonacci ledger). Tone comes from the engraved-line inks.
+ * lemniscate loop, Fibonacci ledger, 21:13 gear pair, 32-point compass). Tone comes from the engraved-line inks.
  */
 export const IGamingEngravedBanner: React.FC<{ label: string; variant: IGamingBannerVariant }> = ({ label, variant }) => (
   <div
@@ -848,6 +850,24 @@ export const IGamingEngravedBanner: React.FC<{ label: string; variant: IGamingBa
         <span className="engraved-ig-baseline" />
       </>
     ) : null}
+    {variant === 'gears' ? (
+      <>
+        <span className="engraved-ig-gear big" />
+        <span className="engraved-ig-gear-body big" />
+        <span className="engraved-ig-gear small" />
+        <span className="engraved-ig-gear-body small" />
+      </>
+    ) : null}
+    {variant === 'compass' ? (
+      <>
+        <span className="engraved-ig-dial" />
+        <span className="engraved-ig-dial-ring" />
+        <span className="engraved-ig-rose-edge" />
+        <span className="engraved-ig-rose" />
+        <span className="engraved-ig-needle" />
+        <span className="engraved-ig-needle-hub" />
+      </>
+    ) : null}
   </div>
 );
 
@@ -855,6 +875,8 @@ export const IGamingTableBanner: CssArtComponent = ({ label }) => <IGamingEngrav
 export const IGamingChipsBanner: CssArtComponent = ({ label }) => <IGamingEngravedBanner label={label} variant="chips" />;
 export const IGamingLoopBanner: CssArtComponent = ({ label }) => <IGamingEngravedBanner label={label} variant="loop" />;
 export const IGamingLedgerBanner: CssArtComponent = ({ label }) => <IGamingEngravedBanner label={label} variant="ledger" />;
+export const IGamingGearsBanner: CssArtComponent = ({ label }) => <IGamingEngravedBanner label={label} variant="gears" />;
+export const IGamingCompassBanner: CssArtComponent = ({ label }) => <IGamingEngravedBanner label={label} variant="compass" />;
 
 /* ---- /igaming "game floor" card art (2026-09-22) ---- */
 

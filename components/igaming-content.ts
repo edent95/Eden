@@ -4,8 +4,10 @@
  * what visitors see.
  *
  * The page is an iGaming primer: who sits at the table, the game floor, the words,
- * how money moves, the promotions providers and operators run, and the daily
- * reporting / campaign / CRM workflow Eden ran. By the owner's request it carries no
+ * how money moves, the promotions providers and operators run, the daily
+ * reporting / campaign / CRM workflow Eden ran, the B2B side that sells to operators,
+ * and symptom-first troubleshooting. Sections 01 additions, 05 and 06 come from
+ * Eden's own starter-pack / B2B / knowledge-base drafts (2026-09-23). By the owner's request it carries no
  * contact details and does not name or link past projects. Workflow facts come from
  * that real work (Transaction + Customer exports, negative withdrawals, brand-scoped
  * joins, recency buckets, 1+1 provider combos); industry numbers are stated as typical
@@ -32,6 +34,11 @@ export type IGamingCard = {
 export type IGamingTerm = { term: string; body: IGamingLocalized };
 export type IGamingFlow = { id: string; title: IGamingLocalized; when: IGamingLocalized; steps: IGamingCard[] };
 export type IGamingMetric = { name: IGamingLocalized; definition: IGamingLocalized; why: IGamingLocalized };
+export type IGamingCallout = { title: IGamingLocalized; body: IGamingLocalized };
+export type IGamingPath = { title: IGamingLocalized; steps: IGamingLocalized[] };
+export type IGamingRelation = { label: IGamingLocalized; body: IGamingLocalized };
+/** A simple table: `head` is the column labels, each row's first cell is the row header. */
+export type IGamingTable = { head: IGamingLocalized[]; rows: IGamingLocalized[][] };
 
 export const IGAMING_PAGE = {
   kicker: L('iGaming · Starter pack', 'iGaming · 入门包'),
@@ -41,14 +48,16 @@ export const IGAMING_PAGE = {
   ),
   claim: L('Put iGaming on the table.', '把 iGaming 摊开在台面上。'),
   standfirst: L(
-    'Most people only see the lobby. Behind it sit providers, aggregators, wallets, promotions, and a daily report that decides what the team believes. This is the starter pack, written from the operator’s desk.',
-    '大多数人只看到大厅。大厅后面是 provider、aggregator、钱包、促销，以及每天决定团队相信什么的那份日报。这是一份入门包，从 operator 的桌子这边写。',
+    'Most people only see the lobby. Behind it sit providers, aggregators, wallets, promotions, a daily report that decides what the team believes, and a whole B2B market selling to the operator. This is the starter pack, written from the operator’s desk.',
+    '大多数人只看到大厅。大厅后面是 provider、aggregator、钱包、促销、每天决定团队相信什么的那份日报，还有一整个卖东西给 operator 的 B2B 市场。这是一份入门包，从 operator 的桌子这边写。',
   ),
   toc: [
     { id: 'starter', label: L('Starter pack', '入门包') },
     { id: 'promotions', label: L('Promotions', '促销类型') },
     { id: 'workflow', label: L('My workflow', '我的工作流程') },
     { id: 'reporting', label: L('Reporting', '报表') },
+    { id: 'b2b', label: L('B2B', 'B2B') },
+    { id: 'troubleshooting', label: L('Troubleshooting', '排查') },
   ],
 
   /* 01 · Starter pack ------------------------------------------------ */
@@ -145,7 +154,28 @@ export const IGAMING_PAGE = {
     },
   ] as IGamingCard[],
 
+  journeyTitle: L('Follow one player', '跟着一个玩家走一遍'),
+  journey: [
+    { title: L('Traffic', '流量'), body: L('Arrives from SEO, an affiliate, an ad, or a friend.', '从 SEO、代理、广告或朋友那里来。') },
+    { title: L('Register', '注册'), body: L('Opens an account and passes the checks the market requires.', '开户，并通过所在市场要求的验证。') },
+    { title: L('First deposit', '首存'), body: L('Becomes an FTD: the first real signal of value.', '成为 FTD，第一个真正有价值的信号。') },
+    { title: L('Play', '下注'), body: L('Every bet adds to turnover; results settle into GGR.', '每一注都算进流水，输赢结算成 GGR。') },
+    { title: L('Withdraw', '提款'), body: L('Takes money out. How fast it lands decides trust.', '把钱提出去。到账快慢决定信任。') },
+    { title: L('Return or churn', '回来或流失'), body: L('Comes back and is retained, or goes quiet and churns.', '回来成为留存，或沉默下去成为流失。') },
+  ] as IGamingCard[],
+  journeyNote: {
+    title: L('Registrations up, FTD flat', '注册涨了，FTD 没动'),
+    body: L(
+      'Before blaming acquisition, check traffic quality, verification friction, payment success, onboarding, and whether the offer is clear.',
+      '先别怪获客。依次查流量质量、验证卡点、支付成功率、新手引导，以及优惠有没有讲清楚。',
+    ),
+  } as IGamingCallout,
+
   termsTitle: L('Words you will hear', '会听到的术语'),
+  termsLead: L(
+    'Learn the words, then confirm how your company defines each one. The same name can hide a different formula.',
+    '先学会这些词，再确认你公司怎么定义每一个。同一个名字，背后可能是不同的算法。',
+  ),
   terms: [
     { term: 'RTP', body: L('Return to player: the share of all bets a game pays back over the long run. 96% RTP means 4% stays with the house.', '返还率：长期来看游戏把所有投注的多少比例还给玩家。RTP 96% 表示 4% 留给庄家。') },
     { term: 'House edge', body: L('The other side of RTP. Small per bet, certain over volume.', 'RTP 的另一面。每一注很小，量大了就是确定的。') },
@@ -159,6 +189,14 @@ export const IGAMING_PAGE = {
     { term: 'Rebate', body: L('A percentage of turnover (or of losses) paid back to the player, usually daily or weekly.', '按流水（或输额）的一定比例返还给玩家，通常按日或按周。') },
     { term: 'Bonus ratio', body: L('Bonus given out compared with deposits. The quickest way to see if promotions are buying growth or burning margin.', '发出的奖金相对存款的比例。最快看出促销是在买增长还是在烧利润。') },
     { term: 'LTV', body: L('Lifetime value: what a player has deposited, withdrawn, and cost in bonus over their whole history.', '终身价值：一个玩家整个历史里的存款、提款和奖金成本。') },
+    { term: 'ARPU / ARPPU', body: L('Average revenue per user, and per paying user. Check which revenue and which users the company means.', '每用户平均收入、每付费用户平均收入。先确认公司说的是哪种收入、哪群用户。') },
+    { term: 'Active player', body: L('A player who meets the company’s own activity rule. The rule differs everywhere, so ask.', '符合公司自己活跃定义的玩家。每家定义都不同，要问清楚。') },
+    { term: 'Retention', body: L('Players who come back or stay active across a defined window.', '在一个限定时间窗口内回来或保持活跃的玩家。') },
+    { term: 'CPA', body: L('Cost per acquisition: a fixed payment to an affiliate for each qualifying depositor.', '按获客付费：每带来一个达标的存款玩家，付给代理一笔固定金额。') },
+    { term: 'Revenue share', body: L('Commission as an agreed share of a defined revenue. Hybrid deals mix it with CPA.', '按约定比例分一部分定义好的收入。Hybrid 合约把它和 CPA 混着用。') },
+    { term: 'Negative carryover', body: L('Whether an affiliate’s negative month is carried into the next. It depends on the contract.', '代理某个月结算为负时，要不要结转到下个月。看合同。') },
+    { term: 'KYC', body: L('Know your customer: identity and eligibility checks.', 'Know your customer：身份与资格验证。') },
+    { term: 'PSP', body: L('Payment service provider: the rails deposits and withdrawals run on.', '支付服务商：存提款走的那条通道。') },
   ] as IGamingTerm[],
 
   moneyTitle: L('How money moves', '钱怎么走'),
@@ -170,6 +208,46 @@ export const IGAMING_PAGE = {
     { title: L('Deductions', '扣除'), body: L('Bonus cost, provider share, payment fees, affiliate commission.', '奖金成本、provider 分成、支付手续费、代理佣金。') },
     { title: L('Margin', '利润'), body: L('What is left. Everything above is what the daily report watches.', '剩下的部分。上面每一步都是日报在盯的东西。') },
   ] as IGamingCard[],
+  moneyNote: {
+    title: L('Deposit ≠ Turnover ≠ GGR', '存款 ≠ 流水 ≠ GGR'),
+    body: L(
+      'A player can deposit 100 and bet the same balance over and over until turnover reaches 500. Each number answers a different question.',
+      '玩家存 100，可以拿同一笔余额反复下注，直到流水到 500。三个数字回答的是三个不同的问题。',
+    ),
+  } as IGamingCallout,
+
+  riskTitle: L('Controls that sit next to growth', '跟增长放在一起的控制'),
+  riskLead: L(
+    'Growth needs controls. What is required depends on the jurisdiction and the licence.',
+    '增长需要控制。具体要求取决于司法管辖区和牌照。',
+  ),
+  risk: [
+    { title: L('KYC and age checks', 'KYC 与年龄验证'), body: L('Confirm who the player is and that they are allowed to play.', '确认玩家是谁，以及对方是否被允许玩。') },
+    { title: L('AML and source of funds', 'AML 与资金来源'), body: L('Anti-money-laundering controls, plus a closer look at where money comes from when required.', '反洗钱控制；需要时再进一步查资金来源。') },
+    { title: L('Responsible gambling', '负责任博彩'), body: L('Deposit limits, time-outs, self-exclusion, and the rules that trigger them.', '存款上限、冷静期、自我排除，以及触发它们的规则。') },
+    { title: L('Multi-accounting and bonus abuse', '多开与薅奖金'), body: L('One person, many accounts, farming the same welcome offer.', '一个人开多个账号，反复领同一个首存优惠。') },
+    { title: L('Payment fraud and chargebacks', '支付欺诈与拒付'), body: L('Stolen cards, disputed deposits, and deposits reversed after play.', '盗卡、争议存款，以及玩完之后被撤回的存款。') },
+    { title: L('Collusion and false positives', '串通与误判'), body: L('Players working together at a table, and the honest players a strict rule catches by mistake.', '牌桌上几个人合伙，以及规则太严时误伤的正常玩家。') },
+  ] as IGamingCard[],
+
+  firstMonthTitle: L('Your first 30 days', '你的前 30 天'),
+  firstMonthLead: L('Build a mental map instead of memorising acronyms.', '先建立一张脑内地图，而不是背缩写。'),
+  firstMonth: {
+    head: [L('Period', '时间'), L('Focus', '重点'), L('Outcome', '做到什么')],
+    rows: [
+      [L('Week 1', '第 1 周'), L('Industry, products, player journey', '行业、产品、玩家路径'), L('Explain who does what and trace one player end to end.', '讲得出谁做什么，并把一个玩家从头追到尾。')],
+      [L('Week 2', '第 2 周'), L('Money, metrics, promotions', '钱、指标、促销'), L('Read a basic report without mixing up deposit, turnover, and GGR.', '看一份基础报表，不把存款、流水和 GGR 搞混。')],
+      [L('Week 3', '第 3 周'), L('Marketing, CRM, affiliates, payments', '营销、CRM、代理、支付'), L('Trace the acquisition and retention funnels.', '追得出获客和留存两条漏斗。')],
+      [L('Week 4', '第 4 周'), L('Risk, compliance, reporting, operations, B2B', '风控、合规、报表、运营、B2B'), L('Investigate a simple anomaly and know who owns the next action.', '查一个简单的异常，并知道下一步归谁。')],
+    ],
+  } as IGamingTable,
+  newcomerRule: {
+    title: L('The newcomer rule', '新人守则'),
+    body: L(
+      'When you see a metric, ask: what does it measure, how is it calculated, what period does it cover, and what decision is it supposed to support?',
+      '看到一个指标，先问四件事：它量的是什么？怎么算？覆盖哪段时间？它要支持哪个决定？',
+    ),
+  } as IGamingCallout,
 
   /* 02 · Promotions -------------------------------------------------- */
 
@@ -297,6 +375,13 @@ export const IGAMING_PAGE = {
     { name: L('Channel ROI', '渠道 ROI'), definition: L('Deposits, withdrawals, bonus, and net result per referrer or channel.', '每个 referrer / 渠道的存款、提款、奖金和净结果。'), why: L('Which sources bring players worth keeping.', '哪些来源带来值得留下的玩家。') },
     { name: L('Brand comparison', '品牌对比'), definition: L('The same metrics side by side for every brand.', '同一套指标，所有品牌并排。'), why: L('One brand’s good week can hide another’s bad one.', '一个品牌的好周可能掩盖另一个品牌的坏周。') },
   ] as IGamingMetric[],
+  reportingNote: {
+    title: L('GGR dropped. Now what?', 'GGR 掉了，然后呢？'),
+    body: L(
+      'Check turnover, actives, deposits, FTD, channel mix, provider and game movement, bonus cost, and unusual player results. The number starts the investigation; it does not end it.',
+      '依次查流水、活跃、存款、FTD、渠道组合、provider 与游戏变化、奖金成本，以及个别玩家的异常输赢。数字是调查的起点，不是结论。',
+    ),
+  } as IGamingCallout,
   trapsTitle: L('Traps I learned to check first', '我学会先查的坑'),
   traps: [
     { title: L('Withdrawals are negative', '提款是负数'), body: L('So net deposit is deposit plus withdrawal. When it matches company win/loss, that is not a bug.', '所以净存款是存款加提款。它和公司输赢一样时，不是 bug。') },
@@ -305,6 +390,296 @@ export const IGAMING_PAGE = {
     { title: L('Cohorts are not transactions', '分群不等于交易明细'), body: L('A recency bucket counts members, not rows. The two tables will not match, and should not.', 'Recency 分组数的是会员，不是交易行。两张表对不上，也本来就不该对上。') },
     { title: L('Good deposits can hide bonus', '好看的存款可能藏着奖金'), body: L('Always read deposit next to bonus ratio before calling a week good.', '说这周好之前，永远把存款和奖金比例放在一起看。') },
   ] as IGamingCard[],
+
+  /* 05 · B2B ---------------------------------------------------------- */
+
+  b2bTitle: L('05 · The B2B side', '05 · B2B 这一边'),
+  b2bLead: L(
+    'Everything above is the operator’s view. Behind it is a second market: companies selling content, platforms, payments, and tools to operators. Here the signed deal is only the start; integration, promotions, and account growth decide whether it becomes a live business.',
+    '上面都是 operator 的视角。它背后还有第二个市场：把内容、平台、支付和工具卖给 operator 的公司。在这里，签约只是开始；对接、促销和客户经营，决定它能不能变成真正在跑的生意。',
+  ),
+  b2bMapTitle: L('Who sells what to whom', '谁卖什么给谁'),
+  b2bMap: [
+    { title: L('Operator, the buyer', 'Operator（买方）'), body: L('Buys technology, content, payments, and services to run a player-facing brand.', '买技术、内容、支付和服务，用来经营一个面向玩家的品牌。') },
+    { title: L('Game provider', 'Game provider（游戏商）'), body: L('Supplies games and the promotional mechanics that come with them.', '供应游戏内容，以及配套的促销机制。') },
+    { title: L('Aggregator', 'Aggregator（聚合商）'), body: L('Distributes many providers through one integration layer.', '通过一层对接，分发很多家 provider。') },
+    { title: L('Platform / PAM', 'Platform / PAM（平台）'), body: L('Supplies the core: player accounts, wallet, bonus engine, and back office.', '供应核心：玩家账户、钱包、奖金引擎和后台。') },
+    { title: L('PSP / payments', 'PSP / 支付'), body: L('Supplies transaction rails and local payment coverage.', '供应交易通道和本地支付覆盖。') },
+    { title: L('CRM, data, and SaaS', 'CRM、数据与 SaaS'), body: L('Supplies engagement, analytics, automation, fraud, and operations tooling.', '供应触达、分析、自动化、反欺诈和运营工具。') },
+  ] as IGamingCard[],
+
+  dealFlow: {
+    id: 'deal',
+    title: L('How a deal starts', '一单生意怎么开始'),
+    when: L('Problem first, demo later', '先问题，后 demo'),
+    steps: [
+      { title: L('Market need', '市场需求'), body: L('The operator wants a market, a product, or a capability.', 'Operator 想进一个市场、上一个产品，或补一项能力。') },
+      { title: L('Discovery', '了解需求'), body: L('Learn their brands, markets, licences, traffic, stack, and priorities.', '弄清楚对方的品牌、市场、牌照、流量、技术栈和优先级。') },
+      { title: L('Fit', '确认匹配'), body: L('Confirm product, technical, and commercial compatibility.', '确认产品、技术和商务三方面都对得上。') },
+      { title: L('Demo', '演示'), body: L('Show only the workflows this buyer cares about.', '只演示这个买家在意的流程。') },
+      { title: L('Proposal', '方案'), body: L('Scope, commercials, responsibilities, and assumptions.', '范围、商务条件、双方责任和前提假设。') },
+      { title: L('Decision', '拍板'), body: L('Business, technical, compliance, and legal stakeholders align.', '业务、技术、合规和法务几方意见对齐。') },
+    ],
+  } as IGamingFlow,
+  dealNote: {
+    title: L('Not “Want a demo?”', '别一开口就问「要不要 demo？」'),
+    body: L(
+      'Ask first: which markets do you operate in, what are you trying to improve, what stack do you run, and what is missing today? Then decide whether a demo is useful.',
+      '先问：你们在哪些市场？想改善什么？用什么技术栈？现在缺什么？问完再决定 demo 有没有用。',
+    ),
+  } as IGamingCallout,
+
+  stakeholdersTitle: L('The client is several people', '「客户」其实是好几个人'),
+  stakeholdersLead: L(
+    'Each one cares about something different, so each one needs a different demo.',
+    '每个人在意的东西不同，所以每个人要看的 demo 也不同。',
+  ),
+  stakeholders: {
+    head: [L('Who', '角色'), L('Cares about', '在意什么'), L('Show them', '给他们看什么')],
+    rows: [
+      [L('Owner / C-level', '老板 / C-level'), L('Commercial impact, speed, risk, strategic fit', '商业影响、速度、风险、战略契合'), L('Outcome, differentiation, economics, implementation risk', '结果、差异化、账算不算得过来、落地风险')],
+      [L('Product', '产品'), L('Content quality, roadmap, player experience', '内容质量、路线图、玩家体验'), L('Catalogue, UX, configuration, roadmap', '游戏库、UX、配置、路线图')],
+      [L('Marketing', '营销'), L('Campaigns, visibility, assets, promo mechanics', '活动、曝光、素材、促销机制'), L('Campaign tools, assets, promotion workflow', '活动工具、素材、促销流程')],
+      [L('Operations', '运营'), L('Configuration, reporting, support, daily workflow', '配置、报表、支持、日常流程'), L('Back office, reports, controls, support flow', '后台、报表、控制项、支持流程')],
+      [L('Tech', '技术'), L('API, integration, environments, reliability', 'API、对接、环境、稳定性'), L('Architecture, API, error handling, environments, monitoring', '架构、API、错误处理、环境、监控')],
+      [L('Finance / legal / compliance', '财务 / 法务 / 合规'), L('Pricing, settlement, contract, regulatory fit', '定价、结算、合同、监管契合'), L('Commercial logic, reconciliation, settlement visibility', '商务逻辑、对账、结算透明度')],
+    ],
+  } as IGamingTable,
+
+  qualifyTitle: L('Qualify before you chase', '先筛选，再追'),
+  qualifyLead: L('Not every lead deserves the same time. Six questions sort them.', '不是每条线索都值得花一样的时间。六个问题筛一遍。'),
+  qualify: [
+    { title: L('Market', '市场'), body: L('Where does the operator actually operate?', '对方实际在哪些市场运营？') },
+    { title: L('Licence', '牌照'), body: L('Can the product legally be supplied there?', '产品在那里能合法供应吗？') },
+    { title: L('Product fit', '产品匹配'), body: L('Do they need what you sell?', '对方需要你卖的东西吗？') },
+    { title: L('Technical fit', '技术匹配'), body: L('Can both stacks integrate?', '两边的技术栈接得上吗？') },
+    { title: L('Commercial fit', '商务匹配'), body: L('Is there realistic volume or value?', '有没有实际的量或价值？') },
+    { title: L('Timing', '时机'), body: L('An active project, or only information gathering?', '是正在推进的项目，还是只是收集资料？') },
+  ] as IGamingCard[],
+
+  commercialTitle: L('How the money is structured', '钱怎么谈'),
+  commercialLead: L(
+    'Know what creates revenue and what creates cost. The sales deck gets attention; the contract defines reality.',
+    '搞清楚什么带来收入、什么带来成本。销售简报吸引注意，合同才定义现实。',
+  ),
+  commercialModels: [
+    { title: L('Revenue share', '分成'), body: L('An agreed percentage of a defined revenue base.', '按约定比例，分一个定义好的收入基数。') },
+    { title: L('Fixed fee', '固定费用'), body: L('Recurring or one-off, independent of gaming results.', '按期或一次性收取，跟游戏输赢无关。') },
+    { title: L('Setup / integration fee', '接入 / 对接费'), body: L('Charged for onboarding or technical work.', '为接入或技术工作收取。') },
+    { title: L('Minimum guarantee', '保底'), body: L('A minimum commercial commitment under agreed terms.', '按约定条款的最低商务承诺。') },
+    { title: L('Tiered pricing', '阶梯价'), body: L('Economics change when volume crosses set bands.', '量跨过某个区间，价格就跟着变。') },
+    { title: L('Custom deal', '定制方案'), body: L('Hybrids, bundles, and market-specific structures are common.', '混合、打包、按市场定制的结构都很常见。') },
+  ] as IGamingCard[],
+  contractTitle: L('What the contract must pin down', '合同要钉死的六件事'),
+  contract: [
+    { title: L('Commercial definition', '商务定义'), body: L('Exactly which number the percentage or fee applies to.', '比例或费用到底作用在哪个数字上。') },
+    { title: L('Territory', '地域'), body: L('Approved markets, brands, domains, or entities.', '批准的市场、品牌、域名或主体。') },
+    { title: L('Term and renewal', '期限与续约'), body: L('How long it runs, how it renews, how it ends.', '合约多长、怎么续、怎么终止。') },
+    { title: L('Payment terms', '付款条款'), body: L('Invoice, currency, settlement, and due dates.', '发票、币种、结算和到期日。') },
+    { title: L('SLA', 'SLA'), body: L('Service levels, and who supports what.', '服务水准，以及谁负责支持什么。') },
+    { title: L('Liability and compliance', '责任与合规'), body: L('Responsibilities, restrictions, and required controls.', '双方责任、限制条件和必须有的控制。') },
+  ] as IGamingCard[],
+
+  integrationFlow: {
+    id: 'integration',
+    title: L('Integration lifecycle', '对接周期'),
+    when: L('Signed does not mean live', '签约不等于上线'),
+    steps: [
+      { title: L('Kickoff', '启动会'), body: L('Owners, scope, markets, and a target launch date.', '负责人、范围、市场和目标上线日。') },
+      { title: L('Documentation', '文档'), body: L('API, credentials, environments, configuration.', 'API、凭证、环境、配置。') },
+      { title: L('Development', '开发'), body: L('Both sides build the connections they own.', '双方各自把自己负责的连接做好。') },
+      { title: L('Testing / UAT', '测试 / UAT'), body: L('Validate flows, errors, wallet, reporting, and edge cases.', '验证流程、报错、钱包、报表和边界情况。') },
+      { title: L('Certification', '认证'), body: L('Complete the required product and compliance checks.', '完成必须的产品与合规检查。') },
+      { title: L('Production', '生产上线'), body: L('Deploy, smoke-test, and watch the live environment.', '部署、冒烟测试，并盯住线上环境。') },
+    ],
+  } as IGamingFlow,
+
+  providerOpsTitle: L('Running a provider relationship', '跟 provider 的日常'),
+  providerOps: [
+    { title: L('Game catalogue', '游戏目录'), body: L('Titles, IDs, categories, availability.', '游戏名、ID、分类、可用性。') },
+    { title: L('RTP and configuration', 'RTP 与配置'), body: L('Approved configurations and the operator’s setup.', '获批的配置，以及 operator 那边的设置。') },
+    { title: L('Currency', '币种'), body: L('Supported currencies and denominations.', '支持的币种和面额。') },
+    { title: L('Launch calendar', '上线日历'), body: L('New releases and the markets they reach.', '新游戏，以及能在哪些市场上线。') },
+    { title: L('Maintenance', '维护'), body: L('Incidents, planned downtime, version changes.', '故障、计划停机、版本更新。') },
+    { title: L('Reporting', '报表'), body: L('Turnover, GGR, players, games, and markets, per operator.', '按 operator 看流水、GGR、玩家、游戏、市场。') },
+  ] as IGamingCard[],
+  aggregatorOpsTitle: L('What an aggregator adds', '多一层 aggregator 意味着什么'),
+  aggregatorOpsLead: L('Aggregation simplifies distribution but adds another relationship layer.', '聚合让分发变简单，但也多了一层关系。'),
+  aggregatorOps: [
+    { title: L('Provider onboarding', 'Provider 接入'), body: L('The aggregator connects and maintains each supplier.', 'Aggregator 负责接上并维护每一家供应商。') },
+    { title: L('Operator integration', 'Operator 对接'), body: L('The operator connects once to reach many suppliers.', 'Operator 接一次，就能接到很多供应商。') },
+    { title: L('Content mapping', '内容映射'), body: L('Game IDs, categories, metadata, assets.', '游戏 ID、分类、元数据、素材。') },
+    { title: L('Commercial routing', '账怎么走'), body: L('The contract decides who bills whom.', '合同决定谁向谁开账单。') },
+    { title: L('Incident routing', '故障怎么传'), body: L('Support may pass through the aggregator before it reaches the provider.', '支持请求可能要先经过 aggregator，才到 provider。') },
+    { title: L('Market availability', '市场可用性'), body: L('Access still depends on supplier and jurisdiction rules.', '能不能上，仍取决于供应商和当地规则。') },
+  ] as IGamingCard[],
+
+  sponsorNote: {
+    title: L('Operator asks: “What can you sponsor?”', 'Operator 问：「你们能赞助什么？」'),
+    body: L(
+      'Before answering, define market, brand, dates, eligible games, mechanic, budget cap, who funds it, assets, reporting, and what success means. Otherwise a “free promotion” becomes an operations problem later.',
+      '回答之前，先定下：市场、品牌、日期、适用游戏、机制、预算上限、谁出钱、素材、报表，以及怎样算成功。不然「免费促销」之后就会变成运营问题。',
+    ),
+  } as IGamingCallout,
+  providerCampaignFlow: {
+    id: 'provider-campaign',
+    title: L('Provider campaign', 'Provider 活动'),
+    when: L('Vague ownership breaks good promotions', '归属不清，好活动也会翻车'),
+    steps: [
+      { title: L('Objective', '目标'), body: L('Launch, exposure, turnover, retention, or reactivation?', '新游戏、曝光、流水、留存，还是召回？') },
+      { title: L('Eligibility', '资格'), body: L('Brand, market, player, game, and date rules.', '品牌、市场、玩家、游戏和日期规则。') },
+      { title: L('Funding', '出资'), body: L('Who pays, and what is the cap?', '谁出钱，上限多少？') },
+      { title: L('Assets', '素材'), body: L('Banners, copy, game links, localisation.', '横幅、文案、游戏链接、本地化。') },
+      { title: L('Tracking', '跟踪'), body: L('Agree the success metrics before launch.', '上线前就定好成功指标。') },
+      { title: L('Reconciliation', '对账'), body: L('Confirm winners, cost, results, and invoicing afterwards.', '结束后确认中奖名单、成本、结果和开票。') },
+    ],
+  } as IGamingFlow,
+
+  growthTitle: L('After go-live: grow the account', '上线之后：把客户做大'),
+  growthLead: L(
+    'A live client is the start of the account, not the end. Pipeline is a sequence of evidence, not optimistic labels, and B2B retention is operational, not only relational.',
+    '客户上线是经营的开始，不是结束。Pipeline 是一串证据，不是乐观的标签；B2B 的留存靠运营，不只靠关系。',
+  ),
+  pipeline: [
+    { title: L('Lead', '线索'), body: L('An identifiable potential customer.', '一个认得出来的潜在客户。') },
+    { title: L('Qualified', '已筛选'), body: L('Fit and opportunity are credible enough to pursue.', '匹配度和机会可信到值得追。') },
+    { title: L('Discovery / demo', '需求 / demo'), body: L('Needs and product fit are being validated.', '正在验证需求和产品匹配。') },
+    { title: L('Commercial', '商务'), body: L('Pricing and deal structure are under discussion.', '正在谈价格和合作结构。') },
+    { title: L('Contract / integration', '合同 / 对接'), body: L('Legal or technical execution is underway.', '法务或技术执行进行中。') },
+    { title: L('Live / expansion', '上线 / 扩展'), body: L('In production, moving into growth and retention.', '已上线，进入增长与留存。') },
+  ] as IGamingCard[],
+  accountWork: [
+    { title: L('Regular check-in', '定期沟通'), body: L('Priorities, issues, and upcoming launches.', '优先级、问题和即将上线的东西。') },
+    { title: L('Performance review', '业绩复盘'), body: L('Volume, growth, game mix, campaign results.', '量、增长、游戏组合、活动结果。') },
+    { title: L('Escalation', '升级处理'), body: L('Coordinate technical and operational incidents.', '协调技术和运营故障。') },
+    { title: L('More content, brands, markets', '更多内容、品牌、市场'), body: L('Grow catalogue adoption, then sister brands and newly approved markets.', '先提高游戏库的使用率，再扩到集团内其他品牌和新批准的市场。') },
+    { title: L('Better placement', '更好的位置'), body: L('Earn visibility with evidence, not by asking.', '用数据争取曝光，而不是靠开口要。') },
+    { title: L('Cross-sell', '交叉销售'), body: L('Introduce other products only when there is fit.', '只有真的匹配时才推其他产品。') },
+  ] as IGamingCard[],
+
+  b2bScoreTitle: L('B2B scorecard', 'B2B 记分卡'),
+  b2bScoreLead: L('Different B2B products need different scorecards.', '不同的 B2B 产品，要用不同的记分卡。'),
+  b2bScore: [
+    { title: L('Revenue', '收入'), body: L('Supplier revenue under the agreed commercial model.', '按约定商务模式算出的供应商收入。') },
+    { title: L('Turnover / GGR', '流水 / GGR'), body: L('The operator activity underneath, where relevant.', '底下 operator 的实际活动量（适用时）。') },
+    { title: L('Active players', '活跃玩家'), body: L('How many people the supplied content reaches and holds.', '供应的内容触达、留住了多少人。') },
+    { title: L('Game / product mix', '游戏 / 产品组合'), body: L('Which products actually create volume.', '到底是哪些产品在贡献量。') },
+    { title: L('Operator growth', 'Operator 增长'), body: L('Movement by brand, market, or account.', '按品牌、市场或客户看变化。') },
+    { title: L('Campaign lift', '活动增量'), body: L('Agreed campaign metrics against a meaningful baseline.', '约定的活动指标，对比一个有意义的基准。') },
+  ] as IGamingCard[],
+
+  techTitle: L('Enough technical language', '够用的技术语言'),
+  techLead: L('You do not need to be an engineer, but you must speak enough of the language to route a problem.', '你不必是工程师，但要会说够用的技术语言，才能把问题转给对的人。'),
+  techTerms: [
+    { term: 'API', body: L('A structured way for systems to request and exchange data.', '系统之间按固定格式请求和交换资料的方式。') },
+    { term: 'Webhook', body: L('An event one system sends to another when something happens. Also called a callback.', '某件事发生时，一个系统主动发给另一个系统的通知，也叫 callback。') },
+    { term: 'Credential', body: L('The secret key a system uses to prove who it is.', '系统用来证明身份的密钥。') },
+    { term: 'Sandbox', body: L('A non-production environment for testing. Also called staging.', '测试用的非生产环境，也叫 staging。') },
+    { term: 'Production', body: L('The live environment serving real players and transactions.', '服务真实玩家和交易的线上环境。') },
+    { term: 'Seamless wallet', body: L('The operator keeps one balance; the provider debits and credits it bet by bet.', 'Operator 只有一个余额，provider 每一注直接扣款和派彩。') },
+    { term: 'Transfer wallet', body: L('Money moves into a separate provider balance before play and back after.', '玩之前把钱转进 provider 的独立余额，玩完再转回来。') },
+    { term: 'Round / Txn ID', body: L('The IDs that let two teams find the same bet in two systems.', '让两个团队在两套系统里找到同一注的 ID。') },
+    { term: 'Settlement', body: L('When and how a bet’s result is finalised and paid.', '一注的结果什么时候、怎样最终确定并派彩。') },
+    { term: 'Error codes', body: L('Logs and codes: the evidence for diagnosing an integration problem.', '日志和错误码：诊断对接问题的证据。') },
+  ] as IGamingTerm[],
+
+  incidentFlow: {
+    id: 'incident',
+    title: L('Incident', '故障处理'),
+    when: L('How you behave is part of the product', '出事时的表现，也是产品的一部分'),
+    steps: [
+      { title: L('Confirm scope', '确认范围'), body: L('One game, provider, brand, market, or everyone?', '一个游戏、一家 provider、一个品牌、一个市场，还是全部？') },
+      { title: L('Collect evidence', '收集证据'), body: L('Timestamp, IDs, request, response, and screenshots where useful.', '时间戳、ID、请求、响应，必要时截图。') },
+      { title: L('Set severity', '定级'), body: L('Business impact decides urgency.', '按业务影响决定紧急程度。') },
+      { title: L('Route to owner', '找到负责人'), body: L('Operator, aggregator, provider, platform, or payments.', 'Operator、aggregator、provider、平台，还是支付。') },
+      { title: L('Communicate', '沟通'), body: L('Status, impact, and when the next update comes.', '现状、影响，以及下次什么时候更新。') },
+      { title: L('Postmortem', '复盘'), body: L('Root cause, fix, and prevention once resolved.', '解决后写清根因、修复和预防。') },
+    ],
+  } as IGamingFlow,
+  incidentNote: {
+    title: L('Never guess during an incident', '故障时不要猜'),
+    body: L(
+      'Separate confirmed facts, current impact, investigation status, and the next update. Fast communication helps; confident speculation does not.',
+      '把已确认的事实、当前影响、排查进度和下次更新分开讲。沟通快有用，笃定地猜没用。',
+    ),
+  } as IGamingCallout,
+
+  mistakesTitle: L('Busy, but not useful', '看起来很忙，其实没产出'),
+  mistakes: [
+    L('Pitching before discovery.', '还没了解需求就开始推销。'),
+    L('Calling every logo a qualified lead.', '把每个认识的品牌都当成合格线索。'),
+    L('Promising technical capability before confirming it.', '技术能力还没确认就先承诺。'),
+    L('Launching promotions without tracking or funding rules.', '没有跟踪和出资规则就上活动。'),
+    L('Treating a signed contract as revenue already earned.', '把签了的合同当成已经到手的收入。'),
+    L('Only contacting clients when you want something.', '只有要东西的时候才联系客户。'),
+  ] as IGamingLocalized[],
+
+  firstQuarterTitle: L('Your first 90 days in B2B', '你在 B2B 的前 90 天'),
+  firstQuarterLead: L('Become commercially useful without making promises you cannot verify.', '在不乱承诺的前提下，变得对生意有用。'),
+  firstQuarter: {
+    head: [L('Period', '时间'), L('Focus', '重点'), L('Outcome', '做到什么')],
+    rows: [
+      [L('Days 1–30', '第 1–30 天'), L('Product, ecosystem, commercial model, terminology', '产品、生态、商务模式、术语'), L('Explain your product, customer, integration, and revenue model without hiding behind jargon.', '不躲在术语后面，讲清楚你的产品、客户、对接方式和收入模式。')],
+      [L('Days 31–60', '第 31–60 天'), L('Discovery, demos, pipeline, integration, reporting', '需求了解、demo、pipeline、对接、报表'), L('Run a useful discovery call, tailor a demo, and know where each account really sits.', '开一场有用的需求会，做一场量身定做的 demo，知道每个客户真正走到哪一步。')],
+      [L('Days 61–90', '第 61–90 天'), L('Account growth, campaigns, incidents, expansion', '客户增长、活动、故障、扩展'), L('Own follow-ups, coordinate internal teams, and turn live accounts into measurable activity.', '自己跟进、协调内部团队，把已上线的客户变成量得出来的活动。')],
+    ],
+  } as IGamingTable,
+  b2bRule: {
+    title: L('The B2B rule', 'B2B 守则'),
+    body: L(
+      'Your job is not to know every answer at once. It is to understand the question, know who owns the answer, verify it, say it clearly, and move the account forward without creating risk.',
+      '你的工作不是马上知道所有答案，而是听懂问题、知道答案归谁、核实、讲清楚，然后在不制造风险的前提下把客户往前推。',
+    ),
+  } as IGamingCallout,
+
+  /* 06 · Troubleshooting ----------------------------------------------- */
+
+  troubleshootingTitle: L('06 · When a number moves', '06 · 数字动了怎么办'),
+  troubleshootingLead: L(
+    'Search by symptom, not by terminology. Each path is an order to check things in; each playbook is a checklist that turns knowledge into repeatable work.',
+    '按症状查，而不是按术语查。每条路径是检查的先后顺序；每个 playbook 是一张把知识变成可重复工作的清单。',
+  ),
+  graphTitle: L('One number, many connections', '一个数字，连着很多东西'),
+  graphLead: L('A glossary tells you what FTD means. The useful part is what it touches.', '术语表告诉你 FTD 是什么。有用的是它连着什么。'),
+  funnel: [L('Traffic', '流量'), L('Registration', '注册'), L('FTD', 'FTD'), L('Deposit', '存款'), L('Turnover', '流水'), L('GGR', 'GGR'), L('NGR', 'NGR')],
+  ftdRelations: [
+    { label: L('Affected by', '受什么影响'), body: L('KYC, payment success, onboarding.', 'KYC、支付成功率、新手引导。') },
+    { label: L('Attributed to', '归因到'), body: L('Affiliate, paid media, SEO, agent.', '代理、付费广告、SEO、agent。') },
+    { label: L('Used in', '用在哪里'), body: L('CPA, conversion, acquisition reporting.', 'CPA、转化率、获客报表。') },
+    { label: L('Do not confuse with', '别搞混'), body: L('Registration, or a deposit attempt that failed.', '注册，或者一次没成功的存款尝试。') },
+  ] as IGamingRelation[],
+
+  symptomsTitle: L('Start from the symptom', '从症状开始查'),
+  symptoms: [
+    { title: L('FTD suddenly dropped', 'FTD 突然掉了'), steps: [L('Traffic', '流量'), L('Registration', '注册'), L('KYC', 'KYC'), L('Deposit attempts', '存款尝试'), L('Success rate', '成功率'), L('PSP status', 'PSP 状态')] },
+    { title: L('GGR suddenly negative', 'GGR 突然变负'), steps: [L('Large winner', '大额赢家'), L('Product', '产品'), L('Game', '游戏'), L('Provider', 'Provider'), L('Turnover', '流水'), L('Settlement', '结算')] },
+    { title: L('Game will not launch', '游戏打不开'), steps: [L('Game ID', '游戏 ID'), L('Currency', '币种'), L('Market', '市场'), L('Provider', 'Provider'), L('Maintenance', '维护'), L('Integration', '对接')] },
+    { title: L('Promotion not credited', '优惠没到账'), steps: [L('Eligibility', '资格'), L('Requirement', '条件'), L('Game', '游戏'), L('Expiry', '有效期'), L('Bonus engine', '奖金引擎'), L('Player', '玩家')] },
+    { title: L('Deposit success dropped', '存款成功率下降'), steps: [L('Method', '支付方式'), L('PSP', 'PSP'), L('Bank response', '银行回应'), L('Market', '市场'), L('Routing', '路由'), L('Incident', '故障')] },
+    { title: L('Withdrawal pending', '提款卡住'), steps: [L('KYC', 'KYC'), L('Risk review', '风控审核'), L('Approval', '审批'), L('Method', '支付方式'), L('Processor', '处理方'), L('Communication', '沟通')] },
+  ] as IGamingPath[],
+  playbooksTitle: L('Playbooks', 'Playbook 清单'),
+  playbooks: [
+    { title: L('Launch a provider promotion', '上线 provider 活动'), steps: [L('Objective', '目标'), L('Funding', '出资'), L('Games', '游戏'), L('Market', '市场'), L('Dates', '日期'), L('T&C', '条款'), L('Assets', '素材'), L('Tracking', '跟踪'), L('QA', 'QA'), L('Report', '报告'), L('Reconcile', '对账')] },
+    { title: L('Launch a new provider', '接入新 provider'), steps: [L('Commercial', '商务'), L('Integration', '对接'), L('Config', '配置'), L('UAT', 'UAT'), L('Metadata', '元数据'), L('Placement', '位置'), L('Smoke test', '冒烟测试'), L('Monitor', '监控')] },
+    { title: L('Handle an incident', '处理故障'), steps: [L('Scope', '范围'), L('Evidence', '证据'), L('Severity', '定级'), L('Owner', '负责人'), L('Communication', '沟通'), L('Resolution', '解决'), L('Postmortem', '复盘')] },
+    { title: L('Investigate a daily report', '查一份日报'), steps: [L('Compare', '对比'), L('Segment', '分群'), L('Anomaly', '异常'), L('Validate', '验证'), L('Driver', '驱动因素'), L('Action', '行动')] },
+    { title: L('CRM campaign QA', 'CRM 活动 QA'), steps: [L('Audience', '受众'), L('Exclusions', '排除名单'), L('Offer', '优惠'), L('Channel', '渠道'), L('Links', '链接'), L('Dates', '日期'), L('Localisation', '本地化'), L('Tracking', '跟踪'), L('Test', '测试')] },
+    { title: L('B2B discovery', 'B2B 需求了解'), steps: [L('Market', '市场'), L('Licence', '牌照'), L('Stack', '技术栈'), L('Problem', '问题'), L('Fit', '匹配'), L('Commercials', '商务'), L('Timing', '时机'), L('Next step', '下一步')] },
+  ] as IGamingPath[],
+
+  ownersTitle: L('Who owns this?', '这归谁管？'),
+  owners: {
+    head: [L('Problem', '问题'), L('Primary', '主责'), L('Support', '协助')],
+    rows: [
+      [L('Withdrawal pending', '提款卡住'), L('Payments / finance', '支付 / 财务'), L('Risk · KYC · support', '风控 · KYC · 客服')],
+      [L('Game launch error', '游戏打不开'), L('Product / tech', '产品 / 技术'), L('Provider · aggregator · support', 'Provider · aggregator · 客服')],
+      [L('Bonus missing', '奖金没到'), L('CRM / operations', 'CRM / 运营'), L('Platform · support', '平台 · 客服')],
+      [L('Provider campaign', 'Provider 活动'), L('Marketing / B2B', '营销 / B2B'), L('Product · CRM · provider', '产品 · CRM · provider')],
+      [L('Wrong settlement', '结算错误'), L('Product / operations', '产品 / 运营'), L('Provider · tech · support', 'Provider · 技术 · 客服')],
+      [L('Deposit failure', '存款失败'), L('Payments', '支付'), L('PSP · tech · support', 'PSP · 技术 · 客服')],
+    ],
+  } as IGamingTable,
 
   closingTitle: L('The edge is maths, not luck.', '优势来自数学，不是运气。'),
   closingBody: L(
@@ -316,6 +691,8 @@ export const IGAMING_PAGE = {
     promotions: L('Engraved casino chips shrinking in golden ratio', '按黄金比例递减的凹版筹码'),
     workflow: L('Engraved infinity loop of two hatched rings', '两个排线圆环组成的凹版无限循环'),
     reporting: L('Engraved bar chart in Fibonacci proportion inside a golden rectangle', '黄金矩形里按斐波那契比例排列的凹版柱状图'),
+    b2b: L('Engraved pair of meshing gears with 21 and 13 teeth', '21 齿与 13 齿两个咬合的凹版齿轮'),
+    troubleshooting: L('Engraved compass rose with a needle searching for north', '指针来回寻找北方的凹版罗盘'),
   },
   back: L('Back to home', '返回首页'),
 };

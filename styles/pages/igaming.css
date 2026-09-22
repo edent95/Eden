@@ -177,6 +177,102 @@
   line-height: 1.65;
 }
 
+.igaming-section .igaming-sublead {
+  max-width: 40rem;
+}
+
+/* Callout: one hard-won rule, set off by a solid rail */
+
+.igaming-callout {
+  margin-top: 1.2rem;
+  padding: 1rem 1.2rem 1.05rem;
+  border-left: 4px solid var(--igaming-gold);
+  border-radius: 0 14px 14px 0;
+  background: var(--theme-surface-muted);
+}
+
+.igaming-callout strong {
+  display: block;
+  color: var(--theme-text-primary);
+  font-family: var(--font-display), sans-serif;
+  font-size: 0.98rem;
+  font-weight: 700;
+}
+
+.igaming-section .igaming-callout p {
+  margin-top: 0.35rem;
+  max-width: 46rem;
+}
+
+/* Path: the order to check things in, as pills joined by arrows */
+
+.igaming-path {
+  margin-top: 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0;
+}
+
+.igaming-path li {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--theme-border);
+  border-radius: 999px;
+  background: var(--theme-page);
+  color: var(--theme-text-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.igaming-path li + li {
+  position: relative;
+  margin-left: 1.3rem;
+}
+
+.igaming-path li + li::before {
+  content: "→";
+  position: absolute;
+  left: -1.08rem;
+  color: var(--igaming-felt);
+  font-weight: 700;
+}
+
+.igaming-section > .igaming-path li {
+  background: var(--igaming-felt-wash);
+  border-color: transparent;
+}
+
+/* Common-mistakes list */
+
+.igaming-list {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem 2rem;
+}
+
+.igaming-list li {
+  position: relative;
+  padding: 0.7rem 0 0.7rem 1.6rem;
+  border-bottom: 1px solid var(--theme-border);
+  color: var(--theme-text-secondary);
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+.igaming-list li::before {
+  content: "×";
+  position: absolute;
+  left: 0.1rem;
+  top: 0.62rem;
+  color: var(--igaming-coral);
+  font-weight: 800;
+}
+
 /* Card grids */
 
 .igaming-grid {
@@ -213,6 +309,8 @@
 }
 .igaming-grid.is-promo li { border-left: 4px solid var(--igaming-felt); }
 .igaming-grid.is-traps li { border-left: 4px solid var(--igaming-coral); }
+.igaming-grid.is-risk li { border-top: 3px solid var(--igaming-coral); }
+.igaming-grid.is-paths li { border-left: 4px solid var(--igaming-blue); }
 
 .igaming-grid.is-compact li {
   padding: 1rem 1.1rem;
@@ -235,6 +333,10 @@
   gap: 0.9rem;
   padding: 0.9rem 0;
   border-bottom: 1px solid var(--theme-border);
+}
+
+.igaming-terms.is-relations > div {
+  grid-template-columns: 9rem minmax(0, 1fr);
 }
 
 .igaming-terms dt {
@@ -302,6 +404,10 @@
 
 .igaming-flow.is-campaign { --igaming-rail: var(--igaming-gold); }
 .igaming-flow.is-crm { --igaming-rail: var(--igaming-blue); }
+.igaming-flow.is-deal { --igaming-rail: var(--igaming-blue); }
+.igaming-flow.is-integration { --igaming-rail: var(--igaming-felt); }
+.igaming-flow.is-provider-campaign { --igaming-rail: var(--igaming-gold); }
+.igaming-flow.is-incident { --igaming-rail: var(--igaming-coral); }
 
 .igaming-flow-head {
   display: flex;
@@ -441,11 +547,13 @@
   .igaming-grid.is-two,
   .igaming-grid.is-three,
   .igaming-terms,
+  .igaming-list,
   .igaming-flow ol {
     grid-template-columns: 1fr;
   }
 
-  .igaming-terms > div {
+  .igaming-terms > div,
+  .igaming-terms.is-relations > div {
     grid-template-columns: 6rem minmax(0, 1fr);
   }
 
