@@ -1,7 +1,7 @@
 # Jiju Revamp Positioning（参考文档）
 
 > 用途：Jiju 从 pet-friendly directory 转向 context-based local discovery 的完整定位。
-> 未来 agent 改 `/jiju-revamp` 页面（`JijuRevampFullPage`，App.tsx）或相关内容时，先读这份。
+> 未来 agent 改 `/jiju-revamp` 页面（`JijuRevampFullPage`，`pages/JijuPages.tsx`）或相关内容时，先读这份。
 > 来源：Eden 在 2026-06-29 给出的详细 pivot 方向。
 
 ## 一句话定位

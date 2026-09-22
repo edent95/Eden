@@ -1,8 +1,12 @@
 import { OG_IMAGES, ROUTE_SEO, SITE_CONTENT_LASTMOD } from '../../seo-routes.ts';
 import { ROUTE_STATIC_COPY } from '../../seo-static-content.ts';
-import { exists, fail, pass, read } from './lib.mjs';
+import { readdirSync } from 'node:fs';
+import path from 'node:path';
+import { exists, fail, pass, read, root } from './lib.mjs';
 
+// Route branches stay in App.tsx; archive entries are data in pages/archived-works.ts.
 const app = read('App.tsx');
+const archivedWorks = read('pages/archived-works.ts');
 const readme = read('README.md');
 const seen = new Set();
 const problems = [];
@@ -16,7 +20,7 @@ function hasImplementedRoute(route) {
     return exists(`wiki/pages/${route.slice('/wiki/'.length)}.md`);
   }
   if (route.startsWith('/archive/')) {
-    return app.includes(`slug: '${route.slice('/archive/'.length)}'`);
+    return archivedWorks.includes(`slug: '${route.slice('/archive/'.length)}'`);
   }
   return app.includes(`pathWithoutBase === '${route}'`);
 }
@@ -41,7 +45,7 @@ for (const route of ROUTE_SEO) {
     problems.push(`${route.path} English description exceeds 160 characters (${route.desc.en.length})`);
   }
   if (!hasImplementedRoute(route.path)) {
-    problems.push(`${route.path} is registered but no matching App.tsx route/data entry was found`);
+    problems.push(`${route.path} is registered but no matching App.tsx route branch or pages/archived-works.ts entry was found`);
   }
   if (!hasReadmeRoute(route.path)) {
     problems.push(`${route.path} is registered but not documented in README.md`);
@@ -93,6 +97,21 @@ const allowedAliases = new Set(['/analog-tech']);
 for (const match of app.matchAll(/pathWithoutBase\s*===\s*'([^']+)'/g)) {
   if (!registeredPaths.has(match[1]) && !allowedAliases.has(match[1])) {
     problems.push(`${match[1]} is implemented in App.tsx but missing from seo-routes.ts`);
+  }
+}
+
+// Each route page in pages/*.tsx is its own lazy chunk. A page importing another page would
+// merge the two chunks, and nothing live may import the unrouted pages/legacy/ files.
+const pageComponentFiles = new Set(
+  readdirSync(path.join(root, 'pages')).filter((file) => file.endsWith('.tsx')).map((file) => file.replace(/\.tsx$/, '')),
+);
+for (const file of ['App.tsx', ...[...pageComponentFiles].map((name) => `pages/${name}.tsx`)]) {
+  for (const match of read(file).matchAll(/from '([^']+)'|import\('([^']+)'\)/g)) {
+    const specifier = match[1] ?? match[2];
+    if (specifier.includes('legacy/')) problems.push(`${file} imports unrouted legacy module ${specifier}`);
+    if (file.startsWith('pages/') && specifier.startsWith('./') && pageComponentFiles.has(specifier.slice(2))) {
+      problems.push(`${file} imports page module ${specifier}; move the shared piece into app/ or a pages/*.ts data file`);
+    }
   }
 }
 
