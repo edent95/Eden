@@ -654,11 +654,11 @@
 :root[data-theme="dark"] .projects-etreport-line,
 :root[data-theme="dark"] .projects-etreport-line::before,
 :root[data-theme="dark"] .projects-etreport-line::after {
-  background: #dc6f82;
+  background: #f28c38;
 }
 
 :root[data-theme="dark"] .projects-etreport-scan {
-  background: rgb(220 111 130 / 0.38);
+  background: rgb(242 140 56 / 0.38);
 }
 
 @keyframes projects-etreport-bar-rise {
@@ -974,10 +974,10 @@
 }
 
 :root[data-theme="dark"] .projects-crm-ring.ring-outer {
-  border-color: rgb(220 111 130 / 0.42);
+  border-color: rgb(242 140 56 / 0.42);
   box-shadow:
-    0 0 0 0.42rem rgb(220 111 130 / 0.04),
-    inset 0 0 0 1px rgb(220 111 130 / 0.12);
+    0 0 0 0.42rem rgb(242 140 56 / 0.04),
+    inset 0 0 0 1px rgb(242 140 56 / 0.12);
 }
 
 :root[data-theme="dark"] .projects-crm-ring.ring-middle {
@@ -1002,7 +1002,7 @@
 }
 
 :root[data-theme="dark"] .projects-crm-triangle::before {
-  background: rgb(220 111 130 / 0.28);
+  background: rgb(242 140 56 / 0.28);
 }
 
 :root[data-theme="dark"] .projects-crm-triangle::after {
@@ -1010,10 +1010,10 @@
 }
 
 :root[data-theme="dark"] .projects-crm-node {
-  background: #dc6f82;
+  background: #f28c38;
   box-shadow:
-    0 0 0 0.25rem rgb(220 111 130 / 0.09),
-    0 0 18px rgb(220 111 130 / 0.24);
+    0 0 0 0.25rem rgb(242 140 56 / 0.09),
+    0 0 18px rgb(242 140 56 / 0.24);
 }
 
 :root[data-theme="dark"] .projects-crm-tick {

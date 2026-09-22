@@ -518,8 +518,8 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
             '按钮与输入框最小高度 44px；hero 最多两个按钮；标题行高 0.98 到 1.08；桌面段落间距 80 到 160px，移动端 48 到 96px；卡片圆角 24 到 32px；首页媒体横幅 16:9；网格从桌面 4 栏到平板 2 栏、手机 1 栏。',
           ),
           L(
-            'Color is signal: six base tokens from Paper to Deep, with Eden Mint as the light-mode accent and a pink accent in dark mode. Type stays simple; motion stays light and lives on visible objects rather than on backgrounds.',
-            '颜色只做信号：从 Paper 到 Deep 六个基础 token，浅色模式的强调色是 Eden Mint，深色模式用粉色。字体少变化；动效要轻，放在可见物件上，而不是背景上。',
+            'Color is signal: six base tokens from Paper to Deep, with Eden Mint as the light-mode accent and an orange accent in dark mode. Type stays simple; motion stays light and lives on visible objects rather than on backgrounds.',
+            '颜色只做信号：从 Paper 到 Deep 六个基础 token，浅色模式的强调色是 Eden Mint，深色模式用橙色。字体少变化；动效要轻，放在可见物件上，而不是背景上。',
           ),
         ],
       },

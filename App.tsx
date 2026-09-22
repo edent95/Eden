@@ -6741,12 +6741,12 @@ const brandGuidePalette = [
 
 const brandGuideAccent = [
   {
-    name: { en: 'Eden Mint / Pink', zh: 'Eden Mint / Pink' },
-    hex: { light: '#7bdcb5', dark: '#dc6f82' },
+    name: { en: 'Eden Mint / Orange', zh: 'Eden Mint / Orange' },
+    hex: { light: '#7bdcb5', dark: '#f28c38' },
     role: { en: 'Primary by theme', zh: '跟随主题的主品牌色' },
     usage: {
-      en: 'Mint in light mode. Pink in dark mode.',
-      zh: '浅色用 Mint，深色用 Pink。',
+      en: 'Mint in light mode. Orange in dark mode.',
+      zh: '浅色用 Mint，深色用 Orange。',
     },
   },
   {
@@ -7643,8 +7643,8 @@ const BrandGuideFullPage: React.FC<{
               </h2>
               <p className="brand-guide-section-copy">
                 {isZh
-                  ? 'Mint / Pink 随主题切换。Amber / Blue 是系统辅助。Dream Purple 负责行动。'
-                  : 'Mint / Pink switch with theme. Amber / Blue support system states. Dream Purple carries action.'}
+                  ? 'Mint / Orange 随主题切换。Amber / Blue 是系统辅助。Dream Purple 负责行动。'
+                  : 'Mint / Orange switch with theme. Amber / Blue support system states. Dream Purple carries action.'}
               </p>
             </div>
             <div className="mt-12 grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
