@@ -197,7 +197,7 @@ const HomePenneyGame: React.FC<HomePenneyGameProps> = ({ isZh, igamingHref }) =>
       <div className="eden-penney-copy">
         <p className="eden-section-label">{t('Daily arena · Mini Coin Slot', '每日擂台 · 劝你不要玩')}</p>
         <h2 className={isZh ? 'is-zh' : undefined}>
-          {isZh ? <>是男人你就第一名</> : <>100 credits.<br />Make them count.</>}
+          {isZh ? <>是男人你就「顶」头榜60天</> : <>100 credits.<br />Make them count.</>}
         </h2>
         <div className="eden-penney-body">
           <p>
