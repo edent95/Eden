@@ -22,8 +22,9 @@ const IGamingSummaryPage: React.FC<{
   language: Lang;
   homeHref: string;
   fullHref: string;
+  casesHref: string;
   controls: React.ReactNode;
-}> = ({ language, homeHref, fullHref, controls }) => {
+}> = ({ language, homeHref, fullHref, casesHref, controls }) => {
   const t = (value: IGamingLocalized) => value[language];
   const page = IGAMING_SUMMARY;
   const [unlocked, setUnlocked] = React.useState(false);
@@ -90,10 +91,16 @@ const IGamingSummaryPage: React.FC<{
         <aside className="igaming-full-panel">
           <h2>{t(page.fullTitle)}</h2>
           <p>{t(page.fullBody)}</p>
-          <a href={fullHref} className="igaming-full-cta">
-            {t(page.openFull)}
-            <ArrowRight size={16} aria-hidden="true" />
-          </a>
+          <div className="igaming-case-links">
+            <a href={fullHref} className="igaming-full-cta">
+              {t(page.openFull)}
+              <ArrowRight size={16} aria-hidden="true" />
+            </a>
+            <a href={casesHref} className="igaming-point-more">
+              {t(page.openCases)} <span aria-hidden="true">→</span>
+            </a>
+          </div>
+          <p className="igaming-cases-line">{t(page.casesLine)}</p>
         </aside>
 
         <section className="igaming-closing" aria-labelledby="igaming-closing">
