@@ -14,6 +14,13 @@ import {
   defaultNameFor,
   sanitizeName,
 } from './penney-mini-core.js';
+import {
+  RETENTION_MS,
+  applySend,
+  chatNameFor,
+  isChatName,
+  sanitizeMessage,
+} from './home-chat-core.js';
 
 if (getApps().length === 0) {
   initializeApp({
@@ -125,6 +132,91 @@ export const penneyMiniApi = onRequest(
     } catch (error) {
       console.error('penney mini api failed', error);
       response.status(500).json({ error: 'server-error', dailyLimit: DAILY_CREDITS });
+    }
+  },
+);
+
+const CHAT_MESSAGES_NODE = 'homeChatMessages';
+const CHAT_SENDERS_NODE = 'homeChatSenders';
+
+/** Chat ids use their own HMAC domain, so the chat never shares a key with the arena. */
+const chatIdFor = (request) =>
+  createHmac('sha256', ipSalt.value()).update(`chat:${readClientIp(request)}`).digest('hex');
+
+const pruneOldMessages = async (now) => {
+  const stale = await getDatabase()
+    .ref(CHAT_MESSAGES_NODE)
+    .orderByChild('createdAt')
+    .endAt(now - RETENTION_MS)
+    .limitToFirst(50)
+    .get();
+  if (!stale.exists()) return;
+  const updates = {};
+  stale.forEach((child) => {
+    updates[child.key] = null;
+  });
+  await getDatabase().ref(CHAT_MESSAGES_NODE).update(updates);
+};
+
+export const homeChatApi = onRequest(
+  {
+    region: 'asia-southeast1',
+    cors: allowedOrigins,
+    secrets: [ipSalt],
+    timeoutSeconds: 15,
+    memory: '256MiB',
+    maxInstances: 10,
+  },
+  async (request, response) => {
+    response.set('Cache-Control', 'no-store');
+
+    if (request.method !== 'POST') {
+      response.set('Allow', 'POST').status(405).json({ error: 'method-not-allowed' });
+      return;
+    }
+
+    try {
+      const text = sanitizeMessage(request.body?.text);
+      if (!text) {
+        response.status(400).json({ error: 'empty-message' });
+        return;
+      }
+
+      const chatId = chatIdFor(request);
+      const name = isChatName(request.body?.name) ? request.body.name : chatNameFor(chatId);
+      const now = Date.now();
+      let outcome = { ok: false, reason: 'server-error' };
+      let muted = false;
+
+      await getDatabase().ref(`${CHAT_SENDERS_NODE}/${chatId}`).transaction(
+        (current) => {
+          muted = current?.muted === true;
+          outcome = applySend({ sender: current, currentDay: dayKey(), now });
+          return outcome.ok ? outcome.next : undefined;
+        },
+        undefined,
+        false,
+      );
+
+      if (!outcome.ok) {
+        response.status(429).json({ error: outcome.reason });
+        return;
+      }
+
+      const message = { name, text, createdAt: now };
+      // A muted sender sees their own message echoed back but nothing reaches the room.
+      if (muted) {
+        response.status(200).json({ message: { id: `local-${now}`, ...message } });
+        return;
+      }
+
+      const ref = getDatabase().ref(CHAT_MESSAGES_NODE).push();
+      await ref.set(message);
+      await pruneOldMessages(now).catch((error) => console.warn('home chat prune failed', error));
+      response.status(200).json({ message: { id: ref.key, ...message } });
+    } catch (error) {
+      console.error('home chat api failed', error);
+      response.status(500).json({ error: 'server-error' });
     }
   },
 );
