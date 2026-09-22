@@ -776,3 +776,160 @@ export const EngravedBorder: React.FC<{ label: string; tone?: EngravedTone }> = 
     <span className="engraved-border-golden" />
   </div>
 );
+
+/* ---- iGaming section banners (/igaming, 2026-09-22) ---- */
+
+export type IGamingBannerVariant = 'table' | 'chips' | 'loop' | 'ledger';
+
+const IGAMING_BANNER_TONE: Record<IGamingBannerVariant, EngravedTone> = {
+  table: 'ink',
+  chips: 'bronze',
+  loop: 'teal',
+  ledger: 'indigo',
+};
+
+/**
+ * 16:5 engraved plate for one /igaming section. The subject sits on the golden
+ * point; each variant carries one maths motif (37-pocket wheel, φ-scaled chips,
+ * lemniscate loop, Fibonacci ledger). Tone comes from the engraved-line inks.
+ */
+export const IGamingEngravedBanner: React.FC<{ label: string; variant: IGamingBannerVariant }> = ({ label, variant }) => (
+  <div
+    className={`engraved-art engraved-igaming is-${variant} engraved-tone-${IGAMING_BANNER_TONE[variant]}`}
+    role="img"
+    aria-label={label}
+  >
+    <span className="engraved-ig-strip" />
+    <span className="engraved-ig-golden" />
+    <span className="engraved-ig-rays" />
+    <span className="engraved-ig-guilloche" />
+    {variant === 'table' ? (
+      <>
+        <span className="engraved-ig-ring r1" />
+        <span className="engraved-ig-wheel" />
+        <span className="engraved-ig-wheel-bowl" />
+        <span className="engraved-ig-wheel-orbit" />
+        <span className="engraved-ig-wheel-hub" />
+      </>
+    ) : null}
+    {variant === 'chips' ? (
+      <>
+        <span className="engraved-ig-chip s1" />
+        <span className="engraved-ig-chip s2" />
+        <span className="engraved-ig-chip s3" />
+        <span className="engraved-ig-chip main" />
+        <span className="engraved-ig-spark k1" />
+        <span className="engraved-ig-spark k2" />
+        <span className="engraved-ig-spark k3" />
+      </>
+    ) : null}
+    {variant === 'loop' ? (
+      <>
+        <span className="engraved-ig-loop-inner left" />
+        <span className="engraved-ig-loop-inner right" />
+        <span className="engraved-ig-loop left" />
+        <span className="engraved-ig-loop right" />
+        <span className="engraved-ig-loop-rule left" />
+        <span className="engraved-ig-loop-rule right" />
+        <span className="engraved-ig-runner left" />
+        <span className="engraved-ig-runner right" />
+        <span className="engraved-ig-knot" />
+      </>
+    ) : null}
+    {variant === 'ledger' ? (
+      <>
+        <span className="engraved-ig-ledger" />
+        <span className="engraved-ig-bar b1" />
+        <span className="engraved-ig-bar b2" />
+        <span className="engraved-ig-bar b3" />
+        <span className="engraved-ig-bar b4" />
+        <span className="engraved-ig-bar b5" />
+        <span className="engraved-ig-trend" />
+        <span className="engraved-ig-baseline" />
+      </>
+    ) : null}
+  </div>
+);
+
+export const IGamingTableBanner: CssArtComponent = ({ label }) => <IGamingEngravedBanner label={label} variant="table" />;
+export const IGamingChipsBanner: CssArtComponent = ({ label }) => <IGamingEngravedBanner label={label} variant="chips" />;
+export const IGamingLoopBanner: CssArtComponent = ({ label }) => <IGamingEngravedBanner label={label} variant="loop" />;
+export const IGamingLedgerBanner: CssArtComponent = ({ label }) => <IGamingEngravedBanner label={label} variant="ledger" />;
+
+/* ---- /igaming "game floor" card art (2026-09-22) ---- */
+
+export type IGamingFloorVariant = 'slots' | 'live' | 'rng' | 'sports' | 'fishing' | 'lottery';
+
+const IGAMING_FLOOR_TONE: Record<IGamingFloorVariant, EngravedTone> = {
+  slots: 'bronze',
+  live: 'ink',
+  rng: 'indigo',
+  sports: 'teal',
+  fishing: 'teal',
+  lottery: 'rose',
+};
+
+/** 16:9 engraved card art for one game type on the /igaming floor, each with one small loop. */
+export const IGamingFloorArt: React.FC<{ label: string; variant: IGamingFloorVariant }> = ({ label, variant }) => (
+  <div
+    className={`engraved-art engraved-floor is-${variant} engraved-tone-${IGAMING_FLOOR_TONE[variant]}`}
+    role="img"
+    aria-label={label}
+  >
+    <span className="engraved-ig-rays" />
+    <span className="engraved-ig-guilloche" />
+    {variant === 'slots' ? (
+      <>
+        <span className="engraved-fl-cabinet" />
+        <span className="engraved-fl-reel r1" />
+        <span className="engraved-fl-reel r2" />
+        <span className="engraved-fl-reel r3" />
+        <span className="engraved-fl-payline" />
+      </>
+    ) : null}
+    {variant === 'live' ? (
+      <>
+        <span className="engraved-fl-felt" />
+        <span className="engraved-fl-card back" />
+        <span className="engraved-fl-card face" />
+      </>
+    ) : null}
+    {variant === 'rng' ? (
+      <>
+        <span className="engraved-fl-die d1" />
+        <span className="engraved-fl-die d2" />
+      </>
+    ) : null}
+    {variant === 'sports' ? (
+      <>
+        <span className="engraved-fl-pitch" />
+        <span className="engraved-fl-shadow" />
+        <span className="engraved-fl-ball" />
+      </>
+    ) : null}
+    {variant === 'fishing' ? (
+      <>
+        <span className="engraved-fl-fish f1" />
+        <span className="engraved-fl-fish f2" />
+        <span className="engraved-fl-fish f3" />
+        <span className="engraved-fl-reticle" />
+      </>
+    ) : null}
+    {variant === 'lottery' ? (
+      <>
+        <span className="engraved-fl-crash" />
+        <span className="engraved-fl-lotto l1" />
+        <span className="engraved-fl-lotto l2" />
+        <span className="engraved-fl-lotto l3" />
+        <span className="engraved-fl-lotto l4" />
+      </>
+    ) : null}
+  </div>
+);
+
+export const IGamingSlotsArt: CssArtComponent = ({ label }) => <IGamingFloorArt label={label} variant="slots" />;
+export const IGamingLiveArt: CssArtComponent = ({ label }) => <IGamingFloorArt label={label} variant="live" />;
+export const IGamingRngArt: CssArtComponent = ({ label }) => <IGamingFloorArt label={label} variant="rng" />;
+export const IGamingSportsArt: CssArtComponent = ({ label }) => <IGamingFloorArt label={label} variant="sports" />;
+export const IGamingFishingArt: CssArtComponent = ({ label }) => <IGamingFloorArt label={label} variant="fishing" />;
+export const IGamingLotteryArt: CssArtComponent = ({ label }) => <IGamingFloorArt label={label} variant="lottery" />;
