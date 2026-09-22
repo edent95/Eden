@@ -665,43 +665,44 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
 
   '/life-os': {
     eyebrow: L('Personal system · Self-knowledge', '个人系统 · 自我认识'),
-    thesis: L(
-      'Build the long-term base map first. Then ask about right now.',
-      '先建立长期底图，再问当下的问题。',
-    ),
+    thesis: L('Read yourself like a manual.', '把你这个人，读成一本说明书。'),
     sections: [
       {
-        title: L('How it works', '怎么使用'),
+        title: L('What it reads', '它读什么'),
         paragraphs: [
           L(
-            'Enter a birth date, time, and place, with a time correction, to build the base map. Read the profile. Ask about now. Take the evidence with you. Four modules carry those steps: Star map, Base map, Ask, and Records.',
-            '输入出生日期、时间与地点，加上时间校正，建立底图；读画像；问当下；把证据带走。四个模块承载这四步：星图、个人底图、提问、记录。',
+            'Birth date, time and place go in, and eight natal systems run separately: BaZi, Zi Wei Dou Shu with its flying stars, the natal I Ching hexagram, numerology, Human Design, Gene Keys, Western astrology and Vedic astrology. Each keeps its own sources and its own stated uncertainty.',
+            '输入出生日期、时间与地点，八套本命系统各自独立运行：八字、紫微斗数（含四化飞星）、易经本命卦、数字学、人类图、基因钥匙、西洋占星、吠陀占星。每一套各自保留出处，也各自标明不确定之处。',
           ),
           L(
-            'Life OS cross-reads four systems into one traceable map: BaZi, I Ching hexagrams, an elemental profile, and tarot records. The outputs are an element profile, a current phase, an action strategy, and an Agent prompt pack.',
-            'Life OS 把四套系统交叉读成同一张可溯源的底图：八字、易经卦象、元素画像与塔罗记录。输出是元素画像、当前阶段、行动策略，以及一份 Agent prompt 包。',
+            'The systems are never blended into one score, never treated as votes, and no new personality theory is invented on top of them. Where they disagree, the disagreement stays visible. Tarot sits in a separate inquiry layer for one-off questions and never writes back into the chart.',
+            '八套系统不会被混成一个分数、不会被拿来投票，上面也不会另造一套人格理论。彼此矛盾的地方，矛盾会留在那里。塔罗在独立的问事层，用来问一次性的事，永远不会回写本命盘。',
           ),
         ],
       },
       {
-        title: L('What makes it different', '它和别的不一样在哪'),
+        title: L('What is inside', '里面有什么'),
         paragraphs: [
           L(
-            'It shows its work. Every conclusion sits on top of a visible evidence trail: which system said it and how many of them agreed. A confidence level drops when systems disagree. Questions fall into seven categories: self, timing, work, money, relationships, shadow, and tactics.',
-            '它把过程摆出来。每个结论都放在可见的证据链上：哪套系统说的、几套系统同意。系统之间不一致时，置信度会下降。问题分七类：自我、时机、事业、金钱、关系、阴影、当下战术。',
+            'The main modules are the eight-chapter life manual, a four-situation personality analysis, the BaZi multi-model page where five methods answer side by side, the Zi Wei chart-data page with twelve palaces and rotation views, how to use yourself, deep reading, the tarot desk, life in months, the life journal, and a daily line written for you.',
+            '主要模块：八章的人生说明书、四场景的性格分析、五种方法并排作答的八字多模型、含十二宫与转宫视角的紫微资料页、怎么使用自己、深度解读、塔罗提问台、人生月份、人生手帐，以及每天写给你的一句话。',
           ),
           L(
-            'The Ask Agent panel exports a copyable prompt pack, so the same base map can be taken to any external AI. It is a map, not a label: not prediction, and not medical, legal, or financial advice.',
-            '「Ask Agent」面板导出可复制的 prompt 包，同一张底图可以带去任何外部 AI。这是底图，不是标签：不是预测，也不是医疗、法律或财务建议。',
+            'The tarot desk uses the full 78-card Rider–Waite–Smith deck across seven spreads, from a single card to the whole deck. A question locks on submission and is archived, so you can come back and mark what actually happened.',
+            '塔罗提问台用完整 78 张 Rider–Waite–Smith 牌，七种牌阵，从单张到整副。问题一提交就锁定并归档，之后你可以回来标记实际发生了什么。',
           ),
         ],
       },
       {
-        title: L('Where it runs', '在哪里运行'),
+        title: L('How it runs', '怎么运行'),
         paragraphs: [
           L(
-            'Life OS is free, runs in any browser, and currently has a Chinese interface.',
-            'Life OS 免费，在任何浏览器运行，目前是中文界面。',
+            'A responsive web app, installable as a PWA, in Chinese and English, with public guide pages also in Traditional Chinese. Google or Apple sign-in is required to build a profile, and signing in includes consent to an anonymous public case library. Data is local-first but syncs to your own cloud account, and readings are generated server-side.',
+            '响应式 Web App，可安装为 PWA，界面有中文与英文，公开指南页另有繁體中文。建立档案需要 Google 或 Apple 登录，登录同时包含对匿名公开命例库的同意。资料 local-first，但会同步到你自己的云端账号，解读在服务器端生成。',
+          ),
+          L(
+            'The free plan is free forever and turns every reading into a one-tap copyable instruction for any chat assistant, including narrower packs for BaZi only, Zi Wei only, or a rotated chart. An online plan at $7.99 a month or $59 a year, and top-up credits at $2.99 for 10, are announced but not switched on; until then in-app readings run on a free daily quota.',
+            '免费版永久免费，把每次解读变成可一键复制的指令，贴到任何聊天助手里继续问，也有只看八字、只看紫微或转宫盘的窄版本。在线版 $7.99 / 月或 $59 / 年、加购点数 $2.99 / 10 点已公布但尚未开启；在此之前，应用内解读按每日免费额度使用。',
           ),
         ],
       },

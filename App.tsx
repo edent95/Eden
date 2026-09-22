@@ -3113,9 +3113,9 @@ const productSiblings: ProductSibling[] = [
     id: 'life-os',
     name: 'Life OS',
     path: 'life-os',
-    iconLabel: 'Life OS CSS app icon',
+    iconLabel: 'LifeOs CSS app icon',
     Icon: ProjectsLifeOsCssIcon,
-    blurb: { en: 'Build the long-term base map first. Then ask about right now.', zh: '先建立长期底图，再问当下的问题。' },
+    blurb: { en: 'Read yourself like a manual.', zh: '把你这个人，读成一本说明书。' },
   },
   {
     id: 'etreporthub',
@@ -7388,7 +7388,7 @@ const LifeOsFullPage: React.FC<{
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
 }> = ({ homeHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
-  const appUrl = 'https://life-os-eden95.web.app/';
+  const appUrl = 'https://dankuku.com/';
 
   return (
     <ProductStorePage
@@ -7396,12 +7396,12 @@ const LifeOsFullPage: React.FC<{
       controls={<HeaderControls language={language} setLanguage={setLanguage} themePreference={themePreference} theme={theme} setThemePreference={setThemePreference} />}
       backHref={homeHref}
       backLabel={{ en: 'Back home', zh: '返回主页' }}
-      icon={<ProjectsLifeOsCssIcon label="Life OS CSS app icon" />}
-      name="Life OS"
+      icon={<ProjectsLifeOsCssIcon label="LifeOs CSS app icon" />}
+      name="LifeOs"
       kicker={{ en: 'Personal system · Self-knowledge', zh: '个人系统 · 自我认识' }}
-      tagline={{ en: 'Build the long-term base map first. Then ask about right now.', zh: '先建立长期底图，再问当下的问题。' }}
-      meta={{ en: 'Free · Runs in any browser · Chinese interface', zh: '免费 · 浏览器直接打开 · 中文界面' }}
-      primary={{ href: appUrl, external: true, label: { en: 'Open Life OS', zh: '打开 Life OS' } }}
+      tagline={{ en: 'Read yourself like a manual.', zh: '把你这个人，读成一本说明书。' }}
+      meta={{ en: 'Free plan forever · Google or Apple sign-in · Chinese and English', zh: '免费版永久免费 · Google / Apple 登录 · 中文与英文' }}
+      primary={{ href: appUrl, external: true, label: { en: 'Open LifeOs', zh: '打开 LifeOs' } }}
       quickLinks={[
         { href: '#overview', label: { en: 'Overview', zh: '产品简介' } },
         { href: '#faq', label: { en: 'FAQ', zh: '常见问题' } },
@@ -7409,41 +7409,50 @@ const LifeOsFullPage: React.FC<{
       ]}
       stage={{
         src: appUrl,
-        domain: 'life-os-eden95.web.app',
-        title: { en: 'Interactive Life OS star map', zh: 'Life OS 互动星图' },
-        caption: { en: 'The live app, running right here. Open it in a new tab to build your own base map.', zh: '真实应用直接跑在这里。想建立自己的底图，就在新标签打开。' },
+        domain: 'dankuku.com',
+        title: { en: 'LifeOs running live', zh: 'LifeOs 实际运行画面' },
+        caption: { en: 'The live app, running right here. Open it in a new tab to build your own manual.', zh: '真实应用直接跑在这里。想写自己那本说明书，就在新标签打开。' },
       }}
       body={[
-        { kind: 'p', text: { en: 'Most self-knowledge tools answer one question at a time, and every answer starts from zero. Life OS flips the order: it builds a long-term base map from your birth data first, then lets you ask situational questions against something that does not move.', zh: '大多数自我认识的工具都是一次回答一个问题，而且每次都从零开始。Life OS 把顺序倒过来：先用出生资料建立一张长期底图，之后所有当下的提问，都有一个不会晃动的参照。' } },
-        { kind: 'p', text: { en: 'The map is assembled by cross-reading several traditional systems—BaZi, I Ching hexagrams, elemental profiling, and tarot records—and surfacing where they agree. What you read is an element profile, a current phase, a confidence level, and an action strategy, each traceable back to the evidence behind it.', zh: '这张底图由多个传统系统交叉阅读组成——八字、易经卦象、元素画像、塔罗记录——并把它们互相重合的部分提上来。你看到的是元素画像、当前阶段、置信度和行动策略，每一条都能追回它背后的证据。' } },
-        { kind: 'h', text: { en: 'How it works', zh: '怎么使用' } },
+        { kind: 'p', text: { en: 'Give LifeOs a birth date, time, and place, and it runs eight natal systems separately — BaZi, Zi Wei Dou Shu with its flying stars, the natal hexagram, numerology, Human Design, Gene Keys, Western and Vedic astrology. Each one answers in its own voice, keeps its own sources, and states its own uncertainty.', zh: '给 LifeOs 出生日期、时间和地点，它会分别跑八套本命系统——八字、紫微斗数（含四化飞星）、易经本命卦、数字学、人类图、基因钥匙、西洋占星、吠陀占星。每一套各自作答、各自留下出处，也各自标明不确定的地方。' } },
+        { kind: 'p', text: { en: 'What it refuses to do matters as much. It does not blend the systems into one score, does not treat them as votes, and does not invent a new personality theory on top of them. Where they disagree, you see the disagreement. What you get back is a plain-language manual about how you tend to operate.', zh: '它不做的事同样重要：不把八套系统混成一个分数、不拿它们投票、也不在上面另造一套人格理论。彼此矛盾的地方，你看到的就是矛盾。最后得到的是一本白话的说明书，讲你通常怎么运作。' } },
+        { kind: 'h', text: { en: 'What is inside', zh: '里面有什么' } },
         { kind: 'steps', items: [
-          { title: { en: 'Build the base map', zh: '建立底图' }, text: { en: 'Enter birth date, time, and place. The system runs a time correction and generates your long-term profile.', zh: '输入出生日期、时间与地点。系统会做时间校正，并生成你的长期底图。' } },
-          { title: { en: 'Read the profile', zh: '读画像' }, text: { en: 'Element profile, main axes, current phase, and a stated confidence level—not a fixed identity label.', zh: '元素画像、主元素、当前阶段和明确标出的置信度——不是一个固定的身份标签。' } },
-          { title: { en: 'Ask about now', zh: '问当下' }, text: { en: 'Pick from question categories—self, timing, work, money, relationships, shadow, tactics—and read against the map.', zh: '从问题分类里选一个——自我、时机、事业、金钱、关系、阴影、当下战术——对着底图来读。' } },
-          { title: { en: 'Take the evidence with you', zh: '带走证据' }, text: { en: 'Copy the whole thing as a prompt pack and keep asking inside any AI agent you already use.', zh: '把整份资料复制成 prompt 包，拿到你已经在用的任何 AI agent 里继续问。' } },
+          { title: { en: 'Life manual', zh: '人生说明书' }, text: { en: 'A short book about you in eight chapters: expression and emotion, relationships, work, how you choose, the stage you are in, your most stable pattern, one upgrade task, and where the reading stops being certain.', zh: '关于你的一本小书，八章：表达与情绪、关系、工作、怎么做选择、当前阶段、最稳定的那个模式、一个升级任务，以及这份阅读到哪里就不确定了。' } },
+          { title: { en: 'Personality, in four situations', zh: '性格分析：四个场景' }, text: { en: 'The same person seen at rest, under pressure, and where practice is possible — description first, raw tags and sources tucked underneath.', zh: '同一个你，在平时、在压力下、以及可以练习的地方——先给描述，原始标签和出处收在下面一层。' } },
+          { title: { en: 'BaZi multi-model and Zi Wei data', zh: '八字多模型与紫微资料' }, text: { en: 'Five BaZi methods answer side by side instead of collapsing into one verdict; the Zi Wei page shows twelve palaces, palace-stem flying stars, rotation views and time layers as raw data, not as a finished story.', zh: '八字有五种方法并排作答，而不是压成一个结论；紫微页把十二宫、宫干飞化、转宫视角和时间层摊成原始资料，不包装成结论。' } },
+          { title: { en: 'Tarot desk', zh: '塔罗提问台' }, text: { en: 'A full 78-card Rider–Waite–Smith deck and seven spreads, from a single card to the whole deck. The question locks when you submit it, and you come back later to mark what actually happened.', zh: '完整 78 张 Rider–Waite–Smith 牌与七种牌阵，从单张到整副。问题一提交就锁定，之后你回来标记实际发生了什么。' } },
+          { title: { en: 'Your own calendar', zh: '属于你的日历' }, text: { en: 'A daily line written for you, every month of your life as one dot, and a journal where a note only becomes a life record when you promote it yourself.', zh: '每天写给你的一句话、人生每个月一个点，以及一本手帐——随手写的东西，只有你自己把它提上来，才会变成人生记录。' } },
+          { title: { en: 'Deep reading', zh: '深度解读' }, text: { en: 'One box: what do you want to get clear about? No preset questions. Long answers come with a reading aid — estimated minutes, bolded lead sentences, and a full-text or key-points toggle.', zh: '只有一个输入框：你想弄清楚什么？没有预设问题。长回答附阅读辅助——预计分钟数、加粗首句，以及「读全文 / 只看要点」切换。' } },
         ] },
         { kind: 'h', text: { en: 'What makes it different', zh: '它和别的不一样在哪' } },
-        { kind: 'p', text: { en: 'It shows its work. Every conclusion sits on top of a visible evidence trail—which system said it, and how many of them agreed. When systems disagree, the confidence number drops instead of the disagreement quietly disappearing.', zh: '它把过程摊开。每一个结论上面都有一条可见的证据链——哪个系统说的、有几个系统同意。当系统之间不一致时，置信度会下降，而不是让分歧悄悄消失。' } },
-        { kind: 'callout', label: { en: 'A map, not a label', zh: '这是底图，不是标签' }, text: { en: 'The profile describes the way you most often operate right now—the combination you reach for by default. It is a current tendency, not a fixed identity, and it is meant to be re-read as your situation changes.', zh: '画像描述的是你现在最常用的运作方式，是你默认会伸手去拿的那个组合。它是当前的倾向，不是固定身份，也本来就该在处境改变时重新读一次。' } },
-        { kind: 'p', text: { en: 'It also refuses to lock you in. The Ask Agent panel packages your map and its evidence into a prompt you can paste anywhere, so the reading stays useful even outside this tool.', zh: '它也不想把你锁住。「问 Agent」会把你的底图和证据打包成一段可以贴到任何地方的 prompt，让这份阅读在这个工具之外依然有用。' } },
-        { kind: 'callout', tone: 'warning', label: { en: 'Not prediction', zh: '不是预测' }, text: { en: 'Life OS is a framing and reflection tool, not fortune telling. It does not forecast events, and nothing here should stand in for medical, legal, or financial advice. Read the output as a prompt for your own thinking, not a verdict.', zh: 'Life OS 是一个整理与反思的工具，不是算命。它不预测事件，也不应该拿来代替医疗、法律或财务上的专业意见。把输出当成让你自己继续想下去的提示，而不是判决。' } },
+        { kind: 'p', text: { en: 'It shows its work, and it keeps the layers apart. The natal chart is computed once and never rewritten by anything you log afterwards; a question you ask today is a one-off that does not quietly edit who the app thinks you are. Claims that can be checked come back later to be scored against what really happened.', zh: '它把过程摊开，也把层次分开。本命盘算一次，之后你记录什么都不会回头改写它；今天问的一件事就是一次性的，不会悄悄修改这个应用对你的判断。能被验证的说法，之后会回来对照现实打分。' } },
+        { kind: 'p', text: { en: 'You are also not locked in. On the free plan every reading turns into a one-tap copyable instruction you can paste into whichever chat assistant you already use, and there are narrower packs too — BaZi only, Zi Wei only, or one palace as the origin point.', zh: '你也不会被锁住。免费版把每一次解读变成可以一键复制的指令，贴到你已经在用的任何聊天助手里继续问；也有更窄的版本——只看八字、只看紫微，或者以某一个宫为原点。' } },
+        { kind: 'callout', label: { en: 'Sign-in, and the public case library', zh: '登录，以及公开命例库' }, text: { en: 'Building a profile requires signing in with Google or Apple, and signing in means agreeing that your chart and readings may appear anonymously in the public case library — names and account IDs removed. That consent is stated on the sign-in button itself.', zh: '建立档案需要用 Google 或 Apple 登录，而登录同时表示你同意：你的命盘与解读可能以匿名形式出现在公开命例库里（去掉姓名与账号标识）。这一点写在登录按钮上。' } },
+        { kind: 'callout', label: { en: 'Where your data sits', zh: '资料放在哪里' }, text: { en: 'It is local-first but not local-only: readings, notes, people and records sync to your own account in the cloud, and the readings themselves are generated server-side. Billing data is kept where the client cannot read it.', zh: '它是 local-first，但不是只存本机：解读、笔记、人物和记录会同步到你自己的云端账号，解读本身也在服务器端生成。付费相关资料存在客户端读不到的地方。' } },
+        { kind: 'callout', tone: 'warning', label: { en: 'Not prediction', zh: '不是预测' }, text: { en: 'LifeOs is a framing and reflection tool, not fortune telling. It does not forecast events, and nothing here should stand in for medical, legal, or financial advice. Read the output as a prompt for your own thinking, not a verdict.', zh: 'LifeOs 是一个整理与反思的工具，不是算命。它不预测事件，也不应该拿来代替医疗、法律或财务上的专业意见。把输出当成让你自己继续想下去的提示，而不是判决。' } },
       ]}
       faq={[
-        { q: { en: 'Is this fortune telling?', zh: '这是算命吗？' }, a: { en: 'No. It compiles traditional systems into a readable profile with visible sources and a confidence level. It is built for reflection and framing—what tends to be true about how you operate—not for predicting what will happen.', zh: '不是。它把几个传统系统整理成一份可读、可溯源、带置信度的画像。它是拿来反思和整理的——关于你通常怎么运作——而不是拿来预测会发生什么。' } },
-        { q: { en: 'What information do I need to provide?', zh: '需要提供什么资料？' }, a: { en: 'Birth date, time, place, and gender. The more accurate the birth time, the more stable the corrected base map—the system applies a time correction before building anything.', zh: '出生日期、时间、地点和性别。出生时间越准，校正后的底图越稳——系统会先做时间校正，再开始生成。' } },
-        { q: { en: 'Why build a base map before asking questions?', zh: '为什么要先建底图再提问？' }, a: { en: 'A single question tends to get answered by whatever mood you are in that day. The base map is the part that does not move, so situational answers have something to be measured against.', zh: '单独一个问题，答案很容易被你当天的情绪带走。底图是不会动的那部分，当下的答案才有东西可以对照。' } },
-        { q: { en: 'What is the Ask Agent panel?', zh: '「问 Agent」是什么？' }, a: { en: 'It packages your profile and its underlying evidence into a copyable prompt. Paste it into whichever AI you already use and keep the conversation going there—the reading is not trapped inside this tool.', zh: '它把你的画像和背后的证据打包成一段可复制的 prompt。贴到你已经在用的任何 AI 里继续聊——这份阅读不会被困在这个工具里。' } },
-        { q: { en: 'Is the interface in Chinese?', zh: '界面是中文的吗？' }, a: { en: 'Yes. Life OS is currently a Chinese-language app, including the readings and the generated prompt packs.', zh: '是的。Life OS 目前是中文应用，包括阅读内容和生成的 prompt 包。' } },
-        { q: { en: 'Which systems does it read from?', zh: '它读的是哪些系统？' }, a: { en: 'BaZi, I Ching hexagrams, elemental profiling, and tarot records. Conclusions with agreement across several systems are weighted higher than anything a single system says alone.', zh: '八字、易经卦象、元素画像和塔罗记录。在多个系统之间重合的结论，权重会高于任何单一系统自己说的话。' } },
+        { q: { en: 'Is this fortune telling?', zh: '这是算命吗？' }, a: { en: 'No. It computes several traditional systems, keeps each one traceable, and writes the overlap in plain language. It is built for reflection — what tends to be true about how you operate — not for predicting what will happen.', zh: '不是。它把几套传统系统算出来、各自保留出处，再用白话写出重合的部分。它是拿来反思的——关于你通常怎么运作——而不是拿来预测会发生什么。' } },
+        { q: { en: 'What do I need to provide?', zh: '需要提供什么资料？' }, a: { en: 'Birth date, time, and place. The more accurate the birth time, the more stable the chart; the app warns you when the time is too rough and has a wizard for working backwards to the right two-hour branch.', zh: '出生日期、时间和地点。出生时间越准，盘越稳；时间太粗时应用会提醒你，也有一个反推时辰的向导。' } },
+        { q: { en: 'Do I need an account?', zh: '需要登录吗？' }, a: { en: 'Yes, Google or Apple. There is no password. Signing in also means agreeing to the public case library, where charts and readings can appear anonymously. The public guide pages can be read without signing in.', zh: '需要，用 Google 或 Apple，没有密码。登录同时表示同意公开命例库——命盘与解读可能以匿名形式出现在那里。公开的指南页面不登录也能看。' } },
+        { q: { en: 'Which systems does it read?', zh: '它读的是哪些系统？' }, a: { en: 'Eight natal systems: BaZi, Zi Wei Dou Shu with flying stars, the natal I Ching hexagram, numerology, Human Design, Gene Keys, Western astrology and Vedic astrology. Tarot sits in a separate layer for one-off questions. Casting a new I Ching hexagram is currently switched off.', zh: '八套本命系统：八字、紫微斗数（含四化飞星）、易经本命卦、数字学、人类图、基因钥匙、西洋占星、吠陀占星。塔罗在另一层，用来问一次性的事。易经起卦目前关闭。' } },
+        { q: { en: 'How much tarot is in there?', zh: '塔罗有多少内容？' }, a: { en: 'The full 78-card Rider–Waite–Smith deck, drawn in CSS, with seven spreads: one card, three cards, Celtic Cross, an advanced soulmate spread, shadow work, Rahdue\u2019s Wheel using all 78, and a 41-card Fire Tree spread shuffled from two decks.', zh: '完整 78 张 Rider–Waite–Smith 牌，全部用 CSS 画的，七种牌阵：单张、三张、凯尔特十字、正缘进阶版、阴影面、用完整 78 张的 Rahdue\u2019s Wheel，以及两副牌洗在一起的 41 张火树银花。' } },
+        { q: { en: 'Is it free?', zh: '免费吗？' }, a: { en: 'The free plan is free forever: unlimited one-tap copyable instructions, the ask desk, and the manual. An online plan that writes readings inside the app is priced at $7.99 a month or $59 a year, with top-up credits at $2.99 for 10 — not switched on yet. Until then, in-app readings run on a daily quota, free.', zh: '免费版永久免费：无限次一键复制指令、提问台和说明书。在应用内直接写解读的「在线版」定价 $7.99 / 月或 $59 / 年，加购点数 $2.99 / 10 点——目前还没开。开之前，应用内解读按每日额度免费使用。' } },
+        { q: { en: 'What language is it in?', zh: '界面是什么语言？' }, a: { en: 'Chinese and English, switchable in the header; newly generated readings follow the language you are in. The public guide pages come in Simplified Chinese, Traditional Chinese and English.', zh: '中文和英文，在顶部切换；新生成的解读跟着当前语言走。公开的指南页面有简体中文、繁體中文和英文三种。' } },
+        { q: { en: 'Can I take a reading elsewhere?', zh: '解读能带到别处用吗？' }, a: { en: 'Yes. Every reading can become a copyable instruction, and there are narrower ones for a single system — BaZi only, Zi Wei only, or a chart rotated so one palace becomes the origin. Paste it into any chat assistant and keep going there.', zh: '可以。每次解读都能变成可复制的指令，也有只针对单一系统的版本——只看八字、只看紫微，或者把某一个宫转成原点的盘。贴到任何聊天助手里继续问就行。' } },
       ]}
       specs={[
         [{ en: 'Category', zh: '类别' }, { en: 'Personal system and self-knowledge', zh: '个人系统与自我认识' }],
-        [{ en: 'Systems read', zh: '读取系统' }, { en: 'BaZi · I Ching · Element profile · Tarot records', zh: '八字 · 易经卦象 · 元素画像 · 塔罗记录' }],
-        [{ en: 'Modules', zh: '主要模块' }, { en: 'Star map · Base map · Ask · Records', zh: '星图 · 个人底图 · 提问 · 记录' }],
-        [{ en: 'Output', zh: '输出' }, { en: 'Element profile · Current phase · Action strategy · Agent prompt pack', zh: '元素画像 · 当前阶段 · 行动策略 · Agent prompt 包' }],
-        [{ en: 'Interface', zh: '界面语言' }, { en: 'Chinese', zh: '中文' }],
-        [{ en: 'Platform', zh: '平台' }, { en: 'Responsive web app', zh: '响应式 Web App' }],
+        [{ en: 'Natal systems', zh: '本命系统' }, { en: 'BaZi · Zi Wei Dou Shu (flying stars) · Natal hexagram · Numerology · Human Design · Gene Keys · Western astrology · Vedic astrology', zh: '八字 · 紫微斗数（四化飞星）· 易经本命卦 · 数字学 · 人类图 · 基因钥匙 · 西洋占星 · 吠陀占星' }],
+        [{ en: 'Inquiry layer', zh: '问事层' }, { en: 'Tarot: 78-card Rider–Waite–Smith deck, 7 spreads', zh: '塔罗：78 张 Rider–Waite–Smith 牌、7 种牌阵' }],
+        [{ en: 'Main modules', zh: '主要模块' }, { en: 'Life manual · Personality analysis · BaZi multi-model · Zi Wei chart data · How to use yourself · Deep reading · Tarot desk · Life in months · Life journal · Daily line', zh: '人生说明书 · 性格分析 · 八字多模型 · 紫微斗数 · 怎么使用自己 · 深度解读 · 塔罗提问台 · 人生月份 · 人生手帐 · 今天的一句' }],
+        [{ en: 'Output', zh: '输出' }, { en: 'Eight-chapter manual · Four-situation personality read · Daily line · Ten capabilities with monthly practice · Raw BaZi and Zi Wei data · Long-form answers · Copyable instruction packs', zh: '八章说明书 · 四场景性格阅读 · 每日一句 · 十项能力与每月练习 · 八字与紫微原始资料 · 长文回答 · 可复制的解读指令' }],
+        [{ en: 'Interface', zh: '界面语言' }, { en: 'Chinese and English (public pages also in Traditional Chinese)', zh: '中文与英文（公开页另有繁體中文）' }],
+        [{ en: 'Account', zh: '账号' }, { en: 'Google or Apple sign-in; includes consent to the anonymous public case library', zh: 'Google 或 Apple 登录；包含对匿名公开命例库的同意' }],
+        [{ en: 'Data', zh: '资料存放' }, { en: 'Local-first, synced to your own cloud account; readings generated server-side', zh: 'Local-first，并同步到你自己的云端账号；解读在服务器端生成' }],
+        [{ en: 'Price', zh: '价格' }, { en: 'Free plan free forever; online plan $7.99/mo or $59/yr and $2.99 per 10 credits, both coming soon', zh: '免费版永久免费；在线版 $7.99 / 月或 $59 / 年、加购点数 $2.99 / 10 点，均即将推出' }],
+        [{ en: 'Platform', zh: '平台' }, { en: 'Responsive web app, installable as a PWA', zh: '响应式 Web App，可安装为 PWA' }],
         [{ en: 'Developer', zh: '开发者' }, { en: 'Eden Tan', zh: 'Eden Tan' }],
       ]}
       also={productSiblingCards(baseUrl, 'life-os')}

@@ -1090,16 +1090,25 @@
   }
 }
 
-/* Life OS — personal star map app icon. */
+/* Life OS — banknote-intaglio app icon, matching the real app icon
+   (LifeOs repo `scripts/app-icon/app-icon.html`, 2026-09-17): ink-green plate,
+   bronze-gold lines, guilloché rosette, double-ruled seal, and an eye on the centre.
+   Hex values stay in this block; the family is dark in both themes by design. */
 
 .projects-life-os-css-icon {
+  --lo-gold: #d9b56f;
+  --lo-gold-hi: #f3dca4;
+  --lo-gold-lo: #8a6a33;
+  --lo-gold-2: rgb(217 181 111 / 0.55);
+  --lo-gold-3: rgb(217 181 111 / 0.22);
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: radial-gradient(120% 100% at 50% 40%, #1b2136 0%, #0d1018 62%, #07090f 100%);
+  container-type: inline-size;
+  background: radial-gradient(60% 60% at 50% 46%, #1c3a2d 0%, #0f231b 55%, #07130e 100%);
   box-shadow:
-    0 18px 50px rgb(10 12 20 / 0.24),
-    inset 0 0 0 1px rgb(255 255 255 / 0.14);
+    0 18px 50px rgb(7 19 14 / 0.3),
+    inset 0 0 0 1px rgb(217 181 111 / 0.22);
 }
 
 .projects-life-os-css-icon::after {
@@ -1109,124 +1118,207 @@
   z-index: 9;
   pointer-events: none;
   box-shadow:
-    inset 0 0 0 1px rgb(255 255 255 / 0.12),
+    inset 0 0 0 1px rgb(217 181 111 / 0.18),
     inset 0 -18px 34px rgb(0 0 0 / 0.34);
 }
 
-.projects-life-os-orbit,
-.projects-life-os-node,
-.projects-life-os-core,
-.projects-life-os-core-ring,
-.projects-life-os-core-dot {
-  position: absolute;
-  display: block;
-}
+.projects-life-os-css-icon span { position: absolute; display: block; box-sizing: border-box; }
 
-.projects-life-os-orbit {
+.projects-life-os-css-icon .lo-centered {
+  left: 50%;
   top: 50%;
-  left: 50%;
-  border-radius: 50%;
-  border: 1px solid rgb(190 205 255 / 0.16);
-  translate: -50% -50%;
-}
-
-.projects-life-os-orbit.orbit-outer { width: 82%; height: 82%; }
-.projects-life-os-orbit.orbit-middle { width: 58%; height: 58%; border-color: rgb(190 205 255 / 0.22); }
-.projects-life-os-orbit.orbit-inner { width: 34%; height: 34%; border-color: rgb(190 205 255 / 0.3); }
-
-.projects-life-os-node {
-  top: 50%;
-  left: 50%;
-  border-radius: 50%;
-  translate: -50% -50%;
-  transform-origin: 50% 50%;
-  animation: projects-life-os-drift 22s linear infinite;
-}
-
-.projects-life-os-node::before {
-  content: "";
-  position: absolute;
-  top: -4%;
-  left: 50%;
-  width: 9%;
-  aspect-ratio: 1;
-  translate: -50% 0;
-  border-radius: 50%;
-  background: currentColor;
-  box-shadow: 0 0 9px currentColor;
-}
-
-.projects-life-os-node.node-a {
-  width: 82%;
-  height: 82%;
-  color: #8fb8ff;
-}
-
-.projects-life-os-node.node-b {
-  width: 58%;
-  height: 58%;
-  color: #b39cff;
-  animation-duration: 16s;
-  animation-delay: -6s;
-  animation-direction: reverse;
-}
-
-.projects-life-os-node.node-c {
-  width: 34%;
-  height: 34%;
-  color: #ffd18f;
-  animation-duration: 11s;
-  animation-delay: -4s;
-}
-
-.projects-life-os-core {
-  top: 50%;
-  left: 50%;
-  width: 30%;
-  height: 30%;
   translate: -50% -50%;
   border-radius: 50%;
-  background: radial-gradient(circle at 38% 32%, #7f9dff 0%, #3f4fa8 55%, #232a52 100%);
+}
+
+/* Plate texture: cross hatching, radial burst, guilloché rosette */
+
+.projects-life-os-paper {
+  inset: 0;
+  background:
+    repeating-linear-gradient(45deg, rgb(217 181 111 / 0.06) 0 0.4cqi, transparent 0.4cqi 1.6cqi),
+    repeating-linear-gradient(-45deg, rgb(217 181 111 / 0.05) 0 0.4cqi, transparent 0.4cqi 1.6cqi);
+}
+
+.projects-life-os-rays {
+  width: 100%;
+  height: 100%;
+  background: repeating-conic-gradient(var(--lo-gold-3) 0 0.35deg, transparent 0.35deg 3deg);
+  -webkit-mask: radial-gradient(closest-side, transparent 44%, black 52%, black 80%, transparent 100%);
+  mask: radial-gradient(closest-side, transparent 44%, black 52%, black 80%, transparent 100%);
+  animation: projects-life-os-spin 240s linear infinite;
+}
+
+.projects-life-os-rosette {
+  width: 78%;
+  height: 78%;
+  background:
+    repeating-radial-gradient(circle at 50% 45%, transparent 0 1.5cqi, var(--lo-gold-3) 1.5cqi 1.9cqi),
+    repeating-radial-gradient(circle at 45% 53%, transparent 0 1.5cqi, var(--lo-gold-3) 1.5cqi 1.9cqi),
+    repeating-radial-gradient(circle at 55% 53%, transparent 0 1.5cqi, var(--lo-gold-3) 1.5cqi 1.9cqi);
+  -webkit-mask: radial-gradient(closest-side, transparent 58%, black 66%, black 92%, transparent 100%);
+  mask: radial-gradient(closest-side, transparent 58%, black 66%, black 92%, transparent 100%);
+  animation: projects-life-os-spin 120s linear infinite reverse;
+}
+
+/* Double-ruled outer ring and the inner seal the eye sits on */
+
+.projects-life-os-ring {
+  width: 76%;
+  height: 76%;
   box-shadow:
-    0 0 22px rgb(115 140 255 / 0.42),
-    inset 0 0 0 1px rgb(255 255 255 / 0.2);
-  animation: projects-life-os-pulse 5.4s ease-in-out infinite;
+    inset 0 0 0 0.7cqi var(--lo-gold),
+    inset 0 0 0 2.4cqi transparent,
+    inset 0 0 0 2.8cqi var(--lo-gold-2);
 }
 
-.projects-life-os-core-ring {
-  top: 50%;
-  left: 50%;
+.projects-life-os-medal {
   width: 62%;
   height: 62%;
-  translate: -50% -50%;
-  border-radius: 50%;
-  border: 1px solid rgb(255 255 255 / 0.42);
+  background:
+    repeating-radial-gradient(circle, rgb(217 181 111 / 0.1) 0 0.4cqi, transparent 0.4cqi 1.4cqi),
+    radial-gradient(circle at 42% 36%, #214434 0%, #112a20 70%);
+  box-shadow:
+    inset 0 0 0 0.9cqi var(--lo-gold),
+    inset 0 0 0 2.6cqi transparent,
+    inset 0 0 0 3.1cqi var(--lo-gold-2);
 }
 
-.projects-life-os-core-dot {
-  top: 50%;
-  left: 50%;
-  width: 20%;
+/* The eye: gold hatched plates, cream sclera, engraved iris */
+
+.projects-life-os-eye {
+  left: 21%;
+  top: 30%;
+  width: 58%;
+  height: 40%;
+}
+
+.projects-life-os-eye span { position: absolute; display: block; }
+
+.projects-life-os-eye .lo-hatch {
+  background:
+    repeating-linear-gradient(60deg, rgb(15 35 27 / 0.55) 0 0.35cqi, transparent 0.35cqi 1.2cqi),
+    linear-gradient(160deg, var(--lo-gold-hi) 0%, var(--lo-gold) 45%, var(--lo-gold-lo) 100%);
+}
+
+.projects-life-os-eye .lo-almond {
+  clip-path: polygon(0% 50%, 12.5% 27.9%, 25% 12.8%, 37.5% 3.3%, 50% 0%, 62.5% 3.3%, 75% 12.8%, 87.5% 27.9%, 100% 50%, 87.5% 64.6%, 75% 78.7%, 62.5% 88.5%, 50% 92%, 37.5% 88.5%, 25% 78.7%, 12.5% 64.6%);
+}
+
+.projects-life-os-brow {
+  left: 10%;
+  top: 0;
+  width: 72%;
+  height: 66%;
+  border-radius: 50%;
+  -webkit-mask: radial-gradient(farthest-side, transparent 82%, black 82.5%);
+  mask: radial-gradient(farthest-side, transparent 82%, black 82.5%);
+  clip-path: polygon(0 0, 100% 0, 100% 15%, 70% 12%, 30% 20%, 0 36%);
+}
+
+.projects-life-os-lid {
+  left: 6%;
+  top: 24%;
+  width: 76%;
+  height: 42%;
+}
+
+.projects-life-os-white {
+  left: 10.5%;
+  top: 30.5%;
+  width: 67%;
+  height: 29%;
+  overflow: hidden;
+  background:
+    repeating-linear-gradient(-3deg, rgb(138 106 51 / 0.35) 0 0.3cqi, transparent 0.3cqi 1.1cqi),
+    radial-gradient(60% 70% at 46% 50%, #fbf2dc 0%, #efe0bb 70%, #d7c18e 100%);
+}
+
+.projects-life-os-iris {
+  left: 30.5%;
+  top: 4%;
+  width: 27%;
+  height: 92%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, #06110c 0 30%, transparent 30.5%),
+    repeating-conic-gradient(rgb(243 220 164 / 0.55) 0 1.5deg, transparent 1.5deg 7deg),
+    radial-gradient(circle, #1f5a44 0 45%, #0c2a1f 80%);
+  box-shadow: inset 0 0 0 0.9cqi var(--lo-gold-lo);
+}
+
+.projects-life-os-iris::after {
+  content: "";
+  position: absolute;
+  left: 34%;
+  top: 24%;
+  width: 22%;
   height: 20%;
-  translate: -50% -50%;
   border-radius: 50%;
-  background: #f2f5ff;
-  box-shadow: 0 0 8px rgb(230 238 255 / 0.9);
+  background: #fffaf0;
+  animation: projects-life-os-glint 7s ease-in-out infinite;
 }
 
-@keyframes projects-life-os-drift {
+.projects-life-os-tail {
+  left: 81%;
+  top: 42%;
+  width: 19%;
+  height: 7.5%;
+  clip-path: polygon(0 8%, 100% 0, 100% 100%, 0 92%);
+  rotate: -3deg;
+  transform-origin: 0 50%;
+}
+
+.projects-life-os-drop {
+  left: 28%;
+  top: 62%;
+  width: 5.4%;
+  height: 38%;
+  clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+}
+
+.projects-life-os-stem {
+  left: 38%;
+  top: 62%;
+  width: 5%;
+  height: 14%;
+}
+
+.projects-life-os-curl {
+  left: 38%;
+  top: 61%;
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  -webkit-mask: radial-gradient(farthest-side, transparent 66%, black 66.5%);
+  mask: radial-gradient(farthest-side, transparent 66%, black 66.5%);
+  clip-path: polygon(0 40%, 46% 40%, 62% 66%, 34% 100%, 0 100%);
+}
+
+@keyframes projects-life-os-spin {
   from { rotate: 0deg; }
   to { rotate: 360deg; }
 }
 
-@keyframes projects-life-os-pulse {
-  0%, 100% { scale: 1; }
-  50% { scale: 1.05; }
+@keyframes projects-life-os-glint {
+  0%, 82%, 100% { opacity: 0.9; }
+  88% { opacity: 0.25; }
+}
+
+@container (max-width: 56px) {
+  .projects-life-os-rays,
+  .projects-life-os-rosette,
+  .projects-life-os-paper,
+  .projects-life-os-brow,
+  .projects-life-os-tail,
+  .projects-life-os-drop,
+  .projects-life-os-stem,
+  .projects-life-os-curl { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .projects-life-os-node,
-  .projects-life-os-core {
+  .projects-life-os-css-icon *,
+  .projects-life-os-css-icon::after {
     animation: none !important;
   }
 }

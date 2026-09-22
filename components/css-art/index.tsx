@@ -86,7 +86,6 @@ export const HomeJijuCatScene: React.FC = () => (
 export const HomeLifeMagicIcon: React.FC<{ label: string }> = ({ label }) => (
   <div className="home-life-magic-icon" role="img" aria-label={label}>
     <span className="home-life-magic-aura" />
-    <span className="home-life-magic-heart" />
     <span className="home-life-magic-ring ring-outer" />
     <span className="home-life-magic-ring ring-inner" />
     <span className="home-life-magic-geometry geometry-a" />
@@ -146,20 +145,8 @@ export const HomePowerUpTotem: React.FC<{ label: string }> = ({ label }) => (
     <span className="home-power-body" />
     <span className="home-power-belt" />
     <span className="home-power-face" />
-    <span className="home-power-hair hair-dark">
-      <span className="lock lock-a" />
-      <span className="lock lock-b" />
-      <span className="lock lock-c" />
-      <span className="lock lock-d" />
-      <span className="lock lock-e" />
-    </span>
-    <span className="home-power-hair hair-gold">
-      <span className="lock lock-a" />
-      <span className="lock lock-b" />
-      <span className="lock lock-c" />
-      <span className="lock lock-d" />
-      <span className="lock lock-e" />
-    </span>
+    <span className="home-power-hair hair-dark" />
+    <span className="home-power-hair hair-gold" />
     <span className="home-power-spark spark-a" />
     <span className="home-power-spark spark-b" />
   </div>
@@ -456,17 +443,24 @@ export const ProjectsDrRacingCssIcon: React.FC<{ label: string }> = ({ label }) 
   </div>
 );
 
+/** Mirrors the real Life OS app icon: engraved ink-green plate, gold rules, eye on the seal. */
 export const ProjectsLifeOsCssIcon: React.FC<{ label: string }> = ({ label }) => (
   <div className="projects-card-icon projects-life-os-css-icon" role="img" aria-label={label}>
-    <span className="projects-life-os-orbit orbit-outer" />
-    <span className="projects-life-os-orbit orbit-middle" />
-    <span className="projects-life-os-orbit orbit-inner" />
-    <span className="projects-life-os-node node-a" />
-    <span className="projects-life-os-node node-b" />
-    <span className="projects-life-os-node node-c" />
-    <span className="projects-life-os-core">
-      <span className="projects-life-os-core-ring" />
-      <span className="projects-life-os-core-dot" />
+    <span className="projects-life-os-paper" />
+    <span className="projects-life-os-rays lo-centered" />
+    <span className="projects-life-os-rosette lo-centered" />
+    <span className="projects-life-os-ring lo-centered" />
+    <span className="projects-life-os-medal lo-centered" />
+    <span className="projects-life-os-eye">
+      <span className="projects-life-os-brow lo-hatch" />
+      <span className="projects-life-os-lid lo-almond lo-hatch" />
+      <span className="projects-life-os-white lo-almond">
+        <span className="projects-life-os-iris" />
+      </span>
+      <span className="projects-life-os-tail lo-hatch" />
+      <span className="projects-life-os-drop lo-hatch" />
+      <span className="projects-life-os-stem lo-hatch" />
+      <span className="projects-life-os-curl lo-hatch" />
     </span>
   </div>
 );

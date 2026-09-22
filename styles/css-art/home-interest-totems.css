@@ -449,196 +449,164 @@
   animation-delay: 0.22s;
 }
 
+/* Life OS — engraved pole-star totem (Home Interests).
+   Transparent totem, banknote-intaglio language to match the Life OS app icon:
+   a twelve-palace tick ring around a foil pole star, with hatched beams.
+   Engraved pieces draw no people, so the old power-up figure was retired. */
+
 .home-power-totem {
+  --hp-ink: #1f4d38;
+  --hp-foil: #c9a44c;
+  --hp-ink-2: color-mix(in srgb, var(--hp-ink) 58%, transparent);
+  --hp-ink-3: color-mix(in srgb, var(--hp-ink) 26%, transparent);
   position: relative;
   isolation: isolate;
+  container-type: inline-size;
   width: clamp(4.7rem, 8vw, 6.2rem);
   aspect-ratio: 1 / 1;
   background: transparent;
   border: 0;
   box-shadow: none;
-  animation: home-power-shake 5.8s ease-in-out infinite;
+}
+
+:root[data-theme="dark"] .home-power-totem {
+  --hp-ink: #d9b56f;
+  --hp-foil: #f2cf7a;
 }
 
 .home-power-totem span {
   position: absolute;
+  display: block;
   pointer-events: none;
 }
 
+/* Radial burst behind the star */
 .home-power-aura {
   left: 50%;
-  bottom: 8%;
-  width: 70%;
-  height: 82%;
-  border-radius: 55% 55% 46% 46%;
-  transform: translateX(-50%) scale(0.78);
-  opacity: 0;
-  clip-path: polygon(50% 0, 62% 18%, 76% 5%, 72% 31%, 95% 28%, 77% 50%, 90% 78%, 62% 70%, 50% 100%, 38% 70%, 10% 78%, 23% 50%, 5% 28%, 28% 31%, 24% 5%, 38% 18%);
-  animation: home-power-aura 5.8s ease-in-out infinite;
+  top: 50%;
+  border-radius: 50%;
+  translate: -50% -50%;
 }
 
 .home-power-aura.aura-back {
-  background: color-mix(in srgb, #ffd64d 34%, transparent);
-  filter: blur(0.5px);
+  width: 116%;
+  height: 116%;
+  background: repeating-conic-gradient(var(--hp-ink-3) 0 0.5deg, transparent 0.5deg 4.5deg);
+  -webkit-mask: radial-gradient(closest-side, transparent 34%, black 44%, transparent 82%);
+  mask: radial-gradient(closest-side, transparent 34%, black 44%, transparent 82%);
+  animation: home-power-drift 200s linear infinite;
 }
 
+/* Guilloché band */
 .home-power-aura.aura-front {
-  width: 54%;
-  height: 68%;
-  background: color-mix(in srgb, #fff2a8 42%, transparent);
-  animation-delay: 0.08s;
-}
-
-.home-power-body {
-  left: 34%;
-  bottom: 13%;
-  width: 32%;
-  height: 28%;
-  border-radius: 38% 38% 18% 18%;
+  width: 84%;
+  height: 84%;
   background:
-    linear-gradient(90deg, transparent 43%, #1e4d9a 44% 56%, transparent 57%),
-    #df6d21;
-  box-shadow: inset 0 -5px 0 rgb(107 45 20 / 0.3);
+    repeating-radial-gradient(circle at 50% 45%, transparent 0 1.5cqi, var(--hp-ink-3) 1.5cqi 1.9cqi),
+    repeating-radial-gradient(circle at 45% 54%, transparent 0 1.5cqi, var(--hp-ink-3) 1.5cqi 1.9cqi),
+    repeating-radial-gradient(circle at 55% 54%, transparent 0 1.5cqi, var(--hp-ink-3) 1.5cqi 1.9cqi);
+  -webkit-mask: radial-gradient(closest-side, transparent 64%, black 72%, black 96%, transparent 100%);
+  mask: radial-gradient(closest-side, transparent 64%, black 72%, black 96%, transparent 100%);
+  animation: home-power-drift 130s linear infinite reverse;
 }
 
+/* Twelve-palace ring: twelve heavy ticks over a fine tick band */
+.home-power-body {
+  left: 50%;
+  top: 50%;
+  width: 70%;
+  height: 70%;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(from -1.5deg, var(--hp-ink) 0 3deg, transparent 3deg 30deg),
+    repeating-conic-gradient(var(--hp-ink-3) 0 0.6deg, transparent 0.6deg 6deg);
+  -webkit-mask: radial-gradient(closest-side, transparent 84%, black 85%);
+  mask: radial-gradient(closest-side, transparent 84%, black 85%);
+  animation: home-power-drift 260s linear infinite;
+}
+
+/* Double rule inside the palace ring */
 .home-power-belt {
-  left: 31%;
-  bottom: 23%;
-  width: 38%;
-  height: 5%;
-  border-radius: 999px;
-  background: #1e4d9a;
+  left: 50%;
+  top: 50%;
+  width: 54%;
+  height: 54%;
+  translate: -50% -50%;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 1.1cqi var(--hp-ink),
+    inset 0 0 0 3.4cqi transparent,
+    inset 0 0 0 4cqi var(--hp-ink-2);
 }
 
+/* Hatched disc the star sits on */
 .home-power-face {
   left: 50%;
-  top: 39%;
-  width: 27%;
-  height: 27%;
-  border-radius: 44% 44% 48% 48%;
-  background: #efbf86;
-  transform: translateX(-50%);
-  box-shadow:
-    inset 0 -4px 0 rgb(117 62 37 / 0.12),
-    0 0 0 1px rgb(75 45 25 / 0.08);
+  top: 50%;
+  width: 52%;
+  height: 52%;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background:
+    repeating-linear-gradient(60deg, var(--hp-ink-3) 0 0.3cqi, transparent 0.3cqi 2.2cqi),
+    repeating-linear-gradient(-60deg, var(--hp-ink-3) 0 0.3cqi, transparent 0.3cqi 3.4cqi);
 }
 
-.home-power-face::before,
-.home-power-face::after {
-  content: "";
-  position: absolute;
-  top: 42%;
-  width: 10%;
-  height: 4%;
-  border-radius: 999px;
-  background: #281b18;
-}
-
-.home-power-face::before {
-  left: 26%;
-}
-
-.home-power-face::after {
-  right: 26%;
-}
-
+/* The pole star: foil eight-point star with a slow shimmer */
 .home-power-hair {
   left: 50%;
-  top: 31%;
-  width: 43%;
-  height: 33%;
-  transform: translateX(-50%);
-}
-
-.home-power-hair .lock {
-  left: 50%;
-  bottom: 28%;
-  width: 25%;
-  height: 58%;
-  border-radius: 85% 85% 35% 35%;
-  transform-origin: center bottom;
-}
-
-.home-power-hair.hair-dark .lock {
-  background: #17110f;
-  box-shadow: inset -3px -3px 0 rgb(255 255 255 / 0.06);
-}
-
-.home-power-hair.hair-gold {
-  opacity: 0;
-  filter: drop-shadow(0 0 8px rgb(255 214 77 / 0.45));
-  animation: home-power-gold-hair 5.8s ease-in-out infinite;
-}
-
-.home-power-hair.hair-gold .lock {
-  background:
-    linear-gradient(160deg, #fff2a8 0 18%, #ffd64d 34%, #d98a19 100%);
-  box-shadow: inset -2px -4px 0 rgb(109 59 0 / 0.14);
+  top: 50%;
+  translate: -50% -50%;
+  background: var(--hp-foil);
+  clip-path: polygon(50% 0, 57% 43%, 100% 50%, 57% 57%, 50% 100%, 43% 57%, 0 50%, 43% 43%);
 }
 
 .home-power-hair.hair-dark {
-  animation: home-power-dark-hair 5.8s ease-in-out infinite;
+  width: 38%;
+  height: 38%;
+  opacity: 0.45;
+  rotate: 22.5deg;
+  animation: home-power-pulse 9s ease-in-out infinite;
 }
 
-.home-power-hair .lock-a {
-  transform: translateX(-50%) rotate(0deg) translateY(-20%);
+.home-power-hair.hair-gold {
+  width: 30%;
+  height: 30%;
+  animation: home-power-pulse 9s ease-in-out -4.5s infinite;
 }
 
-.home-power-hair .lock-b {
-  transform: translateX(-84%) rotate(-32deg) translateY(-4%);
-}
-
-.home-power-hair .lock-c {
-  transform: translateX(-14%) rotate(32deg) translateY(-4%);
-}
-
-.home-power-hair .lock-d {
-  transform: translateX(-110%) rotate(-58deg) translateY(18%);
-}
-
-.home-power-hair .lock-e {
-  transform: translateX(10%) rotate(58deg) translateY(18%);
-}
-
-.home-power-hair.hair-gold .lock-a {
-  transform: translateX(-50%) rotate(0deg) translateY(-58%) scaleY(1.35);
-}
-
-.home-power-hair.hair-gold .lock-b {
-  transform: translateX(-88%) rotate(-30deg) translateY(-36%) scaleY(1.22);
-}
-
-.home-power-hair.hair-gold .lock-c {
-  transform: translateX(-12%) rotate(30deg) translateY(-36%) scaleY(1.22);
-}
-
-.home-power-hair.hair-gold .lock-d {
-  transform: translateX(-112%) rotate(-60deg) translateY(-8%) scaleY(1.1);
-}
-
-.home-power-hair.hair-gold .lock-e {
-  transform: translateX(12%) rotate(60deg) translateY(-8%) scaleY(1.1);
-}
-
+/* Two attendant studs on the ring, like the dipper stars */
 .home-power-spark {
-  width: 5px;
-  aspect-ratio: 1;
-  border-radius: 999px;
-  background: #ffd64d;
-  opacity: 0;
-  box-shadow: 0 0 10px rgb(255 214 77 / 0.76);
-  animation: home-power-spark 5.8s ease-in-out infinite;
+  width: 4cqi;
+  height: 4cqi;
+  border-radius: 50%;
+  background: var(--hp-foil);
+  box-shadow: 0 0 0 1cqi color-mix(in srgb, var(--hp-ink) 12%, transparent);
+  animation: home-power-twinkle 5.4s ease-in-out infinite;
 }
 
-.home-power-spark.spark-a {
-  left: 24%;
-  top: 22%;
+.home-power-spark.spark-a { left: 61.8%; top: 12%; }
+.home-power-spark.spark-b { left: 20%; top: 63%; animation-delay: -2.7s; }
+
+@keyframes home-power-drift {
+  from { rotate: 0deg; }
+  to { rotate: 360deg; }
 }
 
-.home-power-spark.spark-b {
-  right: 20%;
-  top: 47%;
-  animation-delay: 0.22s;
+@keyframes home-power-pulse {
+  0%, 100% { scale: 1; opacity: 0.9; }
+  50% { scale: 1.06; opacity: 1; }
+}
+
+@keyframes home-power-twinkle {
+  0%, 100% { opacity: 0.25; }
+  40% { opacity: 1; }
+}
+
+@container (max-width: 68px) {
+  .home-power-aura,
+  .home-power-spark { display: none; }
 }
 
 .home-gramophone-totem {
@@ -1416,6 +1384,7 @@
   .home-pyramid-pixel,
   .home-power-totem,
   .home-power-aura,
+  .home-power-body,
   .home-power-hair,
   .home-power-spark,
   .home-gramophone-record,
