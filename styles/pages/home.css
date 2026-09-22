@@ -239,6 +239,11 @@
 .eden-penney-spin { width: 100%; min-height: 48px; margin-top: 12px; border: 0; border-radius: 16px; background: var(--eden-ink); color: var(--eden-paper); font-size: 13px; font-weight: 800; letter-spacing: .04em; cursor: pointer; transition: transform 180ms cubic-bezier(.2, .8, .2, 1), background-color 180ms ease; }
 .eden-penney-spin:hover:not(:disabled) { transform: translateY(-2px); background: var(--eden-blue); }
 .eden-penney-spin:disabled { opacity: .42; cursor: default; }
+.eden-penney-unlock { margin-top: 12px; padding: 12px 14px; display: grid; gap: 3px; border: 1px solid color-mix(in srgb, var(--eden-ink) 14%, transparent); border-left: 3px solid var(--eden-orange); border-radius: 14px; color: var(--eden-ink); text-decoration: none; transition: transform 180ms cubic-bezier(.2, .8, .2, 1), border-color 180ms ease; }
+.eden-penney-unlock span { color: color-mix(in srgb, var(--eden-ink) 55%, transparent); font-size: 11px; }
+.eden-penney-unlock strong { font-size: 13px; }
+.eden-penney-unlock:hover { transform: translateY(-2px); border-color: var(--eden-orange); }
+.eden-penney-unlock:focus-visible { outline: 3px solid color-mix(in srgb, var(--eden-blue) 58%, transparent); outline-offset: 3px; }
 .eden-penney-qualify { margin-top: 10px !important; color: color-mix(in srgb, var(--eden-ink) 50%, transparent); font-size: 11px; text-align: center; }
 
 .eden-penney-leaderboard { margin-top: 18px; padding-top: 16px; border-top: 1px solid color-mix(in srgb, var(--eden-ink) 11%, transparent); }

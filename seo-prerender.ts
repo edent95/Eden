@@ -37,6 +37,8 @@ const CLUSTERS: Array<{ prefix?: string; paths: string[] }> = [
   },
   { prefix: '/wiki/', paths: ['/wiki', '/notes/turn-chaos-into-systems', '/notes/judgment-is-not-more-information'] },
   { prefix: '/notes/', paths: ['/notes', '/wiki', '/notes/turn-chaos-into-systems'] },
+  // /igaming links back only to the homepage: the owner wants no past projects linked from it.
+  { paths: ['/igaming', '/'] },
   {
     paths: ['/penneys-game', '/conways-game-of-life', '/cellular-automata-lab', '/wiki/rag-flow'],
   },

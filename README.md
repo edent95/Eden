@@ -72,6 +72,7 @@ npm run preview
 - `/icon-prompts` — ETReportHub / Jiju / Friday Poker Club 四宫格 icon prompt 复制页（隐藏直达页；不进 sitemap）
 - `/etreporthub` — ETReportHub 日报数据系统产品页
 - `/etreporthub-sales` — ETReportHub 售卖页与价格说明
+- `/igaming` — 面向 iGaming operator / aggregator 的服务与合作页（日报数据、活动与奖金工具、服务端把关的小游戏、活动页）；首页 Mini Coin Slot 玩满 10 局后出现入口（带 `?from=coin-slot` 时显示解锁提示）
 - `/dr-racing` — Dr Racing 摩托车贷款仪表台产品页，内嵌公开 Demo
 - `/poker` — Friday Poker Club 产品详情：私人房间、邀请、买入、实时牌桌与 Build Notes
 - `/wiki` — 独立知识库总览，沉淀跨项目可复用 skills
@@ -93,7 +94,7 @@ npm run preview
 - `/conways-game-of-life` 可通过页面内 `Install app / 安装 App` 安装为 standalone PWA；不支持安装提示的 Safari 会显示加入主画面 / Dock 指引
 - `/penneys-game` — Penney's Game 硬币骗局：5 关筹码对赌战役、限时盲选排位赛与全球排行榜、自由对战实验室
 - `/penneys-game` 的胜率用 Conway leading-numbers 公式精确计算（`services/penneyGame.ts`）；排行榜走 Firebase RTDB REST，无新增 npm 依赖，规则与部署见 `docs/penney-leaderboard.md`
-- 首页 `/#penney` 是不公开攻略的 Mini Coin Slot：服务端按 IP 每天发放 100 credits，记录 lifetime plays / wins / win rate，满 10 局后进入访客排行榜；API、隐私边界与部署方式见 `docs/penney-mini-arena.md`
+- 首页 `/#penney` 是不公开攻略的 Mini Coin Slot：服务端按 IP 每天发放 100 credits，记录 lifetime plays / wins / win rate，满 10 局后进入访客排行榜并出现通往 `/igaming` 的入口；API、隐私边界与部署方式见 `docs/penney-mini-arena.md`
 - `/cellular-automata-lab` — 独立的 256 elementary cellular automata rules explorer
 - `/archive/:slug` — 归档项目详情
 - PWA manifest 按路由映射（`vite.config.ts` 的 `web-app-manifest-with-base`）：`/film-gallery` → `film-gallery.webmanifest`，`/conways-game-of-life` → `conway.webmanifest`，其余所有路由（含首页）→ `site.webmanifest`（Eden Tan，`start_url: ./`）
