@@ -318,3 +318,80 @@
   .eden-penney-leaderboard ol { margin-top: 8px; }
   .eden-penney-leaderboard li { min-height: 30px; grid-template-columns: 18px minmax(0, 1fr) auto 42px; gap: 6px; }
 }
+
+/* ------------------------------------------------------------------ */
+/* Home live chat — a floating Siri-like orb that opens the anonymous  */
+/* visitor room. Reads stream from RTDB; the name is not the arena's.  */
+/* ------------------------------------------------------------------ */
+
+.eden-chat { --eden-chat-orb: 60px; position: fixed; right: max(20px, env(safe-area-inset-right)); bottom: max(20px, env(safe-area-inset-bottom)); z-index: 60; display: flex; flex-direction: column; align-items: flex-end; gap: 14px; pointer-events: none; }
+.eden-chat > * { pointer-events: auto; }
+
+/* The orb: three soft colour blobs drifting inside a glass sphere. */
+.eden-chat-orb { position: relative; width: var(--eden-chat-orb); height: var(--eden-chat-orb); padding: 0; overflow: hidden; isolation: isolate; border: 0; border-radius: 50%; background: radial-gradient(circle at 50% 50%, #1b1640 0%, #07060f 72%); box-shadow: 0 10px 30px rgba(76, 70, 220, .38), 0 2px 8px rgba(0, 0, 0, .28), inset 0 0 0 1px rgba(255, 255, 255, .14); cursor: pointer; transition: transform 260ms cubic-bezier(.2, .8, .2, 1), box-shadow 260ms ease; }
+.eden-chat-orb:hover { transform: scale(1.07); box-shadow: 0 14px 38px rgba(110, 76, 255, .5), 0 2px 8px rgba(0, 0, 0, .28), inset 0 0 0 1px rgba(255, 255, 255, .2); }
+.eden-chat-orb:active { transform: scale(.94); }
+.eden-chat-orb:focus-visible { outline: 3px solid color-mix(in srgb, var(--eden-blue) 70%, transparent); outline-offset: 4px; }
+.eden-chat-orb-blob { position: absolute; inset: 14%; border-radius: 46% 54% 58% 42% / 44% 46% 54% 56%; mix-blend-mode: screen; filter: blur(6px); opacity: .92; }
+.eden-chat-orb-blob.is-a { background: radial-gradient(circle at 35% 35%, #35d4ff, transparent 68%); animation: eden-chat-orb-a 5.2s ease-in-out infinite; }
+.eden-chat-orb-blob.is-b { background: radial-gradient(circle at 65% 40%, #ff4fd8, transparent 66%); animation: eden-chat-orb-b 6.4s ease-in-out infinite; }
+.eden-chat-orb-blob.is-c { background: radial-gradient(circle at 50% 70%, #7b5cff, transparent 70%); animation: eden-chat-orb-c 4.6s ease-in-out infinite; }
+.eden-chat-orb-glass { position: absolute; inset: 0; z-index: 2; border-radius: 50%; background: radial-gradient(circle at 32% 24%, rgba(255, 255, 255, .55), transparent 26%), radial-gradient(circle at 50% 120%, rgba(255, 255, 255, .16), transparent 52%); }
+.eden-chat-orb-close { position: absolute; inset: 0; z-index: 3; opacity: 0; transform: rotate(-45deg) scale(.6); transition: opacity 200ms ease, transform 260ms cubic-bezier(.2, .8, .2, 1); }
+.eden-chat-orb-close::before, .eden-chat-orb-close::after { content: ""; position: absolute; left: 50%; top: 50%; width: 20px; height: 2px; margin: -1px 0 0 -10px; border-radius: 2px; background: #fff; transform: rotate(45deg); }
+.eden-chat-orb-close::after { transform: rotate(-45deg); }
+.eden-chat.is-open .eden-chat-orb-close { opacity: 1; transform: none; }
+.eden-chat.is-open .eden-chat-orb-blob { opacity: .55; }
+
+@keyframes eden-chat-orb-a { 0%, 100% { transform: translate(-10%, -6%) rotate(0deg) scale(1); } 50% { transform: translate(12%, 8%) rotate(160deg) scale(1.18); } }
+@keyframes eden-chat-orb-b { 0%, 100% { transform: translate(10%, -8%) rotate(0deg) scale(1.1); } 50% { transform: translate(-12%, 10%) rotate(-190deg) scale(.9); } }
+@keyframes eden-chat-orb-c { 0%, 100% { transform: translate(0, 12%) rotate(0deg) scale(.95); } 50% { transform: translate(-4%, -12%) rotate(220deg) scale(1.2); } }
+
+/* The panel grows out of the orb. */
+.eden-chat-panel { width: min(360px, calc(100vw - 32px)); height: min(520px, calc(100dvh - 140px)); padding: 16px; display: flex; flex-direction: column; border: 1px solid color-mix(in srgb, var(--eden-ink) 12%, transparent); border-radius: 24px; background: color-mix(in srgb, var(--eden-panel) 92%, transparent); box-shadow: 0 24px 60px rgba(20, 16, 60, .28), 0 4px 14px rgba(0, 0, 0, .12); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4); transform-origin: calc(100% - var(--eden-chat-orb) / 2) 100%; opacity: 0; transform: translateY(12px) scale(.6); visibility: hidden; transition: opacity 200ms ease, transform 300ms cubic-bezier(.2, .9, .25, 1.1), visibility 0s linear 300ms; }
+.eden-chat.is-open .eden-chat-panel { opacity: 1; transform: none; visibility: visible; transition: opacity 200ms ease, transform 300ms cubic-bezier(.2, .9, .25, 1.1), visibility 0s; }
+
+.eden-chat-head > div { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.eden-chat-head strong { color: var(--eden-ink); font-size: 16px; font-weight: 760; letter-spacing: -.01em; }
+.eden-chat-head p { margin-top: 2px; color: color-mix(in srgb, var(--eden-ink) 50%, transparent); font-size: 11px; }
+.eden-chat-status { display: inline-flex; align-items: center; gap: 6px; color: color-mix(in srgb, var(--eden-ink) 52%, transparent); font-size: 10px; font-weight: 820; letter-spacing: .14em; text-transform: uppercase; }
+.eden-chat-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: color-mix(in srgb, var(--eden-ink) 30%, transparent); }
+.eden-chat-status.is-live::before { background: #2fae62; animation: eden-chat-pulse 2s ease-in-out infinite; }
+.eden-chat-status.is-offline::before { background: var(--eden-orange); }
+@keyframes eden-chat-pulse { 50% { opacity: .35; } }
+
+.eden-chat-list { margin-top: 12px; flex: 1; min-height: 0; padding: 10px; display: flex; flex-direction: column; gap: 6px; overflow-y: auto; overscroll-behavior: contain; border-radius: 16px; background: color-mix(in srgb, var(--eden-ink) 4%, transparent); }
+.eden-chat-list > li { max-width: 86%; padding: 7px 11px; align-self: flex-start; border-radius: 14px 14px 14px 4px; background: color-mix(in srgb, var(--eden-paper) 86%, transparent); }
+.eden-chat-list > li:first-child { margin-top: auto; }
+.eden-chat-list > li.is-mine { align-self: flex-end; border-radius: 14px 14px 4px 14px; background: color-mix(in srgb, var(--eden-blue) 14%, var(--eden-paper)); }
+.eden-chat-list > li > div { display: flex; align-items: baseline; gap: 8px; }
+.eden-chat-list strong { color: var(--eden-ink); font-size: 12px; }
+.eden-chat-list time { color: color-mix(in srgb, var(--eden-ink) 40%, transparent); font-family: var(--font-mono, ui-monospace, monospace); font-size: 10px; }
+.eden-chat-list p { margin-top: 2px; color: color-mix(in srgb, var(--eden-ink) 80%, transparent); font-size: 14px; line-height: 1.45; overflow-wrap: anywhere; white-space: pre-wrap; }
+.eden-chat-list > li.eden-chat-empty { max-width: none; align-self: center; margin-block: auto; background: none; color: color-mix(in srgb, var(--eden-ink) 44%, transparent); font-size: 12px; }
+
+.eden-chat-form { margin-top: 10px; }
+.eden-chat-identity { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: color-mix(in srgb, var(--eden-ink) 60%, transparent); font-size: 12px; }
+.eden-chat-identity strong { color: var(--eden-ink); }
+.eden-chat-identity button { min-height: 30px; padding: 0 12px; border: 1px solid color-mix(in srgb, var(--eden-ink) 14%, transparent); border-radius: 999px; background: transparent; color: var(--eden-ink); font-size: 11px; font-weight: 760; cursor: pointer; transition: border-color 180ms ease; }
+.eden-chat-identity button:hover { border-color: var(--eden-blue); }
+.eden-chat-compose { margin-top: 8px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
+.eden-chat-compose input { min-width: 0; height: 44px; padding: 0 14px; border: 1px solid color-mix(in srgb, var(--eden-ink) 14%, transparent); border-radius: 14px; background: color-mix(in srgb, var(--eden-paper) 82%, transparent); color: var(--eden-ink); font: inherit; font-size: 14px; }
+.eden-chat-compose input:focus { outline: 3px solid color-mix(in srgb, var(--eden-blue) 32%, transparent); border-color: var(--eden-blue); }
+.eden-chat-compose button { min-width: 68px; min-height: 44px; padding: 0 14px; border: 0; border-radius: 14px; background: var(--eden-ink); color: var(--eden-paper); font-size: 13px; font-weight: 800; cursor: pointer; transition: background-color 180ms ease; }
+.eden-chat-compose button:hover:not(:disabled) { background: var(--eden-blue); }
+.eden-chat-compose button:disabled { opacity: .42; cursor: default; }
+.eden-chat-identity button:focus-visible, .eden-chat-compose button:focus-visible { outline: 3px solid color-mix(in srgb, var(--eden-blue) 58%, transparent); outline-offset: 3px; }
+.eden-chat-notice { margin-top: 6px !important; min-height: 16px; color: var(--eden-orange); font-size: 11px; }
+.eden-chat-notice:empty { min-height: 0; margin-top: 0 !important; }
+
+@media (max-width: 520px) {
+  .eden-chat { --eden-chat-orb: 54px; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); }
+  .eden-chat-panel { height: min(70dvh, 520px); border-radius: 20px; }
+  .eden-chat-compose input { font-size: 16px; } /* iOS zooms inputs under 16px */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eden-chat-orb-blob, .eden-chat-status.is-live::before { animation: none; }
+  .eden-chat-orb, .eden-chat-panel, .eden-chat-orb-close { transition: none; }
+}

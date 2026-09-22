@@ -28,6 +28,15 @@
     "penneyMiniPlayers": {
       ".read": false,
       ".write": false
+    },
+    "homeChatMessages": {
+      ".read": true,
+      ".write": false,
+      ".indexOn": ["createdAt"]
+    },
+    "homeChatSenders": {
+      ".read": false,
+      ".write": false
     }
   }
 }

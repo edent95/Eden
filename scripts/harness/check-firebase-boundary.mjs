@@ -8,6 +8,7 @@ const checks = [
   ['functions/index.js', [`${expectedProject}-default-rtdb`]],
   ['services/penneyLeaderboard.ts', [`${expectedProject}-default-rtdb`]],
   ['services/penneyMini.ts', [`asia-southeast1-${expectedProject}.cloudfunctions.net`]],
+  ['services/homeChat.ts', [`${expectedProject}-default-rtdb`, `asia-southeast1-${expectedProject}.cloudfunctions.net`]],
 ];
 
 const problems = [];
