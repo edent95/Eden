@@ -9149,7 +9149,7 @@ const homeCollageItems: Array<{
     tone: 'starmap',
     image: 'home-banners/life-os-banner-poster.jpg',
     video: 'home-banners/life-os-banner.mp4',
-    imageAlt: { en: 'A lone figure standing inside a glowing rune circle on a mountain summit as a dragon descends through storm clouds', zh: '一个人站在山巅发光的符阵中，巨龙穿过风暴云层俯冲而下' },
+    imageAlt: { en: 'A lone robed figure with a staff faces a colossal dragon in the rain and mist, then raises a blazing light toward it', zh: '一名持杖的斗篷行者在雨雾中直面巨龙，随后向它举起一团炽亮的光' },
     href: 'life-os',
     linkLabel: { en: 'Open the Life OS product page', zh: '打开 Life OS 产品页面' },
     ctaLabel: { en: 'Learn more', zh: '了解更多' },
