@@ -51,7 +51,16 @@ npm run firebase:deploy   # database + functions, project eden-tan
 
 ## Architecture
 
-**Single-file React app.** `index.tsx` mounts `App.tsx` — a ~10.5k-line monolith holding page data, route components, and the router. There is no router library: `App` reads `window.location.pathname`, strips `VITE_BASE` and the `/zh/` locale prefix into `pathWithoutBase`, then branches on `pathWithoutBase === '/route'` flags. Adding a route means adding such a branch (the route harness greps for that exact literal). Only `PenneysGamePage` and `HomePenneyGame` are split out as lazy chunks (`ProductStorePage` is a shared, eagerly imported product-page shell reused by several routes); splitting more is deliberate future work gated on route contracts being test-covered (`state/current.md`).
+**Router plus three layers.** `index.tsx` mounts `App.tsx`, which since the 2026-09-23 split is only ~800 lines: language/theme state and storage, the route branches, and the homepage JSX. Everything else lives in two folders:
+
+- `pages/*.tsx` — one file per route family (`ProductPages`, `ContentPages`, `ConwayPages`, `BrandGuidePage`, `FilmGalleryPage`, `ArchiveAndGalleryPages`, `JijuRevampPage`, `LifePage`, `ProjectHomePage`, `IconPromptsPage`, `NotFoundPage`), each holding its own page-only data constants.
+- `app/*.tsx` — anything more than one page needs: `shared.tsx` (the `Language` / `Theme` / `ThemePreference` types, `joinBasePath`, `resolveAssetPath`, `HeaderControls` and its toggles), `archive.tsx` (`archivedWorks`), `product-siblings.tsx`, `home-collage.tsx`.
+
+**Dependency direction is one-way: `pages/` and `app/` never import from `App.tsx`** — App renders them, so the reverse would be a cycle. A page that needs something from App gets it as a prop or the symbol moves into `app/`.
+
+There is still no router library: `App` reads `window.location.pathname`, strips `VITE_BASE` and the `/zh/` locale prefix into `pathWithoutBase`, then branches on `pathWithoutBase === '/route'` flags. Adding a route means adding such a branch in `App.tsx` (the route harness greps for that exact literal) and a component under `pages/`. Two route families resolve by slug instead, and the harness reads their data files directly: `/archive/:slug` from `app/archive.tsx`, `/igaming/cases/:slug` from `components/igaming-cases-content.ts`. If you move data a route resolves from, update `scripts/harness/check-routes.mjs` in the same change.
+
+`PenneysGamePage`, `HomePenneyGame`, the `/igaming` pages and `IGamingCasesPage` are lazy chunks; `ProductStorePage` is a shared, eagerly imported product-page shell reused by several routes.
 
 **`seo-routes.ts` is the route registry and single source of truth.** Everything else must stay consistent with it: the `pathWithoutBase` branch in `App.tsx`, the README route list, `sitemap`/`index` flags, and `SITE_CONTENT_LASTMOD` (bump whenever SEO-visible content changes). `npm run verify:routes` enforces registry ↔ App.tsx ↔ README agreement. A route that should be reachable but undiscoverable keeps its React branch with `index: false, sitemap: false`.
 
@@ -63,13 +72,15 @@ npm run firebase:deploy   # database + functions, project eden-tan
 
 **CSS layering is machine-checked.** `index.css` may contain nothing but `@import` lines, in order: Tailwind → `styles/tokens.css` → `base.css` → `shared.css` → `theme-overrides.css` → `motion.css` → `styles/css-art/*` → `styles/pages/*`. Route layout goes in `styles/pages/<route>.css`; illustrated visuals go in `styles/css-art/<family>.css`, registered in `css-art.registry.ts`, and reused from `components/css-art` rather than copied. `verify:css` fails if a registered art file is missing, unimported, or animates without a `prefers-reduced-motion` rule. Read `docs/css-art-system.md` before touching CSS art.
 
-**Navigation.** `HeaderControls` in `App.tsx` + the global menu rules in `styles/shared.css` are the nav source of truth for every page. Page CSS may set content width and back destination only.
+**Navigation.** `HeaderControls` in `app/shared.tsx` + the global menu rules in `styles/shared.css` are the nav source of truth for every page. Page CSS may set content width and back destination only.
 
 **Backend boundary.** The homepage Mini Coin Slot calls `penneyMiniApi`, a Firebase Functions v2 endpoint (Node 22, `asia-southeast1`) in `functions/`, which owns IP HMAC, the Malaysia-day 100-credit quota, round results, and all leaderboard writes; the static client never holds raw IPs. `verify:firebase` hard-fails on any reference to the sibling Poker project from `.firebaserc`, `package.json`, `functions/index.js`, `services/penneyLeaderboard.ts`, or `services/penneyMini.ts` — active config must point at `eden-tan`. Details in `docs/penney-mini-arena.md` and `docs/penney-leaderboard.md`.
 
 ## Logging is a build gate
 
-Any changed project file (outside `dist/`) requires a new entry appended to the current `logs/YYYY-MM.md` (month resolved in `Asia/Kuala_Lumpur`), followed by `npm run log:index`. `check-log.mjs` reads only the *last* heading's section and requires all five fields: 改动 / 原因 / 影响 / 验证 / 后续. `log.md` is a legacy pointer and must not receive entries. `log 2.md` and `soul 2.md` are dead snapshots — do not read or update them.
+Any changed project file (outside `dist/`) requires a new entry appended to the current `logs/YYYY-MM.md` (month resolved in `Asia/Kuala_Lumpur`), followed by `npm run log:index`. `check-log.mjs` reads only the *last* heading's section; new entries use the rag-v1 fields (`type` / `scope` / `impact` / `changed` / `ripples` / `verified` / `keywords`), and the older 改动 / 原因 / 影响 / 验证 / 后续 form still passes for historical entries.
+
+**Give every entry a `## YYYY-MM-DD — <title>` section heading above the `### [E-…]` line.** `build-log-index.mjs` only collects headings whose text starts with a date, so an entry filed under a previous day's heading leaves `logs/index.md` unchanged and `verify:log` fails with "The generated logs/index.md was not updated" — the most common way this gate goes red. `log.md` is a legacy pointer and must not receive entries. `log 2.md` and `soul 2.md` are dead snapshots — do not read or update them.
 
 ## Verification style
 
