@@ -313,8 +313,8 @@ const HomePenneyGame: React.FC<HomePenneyGameProps> = ({ isZh, igamingHref }) =>
 
         {player.plays >= QUALIFYING_PLAYS ? (
           <a className="eden-penney-unlock" href={`${igamingHref}?from=coin-slot`}>
-            <span>{t('Ten rounds in. You have seen how the house works.', '十局打完，你已经看过庄家怎么运作。')}</span>
-            <strong>{t('See the iGaming systems I build', '看我做的 iGaming 系统')} <span aria-hidden="true">→</span></strong>
+            <span>{t('Ten rounds in. You have seen the house win.', '十局打完，你已经见过庄家赢。')}</span>
+            <strong>{t('Open the iGaming starter pack', '打开 iGaming 入门包')} <span aria-hidden="true">→</span></strong>
           </a>
         ) : null}
 
