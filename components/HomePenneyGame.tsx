@@ -17,6 +17,8 @@ import {
 
 export type HomePenneyGameProps = {
   isZh: boolean;
+  /** `/igaming`; the link appears once the visitor has played ten rounds. */
+  igamingHref: string;
 };
 
 type Phase = 'idle' | 'requesting' | 'revealing' | 'resolved';
@@ -52,7 +54,7 @@ const useReducedMotion = (): boolean => {
 
 const percent = (value: number): string => `${(value * 100).toFixed(value > 0 && value < 1 ? 1 : 0)}%`;
 
-const HomePenneyGame: React.FC<HomePenneyGameProps> = ({ isZh }) => {
+const HomePenneyGame: React.FC<HomePenneyGameProps> = ({ isZh, igamingHref }) => {
   const t = React.useCallback((en: string, zh: string) => (isZh ? zh : en), [isZh]);
   const reducedMotion = useReducedMotion();
   const [arena, setArena] = React.useState<MiniArenaState>({ player: EMPTY_PLAYER, leaderboard: [] });
@@ -307,6 +309,13 @@ const HomePenneyGame: React.FC<HomePenneyGameProps> = ({ isZh }) => {
               `再玩 ${qualificationLeft} 局进入排行榜。`,
             )}
           </p>
+        ) : null}
+
+        {player.plays >= QUALIFYING_PLAYS ? (
+          <a className="eden-penney-unlock" href={`${igamingHref}?from=coin-slot`}>
+            <span>{t('Ten rounds in. You have seen how the house works.', '十局打完，你已经看过庄家怎么运作。')}</span>
+            <strong>{t('See the iGaming systems I build', '看我做的 iGaming 系统')} <span aria-hidden="true">→</span></strong>
+          </a>
         ) : null}
 
         <MiniLeaderboard entries={arena.leaderboard} isZh={isZh} />
