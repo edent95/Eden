@@ -7,7 +7,7 @@ import {
   type IGamingCard,
   type IGamingLocalized,
 } from './igaming-content';
-import { IGamingEngravedBanner } from './css-art/index';
+import { IGamingEngravedBanner, IGamingFloorArt } from './css-art/index';
 
 type Lang = 'en' | 'zh';
 
@@ -36,6 +36,11 @@ const IGamingPage: React.FC<{
     <ul className={className}>
       {items.map((item) => (
         <li key={item.title.en}>
+          {item.art ? (
+            <div className="igaming-card-art">
+              <IGamingFloorArt variant={item.art.key} label={t(item.art.label)} />
+            </div>
+          ) : null}
           <h4>{t(item.title)}</h4>
           <p>{t(item.body)}</p>
           {item.note ? <small>{t(item.note)}</small> : null}

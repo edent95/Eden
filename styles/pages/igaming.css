@@ -207,6 +207,10 @@
 }
 
 .igaming-grid.is-floor li { border-top: 3px solid var(--igaming-gold); }
+
+.igaming-card-art {
+  margin: -0.3rem -0.3rem 0.95rem;
+}
 .igaming-grid.is-promo li { border-left: 4px solid var(--igaming-felt); }
 .igaming-grid.is-traps li { border-left: 4px solid var(--igaming-coral); }
 

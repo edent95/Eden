@@ -855,3 +855,81 @@ export const IGamingTableBanner: CssArtComponent = ({ label }) => <IGamingEngrav
 export const IGamingChipsBanner: CssArtComponent = ({ label }) => <IGamingEngravedBanner label={label} variant="chips" />;
 export const IGamingLoopBanner: CssArtComponent = ({ label }) => <IGamingEngravedBanner label={label} variant="loop" />;
 export const IGamingLedgerBanner: CssArtComponent = ({ label }) => <IGamingEngravedBanner label={label} variant="ledger" />;
+
+/* ---- /igaming "game floor" card art (2026-09-22) ---- */
+
+export type IGamingFloorVariant = 'slots' | 'live' | 'rng' | 'sports' | 'fishing' | 'lottery';
+
+const IGAMING_FLOOR_TONE: Record<IGamingFloorVariant, EngravedTone> = {
+  slots: 'bronze',
+  live: 'ink',
+  rng: 'indigo',
+  sports: 'teal',
+  fishing: 'teal',
+  lottery: 'rose',
+};
+
+/** 16:9 engraved card art for one game type on the /igaming floor, each with one small loop. */
+export const IGamingFloorArt: React.FC<{ label: string; variant: IGamingFloorVariant }> = ({ label, variant }) => (
+  <div
+    className={`engraved-art engraved-floor is-${variant} engraved-tone-${IGAMING_FLOOR_TONE[variant]}`}
+    role="img"
+    aria-label={label}
+  >
+    <span className="engraved-ig-rays" />
+    <span className="engraved-ig-guilloche" />
+    {variant === 'slots' ? (
+      <>
+        <span className="engraved-fl-cabinet" />
+        <span className="engraved-fl-reel r1" />
+        <span className="engraved-fl-reel r2" />
+        <span className="engraved-fl-reel r3" />
+        <span className="engraved-fl-payline" />
+      </>
+    ) : null}
+    {variant === 'live' ? (
+      <>
+        <span className="engraved-fl-felt" />
+        <span className="engraved-fl-card back" />
+        <span className="engraved-fl-card face" />
+      </>
+    ) : null}
+    {variant === 'rng' ? (
+      <>
+        <span className="engraved-fl-die d1" />
+        <span className="engraved-fl-die d2" />
+      </>
+    ) : null}
+    {variant === 'sports' ? (
+      <>
+        <span className="engraved-fl-pitch" />
+        <span className="engraved-fl-shadow" />
+        <span className="engraved-fl-ball" />
+      </>
+    ) : null}
+    {variant === 'fishing' ? (
+      <>
+        <span className="engraved-fl-fish f1" />
+        <span className="engraved-fl-fish f2" />
+        <span className="engraved-fl-fish f3" />
+        <span className="engraved-fl-reticle" />
+      </>
+    ) : null}
+    {variant === 'lottery' ? (
+      <>
+        <span className="engraved-fl-crash" />
+        <span className="engraved-fl-lotto l1" />
+        <span className="engraved-fl-lotto l2" />
+        <span className="engraved-fl-lotto l3" />
+        <span className="engraved-fl-lotto l4" />
+      </>
+    ) : null}
+  </div>
+);
+
+export const IGamingSlotsArt: CssArtComponent = ({ label }) => <IGamingFloorArt label={label} variant="slots" />;
+export const IGamingLiveArt: CssArtComponent = ({ label }) => <IGamingFloorArt label={label} variant="live" />;
+export const IGamingRngArt: CssArtComponent = ({ label }) => <IGamingFloorArt label={label} variant="rng" />;
+export const IGamingSportsArt: CssArtComponent = ({ label }) => <IGamingFloorArt label={label} variant="sports" />;
+export const IGamingFishingArt: CssArtComponent = ({ label }) => <IGamingFloorArt label={label} variant="fishing" />;
+export const IGamingLotteryArt: CssArtComponent = ({ label }) => <IGamingFloorArt label={label} variant="lottery" />;

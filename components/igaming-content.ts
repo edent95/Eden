@@ -20,7 +20,15 @@ const L = (en: string, zh: string): IGamingLocalized => ({ en, zh });
 export const IGAMING_UNLOCK_PARAM = 'from';
 export const IGAMING_UNLOCK_VALUE = 'coin-slot';
 
-export type IGamingCard = { title: IGamingLocalized; body: IGamingLocalized; note?: IGamingLocalized };
+/** Engraved card art keys for the game floor (drawn by `IGamingFloorArt` in components/css-art). */
+export type IGamingFloorArtKey = 'slots' | 'live' | 'rng' | 'sports' | 'fishing' | 'lottery';
+
+export type IGamingCard = {
+  title: IGamingLocalized;
+  body: IGamingLocalized;
+  note?: IGamingLocalized;
+  art?: { key: IGamingFloorArtKey; label: IGamingLocalized };
+};
 export type IGamingTerm = { term: string; body: IGamingLocalized };
 export type IGamingFlow = { id: string; title: IGamingLocalized; when: IGamingLocalized; steps: IGamingCard[] };
 export type IGamingMetric = { name: IGamingLocalized; definition: IGamingLocalized; why: IGamingLocalized };
@@ -101,31 +109,37 @@ export const IGAMING_PAGE = {
   floor: [
     {
       title: L('Slots', '老虎机 Slots'),
+      art: { key: 'slots', label: L('Engraved slot machine with three spinning reels', '三条滚轴转动的凹版老虎机') },
       body: L('Most of the catalogue and most of the turnover. Maths set by the provider.', '游戏库和流水的大头。数学模型由 provider 设定。'),
       note: L('RTP typically 94–97%', 'RTP 通常 94–97%'),
     },
     {
       title: L('Live casino', '真人娱乐 Live casino'),
+      art: { key: 'live', label: L('Engraved playing cards dealt onto a table edge', '发到桌边的凹版扑克牌') },
       body: L('Real dealers on stream: baccarat, roulette, blackjack, sic bo, game shows.', '真人荷官直播：百家乐、轮盘、21 点、骰宝、游戏秀。'),
       note: L('Baccarat banker edge ≈ 1.06%', '百家乐押庄的庄家优势约 1.06%'),
     },
     {
       title: L('RNG table games', '电子桌游 RNG table'),
+      art: { key: 'rng', label: L('Engraved dice tumbling', '翻滚的凹版骰子') },
       body: L('The same table games, dealt by a random number generator instead of a person.', '同样的桌游，由随机数生成器发牌，而不是真人。'),
       note: L('European roulette edge 2.7%', '欧式轮盘优势 2.7%'),
     },
     {
       title: L('Sportsbook', '体育 Sportsbook'),
+      art: { key: 'sports', label: L('Engraved football bouncing on a pitch line', '在球场中线上弹跳的凹版足球') },
       body: L('Pre-match and in-play betting. The margin is built into the odds, not into a machine.', '赛前和滚球投注。利润藏在赔率里，而不是机器里。'),
       note: L('Margin priced into odds', '利润算进赔率'),
     },
     {
       title: L('Fishing and arcade', '捕鱼与街机'),
+      art: { key: 'fishing', label: L('Engraved fish swimming through a reticle', '游过准星的凹版鱼群') },
       body: L('Shooting-style games popular across Asia; they feel like skill, the maths is still set by the provider.', '在亚洲很流行的射击类游戏；玩起来像技术，数学模型仍由 provider 决定。'),
       note: L('Feels like skill, priced like a slot', '像技术，定价像老虎机'),
     },
     {
       title: L('Lottery and fast games', '彩票与快速游戏'),
+      art: { key: 'lottery', label: L('Engraved lottery balls and a crash curve', '凹版彩票球与 crash 曲线') },
       body: L('4D and number draws, plus crash and instant games with rounds that last seconds.', '4D 与数字开奖，以及几秒一局的 crash 和即开游戏。'),
       note: L('Short rounds, high frequency', '局短、频率高'),
     },
