@@ -141,15 +141,15 @@ export const ROUTE_SEO: RouteSeo[] = [
   {
     path: '/project',
     datePublished: '2026-08-13',
-    dateModified: '2026-09-18',
+    dateModified: '2026-09-22',
     priority: '0.9',
     title: {
       en: 'Projects | Eden Tan',
       zh: '作品 | Eden Tan',
     },
     desc: {
-      en: 'An app shelf of everything Eden Tan has built: Jiju, Friday Poker Club, ETReportHub, Film Gallery, and Conway’s Game of Life.',
-      zh: 'Eden Tan 做过的作品列表：Jiju、Friday Poker Club、ETReportHub、Film Gallery 以及 Conway’s Game of Life。',
+      en: 'An app shelf of everything Eden Tan has built: Jiju, Friday Poker Club, ETReportHub, Life OS, Film Gallery, and Conway’s Game of Life.',
+      zh: 'Eden Tan 做过的作品列表：Jiju、Friday Poker Club、ETReportHub、Life OS、Film Gallery 以及 Conway’s Game of Life。',
     },
   },
   {

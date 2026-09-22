@@ -9838,6 +9838,7 @@ const ProjectHomePage: React.FC<{
   conwayHref: string;
   penneyHref: string;
   miyaHref: string;
+  lifeOsHref: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
   themePreference: ThemePreference;
@@ -9853,6 +9854,7 @@ const ProjectHomePage: React.FC<{
   conwayHref,
   penneyHref,
   miyaHref,
+  lifeOsHref,
   language,
   setLanguage,
   themePreference,
@@ -9881,6 +9883,13 @@ const ProjectHomePage: React.FC<{
       href: etReportHubHref,
       caption: { en: 'Daily data layer', zh: '每日数据层' },
       Icon: ProjectsEtReportCssIcon,
+    },
+    {
+      id: 'life-os',
+      name: 'Life OS',
+      href: lifeOsHref,
+      caption: { en: 'Personal base map', zh: '个人底图' },
+      Icon: ProjectsLifeOsCssIcon,
     },
     {
       id: 'dr-racing',
@@ -9941,7 +9950,7 @@ const ProjectHomePage: React.FC<{
           <h1>{isZh ? '打开任何一个 app。' : 'Open any app.'}</h1>
           <p className="project-home-lede">
             {isZh
-              ? '每一个图标都是一个真的做出来、还在跑的东西。点进去看它在解决什么问题。'
+              ? '都是用心做的'
               : 'Every icon is something real that got built and still runs. Tap one to see the problem it solves.'}
           </p>
         </header>
@@ -10230,6 +10239,7 @@ const App: React.FC = () => {
   const penneyHref = joinBasePath(baseUrl, 'penneys-game');
   const projectHomeHref = joinBasePath(baseUrl, 'project');
   const miyaHref = joinBasePath(baseUrl, 'project/miya');
+  const lifeOsHref = joinBasePath(baseUrl, 'life-os');
   const igamingHref = joinBasePath(baseUrl, 'igaming');
   const cellularAutomataLabHref = joinBasePath(baseUrl, 'cellular-automata-lab');
   const homeSystemFiles: Array<{
@@ -10634,6 +10644,7 @@ const App: React.FC = () => {
         conwayHref={conwayHref}
         penneyHref={penneyHref}
         miyaHref={miyaHref}
+        lifeOsHref={lifeOsHref}
         language={language}
         setLanguage={setLanguage}
         themePreference={themePreference}
