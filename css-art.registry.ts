@@ -188,12 +188,12 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
     cssFile: 'styles/css-art/projects-icons.css',
     Component: ProjectsLifeOsCssIcon,
     label: {
-      en: 'Life OS personal star map CSS app icon',
-      zh: 'Life OS 个人星图 CSS app 图标',
+      en: 'Life OS engraved eye CSS app icon',
+      zh: 'Life OS 凹版之眼 CSS app 图标',
     },
     copy: {
-      en: 'The framed star-map icon: concentric orbits, drifting nodes, and one lit core.',
-      zh: 'Life OS 使用的固定底星图 app icon：同心轨道、漂移节点与一颗点亮的核心。',
+      en: 'Matches the real Life OS app icon: ink-green plate, bronze-gold rules, guilloché rosette and radial burst, with an engraved eye on the double-ruled seal.',
+      zh: '与 Life OS 真实 app 图标同款：墨绿印版、古铜金线、扭索纹玫瑰与放射细线，双线圆章中央一只凹版之眼。',
     },
   },
   {
@@ -375,12 +375,12 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
     cssFile: 'styles/css-art/home-life-magic.css',
     Component: HomeLifeMagicIcon,
     label: {
-      en: 'Life OS heartbeat magic circle CSS icon',
-      zh: 'Life OS 心跳魔法阵 CSS 图标',
+      en: 'Life OS engraved heartbeat seal CSS icon',
+      zh: 'Life OS 凹版心跳印章 CSS 图标',
     },
     copy: {
-      en: 'The transparent heartbeat-to-magic-circle icon from Home System Files.',
-      zh: '主页 System Files 区块里的透明底心跳变魔法阵 CSS 图标。',
+      en: 'Banknote-intaglio seal matching the Life OS app icon: radial burst, guilloché rosette and a φ tick ring around an engraved heartbeat that beats in foil.',
+      zh: '与 Life OS app 图标同款的凹版印章：放射细线、扭索纹玫瑰与 φ 刻度环，中间一条凹版心跳线按节拍泛出金箔。',
     },
   },
   {
@@ -395,12 +395,12 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
     cssFile: 'styles/css-art/home-interest-totems.css',
     Component: HomePowerUpTotem,
     label: {
-      en: 'Life OS black hair to golden power-up transparent CSS totem',
-      zh: 'Life OS 黑发变金发能量变身透明底 CSS 图腾',
+      en: 'Life OS engraved pole-star transparent CSS totem',
+      zh: 'Life OS 凹版北极星透明底 CSS 图腾',
     },
     copy: {
-      en: 'The transparent power-up totem used by the Home Interests Life OS card.',
-      zh: '主页 Interests 里 Life OS 使用的透明底能量变身图腾。',
+      en: 'Transparent intaglio totem for the Home Interests Life OS card: a twelve-palace tick ring and guilloché band around a foil pole star. Engraved pieces draw no people, so the old power-up figure was retired.',
+      zh: '主页 Interests 里 Life OS 的透明底凹版图腾：十二宫刻度环与扭索纹环围着一颗金箔北极星。凹版语言不画人，原来的变身小人已退役。',
     },
   },
   {
