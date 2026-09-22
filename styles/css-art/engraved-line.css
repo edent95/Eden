@@ -229,7 +229,7 @@
    16:5 plates. The subject sits on the golden point (--fx, --fy);
    rays, guilloché and construction lines all centre on it.
    One maths motif each: 37-fold wheel, φ-scaled chips,
-   lemniscate loop, Fibonacci ledger.
+   lemniscate loop, Fibonacci ledger, 21:13 gear pair, 32-point compass.
    ============================================================= */
 .engraved-igaming {
   --fx: 61.8%;
@@ -451,6 +451,83 @@
   box-shadow: inset 0 0.22cqi 0 var(--en-line), inset 0 -0.15cqi 0 var(--en-ink-2);
 }
 
+/* ---- 05 · B2B: two meshing gears, 21 and 13 teeth; the small one is the big one ÷ φ ---- */
+.engraved-ig-gear,
+.engraved-ig-gear-body {
+  left: calc(var(--cx) - var(--size) / 2); top: calc(var(--fy) - var(--size) / 2);
+  width: var(--size); height: var(--size);
+  border-radius: 50%;
+}
+.engraved-ig-gear {
+  background: repeating-conic-gradient(var(--en-line) 0 calc(180deg / var(--n)), transparent 0 calc(360deg / var(--n)));
+  -webkit-mask: radial-gradient(closest-side, transparent 79%, black 80%);
+  mask: radial-gradient(closest-side, transparent 79%, black 80%);
+}
+.engraved-ig-gear-body {
+  background:
+    radial-gradient(circle, var(--en-foil) 0 8%, transparent 8.5%),
+    radial-gradient(circle, var(--en-paper) 0 17%, transparent 17.5%),
+    repeating-conic-gradient(var(--en-line) 0 3deg, transparent 3deg 60deg),
+    repeating-radial-gradient(circle, var(--en-ink-3) 0 var(--en-w), transparent var(--en-w) 0.6cqi),
+    var(--en-paper);
+  box-shadow: inset 0 0 0 0.3cqi var(--en-line), inset 0 0 0 1.1cqi var(--en-paper), inset 0 0 0 1.25cqi var(--en-ink-2);
+}
+.engraved-ig-gear.big,
+.engraved-ig-gear-body.big { --cx: calc(var(--fx) - 9.4cqi); animation: engraved-spin 42s linear infinite; }
+.engraved-ig-gear.big { --n: 21; --size: 24cqi; }
+.engraved-ig-gear-body.big { --size: 19.6cqi; }
+.engraved-ig-gear.small,
+.engraved-ig-gear-body.small { --cx: calc(var(--fx) + 8cqi); animation: engraved-spin-back 26s linear infinite; }
+.engraved-ig-gear.small { --n: 13; --size: 14.8cqi; }
+.engraved-ig-gear-body.small { --size: 12.1cqi; }
+
+/* ---- 06 · Troubleshooting: compass rose, 32-point dial, a needle that searches then settles ---- */
+.engraved-ig-dial,
+.engraved-ig-dial-ring,
+.engraved-ig-needle-hub { border-radius: 50%; }
+.engraved-ig-dial {
+  left: calc(var(--fx) - 13cqi); top: calc(var(--fy) - 13cqi); width: 26cqi; height: 26cqi;
+  background:
+    repeating-conic-gradient(from -0.6deg, var(--en-line) 0 1.2deg, transparent 1.2deg 45deg),
+    repeating-conic-gradient(from -0.3deg, var(--en-ink-2) 0 0.6deg, transparent 0.6deg 11.25deg);
+  -webkit-mask: radial-gradient(closest-side, transparent 84%, black 85%);
+  mask: radial-gradient(closest-side, transparent 84%, black 85%);
+  box-shadow: inset 0 0 0 0.25cqi var(--en-line);
+  animation: engraved-spin-back 200s linear infinite;
+}
+.engraved-ig-dial-ring {
+  left: calc(var(--fx) - 10.8cqi); top: calc(var(--fy) - 10.8cqi); width: 21.6cqi; height: 21.6cqi;
+  background:
+    repeating-radial-gradient(circle, var(--en-ink-3) 0 var(--en-w), transparent var(--en-w) 0.7cqi),
+    var(--en-paper);
+  box-shadow: inset 0 0 0 0.22cqi var(--en-line), 0 0 0 0.5cqi var(--en-paper), 0 0 0 0.62cqi var(--en-ink-2);
+}
+.engraved-ig-rose-edge,
+.engraved-ig-rose { clip-path: polygon(50% 0%, 53.4% 41.7%, 71.9% 28.1%, 58.3% 46.6%, 100% 50%, 58.3% 53.4%, 71.9% 71.9%, 53.4% 58.3%, 50% 100%, 46.6% 58.3%, 28.1% 71.9%, 41.7% 53.4%, 0% 50%, 41.7% 46.6%, 28.1% 28.1%, 46.6% 41.7%); }
+.engraved-ig-rose-edge {
+  left: calc(var(--fx) - 10cqi); top: calc(var(--fy) - 10cqi); width: 20cqi; height: 20cqi;
+  background: var(--en-line);
+}
+/* Each point is half hatched, half paper — the classic engraved rose shading */
+.engraved-ig-rose {
+  left: calc(var(--fx) - 9.3cqi); top: calc(var(--fy) - 9.3cqi); width: 18.6cqi; height: 18.6cqi;
+  background:
+    repeating-conic-gradient(var(--en-paper) 0 22.5deg, transparent 22.5deg 45deg),
+    repeating-linear-gradient(45deg, var(--en-line) 0 var(--en-w), transparent var(--en-w) 0.55cqi),
+    var(--en-paper);
+}
+.engraved-ig-needle {
+  left: calc(var(--fx) - 1.3cqi); top: calc(var(--fy) - 10.5cqi); width: 2.6cqi; height: 21cqi;
+  background: linear-gradient(var(--en-foil) 50%, var(--en-line) 50%);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  animation: engraved-ig-seek 9s ease-in-out infinite;
+}
+.engraved-ig-needle-hub {
+  left: calc(var(--fx) - 1.5cqi); top: calc(var(--fy) - 1.5cqi); width: 3cqi; height: 3cqi;
+  background: radial-gradient(circle, var(--en-foil) 0 30%, var(--en-paper) 32%);
+  box-shadow: inset 0 0 0 0.25cqi var(--en-line);
+}
+
 /* ---- /igaming "game floor" card art: 16:9, subject centred, one small loop each ---- */
 .engraved-floor {
   --fx: 50%;
@@ -660,6 +737,12 @@
   40% { opacity: 0; transform: scale(0.3) rotate(90deg); }
 }
 @keyframes engraved-ig-rise { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.9); } }
+@keyframes engraved-ig-seek {
+  0%, 100% { transform: rotate(-38deg); }
+  25% { transform: rotate(24deg); }
+  45% { transform: rotate(-12deg); }
+  60%, 85% { transform: rotate(0deg); }
+}
 
 /* Phone width: drop the construction and ray layers, keep the subject */
 @container (max-width: 420px) {

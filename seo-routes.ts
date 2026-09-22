@@ -26,7 +26,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-09-22';
+export const SITE_CONTENT_LASTMOD = '2026-09-23';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -214,15 +214,15 @@ export const ROUTE_SEO: RouteSeo[] = [
   {
     path: '/igaming',
     datePublished: '2026-09-22',
-    dateModified: '2026-09-22',
+    dateModified: '2026-09-23',
     priority: '0.7',
     title: {
       en: 'iGaming Starter Pack | Eden Tan',
       zh: 'iGaming 入门包 | Eden Tan',
     },
     desc: {
-      en: 'An iGaming starter pack: who runs a casino, the game floor, RTP and GGR, provider promotions, and the daily reporting and CRM workflow behind it.',
-      zh: 'iGaming 入门包：谁在经营线上娱乐场、有哪些游戏、RTP 与 GGR、provider 常见促销，以及背后的日报与 CRM 工作流程。',
+      en: 'An iGaming starter pack: who runs a casino, RTP and GGR, promotions, daily reporting and CRM, the B2B side from deal to go-live, and troubleshooting.',
+      zh: 'iGaming 入门包：谁在经营线上娱乐场、有哪些游戏、RTP 与 GGR、常见促销、日报与 CRM 工作流程、B2B 从签约到上线，以及按症状排查。',
     },
   },
   {

@@ -86,6 +86,18 @@ function igamingStaticCopy(): StaticRouteCopy {
     en: `${title.en}: ${body.en}`,
     zh: `${title.zh}：${body.zh}`,
   });
+  const joined = (items: Localized[], en: string, zh: string): Localized => ({
+    en: items.map((item) => item.en).join(en),
+    zh: items.map((item) => item.zh).join(zh),
+  });
+  const row = (cells: Localized[]): Localized => ({
+    en: cells.map((cell) => cell.en).join(' — '),
+    zh: cells.map((cell) => cell.zh).join(' — '),
+  });
+  const flow = (item: typeof page.dealFlow): Localized => ({
+    en: `${item.title.en} (${item.when.en}): ${item.steps.map((step) => step.title.en).join(' → ')}.`,
+    zh: `${item.title.zh}（${item.when.zh}）：${item.steps.map((step) => step.title.zh).join(' → ')}。`,
+  });
   return {
     eyebrow: page.kicker,
     thesis: page.claim,
@@ -97,8 +109,15 @@ function igamingStaticCopy(): StaticRouteCopy {
           page.starterLead,
           ...page.roles.map((item) => titled(item.title, item.body)),
           ...page.floor.map((item) => titled(item.title, item.body)),
+          joined(page.journey.map((item) => item.title), ' → ', ' → '),
+          titled(page.journeyNote.title, page.journeyNote.body),
           ...page.terms.map((item) => titled({ en: item.term, zh: item.term }, item.body)),
           ...page.money.map((item) => titled(item.title, item.body)),
+          titled(page.moneyNote.title, page.moneyNote.body),
+          page.riskLead,
+          ...page.risk.map((item) => titled(item.title, item.body)),
+          ...page.firstMonth.rows.map(row),
+          titled(page.newcomerRule.title, page.newcomerRule.body),
         ],
       },
       {
@@ -124,7 +143,48 @@ function igamingStaticCopy(): StaticRouteCopy {
         paragraphs: [
           page.reportingLead,
           ...page.metrics.map((metric) => titled(metric.name, metric.definition)),
+          titled(page.reportingNote.title, page.reportingNote.body),
           ...page.traps.map((item) => titled(item.title, item.body)),
+        ],
+      },
+      {
+        title: page.b2bTitle,
+        paragraphs: [
+          page.b2bLead,
+          ...page.b2bMap.map((item) => titled(item.title, item.body)),
+          flow(page.dealFlow),
+          titled(page.dealNote.title, page.dealNote.body),
+          ...page.stakeholders.rows.map(row),
+          ...page.qualify.map((item) => titled(item.title, item.body)),
+          page.commercialLead,
+          ...page.commercialModels.map((item) => titled(item.title, item.body)),
+          ...page.contract.map((item) => titled(item.title, item.body)),
+          flow(page.integrationFlow),
+          ...page.providerOps.map((item) => titled(item.title, item.body)),
+          ...page.aggregatorOps.map((item) => titled(item.title, item.body)),
+          titled(page.sponsorNote.title, page.sponsorNote.body),
+          flow(page.providerCampaignFlow),
+          page.growthLead,
+          joined(page.pipeline.map((item) => item.title), ' → ', ' → '),
+          ...page.accountWork.map((item) => titled(item.title, item.body)),
+          ...page.b2bScore.map((item) => titled(item.title, item.body)),
+          ...page.techTerms.map((item) => titled({ en: item.term, zh: item.term }, item.body)),
+          flow(page.incidentFlow),
+          titled(page.incidentNote.title, page.incidentNote.body),
+          titled(page.mistakesTitle, joined(page.mistakes, ' ', '')),
+          ...page.firstQuarter.rows.map(row),
+          titled(page.b2bRule.title, page.b2bRule.body),
+        ],
+      },
+      {
+        title: page.troubleshootingTitle,
+        paragraphs: [
+          page.troubleshootingLead,
+          joined(page.funnel, ' → ', ' → '),
+          ...page.ftdRelations.map((item) => titled(item.label, item.body)),
+          ...page.symptoms.map((item) => titled(item.title, joined(item.steps, ' → ', ' → '))),
+          ...page.playbooks.map((item) => titled(item.title, joined(item.steps, ' → ', ' → '))),
+          ...page.owners.rows.map(row),
         ],
       },
       { title: page.closingTitle, paragraphs: [page.closingBody] },
