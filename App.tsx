@@ -86,6 +86,7 @@ type ThemePreference = Theme | 'auto';
 
 const PenneysGamePage = React.lazy(() => import('./components/PenneysGamePage'));
 const MiyaPrivacyPage = React.lazy(() => import('./components/MiyaPrivacyPage'));
+const IGamingPage = React.lazy(() => import('./components/IGamingPage'));
 const HomePenneyGame = React.lazy(() => import('./components/HomePenneyGame'));
 
 type BeforeInstallPromptEvent = Event & {
@@ -10229,6 +10230,7 @@ const App: React.FC = () => {
   const penneyHref = joinBasePath(baseUrl, 'penneys-game');
   const projectHomeHref = joinBasePath(baseUrl, 'project');
   const miyaHref = joinBasePath(baseUrl, 'project/miya');
+  const igamingHref = joinBasePath(baseUrl, 'igaming');
   const cellularAutomataLabHref = joinBasePath(baseUrl, 'cellular-automata-lab');
   const homeSystemFiles: Array<{
     title: string;
@@ -10339,6 +10341,7 @@ const App: React.FC = () => {
   const isCellularAutomataLabFullPage = pathWithoutBase === '/cellular-automata-lab';
   const isProjectHomePage = pathWithoutBase === '/project';
   const isMiyaPrivacyPage = pathWithoutBase === '/project/miya';
+  const isIGamingPage = pathWithoutBase === '/igaming';
   const isIconPromptsPage = pathWithoutBase === '/icon-prompts';
   const archivedWorkSlug = pathWithoutBase.startsWith('/archive/')
     ? pathWithoutBase.replace('/archive/', '')
@@ -10640,6 +10643,32 @@ const App: React.FC = () => {
     );
   }
 
+  if (isIGamingPage) {
+    return (
+      <React.Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
+        <IGamingPage
+          language={language}
+          homeHref={homeHref}
+          proofHrefs={{
+            'etreporthub-sales': joinBasePath(baseUrl, 'etreporthub-sales'),
+            'bonus-key': joinBasePath(baseUrl, 'archive/11-bonus-key-combo-builder'),
+            'penneys-game': penneyHref,
+            atlantis: joinBasePath(baseUrl, 'archive/atlantis-ui-ux-prototype'),
+          }}
+          controls={
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
+          }
+        />
+      </React.Suspense>
+    );
+  }
+
   if (isMiyaPrivacyPage) {
     return (
       <React.Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
@@ -10713,7 +10742,7 @@ const App: React.FC = () => {
         </section>
 
         <React.Suspense fallback={<section className="min-h-64" aria-busy="true" />}>
-          <HomePenneyGame isZh={isZh} />
+          <HomePenneyGame isZh={isZh} igamingHref={igamingHref} />
         </React.Suspense>
 
         <section className="eden-about eden-home-island" id="about">

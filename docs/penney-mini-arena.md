@@ -12,6 +12,8 @@ leaderboard. The people who notice the pattern have discovered it from evidence.
 - Credits refill at `00:00 Asia/Kuala_Lumpur`; lifetime plays and wins remain.
 - A visitor must finish 10 rounds before appearing on the public leaderboard.
 - The board ranks by win rate, then wins, then total plays.
+- Once a visitor has 10 lifetime plays, the slot shows a link to `/igaming?from=coin-slot`
+  (the operator-services page). It is a client-side display rule only; `/igaming` itself is public.
 - A shared NAT means a household or office intentionally shares one quota and one record.
 
 ## Trust boundary

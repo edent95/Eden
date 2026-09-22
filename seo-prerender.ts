@@ -29,7 +29,7 @@ export type StaticRouteContent = {
 const CLUSTERS: Array<{ prefix?: string; paths: string[] }> = [
   {
     paths: [
-      '/', '/project', '/jiju-pet', '/jiju-revamp', '/etreporthub', '/etreporthub-sales',
+      '/', '/project', '/jiju-pet', '/jiju-revamp', '/etreporthub', '/etreporthub-sales', '/igaming',
       '/poker', '/film-gallery', '/life-os', '/brand-guide',
       '/archive/11-bonus-key-combo-builder', '/archive/atlantis-ui-ux-prototype',
       '/archive/soccerking-project',

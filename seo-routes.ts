@@ -26,7 +26,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-09-18';
+export const SITE_CONTENT_LASTMOD = '2026-09-22';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -209,6 +209,20 @@ export const ROUTE_SEO: RouteSeo[] = [
     desc: {
       en: 'Why iGaming operators and aggregators should buy ETReportHub: daily report clarity, Excel risk reduction, CRM-ready exports, and an RM4,890 launch package.',
       zh: '为什么 iGaming operator 和 aggregator 应该购买 ETReportHub：日报清晰度、降低 Excel 风险、CRM-ready 导出，以及 RM4,890 上线套餐。',
+    },
+  },
+  {
+    path: '/igaming',
+    datePublished: '2026-09-22',
+    dateModified: '2026-09-22',
+    priority: '0.7',
+    title: {
+      en: 'iGaming Operator Systems | Eden Tan',
+      zh: 'iGaming 运营系统 | Eden Tan',
+    },
+    desc: {
+      en: 'Systems for iGaming operators and aggregators: daily reporting and CRM data, campaign and bonus tooling, server-trusted mini games, and campaign pages.',
+      zh: 'Eden Tan 给 iGaming operator 与 aggregator 做系统：日报数据与 CRM、活动与奖金工具、由服务端把关的小游戏，以及活动页。',
     },
   },
   {

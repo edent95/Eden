@@ -1,5 +1,6 @@
 import type { SeoLanguage } from './seo-routes.ts';
 import { MIYA_PRIVACY, miyaPlainText, type MiyaBlock } from './components/miya-privacy-content.ts';
+import { IGAMING_CONTACT_EMAIL, IGAMING_PAGE } from './components/igaming-content.ts';
 
 type Localized = Record<SeoLanguage, string>;
 
@@ -78,16 +79,47 @@ function miyaStaticCopy(): StaticRouteCopy {
   };
 }
 
+/** Static body for /igaming, generated from the same copy the React page renders. */
+function igamingStaticCopy(): StaticRouteCopy {
+  const page = IGAMING_PAGE;
+  const titled = (title: Localized, body: Localized): Localized => ({
+    en: `${title.en}: ${body.en}`,
+    zh: `${title.zh}：${body.zh}`,
+  });
+  return {
+    eyebrow: page.kicker,
+    thesis: page.claim,
+    sections: [
+      { title: page.kicker, paragraphs: [page.standfirst] },
+      { title: page.leaksTitle, paragraphs: page.leaks.map((leak) => titled(leak.title, leak.body)) },
+      {
+        title: page.servicesTitle,
+        paragraphs: page.services.map((service) => ({
+          en: `${service.title.en}: ${service.body.en} Proof: ${service.proof.en}.`,
+          zh: `${service.title.zh}：${service.body.zh} 案例：${service.proof.zh}。`,
+        })),
+      },
+      { title: page.processTitle, paragraphs: page.process.map((item) => titled(item.title, item.body)) },
+      {
+        title: page.contactTitle,
+        paragraphs: [page.contactBody, L(`Email: ${IGAMING_CONTACT_EMAIL}`, `邮件：${IGAMING_CONTACT_EMAIL}`)],
+      },
+    ],
+  };
+}
+
 /**
  * Hand-written static body copy for routes whose substance lives in React data
  * rather than in `wiki/`. Every fact here mirrors what the live page renders
  * (product modules, numbers, section order); keep the two in step when a page changes.
  * Wiki and Notes routes do not appear here: their body comes from `generated/content.ts`.
- * `/project/miya` is the exception: it is generated from `components/miya-privacy-content.ts`,
- * the same copy the React page renders, so the policy text cannot drift.
+ * `/project/miya` and `/igaming` are the exceptions: they are generated from
+ * `components/miya-privacy-content.ts` / `components/igaming-content.ts`, the same copy
+ * the React pages render, so the static text cannot drift.
  */
 export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
   '/project/miya': miyaStaticCopy(),
+  '/igaming': igamingStaticCopy(),
 
   '/': {
     eyebrow: L('Eden Tan', 'Eden Tan'),
