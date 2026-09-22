@@ -125,6 +125,12 @@
   outline-offset: 3px;
 }
 
+/* Section banners (art lives in styles/css-art/engraved-line.css) */
+
+.igaming-banner {
+  margin-bottom: clamp(1.4rem, 4vw, 2rem);
+}
+
 /* Sections */
 
 .igaming-section {

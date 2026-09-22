@@ -224,6 +224,249 @@
   transform: translateY(-4cqi);
 }
 
+/* =============================================================
+   iGaming section banners (/igaming, 2026-09-22)
+   16:5 plates. The subject sits on the golden point (--fx, --fy);
+   rays, guilloché and construction lines all centre on it.
+   One maths motif each: 37-fold wheel, φ-scaled chips,
+   lemniscate loop, Fibonacci ledger.
+   ============================================================= */
+.engraved-igaming {
+  --fx: 61.8%;
+  --fy: 50%;
+  --en-foil: color-mix(in srgb, #c9a44c 72%, var(--en-line));
+  aspect-ratio: 16 / 5;
+}
+:root[data-theme="dark"] .engraved-igaming { --en-foil: #f2cf7a; }
+
+.engraved-ig-rays {
+  left: calc(var(--fx) - 62cqi); top: calc(var(--fy) - 62cqi); width: 124cqi; height: 124cqi;
+  border-radius: 50%;
+  background: repeating-conic-gradient(var(--en-ink-3) 0 0.35deg, transparent 0.35deg 3.2deg);
+  -webkit-mask: radial-gradient(closest-side, transparent 16%, black 26%, transparent 72%);
+  mask: radial-gradient(closest-side, transparent 16%, black 26%, transparent 72%);
+  opacity: 0.8;
+  animation: engraved-spin-back 240s linear infinite;
+}
+.engraved-ig-guilloche {
+  left: calc(var(--fx) - 22cqi); top: calc(var(--fy) - 22cqi); width: 44cqi; height: 44cqi;
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(circle at 50% 44%, transparent 0 1cqi, var(--en-ink-3) 1cqi 1.2cqi),
+    repeating-radial-gradient(circle at 44% 53%, transparent 0 1cqi, var(--en-ink-3) 1cqi 1.2cqi),
+    repeating-radial-gradient(circle at 56% 53%, transparent 0 1cqi, var(--en-ink-3) 1cqi 1.2cqi);
+  -webkit-mask: radial-gradient(closest-side, transparent 52%, black 60%, black 80%, transparent 100%);
+  mask: radial-gradient(closest-side, transparent 52%, black 60%, black 80%, transparent 100%);
+  animation: engraved-spin 120s linear infinite;
+}
+.engraved-ig-golden {
+  inset: 2.6cqi 3.4cqi;
+  --t: 0.07cqi;
+  background:
+    linear-gradient(90deg, transparent calc(38.2% - var(--t)), var(--en-ink-3) 0 calc(38.2% + var(--t)), transparent 0),
+    linear-gradient(90deg, transparent calc(61.8% - var(--t)), var(--en-ink-3) 0 calc(61.8% + var(--t)), transparent 0),
+    linear-gradient(0deg, transparent calc(38.2% - var(--t)), var(--en-ink-3) 0 calc(38.2% + var(--t)), transparent 0),
+    linear-gradient(0deg, transparent calc(61.8% - var(--t)), var(--en-ink-3) 0 calc(61.8% + var(--t)), transparent 0);
+}
+/* Left-hand plate: a hatched guilloché strip so the empty side still reads as a banknote */
+.engraved-ig-strip {
+  left: 5cqi; top: 4.2cqi; bottom: 4.2cqi; width: 24cqi;
+  border-radius: 1cqi;
+  background:
+    radial-gradient(circle, transparent 1.3cqi, var(--en-ink-2) 1.3cqi 1.45cqi, transparent 1.45cqi 1.8cqi, var(--en-ink-3) 1.8cqi 1.92cqi, transparent 1.92cqi) 0 0 / 3cqi 3cqi,
+    radial-gradient(circle, transparent 1.3cqi, var(--en-ink-2) 1.3cqi 1.45cqi, transparent 1.45cqi) 1.5cqi 1.5cqi / 3cqi 3cqi,
+    var(--en-paper);
+  box-shadow: inset 0 0 0 0.2cqi var(--en-ink-2), inset 0 0 0 0.9cqi var(--en-paper), inset 0 0 0 1.05cqi var(--en-ink-3);
+  -webkit-mask: linear-gradient(90deg, black 60%, transparent);
+  mask: linear-gradient(90deg, black 60%, transparent);
+}
+.engraved-ig-ring {
+  border-radius: 50%;
+  background: repeating-conic-gradient(var(--en-ink-2) 0 0.7deg, transparent 0.7deg 6deg);
+  -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 1.1cqi), black calc(100% - 1.1cqi));
+  mask: radial-gradient(closest-side, transparent calc(100% - 1.1cqi), black calc(100% - 1.1cqi));
+  box-shadow: inset 0 0 0 0.12cqi var(--en-ink-2);
+}
+.engraved-ig-ring.r1 { left: calc(var(--fx) - 14.6cqi); top: calc(var(--fy) - 14.6cqi); width: 29.2cqi; height: 29.2cqi; animation: engraved-spin 150s linear infinite; }
+
+/* ---- 01 · The table: roulette wheel, 37 pockets (one foil zero + 18 pairs) ---- */
+.engraved-ig-wheel,
+.engraved-ig-wheel-bowl,
+.engraved-ig-wheel-hub,
+.engraved-ig-wheel-orbit { border-radius: 50%; }
+.engraved-ig-wheel {
+  left: calc(var(--fx) - 12cqi); top: calc(var(--fy) - 12cqi); width: 24cqi; height: 24cqi;
+  background:
+    conic-gradient(var(--en-foil) 0 9.73deg, transparent 0),
+    repeating-conic-gradient(from 9.73deg, var(--en-line) 0 9.73deg, transparent 9.73deg 19.46deg),
+    repeating-linear-gradient(45deg, var(--en-ink-3) 0 var(--en-w), transparent var(--en-w) 0.6cqi),
+    var(--en-paper);
+  -webkit-mask: radial-gradient(closest-side, transparent 64%, black 64.5%);
+  mask: radial-gradient(closest-side, transparent 64%, black 64.5%);
+  box-shadow: inset 0 0 0 0.35cqi var(--en-line), inset 0 0 0 1.1cqi var(--en-paper), inset 0 0 0 1.25cqi var(--en-line);
+  animation: engraved-spin 60s linear infinite;
+}
+.engraved-ig-wheel-bowl {
+  left: calc(var(--fx) - 7.8cqi); top: calc(var(--fy) - 7.8cqi); width: 15.6cqi; height: 15.6cqi;
+  background:
+    repeating-radial-gradient(circle, var(--en-ink-2) 0 var(--en-w), transparent var(--en-w) 0.7cqi),
+    var(--en-paper);
+  box-shadow: inset 0 0 0 0.3cqi var(--en-line), 0 0 0 0.5cqi var(--en-paper), 0 0 0 0.65cqi var(--en-ink-2);
+}
+.engraved-ig-wheel-hub {
+  left: calc(var(--fx) - 2.6cqi); top: calc(var(--fy) - 2.6cqi); width: 5.2cqi; height: 5.2cqi;
+  background:
+    repeating-conic-gradient(var(--en-line) 0 45deg, transparent 45deg 90deg),
+    var(--en-paper);
+  box-shadow: inset 0 0 0 0.3cqi var(--en-line), 0 0 0 0.45cqi var(--en-paper), 0 0 0 0.6cqi var(--en-foil);
+  animation: engraved-spin-back 30s linear infinite;
+}
+.engraved-ig-wheel-orbit {
+  left: calc(var(--fx) - 9.8cqi); top: calc(var(--fy) - 9.8cqi); width: 19.6cqi; height: 19.6cqi;
+  animation: engraved-spin-back 11s linear infinite;
+}
+.engraved-ig-wheel-orbit::after {
+  content: ""; position: absolute; left: calc(50% - 0.9cqi); top: -0.9cqi; width: 1.8cqi; height: 1.8cqi;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--en-paper) 0 22%, var(--en-foil) 26%);
+  box-shadow: 0 0 0 0.2cqi var(--en-line);
+}
+
+/* ---- 02 · Promotions: a chip with edge inserts; satellite chips shrink by φ ---- */
+.engraved-ig-chip {
+  --size: 22cqi;
+  left: calc(var(--cx, var(--fx)) - var(--size) / 2); top: calc(var(--cy, var(--fy)) - var(--size) / 2);
+  width: var(--size); height: var(--size);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, transparent 60%, var(--en-line) 60% 61.5%, transparent 61.5% 66%, var(--en-ink-2) 66% 67%, transparent 67%),
+    radial-gradient(circle, var(--en-paper) 0 58%, transparent 58%),
+    repeating-conic-gradient(var(--en-line) 0 11.25deg, var(--en-paper) 11.25deg 22.5deg),
+    var(--en-paper);
+  box-shadow: inset 0 0 0 calc(var(--size) * 0.02) var(--en-line), 0 0 0 calc(var(--size) * 0.03) var(--en-paper), 0 0 0 calc(var(--size) * 0.04) var(--en-ink-2);
+}
+.engraved-ig-chip.main { animation: engraved-spin 90s linear infinite; }
+.engraved-ig-chip.main::before {
+  content: ""; position: absolute; inset: 24%;
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(circle at 50% 44%, transparent 0 0.7cqi, var(--en-ink-2) 0.7cqi 0.85cqi),
+    repeating-radial-gradient(circle at 44% 53%, transparent 0 0.7cqi, var(--en-ink-2) 0.7cqi 0.85cqi),
+    repeating-radial-gradient(circle at 56% 53%, transparent 0 0.7cqi, var(--en-ink-2) 0.7cqi 0.85cqi);
+}
+.engraved-ig-chip.main::after {
+  content: ""; position: absolute; inset: 40%;
+  background: var(--en-foil);
+  clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+}
+.engraved-ig-chip.s1 { --size: 13.6cqi; --cx: 39%; --cy: 44%; animation: engraved-ig-bob 6s ease-in-out infinite; }
+.engraved-ig-chip.s2 { --size: 8.4cqi; --cx: 85%; --cy: 30%; animation: engraved-ig-bob 6s ease-in-out -2s infinite; }
+.engraved-ig-chip.s3 { --size: 5.2cqi; --cx: 91%; --cy: 70%; animation: engraved-ig-bob 6s ease-in-out -4s infinite; }
+.engraved-ig-spark {
+  width: 2.6cqi; height: 2.6cqi;
+  background: var(--en-foil);
+  clip-path: polygon(50% 0, 58% 42%, 100% 50%, 58% 58%, 50% 100%, 42% 58%, 0 50%, 42% 42%);
+  animation: engraved-ig-twinkle 4.8s ease-in-out infinite;
+}
+.engraved-ig-spark.k1 { left: 47%; top: 14%; }
+.engraved-ig-spark.k2 { left: 79%; top: 62%; animation-delay: 1.6s; }
+.engraved-ig-spark.k3 { left: 30%; top: 70%; animation-delay: 3.2s; }
+
+/* ---- 03 · Workflow: a lemniscate — two loops that meet at the golden point ---- */
+.engraved-ig-loop {
+  top: calc(var(--fy) - 9cqi); width: 18cqi; height: 18cqi;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(var(--en-line) 0 1.2deg, transparent 1.2deg 6deg),
+    repeating-radial-gradient(circle, var(--en-ink-2) 0 var(--en-w), transparent var(--en-w) 0.45cqi);
+  -webkit-mask: radial-gradient(closest-side, transparent 78%, black 79% 92%, transparent 93%);
+  mask: radial-gradient(closest-side, transparent 78%, black 79% 92%, transparent 93%);
+  box-shadow: inset 0 0 0 0.12cqi var(--en-ink-2);
+}
+.engraved-ig-loop.left { left: calc(var(--fx) - 17.4cqi); animation: engraved-spin 60s linear infinite; }
+.engraved-ig-loop.right { left: calc(var(--fx) - 0.6cqi); animation: engraved-spin-back 60s linear infinite; }
+.engraved-ig-loop-rule {
+  top: calc(var(--fy) - 10.2cqi); width: 20.4cqi; height: 20.4cqi;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 0.22cqi var(--en-line), 0 0 0 0.9cqi transparent;
+}
+.engraved-ig-loop-rule.left { left: calc(var(--fx) - 18.6cqi); }
+.engraved-ig-loop-rule.right { left: calc(var(--fx) - 1.8cqi); }
+.engraved-ig-loop-inner {
+  top: calc(var(--fy) - 6.6cqi); width: 13.2cqi; height: 13.2cqi;
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle, var(--en-ink-3) 0 var(--en-w), transparent var(--en-w) 0.8cqi);
+  box-shadow: inset 0 0 0 0.2cqi var(--en-ink-2);
+}
+.engraved-ig-loop-inner.left { left: calc(var(--fx) - 15cqi); }
+.engraved-ig-loop-inner.right { left: calc(var(--fx) + 1.8cqi); }
+.engraved-ig-runner {
+  top: calc(var(--fy) - 8.1cqi); width: 16.2cqi; height: 16.2cqi;
+  border-radius: 50%;
+}
+.engraved-ig-runner.left { left: calc(var(--fx) - 16.5cqi); animation: engraved-spin 9s linear infinite; }
+.engraved-ig-runner.right { left: calc(var(--fx) + 0.3cqi); animation: engraved-spin-back 9s linear infinite; }
+.engraved-ig-runner::after {
+  content: ""; position: absolute; left: calc(50% - 1cqi); top: -1cqi; width: 2cqi; height: 2cqi;
+  background: var(--en-foil);
+  transform: rotate(45deg);
+  box-shadow: 0 0 0 0.2cqi var(--en-paper), 0 0 0 0.35cqi var(--en-line);
+}
+.engraved-ig-knot {
+  left: calc(var(--fx) - 2cqi); top: calc(var(--fy) - 2cqi); width: 4cqi; height: 4cqi;
+  background: var(--en-paper);
+  transform: rotate(45deg);
+  box-shadow: inset 0 0 0 0.35cqi var(--en-line), inset 0 0 0 1cqi var(--en-paper), inset 0 0 0 2cqi var(--en-foil);
+}
+
+/* ---- 04 · Reporting: Fibonacci bars (3·5·8·13·21) inside a golden rectangle ---- */
+.engraved-ig-ledger {
+  left: calc(var(--fx) - 16.2cqi); top: calc(var(--fy) - 10cqi); width: 32.4cqi; height: 20cqi;
+  background:
+    linear-gradient(90deg, transparent calc(61.8% - 0.08cqi), var(--en-ink-3) 0 calc(61.8% + 0.08cqi), transparent 0),
+    radial-gradient(circle 20cqi at 100% 100%, transparent 19.8cqi, var(--en-ink-2) 19.8cqi 20cqi, transparent 20cqi) 0 0 / 61.8% 100% no-repeat,
+    radial-gradient(circle 12.36cqi at 0 100%, transparent 12.18cqi, var(--en-ink-2) 12.18cqi 12.36cqi, transparent 12.36cqi) 100% 0 / 38.2% 61.8% no-repeat,
+    repeating-linear-gradient(0deg, var(--en-ink-3) 0 var(--en-w), transparent var(--en-w) 2cqi),
+    var(--en-paper);
+  box-shadow: inset 0 0 0 0.25cqi var(--en-line), 0 0 0 0.8cqi var(--en-paper), 0 0 0 0.95cqi var(--en-ink-2);
+}
+.engraved-ig-bar {
+  bottom: calc(50% - 8.4cqi); width: 3.6cqi;
+  box-shadow: inset 0 0 0 0.22cqi var(--en-line);
+  transform-origin: 50% 100%;
+  animation: engraved-ig-rise 7s ease-in-out infinite;
+}
+.engraved-ig-bar.b1 { left: calc(var(--fx) - 12.6cqi); height: 2.1cqi; background: var(--en-paper); }
+.engraved-ig-bar.b2 { left: calc(var(--fx) - 7.2cqi); height: 3.5cqi; background: repeating-linear-gradient(45deg, var(--en-line) 0 var(--en-w), transparent var(--en-w) 1cqi), var(--en-paper); animation-delay: -1.4s; }
+.engraved-ig-bar.b3 { left: calc(var(--fx) - 1.8cqi); height: 5.6cqi; background: repeating-linear-gradient(45deg, var(--en-line) 0 var(--en-w), transparent var(--en-w) 0.7cqi), var(--en-paper); animation-delay: -2.8s; }
+.engraved-ig-bar.b4 { left: calc(var(--fx) + 3.6cqi); height: 9.1cqi; background: repeating-linear-gradient(45deg, var(--en-line) 0 var(--en-w), transparent var(--en-w) 0.7cqi), repeating-linear-gradient(-45deg, var(--en-line) 0 var(--en-w), transparent var(--en-w) 0.7cqi), var(--en-paper); animation-delay: -4.2s; }
+.engraved-ig-bar.b5 { left: calc(var(--fx) + 9cqi); height: 14.7cqi; background: repeating-linear-gradient(45deg, var(--en-line) 0 0.26cqi, transparent 0.26cqi 0.6cqi), repeating-linear-gradient(-45deg, var(--en-line) 0 0.26cqi, transparent 0.26cqi 0.6cqi), var(--en-paper); animation-delay: -5.6s; }
+.engraved-ig-trend {
+  left: calc(var(--fx) - 12.6cqi); top: calc(var(--fy) - 8.2cqi); width: 25.2cqi; height: 16.6cqi;
+  background: var(--en-foil);
+  clip-path: polygon(3% 94%, 25% 85%, 46% 72%, 68% 50%, 90% 12%, 97% 3%, 97% 8%, 90% 16%, 68% 54%, 46% 76%, 25% 89%, 3% 98%);
+}
+.engraved-ig-baseline {
+  left: calc(var(--fx) - 14cqi); width: 28cqi; top: calc(50% + 8.4cqi); height: 0.9cqi;
+  box-shadow: inset 0 0.22cqi 0 var(--en-line), inset 0 -0.15cqi 0 var(--en-ink-2);
+}
+
+@keyframes engraved-ig-bob { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-1.2cqi) rotate(20deg); } }
+@keyframes engraved-ig-twinkle {
+  0%, 100% { opacity: 0; transform: scale(0.3) rotate(0); }
+  20% { opacity: 1; transform: scale(1) rotate(45deg); }
+  40% { opacity: 0; transform: scale(0.3) rotate(90deg); }
+}
+@keyframes engraved-ig-rise { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.9); } }
+
+/* Phone width: drop the construction and ray layers, keep the subject */
+@container (max-width: 420px) {
+  .engraved-igaming .engraved-ig-rays,
+  .engraved-igaming .engraved-ig-golden,
+  .engraved-igaming .engraved-ig-strip,
+  .engraved-igaming .engraved-ig-spark { display: none; }
+}
+
 @keyframes engraved-spin { to { transform: rotate(360deg); } }
 @keyframes engraved-spin-back { to { transform: rotate(-360deg); } }
 @keyframes engraved-band { from { background-position: 0 50%, 1.7cqi 50%, 0 0; } to { background-position: 6.8cqi 50%, 8.5cqi 50%, 0 0; } }

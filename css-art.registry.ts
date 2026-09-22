@@ -14,6 +14,10 @@ import {
   HomeLifeMagicIcon,
   HomePowerUpTotem,
   HomeProjectsBlueprintIcon,
+  IGamingChipsBanner,
+  IGamingLedgerBanner,
+  IGamingLoopBanner,
+  IGamingTableBanner,
   MathFractalRuneCssIcon,
   MathIntegralSpellCssIcon,
   MathMatrixPortalCssIcon,
@@ -55,7 +59,8 @@ export type CssArtCategory =
   | 'office-icon'
   | 'math-magic-icon'
   | 'elemental-icon'
-  | 'wiki-icon';
+  | 'wiki-icon'
+  | 'engraved-banner';
 export type CssArtBackground = 'framed' | 'transparent' | 'scene';
 export type CssArtRatio = '1:1' | 'banner' | 'transparent-totem';
 
@@ -906,6 +911,86 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
     copy: {
       en: 'A compact framed note-and-tag icon with simple object motion for the RAG flow page.',
       zh: '小型 framed note/tag CSS icon，用简单实体物件动效表达 RAG flow。',
+    },
+  },
+  {
+    id: 'igaming-table',
+    title: 'iGaming · The table',
+    category: 'engraved-banner',
+    sourceRoute: '/igaming',
+    ratio: 'banner',
+    background: 'scene',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/engraved-line.css',
+    Component: IGamingTableBanner,
+    label: {
+      en: 'Engraved roulette wheel banner',
+      zh: '凹版轮盘 banner',
+    },
+    copy: {
+      en: 'Starter-pack banner: a 37-pocket wheel (one foil zero, 18 pairs) on the golden point, ringed by φ ticks and guilloché.',
+      zh: '入门包 banner：37 格轮盘（一格金箔零位 + 18 对）落在黄金点上，外面是 φ 刻度环和扭索纹。',
+    },
+  },
+  {
+    id: 'igaming-chips',
+    title: 'iGaming · Promotions',
+    category: 'engraved-banner',
+    sourceRoute: '/igaming',
+    ratio: 'banner',
+    background: 'scene',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/engraved-line.css',
+    Component: IGamingChipsBanner,
+    label: {
+      en: 'Engraved casino chips banner',
+      zh: '凹版筹码 banner',
+    },
+    copy: {
+      en: 'Promotions banner: an edge-inserted chip with a guilloché face; satellite chips shrink by φ (22 → 13.6 → 8.4 → 5.2).',
+      zh: '促销 banner：带边缘刻齿与扭索纹面的筹码，周围小筹码按 φ 递减（22 → 13.6 → 8.4 → 5.2）。',
+    },
+  },
+  {
+    id: 'igaming-loop',
+    title: 'iGaming · Workflow',
+    category: 'engraved-banner',
+    sourceRoute: '/igaming',
+    ratio: 'banner',
+    background: 'scene',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/engraved-line.css',
+    Component: IGamingLoopBanner,
+    label: {
+      en: 'Engraved infinity loop banner',
+      zh: '凹版无限循环 banner',
+    },
+    copy: {
+      en: 'Workflow banner: a lemniscate of two hatched loops meeting at the golden point, with a foil runner on each loop.',
+      zh: '工作流程 banner：两个排线圆环在黄金点相交成双纽线，每个环上有一颗金箔标记在走。',
+    },
+  },
+  {
+    id: 'igaming-ledger',
+    title: 'iGaming · Reporting',
+    category: 'engraved-banner',
+    sourceRoute: '/igaming',
+    ratio: 'banner',
+    background: 'scene',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/engraved-line.css',
+    Component: IGamingLedgerBanner,
+    label: {
+      en: 'Engraved Fibonacci ledger banner',
+      zh: '凹版斐波那契账本 banner',
+    },
+    copy: {
+      en: 'Reporting banner: bars in Fibonacci proportion (3·5·8·13·21) inside a golden rectangle, hatching deepening with height, and a foil trend line.',
+      zh: '报表 banner：黄金矩形里按斐波那契比例（3·5·8·13·21）排列的柱子，越高排线越密，外加一条金箔趋势线。',
     },
   },
 ];

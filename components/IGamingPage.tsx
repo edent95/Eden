@@ -7,6 +7,7 @@ import {
   type IGamingCard,
   type IGamingLocalized,
 } from './igaming-content';
+import { IGamingEngravedBanner } from './css-art/index';
 
 type Lang = 'en' | 'zh';
 
@@ -70,6 +71,7 @@ const IGamingPage: React.FC<{
         </header>
 
         <section className="igaming-section" id="starter" aria-labelledby="igaming-starter">
+          <div className="igaming-banner"><IGamingEngravedBanner variant="table" label={t(page.bannerLabels.starter)} /></div>
           <h2 id="igaming-starter">{t(page.starterTitle)}</h2>
           <p className="igaming-lead">{t(page.starterLead)}</p>
 
@@ -101,6 +103,7 @@ const IGamingPage: React.FC<{
         </section>
 
         <section className="igaming-section" id="promotions" aria-labelledby="igaming-promotions">
+          <div className="igaming-banner"><IGamingEngravedBanner variant="chips" label={t(page.bannerLabels.promotions)} /></div>
           <h2 id="igaming-promotions">{t(page.promotionsTitle)}</h2>
           <p className="igaming-lead">{t(page.promotionsLead)}</p>
 
@@ -112,6 +115,7 @@ const IGamingPage: React.FC<{
         </section>
 
         <section className="igaming-section" id="workflow" aria-labelledby="igaming-workflow">
+          <div className="igaming-banner"><IGamingEngravedBanner variant="loop" label={t(page.bannerLabels.workflow)} /></div>
           <h2 id="igaming-workflow">{t(page.workflowTitle)}</h2>
           <p className="igaming-lead">{t(page.workflowLead)}</p>
 
@@ -135,6 +139,7 @@ const IGamingPage: React.FC<{
         </section>
 
         <section className="igaming-section" id="reporting" aria-labelledby="igaming-reporting">
+          <div className="igaming-banner"><IGamingEngravedBanner variant="ledger" label={t(page.bannerLabels.reporting)} /></div>
           <h2 id="igaming-reporting">{t(page.reportingTitle)}</h2>
           <p className="igaming-lead">{t(page.reportingLead)}</p>
 

@@ -776,3 +776,82 @@ export const EngravedBorder: React.FC<{ label: string; tone?: EngravedTone }> = 
     <span className="engraved-border-golden" />
   </div>
 );
+
+/* ---- iGaming section banners (/igaming, 2026-09-22) ---- */
+
+export type IGamingBannerVariant = 'table' | 'chips' | 'loop' | 'ledger';
+
+const IGAMING_BANNER_TONE: Record<IGamingBannerVariant, EngravedTone> = {
+  table: 'ink',
+  chips: 'bronze',
+  loop: 'teal',
+  ledger: 'indigo',
+};
+
+/**
+ * 16:5 engraved plate for one /igaming section. The subject sits on the golden
+ * point; each variant carries one maths motif (37-pocket wheel, φ-scaled chips,
+ * lemniscate loop, Fibonacci ledger). Tone comes from the engraved-line inks.
+ */
+export const IGamingEngravedBanner: React.FC<{ label: string; variant: IGamingBannerVariant }> = ({ label, variant }) => (
+  <div
+    className={`engraved-art engraved-igaming is-${variant} engraved-tone-${IGAMING_BANNER_TONE[variant]}`}
+    role="img"
+    aria-label={label}
+  >
+    <span className="engraved-ig-strip" />
+    <span className="engraved-ig-golden" />
+    <span className="engraved-ig-rays" />
+    <span className="engraved-ig-guilloche" />
+    {variant === 'table' ? (
+      <>
+        <span className="engraved-ig-ring r1" />
+        <span className="engraved-ig-wheel" />
+        <span className="engraved-ig-wheel-bowl" />
+        <span className="engraved-ig-wheel-orbit" />
+        <span className="engraved-ig-wheel-hub" />
+      </>
+    ) : null}
+    {variant === 'chips' ? (
+      <>
+        <span className="engraved-ig-chip s1" />
+        <span className="engraved-ig-chip s2" />
+        <span className="engraved-ig-chip s3" />
+        <span className="engraved-ig-chip main" />
+        <span className="engraved-ig-spark k1" />
+        <span className="engraved-ig-spark k2" />
+        <span className="engraved-ig-spark k3" />
+      </>
+    ) : null}
+    {variant === 'loop' ? (
+      <>
+        <span className="engraved-ig-loop-inner left" />
+        <span className="engraved-ig-loop-inner right" />
+        <span className="engraved-ig-loop left" />
+        <span className="engraved-ig-loop right" />
+        <span className="engraved-ig-loop-rule left" />
+        <span className="engraved-ig-loop-rule right" />
+        <span className="engraved-ig-runner left" />
+        <span className="engraved-ig-runner right" />
+        <span className="engraved-ig-knot" />
+      </>
+    ) : null}
+    {variant === 'ledger' ? (
+      <>
+        <span className="engraved-ig-ledger" />
+        <span className="engraved-ig-bar b1" />
+        <span className="engraved-ig-bar b2" />
+        <span className="engraved-ig-bar b3" />
+        <span className="engraved-ig-bar b4" />
+        <span className="engraved-ig-bar b5" />
+        <span className="engraved-ig-trend" />
+        <span className="engraved-ig-baseline" />
+      </>
+    ) : null}
+  </div>
+);
+
+export const IGamingTableBanner: CssArtComponent = ({ label }) => <IGamingEngravedBanner label={label} variant="table" />;
+export const IGamingChipsBanner: CssArtComponent = ({ label }) => <IGamingEngravedBanner label={label} variant="chips" />;
+export const IGamingLoopBanner: CssArtComponent = ({ label }) => <IGamingEngravedBanner label={label} variant="loop" />;
+export const IGamingLedgerBanner: CssArtComponent = ({ label }) => <IGamingEngravedBanner label={label} variant="ledger" />;

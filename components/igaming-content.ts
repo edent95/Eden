@@ -297,5 +297,11 @@ export const IGAMING_PAGE = {
     'Every game here has a house edge, so players as a group lose over time. That is exactly why the industry is worth understanding in the open. This page explains how the business runs, not how to win, and it is not an invitation to play. Gambling laws differ by country.',
     '这里每一种游戏都有庄家优势，所以玩家整体长期是输的。正因为这样，这个行业才值得被公开地理解。这一页讲的是生意怎么运作，不是怎么赢，也不是邀请你去玩。各国对博彩的法律不同。',
   ),
+  bannerLabels: {
+    starter: L('Engraved roulette wheel with 37 pockets on a banknote plate', '钞票版面上的 37 格凹版轮盘'),
+    promotions: L('Engraved casino chips shrinking in golden ratio', '按黄金比例递减的凹版筹码'),
+    workflow: L('Engraved infinity loop of two hatched rings', '两个排线圆环组成的凹版无限循环'),
+    reporting: L('Engraved bar chart in Fibonacci proportion inside a golden rectangle', '黄金矩形里按斐波那契比例排列的凹版柱状图'),
+  },
   back: L('Back to home', '返回首页'),
 };
