@@ -9972,8 +9972,6 @@ const ProjectHomePage: React.FC<{
 
         <nav className="project-home-dock" aria-label={isZh ? '快捷入口' : 'Quick links'}>
           <a href={homeHref} className="project-home-dock-link">{isZh ? '主页' : 'Home'}</a>
-          <a href={jijuHref} className="project-home-dock-link">{isZh ? '实验室' : 'Lab'}</a>
-          <a href={`${homeHref}#about`} className="project-home-dock-link">{isZh ? '关于' : 'About'}</a>
         </nav>
       </main>
     </div>

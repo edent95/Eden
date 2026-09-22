@@ -145,7 +145,12 @@
   -webkit-backdrop-filter: blur(18px) saturate(1.12);
 }
 
-.page-shell :is(.header-theme-toggle, .header-language-toggle) {
+/* The Theme/Language controls are a borderless shell around their own pills: the
+   selected option is the visible chip. Applies to every page, not only `.page-shell`,
+   otherwise the Tailwind `bg-white` on the shell shows through on route pages that
+   use their own wrapper class (e.g. `.igaming-page`). */
+:is(.header-theme-toggle, .header-language-toggle),
+:root[data-theme="dark"] :is(.header-theme-toggle, .header-language-toggle) {
   border: 0 !important;
   outline: 0 !important;
   background: transparent !important;

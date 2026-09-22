@@ -32,9 +32,10 @@
   --ep-paper: #050505;
   --ep-soft: #161617;
   --ep-primary: #f28c38;
-  --ep-primary-hover: #f18498;
+  /* Hover/outline follow the orange primary; the old pink pair clashed with it. */
+  --ep-primary-hover: #e07c2c;
   --ep-primary-text: #220d12;
-  --ep-primary-outline: #ff9aaa;
+  --ep-primary-outline: #ffab66;
   --ep-warn: #e0b070;
   --ep-shadow: 0 30px 90px rgb(0 0 0 / 0.55);
 }
