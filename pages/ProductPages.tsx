@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductStorePage from '../components/ProductStorePage';
+import ProductStorePage, { type EpTutorial } from '../components/ProductStorePage';
 import { ProjectsDrRacingCssIcon, ProjectsEtReportCssIcon, ProjectsJijuCssIcon, ProjectsLifeOsCssIcon, ProjectsPokerCssIcon } from '../components/css-art/index';
 import { HeaderControls, type Language, type Theme, type ThemePreference } from '../app/shared';
 import { productSiblingCards } from '../app/product-siblings';
@@ -275,6 +275,88 @@ const etReportHubSalesFaq = [
   },
 ] as const;
 
+const etReportHubHandbookBase = 'https://edent95.github.io/daily-report-dashboard/handbook';
+
+const etReportHubTutorial: EpTutorial = {
+  title: { en: 'Video tutorial', zh: '视频教程' },
+  intro: {
+    en: 'Four short lessons take a new operator from signing in and the daily upload to reading reports, exporting lists, and analysing channels. Each lesson lists its key steps underneath, so you can follow along while you watch.',
+    zh: '4 段短视频，从登录、每天上传数据，到看报表、导出名单和分析渠道。每段视频下面列出操作要点，方便边看边做。',
+  },
+  meta: [
+    { en: '4 lessons', zh: '共 4 课' },
+    { en: 'About 8 minutes', zh: '约 8 分钟' },
+    { en: 'Chinese UI · Chinese subtitles', zh: '中文界面 · 中文字幕' },
+    { en: 'Demo data only', zh: '视频中为演示数据' },
+  ],
+  lessons: [
+    {
+      id: 'lesson-1',
+      title: { en: 'Signing in and finding your way around', zh: '登录与界面导航' },
+      duration: '1:42',
+      src: `${etReportHubHandbookBase}/videos/lesson-1.mp4`,
+      poster: `${etReportHubHandbookBase}/posters/lesson-1.jpg`,
+      points: [
+        { en: 'Open the system URL and sign in with the email and password your administrator gave you.', zh: '打开系统网址，输入管理员给你的邮箱和密码登录。' },
+        { en: 'You land on Performance by default; click any item in the left menu to switch pages.', zh: '登录后默认进入「业绩报表」，左侧菜单点一下即可切换页面。' },
+        { en: 'Pick a brand under “Current brand” at the bottom left, and every report follows it.', zh: '左下角「当前品牌」选择要查看的品牌，所有报表随之切换。' },
+        { en: 'Use 中 / EN to switch language and the moon button for dark mode.', zh: '「中 / EN」切换语言，月亮按钮切换深色模式。' },
+        { en: 'Sign out when you are done.', zh: '用完点「退出登录」。' },
+      ],
+      tip: { en: 'Everyone uses their own account—never share a password. Ask your administrator to reset a forgotten one.', zh: '每个人请使用自己的账号，不要共用密码。忘记密码请联系管理员重置。' },
+    },
+    {
+      id: 'lesson-2',
+      title: { en: 'The daily data upload', zh: '每日上传数据' },
+      duration: '1:34',
+      src: `${etReportHubHandbookBase}/videos/lesson-2.mp4`,
+      poster: `${etReportHubHandbookBase}/posters/lesson-2.jpg`,
+      points: [
+        { en: 'Open Data Import and confirm the right brand is selected.', zh: '打开「数据导入」，确认品牌选对了。' },
+        { en: 'Click the dashed box (or drag in) the day’s Transaction and Customer Excel exports together; the system recognises each file.', zh: '点击虚线框（或直接拖入），一次选中当天从 BO 导出的 Transaction 和 Customer 两个 Excel，系统会自动识别。' },
+        { en: 'Click “Process and save” and wait for it to finish.', zh: '点「处理并保存」，等待完成。' },
+        { en: 'Check afterwards: Import Diagnostics should show 0 unmatched transactions, and Import History should list the two new files.', zh: '完成后检查：「导入诊断」中未匹配交易应为 0 行，「导入历史」里出现刚才的两条记录。' },
+      ],
+      tip: { en: 'Don’t click twice while it is processing; uploading the same file again never double-counts. With several brands, switch brand and repeat.', zh: '处理中不要重复点击；同一个文件重复上传不会重复计算。有多个品牌时，切换品牌后重复以上步骤。' },
+    },
+    {
+      id: 'lesson-3',
+      title: { en: 'Reading and exporting reports', zh: '报表查看与导出' },
+      duration: '2:17',
+      src: `${etReportHubHandbookBase}/videos/lesson-3.mp4`,
+      poster: `${etReportHubHandbookBase}/posters/lesson-3.jpg`,
+      points: [
+        { en: 'Daily: pick a date to see total deposits, withdrawals, and active members; the red / green tags show the change from the day before.', zh: '每日：选择日期查看当天总存款、提款、活跃会员；数字旁的红 / 绿标签是与前一天相比的涨跌。' },
+        { en: 'Transaction details can be searched by name, phone number, or Transaction ID.', zh: '「交易明细」可按名字、手机号或 Transaction ID 搜索。' },
+        { en: 'Weekly: step with Previous / Next week to see each day’s movement and detail.', zh: '每周：用「上一周 / 下一周」切换，查看每天的走势和明细。' },
+        { en: 'All: jump to Today, Yesterday, Last 7 / 30 days, This week, or a month to see member rankings and monthly detail.', zh: '全部：用今日 / 昨日 / 最近 7 天 / 最近 30 天 / 本周 / 月份快速选时间段，查看会员排名和月度明细。' },
+        { en: 'Compare mode: set a base date on the left and a comparison date on the right to see the difference on every metric.', zh: '对比模式：左边选基准日期，右边选对比日期，直接看到每个指标的差异。' },
+      ],
+      tip: { en: 'Any “Export table” or “Export CSV” button downloads a file you can open in Excel.', zh: '看到「导出表格」或「导出 CSV」按钮，点一下即可下载，用 Excel 打开。' },
+    },
+    {
+      id: 'lesson-4',
+      title: { en: 'Members · channels · trends · brand comparison', zh: '会员 · 渠道 · 趋势 · 品牌对比' },
+      duration: '2:58',
+      src: `${etReportHubHandbookBase}/videos/lesson-4.mp4`,
+      poster: `${etReportHubHandbookBase}/posters/lesson-4.jpg`,
+      points: [
+        { en: 'Member analysis: lifetime value, activity, conversion, and retention, filterable by registration date.', zh: '会员分析：查看累计价值、活跃度、转化与留存；可按注册日期筛选。' },
+        { en: 'Filter the member list to “Not converted” or “High risk”, then “Export filtered members” for the support team; click a member for details.', zh: '会员列表筛选「未转化会员」或「高风险」，点「导出筛选会员」交给客服跟进；单击某个会员可查看详情。' },
+        { en: 'Segment analysis: compare groups by risk level and other dimensions.', zh: '分群分析：按风险等级等维度分组比较。' },
+        { en: 'Channel analysis: compare members and deposits per channel; assign “Unrecognised referrers” to a channel straight from the dropdown.', zh: '渠道分析：比较各推广渠道的会员与存款；「未识别推荐人」可直接在下拉框归入渠道。' },
+        { en: 'Trend analysis: long-run movement by day, week, or month.', zh: '趋势分析：按天 / 周 / 月查看长期走势。' },
+        { en: 'Brand comparison: choose two brands and the metrics to compare, then read the timeline and the gap table.', zh: '品牌对比：选两个品牌和要比较的指标，查看时间线和差距表。' },
+      ],
+      tip: { en: 'Exported member lists contain names and phone numbers—keep them safe and never pass them outside the team.', zh: '导出的会员名单包含名字和手机号，请妥善保管，不要外传。' },
+    },
+  ],
+  foot: {
+    en: 'Brands, members, and amounts in the videos are demo data. Want to try it first? The demo above uses fictional data, so click freely.',
+    zh: '视频中的品牌、会员和金额均为演示数据。想先动手试试？上面的在线演示使用虚构数据，可以随意点击。',
+  },
+};
+
 export const ETReportHubFullPage: React.FC<{
   homeHref: string;
   projectsHref: string;
@@ -304,6 +386,7 @@ export const ETReportHubFullPage: React.FC<{
       secondary={{ href: salesHref, label: { en: 'Launch offer', zh: '上线方案' } }}
       quickLinks={[
         { href: '#overview', label: { en: 'Overview', zh: '产品简介' } },
+        { href: '#tutorial', label: { en: 'Tutorial', zh: '视频教程' } },
         { href: '#faq', label: { en: 'FAQ', zh: '常见问题' } },
         { href: '#information', label: { en: 'Information', zh: '产品资料' } },
       ]}
@@ -330,6 +413,7 @@ export const ETReportHubFullPage: React.FC<{
         { kind: 'p', text: { en: 'The familiar handoff stays. Management can still receive the Excel they expect, while the operations team gets a clearer dashboard for the daily review. Nobody has to be retrained into a new ritual.', zh: '熟悉的交付方式保留下来。管理层仍然可以收到他们习惯的 Excel，运营团队同时拥有更清楚的 Dashboard。没有人需要被重新训练成另一套仪式。' } },
         { kind: 'callout', tone: 'warning', label: { en: 'Data boundary', zh: '数据边界' }, text: { en: 'ETReportHub uses local SQLite and is designed for private deployment. Operational data does not need to enter a public cloud just to become visible in a dashboard. Access, audit, and exports remain inside the team’s own operating boundary.', zh: 'ETReportHub 使用本地 SQLite 保存整理后的数据，并为私有部署设计。原始运营资料不需要为了看 Dashboard 而进入公共云端。权限、审计与导出仍然属于团队自己的工作边界。' } },
       ]}
+      tutorial={etReportHubTutorial}
       faq={[
         { q: { en: 'What files does it take?', zh: '它接受什么文件？' }, a: { en: 'The daily Transaction export and the latest Customer export, both as Excel. Those are the files most operations teams already produce, so nothing upstream has to change.', zh: '每日 Transaction 导出和最新 Customer 导出，都是 Excel。这些本来就是大多数运营团队已经在产出的文件，上游流程不用改。' } },
         { q: { en: 'Where is my data stored?', zh: '数据存在哪里？' }, a: { en: 'In a local SQLite database inside your own deployment. Raw operational data does not have to leave your environment to become visible in a dashboard.', zh: '存在你自己部署环境里的本地 SQLite 数据库。原始运营数据不需要离开你的环境，就能在 Dashboard 上看到。' } },
