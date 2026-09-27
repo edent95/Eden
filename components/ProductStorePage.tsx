@@ -13,6 +13,24 @@ export type EpBlock =
   | { kind: 'callout'; tone?: 'note' | 'warning'; label: EpText; text: EpText }
   | { kind: 'steps'; items: { title: EpText; text: EpText }[] };
 
+export type EpLesson = {
+  id: string;
+  title: EpText;
+  duration: string;
+  src: string;
+  poster?: string;
+  points: EpText[];
+  tip?: EpText;
+};
+
+export type EpTutorial = {
+  title: EpText;
+  intro: EpText;
+  meta?: EpText[];
+  lessons: EpLesson[];
+  foot?: EpText;
+};
+
 export type EpLink = { href: string; label: EpText; external?: boolean };
 
 export type EpAction = EpLink & { ghost?: boolean; icon?: React.ReactNode };
@@ -34,6 +52,8 @@ export type ProductStorePageProps = {
   quickLinks?: EpLink[];
   stage?: { src: string; domain: string; title: EpText; caption: EpText };
   body: EpBlock[];
+  /** Optional video lessons, rendered as #tutorial between the prose body and the FAQ. */
+  tutorial?: EpTutorial;
   faq: { q: EpText; a: EpText }[];
   specs: [EpText, EpText][];
   also?: { href: string; name: string; blurb: EpText; icon: React.ReactNode }[];
@@ -59,6 +79,7 @@ const ProductStorePage: React.FC<ProductStorePageProps> = ({
   quickLinks = [],
   stage,
   body,
+  tutorial,
   faq,
   specs,
   also = [],
@@ -216,6 +237,46 @@ const ProductStorePage: React.FC<ProductStorePageProps> = ({
               );
             })}
           </section>
+
+          {tutorial && (
+            <section className="ep-tutorial" id="tutorial">
+              <h2>{t(tutorial.title)}</h2>
+              <p className="ep-tutorial-intro">{t(tutorial.intro)}</p>
+              {tutorial.meta && tutorial.meta.length > 0 && (
+                <ul className="ep-tutorial-meta">
+                  {tutorial.meta.map((item) => (
+                    <li key={item.en}>{t(item)}</li>
+                  ))}
+                </ul>
+              )}
+              <ol className="ep-tutorial-list">
+                {tutorial.lessons.map((lesson, index) => (
+                  <li key={lesson.id} id={lesson.id} className="ep-lesson">
+                    <div className="ep-lesson-head">
+                      <span className="ep-lesson-num">{String(index + 1).padStart(2, '0')}</span>
+                      <h3>{t(lesson.title)}</h3>
+                      <span className="ep-lesson-dur">{lesson.duration}</span>
+                    </div>
+                    <video
+                      className="ep-lesson-video"
+                      src={lesson.src}
+                      poster={lesson.poster}
+                      controls
+                      playsInline
+                      preload="none"
+                    />
+                    <ol className="ep-lesson-points">
+                      {lesson.points.map((point) => (
+                        <li key={point.en}>{t(point)}</li>
+                      ))}
+                    </ol>
+                    {lesson.tip && <p className="ep-lesson-tip">{t(lesson.tip)}</p>}
+                  </li>
+                ))}
+              </ol>
+              {tutorial.foot && <p className="ep-tutorial-foot">{t(tutorial.foot)}</p>}
+            </section>
+          )}
 
           {faq.length > 0 && (
             <section className="ep-faq" id="faq">

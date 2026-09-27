@@ -488,6 +488,15 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
         ],
       },
       {
+        title: L('Video tutorial', '视频教程'),
+        paragraphs: [
+          L(
+            'Four short lessons, about eight minutes in total with Chinese subtitles and demo data: signing in and navigation; the daily upload of Transaction and Customer Excel with the import checks; reading daily, weekly, and compare-mode reports and exporting them; and member, segment, channel, trend, and brand-comparison analysis. Each lesson lists its key steps beside the video.',
+            '4 段短视频，合计约 8 分钟，中文字幕、演示数据：登录与界面导航；每日上传 Transaction 与 Customer Excel 及导入检查；每日、每周、对比模式报表的查看与导出；会员、分群、渠道、趋势与品牌对比分析。每课都列出操作要点。',
+          ),
+        ],
+      },
+      {
         title: L('Deployment', '部署方式'),
         paragraphs: [
           L(
