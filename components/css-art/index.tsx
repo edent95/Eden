@@ -1081,7 +1081,7 @@ const notesStoryScenes: Record<NotesStoryMotif, { body: React.ReactNode; props: 
 };
 
 /** Spreads a formula around the ring, repeating it to fill 72 positions. */
-const NotesStoryRunes: React.FC<{ formula: string }> = ({ formula }) => {
+export const NotesStoryRunes: React.FC<{ formula: string }> = ({ formula }) => {
   const target = 72;
   let text = formula;
   while (Array.from(text).length < target) text += formula;
@@ -1125,6 +1125,7 @@ export const NotesStoryFrame: React.FC<{
         <span className="nf-dots" />
         {!thumb && <NotesStoryRunes formula={scene.formula} />}
       </span>
+      <span className="nf-shadow" />
       <span className="nf-main">{scene.body}</span>
       <span className={`nf-prop nf-prop-l ${notesStoryPropClass[scene.props[0]]}`}>{notesStoryProps[scene.props[0]]}</span>
       <span className={`nf-prop nf-prop-r ${notesStoryPropClass[scene.props[1]]}`}>{notesStoryProps[scene.props[1]]}</span>
@@ -1137,3 +1138,62 @@ export const NotesStorySpiralArt: CssArtComponent = ({ label }) => <NotesStoryFr
 export const NotesStoryCatenoidArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="catenoid" label={label} thumb />;
 export const NotesStoryCatenaryArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="catenary" label={label} thumb />;
 export const NotesStoryPenroseArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="penrose" label={label} thumb />;
+
+/* ---- Notes grimoire cover (styles/css-art/notes-grimoire.css) ----
+   Full-bleed cover scene for an art-directed Notes article: three depth layers
+   (sky with stars and an orrery engraved with formulas; a floating 3D grimoire
+   whose leaves turn; near candles and a stack of old books). Layers read
+   --nd-px / --nd-py / --nd-scroll from the page for pointer and scroll parallax. */
+const GRIMOIRE_STARS: Array<[number, number, number]> = [
+  [52, 8, 1], [58, 22, 0], [64, 12, 1], [71, 6, 0], [77, 18, 1], [83, 9, 0], [89, 24, 1], [94, 14, 0], [97, 34, 1],
+  [55, 38, 0], [61, 52, 1], [86, 46, 0], [92, 58, 1], [46, 16, 0], [42, 30, 1], [68, 64, 0], [80, 72, 1], [49, 60, 0],
+  [35, 10, 1], [28, 22, 0], [22, 8, 1], [14, 16, 0], [8, 28, 1], [5, 9, 0],
+];
+
+export const NotesGrimoireCover: React.FC<{ formula: string }> = ({ formula }) => (
+  <div className="ng-cover" aria-hidden>
+    <div className="ng-layer ng-sky" style={{ ...cssVar('--z', 0.3), ...cssVar('--sy', 0.35) }}>
+      {GRIMOIRE_STARS.map(([x, y, big]) => (
+        <span key={`${x}-${y}`} className={`ng-star${big ? ' is-big' : ''}`} style={{ left: `${x}%`, top: `${y}%`, ...cssVar('--w', `${(x * 7) % 5}s`) }} />
+      ))}
+      <span className="ng-orrery">
+        <span className="ng-orbit o1"><span className="ng-planet" /></span>
+        <span className="ng-orbit o2"><span className="ng-planet" /></span>
+        <span className="ng-orbit o3"><span className="ng-planet" /></span>
+        <span className="ng-orrery-runes"><NotesStoryRunes formula={formula} /></span>
+        <span className="ng-sun" />
+      </span>
+    </div>
+    <div className="ng-layer ng-mid" style={{ ...cssVar('--z', 1), ...cssVar('--sy', 0.16) }}>
+      <span className="ng-book-shadow" />
+      <span className="ng-book">
+        <span className="ng-book-inner">
+          <span className="ng-board ng-board-l" /><span className="ng-board ng-board-r" />
+          <span className="ng-block ng-block-l"><span className="ng-page-art ng-page-spiral" /></span>
+          <span className="ng-block ng-block-r"><span className="ng-page-art ng-page-star" /></span>
+          {[0, 1, 2, 3, 4].map((i) => <span key={i} className="ng-leaf" style={cssVar('--i', i)} />)}
+          <span className="ng-ribbon" />
+        </span>
+      </span>
+    </div>
+    <div className="ng-layer ng-near" style={{ ...cssVar('--z', 2.2), ...cssVar('--sy', 0.05) }}>
+      <span className="ng-books">
+        <span className="ng-tome t1" /><span className="ng-tome t2" /><span className="ng-tome t3" />
+      </span>
+      {[[0, 17], [1, 11], [2, 14]].map(([i, h]) => (
+        <span key={i} className="ng-candle" style={{ ...cssVar('--i', i), ...cssVar('--h', `${h}cqi`) }}>
+          <span className="ng-wax" /><span className="ng-flame" />
+        </span>
+      ))}
+    </div>
+    {[[62, 88, 11], [70, 80, 13], [78, 92, 10], [86, 84, 14], [66, 70, 12], [90, 74, 9], [74, 96, 12.5]].map(([x, y, d], i) => (
+      <span key={i} className="ng-mote" style={{ left: `${x}%`, top: `${y}%`, ...cssVar('--d', `${d}s`), ...cssVar('--w', `${i * 1.3}s`) }} />
+    ))}
+  </div>
+);
+
+export const NotesGrimoireCoverArt: CssArtComponent = ({ label }) => (
+  <div className="ng-cover-preview" role="img" aria-label={label}>
+    <NotesGrimoireCover formula="φ = (1 + √5) / 2 ✦ e^(iπ) + 1 = 0 ✦ zₙ₊₁ = zₙ² + c ✦ " />
+  </div>
+);

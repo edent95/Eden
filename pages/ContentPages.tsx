@@ -5,6 +5,8 @@ import { WikiBackgroundMusicCssIcon, WikiButtonFeedbackCssIcon, WikiFirebaseStor
 import { HeaderControls, joinBasePath, resolveAssetPath, type Language, type Theme, type ThemePreference } from '../app/shared';
 import { NotesReadingBar, NotesRecap, renderKeySentences, useNotesReading } from '../components/NotesReading';
 import { NotesStoryboard, extractKeySentence, type NotesStoryFrameData } from '../components/NotesStoryboard';
+import { useNotesDepth } from '../components/NotesDepth';
+import { NotesGrimoireCover, NotesStoryFrame } from '../components/css-art/index';
 import { ArrowDownRight, ArrowLeft, ArrowUpRight, Bookmark, Brain, Copy, Database, GitBranch, Layers, MessageSquare, Plus, Search, SearchCheck, Send, SlidersHorizontal, TrendingUp, UserRound } from 'lucide-react';
 
 const GUEST_TOPIC_STORAGE_KEY = 'eden-guest-topic-board';
@@ -1254,9 +1256,21 @@ export const SiteEssayNotePage: React.FC<{
   const sectionId = (index: number) => `sec-${note.slug}-${index + 1}`;
   const rootRef = React.useRef<HTMLDivElement>(null);
   const { active, progress } = useNotesReading(rootRef, `${note.slug}-${language}`);
+  // Art-directed layout (cover scene, page grid, marginalia, depth) for notes that carry a storyboard.
+  const grimoire = Boolean(note.storyboard && note.storyboard.length === note.sections.length);
+  useNotesDepth(rootRef, grimoire);
 
   return (
-    <div ref={rootRef} className="page-shell notes-article-page min-h-screen">
+    <div ref={rootRef} className={`page-shell notes-article-page min-h-screen${grimoire ? ' notes-grimoire' : ''}`}>
+      {grimoire && (
+        <>
+          <div className="ng-backdrop" aria-hidden>
+            <span className="ng-grid" />
+            <span className="ng-arc a1" /><span className="ng-arc a2" /><span className="ng-arc a3" />
+          </div>
+          <NotesGrimoireCover formula="φ = (1 + √5) / 2 ✦ e^(iπ) + 1 = 0 ✦ zₙ₊₁ = zₙ² + c ✦ y = a · cosh(x / a) ✦ " />
+        </>
+      )}
       <main className="notes-article-main">
         <div className="notes-article-island">
           <div className="notes-topbar">
@@ -1313,6 +1327,7 @@ export const SiteEssayNotePage: React.FC<{
             <blockquote className="notes-article-thesis notes-reveal">
               <span>{isZh ? '一句话结论' : 'Core thesis'}</span>
               <p><mark className="notes-thesis-text">{note.thesis[language]}</mark></p>
+              {grimoire && <i className="ng-seal" aria-hidden />}
             </blockquote>
             {note.storyboard && note.storyboard.length === note.sections.length && (
               <NotesStoryboard
@@ -1327,6 +1342,13 @@ export const SiteEssayNotePage: React.FC<{
             <div className="notes-article-sections">
               {note.sections.map((section, index) => (
                 <section key={section.title.en} id={sectionId(index)} data-note-section className="notes-article-section notes-reveal">
+                  {grimoire && note.storyboard && (
+                    <div className="ng-margin" aria-hidden>
+                      <div className={`ng-medal${active === index ? ' is-reading' : ''}`}>
+                        <NotesStoryFrame motif={note.storyboard[index].motif} label="" active={active === index} />
+                      </div>
+                    </div>
+                  )}
                   <div className="notes-article-section-number"><span>{String(index + 1).padStart(2, '0')}</span></div>
                   <div>
                     <h2>{section.title[language]}</h2>

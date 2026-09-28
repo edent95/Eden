@@ -268,6 +268,15 @@
 }
 .notes-frame.is-active .nf-astro .a-rete { transform: rotate(72deg); }
 
+/* cast shadow under the floating main subject, breathing with its float */
+.nf-shadow {
+  left: calc(var(--nf-cx) - 14cqi); top: calc(var(--nf-ground) - 3.5%); width: 28cqi; height: 3.2cqi; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.32), transparent);
+  animation: nf-shadow 8s ease-in-out infinite;
+}
+:root[data-theme="dark"] .nf-shadow { background: radial-gradient(closest-side, rgba(0, 0, 0, 0.6), transparent); }
+@keyframes nf-shadow { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.88); opacity: 0.75; } }
+
 /* ---------- main subjects: each one is a piece of mathematics ---------- */
 .nf-main {
   left: calc(var(--nf-cx) - var(--nf-r)); top: calc(var(--nf-cy) - var(--nf-r));
