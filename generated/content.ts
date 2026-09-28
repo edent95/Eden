@@ -15,6 +15,7 @@ export type SiteEssayNoteData = {
     paragraphs: Record<'en' | 'zh', string[]>;
   }>;
   originalSource?: { url: string; label: Record<'en' | 'zh', string> };
+  storySource?: { url: string; label: Record<'en' | 'zh', string> };
   references?: Array<{ id: string; url: string; label: Record<'en' | 'zh', string> }>;
   referencesNote?: Record<'en' | 'zh', string>;
 };
@@ -623,6 +624,13 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
         "zh": "打开完整证据地图（关系网、照片、来源）"
       }
     },
+    "storySource": {
+      "url": "iraq-war-story.html",
+      "label": {
+        "en": "Read the story version (Chinese)",
+        "zh": "读故事版：一场战争的七年前奏"
+      }
+    },
     "references": [
       {
         "id": "1",
@@ -780,11 +788,11 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
         "paragraphs": {
           "en": [
             "The account that fits the record has several causes, not one: U.S. strategic interests, a decade of regime-change policy, a neoconservative policy network, partial convergence with Israel's right, the shock of 9/11, decisions by Bush, Cheney, and Rumsfeld, and prewar intelligence that was wrong and selectively presented.",
-            "The overlap of people is a fact. The chain of command is a story. Keeping those two apart is the only way to see where this war actually came from. The full evidence map linked on this page has the relationship network, photos of each person, a timeline, and every source."
+            "The overlap of people is a fact. The chain of command is a story. Keeping those two apart is the only way to see where this war actually came from. The full evidence map linked on this page has the relationship network, photos of each person, a timeline, and every source; the story version walks through the same facts as a narrative."
           ],
           "zh": [
             "和档案对得上的解释是多因素的，不是单一原因：美国自身的战略利益，十年累积的政权更替政策，新保守派政策网络，和以色列右翼的部分立场重合，9·11 的冲击，布什、切尼、拉姆斯菲尔德的决策，以及出了错、又被选择性呈现的战前情报。",
-            "人员重叠是事实，指挥链是故事。把这两件事分开，才看得清这场战争真正从哪里来。本页链接的完整证据地图里有关系网、每个人的照片、时间线和全部来源。"
+            "人员重叠是事实，指挥链是故事。把这两件事分开，才看得清这场战争真正从哪里来。本页链接的完整证据地图里有关系网、每个人的照片、时间线和全部来源；故事版则把同样的事实按时间讲成一个故事。"
           ]
         }
       }

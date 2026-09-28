@@ -397,6 +397,8 @@
 
 .notes-source-original:hover { text-decoration: underline; }
 
+.notes-source-original + .notes-source-original { margin-left: 22px; }
+
 .notes-article-references {
   width: min(100%, 820px);
   margin-inline: auto;

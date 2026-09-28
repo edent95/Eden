@@ -60,6 +60,7 @@ export type SiteEssayNoteData = {
     paragraphs: Record<'en' | 'zh', string[]>;
   }>;
   originalSource?: { url: string; label: Record<'en' | 'zh', string> };
+  storySource?: { url: string; label: Record<'en' | 'zh', string> };
   references?: Array<{ id: string; url: string; label: Record<'en' | 'zh', string> }>;
   referencesNote?: Record<'en' | 'zh', string>;
 };

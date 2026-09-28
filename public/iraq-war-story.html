@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>伊拉克战争故事版</title>
+<meta name="description" content="用故事的节奏讲清楚伊拉克战争的来路：1996 年的一份报告、1998 年的公开信、9·11 当天的一行笔记，到战后才回来的真相。所有情节都有出处，不虚构。">
+<style>
+  :root{
+    --bg:#faf9f6;--card:#fff;--ink:#1f1d1a;--soft:#5c584f;--line:#e5e1d8;
+    --accent:#b8622b;--accent-soft:#f3ece2;--ok:#2f7d4f;--warn:#a87400;--bad:#b23a3a;
+    --maxw:40rem;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#15130f;--card:#1e1b16;--ink:#ece6da;--soft:#aaa192;--line:#3a352c;
+    --accent:#e0915a;--accent-soft:#3a2a1c;--ok:#5cc28a;--warn:#e7b54a;--bad:#ef7b7b;
+  }}
+  :root[data-theme="dark"]{
+    --bg:#15130f;--card:#1e1b16;--ink:#ece6da;--soft:#aaa192;--line:#3a352c;
+    --accent:#e0915a;--accent-soft:#3a2a1c;--ok:#5cc28a;--warn:#e7b54a;--bad:#ef7b7b;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,sans-serif;line-height:1.95;font-size:19px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:4.5rem 16px 6rem}
+  a{color:var(--accent)}
+  p{margin:0 0 1.3rem}
+  .kicker{font-size:.72rem;letter-spacing:.26em;color:var(--accent);font-weight:600;margin-bottom:1.2rem}
+  h1{font-size:2.2rem;line-height:1.3;margin:0 0 1rem}
+  .dek{font-size:1.06rem;color:var(--soft);line-height:1.75;margin:0}
+  .meta{margin-top:1.6rem;padding-top:1.2rem;border-top:1px solid var(--line);font-size:.82rem;color:var(--soft);display:flex;gap:1.2rem;flex-wrap:wrap}
+  .switch{margin-top:1.4rem;font-size:.9rem}
+
+  /* cast */
+  .cast-title{font-size:.78rem;letter-spacing:.22em;color:var(--soft);font-weight:600;margin:3.2rem 0 1rem}
+  .cast{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 10px;list-style:none;padding:0;margin:0}
+  .cast li{text-align:center;font-size:.8rem;line-height:1.4}
+  .cast img,.cast .ph{display:block;width:64px;height:64px;margin:0 auto .45rem;border-radius:50%;object-fit:cover;object-position:50% 20%;background:var(--accent-soft);border:2px solid var(--line)}
+  .cast .ph{display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--soft);font-size:.95rem}
+  .cast b{display:block;font-size:.88rem}
+  .cast span{color:var(--soft)}
+
+  /* acts */
+  .act{margin-top:4.2rem}
+  .act-no{font-size:.74rem;letter-spacing:.3em;color:var(--accent);font-weight:700}
+  .act h2{font-size:1.6rem;line-height:1.35;margin:.3rem 0 .4rem}
+  .act .when{font-size:.9rem;color:var(--soft);margin-bottom:1.8rem}
+  .stamp{display:inline-block;font-size:.76rem;font-weight:700;letter-spacing:.08em;color:var(--accent);border:1.5px solid var(--accent);border-radius:4px;padding:0 .45rem;margin-right:.5rem;line-height:1.7;vertical-align:.12em}
+  .beat{font-size:1.24rem;line-height:1.7;font-weight:600;margin:2rem 0}
+  .quote{margin:2rem 0;padding:1.2rem 1.4rem;background:var(--card);border-left:3px solid var(--accent);border-radius:0 8px 8px 0}
+  .quote p{margin:0;font-size:1.02rem}
+  .quote .en{font-family:Georgia,"Times New Roman",serif;font-style:italic;color:var(--soft);font-size:.95rem;margin-top:.5rem}
+  .quote cite{display:block;font-style:normal;font-size:.78rem;color:var(--soft);margin-top:.6rem}
+  .face{display:flex;align-items:center;gap:.8rem;margin:1.8rem 0 1rem}
+  .face img{width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:50% 20%;border:2px solid var(--line);flex:none}
+  .face div{font-size:.86rem;color:var(--soft);line-height:1.5}
+  .face b{color:var(--ink);font-size:.95rem}
+  .check{margin:2.2rem 0 0;padding:.9rem 1.1rem;border:1px solid var(--line);border-radius:10px;font-size:.88rem;line-height:1.7;color:var(--soft);background:var(--card)}
+  .check b{color:var(--ink)}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:.4rem;vertical-align:.08em}
+  .d-ok{background:var(--ok)}.d-warn{background:var(--warn)}.d-bad{background:var(--bad)}
+  .cut{text-align:center;color:var(--soft);letter-spacing:.6em;margin:3rem 0 0;font-size:.9rem}
+  .end{margin-top:4.5rem;padding-top:2rem;border-top:1px solid var(--line)}
+  .end h2{font-size:1.5rem;margin:0 0 1rem}
+  .ledger{list-style:none;padding:0;margin:1.2rem 0}
+  .ledger li{padding:.55rem 0;border-bottom:1px solid var(--line);font-size:.98rem}
+  .src{font-size:.84rem;color:var(--soft)}
+  .src li{margin:.25rem 0}
+  .small{font-size:.8rem;color:var(--soft)}
+
+  /* scene reveal: text blocks slide up once, only when JS is on */
+  .js .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .js .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.js .reveal{opacity:1;transform:none;transition:none}}
+
+  @media (max-width:640px){
+    body{font-size:17.5px}
+    h1{font-size:1.75rem}
+    .act h2{font-size:1.35rem}
+    .beat{font-size:1.12rem}
+    .cast{grid-template-columns:repeat(3,1fr)}
+  }
+</style>
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div class="kicker">NOTES · 故事版</div>
+    <h1>一场战争的七年前奏</h1>
+    <p class="dek">从 1996 年一份写给别国总理的报告，到 2003 年巴格达的第一批导弹，再到战后才回来的真相。这是伊拉克战争的来路，用讲故事的方式走一遍。</p>
+    <div class="meta"><span>Eden Tan</span><span>2026-09-29</span><span>所有情节都有出处，不虚构对白</span></div>
+    <p class="switch">想看证据怎么排、关系网怎么连：<a href="iraq-war-evidence-map-full.html">打开完整证据地图 →</a></p>
+  </header>
+
+  <div class="cast-title">主要角色</div>
+  <ul class="cast">
+    <li><img src="images/iraq-war-map/perle.jpg" alt="Richard Perle" style="object-position:50% 8%"><b>Perle</b><span>写报告的人</span></li>
+    <li><img src="images/iraq-war-map/feith.jpg" alt="Douglas Feith"><b>Feith</b><span>国防部政策主管</span></li>
+    <li><div class="ph">DW</div><b>Wurmser</b><span>报告参与者</span></li>
+    <li><img src="images/iraq-war-map/wolfowitz.jpg" alt="Paul Wolfowitz"><b>Wolfowitz</b><span>国防部副部长</span></li>
+    <li><img src="images/iraq-war-map/rumsfeld.jpg" alt="Donald Rumsfeld"><b>Rumsfeld</b><span>国防部长</span></li>
+    <li><img src="images/iraq-war-map/kristol.jpg" alt="William Kristol"><b>Kristol</b><span>智库创办人</span></li>
+    <li><img src="images/iraq-war-map/bush.jpg" alt="George W. Bush"><b>小布什</b><span>拍板的人</span></li>
+    <li><img src="images/iraq-war-map/saddam.jpg" alt="Saddam Hussein"><b>萨达姆</b><span>目标</span></li>
+  </ul>
+
+  <!-- COLD OPEN -->
+  <section class="act">
+    <div class="act-no reveal">片头</div>
+    <h2 class="reveal">第一批导弹</h2>
+    <div class="when reveal">2003 年 3 月 20 日 · 巴格达</div>
+    <p class="reveal">天还没亮，第一批导弹落在巴格达。美国和盟军对伊拉克开战。</p>
+    <p class="reveal">三周后，4 月 9 日，巴格达陷落。广场上的萨达姆铜像被拉倒，画面传遍全世界。</p>
+    <p class="beat reveal">开战的理由有两个：萨达姆藏着大规模杀伤性武器，萨达姆和恐怖组织有勾结。</p>
+    <p class="beat reveal">后来查明，两个都不成立。</p>
+    <p class="reveal">那么，这场仗到底是怎么来的？要把时间倒回七年前。</p>
+    <div class="cut">· · ·</div>
+  </section>
+
+  <!-- ACT 1 -->
+  <section class="act">
+    <div class="act-no reveal">第一幕</div>
+    <h2 class="reveal">一份写给别国总理的报告</h2>
+    <div class="when reveal">1996 年夏天 · 以色列</div>
+    <p class="reveal">内塔尼亚胡刚刚当选以色列总理。一家以色列智库的研究组给他的新政府准备了一份战略建议，题目叫《A Clean Break》，意思是「彻底决裂」：和过去的和平进程路线一刀两断。</p>
+    <div class="face reveal"><img src="images/iraq-war-map/perle.jpg" alt="Richard Perle" style="object-position:50% 8%"><div><b>Richard Perle</b><br>研究组组长，美国人，里根时代的国防部助理部长</div></div>
+    <p class="reveal">组长是美国人 Richard Perle。组里还有两个名字，后面会再出现：Douglas Feith 和 David Wurmser。</p>
+    <p class="reveal">报告里有一句话，二十多年后仍然被反复引用：</p>
+    <div class="quote reveal"><p>把萨达姆·侯赛因赶下台，本身就是以色列一个重要的战略目标。</p><p class="en">“removing Saddam Hussein from power in Iraq — an important Israeli strategic objective in its own right”</p><cite>—《A Clean Break》，1996</cite></div>
+    <p class="beat reveal">但有一件事常被略过：以色列政府从来没有采纳这份报告。</p>
+    <div class="check reveal"><span class="dot d-ok"></span><b>这一幕有文件证明。</b>报告的作者名单和原文都可以查到。它说明美国的一批政策人物和以色列右翼在想同一件事；它不能说明谁在指挥谁。</div>
+    <div class="cut">· · ·</div>
+  </section>
+
+  <!-- ACT 2 -->
+  <section class="act">
+    <div class="act-no reveal">第二幕</div>
+    <h2 class="reveal">一封传真，一部法律</h2>
+    <div class="when reveal">1998 年 · 华盛顿</div>
+    <p class="reveal">前一年，William Kristol 和 Robert Kagan 在华盛顿成立了一家智库，叫「新美国世纪计划」（PNAC）。</p>
+    <p class="reveal"><span class="stamp">1 月 26 日</span>PNAC 给克林顿总统发了一份传真，要求美国的对伊政策以推翻萨达姆为目标。这份传真至今保存在克林顿总统图书馆。</p>
+    <p class="reveal"><span class="stamp">5 月 29 日</span>他们再写一封信，这次寄给国会两院的领袖。信末的签名里有 Rumsfeld、Wolfowitz、Bolton、Abrams、Perle。</p>
+    <p class="beat reveal">记住这几个名字。三年后，他们几乎都会走进政府。</p>
+    <p class="reveal"><span class="stamp">10 月 31 日</span>国会通过、克林顿签署《伊拉克解放法》。推翻萨达姆，正式成了美国的政策。</p>
+    <p class="reveal">但这部法律里还有一条，后来很少有人提：它<b>不授权动用美军</b>。美国可以给伊拉克反对派钱、物资和训练，不能自己出兵。</p>
+    <p class="reveal"><span class="stamp">12 月</span>同一年年底，美英对伊拉克发动了四天空袭，因为伊拉克不配合联合国武器核查。</p>
+    <div class="check reveal"><span class="dot d-ok"></span><b>这一幕有文件证明。</b>它也提醒我们：美国对付萨达姆，早在 1991 年海湾战争就开始了，并不需要以色列来提醒。到 1998 年，「倒萨」已经是两党共同写进法律的目标，只是手段不是入侵。</div>
+    <div class="cut">· · ·</div>
+  </section>
+
+  <!-- ACT 3 -->
+  <section class="act">
+    <div class="act-no reveal">第三幕</div>
+    <h2 class="reveal">进场</h2>
+    <div class="when reveal">2001 年 1 月 · 小布什就职</div>
+    <p class="reveal">新政府的名单公布了。</p>
+    <p class="reveal">Rumsfeld，国防部长。Wolfowitz，国防部副部长。Feith，国防部主管政策的副部长。Bolton，国务院副国务卿。Wurmser 先到国务院当 Bolton 的助理，后来转到副总统切尼的办公室。</p>
+    <p class="reveal">Perle 没有拿行政职务，他当上了国防政策委员会主席。那是一个咨询机构，有影响力，但没有决策权。</p>
+    <p class="beat reveal">1996 年的报告作者，1998 年的公开信签名人，现在坐进了五角大楼。</p>
+    <p class="reveal">不过，这时候的伊拉克还不是头号议题。他们需要一个契机。</p>
+    <div class="check reveal"><span class="dot d-ok"></span><b>这一幕有文件证明。</b>每个职位都能在官方履历里查到。</div>
+    <div class="cut">· · ·</div>
+  </section>
+
+  <!-- ACT 4 -->
+  <section class="act">
+    <div class="act-no reveal">第四幕</div>
+    <h2 class="reveal">五个小时后</h2>
+    <div class="when reveal">2001 年 9 月 11 日 · 五角大楼</div>
+    <p class="reveal">早上 9 点 37 分，一架被劫持的客机撞进五角大楼。</p>
+    <p class="reveal">下午 2 点 40 分，大楼还在冒烟。国防部长 Rumsfeld 向助手交代工作，助手 Stephen Cambone 在笔记本上记下了他的话：</p>
+    <div class="quote reveal"><p>尽快拿到最好的情报。判断一下够不够同时打萨达姆，不只打本·拉登。</p><p class="en">“Best info fast. Judge whether good enough hit S.H. at same time. Not only UBL.”</p><cite>— Stephen Cambone 的笔记，2001 年 9 月 11 日下午</cite></div>
+    <p class="beat reveal">这时候，没有任何证据显示萨达姆和这次袭击有关。</p>
+    <p class="reveal"><span class="stamp">9 月 15 日</span>戴维营。总统和幕僚开会讨论怎么反击。据 9·11 委员会记录，Wolfowitz 在会上提出了打伊拉克。</p>
+    <p class="reveal">小布什没有采纳。他决定先打阿富汗，那里才是基地组织的大本营。</p>
+    <p class="reveal">但伊拉克这个问题，从这一天起就一直摆在桌上。</p>
+    <div class="check reveal"><span class="dot d-ok"></span><b>这一幕有文件证明。</b>Cambone 笔记后来被公开报道，戴维营会议写在 9·11 委员会报告里。它说明政府里有人在第一时间就想到了伊拉克；它也说明，总统当时没有听他们的。</div>
+    <div class="cut">· · ·</div>
+  </section>
+
+  <!-- ACT 5 -->
+  <section class="act">
+    <div class="act-no reveal">第五幕</div>
+    <h2 class="reveal">说服全世界</h2>
+    <div class="when reveal">2002 年 – 2003 年 3 月</div>
+    <div class="face reveal"><img src="images/iraq-war-map/feith.jpg" alt="Douglas Feith"><div><b>Douglas Feith</b><br>国防部主管政策的副部长，1996 年报告的参与者</div></div>
+    <p class="reveal">在国防部，Feith 的办公室开始自己分析伊拉克和基地组织的关系。他们得出的结论，比中央情报局等情报机构的判断强硬得多，而这些材料被送到了高层决策者手上。</p>
+    <p class="reveal"><span class="stamp">2002 年 10 月</span>国会投票授权总统对伊拉克动武。四年前那部「不授权出兵」的法律，这次被补上了最后一块。</p>
+    <p class="reveal"><span class="stamp">2003 年 1 月 28 日</span>国情咨文。小布什说了一句后来很出名的话，一共 16 个英文单词：</p>
+    <div class="quote reveal"><p>英国政府获悉，萨达姆·侯赛因最近在非洲寻求购买大量铀。</p><p class="en">“The British government has learned that Saddam Hussein recently sought significant quantities of uranium from Africa.”</p><cite>— 小布什，2003 年国情咨文</cite></div>
+    <p class="reveal"><span class="stamp">2 月 5 日</span>国务卿鲍威尔走进联合国安理会，拿着图片和录音，向全世界陈述伊拉克的武器威胁。国务院内部对非洲铀矿的说法有疑虑，他在演讲里没有提这一条。</p>
+    <p class="reveal"><span class="stamp">3 月 20 日</span>战争开始。我们回到了片头。</p>
+    <div class="check reveal"><span class="dot d-warn"></span><b>这一幕一半是文件，一半是推论。</b>Feith 办公室的做法、国情咨文的原话、鲍威尔的演讲都有记录。但「这批人推动了开战」到底推动了多少，没法量化。最后签字的，是总统。</div>
+    <div class="cut">· · ·</div>
+  </section>
+
+  <!-- ACT 6 -->
+  <section class="act">
+    <div class="act-no reveal">第六幕</div>
+    <h2 class="reveal">真相回来的时候</h2>
+    <div class="when reveal">2003 年 – 2008 年</div>
+    <p class="reveal"><span class="stamp">2003 年 7 月</span>开战不到四个月，中情局局长 Tenet 公开承认：国情咨文里那 16 个词，「根本不应该写进总统的讲稿」。</p>
+    <p class="reveal"><span class="stamp">2004 年 7 月</span>9·11 委员会报告出炉。伊拉克和基地组织确实有过接触，但报告写道：</p>
+    <div class="quote reveal"><p>没有证据显示这些接触发展成了协同作战的关系。</p><p class="en">“no evidence that these or the earlier contacts ever developed into a collaborative operational relationship”</p><cite>— 9·11 委员会报告，第 2 章</cite></div>
+    <p class="reveal"><span class="stamp">2004 年 10 月</span>美国派去搜查武器的调查组交出最终报告：伊拉克在 1991 年之后就已经销毁了库存，没有找到现存的大规模杀伤性武器。</p>
+    <p class="beat reveal">开战的第一个理由，没了。</p>
+    <p class="reveal"><span class="stamp">2005 年 9 月</span>鲍威尔在电视采访里说，那场联合国演讲是他履历上的一个「污点」。</p>
+    <p class="reveal"><span class="stamp">2007 年 2 月</span>国防部监察长的报告认定，Feith 的办公室做的那套「另类情报评估」，结论和情报界的共识不一致。定性是：不恰当，但不违法。</p>
+    <p class="reveal"><span class="stamp">2008 年 6 月</span>参议院情报委员会的报告认定，政府多项战前说法没有得到情报的支持。</p>
+    <p class="reveal">到 2011 年美军撤出，美军阵亡约 4,500 人。伊拉克的死亡人数各方估计差距很大，从十几万到数十万不等。</p>
+    <div class="check reveal"><span class="dot d-ok"></span><b>这一幕有文件证明。</b>每一条都是美国政府自己的调查或当事人的公开表态。</div>
+    <div class="cut">· · ·</div>
+  </section>
+
+  <!-- EPILOGUE -->
+  <section class="act">
+    <div class="act-no reveal">尾声</div>
+    <h2 class="reveal">那条不存在的线</h2>
+    <p class="reveal">故事讲完了，网上最流行的版本却还有一段：以色列下令，新保守派执行，美国总统被人操控。</p>
+    <p class="reveal">回头看这七年，每一幕都有文件。唯独这一段，找不到任何一份命令、一份会议记录、一个服从关系的证据。1996 年那份报告，连以色列政府自己都没有采纳。</p>
+    <p class="reveal">把以色列拿掉，美国照样有自己的倒萨路：海湾战争、制裁、核查、空袭、1998 年的法律。把这批新保守派拿掉，我们不知道战争会不会照样发生。他们很重要，但没有人能诚实地算出他们占了几成。</p>
+    <p class="reveal">还有一条线必须划清：几个具体官员的所作所为，不能扩大成对整个犹太族群的指控。那不是从证据推出来的结论，而是一个换了新衣服的反犹老故事。</p>
+    <p class="beat reveal">人员重叠是事实，指挥链是故事。</p>
+  </section>
+
+  <section class="end">
+    <h2>看完这个故事，你应该记住</h2>
+    <ul class="ledger">
+      <li><span class="dot d-ok"></span>同一小批人，写过给以色列的建议，签过倒萨公开信，后来进了布什政府。</li>
+      <li><span class="dot d-ok"></span>推翻萨达姆在 1998 年就是美国法律，但当时明文不授权出兵。</li>
+      <li><span class="dot d-ok"></span>9·11 当天下午，国防部长就在问能不能同时打萨达姆，总统当时没有采纳。</li>
+      <li><span class="dot d-ok"></span>开战的两个理由，后来都被美国政府自己的调查推翻。</li>
+      <li><span class="dot d-warn"></span>这批人对开战有重要影响，但影响有多大量化不了。</li>
+      <li><span class="dot d-bad"></span>「以色列下令」这条指挥链，没有任何公开证据。</li>
+    </ul>
+    <p><a href="iraq-war-evidence-map-full.html">打开完整证据地图：关系网、人物照片、逐条核查 →</a></p>
+
+    <h2 style="margin-top:2.6rem;font-size:1.15rem">故事里每个情节的出处</h2>
+    <ul class="src">
+      <li>1996 报告：<a href="https://en.wikipedia.org/wiki/A_Clean_Break:_A_New_Strategy_for_Securing_the_Realm">A Clean Break（背景与原文引用）</a></li>
+      <li>1998 传真：<a href="https://www.clintonlibrary.gov/research/archives/finding-aids/project-new-american-century-pnac">Clinton Presidential Library — PNAC</a>；5 月公开信：<a href="https://www.globalsecurity.org/wmd/library/news/iraq/1998/980526-pnac.htm">GlobalSecurity 镜像</a></li>
+      <li>伊拉克解放法：<a href="https://www.govinfo.gov/content/pkg/PLAW-105publ338/html/PLAW-105publ338.htm">Public Law 105-338</a></li>
+      <li>9·11 当天的笔记：<a href="https://www.cbsnews.com/news/plans-for-iraq-attack-began-on-9-11">CBS News（2002）</a>、<a href="https://www.lrb.co.uk/the-paper/v33/n07/andrew-cockburn/sh-same-time">London Review of Books</a></li>
+      <li>戴维营会议：<a href="https://www.govinfo.gov/content/pkg/GPO-911REPORT/pdf/GPO-911REPORT-16.pdf">9/11 Commission Report, Chapter 10</a></li>
+      <li>16 个词与 Tenet 的承认：<a href="https://www.factcheck.org/2004/07/bushs-16-words-on-iraq-uranium">FactCheck.org</a>；国情咨文原文：<a href="https://georgewbush-whitehouse.archives.gov/news/releases/2003/01/20030128-19.html">Bush White House Archive</a></li>
+      <li>鲍威尔的「污点」：<a href="https://www.abc.net.au/news/2005-09-09/powell-regrets-un-speech-on-iraq-wmds/2099674">ABC News（2005）</a></li>
+      <li>伊拉克与基地组织：<a href="https://www.9-11commission.gov/report/911Report_Ch2.htm">9/11 Commission Report, Chapter 2</a></li>
+      <li>没有找到库存：<a href="https://www.armscontrol.org/act/2004-11/duelfer-disproves-us-wmd-claims">Arms Control Association — Duelfer 报告</a></li>
+      <li>Feith 办公室：<a href="https://www.csmonitor.com/2007/0209/p99s01-duts.html">CS Monitor — 国防部监察长报告（2007）</a></li>
+      <li>参议院结论：<a href="https://www.armscontrol.org/act/2008-08/senate-committee-completes-iraq-intel-probe">Arms Control Association — Senate Phase II（2008）</a></li>
+    </ul>
+    <p class="small">写法说明：情节的节奏和措辞做过打磨，但事件、时间、引语都来自上面的出处，没有虚构的对白或场面。引语的中文是意译，英文原文附在旁边。伤亡数字取自公开统计，伊拉克方面各来源差距很大，这里只给范围。照片来自 Wikimedia Commons，授权署名见<a href="iraq-war-evidence-map-full.html">完整证据地图</a>末尾。</p>
+  </section>
+</main>
+<script>
+(function(){
+  var items=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){items.forEach(function(el){el.classList.add('in');});return;}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+  },{rootMargin:'0px 0px -8% 0px'});
+  items.forEach(function(el){io.observe(el);});
+})();
+</script>
+</body>
+</html>
