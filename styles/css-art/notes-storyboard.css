@@ -493,3 +493,52 @@
 @media (prefers-reduced-motion: reduce) {
   .notes-frame, .notes-frame * { animation: none !important; transition: none !important; }
 }
+
+/* ---------- dimensional grain (立体颗粒) inside the frames ----------
+   Fine grain over the whole plate, coarser grain on the near props, and stipple
+   shading (dot density away from an upper-left light) on the solid bodies. */
+.notes-frame {
+  --nf-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --nf-stipple: color-mix(in srgb, var(--en-line) 70%, black);
+}
+:root[data-theme="dark"] .notes-frame { --nf-stipple: rgba(0, 0, 0, 0.85); }
+
+.notes-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  border-radius: inherit;
+  background: var(--nf-noise) 0 0 / 150px;
+  mix-blend-mode: soft-light;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.notes-frame :is(.c-wax, .o-ball, .q-well, .s-roll, .a-disc, .g-body, .v-c, .m-cardioid, .b2, .f-film) { overflow: hidden; }
+.notes-frame :is(.c-wax, .o-ball, .q-well, .s-roll, .a-disc, .v-c)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle, var(--nf-stipple) 0 32%, transparent 38%) 0 0 / 0.45cqi 0.45cqi;
+  -webkit-mask: radial-gradient(circle at 30% 26%, transparent 30%, rgba(0, 0, 0, 0.6) 68%, black 100%);
+  mask: radial-gradient(circle at 30% 26%, transparent 30%, rgba(0, 0, 0, 0.6) 68%, black 100%);
+  opacity: 0.6;
+  pointer-events: none;
+}
+.notes-frame :is(.c-wax, .s-roll)::before {
+  -webkit-mask: linear-gradient(90deg, rgba(0, 0, 0, 0.3), transparent 36%, transparent 50%, black 100%);
+  mask: linear-gradient(90deg, rgba(0, 0, 0, 0.3), transparent 36%, transparent 50%, black 100%);
+}
+.notes-frame :is(.m-cardioid, .b2, .f-film)::after,
+.notes-frame .nf-prop :is(.c-wax, .q-well, .o-ball, .a-disc)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--nf-noise) 0 0 / 220px;
+  mix-blend-mode: soft-light;
+  opacity: 0.55;
+  pointer-events: none;
+}
+.notes-frame.is-thumb::after { opacity: 0.25; }

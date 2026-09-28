@@ -1266,6 +1266,7 @@ export const SiteEssayNotePage: React.FC<{
         <>
           <div className="ng-backdrop" aria-hidden>
             <span className="ng-grid" />
+            <span className="ng-grain" />
             <span className="ng-arc a1" /><span className="ng-arc a2" /><span className="ng-arc a3" />
           </div>
           <NotesGrimoireCover formula="φ = (1 + √5) / 2 ✦ e^(iπ) + 1 = 0 ✦ zₙ₊₁ = zₙ² + c ✦ y = a · cosh(x / a) ✦ " />
