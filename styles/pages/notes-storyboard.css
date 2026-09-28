@@ -293,3 +293,32 @@
   .notes-grimoire .notes-sb-stage .notes-frame { transform: none; }
   .notes-grimoire :is(.nf-main, .nf-prop, .nf-circle-wrap, .nf-rays) { translate: none; }
 }
+
+/* dimensional grain on the page: paper fibre on the parchment thesis, and a very
+   faint fixed grain behind the content so the page reads as a printed sheet */
+.notes-grimoire .notes-article-thesis::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    var(--ng-noise) 0 0 / 160px,
+    repeating-linear-gradient(83deg, transparent 0 11px, color-mix(in srgb, var(--notes-accent-ink) 5%, transparent) 11px 12px);
+  mix-blend-mode: soft-light;
+  opacity: 0.7;
+  pointer-events: none;
+}
+.ng-backdrop .ng-grain {
+  inset: 0;
+  background: var(--ng-noise) 0 0 / 200px;
+  mix-blend-mode: soft-light;
+  opacity: 0.35;
+}
+.ng-seal {
+  background:
+    radial-gradient(circle, rgba(60, 40, 10, 0.55) 0 30%, transparent 36%) 0 0 / 4px 4px,
+    repeating-radial-gradient(circle at 50% 50%, rgba(255, 255, 255, .16) 0 1px, transparent 1px 4px),
+    radial-gradient(circle at 34% 30%, #f7dc93, #c7962f 55%, #86601b);
+}
+/* dark pages: soft-light grain lifts near-black toward grey, so keep it faint */
+:root[data-theme="dark"] .ng-backdrop .ng-grain { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.6 0 0 0 -0.62'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") 0 0 / 200px; mix-blend-mode: normal; opacity: 0.55; }
