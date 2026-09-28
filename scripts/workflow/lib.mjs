@@ -19,7 +19,8 @@ export function command(commandName, args, options = {}) {
 
   const response = {
     ok: result.status === 0,
-    stdout: (result.stdout ?? '').trim(),
+    // raw:保留首行行首空白(`git status --short` 的 ` M` 与 `M ` 含义不同,trim 会把第一行吃成「已暂存」的样子)
+    stdout: options.raw ? (result.stdout ?? '').replace(/\n+$/u, '') : (result.stdout ?? '').trim(),
     stderr: (result.stderr ?? '').trim(),
     status: result.status,
   };
@@ -156,7 +157,7 @@ export function uniqueBranchName(title, date = new Date()) {
 }
 
 export function statusLines() {
-  const status = output('git', ['status', '--short']);
+  const status = command('git', ['status', '--short'], { capture: true, raw: true }).stdout;
   return status ? status.split('\n') : [];
 }
 
@@ -186,6 +187,21 @@ export function derivedToStage({ dirtyBefore, dirtyAfter, derived = DERIVED_FILE
   const before = new Set(dirtyBefore);
   const after = new Set(dirtyAfter);
   return derived.filter((file) => after.has(file) && !before.has(file));
+}
+
+// 每个派生文件由哪些源文件生成。事先有未暂存改动的派生文件不会被替人暂存;
+// 若这次暂存的正是它的源文件,提交里就会缺一份重新生成的派生文件,CI 的 --check 必红。
+export const DERIVED_SOURCES = {
+  'generated/content.ts': (file) => file.startsWith('wiki/'),
+  'logs/index.md': (file) => /^logs\/\d{4}-\d{2}\.md$/u.test(file),
+};
+
+export function staleDerived({ dirtyBefore, staged, sources = DERIVED_SOURCES }) {
+  const before = new Set(dirtyBefore);
+  const stagedSet = new Set(staged);
+  return Object.entries(sources)
+    .filter(([derived, isSource]) => before.has(derived) && !stagedSet.has(derived) && staged.some(isSource))
+    .map(([derived]) => derived);
 }
 
 export function nothingStagedMessage(changedLines) {

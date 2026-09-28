@@ -5,6 +5,7 @@ import {
   branchName,
   branchType,
   derivedToStage,
+  staleDerived,
   nothingStagedMessage,
   extractPullRequest,
   extractWorkflowRun,
@@ -83,3 +84,21 @@ test('GitHub response helpers select the relevant objects', () => {
   );
 });
 
+
+test('staleDerived flags pre-dirty generated files whose sources are being committed', () => {
+  // 派生文件事先就脏、这次又暂存了它的源文件 → 提交里的派生文件会过期,必须拦下
+  assert.deepEqual(
+    staleDerived({ dirtyBefore: ['generated/content.ts'], staged: ['wiki/pages/a.md', 'logs/entries/x.md'] }),
+    ['generated/content.ts'],
+  );
+  assert.deepEqual(staleDerived({ dirtyBefore: ['logs/index.md'], staged: ['logs/2026-09.md'] }), ['logs/index.md']);
+  // 源文件没动、派生文件本身已暂存、或事先干净,都不拦
+  assert.deepEqual(staleDerived({ dirtyBefore: ['generated/content.ts'], staged: ['App.tsx'] }), []);
+  assert.deepEqual(
+    staleDerived({ dirtyBefore: ['generated/content.ts'], staged: ['wiki/pages/a.md', 'generated/content.ts'] }),
+    [],
+  );
+  assert.deepEqual(staleDerived({ dirtyBefore: [], staged: ['wiki/pages/a.md'] }), []);
+  // 条目文件(logs/entries/)不进索引,不算 logs/index.md 的源
+  assert.deepEqual(staleDerived({ dirtyBefore: ['logs/index.md'], staged: ['logs/entries/2026-09-29-x.md'] }), []);
+});
