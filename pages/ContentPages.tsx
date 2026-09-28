@@ -3,6 +3,7 @@ import { siteEssayNotes, wikiEntries } from '../generated/content';
 import type { CssArtComponent } from '../components/css-art/index';
 import { WikiBackgroundMusicCssIcon, WikiButtonFeedbackCssIcon, WikiFirebaseStorageCssIcon, WikiRagFlowCssIcon, WikiSkillsCssIcon, WikiViteCssIcon } from '../components/css-art/index';
 import { HeaderControls, joinBasePath, resolveAssetPath, type Language, type Theme, type ThemePreference } from '../app/shared';
+import { NotesReadingBar, NotesRecap, renderKeySentences, useNotesReading } from '../components/NotesReading';
 import { ArrowDownRight, ArrowLeft, ArrowUpRight, Bookmark, Brain, Copy, Database, GitBranch, Layers, MessageSquare, Plus, Search, SearchCheck, Send, SlidersHorizontal, TrendingUp, UserRound } from 'lucide-react';
 
 const GUEST_TOPIC_STORAGE_KEY = 'eden-guest-topic-board';
@@ -727,6 +728,10 @@ export const WikiPage: React.FC<{
   const [skillDrafts, setSkillDrafts] = React.useState<SkillDraft[]>(() => readStoredSkillDrafts());
   const latestDraft = entry ? skillDrafts.find((draft) => draft.sourceSlug === entry.slug) : undefined;
   const isSkillsIndex = !entry || entry.slug === 'skills';
+  const noteTitles = entry ? entry.sections.map((section) => section.title[language]) : [];
+  const noteSectionId = (index: number) => `sec-${entry?.slug ?? 'wiki'}-${index + 1}`;
+  const noteRootRef = React.useRef<HTMLDivElement>(null);
+  const noteReading = useNotesReading(noteRootRef, `${entry?.slug ?? ''}-${language}-${isPublishedNote}`);
   const highlightSections = entry
     ? entry.sections.slice(0, 3).map((section) => ({
         title: section.title[language],
@@ -745,7 +750,7 @@ export const WikiPage: React.FC<{
 
   if (entry && isPublishedNote) {
     return (
-      <div className={`page-shell notes-article-page ${getWikiToneClassName(entry.slug)} min-h-screen`}>
+      <div ref={noteRootRef} className={`page-shell notes-article-page ${getWikiToneClassName(entry.slug)} min-h-screen`}>
         <main className="notes-article-main">
           <div className="notes-article-island">
             <div className="notes-topbar">
@@ -764,6 +769,8 @@ export const WikiPage: React.FC<{
               />
             </div>
 
+            <NotesReadingBar titles={noteTitles} active={noteReading.active} progress={noteReading.progress} language={language} sectionId={noteSectionId} />
+
             <header className="notes-article-hero">
               <div className="notes-article-mark">
                 <WikiEntryVisual entry={entry} language={language} variant="note" />
@@ -774,24 +781,29 @@ export const WikiPage: React.FC<{
             </header>
 
             <article className="notes-article-body">
-              <blockquote className="notes-article-thesis">
-                <span>{isZh ? 'Core thesis' : 'Core thesis'}</span>
-                <p>{entry.thesis[language]}</p>
+              <blockquote className="notes-article-thesis notes-reveal">
+                <span>{isZh ? '一句话结论' : 'Core thesis'}</span>
+                <p><mark className="notes-thesis-text">{entry.thesis[language]}</mark></p>
               </blockquote>
 
               <div className="notes-article-sections">
                 {entry.sections.map((section, index) => (
-                  <section key={section.title.en} className="notes-article-section">
-                    <div className="notes-article-section-number">{String(index + 1).padStart(2, '0')}</div>
+                  <section key={section.title.en} id={noteSectionId(index)} data-note-section className="notes-article-section notes-reveal">
+                    <div className="notes-article-section-number"><span>{String(index + 1).padStart(2, '0')}</span></div>
                     <div>
                       <h2>{section.title[language]}</h2>
                       <div className="notes-article-points">
-                        {section.points[language].map((point) => <p key={point}>{point}</p>)}
+                        {section.points[language].map((point, pIndex) => (
+                          <p key={point} className="notes-reveal" style={{ '--i': pIndex } as React.CSSProperties}>
+                            {renderKeySentences(point, (rest) => rest)}
+                          </p>
+                        ))}
                       </div>
                     </div>
                   </section>
                 ))}
               </div>
+              <NotesRecap titles={noteTitles} language={language} sectionId={noteSectionId} />
             </article>
 
             <footer className="notes-article-footer">
@@ -1181,8 +1193,21 @@ const renderEssayParagraph = (
   language: Language,
   baseUrl: string,
   seenCites: Set<string>,
+  refLabels: Record<string, string> = {},
 ): React.ReactNode[] =>
-  text.split(/(\[\[(?:note:[^\]]+|\d+)\]\])/g).map((part, index) => {
+  renderKeySentences(text, (rest, keyPrefix) => renderEssayTokens(rest, keyPrefix, slug, language, baseUrl, seenCites, refLabels));
+
+const renderEssayTokens = (
+  text: string,
+  keyPrefix: string,
+  slug: string,
+  language: Language,
+  baseUrl: string,
+  seenCites: Set<string>,
+  refLabels: Record<string, string>,
+): React.ReactNode[] =>
+  text.split(/(\[\[(?:note:[^\]]+|\d+)\]\])/g).map((part, rawIndex) => {
+    const index = `${keyPrefix}-${rawIndex}`;
     const citeMatch = part.match(/^\[\[(\d+)\]\]$/);
     if (citeMatch) {
       const refId = citeMatch[1];
@@ -1191,7 +1216,7 @@ const renderEssayParagraph = (
       const isFirst = !seenCites.has(refId);
       if (isFirst) seenCites.add(refId);
       return (
-        <sup key={`cite-${index}`} className="notes-cite" {...(isFirst ? { id: `cite-${slug}-${refId}` } : {})}>
+        <sup key={`cite-${index}`} className="notes-cite" data-tip={refLabels[refId]} {...(isFirst ? { id: `cite-${slug}-${refId}` } : {})}>
           <a href={`#ref-${slug}-${refId}`} aria-label={language === 'zh' ? `参考资料 ${refId}` : `Reference ${refId}`}>{refId}</a>
         </sup>
       );
@@ -1203,7 +1228,7 @@ const renderEssayParagraph = (
         <a key={`link-${index}`} className="notes-inline-link" href={joinBasePath(baseUrl, `notes/${targetSlug}`)}>{label}</a>
       );
     }
-    return part;
+    return <React.Fragment key={`txt-${index}`}>{part}</React.Fragment>;
   });
 
 export const SiteEssayNotePage: React.FC<{
@@ -1221,9 +1246,14 @@ export const SiteEssayNotePage: React.FC<{
   // Tracks which reference numbers have been rendered, so repeated citations don't
   // emit duplicate anchor ids. Fresh per render (and per language switch).
   const citeSeen = new Set<string>();
+  const refLabels = Object.fromEntries((note.references ?? []).map((ref) => [ref.id, ref.label[language]]));
+  const titles = note.sections.map((section) => section.title[language]);
+  const sectionId = (index: number) => `sec-${note.slug}-${index + 1}`;
+  const rootRef = React.useRef<HTMLDivElement>(null);
+  const { active, progress } = useNotesReading(rootRef, `${note.slug}-${language}`);
 
   return (
-    <div className="page-shell notes-article-page min-h-screen">
+    <div ref={rootRef} className="page-shell notes-article-page min-h-screen">
       <main className="notes-article-main">
         <div className="notes-article-island">
           <div className="notes-topbar">
@@ -1241,6 +1271,8 @@ export const SiteEssayNotePage: React.FC<{
               compactLanguageOnSelection
             />
           </div>
+
+          <NotesReadingBar titles={titles} active={active} progress={progress} language={language} sectionId={sectionId} />
 
           <header className="notes-article-hero">
             <div className="notes-article-mark notes-essay-mark" aria-hidden>ET</div>
@@ -1275,23 +1307,28 @@ export const SiteEssayNotePage: React.FC<{
           </header>
 
           <article className="notes-article-body">
-            <blockquote className="notes-article-thesis">
-              <span>Core thesis</span>
-              <p>{note.thesis[language]}</p>
+            <blockquote className="notes-article-thesis notes-reveal">
+              <span>{isZh ? '一句话结论' : 'Core thesis'}</span>
+              <p><mark className="notes-thesis-text">{note.thesis[language]}</mark></p>
             </blockquote>
             <div className="notes-article-sections">
               {note.sections.map((section, index) => (
-                <section key={section.title.en} className="notes-article-section">
-                  <div className="notes-article-section-number">{String(index + 1).padStart(2, '0')}</div>
+                <section key={section.title.en} id={sectionId(index)} data-note-section className="notes-article-section notes-reveal">
+                  <div className="notes-article-section-number"><span>{String(index + 1).padStart(2, '0')}</span></div>
                   <div>
                     <h2>{section.title[language]}</h2>
                     <div className="notes-article-points">
-                      {section.paragraphs[language].map((paragraph) => <p key={paragraph}>{renderEssayParagraph(paragraph, note.slug, language, baseUrl, citeSeen)}</p>)}
+                      {section.paragraphs[language].map((paragraph, pIndex) => (
+                        <p key={paragraph} className="notes-reveal" style={{ '--i': pIndex } as React.CSSProperties}>
+                          {renderEssayParagraph(paragraph, note.slug, language, baseUrl, citeSeen, refLabels)}
+                        </p>
+                      ))}
                     </div>
                   </div>
                 </section>
               ))}
             </div>
+            <NotesRecap titles={titles} language={language} sectionId={sectionId} />
           </article>
 
           {note.references && note.references.length > 0 && (

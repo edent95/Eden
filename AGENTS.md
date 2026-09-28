@@ -334,6 +334,19 @@ When adding, hiding, renaming, or changing a route:
 - Freshness is per route, not sitewide: Wiki/Notes dates live in Markdown frontmatter (`published` / `updated`), other routes in `seo-routes.ts` (`datePublished` / `dateModified`). `SITE_CONTENT_LASTMOD` is only the homepage date and the fallback, and it must be at least as new as every route's `dateModified`.
 - Share images are route families in `OG_IMAGES` (`public/og/*.jpg`, 1200×630); pick an existing family via `og:` before adding a new file.
 
+## Notes Format (reading motion)
+
+Every Notes article (`/notes/:slug` essays and the Wiki pages published as notes) renders through the shared reading layer in `components/NotesReading.tsx`, styled in the "Notes format" block of `styles/pages/notes.css`. Readers get, automatically:
+
+- a sticky reading bar under the menu: progress line, `03 / 05` counter, current section title, and a section map whose marker slides to the section being read (dots are anchor links);
+- scroll reveals, a section-number pop with a rail that draws down, and the thesis ("一句话结论") underlined by a sweep;
+- citation previews: hovering or focusing `[n]` shows that reference's label in place (desktop);
+- a closing "你刚读完 / What you just read" checklist built from the section titles.
+
+Authoring rule: **every section marks exactly one key sentence with `==…==` in both `en` and `zh`** (essays: `paragraphs`; Wiki notes: `points`). It renders as a highlighter sweep. Pick the line a skimming reader most needs, keep en/zh marks equivalent, keep the mark inside one paragraph, and never split a `[[n]]` / `[[note:…]]` token. `scripts/wiki/lint.mjs` rejects unclosed marks; `seo-prerender.ts` strips them from static HTML (unit-tested).
+
+Motion stays on concrete objects (bar, marker, number, rail, highlighter, ticks); start states only apply after JS adds `.notes-motion-ready`, and everything is off under `prefers-reduced-motion`. Theme colors must use `--theme-page` / `--theme-text-primary` (the older `--eden-paper` / `--eden-ink` names in notes.css are not defined anywhere).
+
 ## Current Wiki Structure
 
 - `raw/`: immutable, commit-safe source inputs.

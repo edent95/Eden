@@ -47,11 +47,11 @@ The JSON block below is the structured bilingual source consumed by the site com
       "paragraphs": {
         "en": [
           "Data creates an easy illusion: one more chart, one more metric, and the answer will appear. But a dashboard can hold a hundred numbers and still leave the user asking, “So what?”",
-          "Numbers show that something moved. Judgment places that movement inside context. A sales drop might come from traffic, conversion, stock, seasonality, or an unusually strong previous month."
+          "Numbers show that something moved. ==Judgment places that movement inside context.== A sales drop might come from traffic, conversion, stock, seasonality, or an unusually strong previous month."
         ],
         "zh": [
           "Data 很容易让人产生一种错觉：只要再多看一点，就会更接近答案。但 dashboard 可以放一百个数字，用户最后还是会问：So what？",
-          "数字只能告诉你某个东西发生了变化。真正的判断，是把这个变化放进 context。Sales 掉了，可能是流量、conversion、库存、淡季，甚至只是上个月刚好太好。"
+          "数字只能告诉你某个东西发生了变化。==真正的判断，是把这个变化放进 context。==Sales 掉了，可能是流量、conversion、库存、淡季，甚至只是上个月刚好太好。"
         ]
       }
     },
@@ -63,11 +63,11 @@ The JSON block below is the structured bilingual source consumed by the site com
       "paragraphs": {
         "en": [
           "Ask what it is compared with, why it changed, who is affected, and whether it deserves action now.",
-          "Good analysis does not deliver the most information. It shortens the distance between seeing and deciding."
+          "Good analysis does not deliver the most information. ==It shortens the distance between seeing and deciding.=="
         ],
         "zh": [
           "看到一个数字，至少要问四件事：跟谁比、为什么变、影响谁，以及现在值得行动还是继续观察。",
-          "好的分析不是给最多 information。它是帮人缩短从「看到」到「决定」之间的距离。"
+          "好的分析不是给最多 information。==它是帮人缩短从「看到」到「决定」之间的距离。=="
         ]
       }
     },
@@ -79,11 +79,11 @@ The JSON block below is the structured bilingual source consumed by the site com
       "paragraphs": {
         "en": [
           "Write four lines: Signal — what changed? Context — why does it matter? Trade-off — what will action cost? Next move — what is the smallest safe step?",
-          "If those four lines are impossible to write, more data may not be the answer. The problem itself may still be unclear."
+          "==If those four lines are impossible to write, more data may not be the answer.== The problem itself may still be unclear."
         ],
         "zh": [
           "我会先写四句话：Signal，什么变了？Context，为什么值得注意？Trade-off，行动会牺牲什么？Next move，现在最小、最安全的下一步是什么？",
-          "如果四句话写不出来，可能还不需要更多 data。可能只是问题本身还没想清楚。"
+          "==如果四句话写不出来，可能还不需要更多 data。==可能只是问题本身还没想清楚。"
         ]
       }
     }

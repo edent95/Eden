@@ -134,11 +134,11 @@ The JSON block below is the structured bilingual source consumed by the site com
       "paragraphs": {
         "en": [
           "After tracing the road to the Iraq War in [[note:iraq-war-evidence-map|the last evidence map]], the next question people ask is whether the Bible sits underneath all of it.",
-          "Start by separating two sentences. \"Religion gives people a worldview\" has a great deal of evidence behind it. \"The Bible is a war plan\" has none. Most of the confusion comes from sliding from the first to the second."
+          "Start by separating two sentences. \"Religion gives people a worldview\" has a great deal of evidence behind it. \"The Bible is a war plan\" has none. ==Most of the confusion comes from sliding from the first to the second.=="
         ],
         "zh": [
           "在[[note:iraq-war-evidence-map|上一张证据地图]]追完伊拉克战争的来路之后，常有人再往下问一层：这一切的底下，是不是《圣经》？",
-          "先把两句话分开。「宗教给人一套世界观」，有大量证据。「《圣经》是战争计划书」，没有。多数混乱，都来自从第一句悄悄滑到第二句。"
+          "先把两句话分开。「宗教给人一套世界观」，有大量证据。「《圣经》是战争计划书」，没有。==多数混乱，都来自从第一句悄悄滑到第二句。=="
         ]
       }
     },
@@ -150,11 +150,11 @@ The JSON block below is the structured bilingual source consumed by the site com
       "paragraphs": {
         "en": [
           "Modern Zionism began as a secular movement; Herzl imagined a secular state[[1]]. Religious Zionism grew alongside it. After 1967, followers of Rabbi Zvi Yehuda Kook read the captured land as a step toward redemption and in 1974 founded Gush Emunim, which built West Bank settlements, often ahead of government policy[[2]].",
-          "That current now sits inside government. The 2022 coalition deal with the Religious Zionism party commits to a policy of applying sovereignty to \"Judea and Samaria,\" the biblical names for the West Bank[[3]]. In October 2023 Netanyahu told troops to \"remember what Amalek has done to you\"; South Africa cited the line at the ICJ, and Israel said it referred to Hamas[[4]]. The quote is real; its meaning is contested."
+          "==That current now sits inside government.== The 2022 coalition deal with the Religious Zionism party commits to a policy of applying sovereignty to \"Judea and Samaria,\" the biblical names for the West Bank[[3]]. In October 2023 Netanyahu told troops to \"remember what Amalek has done to you\"; South Africa cited the line at the ICJ, and Israel said it referred to Hamas[[4]]. The quote is real; its meaning is contested."
         ],
         "zh": [
           "现代锡安主义的起点是世俗的，Herzl 设想的是一个世俗国家[[1]]。宗教锡安主义是并行发展的另一支。1967 年后，Zvi Yehuda Kook 拉比的追随者把新得的土地解读为救赎的一步，1974 年成立「信仰者集团」，常常抢在政府政策之前在西岸建定居点[[2]]。",
-          "这股力量今天在政府里。2022 年与宗教锡安主义党签的联合执政协议，写明要推动对「犹地亚和撒玛利亚」适用主权，那是约旦河西岸的圣经名称[[3]]。2023 年 10 月，内塔尼亚胡对部队说「要记得亚玛力人向你所做的」；南非在国际法院引用这句话，以色列说指的是哈马斯[[4]]。原句是真的，含义有争议。"
+          "==这股力量今天在政府里。==2022 年与宗教锡安主义党签的联合执政协议，写明要推动对「犹地亚和撒玛利亚」适用主权，那是约旦河西岸的圣经名称[[3]]。2023 年 10 月，内塔尼亚胡对部队说「要记得亚玛力人向你所做的」；南非在国际法院引用这句话，以色列说指的是哈马斯[[4]]。原句是真的，含义有争议。"
         ]
       }
     },
@@ -165,11 +165,11 @@ The JSON block below is the structured bilingual source consumed by the site com
       },
       "paragraphs": {
         "en": [
-          "Pew found that 82% of white American evangelicals believe God gave the land of Israel to the Jewish people, against 40% of American Jews[[5]]. That single number breaks the model \"U.S. support for Israel equals Jewish control of America\": the strongest believers in the theology are Christians.",
+          "Pew found that 82% of white American evangelicals believe God gave the land of Israel to the Jewish people, against 40% of American Jews[[5]]. That single number breaks the model \"U.S. support for Israel equals Jewish control of America\": ==the strongest believers in the theology are Christians.==",
           "The belief has institutions. John Hagee founded Christians United for Israel in 2006, and when the U.S. embassy opened in Jerusalem in 2018, the two prayers were given by evangelical pastors, Hagee and Robert Jeffress[[6]]. One of them had said Jews cannot be saved without Christ. Allies can want the same policy for different ultimate reasons."
         ],
         "zh": [
-          "Pew 的调查显示，82% 的美国白人福音派相信神把以色列之地赐给了犹太人，美国犹太人只有 40%[[5]]。光这一个数字，就推翻了「美国亲以色列 = 犹太人控制美国」的模型：最相信这套神学的，是基督徒。",
+          "Pew 的调查显示，82% 的美国白人福音派相信神把以色列之地赐给了犹太人，美国犹太人只有 40%[[5]]。光这一个数字，就推翻了「美国亲以色列 = 犹太人控制美国」的模型：==最相信这套神学的，是基督徒。==",
           "这种信仰有组织。John Hagee 在 2006 年创立「基督徒团结支持以色列」；2018 年美国驻耶路撒冷使馆启用，站上台祷告的是两位福音派牧师，Hagee 和 Robert Jeffress[[6]]。其中一位曾说犹太人不信基督就不能得救。盟友可以要同一个政策，终极理由却不同。"
         ]
       }
@@ -182,11 +182,11 @@ The JSON block below is the structured bilingual source consumed by the site com
       "paragraphs": {
         "en": [
           "The third river needs no scripture at all: Gulf security, energy routes, Iran, bases, alliances, and the neoconservative case for regime change. Its public documents speak of national security and American power, not theology.",
-          "The claim that God told Bush to invade Iraq rests on one Palestinian minister's recollection; the White House called it absurd, and the minister later called it a figure of speech[[7]]. So the line \"Bible → Iraq War\" cannot be drawn. The three rivers do meet, in U.S. Middle East policy, but confluence is not control."
+          "The claim that God told Bush to invade Iraq rests on one Palestinian minister's recollection; the White House called it absurd, and the minister later called it a figure of speech[[7]]. So the line \"Bible → Iraq War\" cannot be drawn. ==The three rivers do meet, in U.S. Middle East policy, but confluence is not control.=="
         ],
         "zh": [
           "第三条河完全不需要经文：海湾安全、能源航道、伊朗、军事基地、盟友体系，再加上新保守派的政权更替主张。它的公开文件讲的是国家安全和美国力量，不是神学。",
-          "「神叫布什打伊拉克」只来自一位巴勒斯坦外长的回忆；白宫称之为荒谬，转述者后来也说那是比喻[[7]]。所以「《圣经》→ 伊拉克战争」这条线画不出来。三条河确实在美国中东政策上相遇，但汇流不等于控制。"
+          "「神叫布什打伊拉克」只来自一位巴勒斯坦外长的回忆；白宫称之为荒谬，转述者后来也说那是比喻[[7]]。所以「《圣经》→ 伊拉克战争」这条线画不出来。==三条河确实在美国中东政策上相遇，但汇流不等于控制。=="
         ]
       }
     },
@@ -198,11 +198,11 @@ The JSON block below is the structured bilingual source consumed by the site com
       "paragraphs": {
         "en": [
           "Ordinary interests can be split: one side offers a million, the other wants two, and they meet at one and a half. \"This land was given by God\" has no one-and-a-half version. A 2007 PNAS study found that offering money to compromise on sacred values made Israelis and Palestinians angrier, while symbolic concessions calmed them[[8]].",
-          "Delete every religion tomorrow and refugees, occupation, borders, settlements, Jerusalem, Gaza, statehood and water are all still there. Religion is not a sufficient explanation of the conflict. It can be an amplifier."
+          "Delete every religion tomorrow and refugees, occupation, borders, settlements, Jerusalem, Gaza, statehood and water are all still there. ==Religion is not a sufficient explanation of the conflict. It can be an amplifier.=="
         ],
         "zh": [
           "普通利益可以分：一边出 100 万，一边要 200 万，最后在 150 万成交。「这是神给的地」没有 150 万的版本。2007 年一项 PNAS 研究发现，对神圣价值给钱让人妥协，以色列人和巴勒斯坦人都更愤怒；象征性的让步反而让人平静[[8]]。",
-          "就算明天删掉所有宗教，难民、占领、边界、定居点、耶路撒冷、加沙、建国、水资源都还在。宗教不是冲突的充分解释，但它可能是放大器。"
+          "就算明天删掉所有宗教，难民、占领、边界、定居点、耶路撒冷、加沙、建国、水资源都还在。==宗教不是冲突的充分解释，但它可能是放大器。=="
         ]
       }
     },
@@ -214,11 +214,11 @@ The JSON block below is the structured bilingual source consumed by the site com
       "paragraphs": {
         "en": [
           "The I Ching says \"one yin, one yang: that is the Way,\" and in the taiji diagram each half carries a dot of the other. The point is not that good and bad are balanced, but that each side already contains its opposite. Pure black and pure white are not the normal state.",
-          "Read this story that way and every force is mixed. The same Bible says \"beat swords into plowshares\" and \"destroy Amalek.\" Rabin commanded the army in 1967, signed the Oslo Accords, and was killed by a religious nationalist. The neoconservatives wrote \"spread democracy\" and got a war whose reasons collapsed. The real question is not whether religion is good or bad, but which half people choose to justify what they already want to do."
+          "Read this story that way and every force is mixed. The same Bible says \"beat swords into plowshares\" and \"destroy Amalek.\" Rabin commanded the army in 1967, signed the Oslo Accords, and was killed by a religious nationalist. The neoconservatives wrote \"spread democracy\" and got a war whose reasons collapsed. ==The real question is not whether religion is good or bad, but which half people choose to justify what they already want to do.=="
         ],
         "zh": [
           "《易经》说「一阴一阳之谓道」。太极图里，黑的一半有个白点，白的一半有个黑点。它说的不是好坏各半，而是任何一方里面本来就含着另一方。纯黑和纯白都不是常态。",
-          "这样看这个故事，每股力量都是混合的。同一部《圣经》里，有「将刀打成犁头」，也有「灭绝亚玛力」。拉宾是 1967 年的总参谋长，也签了奥斯陆协议，最后死于一个宗教民族主义者之手。新保守派写着「推广民主」，换来一场理由不成立的战争。真正该问的不是宗教好不好，而是人会挑哪一半，去为已经想做的事找理由。"
+          "这样看这个故事，每股力量都是混合的。同一部《圣经》里，有「将刀打成犁头」，也有「灭绝亚玛力」。拉宾是 1967 年的总参谋长，也签了奥斯陆协议，最后死于一个宗教民族主义者之手。新保守派写着「推广民主」，换来一场理由不成立的战争。==真正该问的不是宗教好不好，而是人会挑哪一半，去为已经想做的事找理由。=="
         ]
       }
     },
@@ -230,11 +230,11 @@ The JSON block below is the structured bilingual source consumed by the site com
       "paragraphs": {
         "en": [
           "The Daodejing warns that once everyone knows beauty as beauty, ugliness is already there. Raise any value to absolute truth, whether God, nation, revolution, security, or even perfect peace, and its opponents become enemies of that truth. The flags differ; the structure is the same.",
-          "The I Ching's top line of Qian reads \"the dragon that climbs too high will have regrets,\" and the Daodejing calls weapons \"instruments of ill omen, used only when there is no choice.\" The danger is not God. It is anyone who announces they speak for absolute truth. Black within white is normal; whoever claims to be pure white deserves a second look."
+          "The I Ching's top line of Qian reads \"the dragon that climbs too high will have regrets,\" and the Daodejing calls weapons \"instruments of ill omen, used only when there is no choice.\" ==The danger is not God. It is anyone who announces they speak for absolute truth.== Black within white is normal; whoever claims to be pure white deserves a second look."
         ],
         "zh": [
           "《道德经》说：「天下皆知美之为美，斯恶已。」把任何一个价值抬成绝对真理，神、国家、革命、安全，甚至绝对的和平，反对它的人就成了真理的敌人。旗帜不同，结构一样。",
-          "《易经》乾卦上九是「亢龙有悔」；《道德经》说「兵者不祥之器，不得已而用之」。危险的不是神，而是宣布自己代表绝对真理的人。黑中有白是常态；谁说自己是纯白的，就多看他一眼。"
+          "《易经》乾卦上九是「亢龙有悔」；《道德经》说「兵者不祥之器，不得已而用之」。==危险的不是神，而是宣布自己代表绝对真理的人。==黑中有白是常态；谁说自己是纯白的，就多看他一眼。"
         ]
       }
     }

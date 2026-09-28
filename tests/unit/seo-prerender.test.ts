@@ -4,6 +4,7 @@ import { siteEssayNotes, wikiEntries } from '../../generated/content.ts';
 import { OG_IMAGES, ROUTE_SEO, SITE_CONTENT_LASTMOD } from '../../seo-routes.ts';
 import {
   buildStaticJsonLd,
+  cleanInlineTokens,
   getStaticRouteContent,
   routeDates,
   routeLastmod,
@@ -83,5 +84,17 @@ test('indexable project pages no longer share one static template', () => {
       const body = content.sections.flatMap((section) => section.paragraphs).join(' ');
       assert.ok(body.length >= (language === 'zh' ? 150 : 500), `${entry.path} (${language}) body is ${body.length} chars`);
     }
+  }
+});
+
+test('static note copy strips Notes-format tokens (key sentences, citations, note links)', () => {
+  assert.equal(
+    cleanInlineTokens('A ==key sentence==[[2]] and [[note:mbi-case|MBI]] here.'),
+    'A key sentence and MBI here.',
+  );
+  for (const note of siteEssayNotes) {
+    const content = getStaticRouteContent(route(`/notes/${note.slug}`), 'zh');
+    const body = JSON.stringify(content);
+    assert.ok(!body.includes('=='), `${note.slug} static body leaks a == mark`);
   }
 });

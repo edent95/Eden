@@ -47,11 +47,11 @@ The JSON block below is the structured bilingual source consumed by the site com
       "paragraphs": {
         "en": [
           "Management language often sounds like this: the employee is not proactive, the user has no patience, the team cannot execute. These statements may be true, but they do not solve anything.",
-          "When the same failure repeats, blaming the person is often a way to avoid designing the system."
+          "==When the same failure repeats, blaming the person is often a way to avoid designing the system.=="
         ],
         "zh": [
           "做 management 的时候，我们很喜欢说：这个人不够主动、那个用户没有耐心、这个团队执行力不行。可能都是真的，但没有什么用。",
-          "如果一个问题会不断重复，单纯怪人，通常只是在逃避 system design。"
+          "==如果一个问题会不断重复，单纯怪人，通常只是在逃避 system design。=="
         ]
       }
     },
@@ -62,11 +62,11 @@ The JSON block below is the structured bilingual source consumed by the site com
       },
       "paragraphs": {
         "en": [
-          "People forget, protect their status, follow the easier path, and copy others under uncertainty. These are not bugs. They are operating conditions.",
+          "People forget, protect their status, follow the easier path, and copy others under uncertainty. ==These are not bugs. They are operating conditions.==",
           "An unclear button produces random clicks. Unclear ownership makes teams wait. Rewards based only on outcomes make people beautify numbers. Punishing every mistake teaches people to hide problems."
         ],
         "zh": [
-          "人会懒、会忘记、会保护自己、会选择比较容易的路，也会在不确定的时候跟着别人走。这些不是 bug，而是 operating condition。",
+          "人会懒、会忘记、会保护自己、会选择比较容易的路，也会在不确定的时候跟着别人走。==这些不是 bug，而是 operating condition。==",
           "按钮不清楚，用户就会乱点。责任不清楚，团队就会互相等。奖励只看结果，人就会把数字做漂亮。犯错只会被骂，人就会开始隐藏问题。"
         ]
       }
@@ -79,11 +79,11 @@ The JSON block below is the structured bilingual source consumed by the site com
       "paragraphs": {
         "en": [
           "What immediate benefit does the action give? What does the person fear losing? Which path is easiest? When something fails, does the system help correction or encourage concealment?",
-          "Understanding human nature is not permission to manipulate. It is a way to make fewer assumptions, blame less, and build something people can actually use."
+          "==Understanding human nature is not permission to manipulate.== It is a way to make fewer assumptions, blame less, and build something people can actually use."
         ],
         "zh": [
           "我会问：这个动作对他有什么好处？他最怕失去什么？最容易走的路是哪一条？出错时，system 会帮助修正，还是鼓励隐藏？",
-          "理解人性，不是为了 manipulate people。是为了少一点假设，少一点责怪，多一点真的可以用的设计。"
+          "==理解人性，不是为了 manipulate people。==是为了少一点假设，少一点责怪，多一点真的可以用的设计。"
         ]
       }
     }
