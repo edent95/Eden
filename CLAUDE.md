@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Read first
 
-`AGENTS.md` is the operating schema for this repo (tone, content voice, CSS-art rules, route/SEO rules, logging duty). It is long but authoritative — read it before non-trivial work instead of duplicating its rules here. Then `soul.md` (collaboration preferences), `state/current.md` (current architecture + known debt), `logs/index.md` (recent changes).
+`AGENTS.md` is the operating schema for this repo (tone, content voice, CSS-art rules, route/SEO rules, logging duty). It is long but authoritative — read it before non-trivial work instead of duplicating its rules here. Then `soul.md` (collaboration preferences), `state/current.md` (current architecture + known debt), `logs/index.md` + the newest `logs/entries/` files (recent changes).
 
 Default reply language is Chinese.
 
@@ -30,7 +30,7 @@ Content and generated files:
 
 ```bash
 npm run wiki:build     # wiki/*.md -> generated/content.ts (never hand-edit the output)
-npm run log:index      # regenerate logs/index.md after appending to logs/YYYY-MM.md
+npm run log:append < entry.md   # one new file in logs/entries/ per change entry
 ```
 
 Operator workflow (protected path — `publish` never pushes `main` directly):
@@ -78,9 +78,9 @@ There is still no router library: `App` reads `window.location.pathname`, strips
 
 ## Logging is a build gate
 
-Any changed project file (outside `dist/`) requires a new entry appended to the current `logs/YYYY-MM.md` (month resolved in `Asia/Kuala_Lumpur`), followed by `npm run log:index`. `check-log.mjs` reads only the *last* heading's section; new entries use the rag-v1 fields (`type` / `scope` / `impact` / `changed` / `ripples` / `verified` / `keywords`), and the older 改动 / 原因 / 影响 / 验证 / 后续 form still passes for historical entries.
+Any changed project file (outside `dist/`) requires a new change entry, created with `npm run log:append < entry.md` (stdin starts with `### Title`). Since 2026-09-28 each entry is **its own file** `logs/entries/<YYYY-MM-DD>-<HHMMSS>-<4 hex>.md` (date/time in `Asia/Kuala_Lumpur`), so parallel branches/agents never edit the same log file and PRs stop conflicting on it. The script writes the `## YYYY-MM-DD — <title>` heading and a collision-free ID `E-<date>-<HHMMSS>-<4 hex>`; do not hand-write, rename, or gitignore these files. `check-log.mjs` reads the whole new entry file; new entries use the rag-v1 fields (`type` / `scope` / `impact` / `changed` / `ripples` / `verified` / `keywords`).
 
-**Give every entry a `## YYYY-MM-DD — <title>` section heading above the `### [E-…]` line.** `build-log-index.mjs` only collects headings whose text starts with a date, so an entry filed under a previous day's heading leaves `logs/index.md` unchanged and `verify:log` fails with "The generated logs/index.md was not updated" — the most common way this gate goes red. `log.md` is a legacy pointer and must not receive entries. `log 2.md` and `soul 2.md` are dead snapshots — do not read or update them.
+The monthly `logs/2026-*.md` files and `logs/index.md` are frozen history — do not append to them (entry files are deliberately not in the index, or every PR would rewrite it). Recent work: `ls logs/entries | tail -20`. `log.md` is a legacy pointer and must not receive entries. `log 2.md` and `soul 2.md` are dead snapshots — do not read or update them.
 
 ## Verification style
 

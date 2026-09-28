@@ -10,7 +10,7 @@
 # 1. 开始任务
 npm run task:new -- "更新首页文案"
 
-# 2. 修改代码，并在 logs/YYYY-MM.md 追加结构化记录
+# 2. 修改代码，并用 npm run log:append < entry.md 在 logs/entries/ 新建一条结构化记录
 
 # 3. 发布
 npm run publish -- "更新首页文案"

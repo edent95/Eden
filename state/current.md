@@ -30,7 +30,7 @@ Last reviewed: 2026-09-14
 - Route and SEO metadata: `seo-routes.ts`.
 - Shared navigation: `HeaderControls` in `App.tsx` plus `styles/shared.css`.
 - CSS art inventory: `css-art.registry.ts` and `docs/css-art-system.md`.
-- Change history: `logs/index.md` plus append-only monthly `logs/YYYY-MM.md` archives.
+- Change history: new entries are one file each in `logs/entries/` (`npm run log:append`); `logs/index.md` indexes the frozen monthly `logs/YYYY-MM.md` archives.
 
 ## Known Structural Debt
 
