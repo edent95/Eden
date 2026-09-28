@@ -992,61 +992,97 @@ export const IGamingFishingArt: CssArtComponent = ({ label }) => <IGamingFloorAr
 export const IGamingLotteryArt: CssArtComponent = ({ label }) => <IGamingFloorArt label={label} variant="lottery" />;
 
 /* ---- Notes storyboard frames (styles/css-art/notes-storyboard.css) ----
-   One engraved scene per section of a Notes article. `active` plays the
-   scene's action (state-driven, not autoplay); `thumb` renders the finished
-   state with fewer layers and no motion. */
+   Ancient-grimoire engravings: every frame has one main subject inside a
+   magic circle, two supporting props, and a formula engraved around the
+   circle like runes. `active` plays the scene's action (state-driven, not
+   autoplay); `thumb` renders the finished state with fewer layers and no motion. */
 export type NotesStoryMotif = 'tiers' | 'papers' | 'columns' | 'chain' | 'vesica';
+type NotesStoryProp = 'candle' | 'quill' | 'scroll' | 'orb' | 'glass' | 'key' | 'astro';
 
-const notesStoryScenes: Record<NotesStoryMotif, React.ReactNode> = {
-  tiers: (
-    <>
-      <span className="nf-post" />
-      <span className="nf-tier nf-tier-1 nf-cross nf-line" />
-      <span className="nf-tier nf-tier-2 nf-line" />
-      <span className="nf-tier nf-tier-3 nf-line" />
-      <span className="nf-star" style={{ left: '50%', top: '27%' }} />
-    </>
-  ),
-  papers: (
-    <>
-      <span className="nf-arc" />
-      <span className="nf-paper nf-paper-1" />
-      <span className="nf-paper nf-paper-2" />
-      <span className="nf-paper nf-paper-3" />
-      <span className="nf-seal" />
-    </>
-  ),
-  columns: (
-    <>
-      <span className="nf-col nf-col-l" />
-      <span className="nf-col nf-col-r" />
-      <span className="nf-crack nf-crack-l" />
-      <span className="nf-crack nf-crack-r" />
-      <span className="nf-lintel nf-cross nf-line" />
-    </>
-  ),
-  chain: (
-    <>
-      <span className="nf-group nf-group-l">
-        <span className="nf-link nf-link-l" />
-        <span className="nf-link nf-half nf-half-l" />
-      </span>
-      <span className="nf-group nf-group-r">
-        <span className="nf-link nf-half nf-half-r" />
-        <span className="nf-link nf-link-r" />
-      </span>
-      <span className="nf-gap" />
-    </>
-  ),
-  vesica: (
-    <>
-      <span className="nf-circle nf-circle-l" />
-      <span className="nf-circle nf-circle-r" />
-      <span className="nf-lens" />
-      <span className="nf-star" style={{ left: '50%', top: '14%' }} />
-    </>
-  ),
+const notesStoryProps: Record<NotesStoryProp, React.ReactNode> = {
+  candle: (<><span className="c-dish" /><span className="c-wax" /><span className="c-drip" /><span className="c-wick" /><span className="c-flame" /></>),
+  quill: (<><span className="q-shaft" /><span className="q-feather" /><span className="q-well" /><span className="q-neck" /></>),
+  scroll: (<><span className="s-sheet" /><span className="s-roll s-bottom" /><span className="s-roll s-top" /><span className="s-ribbon" /></>),
+  orb: (<><span className="o-stand" /><span className="o-ball" /><span className="o-mist" /></>),
+  glass: (<><span className="g-post g-post-l" /><span className="g-post g-post-r" /><span className="g-body" /><span className="g-in" /><span className="g-sand-top" /><span className="g-sand-bot" /><span className="g-cap g-top" /><span className="g-cap g-bot" /></>),
+  key: (<span className="k-body"><span className="k-bow" /><span className="k-shaft" /><span className="k-bit1" /><span className="k-bit2" /></span>),
+  astro: (<><span className="a-stand" /><span className="a-foot" /><span className="a-disc" /><span className="a-rete" /></>),
 };
+
+const notesStoryPropClass: Record<NotesStoryProp, string> = {
+  candle: 'nf-candle', quill: 'nf-quill', scroll: 'nf-scroll', orb: 'nf-orb', glass: 'nf-glass', key: 'nf-key', astro: 'nf-astro',
+};
+
+const notesStoryScenes: Record<NotesStoryMotif, { main: string; body: React.ReactNode; props: [NotesStoryProp, NotesStoryProp]; formula: string }> = {
+  // sorting claims: trays shrink by the golden ratio
+  tiers: {
+    main: 'nf-tiers',
+    props: ['quill', 'candle'],
+    formula: 'φ = (1 + √5) / 2 ✦ φ² = φ + 1 ✦ 1/φ = φ − 1 ✦ ',
+    body: (<>
+      <span className="t-post" /><span className="t-finial" /><span className="t-foot nf-line nf-hatch" />
+      <span className="t-tray t-1 nf-cross nf-line" /><span className="t-tray t-2 nf-hatch nf-line" /><span className="t-tray t-3 nf-line" />
+      <span className="t-orb" style={{ left: '38%', top: '64%' }} /><span className="t-orb" style={{ left: '58%', top: '45.5%' }} /><span className="t-orb" style={{ left: '47%', top: '28.5%' }} />
+    </>),
+  },
+  // the documents: pages scaled by φ float out of a grimoire along a golden spiral
+  papers: {
+    main: 'nf-book',
+    props: ['scroll', 'quill'],
+    formula: 'r = a·e^(bθ) ✦ b = 2 ln φ / π ✦ F(n+1) / F(n) → φ ✦ ',
+    body: (<>
+      <span className="b-page p-1" /><span className="b-page p-2" /><span className="b-page p-3" />
+      <span className="b-left" /><span className="b-right" /><span className="b-spine" /><span className="b-cover" /><span className="b-ribbon" /><span className="b-seal" />
+    </>),
+  },
+  // the case that fell: Euler's buckling load for a column
+  columns: {
+    main: 'nf-temple',
+    props: ['orb', 'glass'],
+    formula: 'P = π² E I / L² ✦ σ = F / A ✦ ',
+    body: (<>
+      <span className="c-step nf-line nf-hatch" />
+      <span className="c-col c-l" /><span className="c-col c-r" />
+      <span className="c-crack k-l" /><span className="c-crack k-r" />
+      <span className="c-lintel nf-cross nf-line" /><span className="c-pediment" />
+    </>),
+  },
+  // the missing link: lemniscate chain links
+  chain: {
+    main: 'nf-chain',
+    props: ['key', 'candle'],
+    formula: 'r² = a² cos 2θ ✦ (x² + y²)² = a²(x² − y²) ✦ ',
+    body: (<>
+      <span className="l-group g-l"><span className="l-link l-a" /><span className="l-link l-b" /><span className="l-link l-mid l-half-l" /></span>
+      <span className="l-group g-r"><span className="l-link l-mid l-half-r" /><span className="l-link l-c" /><span className="l-link l-d" /></span>
+      <span className="l-gap" />
+    </>),
+  },
+  // the overlap: vesica piscis, two circles whose centres are one radius apart
+  vesica: {
+    main: 'nf-vesica',
+    props: ['candle', 'astro'],
+    formula: 'd = r ✦ h = √3 · r ✦ A = (2π/3 − √3/2) r² ✦ ',
+    body: (<>
+      <span className="v-c v-l" /><span className="v-c v-r" /><span className="v-lens" /><span className="v-axis" />
+    </>),
+  },
+};
+
+/** Spreads a formula around the magic circle, repeating it to fill the ring. */
+const NotesStoryRunes: React.FC<{ formula: string }> = ({ formula }) => {
+  const target = 72;
+  let text = formula;
+  while (text.length < target) text += formula;
+  const chars = Array.from(text.slice(0, target));
+  return (
+    <span className="nf-runes" aria-hidden style={{ '--step': `${360 / chars.length}deg` } as React.CSSProperties}>
+      {chars.map((char, index) => <i key={index} style={{ '--k': index } as React.CSSProperties}>{char}</i>)}
+    </span>
+  );
+};
+
+const NOTES_STORY_SPARKS: Array<[string, string]> = [['24%', '18%'], ['76%', '14%'], ['31%', '70%'], ['70%', '66%'], ['8%', '40%'], ['92%', '38%']];
 
 export const NotesStoryFrame: React.FC<{
   motif: NotesStoryMotif;
@@ -1054,19 +1090,33 @@ export const NotesStoryFrame: React.FC<{
   active?: boolean;
   thumb?: boolean;
   stage?: boolean;
-}> = ({ motif, label, active = false, thumb = false, stage = false }) => (
-  <div
-    className={`engraved-art engraved-tone-ink notes-frame nf-${motif}${active || thumb ? ' is-active' : ''}${thumb ? ' is-thumb' : ''}${stage ? ' is-stage' : ''}`}
-    role="img"
-    aria-label={label}
-  >
-    <span className="nf-rays" />
-    <span className="nf-rosette" />
-    <span className="nf-golden" />
-    <span className="nf-ground" />
-    {notesStoryScenes[motif]}
-  </div>
-);
+}> = ({ motif, label, active = false, thumb = false, stage = false }) => {
+  const scene = notesStoryScenes[motif];
+  return (
+    <div
+      className={`engraved-art engraved-tone-ink notes-frame nf-${motif}${active || thumb ? ' is-active' : ''}${thumb ? ' is-thumb' : ''}${stage ? ' is-stage' : ''}`}
+      role="img"
+      aria-label={label}
+    >
+      <span className="nf-vignette" />
+      <span className="nf-rays" />
+      <span className="nf-ground" />
+      <span className="nf-corner nf-corner-tl" /><span className="nf-corner nf-corner-tr" /><span className="nf-corner nf-corner-bl" /><span className="nf-corner nf-corner-br" />
+      <span className="nf-moon" />
+      {NOTES_STORY_SPARKS.map(([left, top]) => <span key={`${left}${top}`} className="nf-spark" style={{ left, top }} />)}
+      <span className="nf-circle-wrap">
+        <span className="nf-ring-outer" />
+        <span className="nf-ring-ticks" />
+        <span className="nf-ring-inner" />
+        <span className="nf-pentagram">{[0, 1, 2, 3, 4].map((k) => <i key={k} style={{ '--k': k } as React.CSSProperties} />)}</span>
+        {!thumb && <NotesStoryRunes formula={scene.formula} />}
+      </span>
+      <span className={`nf-main ${scene.main}`}>{scene.body}</span>
+      <span className={`nf-prop nf-prop-l ${notesStoryPropClass[scene.props[0]]}`}>{notesStoryProps[scene.props[0]]}</span>
+      <span className={`nf-prop nf-prop-r ${notesStoryPropClass[scene.props[1]]}`}>{notesStoryProps[scene.props[1]]}</span>
+    </div>
+  );
+};
 
 export const NotesStoryTiersArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="tiers" label={label} thumb />;
 export const NotesStoryPapersArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="papers" label={label} thumb />;
