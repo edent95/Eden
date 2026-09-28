@@ -1056,6 +1056,8 @@ type SiteEssayNote = {
   }>;
   // Optional link back to the full original source page (served from public/).
   originalSource?: { url: string; label: Record<Language, string> };
+  // Optional second link to a story-style retelling of the same source (served from public/).
+  storySource?: { url: string; label: Record<Language, string> };
   // Optional reference list. Paragraphs may embed [[n]] tokens that link to the
   // matching reference id, and each reference renders a ↩ backlink to that spot.
   references?: Array<{ id: string; url: string; label: Record<Language, string> }>;
@@ -1256,6 +1258,17 @@ export const SiteEssayNotePage: React.FC<{
                 rel="noopener"
               >
                 {note.originalSource.label[language]}
+                <span aria-hidden> ↗</span>
+              </a>
+            )}
+            {note.storySource && (
+              <a
+                className="notes-source-original"
+                href={resolveAssetPath(baseUrl, note.storySource.url)}
+                target="_blank"
+                rel="noopener"
+              >
+                {note.storySource.label[language]}
                 <span aria-hidden> ↗</span>
               </a>
             )}
