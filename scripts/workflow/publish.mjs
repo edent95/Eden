@@ -16,6 +16,7 @@ import {
   parsePublishArgs,
   printPlan,
   sleep,
+  staleDerived,
   stagedFiles,
   statusLines,
   uniqueBranchName,
@@ -119,6 +120,10 @@ async function main() {
 
   // 只提交已暂存的文件:什么都没暂存、分支上也没有待推送的提交 → 停下,告诉人怎么暂存自己的文件。
   const onDefault = branch === defaultName;
+  const unpushedOnDefault = () =>
+    new Error(`本地 ${defaultName} 上有尚未推送的提交；publish 不会丢掉或直推它们。请先把它们挪到任务分支再运行。`);
+  // 先于「没暂存」判断:否则只报「没暂存」,人不知道本地 main 上还压着提交(dry-run 同样要看到)。
+  if (onDefault && commitsAhead(defaultName) > 0) throw unpushedOnDefault();
   if (initialStaged.length === 0 && (onDefault || commitsAhead(defaultName) === 0)) {
     throw new Error(nothingStagedMessage(statusLines()));
   }
@@ -131,9 +136,7 @@ async function main() {
   command('gh', ['auth', 'status']);
   command('git', ['fetch', 'origin', defaultName]);
 
-  if (onDefault && commitsAhead(defaultName) > 0) {
-    throw new Error(`本地 ${defaultName} 上有尚未推送的提交；publish 不会丢掉或直推它们。请先把它们挪到任务分支再运行。`);
-  }
+  if (onDefault && commitsAhead(defaultName) > 0) throw unpushedOnDefault();
 
   if (onDefault) {
     // 在默认分支上直接改是正常做法:到提交这一刻才从最新的 origin/<默认分支> 开任务分支,
@@ -145,7 +148,11 @@ async function main() {
 
   console.log('\n运行 ready：生成派生文件并执行完整 harness…');
   const dirtyBefore = unstagedFiles();
-  command('npm', ['run', 'ready']);
+  // 和 CI 一样按「相对 origin/<默认分支> 的整个分支」判日志门禁:否则分支上已提交的日志条目不算数,
+  // 只推已有提交(没新暂存)时,工作区里别人的未暂存改动会让 ready 以「没有日志条目」失败。
+  command('npm', ['run', 'ready'], {
+    env: { HARNESS_BASE_REF: process.env.HARNESS_BASE_REF?.trim() || `origin/${defaultName}` },
+  });
   const derived = derivedToStage({ dirtyBefore, dirtyAfter: unstagedFiles() });
   if (derived.length > 0) {
     command('git', ['add', '--', ...derived]);
@@ -153,6 +160,17 @@ async function main() {
   }
 
   const files = stagedFiles();
+  const stale = staleDerived({ dirtyBefore, staged: files });
+  if (stale.length > 0) {
+    throw new Error(
+      [
+        `这次暂存了 ${stale.join(', ')} 的源文件,但这些派生文件在 ready 之前就有未暂存改动,publish 不会替你暂存它们;`,
+        '照这样提交,PR 里的派生文件是旧的,CI 的 --check 一定失败。ready 已按当前工作区重新生成了它们:',
+        ...stale.map((file) => `  git diff -- ${file}`),
+        '确认内容只包含你这次的改动后 `git add` 它,再重新运行 publish。',
+      ].join('\n'),
+    );
+  }
   const aheadBeforeCommit = commitsAhead(defaultName);
   if (files.length === 0 && aheadBeforeCommit === 0) throw new Error(nothingStagedMessage(statusLines()));
 
