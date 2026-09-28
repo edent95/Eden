@@ -1,0 +1,162 @@
+/* Notes format · storyboard layout (components/NotesStoryboard.tsx).
+   Page layout only: the engraved scenes live in styles/css-art/notes-storyboard.css.
+   One stage is the protagonist of this screen; thumbnails stay static. */
+
+.notes-sb {
+  --sb-kind-method: var(--notes-accent);
+  --sb-kind-verdict: var(--notes-accent);
+  --sb-kind-fact: #2f7d4f;
+  --sb-kind-overturned: #a87400;
+  --sb-kind-gap: #b23a3a;
+  margin: 0 0 clamp(80px, 11vw, 132px);
+}
+
+:root[data-theme="dark"] .notes-sb {
+  --sb-kind-fact: #5cc28a;
+  --sb-kind-overturned: #e7b54a;
+  --sb-kind-gap: #ef7b7b;
+}
+
+.notes-sb-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.notes-sb-kicker {
+  color: var(--notes-accent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.notes-sb-count {
+  color: var(--notes-accent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.notes-sb-count em { color: color-mix(in srgb, var(--theme-text-primary) 40%, transparent); font-style: normal; font-weight: 600; }
+
+.notes-sb-stage { width: 100%; }
+
+.notes-sb-caption {
+  max-width: 660px;
+  margin-top: 22px;
+  animation: notes-sb-caption-in .5s cubic-bezier(.2, .8, .2, 1);
+}
+
+@keyframes notes-sb-caption-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+.notes-sb-meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-size: 15px; }
+.notes-sb-meta b { color: var(--theme-text-primary); font-weight: 700; }
+
+.notes-sb-kind {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1.5px currentColor;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.notes-sb-kind::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.notes-sb .kind-method { color: var(--sb-kind-method); }
+.notes-sb .kind-verdict { color: var(--sb-kind-verdict); }
+.notes-sb .kind-fact { color: var(--sb-kind-fact); }
+.notes-sb .kind-overturned { color: var(--sb-kind-overturned); }
+.notes-sb .kind-gap { color: var(--sb-kind-gap); }
+
+.notes-sb-beat {
+  margin-top: 12px;
+  color: color-mix(in srgb, var(--theme-text-primary) 82%, transparent);
+  font-size: clamp(18px, 2vw, 22px);
+  font-weight: 650;
+  line-height: 1.55;
+}
+
+.notes-sb-key {
+  margin-top: 10px;
+  color: color-mix(in srgb, var(--theme-text-primary) 70%, transparent);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.notes-sb-key .notes-key { animation: notes-sb-sweep 1s cubic-bezier(.4, 0, .2, 1) .3s both; }
+@keyframes notes-sb-sweep { from { background-size: 0% 100%; } to { background-size: 100% 100%; } }
+
+.notes-sb-jump {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--notes-accent);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.notes-sb-jump:hover { text-decoration: underline; }
+
+.notes-sb-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 10px;
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.notes-sb-strip button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  opacity: .62;
+  transition: opacity .25s ease, transform .3s cubic-bezier(.2, .8, .2, 1);
+}
+
+.notes-sb-strip button:hover,
+.notes-sb-strip button:focus-visible { opacity: .9; transform: translateY(-2px); }
+.notes-sb-strip button.is-shown { opacity: 1; }
+.notes-sb-strip button.is-shown .notes-frame { box-shadow: inset 0 0 0 2px var(--notes-accent), inset 0 0 0 6px var(--en-paper), inset 0 0 0 7px var(--en-ink-2); }
+
+.notes-sb-thumb-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  color: color-mix(in srgb, var(--theme-text-primary) 60%, transparent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.notes-sb-thumb-label i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.notes-sb-strip button.is-shown .notes-sb-thumb-label { color: var(--notes-accent); }
+
+@media (max-width: 700px) {
+  .notes-sb { margin-bottom: 72px; }
+  .notes-sb-strip {
+    display: flex;
+    gap: 8px;
+    margin-inline: -16px;
+    padding: 0 16px 4px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+  .notes-sb-strip li { flex: 0 0 34%; scroll-snap-align: start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notes-sb-caption, .notes-sb-key .notes-key { animation: none; }
+  .notes-sb-strip button { transition: none; }
+}

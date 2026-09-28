@@ -349,6 +349,16 @@ Color: the Notes pages use one content theme, `--notes-accent` / `--notes-accent
 
 Motion stays on concrete objects (bar, marker, number, rail, highlighter, ticks); start states only apply after JS adds `.notes-motion-ready`, and everything is off under `prefers-reduced-motion`. Theme colors must use `--theme-page` / `--theme-text-primary` (the older `--eden-paper` / `--eden-ink` names in notes.css are not defined anywhere).
 
+### Notes storyboard (optional, per essay)
+
+An essay may add a top-level `storyboard` array to its JSON payload, one frame per section in section order: `{ "motif", "kind", "beat": { "en", "zh" } }`. The article then shows, after the thesis card, one large engraved stage that plays the selected frame, a caption (kind chip, section title, the story beat, and that section's `==key sentence==`), and a strip of static thumbnails; while reading, the stage follows the current section.
+
+- `kind` classifies the section's key point: `method`, `fact` (documented), `overturned`, `gap` (no evidence), `verdict`.
+- `motif` picks an engraved scene from `styles/css-art/notes-storyboard.css` (registry category `notes-storyboard`): `tiers` (sorting into layers), `papers` (documents + seal), `columns` (a case that falls), `chain` (a link that is missing), `vesica` (overlap). A new motif needs a scene in `components/css-art/index.tsx`, CSS in that family file, a registry entry, and the motif name added to `scripts/wiki/lint.mjs` and the `storyboard` type in `scripts/wiki/build.mjs`.
+- `beat` is one cinematic line that retells the section as a scene. It must stay true to the section: no new facts, no invented events.
+- Art rules come from the engraved-ui / golden-engraving skills: one stage is the screen's protagonist, one named motif per frame, no people and no text inside the art, scenes act only when selected (`.is-active`), only the slow rosette/rays run on their own, thumbnails are static, and the ink follows the Notes theme (light: green on cream, dark: pink on rose-black).
+- Sample implementation: `/notes/iraq-war-evidence-map`. Other essays roll out after the style is approved.
+
 ## Current Wiki Structure
 
 - `raw/`: immutable, commit-safe source inputs.

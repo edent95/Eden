@@ -56,6 +56,48 @@ The JSON block below is the structured bilingual source consumed by the site com
       "zh": "看故事看板：一场战争的七年前奏"
     }
   },
+  "storyboard": [
+    {
+      "motif": "tiers",
+      "kind": "method",
+      "beat": {
+        "en": "A tidy story arrives with its villains named. Before believing it, we set out three trays: what is on paper, what is inferred, what has no proof.",
+        "zh": "一个整齐的故事端上桌，坏人都点好名了。先别急着信，摆出三层托盘：有文件的、推论的、没证据的。"
+      }
+    },
+    {
+      "motif": "papers",
+      "kind": "fact",
+      "beat": {
+        "en": "Three documents fall into place, 1996, 1998, 2001: a report, an open letter, a list of appointments. Each one carries a seal.",
+        "zh": "三份文件依次落下：1996 年的报告、1998 年的公开信、2001 年的任命名单。每一张都盖着章。"
+      }
+    },
+    {
+      "motif": "columns",
+      "kind": "overturned",
+      "beat": {
+        "en": "The war stood on two pillars, hidden weapons and a terror partnership. The post-war reviews knocked both down.",
+        "zh": "这场仗立在两根柱子上：藏起来的武器、与恐怖组织的勾结。战后的调查，把两根都推倒了。"
+      }
+    },
+    {
+      "motif": "chain",
+      "kind": "gap",
+      "beat": {
+        "en": "The popular version is a chain: Israel orders, neocons obey, the president complies. Pull on it and the middle link is simply not there.",
+        "zh": "网上流传的版本是一条链：以色列下令，新保守派执行，总统照办。用力一拉，中间那一环根本不存在。"
+      }
+    },
+    {
+      "motif": "vesica",
+      "kind": "verdict",
+      "beat": {
+        "en": "Two circles slide together. The overlap is real: the same people appear on both sides. But an overlap is not an arrow.",
+        "zh": "两个圆慢慢靠拢。重叠的那一块是真的：同一批人确实在两边出现过。但重叠不是箭头。"
+      }
+    }
+  ],
   "references": [
     {
       "id": "1",
