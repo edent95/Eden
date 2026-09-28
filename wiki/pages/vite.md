@@ -33,6 +33,48 @@ The JSON block below is the structured bilingual source consumed by the site com
     "en": "For full vibe coding, use Vite as the fast loop, but keep a separate gate for typecheck, build, route checks, and broken-asset checks.",
     "zh": "如果是 fully vibe coding，Vite 应该负责“快速循环”，但必须另外保留 typecheck、build、路由检查和资源检查这道门。"
   },
+  "storyboard": [
+    {
+      "motif": "phyllotaxis",
+      "kind": "example",
+      "beat": {
+        "en": "Jiju grew too heavy to iterate on. Vite split it into small feedback zones: change one page, one component, one asset path, then verify fast.",
+        "zh": "Jiju 变得太庞大，慢慢改一直出问题。Vite 把它拆成一小块一小块的反馈区：改一个页面、一个组件、一个资源路径，马上验证。"
+      }
+    },
+    {
+      "motif": "lissajous",
+      "kind": "idea",
+      "beat": {
+        "en": "Cold start is quick, and HMR keeps the loop running: tune UI, motion, copy, and microfeedback with AI without breaking the visual flow.",
+        "zh": "冷启动很快，HMR 让来回调整不断线：和 AI 一起改 UI、动效、文案、微反馈，视觉迭代不中断。"
+      }
+    },
+    {
+      "motif": "mandelbrot",
+      "kind": "warning",
+      "beat": {
+        "en": "On the surface it is fast. Underneath, dev and production differ, TypeScript is transpiled but not typechecked, and a stale cache can replay old behavior like a ghost.",
+        "zh": "表面很快，底下却藏着细节：dev 和 production 不一样，TypeScript 只转译不 typecheck，旧缓存还会像幽灵一样重播旧行为。"
+      }
+    },
+    {
+      "motif": "catenary",
+      "kind": "action",
+      "beat": {
+        "en": "A working dev server is only one link. Before calling it done, chain on typecheck and build, then check the real assets and public routes.",
+        "zh": "dev server 正常，只是其中一环。完成前要接上 typecheck 和 build，再检查真实资源和公开路由。"
+      }
+    },
+    {
+      "motif": "penrose",
+      "kind": "principle",
+      "beat": {
+        "en": "Two modes overlap: during exploration, optimize for flow; before handoff, optimize for truth. Speed has to be paired with checks that can be repeated.",
+        "zh": "两种状态叠在一起：探索时顾心流，交付前顾真实。速度，要配一套可重复的检查。"
+      }
+    }
+  ],
   "sections": [
     {
       "title": {

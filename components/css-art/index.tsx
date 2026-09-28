@@ -996,7 +996,7 @@ export const IGamingLotteryArt: CssArtComponent = ({ label }) => <IGamingFloorAr
    named piece of mathematics, a loose ring of its formula as runes, and two
    supporting props. `active` plays the scene's action (state-driven, not
    autoplay); `thumb` renders the finished state with fewer layers, no motion. */
-export type NotesStoryMotif = 'mandelbrot' | 'spiral' | 'catenoid' | 'catenary' | 'penrose';
+export type NotesStoryMotif = 'mandelbrot' | 'spiral' | 'catenoid' | 'catenary' | 'penrose' | 'phyllotaxis' | 'lissajous';
 type NotesStoryProp = 'candle' | 'quill' | 'scroll' | 'orb' | 'glass' | 'key' | 'astro';
 
 const notesStoryProps: Record<NotesStoryProp, React.ReactNode> = {
@@ -1014,6 +1014,21 @@ const notesStoryPropClass: Record<NotesStoryProp, string> = {
 };
 
 const cssVar = (name: string, value: string | number) => ({ [name]: value }) as React.CSSProperties;
+
+
+// Phyllotaxis: 89 seeds, seed n at n × 137.508° (the golden angle, 360°/φ²) and radius ∝ √n.
+const PHYLLO_FIB = new Set([1, 2, 3, 5, 8, 13, 21, 34, 55, 89]);
+const PHYLLO_SEEDS = Array.from({ length: 89 }, (_, i) => {
+  const n = i + 1;
+  const angle = (n * 137.508 * Math.PI) / 180;
+  const r = 47 * Math.sqrt(n / 89);
+  return { n, x: 50 + r * Math.cos(angle), y: 50 + r * Math.sin(angle), size: 0.7 + 1.1 * Math.sqrt(n / 89), fib: PHYLLO_FIB.has(n) };
+});
+// Lissajous figure x = sin(3t + π/2), y = sin(2t), sampled at 180 points.
+const LISSA_DOTS = Array.from({ length: 180 }, (_, i) => {
+  const t = (i / 180) * Math.PI * 2;
+  return { n: i, x: 50 + 47 * Math.sin(3 * t + Math.PI / 2), y: 50 + 46 * Math.sin(2 * t), beat: i % 30 === 0 };
+});
 
 const notesStoryScenes: Record<NotesStoryMotif, { body: React.ReactNode; props: [NotesStoryProp, NotesStoryProp]; formula: string }> = {
   // a simple rule that grows endless detail: the Mandelbrot set (cardioid + bulbs, sampled from c = e^{it}/2 − e^{2it}/4)
@@ -1066,6 +1081,32 @@ const notesStoryScenes: Record<NotesStoryMotif, { body: React.ReactNode; props: 
       </span>
     ),
   },
+  // many small units, one rule: the golden-angle sunflower
+  phyllotaxis: {
+    props: ['quill', 'orb'],
+    formula: 'θₙ = n · 137.5° ✦ rₙ = c √n ✦ 360° / φ² ✦ ',
+    body: (
+      <span className="nf-phyllo">
+        {PHYLLO_SEEDS.map((seed) => (
+          <span key={seed.n} className={`p-seed${seed.fib ? ' is-fib' : ''}`} style={{ left: `${seed.x.toFixed(2)}%`, top: `${seed.y.toFixed(2)}%`, ...cssVar('--s', `${seed.size.toFixed(2)}cqi`), ...cssVar('--n', seed.n) }} />
+        ))}
+      </span>
+    ),
+  },
+  // rhythm and response: a 3 : 2 Lissajous figure traced dot by dot
+  lissajous: {
+    props: ['glass', 'candle'],
+    formula: 'x = sin(3t + π/2) ✦ y = sin(2t) ✦ a : b = 3 : 2 ✦ ',
+    body: (
+      <span className="nf-lissa">
+        <span className="l-rail r-x" /><span className="l-rail r-y" />
+        {LISSA_DOTS.map((dot) => (
+          <span key={dot.n} className={`l-dot${dot.beat ? ' is-beat' : ''}`} style={{ left: `${dot.x.toFixed(2)}%`, top: `${dot.y.toFixed(2)}%`, ...cssVar('--n', dot.n) }} />
+        ))}
+        <span className="l-bead" style={{ left: '50%', top: '50%' }} />
+      </span>
+    ),
+  },
   // the overlap: two circles, and in their lens a Penrose sun (5 fat rhombs + 5 thin rhombs)
   penrose: {
     props: ['candle', 'astro'],
@@ -1079,6 +1120,9 @@ const notesStoryScenes: Record<NotesStoryMotif, { body: React.ReactNode; props: 
     ),
   },
 };
+
+/** The formula engraved for a motif (used by covers to build a note-specific ring). */
+export const notesStoryFormula = (motif: NotesStoryMotif) => notesStoryScenes[motif].formula;
 
 /** Spreads a formula around the ring, repeating it to fill 72 positions. */
 export const NotesStoryRunes: React.FC<{ formula: string }> = ({ formula }) => {
@@ -1138,6 +1182,8 @@ export const NotesStorySpiralArt: CssArtComponent = ({ label }) => <NotesStoryFr
 export const NotesStoryCatenoidArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="catenoid" label={label} thumb />;
 export const NotesStoryCatenaryArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="catenary" label={label} thumb />;
 export const NotesStoryPenroseArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="penrose" label={label} thumb />;
+export const NotesStoryPhyllotaxisArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="phyllotaxis" label={label} thumb />;
+export const NotesStoryLissajousArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="lissajous" label={label} thumb />;
 
 /* ---- Notes grimoire cover (styles/css-art/notes-grimoire.css) ----
    Full-bleed cover scene for an art-directed Notes article: three depth layers

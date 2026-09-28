@@ -38,6 +38,32 @@ The JSON block below is the structured bilingual source consumed by the site com
     "营销管理",
     "商弈"
   ],
+  "storyboard": [
+    {
+      "motif": "lissajous",
+      "kind": "idea",
+      "beat": {
+        "en": "The same fire loops back again and again, and endless firefighting looks like skill. Real capability turns that loop into a rule, a workflow, or a boundary, so it never needs saving twice.",
+        "zh": "同一把火一圈一圈绕回来，一直救火看起来很厉害。真正的本事，是把这个循环变成规则、workflow 或 boundary，让同样的火不用救第二次。"
+      }
+    },
+    {
+      "motif": "catenary",
+      "kind": "principle",
+      "beat": {
+        "en": "Messy work is often three links tangled into one: what comes in, how it is judged, what action follows. Pull them apart, and the mess is often a system that never explained itself, not weak people.",
+        "zh": "很多乱，其实是三个环缠在一起：输入是什么、用什么规则判断、最后做什么。把环拆开看，乱的往往不是人，是 system 从没讲清楚。"
+      }
+    },
+    {
+      "motif": "mandelbrot",
+      "kind": "principle",
+      "beat": {
+        "en": "Look where work repeats daily and judgment lives in one person's memory. A good system is like this figure: the complexity stays inside, and the person outside sees a clear edge.",
+        "zh": "去找每天重复的动作、只靠某个人记得的判断。好的 system 就像这张图：复杂都留在里面，外面的人只看到清楚的轮廓。"
+      }
+    }
+  ],
   "sections": [
     {
       "title": {

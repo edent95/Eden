@@ -33,6 +33,24 @@ The JSON block below is the structured bilingual source consumed by the site com
     "en": "Music should support the table mood without stealing control from the player.",
     "zh": "音乐应该支撑牌桌气氛，但不能把控制权从玩家手里拿走。"
   },
+  "storyboard": [
+    {
+      "motif": "spiral",
+      "kind": "action",
+      "beat": {
+        "en": "The sound can be turned off, and the control sits in plain sight. Visit after visit, the table remembers the player's choice instead of resetting the mood.",
+        "zh": "声音可以关，控制入口就摆在看得见的地方。一次又一次回来，桌子都记得玩家的选择，不会每次重置气氛。"
+      }
+    },
+    {
+      "motif": "lissajous",
+      "kind": "idea",
+      "beat": {
+        "en": "A social table in total silence feels unfinished. A calm loop gives the wait between moves a rhythm, and solo BOT mode stops feeling like a test screen.",
+        "zh": "社交场完全安静，桌子就像还没做完。一段轻轻的循环，给等待的空档一点节奏，单人 BOT 模式也不再像测试页。"
+      }
+    }
+  ],
   "sections": [
     {
       "title": {

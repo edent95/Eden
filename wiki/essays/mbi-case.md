@@ -46,6 +46,48 @@ The JSON block below is the structured bilingual source consumed by the site com
       "zh": "阅读完整原文（白话版）"
     }
   },
+  "storyboard": [
+    {
+      "motif": "phyllotaxis",
+      "kind": "example",
+      "beat": {
+        "en": "A seminar promises a Ferrari; one investor pays in. Around him, recruit by recruit, the same three-step rule arranges some two million people into one scheme.",
+        "zh": "说明会上许诺一辆法拉利，一个投资者交了钱。在他身边，一个拉一个，同一套三步规则，把约两百万人排成一个盘。"
+      }
+    },
+    {
+      "motif": "mandelbrot",
+      "kind": "principle",
+      "beat": {
+        "en": "The mall is a tidy storefront over a hollow core. The coin never rose because the mall earned money; it rose because someone new kept buying higher.",
+        "zh": "商城是一层整齐的门面，底下是空的。币从来不是因为商城赚钱才涨，而是后面一直有新人用更高的价格接盘。"
+      }
+    },
+    {
+      "motif": "catenary",
+      "kind": "verdict",
+      "beat": {
+        "en": "Hang the three old questions on it: returns come from later money, nothing real beneath, it breaks when new money stops. Three for three: a money game.",
+        "zh": "拿三个老问题一挂：回报来自后面的钱，底下没有真东西，新钱一断就崩。三条全中，就是一场 money game。"
+      }
+    },
+    {
+      "motif": "catenoid",
+      "kind": "fact",
+      "beat": {
+        "en": "Paper cannot wrap fire. The film breaks, accounts are frozen, the money has already scattered, and the founder is chased across borders.",
+        "zh": "纸包不住火。膜一破，账户冻结，钱早已四散，创办人一路被追到境外。"
+      }
+    },
+    {
+      "motif": "lissajous",
+      "kind": "principle",
+      "beat": {
+        "en": "Postal coupons, property, a coin: the clothes change with each era, but the curve traces the same loop. Three plain questions still catch it every time.",
+        "zh": "邮票、地产、虚拟币，外衣一个时代换一件，画出来却还是同一个圈。三个老问题，每一圈都能把它认出来。"
+      }
+    }
+  ],
   "references": [
     {
       "id": "1",

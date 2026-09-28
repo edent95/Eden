@@ -38,6 +38,32 @@ The JSON block below is the structured bilingual source consumed by the site com
     "厚黑学",
     "不完美人生经验法则"
   ],
+  "storyboard": [
+    {
+      "motif": "catenoid",
+      "kind": "warning",
+      "beat": {
+        "en": "Speed feels like action, but some speed only carries you faster into a bad game. Don't stretch into a fight when you are weakest, they are strongest, and the rules run against you.",
+        "zh": "快，看起来像行动力，有些快却只是更快走进烂局。别在自己最弱、对方最强、规则又不利的时候硬撑开战。"
+      }
+    },
+    {
+      "motif": "penrose",
+      "kind": "idea",
+      "beat": {
+        "en": "Proving yourself, beating someone, getting the result: three goals laid over each other that look almost the same. So ask first what winning means, who set the rules, and how you leave if the worst happens.",
+        "zh": "证明自己、赢过某人、拿到结果，三个目标叠在一起，看起来几乎一样。所以先问：赢是什么？规则谁定的？最坏的时候怎么退？"
+      }
+    },
+    {
+      "motif": "phyllotaxis",
+      "kind": "principle",
+      "beat": {
+        "en": "Around one situation sit six moves: fight, go around, delay, retreat, change the field, ally. Maturity is not winning every fight, but knowing which one deserves to be yours.",
+        "zh": "一个局周围排着六种动作：正打、绕打、拖、退、换场、结盟。成熟不是每场都赢，是清楚哪一场值得成为自己的战争。"
+      }
+    }
+  ],
   "sections": [
     {
       "title": {

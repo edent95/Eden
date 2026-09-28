@@ -38,6 +38,32 @@ The JSON block below is the structured bilingual source consumed by the site com
     "薛兆丰的经济学讲义",
     "营销管理"
   ],
+  "storyboard": [
+    {
+      "motif": "mandelbrot",
+      "kind": "idea",
+      "beat": {
+        "en": "A dashboard holds a hundred numbers, and the user still asks: so what? One drop in sales can hide traffic, conversion, stock, or season; judgment places that movement inside its context.",
+        "zh": "dashboard 摆了一百个数字，用户还是问：So what？一次 sales 下滑，底下可能是流量、conversion、库存、淡季。判断，就是把这个变化放回 context。"
+      }
+    },
+    {
+      "motif": "catenary",
+      "kind": "method",
+      "beat": {
+        "en": "Four links hang between seeing and deciding: compared with what, why it changed, who it affects, whether to act now. Good analysis shortens that chain.",
+        "zh": "从「看到」到「决定」之间，挂着四个环节：跟谁比、为什么变、影响谁、现在该不该动。好的分析，是把这条链缩短。"
+      }
+    },
+    {
+      "motif": "phyllotaxis",
+      "kind": "action",
+      "beat": {
+        "en": "Four lines, placed one by one: signal, context, trade-off, next move. If they will not come together, more data is not the answer; the problem itself is still unclear.",
+        "zh": "四句话一句一句排上去：Signal、Context、Trade-off、Next move。四句拼不起来，要的不是更多 data，是问题本身还没想清楚。"
+      }
+    }
+  ],
   "sections": [
     {
       "title": {

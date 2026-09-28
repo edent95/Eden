@@ -73,6 +73,10 @@
 .notes-sb .kind-fact { color: var(--sb-kind-fact); }
 .notes-sb .kind-overturned { color: var(--sb-kind-overturned); }
 .notes-sb .kind-gap { color: var(--sb-kind-gap); }
+.notes-sb :is(.kind-idea, .kind-principle) { color: var(--sb-kind-method); }
+.notes-sb .kind-example { color: var(--sb-kind-fact); }
+.notes-sb .kind-warning { color: var(--sb-kind-gap); }
+.notes-sb .kind-action { color: var(--sb-kind-overturned); }
 
 .notes-sb-beat {
   margin-top: 12px;

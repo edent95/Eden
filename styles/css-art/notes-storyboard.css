@@ -542,3 +542,39 @@
   pointer-events: none;
 }
 .notes-frame.is-thumb::after { opacity: 0.25; }
+
+/* 6 · phyllotaxis: seed n sits at n·137.508° (360°/φ²), radius c·√n; Fibonacci-numbered seeds in foil */
+.nf-phyllo { left: calc(50% - 17cqi); top: calc(50% - 17cqi); width: 34cqi; height: 34cqi; }
+.nf-phyllo .p-seed {
+  width: var(--s); height: var(--s); margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2); border-radius: 50%;
+  background:
+    radial-gradient(circle, var(--nf-stipple, rgba(0, 0, 0, 0.6)) 0 30%, transparent 36%) 0 0 / 0.35cqi 0.35cqi,
+    radial-gradient(circle at 35% 30%, var(--nf-t1), var(--nf-t3));
+  transform: scale(0);
+  transition: transform 0.35s cubic-bezier(0.3, 1.6, 0.5, 1);
+  transition-delay: calc(var(--n) * 14ms);
+}
+.nf-phyllo .p-seed.is-fib { background: radial-gradient(circle at 35% 30%, var(--en-paper) 0 14%, var(--nf-foil) 20%); }
+.notes-frame.is-active .nf-phyllo .p-seed { transform: none; }
+
+/* 7 · Lissajous figure  x = sin(3t + π/2), y = sin(2t): traced dot by dot when the scene plays */
+.nf-lissa { left: calc(50% - 16cqi); top: calc(50% - 13cqi); width: 32cqi; height: 26cqi; }
+.nf-lissa .l-dot {
+  width: 0.5cqi; height: 0.5cqi; margin: -0.25cqi 0 0 -0.25cqi; border-radius: 50%;
+  background: var(--en-ink-2);
+  opacity: 0; transform: scale(0.3);
+  transition: opacity 0.2s ease, transform 0.3s ease;
+  transition-delay: calc(var(--n) * 11ms);
+}
+.nf-lissa .l-dot.is-beat { width: 1.3cqi; height: 1.3cqi; margin: -0.65cqi 0 0 -0.65cqi; background: var(--nf-foil); }
+.nf-lissa .l-rail { background: repeating-linear-gradient(90deg, var(--en-ink-3) 0 0.25cqi, transparent 0.25cqi 1.1cqi); height: 0.25cqi; left: 0; right: 0; }
+.nf-lissa .l-rail.r-x { top: calc(100% + 2.2cqi); }
+.nf-lissa .l-rail.r-y { width: 0.25cqi; height: auto; top: 0; bottom: 0; left: -2.2cqi; right: auto; background: repeating-linear-gradient(180deg, var(--en-ink-3) 0 0.25cqi, transparent 0.25cqi 1.1cqi); }
+.nf-lissa .l-bead {
+  width: 1.6cqi; height: 1.6cqi; margin: -0.8cqi 0 0 -0.8cqi; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--en-paper) 0 16%, var(--nf-foil) 22%);
+  opacity: 0; transition: opacity 0.3s ease 1.7s;
+}
+.notes-frame.is-active .nf-lissa .l-dot { opacity: 1; transform: none; }
+.notes-frame.is-active .nf-lissa .l-bead { opacity: 1; animation: nf-bead 2.4s ease-in-out 2s infinite; }
+@keyframes nf-bead { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.35); } }
