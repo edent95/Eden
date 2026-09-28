@@ -29,6 +29,7 @@ import {
   IGamingLoopBanner,
   IGamingTableBanner,
   MathFractalRuneCssIcon,
+  NotesGrimoireCoverArt,
   NotesStoryCatenaryArt,
   NotesStoryCatenoidArt,
   NotesStoryMandelbrotArt,
@@ -1278,6 +1279,20 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
     Component: NotesStoryPenroseArt,
     label: { en: 'Engraved storyboard frame: penrose', zh: '凹版分镜：Penrose' },
     copy: { en: 'Two circles meet, and a Penrose sun of fat and thin rhombs grows in their overlap; flanked by a candle and an astrolabe.', zh: '两个圆相遇，重叠处长出由胖、瘦菱形组成的彭罗斯太阳；两旁是蜡烛与星盘。' },
+  },
+  {
+    id: 'notes-grimoire-cover',
+    title: 'Notes grimoire cover',
+    category: 'notes-storyboard',
+    sourceRoute: '/notes/iraq-war-evidence-map',
+    ratio: 'banner',
+    background: 'scene',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/notes-grimoire.css',
+    Component: NotesGrimoireCoverArt,
+    label: { en: 'Grimoire cover: a floating 3D spellbook under an orrery engraved with formulas', zh: '魔法书封面：刻着公式的星盘下，一本漂浮的 3D 魔法书' },
+    copy: { en: 'Full-bleed, three-layer cover scene for art-directed Notes: sky with stars and an orrery, a CSS-3D grimoire whose leaves turn, and near candles and old books; layers parallax with pointer and scroll.', zh: '美术化 Notes 的全宽三层封面：星空与星盘、书页会翻的 CSS 3D 魔法书、近景蜡烛与古书堆；各层随鼠标与滚动产生视差。' },
   },
 ];
 

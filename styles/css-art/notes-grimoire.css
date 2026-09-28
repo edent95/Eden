@@ -1,0 +1,240 @@
+/* =============================================================
+   Notes grimoire cover — full-bleed layered scene (NotesGrimoireCover)
+   Depth, not decoration: three layers (sky, floating book, near props)
+   move at different rates with the pointer (--nd-px / --nd-py, −1…1) and
+   with scroll (--nd-scroll, px), set on the page root by useNotesDepth.
+   No outlines: forms come from hatching, tone and cast shadows. The book is
+   real CSS 3D (preserve-3d): its leaves turn on the Y axis.
+   Ink follows the Notes theme (green on cream / pink on rose-black) with
+   gold foil. Self-running motion is slow (orbits 60–180s, leaves 15s,
+   bob 9s) or tiny (stars, flames). All of it stops under reduced motion.
+   ============================================================= */
+
+.ng-cover {
+  --ng-ink: #1f4d38;
+  --ng-paper: #f5eedc;
+  --ng-foil: #b8862f;
+  --ng-t1: color-mix(in srgb, var(--ng-ink) 8%, transparent);
+  --ng-t2: color-mix(in srgb, var(--ng-ink) 18%, transparent);
+  --ng-t3: color-mix(in srgb, var(--ng-ink) 32%, transparent);
+  --ng-shadow: rgba(20, 30, 24, 0.28);
+  position: absolute;
+  overflow: hidden;
+  container-type: inline-size;
+  pointer-events: none;
+}
+
+:root[data-theme="dark"] .ng-cover {
+  --ng-ink: #f3a6b5;
+  --ng-paper: #3e2730;
+  --ng-foil: #f2cf7a;
+  --ng-shadow: rgba(0, 0, 0, 0.55);
+}
+
+.ng-cover span { position: absolute; display: block; }
+
+.ng-layer {
+  position: absolute;
+  inset: 0;
+  translate:
+    calc(var(--nd-px, 0) * var(--z) * -1.3cqi)
+    calc(var(--nd-py, 0) * var(--z) * -0.9cqi + var(--nd-scroll, 0) * var(--sy) * 1px);
+  transition: translate 0.25s linear;
+}
+
+/* ---------- sky: stars and an orrery engraved with formulas ---------- */
+.ng-star {
+  width: 0.28cqi; height: 0.28cqi; border-radius: 50%;
+  background: var(--ng-foil);
+  opacity: 0.55;
+  animation: ng-twinkle 5.5s ease-in-out var(--w, 0s) infinite;
+}
+.ng-star.is-big {
+  width: 0.9cqi; height: 0.9cqi; border-radius: 0;
+  clip-path: polygon(50% 0, 58% 42%, 100% 50%, 58% 58%, 50% 100%, 42% 58%, 0 50%, 42% 42%);
+  opacity: 0.8;
+}
+
+.ng-orrery { left: calc(74% - 21cqi); top: calc(46% - 21cqi); width: 42cqi; height: 42cqi; }
+.ng-orbit {
+  border-radius: 50%;
+  background: repeating-conic-gradient(var(--ng-t3) 0 0.7deg, transparent 0.7deg 4.5deg);
+  -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 0.35cqi), black calc(100% - 0.35cqi));
+  mask: radial-gradient(closest-side, transparent calc(100% - 0.35cqi), black calc(100% - 0.35cqi));
+}
+.ng-orbit .ng-planet {
+  left: calc(50% - 0.8cqi); top: -0.45cqi; width: 1.6cqi; height: 1.6cqi; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--ng-paper) 0 18%, var(--ng-foil) 22%);
+  -webkit-mask: none; mask: none;
+}
+.ng-orbit.o1 { inset: 0; animation: ng-spin 180s linear infinite; }
+.ng-orbit.o2 { inset: 17%; animation: ng-spin-back 110s linear infinite; }
+.ng-orbit.o3 { inset: 33%; animation: ng-spin 60s linear infinite; }
+.ng-orbit.o2 .ng-planet { width: 1.2cqi; height: 1.2cqi; left: calc(50% - 0.6cqi); }
+.ng-orbit.o3 .ng-planet { width: 0.9cqi; height: 0.9cqi; left: calc(50% - 0.45cqi); }
+.ng-orrery-runes { inset: -3cqi; animation: ng-spin-back 240s linear infinite; }
+.ng-orrery-runes .nf-runes { inset: 0; -webkit-mask: none; mask: none; }
+.ng-orrery-runes .nf-runes i { color: var(--ng-ink); font-size: 1.1cqi; opacity: 0.5; }
+.ng-sun {
+  left: calc(50% - 2cqi); top: calc(50% - 2cqi); width: 4cqi; height: 4cqi; border-radius: 50%;
+  background:
+    repeating-conic-gradient(var(--ng-foil) 0 3deg, transparent 3deg 15deg),
+    radial-gradient(circle, var(--ng-foil) 0 36%, transparent 38%);
+  -webkit-mask: radial-gradient(circle, black 0 50%, transparent 72%);
+  mask: radial-gradient(circle, black 0 50%, transparent 72%);
+  opacity: 0.85;
+  animation: ng-spin 40s linear infinite;
+}
+
+/* ---------- mid: a floating grimoire in real 3D ---------- */
+.ng-book {
+  left: calc(75% - 19cqi); top: calc(48% - 11cqi); width: 38cqi; height: 24cqi;
+  perspective: 90cqi;
+}
+.ng-book-inner {
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(56deg) rotateZ(-16deg);
+  animation: ng-bob 9s ease-in-out infinite;
+}
+.ng-book-inner > span { transform-style: preserve-3d; }
+.ng-board {
+  top: -2%; bottom: -2%; width: 51%;
+  background:
+    repeating-linear-gradient(45deg, color-mix(in srgb, var(--ng-ink) 26%, transparent) 0 0.12cqi, transparent 0.12cqi 0.55cqi),
+    color-mix(in srgb, var(--ng-ink) 58%, var(--ng-paper));
+  transform: translateZ(-0.6cqi);
+  box-shadow: 0 0.5cqi 0 color-mix(in srgb, var(--ng-ink) 70%, black), 0 1.2cqi 2.4cqi var(--ng-shadow);
+}
+.ng-board-l { left: -1%; border-radius: 1cqi 0.2cqi 0.2cqi 1cqi; }
+.ng-board-r { right: -1%; border-radius: 0.2cqi 1cqi 1cqi 0.2cqi; }
+.ng-block {
+  top: 2%; bottom: 2%; width: 48%;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 1.1cqi, var(--ng-t2) 1.1cqi 1.2cqi) 16% 16% / 68% 66% no-repeat,
+    linear-gradient(90deg, var(--ng-paper), color-mix(in srgb, var(--ng-paper) 88%, var(--ng-ink)));
+  box-shadow:
+    0 0.18cqi 0 color-mix(in srgb, var(--ng-paper) 80%, var(--ng-ink)),
+    0 0.36cqi 0 color-mix(in srgb, var(--ng-paper) 70%, var(--ng-ink)),
+    0 0.54cqi 0 color-mix(in srgb, var(--ng-paper) 60%, var(--ng-ink));
+}
+.ng-block-l { left: 2%; transform: translateZ(0.2cqi); border-radius: 0.6cqi 0 0 0.6cqi; background-position: 16% 60%, 0 0; }
+.ng-block-r { right: 2%; transform: translateZ(0.2cqi); border-radius: 0 0.6cqi 0.6cqi 0; }
+.ng-page-art { border-radius: 50%; }
+.ng-page-spiral {
+  left: 22%; top: 12%; width: 9cqi; height: 9cqi;
+  background:
+    radial-gradient(circle at 70% 30%, var(--ng-foil) 0 6%, transparent 7%),
+    repeating-radial-gradient(circle at 62% 38%, transparent 0 0.9cqi, color-mix(in srgb, var(--ng-foil) 70%, transparent) 0.9cqi 1.05cqi);
+  -webkit-mask: conic-gradient(from 200deg, transparent 0 25%, black 25%);
+  mask: conic-gradient(from 200deg, transparent 0 25%, black 25%);
+}
+.ng-page-star {
+  left: 30%; top: 50%; width: 7cqi; height: 7cqi; border-radius: 0;
+  background: var(--ng-foil);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  opacity: 0.8;
+}
+.ng-leaf {
+  left: 50%; top: 3%; bottom: 3%; width: 47%;
+  transform-origin: 0 50%;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 1.1cqi, var(--ng-t2) 1.1cqi 1.2cqi) 18% 18% / 64% 64% no-repeat,
+    linear-gradient(90deg, color-mix(in srgb, var(--ng-paper) 90%, var(--ng-ink)), var(--ng-paper));
+  border-radius: 0 0.6cqi 0.6cqi 0;
+  transform: translateZ(0.4cqi) rotateY(0deg);
+  animation: ng-turn 7.5s cubic-bezier(0.45, 0, 0.3, 1) calc(var(--i) * 1.5s) infinite alternate;
+  box-shadow: -0.4cqi 0 1.2cqi var(--ng-shadow);
+}
+.ng-ribbon {
+  left: 60%; bottom: -9%; width: 1.3cqi; height: 7cqi;
+  background: var(--ng-foil);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%);
+  transform: translateZ(0.3cqi);
+}
+.ng-book-shadow {
+  left: calc(75% - 14cqi); top: calc(48% + 11cqi); width: 28cqi; height: 5cqi; border-radius: 50%;
+  background: radial-gradient(closest-side, var(--ng-shadow), transparent);
+  animation: ng-shadow 9s ease-in-out infinite;
+}
+
+/* ---------- near: old books and candles, closest to the viewer ---------- */
+.ng-books { right: 3cqi; bottom: 0; width: 22cqi; height: 10cqi; }
+.ng-tome {
+  height: 3cqi; border-radius: 0.5cqi;
+  background:
+    linear-gradient(90deg, transparent 12%, var(--ng-foil) 12% 13%, transparent 13% 87%, var(--ng-foil) 87% 88%, transparent 88%),
+    repeating-linear-gradient(90deg, var(--ng-t3) 0 0.12cqi, transparent 0.12cqi 0.5cqi),
+    linear-gradient(180deg, color-mix(in srgb, var(--ng-ink) 55%, var(--ng-paper)), color-mix(in srgb, var(--ng-ink) 75%, black));
+  box-shadow: 0 0.6cqi 1.2cqi var(--ng-shadow);
+}
+.ng-tome.t1 { left: 0; right: 0; bottom: 0; }
+.ng-tome.t2 { left: 1.6cqi; right: 2.4cqi; bottom: 3cqi; transform: rotate(-2deg); }
+.ng-tome.t3 { left: 3.4cqi; right: 5cqi; bottom: 6cqi; transform: rotate(1.5deg); }
+.ng-candle { bottom: 0; right: calc(27cqi + var(--i) * 3.6cqi); width: 2.8cqi; height: var(--h); }
+.ng-wax {
+  left: 0; right: 0; bottom: 0; top: 2cqi; border-radius: 0.5cqi 0.5cqi 0 0;
+  background:
+    repeating-linear-gradient(90deg, var(--ng-t2) 0 0.12cqi, transparent 0.12cqi 0.5cqi),
+    linear-gradient(90deg, color-mix(in srgb, var(--ng-ink) 26%, var(--ng-paper)), var(--ng-paper) 45%, color-mix(in srgb, var(--ng-ink) 30%, var(--ng-paper)));
+  box-shadow: 0 1cqi 2cqi var(--ng-shadow);
+}
+.ng-flame {
+  left: calc(50% - 0.8cqi); top: -1.2cqi; width: 1.6cqi; height: 3cqi;
+  border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%;
+  background: radial-gradient(55% 42% at 50% 72%, var(--ng-paper) 0 35%, var(--ng-foil) 38%, color-mix(in srgb, var(--ng-foil) 30%, transparent) 100%);
+  transform-origin: 50% 100%;
+  animation: ng-flicker 3s ease-in-out calc(var(--i) * 0.7s) infinite;
+}
+
+.ng-mote {
+  width: 0.35cqi; height: 0.35cqi; border-radius: 50%;
+  background: var(--ng-foil);
+  opacity: 0;
+  animation: ng-rise var(--d, 11s) linear var(--w, 0s) infinite;
+}
+
+/* registry / review preview: a framed 16:9 box the absolute cover can fill */
+.ng-cover-preview { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 18px; overflow: hidden; background: var(--theme-page); }
+.ng-cover-preview > .ng-cover { inset: 0; }
+
+/* narrow screens: the scene sits above the title, book centred */
+@container (max-width: 820px) {
+  .ng-orrery { left: calc(50% - 38cqi); top: calc(48% - 38cqi); width: 76cqi; height: 76cqi; }
+  .ng-orrery-runes .nf-runes i { font-size: 2.2cqi; }
+  .ng-book { left: calc(50% - 30cqi); top: calc(46% - 17cqi); width: 60cqi; height: 38cqi; }
+  .ng-book-shadow { left: calc(50% - 22cqi); top: calc(46% + 18cqi); width: 44cqi; height: 8cqi; }
+  .ng-books { right: 2cqi; width: 30cqi; height: 14cqi; }
+  .ng-tome { height: 4cqi; }
+  .ng-candle { right: calc(36cqi + var(--i) * 5cqi); width: 4cqi; }
+  .ng-star { width: 0.6cqi; height: 0.6cqi; }
+  .ng-star.is-big { width: 1.6cqi; height: 1.6cqi; }
+}
+
+@keyframes ng-spin { to { transform: rotate(360deg); } }
+@keyframes ng-spin-back { to { transform: rotate(-360deg); } }
+@keyframes ng-twinkle { 0%, 100% { opacity: 0.25; } 50% { opacity: 0.9; } }
+@keyframes ng-bob {
+  0%, 100% { transform: rotateX(56deg) rotateZ(-16deg) translateZ(0); }
+  50% { transform: rotateX(56deg) rotateZ(-16deg) translateZ(2.2cqi); }
+}
+@keyframes ng-shadow { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.86); opacity: 0.7; } }
+@keyframes ng-turn {
+  0%, 12% { transform: translateZ(0.4cqi) rotateY(0deg); }
+  40%, 100% { transform: translateZ(0.4cqi) rotateY(-178deg); }
+}
+@keyframes ng-flicker {
+  0%, 100% { transform: scale(1) rotate(0); }
+  30% { transform: scale(0.92, 1.08) rotate(-3deg); }
+  60% { transform: scale(1.05, 0.94) rotate(2deg); }
+}
+@keyframes ng-rise {
+  0% { opacity: 0; transform: translate(0, 0); }
+  15% { opacity: 0.8; }
+  100% { opacity: 0; transform: translate(2cqi, -22cqi); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ng-cover, .ng-cover * { animation: none !important; transition: none !important; }
+  .ng-layer { translate: none; }
+}
