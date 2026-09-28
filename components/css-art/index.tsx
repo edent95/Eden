@@ -992,11 +992,11 @@ export const IGamingFishingArt: CssArtComponent = ({ label }) => <IGamingFloorAr
 export const IGamingLotteryArt: CssArtComponent = ({ label }) => <IGamingFloorArt label={label} variant="lottery" />;
 
 /* ---- Notes storyboard frames (styles/css-art/notes-storyboard.css) ----
-   Ancient-grimoire engravings: every frame has one main subject inside a
-   magic circle, two supporting props, and a formula engraved around the
-   circle like runes. `active` plays the scene's action (state-driven, not
-   autoplay); `thumb` renders the finished state with fewer layers and no motion. */
-export type NotesStoryMotif = 'tiers' | 'papers' | 'columns' | 'chain' | 'vesica';
+   Ancient-grimoire engravings with no outlines: one main subject that is a
+   named piece of mathematics, a loose ring of its formula as runes, and two
+   supporting props. `active` plays the scene's action (state-driven, not
+   autoplay); `thumb` renders the finished state with fewer layers, no motion. */
+export type NotesStoryMotif = 'mandelbrot' | 'spiral' | 'catenoid' | 'catenary' | 'penrose';
 type NotesStoryProp = 'candle' | 'quill' | 'scroll' | 'orb' | 'glass' | 'key' | 'astro';
 
 const notesStoryProps: Record<NotesStoryProp, React.ReactNode> = {
@@ -1004,7 +1004,7 @@ const notesStoryProps: Record<NotesStoryProp, React.ReactNode> = {
   quill: (<><span className="q-shaft" /><span className="q-feather" /><span className="q-well" /><span className="q-neck" /></>),
   scroll: (<><span className="s-sheet" /><span className="s-roll s-bottom" /><span className="s-roll s-top" /><span className="s-ribbon" /></>),
   orb: (<><span className="o-stand" /><span className="o-ball" /><span className="o-mist" /></>),
-  glass: (<><span className="g-post g-post-l" /><span className="g-post g-post-r" /><span className="g-body" /><span className="g-in" /><span className="g-sand-top" /><span className="g-sand-bot" /><span className="g-cap g-top" /><span className="g-cap g-bot" /></>),
+  glass: (<><span className="g-post g-post-l" /><span className="g-post g-post-r" /><span className="g-body" /><span className="g-sand-top" /><span className="g-sand-bot" /><span className="g-cap g-top" /><span className="g-cap g-bot" /></>),
   key: (<span className="k-body"><span className="k-bow" /><span className="k-shaft" /><span className="k-bit1" /><span className="k-bit2" /></span>),
   astro: (<><span className="a-stand" /><span className="a-foot" /><span className="a-disc" /><span className="a-rete" /></>),
 };
@@ -1013,76 +1013,91 @@ const notesStoryPropClass: Record<NotesStoryProp, string> = {
   candle: 'nf-candle', quill: 'nf-quill', scroll: 'nf-scroll', orb: 'nf-orb', glass: 'nf-glass', key: 'nf-key', astro: 'nf-astro',
 };
 
-const notesStoryScenes: Record<NotesStoryMotif, { main: string; body: React.ReactNode; props: [NotesStoryProp, NotesStoryProp]; formula: string }> = {
-  // sorting claims: trays shrink by the golden ratio
-  tiers: {
-    main: 'nf-tiers',
+const cssVar = (name: string, value: string | number) => ({ [name]: value }) as React.CSSProperties;
+
+const notesStoryScenes: Record<NotesStoryMotif, { body: React.ReactNode; props: [NotesStoryProp, NotesStoryProp]; formula: string }> = {
+  // a simple rule that grows endless detail: the Mandelbrot set (cardioid + bulbs, sampled from c = e^{it}/2 − e^{2it}/4)
+  mandelbrot: {
     props: ['quill', 'candle'],
-    formula: 'φ = (1 + √5) / 2 ✦ φ² = φ + 1 ✦ 1/φ = φ − 1 ✦ ',
-    body: (<>
-      <span className="t-post" /><span className="t-finial" /><span className="t-foot nf-line nf-hatch" />
-      <span className="t-tray t-1 nf-cross nf-line" /><span className="t-tray t-2 nf-hatch nf-line" /><span className="t-tray t-3 nf-line" />
-      <span className="t-orb" style={{ left: '38%', top: '64%' }} /><span className="t-orb" style={{ left: '58%', top: '45.5%' }} /><span className="t-orb" style={{ left: '47%', top: '28.5%' }} />
-    </>),
+    formula: 'zₙ₊₁ = zₙ² + c ✦ |z| ≤ 2 ✦ c ∈ ℂ ✦ ',
+    body: (
+      <span className="nf-mandel">
+        <span className="m-bands" />
+        <span className="m-antenna" /><span className="m-mini" />
+        <span className="m-cardioid m-fill" />
+        {['b2', 'b3a', 'b3b', 'b4', 'b4a', 'b4b', 'b5a', 'b5b', 'b5c', 'b5d', 'b8'].map((b) => <span key={b} className={`m-bulb m-fill ${b}`} />)}
+      </span>
+    ),
   },
-  // the documents: pages scaled by φ float out of a grimoire along a golden spiral
-  papers: {
-    main: 'nf-book',
+  // documents accumulating: Fibonacci squares and the golden spiral
+  spiral: {
     props: ['scroll', 'quill'],
-    formula: 'r = a·e^(bθ) ✦ b = 2 ln φ / π ✦ F(n+1) / F(n) → φ ✦ ',
-    body: (<>
-      <span className="b-page p-1" /><span className="b-page p-2" /><span className="b-page p-3" />
-      <span className="b-left" /><span className="b-right" /><span className="b-spine" /><span className="b-cover" /><span className="b-ribbon" /><span className="b-seal" />
-    </>),
+    formula: 'Fₙ₊₁ = Fₙ + Fₙ₋₁ ✦ 1 · 1 · 2 · 3 · 5 · 8 · 13 ✦ Fₙ₊₁ / Fₙ → φ ✦ ',
+    body: (
+      <span className="nf-spiral">
+        {['q1', 'q2', 'q3', 'q4', 'q5', 'q6'].map((q) => <span key={q} className={`s-sq ${q}`} />)}
+        {['a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8'].map((a) => <span key={a} className={`s-arc ${a}`} />)}
+        <span className="s-seal" />
+      </span>
+    ),
   },
-  // the case that fell: Euler's buckling load for a column
-  columns: {
-    main: 'nf-temple',
+  // two reasons holding a film between them: the catenoid snaps when pulled too far apart
+  catenoid: {
     props: ['orb', 'glass'],
-    formula: 'P = π² E I / L² ✦ σ = F / A ✦ ',
-    body: (<>
-      <span className="c-step nf-line nf-hatch" />
-      <span className="c-col c-l" /><span className="c-col c-r" />
-      <span className="c-crack k-l" /><span className="c-crack k-r" />
-      <span className="c-lintel nf-cross nf-line" /><span className="c-pediment" />
-    </>),
+    formula: 'H = 0 ✦ r = c · cosh(z / c) ✦ area → min ✦ ',
+    body: (
+      <span className="nf-catenoid">
+        <span className="f-film" />
+        <span className="f-disc d-top" /><span className="f-disc d-bot" />
+        <span className="f-ring r-top" /><span className="f-ring r-bot" />
+        {[['38%', '44%'], ['47%', '52%'], ['55%', '46%'], ['62%', '55%'], ['43%', '60%']].map(([left, top], i) => <span key={left} className="f-drop" style={{ left, top, ...cssVar('--i', i) }} />)}
+      </span>
+    ),
   },
-  // the missing link: lemniscate chain links
-  chain: {
-    main: 'nf-chain',
+  // the chain of command: a catenary with its middle link missing
+  catenary: {
     props: ['key', 'candle'],
-    formula: 'r² = a² cos 2θ ✦ (x² + y²)² = a²(x² − y²) ✦ ',
-    body: (<>
-      <span className="l-group g-l"><span className="l-link l-a" /><span className="l-link l-b" /><span className="l-link l-mid l-half-l" /></span>
-      <span className="l-group g-r"><span className="l-link l-mid l-half-r" /><span className="l-link l-c" /><span className="l-link l-d" /></span>
-      <span className="l-gap" />
-    </>),
+    formula: 'y = a · cosh(x / a) ✦ T₀ = ρ g a ✦ ',
+    body: (
+      <span className="nf-catenary">
+        <span className="c-half c-left"><span className="c-peg" style={{ left: '6%', top: '12%' }} /><span className="c-link" style={{ left: '8.3%', top: '21.1%', '--a': '-66.7deg' } as React.CSSProperties} /><span className="c-link is-edge" style={{ left: '13.6%', top: '38.9%', '--a': '-61.7deg' } as React.CSSProperties} /><span className="c-link" style={{ left: '20.1%', top: '55.6%', '--a': '-54.3deg' } as React.CSSProperties} /><span className="c-link is-edge" style={{ left: '28.1%', top: '70.4%', '--a': '-42.9deg' } as React.CSSProperties} /><span className="c-link" style={{ left: '38.1%', top: '81.5%', '--a': '-24.9deg' } as React.CSSProperties} /></span>
+        <span className="c-half c-right"><span className="c-peg" style={{ left: '94%', top: '12%' }} /><span className="c-link" style={{ left: '61.9%', top: '81.5%', '--a': '24.9deg' } as React.CSSProperties} /><span className="c-link is-edge" style={{ left: '71.9%', top: '70.4%', '--a': '42.9deg' } as React.CSSProperties} /><span className="c-link" style={{ left: '79.9%', top: '55.6%', '--a': '54.3deg' } as React.CSSProperties} /><span className="c-link is-edge" style={{ left: '86.4%', top: '38.9%', '--a': '61.7deg' } as React.CSSProperties} /><span className="c-link" style={{ left: '91.7%', top: '21.1%', '--a': '66.7deg' } as React.CSSProperties} /></span>
+        <span className="c-gap" />
+      </span>
+    ),
   },
-  // the overlap: vesica piscis, two circles whose centres are one radius apart
-  vesica: {
-    main: 'nf-vesica',
+  // the overlap: two circles, and in their lens a Penrose sun (5 fat rhombs + 5 thin rhombs)
+  penrose: {
     props: ['candle', 'astro'],
-    formula: 'd = r ✦ h = √3 · r ✦ A = (2π/3 − √3/2) r² ✦ ',
-    body: (<>
-      <span className="v-c v-l" /><span className="v-c v-r" /><span className="v-lens" /><span className="v-axis" />
-    </>),
+    formula: 'fat : thin = φ ✦ 36° · 72° · 108° · 144° ✦ d = r ✦ h = √3 · r ✦ ',
+    body: (
+      <span className="nf-penrose">
+        <span className="v-c v-l" /><span className="v-c v-r" />
+        {[0, 1, 2, 3, 4].map((k) => <span key={`f${k}`} className="p-fat" style={cssVar('--k', k)} />)}
+        {[0, 1, 2, 3, 4].map((k) => <span key={`t${k}`} className="p-thin" style={cssVar('--k', k)} />)}
+      </span>
+    ),
   },
 };
 
-/** Spreads a formula around the magic circle, repeating it to fill the ring. */
+/** Spreads a formula around the ring, repeating it to fill 72 positions. */
 const NotesStoryRunes: React.FC<{ formula: string }> = ({ formula }) => {
   const target = 72;
   let text = formula;
-  while (text.length < target) text += formula;
-  const chars = Array.from(text.slice(0, target));
+  while (Array.from(text).length < target) text += formula;
+  const chars = Array.from(text).slice(0, target);
   return (
-    <span className="nf-runes" aria-hidden style={{ '--step': `${360 / chars.length}deg` } as React.CSSProperties}>
-      {chars.map((char, index) => <i key={index} style={{ '--k': index } as React.CSSProperties}>{char}</i>)}
+    <span className="nf-runes" aria-hidden style={cssVar('--step', `${360 / chars.length}deg`)}>
+      {chars.map((char, index) => <i key={index} style={cssVar('--k', index)}>{char}</i>)}
     </span>
   );
 };
 
-const NOTES_STORY_SPARKS: Array<[string, string]> = [['24%', '18%'], ['76%', '14%'], ['31%', '70%'], ['70%', '66%'], ['8%', '40%'], ['92%', '38%']];
+const NOTES_STORY_SPARKS: Array<[string, string]> = [['24%', '18%'], ['76%', '14%'], ['31%', '72%'], ['70%', '68%'], ['8%', '40%'], ['92%', '36%']];
+const NOTES_STORY_MOTES: Array<[string, string, string, string]> = [
+  ['36%', '82%', '11s', '0s'], ['44%', '78%', '13s', '2.4s'], ['58%', '84%', '10s', '4.1s'], ['63%', '76%', '14s', '1.2s'],
+  ['52%', '86%', '12s', '6s'], ['40%', '70%', '9s', '3.3s'], ['67%', '80%', '12.5s', '7.2s'], ['48%', '74%', '10.5s', '8.4s'],
+];
 
 export const NotesStoryFrame: React.FC<{
   motif: NotesStoryMotif;
@@ -1094,32 +1109,31 @@ export const NotesStoryFrame: React.FC<{
   const scene = notesStoryScenes[motif];
   return (
     <div
-      className={`engraved-art engraved-tone-ink notes-frame nf-${motif}${active || thumb ? ' is-active' : ''}${thumb ? ' is-thumb' : ''}${stage ? ' is-stage' : ''}`}
+      className={`engraved-art engraved-tone-ink notes-frame nf-m-${motif}${active || thumb ? ' is-active' : ''}${thumb ? ' is-thumb' : ''}${stage ? ' is-stage' : ''}`}
       role="img"
       aria-label={label}
     >
       <span className="nf-vignette" />
       <span className="nf-rays" />
       <span className="nf-ground" />
-      <span className="nf-corner nf-corner-tl" /><span className="nf-corner nf-corner-tr" /><span className="nf-corner nf-corner-bl" /><span className="nf-corner nf-corner-br" />
       <span className="nf-moon" />
       {NOTES_STORY_SPARKS.map(([left, top]) => <span key={`${left}${top}`} className="nf-spark" style={{ left, top }} />)}
+      {!thumb && NOTES_STORY_MOTES.map(([left, top, d, w]) => (
+        <span key={`${left}${top}`} className="nf-mote" style={{ left, top, ...cssVar('--d', d), ...cssVar('--w', w) }} />
+      ))}
       <span className="nf-circle-wrap">
-        <span className="nf-ring-outer" />
-        <span className="nf-ring-ticks" />
-        <span className="nf-ring-inner" />
-        <span className="nf-pentagram">{[0, 1, 2, 3, 4].map((k) => <i key={k} style={{ '--k': k } as React.CSSProperties} />)}</span>
+        <span className="nf-dots" />
         {!thumb && <NotesStoryRunes formula={scene.formula} />}
       </span>
-      <span className={`nf-main ${scene.main}`}>{scene.body}</span>
+      <span className="nf-main">{scene.body}</span>
       <span className={`nf-prop nf-prop-l ${notesStoryPropClass[scene.props[0]]}`}>{notesStoryProps[scene.props[0]]}</span>
       <span className={`nf-prop nf-prop-r ${notesStoryPropClass[scene.props[1]]}`}>{notesStoryProps[scene.props[1]]}</span>
     </div>
   );
 };
 
-export const NotesStoryTiersArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="tiers" label={label} thumb />;
-export const NotesStoryPapersArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="papers" label={label} thumb />;
-export const NotesStoryColumnsArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="columns" label={label} thumb />;
-export const NotesStoryChainArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="chain" label={label} thumb />;
-export const NotesStoryVesicaArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="vesica" label={label} thumb />;
+export const NotesStoryMandelbrotArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="mandelbrot" label={label} thumb />;
+export const NotesStorySpiralArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="spiral" label={label} thumb />;
+export const NotesStoryCatenoidArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="catenoid" label={label} thumb />;
+export const NotesStoryCatenaryArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="catenary" label={label} thumb />;
+export const NotesStoryPenroseArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="penrose" label={label} thumb />;

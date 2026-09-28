@@ -16,7 +16,7 @@ export type SiteEssayNoteData = {
   }>;
   originalSource?: { url: string; label: Record<'en' | 'zh', string> };
   storySource?: { url: string; label: Record<'en' | 'zh', string> };
-  storyboard?: Array<{ motif: 'tiers' | 'papers' | 'columns' | 'chain' | 'vesica'; kind: 'method' | 'fact' | 'overturned' | 'gap' | 'verdict'; beat: Record<'en' | 'zh', string> }>;
+  storyboard?: Array<{ motif: 'mandelbrot' | 'spiral' | 'catenoid' | 'catenary' | 'penrose'; kind: 'method' | 'fact' | 'overturned' | 'gap' | 'verdict'; beat: Record<'en' | 'zh', string> }>;
   references?: Array<{ id: string; url: string; label: Record<'en' | 'zh', string> }>;
   referencesNote?: Record<'en' | 'zh', string>;
 };
@@ -861,31 +861,31 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
     },
     "storyboard": [
       {
-        "motif": "tiers",
+        "motif": "mandelbrot",
         "kind": "method",
         "beat": {
-          "en": "A tidy story arrives with its villains named. Before believing it, we set out three trays: what is on paper, what is inferred, what has no proof.",
-          "zh": "一个整齐的故事端上桌，坏人都点好名了。先别急着信，摆出三层托盘：有文件的、推论的、没证据的。"
+          "en": "A tidy story arrives with its villains named. But a one-line rule can hide endless detail, so before believing it we sort every claim three ways: on paper, inferred, or unproven.",
+          "zh": "一个整齐的故事端上桌，坏人都点好名了。可一条简单的公式，放大后能长出无穷细节。所以先别急着信，把每句话分三类：有文件的、推论的、没证据的。"
         }
       },
       {
-        "motif": "papers",
+        "motif": "spiral",
         "kind": "fact",
         "beat": {
-          "en": "Three documents fall into place, 1996, 1998, 2001: a report, an open letter, a list of appointments. Each one carries a seal.",
-          "zh": "三份文件依次落下：1996 年的报告、1998 年的公开信、2001 年的任命名单。每一张都盖着章。"
+          "en": "The documents build on each other like a Fibonacci spiral: the 1996 report, the 1998 open letters, the 2001 appointments. Each one carries a seal.",
+          "zh": "文件像斐波那契螺旋一样一层叠一层：1996 年的报告、1998 年的公开信、2001 年的任命名单。每一份都盖着章。"
         }
       },
       {
-        "motif": "columns",
+        "motif": "catenoid",
         "kind": "overturned",
         "beat": {
-          "en": "The war stood on two pillars, hidden weapons and a terror partnership. The post-war reviews knocked both down.",
-          "zh": "这场仗立在两根柱子上：藏起来的武器、与恐怖组织的勾结。战后的调查，把两根都推倒了。"
+          "en": "The case was held up by two rings, hidden weapons and a terror partnership, like a soap film stretched between them. The post-war reviews pulled the rings apart, and the film broke.",
+          "zh": "这场仗靠两个环撑着：藏起来的武器、与恐怖组织的勾结，像撑在两环之间的一层肥皂膜。战后调查把两个环拉开，膜就断了。"
         }
       },
       {
-        "motif": "chain",
+        "motif": "catenary",
         "kind": "gap",
         "beat": {
           "en": "The popular version is a chain: Israel orders, neocons obey, the president complies. Pull on it and the middle link is simply not there.",
@@ -893,11 +893,11 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
         }
       },
       {
-        "motif": "vesica",
+        "motif": "penrose",
         "kind": "verdict",
         "beat": {
-          "en": "Two circles slide together. The overlap is real: the same people appear on both sides. But an overlap is not an arrow.",
-          "zh": "两个圆慢慢靠拢。重叠的那一块是真的：同一批人确实在两边出现过。但重叠不是箭头。"
+          "en": "Two circles slide together. The overlap is real: the same people appear on both sides. A pattern grows there, but it never repeats into a chain of command.",
+          "zh": "两个圆慢慢靠拢。重叠的那一块是真的：同一批人确实在两边出现过。那里长出一种图案，却永远不会重复成一条指挥链。"
         }
       }
     ],
