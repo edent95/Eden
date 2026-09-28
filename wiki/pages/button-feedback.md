@@ -33,6 +33,24 @@ The JSON block below is the structured bilingual source consumed by the site com
     "en": "Every important action needs an immediate signal: pressed, loading, accepted, blocked, or failed.",
     "zh": "每个重要操作都要马上给信号：已按下、处理中、已接受、被挡住、或失败。"
   },
+  "storyboard": [
+    {
+      "motif": "lissajous",
+      "kind": "principle",
+      "beat": {
+        "en": "Press, wait, result: the button answers each beat in turn. The last beat tells the user whether the table accepted the action.",
+        "zh": "按下、等待、结果，按钮一拍一拍地回应。最后那一拍，要让用户知道牌桌收到了没有。"
+      }
+    },
+    {
+      "motif": "penrose",
+      "kind": "idea",
+      "beat": {
+        "en": "Small motion and sound overlap, and the table starts to feel alive. The best microinteraction removes doubt, so no one double-clicks or retries in confusion.",
+        "zh": "小动效和声音叠在一起，桌子就有了生命感。最好的微交互，是把怀疑拿掉，没人再重复点、乱重试。"
+      }
+    }
+  ],
   "sections": [
     {
       "title": {

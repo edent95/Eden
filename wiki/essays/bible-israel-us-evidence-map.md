@@ -55,6 +55,64 @@ The JSON block below is the structured bilingual source consumed by the site com
       "zh": "看故事看板：三条河"
     }
   },
+  "storyboard": [
+    {
+      "motif": "mandelbrot",
+      "kind": "method",
+      "beat": {
+        "en": "Two sentences look almost identical from far away. Zoom in and they split: one has a great deal of evidence behind it, the other has none.",
+        "zh": "两句话远看几乎一样。放大一看就分开了：一句有大量证据，一句一点都没有。"
+      }
+    },
+    {
+      "motif": "spiral",
+      "kind": "fact",
+      "beat": {
+        "en": "A secular movement, then a religious current growing beside it: land read as redemption after 1967, settlements from 1974, and now a seat in government.",
+        "zh": "起点是世俗的，旁边却长出一股宗教的力量：1967 年后把土地读成救赎，1974 年起建定居点，一圈圈长到今天，坐进了政府。"
+      }
+    },
+    {
+      "motif": "penrose",
+      "kind": "fact",
+      "beat": {
+        "en": "One number turns the picture over: the strongest believers are Christians. Two groups overlap on the same policy, each for its own ultimate reason.",
+        "zh": "一个数字就把画面翻过来：最信这套神学的，是基督徒。两群人在同一个政策上重叠，终极理由却各不相同。"
+      }
+    },
+    {
+      "motif": "catenary",
+      "kind": "gap",
+      "beat": {
+        "en": "Draw the chain \"Bible → Iraq War\" and the key link hangs on one secondhand recollection, later called a figure of speech. The rivers meet, but meeting is not control.",
+        "zh": "想画一条「《圣经》→ 伊拉克战争」的链，关键那一环只挂在一段转述上，后来还被说成比喻。三条河会合，但汇流不等于控制。"
+      }
+    },
+    {
+      "motif": "lissajous",
+      "kind": "principle",
+      "beat": {
+        "en": "Money can be split down the middle; land \"given by God\" cannot. Offer cash and the anger rises. Religion does not start the signal, but it can amplify it.",
+        "zh": "钱可以对半分，「神给的地」不行。拿钱去换，怒气反而更大。宗教不是源头的那道讯号，却可能是放大器。"
+      }
+    },
+    {
+      "motif": "penrose",
+      "kind": "idea",
+      "beat": {
+        "en": "Black holds a dot of white, white holds a dot of black. The same book gives both plowshares and Amalek; the question is which half people pick.",
+        "zh": "黑里有个白点，白里有个黑点。同一部书里有犁头，也有亚玛力。要问的是，人会挑哪一半。"
+      }
+    },
+    {
+      "motif": "catenoid",
+      "kind": "warning",
+      "beat": {
+        "en": "Stretch any value into absolute truth and the film pulls too thin: the dragon that climbs too high will have regrets. Whoever claims to be pure white deserves a second look.",
+        "zh": "把任何价值拉成绝对真理，膜就绷得太薄：亢龙有悔。谁说自己是纯白的，就多看他一眼。"
+      }
+    }
+  ],
   "references": [
     {
       "id": "1",

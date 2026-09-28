@@ -47,6 +47,48 @@ The JSON block below is the structured bilingual source consumed by the site com
       "zh": "阅读完整原文（白话版）"
     }
   },
+  "storyboard": [
+    {
+      "motif": "mandelbrot",
+      "kind": "example",
+      "beat": {
+        "en": "An auditor sent to ask one question ends up in a banana grove. Trace back from the body, and the city's most glamorous company turns out to be built on borrowed money.",
+        "zh": "一个被派来问一个问题的核数师，最后躺在香蕉林里。顺着尸体往回查，全城最风光的公司，风光几乎全是借来的。"
+      }
+    },
+    {
+      "motif": "spiral",
+      "kind": "fact",
+      "beat": {
+        "en": "Cheap land, a quick flip, then one building resold for nearly HK$700m more in months. The halo grows outward, turn after turn, to over 200 companies.",
+        "zh": "低价买地、转手获利，再来一栋楼，几个月账面赚近 7 亿。光环一圈圈往外长，长成两百多家公司。"
+      }
+    },
+    {
+      "motif": "catenary",
+      "kind": "fact",
+      "beat": {
+        "en": "Follow the money and it hangs from one long chain of loans out of Malaysia. Each link props the asset prices a little higher, as long as the next loan comes.",
+        "zh": "顺着钱往回找，它挂在一条从马来西亚借来的长链上。每一环都把资产价格再垫高一点，只要下一笔钱还借得到。"
+      }
+    },
+    {
+      "motif": "catenoid",
+      "kind": "overturned",
+      "beat": {
+        "en": "Prices fall, collateral shrinks, old debts come due. The film stretched between borrowing and belief snaps, and Malaysian taxpayers patch the hole.",
+        "zh": "楼价一跌，抵押品缩水，旧债到期。撑在「借得到」和「有人信」之间的那层膜，啪一声断了，窟窿由马来西亚纳税人来填。"
+      }
+    },
+    {
+      "motif": "mandelbrot",
+      "kind": "warning",
+      "beat": {
+        "en": "Seventeen years of work end in three years of prison. The real lesson is a daily mistake: taking \"looks rich\" for \"is valuable\". Look underneath.",
+        "zh": "十七年换来三年刑期。真正的教训是我们每天都在犯的错：把「看起来有钱」当成「真的有价值」。往底下看一眼。"
+      }
+    }
+  ],
   "references": [
     {
       "id": "1",

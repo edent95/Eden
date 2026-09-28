@@ -9,7 +9,7 @@ import { NotesStoryFrame, type NotesStoryMotif } from './css-art/index';
 // the selected frame; thumbnails below pick a frame; while reading, the stage
 // follows the section being read.
 
-export type NotesStoryKind = 'method' | 'fact' | 'overturned' | 'gap' | 'verdict';
+export type NotesStoryKind = 'method' | 'fact' | 'overturned' | 'gap' | 'verdict' | 'idea' | 'example' | 'principle' | 'warning' | 'action';
 
 export type NotesStoryFrameData = {
   motif: NotesStoryMotif;
@@ -23,6 +23,11 @@ const KIND_LABEL: Record<NotesStoryKind, Record<Language, string>> = {
   overturned: { en: 'Overturned', zh: '被推翻' },
   gap: { en: 'No evidence', zh: '没有证据' },
   verdict: { en: 'Verdict', zh: '结论' },
+  idea: { en: 'Idea', zh: '观点' },
+  example: { en: 'Case', zh: '案例' },
+  principle: { en: 'Principle', zh: '原理' },
+  warning: { en: 'Warning', zh: '警示' },
+  action: { en: 'Practice', zh: '做法' },
 };
 
 /** The section's ==key sentence==, with citation / link tokens reduced to plain text. */
@@ -40,7 +45,7 @@ export const extractKeySentence = (paragraphs: string[]): string => {
 };
 
 export const NotesStoryboard: React.FC<{
-  frames: NotesStoryFrameData[];
+  frames: readonly NotesStoryFrameData[];
   titles: string[];
   keySentences: string[];
   active: number;

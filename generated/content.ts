@@ -16,7 +16,7 @@ export type SiteEssayNoteData = {
   }>;
   originalSource?: { url: string; label: Record<'en' | 'zh', string> };
   storySource?: { url: string; label: Record<'en' | 'zh', string> };
-  storyboard?: Array<{ motif: 'mandelbrot' | 'spiral' | 'catenoid' | 'catenary' | 'penrose'; kind: 'method' | 'fact' | 'overturned' | 'gap' | 'verdict'; beat: Record<'en' | 'zh', string> }>;
+  storyboard?: Array<{ motif: 'mandelbrot' | 'spiral' | 'catenoid' | 'catenary' | 'penrose' | 'phyllotaxis' | 'lissajous'; kind: 'method' | 'fact' | 'overturned' | 'gap' | 'verdict' | 'idea' | 'example' | 'principle' | 'warning' | 'action'; beat: Record<'en' | 'zh', string> }>;
   references?: Array<{ id: string; url: string; label: Record<'en' | 'zh', string> }>;
   referencesNote?: Record<'en' | 'zh', string>;
 };
@@ -40,6 +40,48 @@ export const wikiEntries = [
       "en": "For full vibe coding, use Vite as the fast loop, but keep a separate gate for typecheck, build, route checks, and broken-asset checks.",
       "zh": "如果是 fully vibe coding，Vite 应该负责“快速循环”，但必须另外保留 typecheck、build、路由检查和资源检查这道门。"
     },
+    "storyboard": [
+      {
+        "motif": "phyllotaxis",
+        "kind": "example",
+        "beat": {
+          "en": "Jiju grew too heavy to iterate on. Vite split it into small feedback zones: change one page, one component, one asset path, then verify fast.",
+          "zh": "Jiju 变得太庞大，慢慢改一直出问题。Vite 把它拆成一小块一小块的反馈区：改一个页面、一个组件、一个资源路径，马上验证。"
+        }
+      },
+      {
+        "motif": "lissajous",
+        "kind": "idea",
+        "beat": {
+          "en": "Cold start is quick, and HMR keeps the loop running: tune UI, motion, copy, and microfeedback with AI without breaking the visual flow.",
+          "zh": "冷启动很快，HMR 让来回调整不断线：和 AI 一起改 UI、动效、文案、微反馈，视觉迭代不中断。"
+        }
+      },
+      {
+        "motif": "mandelbrot",
+        "kind": "warning",
+        "beat": {
+          "en": "On the surface it is fast. Underneath, dev and production differ, TypeScript is transpiled but not typechecked, and a stale cache can replay old behavior like a ghost.",
+          "zh": "表面很快，底下却藏着细节：dev 和 production 不一样，TypeScript 只转译不 typecheck，旧缓存还会像幽灵一样重播旧行为。"
+        }
+      },
+      {
+        "motif": "catenary",
+        "kind": "action",
+        "beat": {
+          "en": "A working dev server is only one link. Before calling it done, chain on typecheck and build, then check the real assets and public routes.",
+          "zh": "dev server 正常，只是其中一环。完成前要接上 typecheck 和 build，再检查真实资源和公开路由。"
+        }
+      },
+      {
+        "motif": "penrose",
+        "kind": "principle",
+        "beat": {
+          "en": "Two modes overlap: during exploration, optimize for flow; before handoff, optimize for truth. Speed has to be paired with checks that can be repeated.",
+          "zh": "两种状态叠在一起：探索时顾心流，交付前顾真实。速度，要配一套可重复的检查。"
+        }
+      }
+    ],
     "sections": [
       {
         "title": {
@@ -163,6 +205,24 @@ export const wikiEntries = [
       "en": "Music should support the table mood without stealing control from the player.",
       "zh": "音乐应该支撑牌桌气氛，但不能把控制权从玩家手里拿走。"
     },
+    "storyboard": [
+      {
+        "motif": "spiral",
+        "kind": "action",
+        "beat": {
+          "en": "The sound can be turned off, and the control sits in plain sight. Visit after visit, the table remembers the player's choice instead of resetting the mood.",
+          "zh": "声音可以关，控制入口就摆在看得见的地方。一次又一次回来，桌子都记得玩家的选择，不会每次重置气氛。"
+        }
+      },
+      {
+        "motif": "lissajous",
+        "kind": "idea",
+        "beat": {
+          "en": "A social table in total silence feels unfinished. A calm loop gives the wait between moves a rhythm, and solo BOT mode stops feeling like a test screen.",
+          "zh": "社交场完全安静，桌子就像还没做完。一段轻轻的循环，给等待的空档一点节奏，单人 BOT 模式也不再像测试页。"
+        }
+      }
+    ],
     "sections": [
       {
         "title": {
@@ -222,6 +282,24 @@ export const wikiEntries = [
       "en": "Every important action needs an immediate signal: pressed, loading, accepted, blocked, or failed.",
       "zh": "每个重要操作都要马上给信号：已按下、处理中、已接受、被挡住、或失败。"
     },
+    "storyboard": [
+      {
+        "motif": "lissajous",
+        "kind": "principle",
+        "beat": {
+          "en": "Press, wait, result: the button answers each beat in turn. The last beat tells the user whether the table accepted the action.",
+          "zh": "按下、等待、结果，按钮一拍一拍地回应。最后那一拍，要让用户知道牌桌收到了没有。"
+        }
+      },
+      {
+        "motif": "penrose",
+        "kind": "idea",
+        "beat": {
+          "en": "Small motion and sound overlap, and the table starts to feel alive. The best microinteraction removes doubt, so no one double-clicks or retries in confusion.",
+          "zh": "小动效和声音叠在一起，桌子就有了生命感。最好的微交互，是把怀疑拿掉，没人再重复点、乱重试。"
+        }
+      }
+    ],
     "sections": [
       {
         "title": {
@@ -281,6 +359,24 @@ export const wikiEntries = [
       "en": "Realtime storage is not just where data sits. It defines what the table remembers and what must be cleaned up.",
       "zh": "Realtime storage 不只是放数据的地方。它决定牌桌记住什么，也决定什么必须被清掉。"
     },
+    "storyboard": [
+      {
+        "motif": "catenary",
+        "kind": "principle",
+        "beat": {
+          "en": "The browser session ends, but the room state still hangs from a durable source of truth. Players rejoin, and the table keeps its shared context.",
+          "zh": "浏览器 session 结束了，房间状态还挂在一个稳定的 truth source 上。玩家重连，桌上的共同上下文一样都没少。"
+        }
+      },
+      {
+        "motif": "phyllotaxis",
+        "kind": "warning",
+        "beat": {
+          "en": "Game state should be laid out like a schema, not scattered into loose flags, and it still needs cleanup rules. Persistence is a product decision, not only a backend one.",
+          "zh": "游戏状态要按 schema 排好，不要散成一堆 flag，也要有 cleanup 规则。持久化，是产品决策，不只是后端决策。"
+        }
+      }
+    ],
     "sections": [
       {
         "title": {
@@ -631,6 +727,64 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
         "zh": "看故事看板：三条河"
       }
     },
+    "storyboard": [
+      {
+        "motif": "mandelbrot",
+        "kind": "method",
+        "beat": {
+          "en": "Two sentences look almost identical from far away. Zoom in and they split: one has a great deal of evidence behind it, the other has none.",
+          "zh": "两句话远看几乎一样。放大一看就分开了：一句有大量证据，一句一点都没有。"
+        }
+      },
+      {
+        "motif": "spiral",
+        "kind": "fact",
+        "beat": {
+          "en": "A secular movement, then a religious current growing beside it: land read as redemption after 1967, settlements from 1974, and now a seat in government.",
+          "zh": "起点是世俗的，旁边却长出一股宗教的力量：1967 年后把土地读成救赎，1974 年起建定居点，一圈圈长到今天，坐进了政府。"
+        }
+      },
+      {
+        "motif": "penrose",
+        "kind": "fact",
+        "beat": {
+          "en": "One number turns the picture over: the strongest believers are Christians. Two groups overlap on the same policy, each for its own ultimate reason.",
+          "zh": "一个数字就把画面翻过来：最信这套神学的，是基督徒。两群人在同一个政策上重叠，终极理由却各不相同。"
+        }
+      },
+      {
+        "motif": "catenary",
+        "kind": "gap",
+        "beat": {
+          "en": "Draw the chain \"Bible → Iraq War\" and the key link hangs on one secondhand recollection, later called a figure of speech. The rivers meet, but meeting is not control.",
+          "zh": "想画一条「《圣经》→ 伊拉克战争」的链，关键那一环只挂在一段转述上，后来还被说成比喻。三条河会合，但汇流不等于控制。"
+        }
+      },
+      {
+        "motif": "lissajous",
+        "kind": "principle",
+        "beat": {
+          "en": "Money can be split down the middle; land \"given by God\" cannot. Offer cash and the anger rises. Religion does not start the signal, but it can amplify it.",
+          "zh": "钱可以对半分，「神给的地」不行。拿钱去换，怒气反而更大。宗教不是源头的那道讯号，却可能是放大器。"
+        }
+      },
+      {
+        "motif": "penrose",
+        "kind": "idea",
+        "beat": {
+          "en": "Black holds a dot of white, white holds a dot of black. The same book gives both plowshares and Amalek; the question is which half people pick.",
+          "zh": "黑里有个白点，白里有个黑点。同一部书里有犁头，也有亚玛力。要问的是，人会挑哪一半。"
+        }
+      },
+      {
+        "motif": "catenoid",
+        "kind": "warning",
+        "beat": {
+          "en": "Stretch any value into absolute truth and the film pulls too thin: the dragon that climbs too high will have regrets. Whoever claims to be pure white deserves a second look.",
+          "zh": "把任何价值拉成绝对真理，膜就绷得太薄：亢龙有悔。谁说自己是纯白的，就多看他一眼。"
+        }
+      }
+    ],
     "references": [
       {
         "id": "1",
@@ -1103,6 +1257,48 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
         "zh": "阅读完整原文（白话版）"
       }
     },
+    "storyboard": [
+      {
+        "motif": "penrose",
+        "kind": "fact",
+        "beat": {
+          "en": "Two numbers overlap in the same month: exports hit an all-time high, while the stock market posts its largest monthly fall on record. Set side by side, they are already a lesson.",
+          "zh": "两个数字叠在同一个月里：出口创下历史新高，股市却跌出史上最大单月跌幅。摆在一起，本身就是一堂课。"
+        }
+      },
+      {
+        "motif": "spiral",
+        "kind": "example",
+        "beat": {
+          "en": "The AI boom drives money toward chips, and the index nearly doubles in six months, spiralling outward. Many put in not just savings but borrowed money, hoping to multiply the gains.",
+          "zh": "AI 热潮把钱往芯片上赶，指数半年差不多翻了一倍，像螺旋一圈圈往外长。很多人不只投进积蓄，还借钱加杠杆，想让赚的再翻几倍。"
+        }
+      },
+      {
+        "motif": "catenoid",
+        "kind": "warning",
+        "beat": {
+          "en": "The rally was a soap film stretched over borrowed money. In July it was pulled too far and broke: margin calls, forced selling, lower prices, more forced selling, until the fall became a stampede.",
+          "zh": "那段涨势像一层撑在借来的钱上的肥皂膜，7 月被拉得太开，断了。追缴、强平、再跌、再强平，下跌就这样变成了踩踏。"
+        }
+      },
+      {
+        "motif": "lissajous",
+        "kind": "principle",
+        "beat": {
+          "en": "Two curves circle each other: value moves slowly, while price is shoved around by emotion and leverage. In the first half price ran far ahead; in July it crashed well below, while the real business barely moved.",
+          "zh": "两条曲线绕着彼此走：价值变得慢，价格被情绪和杠杆推来推去。上半年价格远远跑在前面，7 月又狠狠跌到下面，真实的生意几乎没动。"
+        }
+      },
+      {
+        "motif": "mandelbrot",
+        "kind": "warning",
+        "beat": {
+          "en": "The chips are real, the AI demand is real, the companies really earn; the surface is perfectly tidy. Zoom in and only the price has been blown too far, and even a sound market can bubble and crash.",
+          "zh": "芯片是真的，需求是真的，公司也真赚钱，表面整整齐齐。可放大一看，被吹过头的只是价格；基本面再好的市场，照样能起泡沫、照样能崩。"
+        }
+      }
+    ],
     "references": [
       {
         "id": "1",
@@ -1277,6 +1473,48 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
         "zh": "阅读完整原文（白话版）"
       }
     },
+    "storyboard": [
+      {
+        "motif": "phyllotaxis",
+        "kind": "example",
+        "beat": {
+          "en": "A seminar promises a Ferrari; one investor pays in. Around him, recruit by recruit, the same three-step rule arranges some two million people into one scheme.",
+          "zh": "说明会上许诺一辆法拉利，一个投资者交了钱。在他身边，一个拉一个，同一套三步规则，把约两百万人排成一个盘。"
+        }
+      },
+      {
+        "motif": "mandelbrot",
+        "kind": "principle",
+        "beat": {
+          "en": "The mall is a tidy storefront over a hollow core. The coin never rose because the mall earned money; it rose because someone new kept buying higher.",
+          "zh": "商城是一层整齐的门面，底下是空的。币从来不是因为商城赚钱才涨，而是后面一直有新人用更高的价格接盘。"
+        }
+      },
+      {
+        "motif": "catenary",
+        "kind": "verdict",
+        "beat": {
+          "en": "Hang the three old questions on it: returns come from later money, nothing real beneath, it breaks when new money stops. Three for three: a money game.",
+          "zh": "拿三个老问题一挂：回报来自后面的钱，底下没有真东西，新钱一断就崩。三条全中，就是一场 money game。"
+        }
+      },
+      {
+        "motif": "catenoid",
+        "kind": "fact",
+        "beat": {
+          "en": "Paper cannot wrap fire. The film breaks, accounts are frozen, the money has already scattered, and the founder is chased across borders.",
+          "zh": "纸包不住火。膜一破，账户冻结，钱早已四散，创办人一路被追到境外。"
+        }
+      },
+      {
+        "motif": "lissajous",
+        "kind": "principle",
+        "beat": {
+          "en": "Postal coupons, property, a coin: the clothes change with each era, but the curve traces the same loop. Three plain questions still catch it every time.",
+          "zh": "邮票、地产、虚拟币，外衣一个时代换一件，画出来却还是同一个圈。三个老问题，每一圈都能把它认出来。"
+        }
+      }
+    ],
     "references": [
       {
         "id": "1",
@@ -1434,6 +1672,48 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
         "zh": "阅读完整原文（白话版）"
       }
     },
+    "storyboard": [
+      {
+        "motif": "mandelbrot",
+        "kind": "example",
+        "beat": {
+          "en": "An auditor sent to ask one question ends up in a banana grove. Trace back from the body, and the city's most glamorous company turns out to be built on borrowed money.",
+          "zh": "一个被派来问一个问题的核数师，最后躺在香蕉林里。顺着尸体往回查，全城最风光的公司，风光几乎全是借来的。"
+        }
+      },
+      {
+        "motif": "spiral",
+        "kind": "fact",
+        "beat": {
+          "en": "Cheap land, a quick flip, then one building resold for nearly HK$700m more in months. The halo grows outward, turn after turn, to over 200 companies.",
+          "zh": "低价买地、转手获利，再来一栋楼，几个月账面赚近 7 亿。光环一圈圈往外长，长成两百多家公司。"
+        }
+      },
+      {
+        "motif": "catenary",
+        "kind": "fact",
+        "beat": {
+          "en": "Follow the money and it hangs from one long chain of loans out of Malaysia. Each link props the asset prices a little higher, as long as the next loan comes.",
+          "zh": "顺着钱往回找，它挂在一条从马来西亚借来的长链上。每一环都把资产价格再垫高一点，只要下一笔钱还借得到。"
+        }
+      },
+      {
+        "motif": "catenoid",
+        "kind": "overturned",
+        "beat": {
+          "en": "Prices fall, collateral shrinks, old debts come due. The film stretched between borrowing and belief snaps, and Malaysian taxpayers patch the hole.",
+          "zh": "楼价一跌，抵押品缩水，旧债到期。撑在「借得到」和「有人信」之间的那层膜，啪一声断了，窟窿由马来西亚纳税人来填。"
+        }
+      },
+      {
+        "motif": "mandelbrot",
+        "kind": "warning",
+        "beat": {
+          "en": "Seventeen years of work end in three years of prison. The real lesson is a daily mistake: taking \"looks rich\" for \"is valuable\". Look underneath.",
+          "zh": "十七年换来三年刑期。真正的教训是我们每天都在犯的错：把「看起来有钱」当成「真的有价值」。往底下看一眼。"
+        }
+      }
+    ],
     "references": [
       {
         "id": "1",
@@ -1598,6 +1878,48 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
         "zh": "阅读完整原文（白话版）"
       }
     },
+    "storyboard": [
+      {
+        "motif": "catenary",
+        "kind": "fact",
+        "beat": {
+          "en": "Boston, 1920: money passes down a chain, later investors' principal becoming earlier investors' \"profit.\" The moment the papers exposed it, the whole chain came down.",
+          "zh": "1920 年的波士顿，钱一环扣一环地往下传：后来者的本金，变成早来者的「利润」。报纸一戳破，整条链当场塌掉。"
+        }
+      },
+      {
+        "motif": "spiral",
+        "kind": "method",
+        "beat": {
+          "en": "Hold the three traits up one by one. A borrowed million becomes a factory that makes things that did not exist before: a Ponzi only splits the same cake, lending can make it grow.",
+          "zh": "把三条特点一条条架上去比。借来的 100 万建成工厂，做出原本没有的东西：庞氏只在分同一块蛋糕，借贷却能把蛋糕做大。"
+        }
+      },
+      {
+        "motif": "penrose",
+        "kind": "verdict",
+        "beat": {
+          "en": "Two circles meet and overlap in one small patch: both depend on the future. By definition modern finance is not a Ponzi scheme; it does not lie or steal, but it does bet that the future will make more real things.",
+          "zh": "两个圆靠在一起，只重叠了一小块：都指望未来。按定义讲，现代金融不是庞氏骗局；它不偷不骗，却押了一个宝：未来会做出更多真东西。"
+        }
+      },
+      {
+        "motif": "lissajous",
+        "kind": "idea",
+        "beat": {
+          "en": "Shout \"Ponzi\" and one reply knocks you down. The sharper move is to watch two lines in rhythm: is our debt growing faster than the real things the future can produce?",
+          "zh": "张口喊「庞氏骗局」，对方一句话就能驳倒。更聪明的是看两条线的节奏：我们欠下的债，是不是涨得比未来能做出的真东西还快？"
+        }
+      },
+      {
+        "motif": "mandelbrot",
+        "kind": "action",
+        "beat": {
+          "en": "Once the label goes on, the discussion ends. Peel it off, take the word apart and zoom in, and underneath sits one enormous assumption: that the future will be richer.",
+          "zh": "「庞氏骗局」四个字一贴，讨论就结束了。撕下标签、把词拆开放大，底下露出一个巨大的假设：未来会更富有。"
+        }
+      }
+    ],
     "references": [
       {
         "id": "1",
@@ -1773,6 +2095,48 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
         "zh": "阅读完整原文（白话版）"
       }
     },
+    "storyboard": [
+      {
+        "motif": "mandelbrot",
+        "kind": "idea",
+        "beat": {
+          "en": "Only two people are left on Earth: you hold $10bn, the other has water, food, and a solar panel. When that person leaves, the cash is just paper. Wealth is not money; it is the ability to meet needs.",
+          "zh": "地球上只剩两个人：你握着 100 亿，他有水、食物和一块太阳能板。那个人一走，钞票就只是一堆纸。财富不是钱，是能满足需求的能力。"
+        }
+      },
+      {
+        "motif": "catenary",
+        "kind": "principle",
+        "beat": {
+          "en": "Every debt is a chain: a borrower at one end, someone's asset at the other. Debt never borrows money, it borrows the future, and the chain snaps when cash flow and confidence break together.",
+          "zh": "每一笔债都是一条链，一头挂着借钱的人，另一头挂着某人的资产。债借的从来不是钱，是未来；链真正会断，是现金流和信心一起断掉那一刻。"
+        }
+      },
+      {
+        "motif": "lissajous",
+        "kind": "principle",
+        "beat": {
+          "en": "One line is population heading down; the other is AI-amplified productivity heading up. As long as the multiplier climbs faster, fewer people need not mean a weaker economy, but the formula can save growth, not distribution.",
+          "zh": "一条线是人口在往下走，一条线是被 AI 放大的生产力在往上走。只要倍数涨得比人口跌得快，人少就未必等于经济差；可这个公式救得了增长，救不了分配。"
+        }
+      },
+      {
+        "motif": "spiral",
+        "kind": "idea",
+        "beat": {
+          "en": "The unit of wealth upgrades turn by turn: grain, gold, currency, credit, data, maybe AI next. Each turn moves closer to productive capacity itself.",
+          "zh": "财富的单位一圈圈升级：粮食、黄金、货币、信用、数据，也许下一站是 AI。每转一圈，都更靠近生产能力本身。"
+        }
+      },
+      {
+        "motif": "mandelbrot",
+        "kind": "method",
+        "beat": {
+          "en": "Keep zooming into what you thought you understood, and break it down until it cannot be broken further. First principles is not a prediction machine but a posture: ask what is left.",
+          "zh": "把你以为早就懂的东西一直放大、一直拆，拆到不能再拆。第一性原理不是预测机器，是一种姿态：问一句，它还剩下什么。"
+        }
+      }
+    ],
     "references": [
       {
         "id": "1",
@@ -1937,6 +2301,32 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
       "营销管理",
       "商弈"
     ],
+    "storyboard": [
+      {
+        "motif": "lissajous",
+        "kind": "idea",
+        "beat": {
+          "en": "The same fire loops back again and again, and endless firefighting looks like skill. Real capability turns that loop into a rule, a workflow, or a boundary, so it never needs saving twice.",
+          "zh": "同一把火一圈一圈绕回来，一直救火看起来很厉害。真正的本事，是把这个循环变成规则、workflow 或 boundary，让同样的火不用救第二次。"
+        }
+      },
+      {
+        "motif": "catenary",
+        "kind": "principle",
+        "beat": {
+          "en": "Messy work is often three links tangled into one: what comes in, how it is judged, what action follows. Pull them apart, and the mess is often a system that never explained itself, not weak people.",
+          "zh": "很多乱，其实是三个环缠在一起：输入是什么、用什么规则判断、最后做什么。把环拆开看，乱的往往不是人，是 system 从没讲清楚。"
+        }
+      },
+      {
+        "motif": "mandelbrot",
+        "kind": "principle",
+        "beat": {
+          "en": "Look where work repeats daily and judgment lives in one person's memory. A good system is like this figure: the complexity stays inside, and the person outside sees a clear edge.",
+          "zh": "去找每天重复的动作、只靠某个人记得的判断。好的 system 就像这张图：复杂都留在里面，外面的人只看到清楚的轮廓。"
+        }
+      }
+    ],
     "sections": [
       {
         "title": {
@@ -2012,6 +2402,32 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
       "数字会说话",
       "薛兆丰的经济学讲义",
       "营销管理"
+    ],
+    "storyboard": [
+      {
+        "motif": "mandelbrot",
+        "kind": "idea",
+        "beat": {
+          "en": "A dashboard holds a hundred numbers, and the user still asks: so what? One drop in sales can hide traffic, conversion, stock, or season; judgment places that movement inside its context.",
+          "zh": "dashboard 摆了一百个数字，用户还是问：So what？一次 sales 下滑，底下可能是流量、conversion、库存、淡季。判断，就是把这个变化放回 context。"
+        }
+      },
+      {
+        "motif": "catenary",
+        "kind": "method",
+        "beat": {
+          "en": "Four links hang between seeing and deciding: compared with what, why it changed, who it affects, whether to act now. Good analysis shortens that chain.",
+          "zh": "从「看到」到「决定」之间，挂着四个环节：跟谁比、为什么变、影响谁、现在该不该动。好的分析，是把这条链缩短。"
+        }
+      },
+      {
+        "motif": "phyllotaxis",
+        "kind": "action",
+        "beat": {
+          "en": "Four lines, placed one by one: signal, context, trade-off, next move. If they will not come together, more data is not the answer; the problem itself is still unclear.",
+          "zh": "四句话一句一句排上去：Signal、Context、Trade-off、Next move。四句拼不起来，要的不是更多 data，是问题本身还没想清楚。"
+        }
+      }
     ],
     "sections": [
       {
@@ -2089,6 +2505,32 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
       "商弈",
       "七个习惯"
     ],
+    "storyboard": [
+      {
+        "motif": "mandelbrot",
+        "kind": "warning",
+        "beat": {
+          "en": "The same failure keeps coming back, and the easy move is to blame the person. That tidy answer only avoids designing the system beneath it.",
+          "zh": "同一个问题一再重演，最省事的就是怪人。可这个整齐的答案，只是在逃避底下的 system design。"
+        }
+      },
+      {
+        "motif": "lissajous",
+        "kind": "principle",
+        "beat": {
+          "en": "People forget, protect themselves, and take the easy path. Every design signal draws its own answer: an unclear button gets random clicks; punish every mistake, and problems go into hiding.",
+          "zh": "人会忘、会自保、会挑好走的路。每个设计都会收到对应的回应：按钮不清楚，就乱点；犯错只会被骂，问题就藏起来。"
+        }
+      },
+      {
+        "motif": "phyllotaxis",
+        "kind": "idea",
+        "beat": {
+          "en": "Four questions set around one action: what it gains, what it fears losing, which path is easiest, what happens after a mistake. Not to manipulate people, but to assume less, blame less, and build something usable.",
+          "zh": "四个问题绕着一个动作排开：有什么好处、怕失去什么、哪条路最好走、出错之后会怎样。不是为了 manipulate 人，是为了少假设、少责怪，做出真的能用的设计。"
+        }
+      }
+    ],
     "sections": [
       {
         "title": {
@@ -2164,6 +2606,32 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
       "孙子兵法",
       "厚黑学",
       "不完美人生经验法则"
+    ],
+    "storyboard": [
+      {
+        "motif": "catenoid",
+        "kind": "warning",
+        "beat": {
+          "en": "Speed feels like action, but some speed only carries you faster into a bad game. Don't stretch into a fight when you are weakest, they are strongest, and the rules run against you.",
+          "zh": "快，看起来像行动力，有些快却只是更快走进烂局。别在自己最弱、对方最强、规则又不利的时候硬撑开战。"
+        }
+      },
+      {
+        "motif": "penrose",
+        "kind": "idea",
+        "beat": {
+          "en": "Proving yourself, beating someone, getting the result: three goals laid over each other that look almost the same. So ask first what winning means, who set the rules, and how you leave if the worst happens.",
+          "zh": "证明自己、赢过某人、拿到结果，三个目标叠在一起，看起来几乎一样。所以先问：赢是什么？规则谁定的？最坏的时候怎么退？"
+        }
+      },
+      {
+        "motif": "phyllotaxis",
+        "kind": "principle",
+        "beat": {
+          "en": "Around one situation sit six moves: fight, go around, delay, retreat, change the field, ally. Maturity is not winning every fight, but knowing which one deserves to be yours.",
+          "zh": "一个局周围排着六种动作：正打、绕打、拖、退、换场、结盟。成熟不是每场都赢，是清楚哪一场值得成为自己的战争。"
+        }
+      }
     ],
     "sections": [
       {

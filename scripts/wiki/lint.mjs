@@ -71,8 +71,8 @@ for (const file of files) {
       }
       // Notes format: optional storyboard, one frame per section.
       if (payload.storyboard !== undefined) {
-        const motifs = ['mandelbrot', 'spiral', 'catenoid', 'catenary', 'penrose'];
-        const kinds = ['method', 'fact', 'overturned', 'gap', 'verdict'];
+        const motifs = ['mandelbrot', 'spiral', 'catenoid', 'catenary', 'penrose', 'phyllotaxis', 'lissajous'];
+        const kinds = ['method', 'fact', 'overturned', 'gap', 'verdict', 'idea', 'example', 'principle', 'warning', 'action'];
         if (!Array.isArray(payload.storyboard) || payload.storyboard.length !== (payload.sections ?? []).length) {
           problems.push(`${relative} storyboard must have exactly one frame per section`);
         } else {

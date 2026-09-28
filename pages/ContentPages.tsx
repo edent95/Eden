@@ -6,7 +6,11 @@ import { HeaderControls, joinBasePath, resolveAssetPath, type Language, type The
 import { NotesReadingBar, NotesRecap, renderKeySentences, useNotesReading } from '../components/NotesReading';
 import { NotesStoryboard, extractKeySentence, type NotesStoryFrameData } from '../components/NotesStoryboard';
 import { useNotesDepth } from '../components/NotesDepth';
-import { NotesGrimoireCover, NotesStoryFrame } from '../components/css-art/index';
+import { NotesGrimoireCover, NotesStoryFrame, notesStoryFormula } from '../components/css-art/index';
+
+/** A cover ring built from the formulas of the motifs this note actually uses. */
+const coverFormula = (frames: readonly NotesStoryFrameData[]) =>
+  Array.from(new Set(frames.map((frame) => frame.motif))).slice(0, 3).map(notesStoryFormula).join('');
 import { ArrowDownRight, ArrowLeft, ArrowUpRight, Bookmark, Brain, Copy, Database, GitBranch, Layers, MessageSquare, Plus, Search, SearchCheck, Send, SlidersHorizontal, TrendingUp, UserRound } from 'lucide-react';
 
 const GUEST_TOPIC_STORAGE_KEY = 'eden-guest-topic-board';
@@ -735,6 +739,10 @@ export const WikiPage: React.FC<{
   const noteSectionId = (index: number) => `sec-${entry?.slug ?? 'wiki'}-${index + 1}`;
   const noteRootRef = React.useRef<HTMLDivElement>(null);
   const noteReading = useNotesReading(noteRootRef, `${entry?.slug ?? ''}-${language}-${isPublishedNote}`);
+  const noteStoryboard: readonly NotesStoryFrameData[] | undefined =
+    entry && 'storyboard' in entry ? (entry.storyboard as readonly NotesStoryFrameData[]) : undefined;
+  const noteGrimoire = Boolean(isPublishedNote && entry && noteStoryboard && noteStoryboard.length === entry.sections.length);
+  useNotesDepth(noteRootRef, noteGrimoire);
   const highlightSections = entry
     ? entry.sections.slice(0, 3).map((section) => ({
         title: section.title[language],
@@ -753,7 +761,17 @@ export const WikiPage: React.FC<{
 
   if (entry && isPublishedNote) {
     return (
-      <div ref={noteRootRef} className={`page-shell notes-article-page ${getWikiToneClassName(entry.slug)} min-h-screen`}>
+      <div ref={noteRootRef} className={`page-shell notes-article-page ${getWikiToneClassName(entry.slug)} min-h-screen${noteGrimoire ? ' notes-grimoire' : ''}`}>
+        {noteGrimoire && noteStoryboard && (
+          <>
+            <div className="ng-backdrop" aria-hidden>
+              <span className="ng-grid" />
+              <span className="ng-grain" />
+              <span className="ng-arc a1" /><span className="ng-arc a2" /><span className="ng-arc a3" />
+            </div>
+            <NotesGrimoireCover formula={coverFormula(noteStoryboard)} />
+          </>
+        )}
         <main className="notes-article-main">
           <div className="notes-article-island">
             <div className="notes-topbar">
@@ -787,11 +805,29 @@ export const WikiPage: React.FC<{
               <blockquote className="notes-article-thesis notes-reveal">
                 <span>{isZh ? '一句话结论' : 'Core thesis'}</span>
                 <p><mark className="notes-thesis-text">{entry.thesis[language]}</mark></p>
+                {noteGrimoire && <i className="ng-seal" aria-hidden />}
               </blockquote>
+              {noteGrimoire && noteStoryboard && (
+                <NotesStoryboard
+                  frames={noteStoryboard}
+                  titles={noteTitles}
+                  keySentences={entry.sections.map((section) => extractKeySentence([...section.points[language]]))}
+                  active={noteReading.active}
+                  language={language}
+                  sectionId={noteSectionId}
+                />
+              )}
 
               <div className="notes-article-sections">
                 {entry.sections.map((section, index) => (
                   <section key={section.title.en} id={noteSectionId(index)} data-note-section className="notes-article-section notes-reveal">
+                    {noteGrimoire && noteStoryboard && (
+                      <div className="ng-margin" aria-hidden>
+                        <div className={`ng-medal${noteReading.active === index ? ' is-reading' : ''}`}>
+                          <NotesStoryFrame motif={noteStoryboard[index].motif} label="" active={noteReading.active === index} />
+                        </div>
+                      </div>
+                    )}
                     <div className="notes-article-section-number"><span>{String(index + 1).padStart(2, '0')}</span></div>
                     <div>
                       <h2>{section.title[language]}</h2>
@@ -1269,7 +1305,7 @@ export const SiteEssayNotePage: React.FC<{
             <span className="ng-grain" />
             <span className="ng-arc a1" /><span className="ng-arc a2" /><span className="ng-arc a3" />
           </div>
-          <NotesGrimoireCover formula="φ = (1 + √5) / 2 ✦ e^(iπ) + 1 = 0 ✦ zₙ₊₁ = zₙ² + c ✦ y = a · cosh(x / a) ✦ " />
+          <NotesGrimoireCover formula={coverFormula(note.storyboard ?? [])} />
         </>
       )}
       <main className="notes-article-main">

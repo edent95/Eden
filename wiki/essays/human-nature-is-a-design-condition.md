@@ -38,6 +38,32 @@ The JSON block below is the structured bilingual source consumed by the site com
     "商弈",
     "七个习惯"
   ],
+  "storyboard": [
+    {
+      "motif": "mandelbrot",
+      "kind": "warning",
+      "beat": {
+        "en": "The same failure keeps coming back, and the easy move is to blame the person. That tidy answer only avoids designing the system beneath it.",
+        "zh": "同一个问题一再重演，最省事的就是怪人。可这个整齐的答案，只是在逃避底下的 system design。"
+      }
+    },
+    {
+      "motif": "lissajous",
+      "kind": "principle",
+      "beat": {
+        "en": "People forget, protect themselves, and take the easy path. Every design signal draws its own answer: an unclear button gets random clicks; punish every mistake, and problems go into hiding.",
+        "zh": "人会忘、会自保、会挑好走的路。每个设计都会收到对应的回应：按钮不清楚，就乱点；犯错只会被骂，问题就藏起来。"
+      }
+    },
+    {
+      "motif": "phyllotaxis",
+      "kind": "idea",
+      "beat": {
+        "en": "Four questions set around one action: what it gains, what it fears losing, which path is easiest, what happens after a mistake. Not to manipulate people, but to assume less, blame less, and build something usable.",
+        "zh": "四个问题绕着一个动作排开：有什么好处、怕失去什么、哪条路最好走、出错之后会怎样。不是为了 manipulate 人，是为了少假设、少责怪，做出真的能用的设计。"
+      }
+    }
+  ],
   "sections": [
     {
       "title": {

@@ -51,6 +51,48 @@ The JSON block below is the structured bilingual source consumed by the site com
       "zh": "阅读完整原文（白话版）"
     }
   },
+  "storyboard": [
+    {
+      "motif": "mandelbrot",
+      "kind": "idea",
+      "beat": {
+        "en": "Only two people are left on Earth: you hold $10bn, the other has water, food, and a solar panel. When that person leaves, the cash is just paper. Wealth is not money; it is the ability to meet needs.",
+        "zh": "地球上只剩两个人：你握着 100 亿，他有水、食物和一块太阳能板。那个人一走，钞票就只是一堆纸。财富不是钱，是能满足需求的能力。"
+      }
+    },
+    {
+      "motif": "catenary",
+      "kind": "principle",
+      "beat": {
+        "en": "Every debt is a chain: a borrower at one end, someone's asset at the other. Debt never borrows money, it borrows the future, and the chain snaps when cash flow and confidence break together.",
+        "zh": "每一笔债都是一条链，一头挂着借钱的人，另一头挂着某人的资产。债借的从来不是钱，是未来；链真正会断，是现金流和信心一起断掉那一刻。"
+      }
+    },
+    {
+      "motif": "lissajous",
+      "kind": "principle",
+      "beat": {
+        "en": "One line is population heading down; the other is AI-amplified productivity heading up. As long as the multiplier climbs faster, fewer people need not mean a weaker economy, but the formula can save growth, not distribution.",
+        "zh": "一条线是人口在往下走，一条线是被 AI 放大的生产力在往上走。只要倍数涨得比人口跌得快，人少就未必等于经济差；可这个公式救得了增长，救不了分配。"
+      }
+    },
+    {
+      "motif": "spiral",
+      "kind": "idea",
+      "beat": {
+        "en": "The unit of wealth upgrades turn by turn: grain, gold, currency, credit, data, maybe AI next. Each turn moves closer to productive capacity itself.",
+        "zh": "财富的单位一圈圈升级：粮食、黄金、货币、信用、数据，也许下一站是 AI。每转一圈，都更靠近生产能力本身。"
+      }
+    },
+    {
+      "motif": "mandelbrot",
+      "kind": "method",
+      "beat": {
+        "en": "Keep zooming into what you thought you understood, and break it down until it cannot be broken further. First principles is not a prediction machine but a posture: ask what is left.",
+        "zh": "把你以为早就懂的东西一直放大、一直拆，拆到不能再拆。第一性原理不是预测机器，是一种姿态：问一句，它还剩下什么。"
+      }
+    }
+  ],
   "references": [
     {
       "id": "1",

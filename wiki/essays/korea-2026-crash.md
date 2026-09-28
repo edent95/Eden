@@ -48,6 +48,48 @@ The JSON block below is the structured bilingual source consumed by the site com
       "zh": "阅读完整原文（白话版）"
     }
   },
+  "storyboard": [
+    {
+      "motif": "penrose",
+      "kind": "fact",
+      "beat": {
+        "en": "Two numbers overlap in the same month: exports hit an all-time high, while the stock market posts its largest monthly fall on record. Set side by side, they are already a lesson.",
+        "zh": "两个数字叠在同一个月里：出口创下历史新高，股市却跌出史上最大单月跌幅。摆在一起，本身就是一堂课。"
+      }
+    },
+    {
+      "motif": "spiral",
+      "kind": "example",
+      "beat": {
+        "en": "The AI boom drives money toward chips, and the index nearly doubles in six months, spiralling outward. Many put in not just savings but borrowed money, hoping to multiply the gains.",
+        "zh": "AI 热潮把钱往芯片上赶，指数半年差不多翻了一倍，像螺旋一圈圈往外长。很多人不只投进积蓄，还借钱加杠杆，想让赚的再翻几倍。"
+      }
+    },
+    {
+      "motif": "catenoid",
+      "kind": "warning",
+      "beat": {
+        "en": "The rally was a soap film stretched over borrowed money. In July it was pulled too far and broke: margin calls, forced selling, lower prices, more forced selling, until the fall became a stampede.",
+        "zh": "那段涨势像一层撑在借来的钱上的肥皂膜，7 月被拉得太开，断了。追缴、强平、再跌、再强平，下跌就这样变成了踩踏。"
+      }
+    },
+    {
+      "motif": "lissajous",
+      "kind": "principle",
+      "beat": {
+        "en": "Two curves circle each other: value moves slowly, while price is shoved around by emotion and leverage. In the first half price ran far ahead; in July it crashed well below, while the real business barely moved.",
+        "zh": "两条曲线绕着彼此走：价值变得慢，价格被情绪和杠杆推来推去。上半年价格远远跑在前面，7 月又狠狠跌到下面，真实的生意几乎没动。"
+      }
+    },
+    {
+      "motif": "mandelbrot",
+      "kind": "warning",
+      "beat": {
+        "en": "The chips are real, the AI demand is real, the companies really earn; the surface is perfectly tidy. Zoom in and only the price has been blown too far, and even a sound market can bubble and crash.",
+        "zh": "芯片是真的，需求是真的，公司也真赚钱，表面整整齐齐。可放大一看，被吹过头的只是价格；基本面再好的市场，照样能起泡沫、照样能崩。"
+      }
+    }
+  ],
   "references": [
     {
       "id": "1",

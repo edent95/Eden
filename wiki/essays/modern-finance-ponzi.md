@@ -48,6 +48,48 @@ The JSON block below is the structured bilingual source consumed by the site com
       "zh": "阅读完整原文（白话版）"
     }
   },
+  "storyboard": [
+    {
+      "motif": "catenary",
+      "kind": "fact",
+      "beat": {
+        "en": "Boston, 1920: money passes down a chain, later investors' principal becoming earlier investors' \"profit.\" The moment the papers exposed it, the whole chain came down.",
+        "zh": "1920 年的波士顿，钱一环扣一环地往下传：后来者的本金，变成早来者的「利润」。报纸一戳破，整条链当场塌掉。"
+      }
+    },
+    {
+      "motif": "spiral",
+      "kind": "method",
+      "beat": {
+        "en": "Hold the three traits up one by one. A borrowed million becomes a factory that makes things that did not exist before: a Ponzi only splits the same cake, lending can make it grow.",
+        "zh": "把三条特点一条条架上去比。借来的 100 万建成工厂，做出原本没有的东西：庞氏只在分同一块蛋糕，借贷却能把蛋糕做大。"
+      }
+    },
+    {
+      "motif": "penrose",
+      "kind": "verdict",
+      "beat": {
+        "en": "Two circles meet and overlap in one small patch: both depend on the future. By definition modern finance is not a Ponzi scheme; it does not lie or steal, but it does bet that the future will make more real things.",
+        "zh": "两个圆靠在一起，只重叠了一小块：都指望未来。按定义讲，现代金融不是庞氏骗局；它不偷不骗，却押了一个宝：未来会做出更多真东西。"
+      }
+    },
+    {
+      "motif": "lissajous",
+      "kind": "idea",
+      "beat": {
+        "en": "Shout \"Ponzi\" and one reply knocks you down. The sharper move is to watch two lines in rhythm: is our debt growing faster than the real things the future can produce?",
+        "zh": "张口喊「庞氏骗局」，对方一句话就能驳倒。更聪明的是看两条线的节奏：我们欠下的债，是不是涨得比未来能做出的真东西还快？"
+      }
+    },
+    {
+      "motif": "mandelbrot",
+      "kind": "action",
+      "beat": {
+        "en": "Once the label goes on, the discussion ends. Peel it off, take the word apart and zoom in, and underneath sits one enormous assumption: that the future will be richer.",
+        "zh": "「庞氏骗局」四个字一贴，讨论就结束了。撕下标签、把词拆开放大，底下露出一个巨大的假设：未来会更富有。"
+      }
+    }
+  ],
   "references": [
     {
       "id": "1",

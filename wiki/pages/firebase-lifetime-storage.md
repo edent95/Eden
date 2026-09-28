@@ -33,6 +33,24 @@ The JSON block below is the structured bilingual source consumed by the site com
     "en": "Realtime storage is not just where data sits. It defines what the table remembers and what must be cleaned up.",
     "zh": "Realtime storage 不只是放数据的地方。它决定牌桌记住什么，也决定什么必须被清掉。"
   },
+  "storyboard": [
+    {
+      "motif": "catenary",
+      "kind": "principle",
+      "beat": {
+        "en": "The browser session ends, but the room state still hangs from a durable source of truth. Players rejoin, and the table keeps its shared context.",
+        "zh": "浏览器 session 结束了，房间状态还挂在一个稳定的 truth source 上。玩家重连，桌上的共同上下文一样都没少。"
+      }
+    },
+    {
+      "motif": "phyllotaxis",
+      "kind": "warning",
+      "beat": {
+        "en": "Game state should be laid out like a schema, not scattered into loose flags, and it still needs cleanup rules. Persistence is a product decision, not only a backend one.",
+        "zh": "游戏状态要按 schema 排好，不要散成一堆 flag，也要有 cleanup 规则。持久化，是产品决策，不只是后端决策。"
+      }
+    }
+  ],
   "sections": [
     {
       "title": {
