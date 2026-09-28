@@ -339,11 +339,13 @@ When adding, hiding, renaming, or changing a route:
 Every Notes article (`/notes/:slug` essays and the Wiki pages published as notes) renders through the shared reading layer in `components/NotesReading.tsx`, styled in the "Notes format" block of `styles/pages/notes.css`. Readers get, automatically:
 
 - a sticky reading bar under the menu: progress line, `03 / 05` counter, current section title, and a section map whose marker slides to the section being read (dots are anchor links);
-- scroll reveals, a section-number pop with a rail that draws down, and the thesis ("一句话结论") underlined by a sweep;
+- scroll reveals and a section-number pop with a rail that draws down (the thesis card "一句话结论" stays plain, no underline);
 - citation previews: hovering or focusing `[n]` shows that reference's label in place (desktop);
 - a closing "你刚读完 / What you just read" checklist built from the section titles.
 
 Authoring rule: **every section marks exactly one key sentence with `==…==` in both `en` and `zh`** (essays: `paragraphs`; Wiki notes: `points`). It renders as a highlighter sweep. Pick the line a skimming reader most needs, keep en/zh marks equivalent, keep the mark inside one paragraph, and never split a `[[n]]` / `[[note:…]]` token. `scripts/wiki/lint.mjs` rejects unclosed marks; `seo-prerender.ts` strips them from static HTML (unit-tested).
+
+Color: the Notes pages use one content theme, `--notes-accent` / `--notes-accent-soft` (dark: pink, light: green). The key-sentence highlighter, the thesis card, the reading bar, and the selected Theme / Language pills in the menu all follow it; do not reintroduce the site-wide mint/orange on Notes pages.
 
 Motion stays on concrete objects (bar, marker, number, rail, highlighter, ticks); start states only apply after JS adds `.notes-motion-ready`, and everything is off under `prefers-reduced-motion`. Theme colors must use `--theme-page` / `--theme-text-primary` (the older `--eden-paper` / `--eden-ink` names in notes.css are not defined anywhere).
 
