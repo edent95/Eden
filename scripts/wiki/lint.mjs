@@ -69,6 +69,20 @@ for (const file of files) {
       for (const text of allParagraphs) {
         if (((text.match(/==/g) ?? []).length) % 2 !== 0) problems.push(`${relative} has an unclosed ==key sentence== mark: ${text.slice(0, 60)}`);
       }
+      // Notes format: optional storyboard, one frame per section.
+      if (payload.storyboard !== undefined) {
+        const motifs = ['tiers', 'papers', 'columns', 'chain', 'vesica'];
+        const kinds = ['method', 'fact', 'overturned', 'gap', 'verdict'];
+        if (!Array.isArray(payload.storyboard) || payload.storyboard.length !== (payload.sections ?? []).length) {
+          problems.push(`${relative} storyboard must have exactly one frame per section`);
+        } else {
+          payload.storyboard.forEach((frame, index) => {
+            if (!motifs.includes(frame.motif)) problems.push(`${relative} storyboard[${index}] has unknown motif ${frame.motif} (known: ${motifs.join(', ')})`);
+            if (!kinds.includes(frame.kind)) problems.push(`${relative} storyboard[${index}] has unknown kind ${frame.kind}`);
+            if (!frame.beat?.en || !frame.beat?.zh) problems.push(`${relative} storyboard[${index}] beat must be bilingual`);
+          });
+        }
+      }
       for (const match of paragraphs.matchAll(/\[\[(\d+)\]\]/g)) {
         if (!referenceIds.has(match[1])) problems.push(`${relative} cites missing reference ${match[1]}`);
       }

@@ -4,6 +4,7 @@ import type { CssArtComponent } from '../components/css-art/index';
 import { WikiBackgroundMusicCssIcon, WikiButtonFeedbackCssIcon, WikiFirebaseStorageCssIcon, WikiRagFlowCssIcon, WikiSkillsCssIcon, WikiViteCssIcon } from '../components/css-art/index';
 import { HeaderControls, joinBasePath, resolveAssetPath, type Language, type Theme, type ThemePreference } from '../app/shared';
 import { NotesReadingBar, NotesRecap, renderKeySentences, useNotesReading } from '../components/NotesReading';
+import { NotesStoryboard, extractKeySentence, type NotesStoryFrameData } from '../components/NotesStoryboard';
 import { ArrowDownRight, ArrowLeft, ArrowUpRight, Bookmark, Brain, Copy, Database, GitBranch, Layers, MessageSquare, Plus, Search, SearchCheck, Send, SlidersHorizontal, TrendingUp, UserRound } from 'lucide-react';
 
 const GUEST_TOPIC_STORAGE_KEY = 'eden-guest-topic-board';
@@ -1070,6 +1071,8 @@ type SiteEssayNote = {
   originalSource?: { url: string; label: Record<Language, string> };
   // Optional second link to a story-style retelling of the same source (served from public/).
   storySource?: { url: string; label: Record<Language, string> };
+  // Optional Notes-format storyboard: one engraved scene per section, same order as `sections`.
+  storyboard?: NotesStoryFrameData[];
   // Optional reference list. Paragraphs may embed [[n]] tokens that link to the
   // matching reference id, and each reference renders a ↩ backlink to that spot.
   references?: Array<{ id: string; url: string; label: Record<Language, string> }>;
@@ -1311,6 +1314,16 @@ export const SiteEssayNotePage: React.FC<{
               <span>{isZh ? '一句话结论' : 'Core thesis'}</span>
               <p><mark className="notes-thesis-text">{note.thesis[language]}</mark></p>
             </blockquote>
+            {note.storyboard && note.storyboard.length === note.sections.length && (
+              <NotesStoryboard
+                frames={note.storyboard}
+                titles={titles}
+                keySentences={note.sections.map((section) => extractKeySentence(section.paragraphs[language]))}
+                active={active}
+                language={language}
+                sectionId={sectionId}
+              />
+            )}
             <div className="notes-article-sections">
               {note.sections.map((section, index) => (
                 <section key={section.title.en} id={sectionId(index)} data-note-section className="notes-article-section notes-reveal">

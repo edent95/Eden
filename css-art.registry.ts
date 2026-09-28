@@ -29,6 +29,11 @@ import {
   IGamingLoopBanner,
   IGamingTableBanner,
   MathFractalRuneCssIcon,
+  NotesStoryChainArt,
+  NotesStoryColumnsArt,
+  NotesStoryPapersArt,
+  NotesStoryTiersArt,
+  NotesStoryVesicaArt,
   MathIntegralSpellCssIcon,
   MathMatrixPortalCssIcon,
   MathPiOrbCssIcon,
@@ -70,7 +75,8 @@ export type CssArtCategory =
   | 'math-magic-icon'
   | 'elemental-icon'
   | 'wiki-icon'
-  | 'engraved-banner';
+  | 'engraved-banner'
+  | 'notes-storyboard';
 export type CssArtBackground = 'framed' | 'transparent' | 'scene';
 export type CssArtRatio = '1:1' | 'banner' | 'transparent-totem';
 
@@ -1202,6 +1208,76 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
       en: 'Four draw balls pop out in sequence in front of a climbing crash curve.',
       zh: '四颗号码球依次弹出，背后一条冲高的 crash 曲线。',
     },
+  },
+  {
+    id: 'notes-story-tiers',
+    title: 'Notes storyboard · Tiers',
+    category: 'notes-storyboard',
+    sourceRoute: '/notes/iraq-war-evidence-map',
+    ratio: 'banner',
+    background: 'scene',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/notes-storyboard.css',
+    Component: NotesStoryTiersArt,
+    label: { en: 'Engraved storyboard frame: tiers', zh: '凹版分镜：Tiers' },
+    copy: { en: 'Three trays shrinking by φ: sorting claims into documented, inferred and unsupported.', zh: '三层按 φ 递减的托盘：把说法分成有文件、推论、没证据三类。' },
+  },
+  {
+    id: 'notes-story-papers',
+    title: 'Notes storyboard · Papers',
+    category: 'notes-storyboard',
+    sourceRoute: '/notes/iraq-war-evidence-map',
+    ratio: 'banner',
+    background: 'scene',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/notes-storyboard.css',
+    Component: NotesStoryPapersArt,
+    label: { en: 'Engraved storyboard frame: papers', zh: '凹版分镜：Papers' },
+    copy: { en: 'Three documents fall into a golden spiral and receive a foil seal: the claims that are on paper.', zh: '三份文件沿黄金螺旋落下、盖上金章：有白纸黑字的部分。' },
+  },
+  {
+    id: 'notes-story-columns',
+    title: 'Notes storyboard · Columns',
+    category: 'notes-storyboard',
+    sourceRoute: '/notes/iraq-war-evidence-map',
+    ratio: 'banner',
+    background: 'scene',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/notes-storyboard.css',
+    Component: NotesStoryColumnsArt,
+    label: { en: 'Engraved storyboard frame: columns', zh: '凹版分镜：Columns' },
+    copy: { en: 'Two fluted columns on the golden lines fall under a lintel: the case that did not hold.', zh: '立在黄金分割线上的两根柱子连同横梁倒下：没站住的理由。' },
+  },
+  {
+    id: 'notes-story-chain',
+    title: 'Notes storyboard · Chain',
+    category: 'notes-storyboard',
+    sourceRoute: '/notes/iraq-war-evidence-map',
+    ratio: 'banner',
+    background: 'scene',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/notes-storyboard.css',
+    Component: NotesStoryChainArt,
+    label: { en: 'Engraved storyboard frame: chain', zh: '凹版分镜：Chain' },
+    copy: { en: 'Three links whose middle one splits apart: the chain of command that has no evidence.', zh: '中间一环断开的三节链：没有证据的指挥链。' },
+  },
+  {
+    id: 'notes-story-vesica',
+    title: 'Notes storyboard · Vesica',
+    category: 'notes-storyboard',
+    sourceRoute: '/notes/iraq-war-evidence-map',
+    ratio: 'banner',
+    background: 'scene',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/notes-storyboard.css',
+    Component: NotesStoryVesicaArt,
+    label: { en: 'Engraved storyboard frame: vesica', zh: '凹版分镜：Vesica' },
+    copy: { en: 'Two circles slide into a vesica piscis; the cross-hatched overlap is the documented fact.', zh: '两个圆滑成鱼形光环，交叉排线的重叠处就是有文件的事实。' },
   },
 ];
 

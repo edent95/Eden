@@ -990,3 +990,86 @@ export const IGamingRngArt: CssArtComponent = ({ label }) => <IGamingFloorArt la
 export const IGamingSportsArt: CssArtComponent = ({ label }) => <IGamingFloorArt label={label} variant="sports" />;
 export const IGamingFishingArt: CssArtComponent = ({ label }) => <IGamingFloorArt label={label} variant="fishing" />;
 export const IGamingLotteryArt: CssArtComponent = ({ label }) => <IGamingFloorArt label={label} variant="lottery" />;
+
+/* ---- Notes storyboard frames (styles/css-art/notes-storyboard.css) ----
+   One engraved scene per section of a Notes article. `active` plays the
+   scene's action (state-driven, not autoplay); `thumb` renders the finished
+   state with fewer layers and no motion. */
+export type NotesStoryMotif = 'tiers' | 'papers' | 'columns' | 'chain' | 'vesica';
+
+const notesStoryScenes: Record<NotesStoryMotif, React.ReactNode> = {
+  tiers: (
+    <>
+      <span className="nf-post" />
+      <span className="nf-tier nf-tier-1 nf-cross nf-line" />
+      <span className="nf-tier nf-tier-2 nf-line" />
+      <span className="nf-tier nf-tier-3 nf-line" />
+      <span className="nf-star" style={{ left: '50%', top: '27%' }} />
+    </>
+  ),
+  papers: (
+    <>
+      <span className="nf-arc" />
+      <span className="nf-paper nf-paper-1" />
+      <span className="nf-paper nf-paper-2" />
+      <span className="nf-paper nf-paper-3" />
+      <span className="nf-seal" />
+    </>
+  ),
+  columns: (
+    <>
+      <span className="nf-col nf-col-l" />
+      <span className="nf-col nf-col-r" />
+      <span className="nf-crack nf-crack-l" />
+      <span className="nf-crack nf-crack-r" />
+      <span className="nf-lintel nf-cross nf-line" />
+    </>
+  ),
+  chain: (
+    <>
+      <span className="nf-group nf-group-l">
+        <span className="nf-link nf-link-l" />
+        <span className="nf-link nf-half nf-half-l" />
+      </span>
+      <span className="nf-group nf-group-r">
+        <span className="nf-link nf-half nf-half-r" />
+        <span className="nf-link nf-link-r" />
+      </span>
+      <span className="nf-gap" />
+    </>
+  ),
+  vesica: (
+    <>
+      <span className="nf-circle nf-circle-l" />
+      <span className="nf-circle nf-circle-r" />
+      <span className="nf-lens" />
+      <span className="nf-star" style={{ left: '50%', top: '14%' }} />
+    </>
+  ),
+};
+
+export const NotesStoryFrame: React.FC<{
+  motif: NotesStoryMotif;
+  label: string;
+  active?: boolean;
+  thumb?: boolean;
+  stage?: boolean;
+}> = ({ motif, label, active = false, thumb = false, stage = false }) => (
+  <div
+    className={`engraved-art engraved-tone-ink notes-frame nf-${motif}${active || thumb ? ' is-active' : ''}${thumb ? ' is-thumb' : ''}${stage ? ' is-stage' : ''}`}
+    role="img"
+    aria-label={label}
+  >
+    <span className="nf-rays" />
+    <span className="nf-rosette" />
+    <span className="nf-golden" />
+    <span className="nf-ground" />
+    {notesStoryScenes[motif]}
+  </div>
+);
+
+export const NotesStoryTiersArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="tiers" label={label} thumb />;
+export const NotesStoryPapersArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="papers" label={label} thumb />;
+export const NotesStoryColumnsArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="columns" label={label} thumb />;
+export const NotesStoryChainArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="chain" label={label} thumb />;
+export const NotesStoryVesicaArt: CssArtComponent = ({ label }) => <NotesStoryFrame motif="vesica" label={label} thumb />;
