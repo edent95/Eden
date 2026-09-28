@@ -106,7 +106,7 @@ Expected behavior:
 - Create or update a source summary page.
 - Update related topic/entity/concept pages.
 - Update `index.md`.
-- Append a dated entry to the current `logs/YYYY-MM.md`, then regenerate `logs/index.md`.
+- Add a change entry with `npm run log:append < entry.md` (one new file in `logs/entries/`).
 - Flag contradictions or superseded claims instead of silently overwriting them.
 
 ### Query
@@ -369,7 +369,7 @@ Before making changes, read these files first:
 1. `README.md` (current runnable project truth)
 2. `soul.md` (collaboration rules to reduce rework)
 3. `state/current.md` (current architecture, verification, and known risks)
-4. `logs/index.md` (open a monthly archive only when the task needs older detail)
+4. `logs/index.md` and the newest files in `logs/entries/` (`ls logs/entries | tail -20`; open a monthly archive only when the task needs older detail)
 
 ### 2) Do not stop at single-page edits
 
@@ -394,29 +394,41 @@ same change rather than silently bypassing the gate.
 
 ### 4) Logging is mandatory
 
-Entries live in the **current month's** `logs/YYYY-MM.md`. The root `log.md` is a stable
-pointer to the monthly archive and must not receive normal change entries.
+**Since 2026-09-28: one entry = one new file in `logs/entries/`.** The monthly
+`logs/2026-*.md` files and `logs/index.md` are frozen history — do not append to them.
+The root `log.md` is a stable pointer and must not receive entries either.
 
 ```bash
-npm run log:append < entry.md   # appends to logs/<current MYT month>.md; the ID and the `## date` heading are assigned by the script
-npm run log:check               # duplicate IDs + day headings run oldest → newest
-npm run log:index               # regenerate logs/index.md — the log gate checks this
+npm run log:append < entry.md   # creates logs/entries/<YYYY-MM-DD>-<HHMMSS>-<4 hex>.md; ID + `## date — title` heading are written by the script
+npm run log:check               # duplicate IDs across monthly files + entry files; every entry file has a `## date` heading
 ```
 
-**Three hard rules — breaking them does not error, it fails silently:**
+**Why a file per entry:** several agents / branches work on this repo at once. When every PR
+appended to the end of the same monthly file (and regenerated the same `logs/index.md`), every
+pair of PRs conflicted at EOF and auto-merge stopped. New files never collide.
 
-1. **Always append with the script. Never "read the whole file → concatenate → write it back".**
-   Measured with two processes writing 40 entries each: read-modify-write landed 18/80
-   (**62 entries silently eaten**); `fs.appendFileSync` (O_APPEND) landed 80/80.
-2. **Order is oldest → newest; new entries go at the end of the month file.** That is what
-   makes O_APPEND work. Writing newest-first forces read-modify-write, which is rule 1's trap.
-3. **`## YYYY-MM-DD` day headings are written by the script — never by hand.** The external
-   dashboard aggregates **by `##` day**; an entry with no day heading is dropped silently.
-   `scripts/harness/log-append.mjs` picks the month with **Asia/Kuala_Lumpur**, matching
-   `check-log.mjs` — using a different timezone would write into last month's file while the
-   gate looks at this month's.
+**Hard rules — breaking them does not error, it fails silently:**
 
-**Format:** a `## YYYY-MM-DD` day heading, then `### [E-YYYY-MM-DD-NN] Title` entries carrying
+1. **Always create entries with the script, never by hand.** It opens the file with `wx`
+   (never overwrites), picks the date/time in **Asia/Kuala_Lumpur** (same as `check-log.mjs`),
+   and assigns a collision-free ID `E-<YYYY-MM-DD>-<HHMMSS>-<4 hex>`. Do **not** go back to
+   "today's max number + 1": other branches' numbers are invisible, so +1 collides.
+2. **Do not rename entry files.** The file name must start with `YYYY-MM-DD-`: the
+   personal-dashboard scanner only picks `^\d{4}-\d{2}-\d{2}-.+\.md$` from `logs/entries/`
+   and merges them into Eden automatically (no `log_includes` change needed; the
+   `logs/2026-*.md` glob does not match the subdirectory, which is intended).
+3. **Every entry file keeps its `## YYYY-MM-DD — <title>` heading.** The dashboard aggregates
+   **by `##` day**; a file without one is dropped silently. `verify:log` checks it.
+4. **Never gitignore `logs/` or `logs/entries/`.** The entries are the change history;
+   ignoring them would silently drop every new entry from git, the dashboard and the gate.
+
+`verify:log` passes when changed project files come with at least one new `logs/entries/`
+file carrying the rag-v1 fields. Entry files are intentionally **not** listed in
+`logs/index.md` — an index that every PR rewrites would bring the conflicts back. The legacy
+path (append to the current month + `npm run log:index`) is still accepted by the gate but
+should not be used.
+
+**Format:** a `## YYYY-MM-DD — Title` heading, then one `### [E-YYYY-MM-DD-HHMMSS-xxxx] Title` entry carrying
 the seven rag-v1 fields — `type` `scope` `impact` `changed` `ripples` `verified` `keywords`.
 Of those, **`ripples` is the most valuable and the one most often left empty**:
 
@@ -448,7 +460,7 @@ Do not leave critical execution assumptions only in chat history.
 For normal repository changes:
 
 1. Start from the default branch with `npm run task:new -- "task name"`.
-2. Make the scoped change and append the required monthly log entry.
+2. Make the scoped change and add the required log entry (`npm run log:append < entry.md`).
 3. Run `npm run publish -- "commit title"`; it runs `ready` and the full harness before any commit or push.
 4. In a non-interactive Agent environment, inspect `git status --short` first and pass `--yes` explicitly. Never add `--yes` by habit.
 
