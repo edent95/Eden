@@ -627,8 +627,8 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
     "storySource": {
       "url": "iraq-war-story.html",
       "label": {
-        "en": "Read the story version (Chinese)",
-        "zh": "读故事版：一场战争的七年前奏"
+        "en": "Watch the storyboard version (Chinese)",
+        "zh": "看故事看板：一场战争的七年前奏"
       }
     },
     "references": [
