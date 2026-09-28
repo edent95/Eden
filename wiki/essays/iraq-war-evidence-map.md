@@ -143,11 +143,11 @@ The JSON block below is the structured bilingual source consumed by the site com
       "paragraphs": {
         "en": [
           "A familiar version goes like this: Israel wanted Saddam gone, American neoconservatives carried the plan into Washington, and the Bush administration went to war on their behalf. It is tidy, and it names villains.",
-          "I took a document that makes this case in evidence-map form and checked every link against public records: letters, laws, official biographies, and the government's own post-war reviews. The goal was simple: sort each claim into documented, reasonable inference, or unsupported."
+          "I took a document that makes this case in evidence-map form and checked every link against public records: letters, laws, official biographies, and the government's own post-war reviews. ==The goal was simple: sort each claim into documented, reasonable inference, or unsupported.=="
         ],
         "zh": [
           "常见的版本是这样的：以色列想除掉萨达姆，美国新保守派把计划带进华盛顿，布什政府替他们打了这场仗。故事很整齐，坏人也很清楚。",
-          "我拿一份用「证据地图」形式整理这个说法的文件，把每一环都和公开档案对了一遍：公开信、法律、官方履历，以及政府自己在战后做的复盘。目的很简单：把每个说法分成三类，有文件可查的、合理推论的、没有证据的。"
+          "我拿一份用「证据地图」形式整理这个说法的文件，把每一环都和公开档案对了一遍：公开信、法律、官方履历，以及政府自己在战后做的复盘。==目的很简单：把每个说法分成三类，有文件可查的、合理推论的、没有证据的。=="
         ]
       }
     },
@@ -160,12 +160,12 @@ The JSON block below is the structured bilingual source consumed by the site com
         "en": [
           "In 1996 a study group led by Richard Perle wrote \"A Clean Break\" for Netanyahu's new government. Douglas Feith and David Wurmser took part. It called removing Saddam an important strategic objective. Israel never adopted it as policy[[1]].",
           "In 1998 the Project for a New American Century asked President Clinton, then congressional leaders, to make Saddam's removal U.S. policy. The signers included Rumsfeld, Wolfowitz, Bolton, Abrams, Perle, Kristol, and Kagan[[2]][[3]]. That October, Congress passed the Iraq Liberation Act, which made regime change official policy but explicitly did not authorize U.S. troops[[4]].",
-          "From 2001, several of these people held posts under Bush: Rumsfeld at Defense, Wolfowitz as his deputy, Feith running defense policy, Bolton at State, Abrams at the National Security Council, and Wurmser moving from State to Cheney's office. Perle chaired an advisory board rather than holding an executive post. Every one of these links is on paper."
+          "From 2001, several of these people held posts under Bush: Rumsfeld at Defense, Wolfowitz as his deputy, Feith running defense policy, Bolton at State, Abrams at the National Security Council, and Wurmser moving from State to Cheney's office. Perle chaired an advisory board rather than holding an executive post. ==Every one of these links is on paper.=="
         ],
         "zh": [
           "1996 年，Richard Perle 带领的研究组为内塔尼亚胡的新政府写了《A Clean Break》，Douglas Feith 和 David Wurmser 都参与了。报告把推翻萨达姆称为重要的战略目标。以色列从未把它采纳为政策[[1]]。",
           "1998 年，智库 PNAC 先后写信给克林顿总统和国会领袖，要求把推翻萨达姆定为美国政策。签名者包括 Rumsfeld、Wolfowitz、Bolton、Abrams、Perle、Kristol、Kagan[[2]][[3]]。同年 10 月国会通过《伊拉克解放法》，把政权更替写进政策，但明文不授权出兵[[4]]。",
-          "2001 年起，这批人里有好几位进了布什政府：Rumsfeld 任国防部长，Wolfowitz 任副部长，Feith 主管国防政策，Bolton 在国务院，Abrams 在国家安全委员会，Wurmser 从国务院转到切尼的办公室。Perle 担任的是咨询委员会主席，不是行政职务。这些关系每一条都有文件。"
+          "2001 年起，这批人里有好几位进了布什政府：Rumsfeld 任国防部长，Wolfowitz 任副部长，Feith 主管国防政策，Bolton 在国务院，Abrams 在国家安全委员会，Wurmser 从国务院转到切尼的办公室。Perle 担任的是咨询委员会主席，不是行政职务。==这些关系每一条都有文件。=="
         ]
       }
     },
@@ -176,12 +176,12 @@ The JSON block below is the structured bilingual source consumed by the site com
       },
       "paragraphs": {
         "en": [
-          "The two main public reasons for war did not hold up. The 9/11 Commission found contacts between Iraq and al Qaeda but no collaborative operational relationship[[5]]. The Duelfer report found no existing WMD stockpiles; the old chemical munitions found later dated from before 1991[[8]].",
+          "==The two main public reasons for war did not hold up.== The 9/11 Commission found contacts between Iraq and al Qaeda but no collaborative operational relationship[[5]]. The Duelfer report found no existing WMD stockpiles; the old chemical munitions found later dated from before 1991[[8]].",
           "The Senate Intelligence Committee concluded that several prewar statements were not supported by the intelligence, though the vote split 10–5[[6]]. The Pentagon's inspector general found that Feith's office pushed alternative intelligence assessments to senior leaders: inappropriate, not illegal[[7]]. That is the strongest evidence that this network shaped the case for war, and it is still influence, not command.",
           "One case is often stretched further than it goes. Lawrence Franklin, a Pentagon Iran analyst, was charged with leaking classified information and pleaded guilty[[9]]. It is a real case about one person. It does not show that a whole policy network was an espionage ring."
         ],
         "zh": [
-          "两条主要的开战理由都没站住。9·11 委员会发现伊拉克和基地组织有过接触，但没有协同作战关系[[5]]。Duelfer 报告没有找到现存的 WMD 库存，后来发现的旧化学弹药都是 1991 年以前生产的[[8]]。",
+          "==两条主要的开战理由都没站住。==9·11 委员会发现伊拉克和基地组织有过接触，但没有协同作战关系[[5]]。Duelfer 报告没有找到现存的 WMD 库存，后来发现的旧化学弹药都是 1991 年以前生产的[[8]]。",
           "参议院情报委员会认定多项战前说法没有得到情报支持，不过投票是 10 比 5[[6]]。国防部监察长认定 Feith 的办公室把另类情报评估送给了高层：不恰当，但不违法[[7]]。这是「这批人影响了开战论证」最有力的证据，但它证明的仍然是影响，不是指挥。",
           "有一桩案子常被说过头。国防部伊朗科分析员 Lawrence Franklin 被控泄露机密并认罪[[9]]。这是一个人的真实案件，证明不了整个政策网络是间谍网。"
         ]
@@ -194,12 +194,12 @@ The JSON block below is the structured bilingual source consumed by the site com
       },
       "paragraphs": {
         "en": [
-          "What no public record shows is the chain itself: an order from Israel, neoconservatives carrying it out, a president under someone else's control. There is no memo, no meeting record, no line of obedience. The 1996 paper was not even Israeli policy.",
+          "==What no public record shows is the chain itself: an order from Israel, neoconservatives carrying it out, a president under someone else's control.== There is no memo, no meeting record, no line of obedience. The 1996 paper was not even Israeli policy.",
           "Take Israel out of the picture and the United States still had its own long road against Saddam: the 1991 Gulf War, sanctions, weapons inspections, Clinton-era strikes, and the 1998 law. Take the neoconservatives out and we cannot know whether the war would have happened the same way. They were an important variable, but nobody can honestly assign them a percentage.",
           "And one line should be drawn hard: the conduct of specific officials cannot be stretched into a claim about Jewish people as a group. That is not an inference from evidence. It is an old antisemitic story wearing new clothes."
         ],
         "zh": [
-          "没有任何公开档案能证明的，恰恰是那条链本身：以色列下令，新保守派执行，总统被人控制。没有备忘录，没有会议记录，没有服从关系。1996 年那份报告连以色列的政策都不是。",
+          "==没有任何公开档案能证明的，恰恰是那条链本身：以色列下令，新保守派执行，总统被人控制。==没有备忘录，没有会议记录，没有服从关系。1996 年那份报告连以色列的政策都不是。",
           "把以色列拿掉，美国自己也有一条很长的倒萨路：1991 年海湾战争、制裁、武器核查、克林顿时期的空袭、1998 年的法律。把新保守派拿掉，我们没法知道战争会不会照样发生。他们是重要变量，但没人能诚实地给他们算出一个百分比。",
           "还有一条线必须划清：具体官员的行为，不能扩大成对整个犹太族群的指控。这不是从证据推出的结论，而是一个换了新衣服的反犹老故事。"
         ]
@@ -213,11 +213,11 @@ The JSON block below is the structured bilingual source consumed by the site com
       "paragraphs": {
         "en": [
           "The account that fits the record has several causes, not one: U.S. strategic interests, a decade of regime-change policy, a neoconservative policy network, partial convergence with Israel's right, the shock of 9/11, decisions by Bush, Cheney, and Rumsfeld, and prewar intelligence that was wrong and selectively presented.",
-          "The overlap of people is a fact. The chain of command is a story. Keeping those two apart is the only way to see where this war actually came from. The full evidence map linked on this page has the relationship network, photos of each person, a timeline, and every source; the story version walks through the same facts as a narrative."
+          "==The overlap of people is a fact. The chain of command is a story.== Keeping those two apart is the only way to see where this war actually came from. The full evidence map linked on this page has the relationship network, photos of each person, a timeline, and every source; the story version walks through the same facts as a narrative."
         ],
         "zh": [
           "和档案对得上的解释是多因素的，不是单一原因：美国自身的战略利益，十年累积的政权更替政策，新保守派政策网络，和以色列右翼的部分立场重合，9·11 的冲击，布什、切尼、拉姆斯菲尔德的决策，以及出了错、又被选择性呈现的战前情报。",
-          "人员重叠是事实，指挥链是故事。把这两件事分开，才看得清这场战争真正从哪里来。本页链接的完整证据地图里有关系网、每个人的照片、时间线和全部来源；故事版则把同样的事实按时间讲成一个故事。"
+          "==人员重叠是事实，指挥链是故事。==把这两件事分开，才看得清这场战争真正从哪里来。本页链接的完整证据地图里有关系网、每个人的照片、时间线和全部来源；故事版则把同样的事实按时间讲成一个故事。"
         ]
       }
     }

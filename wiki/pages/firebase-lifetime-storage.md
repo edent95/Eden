@@ -41,12 +41,12 @@ The JSON block below is the structured bilingual source consumed by the site com
       },
       "points": {
         "en": [
-          "Room state can persist beyond one browser session.",
+          "==Room state can persist beyond one browser session.==",
           "Players can rejoin without the table losing the shared context.",
           "Host-started public tables have a durable source of truth."
         ],
         "zh": [
-          "房间状态可以活过一次浏览器 session。",
+          "==房间状态可以活过一次浏览器 session。==",
           "玩家重连时，牌桌不会丢掉共同上下文。",
           "房主开的公开桌有一个稳定的 truth source。"
         ]
@@ -61,12 +61,12 @@ The JSON block below is the structured bilingual source consumed by the site com
         "en": [
           "Lifetime storage still needs cleanup rules.",
           "Game state should be shaped like a schema, not scattered flags.",
-          "Persistence is a product decision, not only a backend decision."
+          "==Persistence is a product decision, not only a backend decision.=="
         ],
         "zh": [
           "Lifetime storage 也需要 cleanup 规则。",
           "游戏状态要像 schema，不要散成一堆 flag。",
-          "持久化是产品决策，不只是后端决策。"
+          "==持久化是产品决策，不只是后端决策。=="
         ]
       }
     }

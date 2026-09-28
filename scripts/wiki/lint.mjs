@@ -61,6 +61,14 @@ for (const file of files) {
         ...(section.paragraphs?.en ?? []),
         ...(section.paragraphs?.zh ?? []),
       ]).join('\n');
+      // Notes format: ==key sentence== marks must open and close inside one paragraph.
+      const allParagraphs = (payload.sections ?? []).flatMap((section) => [
+        ...(section.paragraphs?.en ?? []), ...(section.paragraphs?.zh ?? []),
+        ...(section.points?.en ?? []), ...(section.points?.zh ?? []),
+      ]);
+      for (const text of allParagraphs) {
+        if (((text.match(/==/g) ?? []).length) % 2 !== 0) problems.push(`${relative} has an unclosed ==key sentence== mark: ${text.slice(0, 60)}`);
+      }
       for (const match of paragraphs.matchAll(/\[\[(\d+)\]\]/g)) {
         if (!referenceIds.has(match[1])) problems.push(`${relative} cites missing reference ${match[1]}`);
       }

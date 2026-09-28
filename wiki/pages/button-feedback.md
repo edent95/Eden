@@ -43,12 +43,12 @@ The JSON block below is the structured bilingual source consumed by the site com
         "en": [
           "Pressed state: the button should physically respond.",
           "Pending state: remote actions need loading or disabled feedback.",
-          "Result state: users should know whether the table accepted the action."
+          "==Result state: users should know whether the table accepted the action.=="
         ],
         "zh": [
           "按下状态：按钮要有物理反馈感。",
           "等待状态：远端动作需要 loading 或 disabled feedback。",
-          "结果状态：用户要知道牌桌有没有接收这个动作。"
+          "==结果状态：用户要知道牌桌有没有接收这个动作。=="
         ]
       }
     },
@@ -61,12 +61,12 @@ The JSON block below is the structured bilingual source consumed by the site com
         "en": [
           "Feedback prevents double clicks and confused retries.",
           "Small motion and sound can make the table feel alive.",
-          "The best microinteraction is the one that removes doubt."
+          "==The best microinteraction is the one that removes doubt.=="
         ],
         "zh": [
           "反馈可以减少重复点击和乱重试。",
           "小动效和声音能让桌子变得更有生命感。",
-          "最好的微交互，是把用户的怀疑拿掉。"
+          "==最好的微交互，是把用户的怀疑拿掉。=="
         ]
       }
     }

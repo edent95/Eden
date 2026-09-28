@@ -58,8 +58,9 @@ const GENERIC_CONTEXT: Record<string, Localized> = {
   },
 };
 
-function cleanInlineTokens(value: string): string {
+export function cleanInlineTokens(value: string): string {
   return value
+    .replace(/==([^=]+)==/g, '$1')
     .replace(/\[\[note:[^|\]]+\|([^\]]+)\]\]/g, '$1')
     .replace(/\[\[\d+\]\]/g, '')
     .replace(/\s{2,}/g, ' ')
