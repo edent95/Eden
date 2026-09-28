@@ -459,6 +459,13 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
   },
   {
+    path: '/notes/bible-israel-us-evidence-map',
+    og: 'notes',
+    priority: '0.7',
+    title: { en: 'The Bible, Israel and US Middle East policy | Eden Tan', zh: '《圣经》、以色列与美国中东政治：证据地图 | Eden Tan' },
+    desc: { en: 'Three rivers—Israeli religious Zionism, American Christian Zionism, and US strategy—meet in Middle East policy. What the evidence shows, and what it does not.', zh: '以色列宗教锡安主义、美国基督教锡安主义、美国战略利益三条河在中东政策汇流。哪些有证据、哪些画不出线，并用易经与道家看「黑中有白」。' },
+  },
+  {
     path: '/notes/iraq-war-evidence-map',
     og: 'notes',
     priority: '0.7',

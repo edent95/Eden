@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三条河故事看板</title>
+<meta name="description" content="用故事看板讲《圣经》、以色列、美国福音派和新保守派怎样在中东政策上汇流，以及为什么「黑中有白、白中有黑」才是常态。画面随阅读切换，所有情节都有出处。">
+<style>
+  :root{
+    --bg:#faf9f6;--card:#fff;--ink:#1f1d1a;--soft:#5c584f;--line:#e5e1d8;
+    --accent:#b8622b;--accent-soft:#f3ece2;--ok:#2f7d4f;--warn:#a87400;--bad:#b23a3a;
+    --scr:#16140f;--scr-2:#221f18;--scr-ink:#efe8da;--scr-soft:#a79e8c;--scr-line:#3b362c;
+    --scr-acc:#e39a62;--scr-bad:#f07a6e;--scr-ok:#6cc995;--paper:#f4efe4;--paper-ink:#2a261f;
+    --ra:#7fb0de;--rb:#e0a07a;--rc:#a8c88a;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#100e0b;--card:#1b1914;--ink:#ece6da;--soft:#aaa192;--line:#353027;
+    --accent:#e0915a;--accent-soft:#3a2a1c;--ok:#5cc28a;--warn:#e7b54a;--bad:#ef7b7b;
+  }}
+  :root[data-theme="dark"]{
+    --bg:#100e0b;--card:#1b1914;--ink:#ece6da;--soft:#aaa192;--line:#353027;
+    --accent:#e0915a;--accent-soft:#3a2a1c;--ok:#5cc28a;--warn:#e7b54a;--bad:#ef7b7b;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,sans-serif;line-height:1.85;font-size:18px;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent)}
+  p{margin:0 0 1rem}
+  .intro,.outro{max-width:42rem;margin:0 auto;padding:4.5rem 16px 2rem}
+  .kicker{font-size:.72rem;letter-spacing:.26em;color:var(--accent);font-weight:600;margin-bottom:1.1rem}
+  h1{font-size:2.3rem;line-height:1.28;margin:0 0 1rem}
+  .dek{font-size:1.06rem;color:var(--soft);line-height:1.75;margin:0}
+  .meta{margin-top:1.5rem;padding-top:1.1rem;border-top:1px solid var(--line);font-size:.82rem;color:var(--soft);display:flex;gap:1.2rem;flex-wrap:wrap}
+  .how{margin-top:1.3rem;font-size:.9rem;color:var(--soft)}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:.35rem;vertical-align:.06em}
+  .d-ok{background:var(--ok)}.d-warn{background:var(--warn)}.d-bad{background:var(--bad)}
+  .classic{font-family:"Songti SC","STSong","Noto Serif SC",serif}
+
+  .board{max-width:1200px;margin:0 auto;padding:0 16px;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:40px;align-items:start}
+  .stage-wrap{position:sticky;top:12vh}
+  .steps{padding:30vh 0 40vh}
+  .step{min-height:62vh;display:flex;align-items:center}
+  .step .txt{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.3rem;transition:border-color .3s}
+  .step.cur .txt{border-color:var(--accent)}
+  .step .txt p:last-child{margin:0}
+  .step .lbl{font-size:.72rem;letter-spacing:.22em;color:var(--accent);font-weight:700;margin-bottom:.35rem}
+  .step .big{font-size:1.18rem;font-weight:700;line-height:1.6}
+  .step .note{font-size:.84rem;color:var(--soft);border-top:1px dashed var(--line);margin-top:.8rem;padding-top:.6rem}
+  .step .en{font-family:Georgia,"Times New Roman",serif;font-style:italic;color:var(--soft);font-size:.93rem}
+
+  /* ---------- stage (1000 × 625 coordinate space) ---------- */
+  .stage{position:relative;width:100%;aspect-ratio:16/10;background:var(--scr);border-radius:14px;overflow:hidden;container-type:inline-size;color:var(--scr-ink);border:1px solid var(--scr-line)}
+  .pr{position:absolute;left:calc(var(--x)*.1%);top:calc((var(--y) + var(--dy,45))*.16%);width:calc(var(--w,200)*.1%);opacity:0;transform:translateY(2.4cqw);transition:opacity .55s ease,transform .75s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+  .pr.on{opacity:1;transform:none}
+  .pr.from-l{transform:translateX(-5cqw)}.pr.from-r{transform:translateX(5cqw)}
+  .pr.from-l.on,.pr.from-r.on{transform:none}
+  .pr.stampbox{transform:none}
+
+  .slate{position:absolute;left:3%;top:4.2%;z-index:5;display:flex;align-items:center;gap:1.2cqw}
+  .clap{width:5.2cqw;height:3.6cqw;position:relative}
+  .clap i{position:absolute;left:0;right:0;height:1cqw;background:repeating-linear-gradient(-45deg,var(--scr-ink) 0 .7cqw,var(--scr) .7cqw 1.4cqw);border-radius:.3cqw}
+  .clap i:first-child{top:0;transform-origin:0 100%;transition:transform .25s}
+  .clap i:last-child{top:1.3cqw}
+  .clap b{position:absolute;left:0;right:0;top:2.4cqw;height:1.2cqw;background:var(--scr-ink);border-radius:.2cqw}
+  .stage.snap .clap i:first-child{transform:rotate(-22deg)}
+  .slate .sc{font-size:1.15cqw;letter-spacing:.3em;color:var(--scr-acc);font-weight:700}
+  .slate .dt{font-size:2.3cqw;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
+  .slate .pl{font-size:1.25cqw;color:var(--scr-soft)}
+  .slate .flip{display:inline-block;animation:flip .5s ease}
+  @keyframes flip{from{transform:translateY(-60%);opacity:0}to{transform:none;opacity:1}}
+  .strip{position:absolute;left:0;right:0;bottom:0;height:7.2%;display:flex;gap:.5cqw;padding:0 3% 1.3cqw;align-items:flex-end;z-index:5}
+  .strip span{flex:1;font-size:1cqw;text-align:center;color:var(--scr-soft);border-top:.35cqw solid var(--scr-line);padding-top:.35cqw;transition:color .3s,border-color .3s}
+  .strip span.on{color:var(--scr-ink);border-color:var(--scr-acc)}
+  .strip span.done{border-color:color-mix(in srgb,var(--scr-acc) 45%,var(--scr-line))}
+
+  .actor{position:absolute;inset:0;pointer-events:none;transform:translate(calc(var(--ax,500)*.1%),calc((var(--ay,700) + 45)*.16%));opacity:0;transition:transform 1s cubic-bezier(.2,.8,.2,1),opacity .5s ease;z-index:3}
+  .actor.on{opacity:1}
+  .av{position:absolute;left:0;top:0;width:9cqw;transform:translate(-50%,-50%) scale(var(--as,1));transition:transform 1s cubic-bezier(.2,.8,.2,1);text-align:center}
+  .av img{display:block;width:6.4cqw;height:6.4cqw;margin:0 auto;border-radius:50%;object-fit:cover;object-position:50% 20%;border:.3cqw solid var(--scr-line);background:var(--scr-2)}
+  .av b{display:block;font-size:1.25cqw;font-weight:600;margin-top:.3cqw;white-space:nowrap}
+  .actor.hot .av img{border-color:var(--scr-acc)}
+
+  .card{background:var(--scr-2);border:.15cqw solid var(--scr-line);border-radius:1cqw;padding:1.3cqw 1.6cqw;font-size:1.5cqw;line-height:1.45}
+  .card small{display:block;font-size:1.1cqw;color:var(--scr-soft);letter-spacing:.12em}
+  .card.paper{background:var(--paper);color:var(--paper-ink);border-color:transparent}
+  .card.paper small{color:#8a5a2b}
+  .cl{position:relative;display:inline}
+  .cl u{position:absolute;left:0;right:0;bottom:-.3cqw;height:.35cqw;background:#c0392b;transform:scaleX(0);transform-origin:left;transition:transform .8s .7s ease}
+  .pr.on .cl u{transform:scaleX(1)}
+  .stamp{border:.4cqw solid var(--scr-bad);color:var(--scr-bad);font-weight:800;font-size:2.2cqw;padding:.4cqw 1.4cqw;border-radius:.6cqw;text-align:center;letter-spacing:.08em;background:rgba(22,20,15,.6);transform:scale(2.4) rotate(-16deg);opacity:0;transition:transform .35s cubic-bezier(.3,1.6,.5,1),opacity .2s}
+  .pr.on .stamp{transform:scale(1) rotate(-8deg);opacity:1}
+  .stamp.s2{transition-delay:.5s}.stamp.s3{transition-delay:1s}
+  .tag{display:inline-block;font-size:1.25cqw;padding:.3cqw 1cqw;border-radius:999px;border:.15cqw solid var(--scr-acc);color:var(--scr-acc);background:var(--scr)}
+  .tag.bad{border-color:var(--scr-bad);color:var(--scr-bad)}
+  .arrow{height:.35cqw;background:var(--scr-soft);position:relative;transform-origin:left;transform:scaleX(0);transition:transform .8s .4s ease}
+  .arrow::after{content:"";position:absolute;right:-.2cqw;top:50%;border:1cqw solid transparent;border-left-color:var(--scr-soft);border-right:0;transform:translateY(-50%)}
+  .pr.on .arrow{transform:scaleX(1)}
+
+  /* book */
+  .book{width:100%;aspect-ratio:1.5;position:relative;perspective:60cqw}
+  .book .pg{position:absolute;top:0;bottom:0;width:50%;background:var(--paper);border:.2cqw solid #d9d1c1;display:flex;align-items:center;justify-content:center;color:var(--paper-ink);font-size:1.6cqw;font-family:Georgia,serif}
+  .book .l{left:0;border-radius:.8cqw 0 0 .8cqw}
+  .book .r{right:0;border-radius:0 .8cqw .8cqw 0}
+  .book .cover{position:absolute;top:0;bottom:0;right:0;width:50%;background:#5a2e1c;border-radius:0 .8cqw .8cqw 0;transform-origin:left center;transition:transform 1.2s .3s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;justify-content:center;color:#e8c27a;font-size:1.8cqw;font-weight:700;letter-spacing:.2em;backface-visibility:hidden}
+  .pr.on .book .cover{transform:rotateY(-178deg)}
+  .qmark{font-size:10cqw;font-weight:800;color:var(--scr-acc);text-align:center;line-height:1}
+
+  /* houses */
+  .houses{display:flex;gap:1.4cqw;align-items:flex-end;flex-wrap:wrap}
+  .houses i{width:4cqw;height:3.2cqw;background:var(--paper);position:relative;transform:translateY(3cqw) scale(0);transform-origin:bottom;transition:transform .45s cubic-bezier(.3,1.5,.5,1)}
+  .houses i::before{content:"";position:absolute;left:-.6cqw;right:-.6cqw;bottom:100%;border-bottom:2cqw solid #c9753f;border-left:2.6cqw solid transparent;border-right:2.6cqw solid transparent}
+  .pr.on .houses i{transform:none}
+
+  /* bars */
+  .bars{display:flex;flex-direction:column;gap:2cqw}
+  .bar{display:grid;grid-template-columns:22cqw 1fr 6cqw;align-items:center;gap:1.2cqw;font-size:1.45cqw}
+  .bar .t{height:3.2cqw;background:var(--scr-2);border-radius:.4cqw;overflow:hidden}
+  .bar .t i{display:block;height:100%;width:var(--v);background:var(--scr-acc);transform:scaleX(0);transform-origin:left;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+  .bar.alt .t i{background:var(--ra)}.bar.all .t i{background:var(--scr-soft)}
+  .pr.on .bar .t i{transform:none}
+  .bar:nth-child(2) .t i{transition-delay:.35s}.bar:nth-child(3) .t i{transition-delay:.7s}
+  .bar b{font-size:2.2cqw;font-variant-numeric:tabular-nums}
+
+  /* embassy */
+  .embassy{position:relative;height:18cqw}
+  .embassy .bld{position:absolute;left:30%;right:30%;bottom:0;height:11cqw;background:var(--paper);border-radius:.4cqw}
+  .embassy .bld::before{content:"";position:absolute;left:-1cqw;right:-1cqw;top:-2cqw;height:2cqw;background:#d9d1c1}
+  .embassy .bld i{position:absolute;bottom:0;width:1.6cqw;top:1.4cqw;background:#cfc5b1}
+  .bubble{position:absolute;top:0;background:var(--scr-2);border:.15cqw solid var(--scr-line);border-radius:1cqw;padding:.8cqw 1.2cqw;font-size:1.3cqw;width:30%;opacity:0;transform:scale(.6);transition:transform .45s cubic-bezier(.3,1.5,.5,1),opacity .3s}
+  .bubble.b1{left:0;transition-delay:.4s}.bubble.b2{right:0;transition-delay:1s}
+  .pr.on .bubble{opacity:1;transform:none}
+  .eq{font-size:3cqw;font-weight:800;text-align:center}
+
+  /* rivers */
+  .lanes{position:relative;height:30cqw}
+  .lane{position:absolute;left:0;right:22%;height:.6cqw;border-radius:.3cqw;transform:scaleX(0);transform-origin:left;transition:transform 1.4s cubic-bezier(.4,0,.2,1)}
+  .lane.a{top:3cqw;background:var(--ra)}.lane.b{top:14cqw;background:var(--rb);transition-delay:.3s}.lane.c{top:25cqw;background:var(--rc);transition-delay:.6s}
+  .pr.on .lane{transform:none}
+  .lane span{position:absolute;left:0;top:-2.8cqw;font-size:1.3cqw;white-space:nowrap}
+  .lane.a span{color:var(--ra)}.lane.b span{color:var(--rb)}.lane.c span{color:var(--rc)}
+  .hubbox{position:absolute;right:0;top:9cqw;width:20%;background:var(--scr-2);border:.25cqw solid var(--scr-acc);border-radius:1.2cqw;padding:1.4cqw;font-size:1.6cqw;font-weight:700;text-align:center;transform:scale(0);transition:transform .5s 1.6s cubic-bezier(.3,1.5,.5,1)}
+  .pr.on .hubbox{transform:none}
+
+  /* scale */
+  .deal{display:flex;align-items:center;justify-content:space-between;gap:2cqw}
+  .deal .coin{flex:1;background:var(--scr-2);border:.2cqw solid var(--scr-line);border-radius:1cqw;padding:1.6cqw;text-align:center;font-size:1.4cqw}
+  .deal .coin b{display:block;font-size:3.6cqw;font-variant-numeric:tabular-nums}
+  .deal .mid b{color:var(--scr-ok)}
+  .deal .mid.no b{color:var(--scr-bad)}
+  .meter{display:grid;grid-template-columns:24cqw 1fr;gap:1.4cqw;align-items:center;font-size:1.4cqw;margin-top:1.4cqw}
+  .meter .t{height:2.6cqw;background:var(--scr-2);border-radius:.4cqw;overflow:hidden}
+  .meter .t i{display:block;height:100%;background:var(--scr-bad);width:var(--v);transform:scaleX(0);transform-origin:left;transition:transform 1s .4s}
+  .meter.down .t i{background:var(--scr-ok)}
+  .pr.on .meter .t i{transform:none}
+  .chips{display:flex;flex-wrap:wrap;gap:1cqw}
+  .chips span{font-size:1.6cqw;padding:.6cqw 1.3cqw;border-radius:.6cqw;background:var(--scr-2);border:.15cqw solid var(--scr-line);opacity:0;transform:translateY(1.6cqw);transition:opacity .3s,transform .4s cubic-bezier(.3,1.5,.5,1)}
+  .pr.on .chips span{opacity:1;transform:none}
+
+  /* taiji */
+  .taiji{width:100%;aspect-ratio:1;transform:rotate(-200deg) scale(.4);opacity:0;transition:transform 1.8s cubic-bezier(.2,.8,.2,1),opacity .6s}
+  .pr.on .taiji{transform:rotate(0) scale(1);opacity:1}
+  .taiji .yin{fill:#0b0a08}.taiji .yang{fill:var(--scr-ink)}
+  .taiji svg{width:100%;height:100%;animation:turn 30s linear infinite}
+  @keyframes turn{to{transform:rotate(360deg)}}
+  .quote{font-size:2.4cqw;line-height:1.6}
+  .quote small{display:block;font-size:1.2cqw;color:var(--scr-soft);font-family:inherit}
+
+  /* flip cards */
+  .flips{display:flex;gap:1.6cqw}
+  .fc{flex:1;height:22cqw;perspective:60cqw}
+  .fc .in{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.4,0,.2,1)}
+  .fc .s{position:absolute;inset:0;backface-visibility:hidden;border-radius:1cqw;padding:1.4cqw;font-size:1.35cqw;line-height:1.55;display:flex;flex-direction:column;justify-content:center}
+  .fc .s b{font-size:1.7cqw;margin-bottom:.6cqw}
+  .fc .w{background:var(--scr-ink);color:#16140f}
+  .fc .k{background:#0b0a08;color:var(--scr-ink);border:.15cqw solid var(--scr-line);transform:rotateY(180deg)}
+  .fc .w::after,.fc .k::after{content:"";position:absolute;right:1.2cqw;top:1.2cqw;width:1.6cqw;height:1.6cqw;border-radius:50%}
+  .fc .w::after{background:#0b0a08}.fc .k::after{background:var(--scr-ink)}
+  .stage.fx-flip .fc .in{transform:rotateY(180deg)}
+  .stage.fx-flip .fc .in{transition-delay:1.2s}.stage.fx-flip .fc:nth-child(2) .in{transition-delay:1.55s}.stage.fx-flip .fc:nth-child(3) .in{transition-delay:1.9s}
+
+  /* absolute table */
+  .abs{display:flex;flex-direction:column;gap:.9cqw}
+  .abs div{display:grid;grid-template-columns:1fr 3cqw 1.4fr;align-items:center;font-size:1.7cqw;opacity:0;transform:translateX(-3cqw);transition:opacity .3s,transform .45s}
+  .abs div b{background:var(--scr-ink);color:#16140f;padding:.4cqw 1cqw;border-radius:.4cqw;text-align:center}
+  .abs div span{color:var(--scr-bad)}
+  .abs div em{font-style:normal;color:var(--scr-soft);text-align:center}
+  .pr.on .abs div{opacity:1;transform:none}
+  .peak svg{width:100%;height:auto;overflow:visible}
+  .peak path{fill:none;stroke:var(--scr-acc);stroke-width:5;stroke-linecap:round;stroke-dasharray:1200;stroke-dashoffset:1200;transition:stroke-dashoffset 2.2s .3s ease}
+  .pr.peak.on path{stroke-dashoffset:0}
+  .peak text{fill:var(--scr-soft);font-size:26px}
+  .peak .top{fill:var(--scr-ink);font-size:30px;font-weight:700}
+
+  html:not(.js) .stage-wrap{display:none}
+  html:not(.js) .board{display:block;max-width:42rem}
+  html:not(.js) .steps{padding:0}
+  html:not(.js) .step{min-height:0;margin:1rem 0}
+
+  .outro h2{font-size:1.45rem;margin:2.4rem 0 1rem}
+  .ledger{list-style:none;padding:0;margin:1rem 0}
+  .ledger li{padding:.55rem 0;border-bottom:1px solid var(--line);font-size:.98rem}
+  .src{font-size:.84rem;color:var(--soft);padding-left:1.1rem}
+  .src li{margin:.25rem 0}
+  .small{font-size:.8rem;color:var(--soft)}
+
+  @media (max-width:820px){
+    body{font-size:17px}
+    h1{font-size:1.8rem}
+    .board{display:block;padding:0}
+    .stage-wrap{position:sticky;top:0;z-index:10;background:var(--bg);padding:6px 6px 8px;border-bottom:1px solid var(--line)}
+    .stage{border-radius:10px}
+    .steps{padding:8vh 14px 50vh}
+    .step{min-height:72vh;align-items:center;padding-top:22vh}
+    .step .big{font-size:1.08rem}
+    .av b{font-size:max(1.25cqw,8px)}
+    .card,.bar,.meter,.deal .coin,.chips span,.bubble,.fc .s,.abs div{font-size:max(1.45cqw,8.5px)}
+    .card small{font-size:max(1.1cqw,7px)}
+    .slate .dt{font-size:max(2.3cqw,12px)}
+    .slate .sc,.slate .pl,.strip span{font-size:max(1.1cqw,7px)}
+    .tag,.lane span{font-size:max(1.25cqw,8px)}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{transition-duration:0s!important;transition-delay:0s!important;animation:none!important}
+  }
+</style>
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<header class="intro">
+  <div class="kicker">NOTES · 故事看板</div>
+  <h1>三条河：《圣经》、以色列与美国的中东政治</h1>
+  <p class="dek">《圣经》是不是中东战争的计划书？往下滚，画面会带你走过三条源头不同的河，看它们在哪里汇流，又在哪里被人画错了线。最后用《易经》和道家的眼光收尾：黑中有白、白中有黑，才是常态。</p>
+  <div class="meta"><span>Eden Tan</span><span>2026-09-29</span><span>所有情节都有出处，不虚构对白</span></div>
+  <p class="how">证据强度：<span class="dot d-ok"></span>有文件证明　<span class="dot d-warn"></span>汇流或推论　<span class="dot d-bad"></span>没有证据。想直接看关系网和逐条核查：<a href="bible-israel-us-evidence-map-full.html">完整证据地图 →</a></p>
+</header>
+
+<div class="board">
+  <div class="stage-wrap" aria-hidden="true">
+    <div class="stage" id="stage">
+      <div class="slate"><div class="clap"><i></i><i></i><b></b></div><div><div class="sc" id="sl-sc">片头</div><div class="dt" id="sl-dt">一个问题</div><div class="pl" id="sl-pl">&nbsp;</div></div></div>
+
+      <!-- 0-1 question -->
+      <div class="pr" data-on="0" style="--x:250;--y:110;--w:330"><div class="book"><div class="pg l">土地</div><div class="pg r">盟约</div><div class="cover">圣经</div></div></div>
+      <div class="pr from-r" data-on="0" style="--x:640;--y:130;--w:220"><div class="qmark">?</div><div style="text-align:center;font-size:1.6cqw">战争计划书</div></div>
+      <div class="pr from-l" data-on="1" style="--x:80;--y:150;--w:380"><div class="card"><small>说法 A</small>宗教给人一套世界观</div></div>
+      <div class="pr from-r" data-on="1" style="--x:540;--y:150;--w:380"><div class="card"><small>说法 B</small>《圣经》就是战争计划书</div></div>
+      <div class="pr stampbox" data-on="1" style="--x:390;--y:300;--w:220"><div class="stamp">两回事</div></div>
+
+      <!-- 2-6 river A -->
+      <div class="pr" data-on="2" style="--x:420;--y:170;--w:480"><div class="card"><small>1897 · 巴塞尔</small>第一届锡安主义大会<br>Herzl 设想的是一个<span class="cl">世俗国家<u></u></span></div></div>
+      <div class="pr" data-on="3" style="--x:420;--y:170;--w:480"><div class="card paper"><small>宗教锡安主义</small>世俗的建国运动，被理解为<span class="cl">宗教意义上的救赎开端<u></u></span></div></div>
+      <div class="pr" data-on="4" style="--x:360;--y:95;--w:560"><div class="card paper"><small>1974 · 信仰者集团的口号</small>以色列之地，属于以色列人民，依照以色列的妥拉</div></div>
+      <div class="pr" data-on="4" style="--x:380;--y:300;--w:520"><div class="houses" id="houses"></div><div style="font-size:1.25cqw;color:var(--scr-soft);margin-top:1cqw">约旦河西岸的定居点，常抢在政府政策之前建起</div></div>
+      <div class="pr" data-on="5" style="--x:330;--y:110;--w:420"><div class="card paper"><small>2022.12 · 联合执政协议</small>总理将推动对<span class="cl">「犹地亚和撒玛利亚」适用主权<u></u></span>的政策</div></div>
+      <div class="pr" data-on="5" style="--x:330;--y:300;--w:420"><span class="tag">犹地亚和撒玛利亚 = 约旦河西岸的圣经名称</span></div>
+      <div class="pr" data-on="6" style="--x:300;--y:95;--w:640"><div class="card paper"><small>2023.10.28 · 内塔尼亚胡对地面部队</small>要记得亚玛力人向你所做的。</div></div>
+      <div class="pr from-l" data-on="6" style="--x:300;--y:270;--w:300"><div class="card"><small>南非 · 国际法院</small>种族灭绝意图的证据</div></div>
+      <div class="pr from-r" data-on="6" style="--x:640;--y:270;--w:300"><div class="card"><small>以色列总理办公室</small>指的是哈马斯的暴行</div></div>
+      <div class="pr" data-on="6" style="--x:300;--y:440;--w:640"><span class="tag">原句是真的，含义各方解读不同</span></div>
+
+      <!-- 7-10 river B -->
+      <div class="pr" data-on="7" style="--x:80;--y:110;--w:840"><div style="font-size:1.4cqw;color:var(--scr-soft);margin-bottom:2cqw">「神把以色列之地赐给了犹太人」—— 同意的比例（Pew）</div><div class="bars"><div class="bar"><span>美国白人福音派 · 2013</span><div class="t"><i style="--v:82%"></i></div><b>82%</b></div><div class="bar alt"><span>美国犹太人 · 2013</span><div class="t"><i style="--v:40%"></i></div><b>40%</b></div><div class="bar all"><span>全体美国成年人 · 2022</span><div class="t"><i style="--v:30%"></i></div><b>30%</b></div></div></div>
+      <div class="pr" data-on="8" style="--x:420;--y:150;--w:480"><div class="card"><small>2006 · 圣安东尼奥</small>Christians United for Israel<br>以基督教信仰为基础，游说美国支持以色列</div></div>
+      <div class="pr" data-on="9" style="--x:150;--y:110;--w:700"><div class="embassy"><div class="bld"><i style="left:15%"></i><i style="left:42%"></i><i style="left:69%"></i></div><div class="bubble b1"><b>开场祷告</b><br>Robert Jeffress 牧师</div><div class="bubble b2"><b>结束祷告</b><br>John Hagee 牧师</div></div><div style="text-align:center;font-size:1.5cqw;margin-top:1.4cqw">2018.05.14 · 美国驻耶路撒冷使馆启用</div></div>
+      <div class="pr" data-on="9" style="--x:220;--y:440;--w:560"><span class="tag bad">白中有黑：Jeffress 曾说犹太人不信基督就不能得救</span></div>
+      <div class="pr" data-on="10" style="--x:150;--y:170;--w:700"><div class="eq">美国亲以色列 = 犹太人控制美国</div></div>
+      <div class="pr stampbox" data-on="10" style="--x:360;--y:260;--w:280"><div class="stamp">模型不成立</div></div>
+      <div class="pr" data-on="10" style="--x:150;--y:390;--w:700"><div style="font-size:1.5cqw;text-align:center;color:var(--scr-soft)">最相信「神赐地」的，是美国基督徒</div></div>
+
+      <!-- 11-12 river C -->
+      <div class="pr" data-on="11" style="--x:70;--y:110;--w:860"><div class="chips"><span>海湾安全</span><span style="transition-delay:.15s">能源与航道</span><span style="transition-delay:.3s">伊朗</span><span style="transition-delay:.45s">军事基地</span><span style="transition-delay:.6s">盟友体系</span><span style="transition-delay:.75s">政权更替</span></div></div>
+      <div class="pr" data-on="11" style="--x:560;--y:300;--w:380"><div class="card"><small>PNAC 1998 · Clean Break 1996 的公开语言</small>国家安全、美国力量、地区战略<br><b style="color:var(--scr-bad)">不是</b>「圣经要求攻打伊拉克」</div></div>
+      <div class="pr" data-on="12" style="--x:330;--y:100;--w:600"><div class="card paper"><small>巴勒斯坦外长 Shaath 在 2005 年 BBC 纪录片中的转述</small>「神告诉我：乔治，去结束伊拉克的暴政。」</div></div>
+      <div class="pr stampbox" data-on="12" style="--x:330;--y:290;--w:600"><div style="display:flex;gap:2cqw;justify-content:center"><div class="stamp" style="font-size:1.6cqw">单一来源</div><div class="stamp s2" style="font-size:1.6cqw">白宫否认</div><div class="stamp s3" style="font-size:1.6cqw">转述者：是比喻</div></div></div>
+
+      <!-- 13 confluence -->
+      <div class="pr" data-on="13" style="--x:60;--y:100;--w:880"><div class="lanes"><div class="lane a"><span>以色列宗教锡安主义 · 神学 + 民族 + 安全</span></div><div class="lane b"><span>美国基督教锡安主义 · 神学 + 国内选票</span></div><div class="lane c"><span>美国国家利益与新保守派 · 战略 + 权力</span></div><div class="hubbox">美国<br>中东政策</div></div></div>
+      <div class="pr" data-on="13" style="--x:240;--y:450;--w:520"><span class="tag">汇流 ≠ 控制：动机不同，方向一致</span></div>
+
+      <!-- 14-16 sacred values -->
+      <div class="pr" data-on="14" style="--x:100;--y:130;--w:800"><div class="deal"><div class="coin">我出价<b>RM 100 万</b></div><div class="coin mid">成交<b id="mid">RM 100 万</b></div><div class="coin">你要价<b>RM 200 万</b></div></div></div>
+      <div class="pr" data-on="14" style="--x:100;--y:360;--w:800"><div style="font-size:1.6cqw;text-align:center;color:var(--scr-soft)">普通利益：可以交换、补偿、谈判</div></div>
+      <div class="pr" data-on="15" style="--x:100;--y:100;--w:800"><div class="deal"><div class="coin">「这是神给我们的地」</div><div class="coin mid no">成交<b>—</b></div><div class="coin">「这是我们的圣地」</div></div></div>
+      <div class="pr" data-on="15" style="--x:100;--y:280;--w:800"><div style="font-size:1.2cqw;color:var(--scr-soft);margin-bottom:.4cqw">PNAS 2007 实验：对神圣价值……</div><div class="meter"><span>给钱让对方妥协 → 愤怒</span><div class="t"><i style="--v:85%"></i></div></div><div class="meter down"><span>对方象征性让步 → 愤怒</span><div class="t"><i style="--v:30%"></i></div></div></div>
+      <div class="pr" data-on="16" style="--x:80;--y:100;--w:840"><div style="font-size:1.6cqw;margin-bottom:1.6cqw">把宗教全部删掉，这些问题还在：</div><div class="chips"><span>1948 难民</span><span style="transition-delay:.12s">1967 后的占领</span><span style="transition-delay:.24s">边界</span><span style="transition-delay:.36s">西岸定居点</span><span style="transition-delay:.48s">耶路撒冷归属</span><span style="transition-delay:.6s">加沙治理</span><span style="transition-delay:.72s">巴勒斯坦建国</span><span style="transition-delay:.84s">水资源</span></div></div>
+      <div class="pr" data-on="16" style="--x:80;--y:400;--w:840"><span class="tag">宗教不是冲突的充分解释，却可能是放大器</span></div>
+
+      <!-- 17-18 yin yang -->
+      <div class="pr" data-on="17" style="--x:100;--y:85;--w:300"><div class="taiji"><svg viewBox="0 0 200 200"><circle class="yang" cx="100" cy="100" r="98"/><path class="yin" d="M100 2 A98 98 0 0 1 100 198 A49 49 0 0 1 100 100 A49 49 0 0 0 100 2Z"/><circle class="yin" cx="100" cy="51" r="14"/><circle class="yang" cx="100" cy="149" r="14"/></svg></div></div>
+      <div class="pr from-r" data-on="17" style="--x:470;--y:140;--w:460"><div class="quote classic">一阴一阳之谓道。<small>《易经·系辞上》</small></div><div class="quote classic" style="margin-top:2cqw">万物负阴而抱阳，<br>冲气以为和。<small>《道德经》第四十二章</small></div></div>
+      <div class="pr" data-on="18" style="--x:60;--y:110;--w:880"><div class="flips"><div class="fc"><div class="in"><div class="s w"><b>《圣经》</b>以赛亚书 2:4：将刀打成犁头</div><div class="s k"><b>《圣经》</b>撒母耳记上 15：灭绝亚玛力</div></div></div><div class="fc"><div class="in"><div class="s w"><b>拉宾</b>1993 年签奥斯陆协议，获和平奖</div><div class="s k"><b>拉宾</b>1967 年战争的总参谋长</div></div></div><div class="fc"><div class="in"><div class="s w"><b>新保守派</b>目标写着：推广民主</div><div class="s k"><b>新保守派</b>结果：一场理由不成立的战争</div></div></div></div></div>
+      <div class="pr" data-on="18" style="--x:60;--y:430;--w:880"><span class="tag">每一张牌翻过来，都是另一种颜色</span></div>
+
+      <!-- 19-20 epilogue -->
+      <div class="pr" data-on="19" style="--x:120;--y:95;--w:560"><div class="abs"><div><b>神</b><em>→</em><span>神的敌人</span></div><div style="transition-delay:.2s"><b>国家</b><em>→</em><span>叛国者</span></div><div style="transition-delay:.4s"><b>革命</b><em>→</em><span>反革命</span></div><div style="transition-delay:.6s"><b>民族</b><em>→</em><span>民族的敌人</span></div><div style="transition-delay:.8s"><b>安全</b><em>→</em><span>潜在威胁</span></div><div style="transition-delay:1s"><b>绝对和平</b><em>→</em><span>破坏和平的人</span></div></div></div>
+      <div class="pr from-r" data-on="19" style="--x:720;--y:140;--w:230"><div class="quote classic" style="font-size:2cqw">天下皆知美之为美，<br>斯恶已。<small>《道德经》第二章</small></div></div>
+      <div class="pr peak" data-on="20" style="--x:120;--y:100;--w:520"><svg viewBox="0 0 520 300"><path d="M10 280 C 120 270, 200 200, 260 60 C 280 20, 300 20, 320 60 C 380 190, 450 250, 510 280"/><text class="top" x="210" y="30">亢龙有悔</text><text x="10" y="300">往上</text><text x="440" y="300">反转</text></svg></div>
+      <div class="pr from-r" data-on="20" style="--x:680;--y:130;--w:280"><div class="quote classic" style="font-size:1.9cqw">兵者不祥之器，<br>不得已而用之。<small>《道德经》第三十一章</small></div></div>
+      <div class="pr" data-on="20" style="--x:120;--y:440;--w:760"><span class="tag">谁说自己是纯白的，就多看他一眼</span></div>
+
+      <!-- actors -->
+      <div class="actor" data-a="herzl"><div class="av"><img src="images/religion-map/herzl.jpg" alt=""><b>Herzl</b></div></div>
+      <div class="actor" data-a="kook"><div class="av"><img src="images/religion-map/kook.jpg" alt=""><b>Kook 拉比</b></div></div>
+      <div class="actor" data-a="zvikook"><div class="av"><img src="images/religion-map/zvikook.jpg" alt="" style="object-position:55% 25%"><b>Zvi Yehuda Kook</b></div></div>
+      <div class="actor" data-a="smotrich"><div class="av"><img src="images/religion-map/smotrich.jpg" alt=""><b>Smotrich</b></div></div>
+      <div class="actor" data-a="netanyahu"><div class="av"><img src="images/iraq-war-map/netanyahu.jpg" alt=""><b>内塔尼亚胡</b></div></div>
+      <div class="actor" data-a="hagee"><div class="av"><img src="images/religion-map/hagee.jpg" alt=""><b>Hagee</b></div></div>
+      <div class="actor" data-a="perle"><div class="av"><img src="images/iraq-war-map/perle.jpg" alt="" style="object-position:50% 6%"><b>Perle</b></div></div>
+      <div class="actor" data-a="wolfowitz"><div class="av"><img src="images/iraq-war-map/wolfowitz.jpg" alt=""><b>Wolfowitz</b></div></div>
+      <div class="actor" data-a="bush"><div class="av"><img src="images/iraq-war-map/bush.jpg" alt=""><b>小布什</b></div></div>
+
+      <div class="strip" id="strip"><span>问题</span><span>第一条河</span><span>第二条河</span><span>第三条河</span><span>汇流</span><span>神圣价值</span><span>黑中有白</span><span>尾声</span></div>
+    </div>
+  </div>
+
+  <div class="steps">
+    <section class="step" data-f="0" data-sc="片头" data-dt="一个问题" data-pl="&nbsp;"><div class="txt"><div class="lbl">片头</div><p>上一篇我们追了伊拉克战争的来路。常有人再往下问一层：这一切的底下，是不是《圣经》？《圣经》是不是一份中东战争的计划书？</p></div></section>
+    <section class="step" data-f="0" data-sc="片头" data-dt="一个问题" data-pl="&nbsp;"><div class="txt"><p>先把两句话分开：「宗教给人一套世界观」，和「《圣经》就是战争计划书」。</p><p class="big">这是两回事。第一句有大量证据，第二句没有。</p></div></section>
+
+    <section class="step" data-f="1" data-sc="第一条河" data-dt="1897" data-pl="巴塞尔"><div class="txt"><div class="lbl">第一条河 · 以色列的宗教锡安主义</div><p>先说一件常被忽略的事：现代锡安主义的起点是世俗的。1897 年，Theodor Herzl 召开第一届锡安主义大会，他设想的犹太国家，是一个仿照中欧国家的世俗国家。</p></div></section>
+    <section class="step" data-f="1" data-sc="第一条河" data-dt="1920 年代" data-pl="耶路撒冷"><div class="txt"><p>宗教锡安主义是另一支。Abraham Isaac Kook 拉比把信仰和建国连在一起：世俗的建国运动，被他理解成宗教意义上「救赎」的开端。</p></div></section>
+    <section class="step" data-f="1" data-sc="第一条河" data-dt="1974" data-pl="约旦河西岸" data-fx="houses"><div class="txt"><p>他的儿子 Zvi Yehuda Kook 把 1967 年战争得到的土地，解读为救赎的一步。1974 年，他的追随者成立「信仰者集团」，在西岸建起一个又一个定居点，常常抢在政府政策之前。</p></div></section>
+    <section class="step" data-f="1" data-sc="第一条河" data-dt="2022.12" data-pl="耶路撒冷"><div class="txt"><p>快进到 2022 年。宗教锡安主义党的 Smotrich 与内塔尼亚胡签下联合执政协议，写明要推动对「犹地亚和撒玛利亚」适用以色列主权。那是约旦河西岸的圣经名称。</p></div></section>
+    <section class="step" data-f="1" data-sc="第一条河" data-dt="2023.10.28" data-pl="特拉维夫"><div class="txt"><p>2023 年 10 月，内塔尼亚胡对准备进入加沙的部队说：「要记得亚玛力人向你所做的。」南非在国际法院把这句话当作种族灭绝意图的证据；以色列说，这指的是哈马斯。</p><p class="note"><span class="dot d-ok"></span>这条河有文件证明：组织、口号、执政协议、原话都可查。但它只是以色列政治的一部分，不是全部。</p></div></section>
+
+    <section class="step" data-f="2" data-sc="第二条河" data-dt="2013 / 2022" data-pl="美国" data-fx="bars"><div class="txt"><div class="lbl">第二条河 · 美国的基督教锡安主义</div><p>现在把镜头转到美国。Pew 研究中心问：你相信神把以色列之地赐给了犹太人吗？</p><p class="big">美国白人福音派同意的比例，是美国犹太人的两倍。</p></div></section>
+    <section class="step" data-f="2" data-sc="第二条河" data-dt="2006" data-pl="圣安东尼奥"><div class="txt"><p>这种信仰有真实的组织。2006 年，福音派牧师 John Hagee 创立「基督徒团结支持以色列」（CUFI），以基督教信仰为基础游说美国支持以色列，自称会员数以百万计。</p></div></section>
+    <section class="step" data-f="2" data-sc="第二条河" data-dt="2018.05.14" data-pl="耶路撒冷"><div class="txt"><p>2018 年 5 月 14 日，美国驻耶路撒冷使馆启用。站上台祷告的，是两位福音派牧师：开场的 Robert Jeffress，收尾的 John Hagee。</p><p>有个细节：Jeffress 过去说过，犹太人不信基督就不能得救。支持以色列的盟友，终极信念并不相同。</p></div></section>
+    <section class="step" data-f="2" data-sc="第二条河" data-dt="结论" data-pl="美国"><div class="txt"><p class="big">所以「美国亲以色列 = 犹太人控制美国」这个模型，第一步就站不住。</p><p class="note"><span class="dot d-ok"></span>这条河有文件证明：民调、组织、典礼都可查。</p></div></section>
+
+    <section class="step" data-f="3" data-sc="第三条河" data-dt="1996–2003" data-pl="华盛顿"><div class="txt"><div class="lbl">第三条河 · 美国国家利益与新保守派</div><p>第三条河完全不需要《圣经》。海湾安全、能源航道、伊朗、军事基地、盟友体系，再加上新保守派的政权更替主张。Clean Break 和 PNAC 的公开文件，讲的是国家安全和美国力量，不是神学。</p></div></section>
+    <section class="step" data-f="3" data-sc="第三条河" data-dt="2005" data-pl="BBC 纪录片"><div class="txt"><p>那「神叫布什打伊拉克」呢？这句话来自巴勒斯坦外长 Shaath 在 BBC 纪录片里的回忆。</p><p>只有他一个来源；白宫说这种说法「荒谬」；Shaath 自己后来也说，那更像是比喻。</p><p class="note"><span class="dot d-bad"></span>证据不足。不能拿来证明宗教决定了这场战争。</p></div></section>
+
+    <section class="step" data-f="4" data-sc="汇流" data-dt="今天" data-pl="华盛顿"><div class="txt"><div class="lbl">汇流</div><p>三条河的源头不同：一条是神学加民族，一条是神学加选票，一条是战略加权力。它们在某些问题上流向同一个出口：美国的中东政策。</p><p class="big">它们不需要相信同一件事，也不需要谁控制谁。</p><p class="note"><span class="dot d-warn"></span>方向一致有据可查，但汇流不等于控制。</p></div></section>
+
+    <section class="step" data-f="5" data-sc="神圣价值" data-dt="谈判桌" data-pl="&nbsp;" data-fx="deal"><div class="txt"><div class="lbl">神圣价值</div><p>宗教真正改变冲突的地方在这里。普通的利益可以谈：我出 100 万，你要 200 万，最后可以在 150 万成交。</p></div></section>
+    <section class="step" data-f="5" data-sc="神圣价值" data-dt="谈判桌" data-pl="&nbsp;"><div class="txt"><p>但如果一边说「这是神给我们的地」，另一边说「这是我们的圣地」，就没有 150 万的版本。</p><p>2007 年一项发表在 PNAS 的实验，对以色列定居者和巴勒斯坦人做测试：对神圣价值，<b>给钱让人妥协，只会让人更愤怒</b>；对方做出象征性的让步，愤怒反而下降。</p></div></section>
+    <section class="step" data-f="5" data-sc="神圣价值" data-dt="如果没有宗教" data-pl="&nbsp;"><div class="txt"><p>那如果把宗教全部删掉，以巴问题会消失吗？不会。难民、占领、边界、定居点、耶路撒冷、加沙、建国、水资源，全都还在。</p><p class="big">宗教不是冲突的充分解释，但它可能是放大器。</p></div></section>
+
+    <section class="step" data-f="6" data-sc="黑中有白" data-dt="《易经》" data-pl="&nbsp;"><div class="txt"><div class="lbl">黑中有白，白中有黑</div><p>看太极图：黑的一半里有一个白点，白的一半里有一个黑点。它说的不是好坏各半，而是<b>任何一方里面，本来就含着另一方</b>。纯黑和纯白都不是常态。</p></div></section>
+    <section class="step" data-f="6" data-sc="黑中有白" data-dt="翻过来看" data-pl="&nbsp;" data-fx="flip"><div class="txt"><p>拿这个眼光回头看：同一部《圣经》里，有「将刀打成犁头」，也有「灭绝亚玛力」。拉宾是 1967 年的总参谋长，也是奥斯陆协议的签署人，最后被一个宗教民族主义者刺杀。新保守派写着推广民主，换来的是一场理由不成立的战争。</p><p class="big">真正该问的不是「宗教是好是坏」，而是人会挑哪一半，去为已经想做的事找理由。</p></div></section>
+
+    <section class="step" data-f="7" data-sc="尾声" data-dt="纯白的危险" data-pl="&nbsp;"><div class="txt"><div class="lbl">尾声</div><p>《道德经》说：「天下皆知美之为美，斯恶已。」把一个价值抬成绝对真理，反对它的人就自动成了敌人。神、国家、革命、民族、安全，甚至绝对的和平，都可以这样用。旗帜不同，结构一样。</p></div></section>
+    <section class="step" data-f="7" data-sc="尾声" data-dt="亢龙有悔" data-pl="&nbsp;"><div class="txt"><p>《易经》乾卦的最后一爻叫「亢龙有悔」：飞到最高处，就要反转。道家对战争也说得明白：「兵者不祥之器，不得已而用之。」</p><p class="big">危险的不是神，而是有人宣布自己代表绝对真理。黑中有白、白中有黑才是常态；谁说自己是纯白的，就多看他一眼。</p></div></section>
+  </div>
+</div>
+
+<footer class="outro">
+  <h2>看完这个故事，你应该记住</h2>
+  <ul class="ledger">
+    <li><span class="dot d-ok"></span>现代锡安主义起点是世俗的；宗教锡安主义是后来并行的一支，今天在以色列政府里有真实的位置。</li>
+    <li><span class="dot d-ok"></span>美国白人福音派比美国犹太人更相信「神把这块地赐给犹太人」。</li>
+    <li><span class="dot d-ok"></span>基督教锡安主义有真实的组织，也出现在 2018 年使馆启用的讲台上。</li>
+    <li><span class="dot d-ok"></span>神圣价值会让妥协更难，给钱反而更糟，这有实验证据。</li>
+    <li><span class="dot d-warn"></span>三条河在美国中东政策上汇流，但动机不同，汇流不等于控制。</li>
+    <li><span class="dot d-bad"></span>《圣经》→ 伊拉克战争，以及「神叫布什开战」，都没有可靠证据。</li>
+  </ul>
+  <p><a href="bible-israel-us-evidence-map-full.html">打开完整证据地图：三条河关系网、人物照片、逐条核查 →</a></p>
+  <p><a href="iraq-war-story.html">上一部：一场战争的七年前奏 →</a></p>
+
+  <h2 style="font-size:1.15rem">故事里每个情节的出处</h2>
+  <ul class="src">
+    <li>世俗锡安主义与 Herzl：<a href="https://www.myjewishlearning.com/article/secular-zionism/">My Jewish Learning</a></li>
+    <li>信仰者集团与 Kook 父子：<a href="https://www.myjewishlearning.com/article/gush-emunim/">My Jewish Learning — Gush Emunim</a></li>
+    <li>2022 联合执政协议：<a href="https://www.timesofisrael.com/religious-zionism-coalition-deal-settlement-growth-changes-to-discrimination-laws/">Times of Israel</a></li>
+    <li>「亚玛力」与各方解读：<a href="https://www.timesofisrael.com/pms-office-says-its-preposterous-to-say-invoking-amalek-was-a-genocide-call/">Times of Israel</a>、<a href="https://www.abc.net.au/news/2024-01-31/biblical-story-amalek-south-africa-icj-genocide-case-israel/103403552">ABC News</a></li>
+    <li>Pew 民调：<a href="https://www.pewresearch.org/short-reads/2013/10/03/more-white-evangelicals-than-american-jews-say-god-gave-israel-to-the-jewish-people/">2013</a>、<a href="https://www.pewresearch.org/religion/2022/05/26/modest-warming-in-u-s-views-on-israel-and-palestinians/">2022</a></li>
+    <li>CUFI 与使馆启用：<a href="https://en.wikipedia.org/wiki/Christians_United_for_Israel">CUFI（背景）</a>、<a href="https://edition.cnn.com/2018/05/13/politics/hagee-jeffress-us-embassy-jerusalem/index.html">CNN 2018</a></li>
+    <li>「神叫我」的说法与否认：<a href="https://www.voanews.com/a/a-13-2005-10-06-voa66/301119.html">VOA 2005</a>、<a href="https://www.nbcnews.com/id/wbna9618531">NBC News</a></li>
+    <li>神圣价值实验：<a href="https://www.pnas.org/doi/10.1073/pnas.0701768104">Ginges et al., PNAS 2007</a></li>
+    <li>经典原文：《易经·系辞上》《乾卦》上九；《道德经》第二、三十一、四十二章；《以赛亚书》2:4；《撒母耳记上》15</li>
+  </ul>
+  <p class="small">写法说明：画面是示意，不是现场影像；节奏做过打磨，但事件、时间、引语都来自上面的出处，没有虚构对白。引语中文为意译。照片来自 Wikimedia Commons，授权署名见<a href="bible-israel-us-evidence-map-full.html">完整证据地图</a>和<a href="iraq-war-evidence-map-full.html">伊拉克战争证据地图</a>末尾。本页不代表对任何宗教、民族或人物的立场评价。</p>
+</footer>
+
+<script>
+(function(){
+  var stage=document.getElementById('stage');
+  var steps=[].slice.call(document.querySelectorAll('.step'));
+  if(!stage||!steps.length)return;
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var props=[].slice.call(stage.querySelectorAll('.pr[data-on]'));
+  var actors={};[].slice.call(stage.querySelectorAll('.actor')).forEach(function(a){actors[a.dataset.a]=a;});
+  var strip=[].slice.call(document.querySelectorAll('#strip span'));
+  function inRange(spec,i){return spec.split(',').some(function(r){var p=r.split('-');var a=+p[0],b=p.length>1?+p[1]:a;return i>=a&&i<=b;});}
+
+  // actor layouts keyed by step index; a step without an entry reuses the nearest earlier one
+  var L={
+    0:{},
+    2:{herzl:[220,280,1.5,1]},
+    3:{herzl:[140,300,.9],kook:[280,280,1.5,1]},
+    4:{kook:[90,150,.85],zvikook:[240,170,1.3,1]},
+    5:{smotrich:[160,240,1.3,1],netanyahu:[850,240,1.3]},
+    6:{netanyahu:[150,240,1.4,1]},
+    7:{},
+    8:{hagee:[230,250,1.6,1]},
+    9:{hagee:[900,420,.8]},
+    10:{},
+    11:{perle:[200,380,1],wolfowitz:[330,380,1]},
+    12:{bush:[170,250,1.5,1]},
+    13:{}
+  };
+  function layoutFor(i){for(var k=i;k>=0;k--){if(L[k])return L[k];}return {};}
+
+  var cur=-1,timers=[];
+  function clearTimers(){timers.forEach(clearTimeout);timers=[];}
+  function later(fn,ms){timers.push(setTimeout(fn,reduce?0:ms));}
+  function setText(id,val){var el=document.getElementById(id);if(el.innerHTML.indexOf(val)>-1&&el.textContent)return;el.innerHTML='<span class="flip">'+val+'</span>';}
+
+  var housesBox=document.getElementById('houses');
+  for(var h=0;h<9;h++){var i=document.createElement('i');i.style.transitionDelay=(0.4+h*0.18)+'s';housesBox.appendChild(i);}
+
+  function deal(){
+    var el=document.getElementById('mid');
+    if(reduce){el.textContent='RM 150 万';return;}
+    var v=100;el.textContent='RM 100 万';
+    (function step(){later(function(){v+=5;el.textContent='RM '+v+' 万';if(v<150)step();},v===100?700:70);})();
+  }
+
+  function go(i){
+    if(i===cur)return;
+    var prev=cur;cur=i;clearTimers();
+    var st=steps[i];
+    steps.forEach(function(s,k){s.classList.toggle('cur',k===i);});
+    props.forEach(function(p){p.classList.toggle('on',inRange(p.dataset.on,i));});
+    var lay=layoutFor(i);
+    Object.keys(actors).forEach(function(n){
+      var a=actors[n],pos=lay[n];
+      if(pos){a.style.setProperty('--ax',pos[0]);a.style.setProperty('--ay',pos[1]);a.querySelector('.av').style.setProperty('--as',pos[2]||1);}
+      a.classList.toggle('on',!!pos);a.classList.toggle('hot',!!(pos&&pos[3]));
+    });
+    var f=+st.dataset.f;
+    strip.forEach(function(s,k){s.classList.toggle('on',k===f);s.classList.toggle('done',k<f);});
+    setText('sl-sc',st.dataset.sc);setText('sl-dt',st.dataset.dt);setText('sl-pl',st.dataset.pl);
+    if(prev<0||+steps[prev].dataset.f!==f){stage.classList.add('snap');later(function(){stage.classList.remove('snap');},260);}
+    var fx=(st.dataset.fx||'').split(' ');
+    stage.classList.toggle('fx-flip',fx.indexOf('flip')>-1);
+    if(fx.indexOf('deal')>-1)deal();
+  }
+
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){if(e.isIntersecting)go(steps.indexOf(e.target));});
+    },{rootMargin:'-45% 0px -45% 0px'});
+    steps.forEach(function(s){io.observe(s);});
+  }
+  go(0);
+})();
+</script>
+</body>
+</html>

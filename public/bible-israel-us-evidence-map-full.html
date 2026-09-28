@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>圣经与中东证据地图</title>
+<meta name="description" content="《圣经》怎样进入以色列与美国的中东政治？三条河的关系网、人物照片、逐条核查，以及易经与道家「黑中有白、白中有黑」的视角。">
+<style>
+  :root{
+    --bg:#faf9f6;--card:#fff;--ink:#1f1d1a;--soft:#5c584f;--line:#e5e1d8;
+    --accent:#b8622b;--accent-soft:#f3ece2;--ok:#2f7d4f;--warn:#a87400;--bad:#b23a3a;
+    --node:#fff;--doc:#f3ece2;--ra:#2f5f8a;--rb:#8a4f2f;--rc:#4f6b3a;
+    --yin:#1f1d1a;--yang:#faf9f6;--maxw:46rem;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#15130f;--card:#1e1b16;--ink:#ece6da;--soft:#aaa192;--line:#3a352c;
+    --accent:#e0915a;--accent-soft:#3a2a1c;--ok:#5cc28a;--warn:#e7b54a;--bad:#ef7b7b;
+    --node:#1e1b16;--doc:#2b241b;--ra:#7fb0de;--rb:#e0a07a;--rc:#a8c88a;
+    --yin:#0b0a08;--yang:#ece6da;
+  }}
+  :root[data-theme="dark"]{
+    --bg:#15130f;--card:#1e1b16;--ink:#ece6da;--soft:#aaa192;--line:#3a352c;
+    --accent:#e0915a;--accent-soft:#3a2a1c;--ok:#5cc28a;--warn:#e7b54a;--bad:#ef7b7b;
+    --node:#1e1b16;--doc:#2b241b;--ra:#7fb0de;--rb:#e0a07a;--rc:#a8c88a;
+    --yin:#0b0a08;--yang:#ece6da;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,sans-serif;line-height:1.85;font-size:18px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:4.5rem 16px 6rem}
+  .wide{max-width:62rem;margin:0 auto;padding:0 16px}
+  .kicker{font-size:.72rem;letter-spacing:.24em;color:var(--accent);font-weight:600;margin-bottom:1.2rem}
+  h1{font-size:2.1rem;line-height:1.34;margin:0 0 1rem}
+  h2{font-size:1.4rem;line-height:1.4;margin:3.4rem 0 1rem}
+  h3{font-size:1.05rem;margin:0 0 .3rem}
+  .dek{font-size:1.06rem;color:var(--soft);line-height:1.75;margin:0}
+  .meta{margin-top:1.6rem;padding-top:1.2rem;border-top:1px solid var(--line);font-size:.82rem;color:var(--soft);display:flex;gap:1.2rem;flex-wrap:wrap}
+  p{margin:0 0 1.15rem}
+  a{color:var(--accent)}
+  .small{font-size:.84rem;color:var(--soft)}
+  blockquote{margin:2rem 0;padding:1.2rem 1.4rem;background:var(--card);border-left:3px solid var(--accent);border-radius:0 6px 6px 0}
+  blockquote p:last-child{margin:0}
+  .legend{display:flex;gap:1.1rem;flex-wrap:wrap;font-size:.85rem;color:var(--soft);margin:.4rem 0 1rem}
+  .legend span::before{content:"";display:inline-block;width:22px;height:0;border-top:3px solid currentColor;vertical-align:middle;margin-right:.4rem}
+  .legend .l-ok{color:var(--ok)}.legend .l-warn{color:var(--warn)}.legend .l-warn::before{border-top-style:dashed}
+  .legend .l-bad{color:var(--bad)}.legend .l-bad::before{border-top-style:dotted}
+  .legend b{color:var(--ink);font-weight:500}
+
+  .net-box{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .net{display:block;width:100%;min-width:780px;height:auto;font-family:inherit}
+  .net text{fill:var(--ink);font-size:13px}
+  .net .t-soft{fill:var(--soft);font-size:11.5px}
+  .net .t-row{font-size:12px;font-weight:700;letter-spacing:.12em}
+  .net .ra{fill:var(--ra)}.net .rb{fill:var(--rb)}.net .rc{fill:var(--rc)}
+  .net .band{fill:none;stroke-width:1;stroke:var(--line);stroke-dasharray:3 5}
+  .net .doc rect{fill:var(--doc);stroke:var(--line)}
+  .net .doc text{font-weight:600}
+  .net .hub rect{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.5}
+  .net .ring{fill:var(--node);stroke:var(--line);stroke-width:2}
+  .net .e{fill:none;stroke-width:2;transition:opacity .2s}
+  .net .ok{stroke:var(--ok)}
+  .net .warn{stroke:var(--warn);stroke-dasharray:7 5}
+  .net .bad{stroke:var(--bad);stroke-dasharray:2 5;stroke-linecap:round}
+  .net .t-bad{fill:var(--bad);font-size:12px;font-weight:600}
+  .net .t-warn{fill:var(--warn);font-size:11.5px;font-weight:600}
+  .net .p,.net .doc,.net .hub{cursor:pointer}
+  .net.focus .e{opacity:.1}
+  .net.focus .e.on{opacity:1;stroke-width:3}
+  .net.focus .p,.net.focus .doc,.net.focus .hub{opacity:.35}
+  .net.focus .on{opacity:1}
+  .net.focus .p.on .ring{stroke:var(--accent);stroke-width:3}
+  .hint{font-size:.8rem;color:var(--soft);margin:.6rem auto 0;max-width:44rem}
+
+  .people{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:1rem}
+  .person{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .person img{width:64px;height:64px;border-radius:50%;object-fit:cover;object-position:50% 22%;flex:none;background:var(--accent-soft)}
+  .person p{font-size:.9rem;line-height:1.65;margin:0}
+  .person h3{font-size:1rem;margin:0}
+  .role{font-size:.78rem;font-weight:600;margin:.1rem 0 .35rem}
+  .r-a{color:var(--ra)}.r-b{color:var(--rb)}.r-c{color:var(--rc)}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1rem 1.25rem;margin:.8rem 0;font-size:.97rem}
+  .card p:last-child,.card ul:last-child{margin-bottom:0}
+  .chip{display:inline-block;font-size:.72rem;font-weight:700;padding:1px 9px;border-radius:999px;margin-right:6px;border:1.5px solid currentColor;line-height:1.6}
+  .c-ok{color:var(--ok)}.c-warn{color:var(--warn)}.c-bad{color:var(--bad)}
+  .add{color:var(--warn);font-weight:600}
+  table{width:100%;border-collapse:collapse;font-size:.92rem;background:var(--card)}
+  th,td{padding:.7rem .8rem;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-size:.8rem;color:var(--soft);font-weight:600}
+  .tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+  ul{padding-left:1.2rem}
+  .src li{font-size:.86rem;margin:.25rem 0}
+
+  /* sacred vs tradable */
+  .scale{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin:1.2rem 0}
+  .scale .side{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1rem;text-align:center}
+  .scale .side b{display:block;font-size:1.3rem;margin:.3rem 0}
+  .scale .side small{color:var(--soft);font-size:.82rem}
+  .scale .mid{font-size:1.4rem;color:var(--soft)}
+
+  /* taiji: a concrete object that turns slowly */
+  .taiji-row{display:flex;gap:28px;align-items:center;margin:1.6rem 0}
+  .taiji{flex:none;width:150px;height:150px;animation:turn 24s linear infinite}
+  .taiji .yin{fill:var(--yin)}.taiji .yang{fill:var(--yang)}.taiji .rim{fill:none;stroke:var(--ink);stroke-width:2}
+  @keyframes turn{to{transform:rotate(360deg)}}
+  .pairs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:1rem 0}
+  .pair{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.9rem 1rem;font-size:.9rem;line-height:1.65}
+  .pair h3{font-size:.95rem;margin-bottom:.45rem}
+  .pair .w,.pair .k{display:block;padding-left:1.3rem;position:relative;margin:.35rem 0}
+  .pair .w::before,.pair .k::before{content:"";position:absolute;left:0;top:.45em;width:.8rem;height:.8rem;border-radius:50%;border:1.5px solid var(--ink)}
+  .pair .w::before{background:var(--yang)}.pair .k::before{background:var(--yin)}
+  .classic{font-family:"Songti SC","STSong","Noto Serif SC",serif;font-size:1.1rem}
+
+  @media (max-width:640px){
+    body{font-size:17px}
+    h1{font-size:1.7rem}
+    .people,.pairs{grid-template-columns:1fr}
+    .taiji-row{flex-direction:column;align-items:flex-start}
+    .taiji{width:120px;height:120px}
+    .scale{grid-template-columns:1fr}
+    .scale .mid{text-align:center}
+  }
+  @media (prefers-reduced-motion:reduce){.taiji{animation:none}.net .e{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<div class="wrap" style="padding-bottom:1rem">
+  <header>
+    <div class="kicker">NOTES · 证据核查 · 白话版</div>
+    <h1>《圣经》怎样进入以色列和美国的中东政治</h1>
+    <p class="dek">「宗教给了世界观」和「《圣经》是战争计划书」是两回事。这篇把宗教、以色列右翼、美国福音派、新保守派和美国国家利益拆成三条河，逐条核对证据，最后用《易经》和道家的眼光看一看：为什么「黑中有白、白中有黑」才是常态。</p>
+    <div class="meta"><span>Eden Tan</span><span>2026-09-29</span><span>配套阅读：<a href="iraq-war-evidence-map-full.html">伊拉克战争证据地图</a></span></div>
+    <p style="margin-top:1.2rem;font-size:.92rem">想先看故事、再看证据：<a href="bible-israel-us-story.html">看故事看板：三条河 →</a></p>
+  </header>
+
+  <blockquote><p><b>一句话结论：</b>《圣经》确实在两处真实地影响了政治：以色列的宗教锡安主义，和美国的基督教锡安主义。但它和伊拉克战争之间，画不出一条直线。美国的中东政策，是三条动机不同的河在某些问题上汇流的结果；汇流不等于谁在控制谁。</p></blockquote>
+
+  <p>这张图沿用上一篇的三种颜色：</p>
+  <div class="legend">
+    <span class="l-ok"><b>直接证据</b>：原文、组织、民调、官方文件</span>
+    <span class="l-warn"><b>汇流或推论</b>：方向一致，但不等于互相控制</span>
+    <span class="l-bad"><b>证据不足</b>：没有公开文件支撑</span>
+  </div>
+</div>
+
+<div class="wide">
+  <h2 style="max-width:44rem;margin-left:auto;margin-right:auto">关系网：三条河，一个汇流口</h2>
+  <div class="net-box">
+  <svg class="net" id="net" viewBox="0 0 1000 720" role="img" aria-labelledby="nt nd">
+    <title id="nt">圣经、以色列与美国中东政策的三条河关系网</title>
+    <desc id="nd">上排是以色列的宗教锡安主义，中排是美国的基督教锡安主义，下排是美国新保守派与国家利益；三条河在右侧的「美国中东政策」汇流。从《圣经》直通伊拉克战争的连线标为证据不足。</desc>
+    <defs><clipPath id="clip" clipPathUnits="objectBoundingBox"><circle cx=".5" cy=".5" r=".5"/></clipPath></defs>
+
+    <path class="band" d="M20 235 H 980"/><path class="band" d="M20 470 H 980"/>
+    <text class="t-row ra" x="30" y="40">第一条河 · 以色列宗教锡安主义</text>
+    <text class="t-row rb" x="30" y="272">第二条河 · 美国基督教锡安主义</text>
+    <text class="t-row rc" x="30" y="507">第三条河 · 美国国家利益与新保守派</text>
+
+    <!-- river A edges -->
+    <path class="e ok" data-k="bible kook" d="M160 128 L 222 128"/>
+    <path class="e ok" data-k="kook zvikook" d="M298 128 L 352 128"/>
+    <path class="e ok" data-k="zvikook settle" d="M428 128 L 470 128"/>
+    <path class="e ok" data-k="settle smotrich" d="M600 128 L 642 128"/>
+    <path class="e ok" data-k="smotrich netanyahu" d="M718 128 L 772 128"/>
+    <path class="e warn" data-k="netanyahu hub" d="M810 166 C 810 250, 850 300, 870 330"/>
+    <text class="t-warn" x="826" y="232">盟友关系</text>
+
+    <!-- river B edges -->
+    <path class="e ok" data-k="xbible evang" d="M160 360 L 222 360"/>
+    <path class="e ok" data-k="evang hagee" d="M360 360 L 402 360"/>
+    <path class="e ok" data-k="hagee embassy" d="M478 360 L 520 360"/>
+    <path class="e warn" data-k="embassy hub" d="M680 360 L 842 360"/>
+    <text class="t-warn" x="700" y="350">国内政治压力之一</text>
+
+    <!-- river C edges -->
+    <path class="e ok" data-k="interest neocon" d="M160 600 L 222 600"/>
+    <path class="e ok" data-k="neocon perle wolfowitz" d="M340 600 L 402 600"/>
+    <path class="e ok" data-k="perle wolfowitz bush" d="M478 600 L 560 600"/>
+    <path class="e ok" data-k="bush war" d="M636 600 L 700 600"/>
+    <path class="e warn" data-k="interest hub" d="M160 620 C 400 690, 760 690, 900 400"/>
+    <path class="e warn" data-k="war hub" d="M820 580 C 880 560, 900 470, 905 400"/>
+
+    <!-- the missing edge -->
+    <path class="e bad" data-k="bible war" d="M100 158 C 100 420, 560 520, 740 578"/>
+    <text class="t-bad" x="118" y="462">《圣经》→ 伊拉克战争：画不出这条线</text>
+    <!-- Bush and God claim -->
+    <path class="e bad" data-k="xbible bush" d="M100 392 C 150 520, 520 520, 590 564"/>
+    <text class="t-bad" x="150" y="556">「神叫我结束伊拉克暴政」：单一来源，白宫否认</text>
+
+    <!-- nodes: documents -->
+    <g class="doc" data-k="bible"><rect x="30" y="100" width="130" height="56" rx="10"/><text x="44" y="124">希伯来圣经</text><text class="t-soft" x="44" y="143">土地、盟约、圣城</text></g>
+    <g class="doc" data-k="settle"><rect x="470" y="100" width="130" height="56" rx="10"/><text x="484" y="124">定居点运动</text><text class="t-soft" x="484" y="143">1974 年起</text></g>
+    <g class="doc" data-k="xbible"><rect x="30" y="332" width="130" height="56" rx="10"/><text x="44" y="356">基督教圣经解释</text><text class="t-soft" x="44" y="375">预言与末世论</text></g>
+    <g class="doc" data-k="evang"><rect x="222" y="332" width="138" height="56" rx="10"/><text x="236" y="356">美国福音派</text><text class="t-soft" x="236" y="375">70% 信「神赐地」</text></g>
+    <g class="doc" data-k="embassy"><rect x="520" y="332" width="160" height="56" rx="10"/><text x="534" y="356">2018 使馆迁耶路撒冷</text><text class="t-soft" x="534" y="375">两位福音派牧师祈祷</text></g>
+    <g class="doc" data-k="interest"><rect x="30" y="572" width="130" height="56" rx="10"/><text x="44" y="596">美国国家利益</text><text class="t-soft" x="44" y="615">海湾、能源、伊朗</text></g>
+    <g class="doc" data-k="neocon"><rect x="222" y="572" width="118" height="56" rx="10"/><text x="236" y="596">新保守派</text><text class="t-soft" x="236" y="615">PNAC · 1998</text></g>
+    <g class="doc" data-k="war"><rect x="700" y="572" width="120" height="56" rx="10"/><text x="714" y="596">伊拉克战争</text><text class="t-soft" x="714" y="615">2003</text></g>
+    <g class="hub" data-k="hub"><rect x="842" y="330" width="140" height="70" rx="12"/><text x="856" y="360">美国中东政策</text><text class="t-soft" x="856" y="382">三条河在这里汇流</text></g>
+
+    <!-- nodes: people -->
+    <g class="p" data-k="kook"><circle class="ring" cx="260" cy="128" r="36"/><image href="images/religion-map/kook.jpg" x="226" y="94" width="68" height="68" clip-path="url(#clip)" preserveAspectRatio="xMidYMin slice"/><text x="260" y="186" text-anchor="middle">Kook 拉比</text><text class="t-soft" x="260" y="203" text-anchor="middle">宗教锡安主义思想</text></g>
+    <g class="p" data-k="zvikook"><circle class="ring" cx="390" cy="128" r="36"/><image href="images/religion-map/zvikook.jpg" x="356" y="94" width="68" height="68" clip-path="url(#clip)" preserveAspectRatio="xMidYMin slice"/><text x="390" y="186" text-anchor="middle">Zvi Yehuda Kook</text><text class="t-soft" x="390" y="203" text-anchor="middle">信徒 1974 建运动</text></g>
+    <g class="p" data-k="smotrich"><circle class="ring" cx="680" cy="128" r="36"/><image href="images/religion-map/smotrich.jpg" x="646" y="94" width="68" height="68" clip-path="url(#clip)" preserveAspectRatio="xMidYMin slice"/><text x="680" y="186" text-anchor="middle">Smotrich</text><text class="t-soft" x="680" y="203" text-anchor="middle">2022 入阁</text></g>
+    <g class="p" data-k="netanyahu"><circle class="ring" cx="810" cy="128" r="36"/><image href="images/iraq-war-map/netanyahu.jpg" x="776" y="94" width="68" height="68" clip-path="url(#clip)" preserveAspectRatio="xMidYMin slice"/><text x="870" y="120">内塔尼亚胡</text><text class="t-soft" x="870" y="138">2023 引用亚玛力</text></g>
+    <g class="p" data-k="hagee"><circle class="ring" cx="440" cy="360" r="36"/><image href="images/religion-map/hagee.jpg" x="406" y="326" width="68" height="68" clip-path="url(#clip)" preserveAspectRatio="xMidYMin slice"/><text x="440" y="418" text-anchor="middle">Hagee · CUFI</text><text class="t-soft" x="440" y="435" text-anchor="middle">2006 创立</text></g>
+    <g class="p" data-k="perle"><circle class="ring" cx="378" cy="585" r="26"/><image href="images/iraq-war-map/perle.jpg" x="354" y="561" width="48" height="48" clip-path="url(#clip)" preserveAspectRatio="xMidYMin slice"/><text x="378" y="632" text-anchor="middle">Perle</text></g>
+    <g class="p" data-k="wolfowitz"><circle class="ring" cx="440" cy="585" r="26"/><image href="images/iraq-war-map/wolfowitz.jpg" x="416" y="561" width="48" height="48" clip-path="url(#clip)" preserveAspectRatio="xMidYMin slice"/><text x="440" y="632" text-anchor="middle">Wolfowitz</text></g>
+    <g class="p" data-k="bush"><circle class="ring" cx="598" cy="600" r="36"/><image href="images/iraq-war-map/bush.jpg" x="564" y="566" width="68" height="68" clip-path="url(#clip)" preserveAspectRatio="xMidYMin slice"/><text x="598" y="656" text-anchor="middle">小布什</text></g>
+  </svg>
+  </div>
+  <p class="hint">点一下人物或方框，只看它的连线；再点一次恢复。手机上可以左右滑动看全图。</p>
+</div>
+
+<div class="wrap" style="padding-top:0">
+  <p style="margin-top:1.6rem">三条河各自都有真实的源头，也各自有文件可查。但请注意中间和下面那两条红线：从《圣经》直通伊拉克战争的线，以及「神叫布什打伊拉克」的线，都是网上常见、却画不实的连接。三条河真正相遇的地方在右边：美国的中东政策。它们在那里汇流，却不需要相信同一件事。</p>
+
+  <h2>图上的人</h2>
+  <div class="people">
+    <div class="person"><img src="images/religion-map/herzl.jpg" alt="Theodor Herzl"><div><h3>Theodor Herzl</h3><div class="role r-a">现代锡安主义的发起人 · 1897</div><p>他设想的犹太国家是一个世俗国家。现代锡安主义从一开始就不等于宗教运动，这是理解第一条河的前提。</p></div></div>
+    <div class="person"><img src="images/religion-map/kook.jpg" alt="Abraham Isaac Kook"><div><h3>Abraham Isaac Kook</h3><div class="role r-a">宗教锡安主义思想家</div><p>把犹太教信仰和锡安主义结合起来，把世俗的建国运动理解成宗教意义上的「救赎」开端。</p></div></div>
+    <div class="person"><img src="images/religion-map/zvikook.jpg" alt="Zvi Yehuda Kook" style="object-position:55% 25%"><div><h3>Zvi Yehuda Kook</h3><div class="role r-a">前者之子 · 定居点运动的精神导师</div><p>他把 1967 年战争得到的土地解读为救赎的一步。1974 年，他的追随者成立「信仰者集团」（Gush Emunim），在约旦河西岸建定居点，口号是「以色列之地，属于以色列人民，依照以色列的妥拉」。</p></div></div>
+    <div class="person"><img src="images/religion-map/smotrich.jpg" alt="Bezalel Smotrich"><div><h3>Bezalel Smotrich</h3><div class="role r-a">宗教锡安主义党领袖 · 财政部长</div><p>2022 年与内塔尼亚胡签联合执政协议，协议写明要推动对「犹地亚和撒玛利亚」（约旦河西岸的圣经名称）适用以色列主权。</p></div></div>
+    <div class="person"><img src="images/iraq-war-map/netanyahu.jpg" alt="Benjamin Netanyahu"><div><h3>Benjamin Netanyahu</h3><div class="role r-a">以色列总理</div><p>长期用圣经语言讲以色列的历史和土地。2023 年 10 月引用「要记得亚玛力人向你所做的」，南非在国际法院把它当作证据；以色列回应说，指的是哈马斯，不是巴勒斯坦人。</p></div></div>
+    <div class="person"><img src="images/religion-map/rabin.jpg" alt="Yitzhak Rabin"><div><h3>Yitzhak Rabin</h3><div class="role r-a">1967 年的总参谋长，1993 年签奥斯陆协议</div><p>打过仗、也签过和平协议的人。1995 年被一名反对奥斯陆协议的宗教民族主义青年刺杀。他本身就是「黑中有白」的注脚。</p></div></div>
+    <div class="person"><img src="images/religion-map/hagee.jpg" alt="John Hagee"><div><h3>John Hagee</h3><div class="role r-b">福音派牧师 · CUFI 创办人</div><p>2006 年创立「基督徒团结支持以色列」（CUFI），以基督教信仰为基础游说美国支持以色列。2018 年美国驻耶路撒冷使馆启用时，由他作结束祷告。</p></div></div>
+    <div class="person"><img src="images/iraq-war-map/bush.jpg" alt="George W. Bush"><div><h3>George W. Bush</h3><div class="role r-c">美国总统 · 虔诚的基督徒</div><p>个人信仰公开而虔诚，但伊拉克战争的官方理由是 WMD、恐怖主义与政权更替，不是《圣经》。「神叫我打伊拉克」只有巴勒斯坦外长一人转述，白宫否认，转述者后来也说那是比喻。</p></div></div>
+  </div>
+
+  <h2>逐条核查</h2>
+
+  <div class="card"><p><span class="chip c-ok">属实</span><b>现代锡安主义起点是世俗的</b></p>
+  <p>Herzl 在 19 世纪末提出政治锡安主义时，设想的是一个仿照中欧国家的世俗国家。宗教锡安主义是后来并行发展出来的一支。所以「以色列的领土政策 = 《圣经》的直接命令」这个说法不成立。</p></div>
+
+  <div class="card"><p><span class="chip c-ok">属实</span><b>宗教锡安主义把《圣经》地理和现代领土连在一起</b></p>
+  <p>1974 年成立的「信仰者集团」由 Zvi Yehuda Kook 的追随者组成，经常抢在政府政策之前、甚至违背政府政策在西岸建定居点。2022 年大选，宗教锡安主义党领衔的联合名单拿下 14 席，Smotrich 出任财政部长，联合执政协议写明要推动对「犹地亚和撒玛利亚」适用主权。</p></div>
+
+  <div class="card"><p><span class="chip c-ok">属实</span><span class="chip c-warn">解读有争议</span><b>内塔尼亚胡引用「亚玛力」</b></p>
+  <p>2023 年 10 月 28 日，他对准备进入加沙的部队说「要记得亚玛力人向你所做的」，11 月 3 日的信中再次提到。《撒母耳记上》里，神命令扫罗灭绝亚玛力人。南非在国际法院把这句话列为种族灭绝意图的证据；以色列总理办公室说这是在描述 10 月 7 日哈马斯的暴行，不是针对巴勒斯坦人。原句是真的，它的含义各方解读不同。</p></div>
+
+  <div class="card"><p><span class="chip c-ok">属实</span><b>美国福音派比美国犹太人更相信「神把这块地赐给犹太人」</b></p>
+  <p>Pew 研究中心 2013 年的调查：82% 的美国白人福音派相信神把以色列之地赐给了犹太人，美国犹太人只有 40%。2022 年的调查中，白人福音派是 70%，全体美国成年人是 30%。<span class="add">这一条很关键：</span>它直接推翻了「美国亲以色列 = 犹太人控制美国」的简单模型，因为最相信这套神学的，是基督徒。</p></div>
+
+  <div class="card"><p><span class="chip c-ok">属实</span><b>基督教锡安主义有真实的组织和政治动作</b></p>
+  <p>CUFI 由 John Hagee 于 2006 年创立，自称会员数以百万计。2018 年 5 月 14 日美国驻耶路撒冷使馆启用，开场祷告的是福音派牧师 Robert Jeffress，结束祷告的是 Hagee。<span class="add">补充一个「白中有黑」：</span>Jeffress 过去曾说过犹太人不信基督就不能得救，这在当时引起犹太社群的批评。支持以色列的盟友，终极信念未必相同。</p></div>
+
+  <div class="card"><p><span class="chip c-ok">属实</span><b>新保守派推动伊拉克战争的公开语言不是宗教语言</b></p>
+  <p>《A Clean Break》和 PNAC 的公开文件，讲的是国家安全、美国力量、地区战略和政权更替，不是「《圣经》要求攻打伊拉克」。详细证据见<a href="iraq-war-evidence-map-full.html">伊拉克战争证据地图</a>。</p></div>
+
+  <div class="card"><p><span class="chip c-bad">证据不足</span><b>「神叫布什打伊拉克」</b></p>
+  <p>2005 年 BBC 纪录片里，巴勒斯坦外长 Nabil Shaath 回忆布什在 2003 年说过「神告诉我：乔治，去结束伊拉克的暴政」。白宫发言人称这种说法「荒谬」，总统「从没说过」。Shaath 后来也说，他们从没认为布什是字面意义上听到神说话，那更像是比喻。单一来源、当事方否认、转述者自己弱化，不能当作宗教决定战争的证据。</p></div>
+
+  <div class="card"><p><span class="chip c-ok">属实</span><b>神圣价值确实会让妥协更难：有实验证据</b></p>
+  <p>Ginges、Atran 等人 2007 年发表在《美国国家科学院院刊》（PNAS）的研究，对以色列定居者和巴勒斯坦人做实验：当一方把某件事视为神圣时，<b>给钱让他们妥协，反而会增加愤怒和支持暴力</b>；而对方在自己的神圣价值上做出象征性让步（例如正式道歉、承认对方的历史），反对妥协的情绪会下降。</p></div>
+
+  <div class="card"><p><span class="chip c-ok">属实</span><b>「神圣化」在两边都有</b></p>
+  <ul>
+    <li>耶路撒冷的圣殿山 / 谢里夫圣地，同时是犹太教最神圣的地点和伊斯兰教的第三圣地。</li>
+    <li>哈马斯 1988 年的宪章第 11 条把整个巴勒斯坦称为「伊斯兰的瓦克夫」（宗教捐献地），任何人都无权放弃其中任何一部分。</li>
+    <li>1995 年刺杀拉宾的凶手是反对奥斯陆协议的宗教民族主义者。</li>
+  </ul>
+  <p>神圣化不是某一方的专利，这正是冲突难解的原因之一。</p></div>
+
+  <h2>宗教怎样把普通冲突变难</h2>
+  <div class="scale">
+    <div class="side"><small>普通利益</small><b>这块地怎么分？</b><small>可以交换、补偿、谈判</small></div>
+    <div class="mid">→</div>
+    <div class="side"><small>神圣价值</small><b>这是神应许的地</b><small>让步 = 背叛信仰</small></div>
+  </div>
+  <p>100 万和 200 万之间，可以谈出 150 万。但「这是神的旨意」没有 150 万的版本。宗教不一定制造冲突，但它可能把<b>可以交易的利益</b>变成<b>不可交易的价值</b>。上面那项实验说明，这时候拿钱去买，只会更糟。</p>
+
+  <h2>如果世界上没有宗教，以巴问题会消失吗？</h2>
+  <p><b>不会。</b>1948 年的战争和难民、1967 年后的占领、边界、西岸定居点、耶路撒冷归属、加沙治理、巴勒斯坦能否建国、水资源怎么分，这些全都是现实政治问题。</p>
+  <p><b>但有一部分会更容易谈。</b>当土地、圣地和民族使命被赋予绝对神圣的意义，妥协的心理和政治成本就会大幅上升。所以宗教不是冲突的充分解释，但它可能是放大器。</p>
+
+  <h2>黑中有白，白中有黑</h2>
+  <div class="taiji-row">
+    <svg class="taiji" viewBox="0 0 200 200" aria-hidden="true">
+      <circle class="yang" cx="100" cy="100" r="98"/>
+      <path class="yin" d="M100 2 A98 98 0 0 1 100 198 A49 49 0 0 1 100 100 A49 49 0 0 0 100 2Z"/>
+      <circle class="yin" cx="100" cy="51" r="14"/>
+      <circle class="yang" cx="100" cy="149" r="14"/>
+      <circle class="rim" cx="100" cy="100" r="98"/>
+    </svg>
+    <div>
+      <p class="classic">一阴一阳之谓道。<span class="small">——《易经·系辞上》</span></p>
+      <p class="classic" style="margin:0">万物负阴而抱阳，冲气以为和。<span class="small">——《道德经》第四十二章</span></p>
+    </div>
+  </div>
+  <p>太极图里，黑的一半里有一个白点，白的一半里有一个黑点。它说的不是「好坏各占一半」，而是：<b>任何一方里面，本来就含着另一方</b>。纯黑和纯白都不是常态。</p>
+  <p>拿这个眼光回头看这张关系网，会发现每一股力量内部都是混合的：</p>
+  <div class="pairs">
+    <div class="pair"><h3>《圣经》</h3><span class="k">《申命记》《撒母耳记》：记住亚玛力，灭绝亚玛力</span><span class="w">《以赛亚书》2:4：将刀打成犁头（联合国总部对面的墙上刻着这句）；《马太福音》5:9：使人和睦的人有福了</span></div>
+    <div class="pair"><h3>《古兰经》</h3><span class="k">有关于作战的经文，常被武装团体脱离上下文引用</span><span class="w">5:32：杀一人如杀全人类，救一人如救全人类</span></div>
+    <div class="pair"><h3>拉宾</h3><span class="k">1967 年战争的总参谋长</span><span class="w">1993 年签奥斯陆协议，1994 年获诺贝尔和平奖，最后被宗教民族主义者杀害</span></div>
+    <div class="pair"><h3>基督教锡安主义</h3><span class="w">真心支持犹太人拥有一个安全的国家</span><span class="k">部分领袖的神学里，犹太人最终要信基督才得救；盟友的终点并不相同</span></div>
+    <div class="pair"><h3>新保守派</h3><span class="w">目标写的是推广民主、推翻独裁者</span><span class="k">结果是一场理由不成立的战争和数十万伊拉克人死亡</span></div>
+    <div class="pair"><h3>美国国家利益</h3><span class="w">保护航道、盟友与地区稳定</span><span class="k">同一套逻辑也支撑过对独裁政权的长期支持</span></div>
+  </div>
+  <p>所以真正该问的，不是「宗教是好是坏」，而是：<b>人会从自己的传统里挑出哪一半，去为已经想做的事找理由？</b></p>
+
+  <h2>真正危险的，是把一种颜色宣布为纯白</h2>
+  <p class="classic">天下皆知美之为美，斯恶已。<span class="small">——《道德经》第二章</span></p>
+  <p>当所有人都认定某样东西是绝对的美，丑就随之被制造出来了。把一个价值抬成绝对真理，反对它的人就自动变成敌人：</p>
+  <div class="tbl"><table>
+    <tr><th>被绝对化的价值</th><th>反对者会被叫作</th></tr>
+    <tr><td>神</td><td>异教徒、神的敌人</td></tr>
+    <tr><td>国家</td><td>叛国者</td></tr>
+    <tr><td>革命</td><td>反革命</td></tr>
+    <tr><td>民族</td><td>民族的敌人</td></tr>
+    <tr><td>安全</td><td>潜在威胁</td></tr>
+    <tr><td>绝对和平</td><td>破坏和平的人</td></tr>
+  </table></div>
+  <p style="margin-top:1.2rem">旗帜不同，底层结构一样。就算明天删掉所有经书，人类还是能找到民族、阶级、国家安全、民主输出来承担同样的功能。</p>
+  <p>《易经》乾卦的最后一爻叫「亢龙有悔」：龙飞到最高处，就要后悔了。走到极端的东西会反转。道家对战争的态度也很清楚：</p>
+  <p class="classic">以道佐人主者，不以兵强天下。<span class="small">——《道德经》第三十章</span></p>
+  <p class="classic">兵者不祥之器，非君子之器，不得已而用之。<span class="small">——《道德经》第三十一章</span></p>
+  <p>承认自己也有黑点，是阻止自己变成「为了纯白而作恶」的那个人最好的办法。</p>
+
+  <blockquote><p>危险的不是神，而是有人宣布自己代表绝对真理。黑中有白、白中有黑才是常态；谁说自己是纯白的，就要多看他一眼。</p></blockquote>
+
+  <h2>哪些结论站得住</h2>
+  <div class="tbl"><table>
+    <tr><th>说法</th><th>强度</th><th>理由</th></tr>
+    <tr><td>《圣经》影响了以色列部分宗教民族主义和美国的基督教锡安主义</td><td class="c-ok">强</td><td>组织、口号、联合执政协议、民调都可查。</td></tr>
+    <tr><td>基督教锡安主义在美国有真实的组织和政治影响</td><td class="c-ok">强</td><td>CUFI、2018 年使馆启用典礼、Pew 民调。</td></tr>
+    <tr><td>宗教支持、战略利益、游说和选举政治会在同一政策方向汇流</td><td class="c-warn">合理</td><td>方向一致有据可查，但各方动机不同，不能推出谁控制谁。</td></tr>
+    <tr><td>神圣价值会让冲突更难妥协</td><td class="c-ok">强</td><td>2007 年 PNAS 实验研究。</td></tr>
+    <tr><td>《圣经》是伊拉克战争的原因</td><td class="c-bad">不足</td><td>新保守派的公开论证是安全和战略语言；「神叫我打」只有单一来源且被否认。</td></tr>
+    <tr><td>「犹太人按圣经控制美国发动战争」</td><td class="c-bad">不成立</td><td>最相信「神赐地」的是美国基督徒；把具体政治网络扩大成整个民族，是反犹叙事。</td></tr>
+  </table></div>
+
+  <h2>来源</h2>
+  <ul class="src">
+    <li><a href="https://www.timesofisrael.com/pms-office-says-its-preposterous-to-say-invoking-amalek-was-a-genocide-call/">Times of Israel — 总理办公室回应「亚玛力」争议</a> · <a href="https://www.abc.net.au/news/2024-01-31/biblical-story-amalek-south-africa-icj-genocide-case-israel/103403552">ABC News — 亚玛力的圣经故事与国际法院案</a></li>
+    <li><a href="https://www.pewresearch.org/short-reads/2013/10/03/more-white-evangelicals-than-american-jews-say-god-gave-israel-to-the-jewish-people/">Pew Research 2013 — 白人福音派 82%、美国犹太人 40%</a> · <a href="https://www.pewresearch.org/religion/2022/05/26/modest-warming-in-u-s-views-on-israel-and-palestinians/">Pew Research 2022</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/Christians_United_for_Israel">Christians United for Israel（背景）</a> · <a href="https://edition.cnn.com/2018/05/13/politics/hagee-jeffress-us-embassy-jerusalem/index.html">CNN 2018 — 两位牧师参加使馆启用</a></li>
+    <li><a href="https://www.myjewishlearning.com/article/gush-emunim/">My Jewish Learning — Gush Emunim</a> · <a href="https://www.myjewishlearning.com/article/secular-zionism/">Secular Zionism</a></li>
+    <li><a href="https://www.timesofisrael.com/religious-zionism-coalition-deal-settlement-growth-changes-to-discrimination-laws/">Times of Israel — 宗教锡安主义党联合执政协议</a> · <a href="https://en.idi.org.il/israeli-elections-and-parties/parties/religious-zionist-party/">Israel Democracy Institute — 宗教锡安主义党</a></li>
+    <li><a href="https://www.voanews.com/a/a-13-2005-10-06-voa66/301119.html">VOA 2005 — 白宫否认布什说「神叫他」开战</a> · <a href="https://www.nbcnews.com/id/wbna9618531">NBC News — Shaath 的说法与澄清</a></li>
+    <li><a href="https://www.pnas.org/doi/10.1073/pnas.0701768104">Ginges et al., PNAS 2007 — Sacred bounds on rational resolution of violent political conflict</a></li>
+    <li><a href="https://history.state.gov/milestones/1993-2000/oslo">U.S. Office of the Historian — 奥斯陆协议</a></li>
+    <li><a href="https://avalon.law.yale.edu/20th_century/hamas.asp">Yale Avalon Project — 哈马斯 1988 年宪章</a></li>
+    <li>经典原文：《易经·系辞上》《易经·乾卦》上九；《道德经》第二、三十、三十一、四十二章；《以赛亚书》2:4；《马太福音》5:9；《申命记》25:17–19；《撒母耳记上》15；《古兰经》5:32。</li>
+  </ul>
+
+  <h2>照片来源</h2>
+  <p class="small">来自 Wikimedia Commons，已缩小或裁切。公有领域：Theodor Herzl（Carl Pietzner, 1897）、Abraham Isaac Kook（1920 年代）、Zvi Yehuda Kook（1973）、George W. Bush（Eric Draper, White House）、Paul Wolfowitz（Scott Davis, U.S. Army）。按授权署名：John Hagee — Paul Wharton，Attribution；Yitzhak Rabin — Yaakov Saar / 以色列政府新闻办公室，CC BY-SA 3.0；Bezalel Smotrich — Avi Ohayon / 以色列政府新闻办公室，CC BY-SA 3.0；Benjamin Netanyahu — Avi Ohayon / 以色列政府新闻办公室，CC BY-SA 3.0；Richard Perle — New America，CC BY 2.0。本页是公开资料的整理与核查，不代表对任何宗教、民族或人物的立场评价。</p>
+</div>
+</main>
+<script>
+(function(){
+  var svg=document.getElementById('net');if(!svg)return;
+  var active=null;
+  function keys(el){return (el.getAttribute('data-k')||'').split(' ');}
+  function clear(){active=null;svg.classList.remove('focus');svg.querySelectorAll('.on').forEach(function(n){n.classList.remove('on');});}
+  svg.querySelectorAll('.p,.doc,.hub').forEach(function(node){
+    node.addEventListener('click',function(){
+      var k=keys(node)[0];
+      if(active===k){clear();return;}
+      clear();active=k;svg.classList.add('focus');node.classList.add('on');
+      svg.querySelectorAll('.e').forEach(function(e){
+        var ks=keys(e);if(ks.indexOf(k)<0)return;e.classList.add('on');
+        ks.forEach(function(o){var n=svg.querySelector('[data-k="'+o+'"]:not(.e)');if(n)n.classList.add('on');});
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
