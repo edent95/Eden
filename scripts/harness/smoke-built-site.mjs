@@ -59,7 +59,7 @@ if (problems.length === 0) {
   if (redirect.includes('__PATH_SEGMENTS_TO_KEEP__')) {
     problems.push('dist/404.html still contains its unresolved path placeholder');
   }
-  for (const command of ['npm run task:new', 'npm run ready', 'npm run publish']) {
+  for (const command of ['git add', 'npm run ready', 'npm run publish']) {
     if (!operatorMenu.includes(command)) problems.push(`operator-menu.html is missing ${command}`);
   }
   if (!html.includes(`<meta property="og:image" content="${expectedSiteUrl}/og-image.jpg" />`)) {

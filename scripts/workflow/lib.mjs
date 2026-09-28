@@ -61,8 +61,21 @@ export function compactTimestamp(date = new Date()) {
   return `${get('year')}${get('month')}${get('day')}-${get('hour')}${get('minute')}`;
 }
 
+export const BRANCH_TYPES = ['feat', 'fix', 'refactor', 'docs', 'ci', 'chore'];
+
+// 标题形如 `fix: xxx` / `feat(scope): xxx` 时取出类型,其余一律 chore。
+export function branchType(title) {
+  const match = /^\s*([a-z]+)(?:\([^)]*\))?!?:/u.exec(title);
+  return match && BRANCH_TYPES.includes(match[1]) ? match[1] : 'chore';
+}
+
+export function stripTypePrefix(title) {
+  return title.replace(/^\s*[a-z]+(?:\([^)]*\))?!?:\s*/u, '');
+}
+
+// 分支名 `<类型>/<YYYYMMDD>-<短描述>`(全局规则的命名;日期按 Asia/Kuala_Lumpur)。
 export function branchName(title, date = new Date()) {
-  return `work/${compactTimestamp(date)}-${slugify(title)}`;
+  return `${branchType(title)}/${compactTimestamp(date).slice(0, 8)}-${slugify(stripTypePrefix(title))}`;
 }
 
 export function parseTaskArgs(argv) {
@@ -73,12 +86,15 @@ export function parseTaskArgs(argv) {
 }
 
 export function parsePublishArgs(argv) {
-  const options = { dryRun: false, help: false, merge: true, title: '', yes: false };
+  // 缺省只开 PR 就停:合并交给 GitHub 原生自动合并 / 面板的 PR 自动合并(CI 全过才合)。
+  // 只有人明确要求时才传 --merge 让本命令自己合并并跟到部署。
+  const options = { dryRun: false, help: false, merge: false, title: '', yes: false };
   const titleParts = [];
 
   for (const arg of argv) {
     if (arg === '--dry-run') options.dryRun = true;
     else if (arg === '--yes' || arg === '-y') options.yes = true;
+    else if (arg === '--merge') options.merge = true;
     else if (arg === '--no-merge') options.merge = false;
     else if (arg === '--help' || arg === '-h') options.help = true;
     else if (arg.startsWith('-')) throw new Error(`未知参数：${arg}`);
@@ -144,6 +160,44 @@ export function statusLines() {
   return status ? status.split('\n') : [];
 }
 
+function splitNul(text) {
+  return text.split('\0').filter(Boolean);
+}
+
+// 已暂存(index 里和 HEAD 不同)的路径。publish 只提交这些。
+export function stagedFiles() {
+  return splitNul(command('git', ['diff', '--cached', '--name-only', '-z'], { capture: true }).stdout);
+}
+
+// 工作区里改了但没暂存的已跟踪路径。
+export function unstagedFiles() {
+  return splitNul(command('git', ['diff', '--name-only', '-z'], { capture: true }).stdout);
+}
+
+export function untrackedFiles() {
+  return splitNul(command('git', ['ls-files', '--others', '--exclude-standard', '-z'], { capture: true }).stdout);
+}
+
+// ready 会重写的派生文件:只在它们「ready 之前干净、之后变了」时才替你暂存,
+// 事先就有未暂存改动的(可能是别的会话的)一律不碰。
+export const DERIVED_FILES = ['generated/content.ts', 'logs/index.md'];
+
+export function derivedToStage({ dirtyBefore, dirtyAfter, derived = DERIVED_FILES }) {
+  const before = new Set(dirtyBefore);
+  const after = new Set(dirtyAfter);
+  return derived.filter((file) => after.has(file) && !before.has(file));
+}
+
+export function nothingStagedMessage(changedLines) {
+  const lines = ['没有已暂存的改动。publish 只提交你自己 `git add` 过的文件,不会替你 add 全部。'];
+  if (changedLines.length > 0) {
+    lines.push('', '工作区里有这些改动(不一定都是你的):');
+    for (const line of changedLines) lines.push(`  ${line}`);
+  }
+  lines.push('', '先只暂存你这次的文件,再重新运行:', '  git add <你的文件> …', '  npm run publish -- "提交标题"');
+  return lines.join('\n');
+}
+
 export function commitsAhead(base) {
   const result = command('git', ['rev-list', '--count', `origin/${base}..HEAD`], {
     capture: true,
@@ -152,16 +206,22 @@ export function commitsAhead(base) {
   return result.ok ? Number.parseInt(result.stdout, 10) || 0 : 0;
 }
 
-export function printPlan({ branch, defaultName, files, merge, title }) {
+export function printPlan({ branch, defaultName, files, merge, title, others = [] }) {
   console.log('\n发布计划');
   console.log(`- 标题：${title}`);
   console.log(`- 当前分支：${branch}`);
   console.log(`- 目标分支：${defaultName}`);
-  console.log(`- 未提交文件：${files.length}`);
-  console.log(`- 完成方式：${merge ? 'PR verify → squash merge → deploy → live check' : 'PR verify 后停止'}`);
+  console.log(`- 将提交(已暂存)：${files.length}`);
+  console.log(
+    `- 完成方式：${merge ? 'PR → verify → squash merge → deploy → live check(--merge)' : 'push + 开 PR 后停止;CI 通过后由自动合并接手'}`,
+  );
   if (files.length > 0) {
     console.log('- 文件：');
     for (const file of files) console.log(`  ${file}`);
+  }
+  if (others.length > 0) {
+    console.log(`- 不会提交(未暂存 / 未跟踪，留在工作区)：${others.length}`);
+    for (const line of others) console.log(`  ${line}`);
   }
 }
 

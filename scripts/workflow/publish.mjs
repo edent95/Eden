@@ -6,29 +6,37 @@ import {
   confirmPublish,
   currentBranch,
   defaultBranch,
+  derivedToStage,
   ensureExecutable,
   ensureRepository,
   extractPullRequest,
   extractWorkflowRun,
+  nothingStagedMessage,
   output,
   parsePublishArgs,
   printPlan,
   sleep,
+  stagedFiles,
   statusLines,
   uniqueBranchName,
+  unstagedFiles,
+  untrackedFiles,
 } from './lib.mjs';
 
 const HELP = `Eden 安全发布命令
 
 用法：
-  npm run publish -- "提交标题"
+  git add <你这次改的文件> …
+  npm run publish -- "fix: 提交标题"
   npm run publish -- "提交标题" --dry-run
   npm run publish -- "提交标题" --yes
-  npm run publish -- "提交标题" --no-merge
+  npm run publish -- "提交标题" --merge     # 仅在人明确要求时:自己等 verify、合并并跟到部署
 
 行为：
-  自动生成 Wiki / 日志索引、运行完整 harness、提交当前范围、建立 PR、等待 verify，
-  默认 squash merge，等待 GitHub Pages 部署并检查线上首页、sitemap 与 manifest。
+  只提交已暂存(git add 过)的文件，绝不 add 全部；在默认分支上运行时，
+  从 origin/<默认分支> 开出 <类型>/<YYYYMMDD>-<描述> 分支并带上改动。
+  生成 Wiki / 日志索引、运行完整 harness、提交、push、建立 PR，然后停止——
+  CI 通过后由 GitHub 自动合并 / 面板的 PR 自动合并接手。
 
 安全规则：
   永不直接 push 默认分支；交互终端需要输入 yes，非交互环境必须显式传 --yes。`;
@@ -105,8 +113,15 @@ async function main() {
 
   let branch = currentBranch();
   const defaultName = defaultBranch();
-  const initialFiles = statusLines();
-  printPlan({ branch, defaultName, files: initialFiles, merge: options.merge, title: options.title });
+  const others = () => [...new Set([...unstagedFiles(), ...untrackedFiles()])];
+  const initialStaged = stagedFiles();
+  printPlan({ branch, defaultName, files: initialStaged, merge: options.merge, title: options.title, others: others() });
+
+  // 只提交已暂存的文件:什么都没暂存、分支上也没有待推送的提交 → 停下,告诉人怎么暂存自己的文件。
+  const onDefault = branch === defaultName;
+  if (initialStaged.length === 0 && (onDefault || commitsAhead(defaultName) === 0)) {
+    throw new Error(nothingStagedMessage(statusLines()));
+  }
 
   if (options.dryRun) {
     console.log('\n✓ Dry run 完成；没有修改文件、提交、推送或调用写入型 GitHub 操作。');
@@ -116,28 +131,36 @@ async function main() {
   command('gh', ['auth', 'status']);
   command('git', ['fetch', 'origin', defaultName]);
 
-  if (branch === defaultName) {
-    const availableWork = initialFiles.length > 0 || commitsAhead(defaultName) > 0;
-    if (!availableWork) throw new Error(`${defaultName} 没有可发布的改动；请先运行 task:new 并完成任务。`);
+  if (onDefault && commitsAhead(defaultName) > 0) {
+    throw new Error(`本地 ${defaultName} 上有尚未推送的提交；publish 不会丢掉或直推它们。请先把它们挪到任务分支再运行。`);
+  }
+
+  if (onDefault) {
+    // 在默认分支上直接改是正常做法:到提交这一刻才从最新的 origin/<默认分支> 开任务分支,
+    // 已暂存与未暂存的改动都原样带过去(和 origin 冲突时 git 会拒绝切换,不会强切)。
     branch = uniqueBranchName(options.title);
-    command('git', ['switch', '-c', branch]);
-    console.log(`✓ 检测到默认分支上的工作，已自动转移到 ${branch}`);
+    command('git', ['switch', '-c', branch, `origin/${defaultName}`]);
+    console.log(`✓ 已从 origin/${defaultName} 开出任务分支 ${branch}，改动已随分支带过去`);
   }
 
   console.log('\n运行 ready：生成派生文件并执行完整 harness…');
+  const dirtyBefore = unstagedFiles();
   command('npm', ['run', 'ready']);
+  const derived = derivedToStage({ dirtyBefore, dirtyAfter: unstagedFiles() });
+  if (derived.length > 0) {
+    command('git', ['add', '--', ...derived]);
+    console.log(`✓ 已暂存 ready 重新生成的派生文件：${derived.join(', ')}`);
+  }
 
-  const files = statusLines();
+  const files = stagedFiles();
   const aheadBeforeCommit = commitsAhead(defaultName);
-  if (files.length === 0 && aheadBeforeCommit === 0) throw new Error('没有可发布的文件或提交。');
+  if (files.length === 0 && aheadBeforeCommit === 0) throw new Error(nothingStagedMessage(statusLines()));
 
-  printPlan({ branch, defaultName, files, merge: options.merge, title: options.title });
+  printPlan({ branch, defaultName, files, merge: options.merge, title: options.title, others: others() });
   await confirmPublish(options);
 
-  if (files.length > 0) {
-    command('git', ['add', '--all']);
-    command('git', ['commit', '-m', options.title]);
-  }
+  // 不带路径的 commit 只提交 index;没暂存的改动(可能是别的会话的)留在工作区。
+  if (files.length > 0) command('git', ['commit', '-m', options.title]);
 
   command('git', ['push', '--set-upstream', 'origin', branch]);
 
@@ -182,6 +205,13 @@ async function main() {
   }
   console.log(`\nPR：${pullRequest.url}`);
 
+  if (!options.merge) {
+    console.log('\n✓ 已推送并开好 PR，本命令到此为止。');
+    console.log('  CI(verify)全过后由 GitHub 自动合并 / personal-dashboard 的 PR 自动合并接手;挂了就在同一分支修、再运行 publish。');
+    console.log(`  看检查：gh pr checks ${pullRequest.number} --watch`);
+    return;
+  }
+
   const mergeState = command(
     'gh',
     ['pr', 'view', String(pullRequest.number), '--json', 'mergeStateStatus', '--jq', '.mergeStateStatus'],
@@ -193,10 +223,6 @@ async function main() {
   }
 
   await waitForChecks(pullRequest.number);
-  if (!options.merge) {
-    console.log(`\n✓ verify 已通过；按 --no-merge 要求保留 PR：${pullRequest.url}`);
-    return;
-  }
 
   command('gh', ['pr', 'merge', String(pullRequest.number), '--squash', '--delete-branch']);
   const merged = JSON.parse(output('gh', ['pr', 'view', String(pullRequest.number), '--json', 'mergeCommit,url']));

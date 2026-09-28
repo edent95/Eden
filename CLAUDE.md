@@ -33,14 +33,15 @@ npm run wiki:build     # wiki/*.md -> generated/content.ts (never hand-edit the 
 npm run log:append < entry.md   # one new file in logs/entries/ per change entry
 ```
 
-Operator workflow (protected path — `publish` never pushes `main` directly):
+Operator workflow (protected path — `publish` never pushes `main` directly, never `git add --all`s, and does not merge by default):
 
 ```bash
-npm run task:new -- "task name"        # branch off default branch: work/YYYYMMDD-HHmm-name
-npm run publish -- "commit title"      # ready -> check -> commit -> PR -> verify -> squash merge -> Pages deploy -> live check
+# edit in place (no branch first) -> git add <only your files> -> publish
+npm run publish -- "fix: commit title" # commits ONLY staged files; on main creates <type>/<YYYYMMDD>-<desc> from origin/main; ready -> check -> commit -> push -> PR, then stops (auto-merge after CI)
 npm run publish -- "title" --dry-run   # no writes
 npm run publish -- "title" --yes       # required in non-interactive/agent shells; inspect `git status --short` first, never add by habit
-npm run publish -- "title" --no-merge  # stop after PR + verify
+npm run publish -- "title" --merge     # only when the user explicitly asks: wait for verify -> squash merge -> Pages deploy -> live check
+npm run task:new -- "task name"        # optional: branch off the default branch up front
 ```
 
 Firebase (deploy is always an explicit, separate step):

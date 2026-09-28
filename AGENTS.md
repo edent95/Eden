@@ -428,7 +428,7 @@ file carrying the rag-v1 fields. Entry files are intentionally **not** listed in
 path (append to the current month + `npm run log:index`) is still accepted by the gate but
 should not be used.
 
-**Format:** a `## YYYY-MM-DD — Title` heading, then one `### [E-YYYY-MM-DD-HHMMSS-xxxx] Title` entry carrying
+**Format** (the script writes the `##` heading and the ID; you only supply `### Title` + fields on stdin): a `## YYYY-MM-DD — Title` heading, then one `### [E-YYYY-MM-DD-HHMMSS-xxxx] Title` entry carrying
 the seven rag-v1 fields — `type` `scope` `impact` `changed` `ripples` `verified` `keywords`.
 Of those, **`ripples` is the most valuable and the one most often left empty**:
 
@@ -459,9 +459,11 @@ Do not leave critical execution assumptions only in chat history.
 
 For normal repository changes:
 
-1. Start from the default branch with `npm run task:new -- "task name"`.
+1. Edit directly in the current working directory — do **not** create a branch or worktree before editing (the user's dev server hot-reloads the working copy). Run `git status` first and note changes that are not yours (another session may be working here).
 2. Make the scoped change and add the required log entry (`npm run log:append < entry.md`).
-3. Run `npm run publish -- "commit title"`; it runs `ready` and the full harness before any commit or push.
-4. In a non-interactive Agent environment, inspect `git status --short` first and pass `--yes` explicitly. Never add `--yes` by habit.
+3. Stage **only your own files**: `git add <file> …`. Never `git add -A` / `git add .` / `git add --all`; other sessions' changes stay in the working tree.
+4. Run `npm run publish -- "fix: commit title"`. It commits **only what is staged** (and refuses, listing the changed files, when nothing is), runs `ready` and the full harness, and — if you are on the default branch — creates the task branch `<type>/<YYYYMMDD>-<desc>` from `origin/<default>` at that moment, carrying your changes. It then pushes, opens the PR, and **stops**.
+5. The PR merges itself after CI: GitHub native auto-merge / the personal-dashboard PR auto-merge merge once the required `verify` check passes. If CI fails, fix on the same branch and run `publish` again. Do not merge the PR yourself unless the user explicitly asks — only then pass `--merge` (waits for `verify`, squash-merges, follows the Pages deploy and live checks).
+6. In a non-interactive Agent environment, inspect `git status --short` first and pass `--yes` explicitly. Never add `--yes` by habit.
 
-`publish` must never push the default branch directly. Keep GitHub branch protection and the required `verify` check enabled; the command exists to orchestrate that protected path, not bypass it. Use `--dry-run` for a no-write preview and `--no-merge` when human review should remain before merge. The executable behavior is documented in `docs/operator-workflow.md` and implemented under `scripts/workflow/`.
+`publish` must never push the default branch directly. Keep GitHub branch protection and the required `verify` check enabled; the command exists to orchestrate that protected path, not bypass it. Use `--dry-run` for a no-write preview. `npm run task:new -- "task name"` (branch off the default branch before editing) still exists but is **optional**; nothing requires it. The executable behavior is documented in `docs/operator-workflow.md` and implemented under `scripts/workflow/`.

@@ -42,18 +42,18 @@ npm run dev
 开发服务器固定 **<http://localhost:4180>**（`vite.config.ts` 中 `strictPort: true`），避免端口变化导致“改了但看不到”。
 
 ```bash
-npm run task:new -- "任务名"
+git add <你改的文件>
 npm run ready
-npm run publish -- "提交标题"
+npm run publish -- "fix: 提交标题"
 npm run typecheck
 npm run check
 npm run build
 npm run preview
 ```
 
-日常开发推荐只记两条：开始任务时运行 `task:new`，完成时运行 `publish`。`publish` 会自动执行 `ready`（生成 Wiki 与日志索引，再跑完整 harness），之后建立 PR、等待必需的 `verify`、squash merge、等待 Pages 部署并检查线上站点。它不会直接 push `main`。
+日常开发：直接在当前目录改（不必先开分支），完成后只 `git add` 自己改的文件，再运行 `publish`。`publish` 只提交已暂存的文件，在 `main` 上运行时从 `origin/main` 开出 `<类型>/<YYYYMMDD>-<描述>` 分支并带上改动，自动执行 `ready`（生成 Wiki 与日志索引，再跑完整 harness），之后 push、建立 PR 就停下；必需的 `verify` 通过后由自动合并接手。它不会直接 push `main`，也不会替你 `git add` 全部。
 
-需要预览范围但不产生任何写入时运行 `npm run publish -- "提交标题" --dry-run`；自动化或 Agent 终端没有交互确认，必须在检查变更范围后显式加 `--yes`。只希望建立并验证 PR、不自动合并时加 `--no-merge`。完整说明见 [`docs/operator-workflow.md`](docs/operator-workflow.md)。
+需要预览范围但不产生任何写入时运行 `npm run publish -- "提交标题" --dry-run`；自动化或 Agent 终端没有交互确认，必须在检查变更范围后显式加 `--yes`。只有明确要本命令自己等 verify、合并并跟到部署时才加 `--merge`。完整说明见 [`docs/operator-workflow.md`](docs/operator-workflow.md)。
 
 给第一次使用的人，可打开图形化菜单：本地开发环境的 <http://localhost:4180/operator-menu.html>，或线上 <https://eden-tan.com/operator-menu.html>。页面用流程图解释闭环，并提供三条核心命令的一键复制。
 
@@ -109,7 +109,7 @@ npm run preview
 - **验证：** Pull Request 触发 `.github/workflows/verify.yml`，必须通过统一 harness。
 - **发布：** `main` 推送触发 `.github/workflows/deploy.yml`；同一 workflow 先通过统一 harness，再把 `dist` 发布到 **GitHub Pages**。
 - **Mini Coin Slot API：** Firebase Functions v2 的 `penneyMiniApi` 负责 IP HMAC、马来西亚时间每日 100 credits、服务端回合结果与访客排行榜；前端静态站不持有原始 IP，也不能直接写比赛记录。
-- **操作入口：** `npm run task:new` 建安全工作分支，`npm run publish` 串联 ready、PR、verify、merge、deploy 与 live check。
+- **操作入口：** `npm run publish` 只提交已暂存文件，串联 ready、分支、PR；合并交给 CI 通过后的自动合并（`--merge` 才自己合并并跟到 deploy 与 live check）。`npm run task:new` 是可选的提前开分支。
 - **分支保护：** `main` 要求 `verify`、分支保持最新并解决 review conversations；管理员同样受保护，force-push 与删除已禁用。
 - **Route HTML：** production build 会依据 `seo-routes.ts` 为每个 route 生成英文 `<route>/index.html` 与中文 `/zh/<route>/index.html`。服务器响应直接包含真实 H1、正文、主题集群内链、面包屑、页面类型 JSON-LD、canonical 与 hreflang；React 加载后接管等价互动页面。Wiki/Notes 正文来自 `generated/content.ts`；产品页、工具页与归档页的静态正文来自 `seo-static-content.ts`（每个可索引 route 一段独立双语正文，`verify:routes` 与 `test:smoke` 会拒绝缺失或重复模板）。`public/404.html` 只保留给 registry 之外的未知路径作 SPA fallback；`/?p=` shim 落到未登记路径时由 `NotFoundPage` 渲染并标 `noindex`，`robots.txt` 同时 `Disallow: /*?p=`。
 - **Freshness 与分享图：** `sitemap.xml` 的 `lastmod` 与 JSON-LD 的 `datePublished` / `dateModified` 按 route 计算（`seo-prerender.ts` 的 `routeDates`）：Wiki/Notes 取 Markdown frontmatter 的 `published` / `updated`，`/wiki` 与 `/notes` 取最新子页，其余 route 取 `seo-routes.ts` 里的 `datePublished` / `dateModified`，`SITE_CONTENT_LASTMOD` 只作首页与兜底。分享图按 route 家族映射（`seo-routes.ts` 的 `OG_IMAGES`，文件在 `public/og/`，1200×630），Notes/Wiki 的 `og:type` 为 `article` 并带 `article:published_time`。
