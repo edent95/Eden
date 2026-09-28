@@ -62,7 +62,7 @@
   min-height: 24px;
   padding: 0 10px;
   border-radius: 999px;
-  box-shadow: inset 0 0 0 1.5px currentColor;
+  background: color-mix(in srgb, currentColor 14%, transparent);
   font-size: 12px;
   font-weight: 800;
 }
@@ -127,7 +127,7 @@
 .notes-sb-strip button:hover,
 .notes-sb-strip button:focus-visible { opacity: .9; transform: translateY(-2px); }
 .notes-sb-strip button.is-shown { opacity: 1; }
-.notes-sb-strip button.is-shown .notes-frame { box-shadow: inset 0 0 0 2px var(--notes-accent), inset 0 0 0 6px var(--en-paper), inset 0 0 0 7px var(--en-ink-2); }
+.notes-sb-strip button.is-shown { transform: translateY(-3px); }
 
 .notes-sb-thumb-label {
   display: flex;
