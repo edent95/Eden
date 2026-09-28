@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>伊拉克战争证据地图</title>
+<meta name="description" content="逐条核查「美国新保守派 × 以色列右翼 × 伊拉克战争」的公开证据：人物关系网、照片、时间线，以及哪些结论站得住、哪些证据不足。">
+<style>
+  :root{
+    --bg:#faf9f6;--card:#fff;--ink:#1f1d1a;--soft:#5c584f;--line:#e5e1d8;
+    --accent:#b8622b;--accent-soft:#f3ece2;
+    --ok:#2f7d4f;--warn:#a87400;--bad:#b23a3a;
+    --node:#fff;--doc:#f3ece2;--maxw:46rem;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#15130f;--card:#1e1b16;--ink:#ece6da;--soft:#aaa192;--line:#3a352c;
+    --accent:#e0915a;--accent-soft:#3a2a1c;--ok:#5cc28a;--warn:#e7b54a;--bad:#ef7b7b;
+    --node:#1e1b16;--doc:#2b241b;
+  }}
+  :root[data-theme="dark"]{
+    --bg:#15130f;--card:#1e1b16;--ink:#ece6da;--soft:#aaa192;--line:#3a352c;
+    --accent:#e0915a;--accent-soft:#3a2a1c;--ok:#5cc28a;--warn:#e7b54a;--bad:#ef7b7b;
+    --node:#1e1b16;--doc:#2b241b;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,sans-serif;line-height:1.85;font-size:18px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:4.5rem 16px 6rem}
+  .wide{max-width:62rem;margin:0 auto;padding:0 16px}
+  .kicker{font-size:.72rem;letter-spacing:.24em;color:var(--accent);font-weight:600;margin-bottom:1.2rem}
+  h1{font-size:2.1rem;line-height:1.34;margin:0 0 1rem}
+  h2{font-size:1.4rem;line-height:1.4;margin:3.4rem 0 1rem}
+  h3{font-size:1.05rem;margin:0 0 .3rem}
+  .dek{font-size:1.06rem;color:var(--soft);line-height:1.75;margin:0}
+  .meta{margin-top:1.6rem;padding-top:1.2rem;border-top:1px solid var(--line);font-size:.82rem;color:var(--soft);display:flex;gap:1.2rem;flex-wrap:wrap}
+  p{margin:0 0 1.15rem}
+  a{color:var(--accent)}
+  .small{font-size:.84rem;color:var(--soft)}
+  blockquote{margin:2rem 0;padding:1.2rem 1.4rem;background:var(--card);border-left:3px solid var(--accent);border-radius:0 6px 6px 0}
+  blockquote p:last-child{margin:0}
+  .legend{display:flex;gap:1.1rem;flex-wrap:wrap;font-size:.85rem;color:var(--soft);margin:.4rem 0 1rem}
+  .legend span::before{content:"";display:inline-block;width:22px;height:0;border-top:3px solid currentColor;vertical-align:middle;margin-right:.4rem}
+  .legend .l-ok{color:var(--ok)}.legend .l-warn{color:var(--warn)}.legend .l-warn::before{border-top-style:dashed}
+  .legend .l-bad{color:var(--bad)}.legend .l-bad::before{border-top-style:dotted}
+  .legend b{color:var(--ink);font-weight:500}
+
+  /* relationship network */
+  .net-box{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .net{display:block;width:100%;min-width:760px;height:auto;font-family:inherit}
+  .net text{fill:var(--ink);font-size:13px}
+  .net .t-soft{fill:var(--soft);font-size:11.5px}
+  .net .t-col{fill:var(--accent);font-size:11px;letter-spacing:.14em;font-weight:600}
+  .net .doc rect{fill:var(--doc);stroke:var(--line)}
+  .net .doc text{font-weight:600}
+  .net .ring{fill:var(--node);stroke:var(--line);stroke-width:2}
+  .net .initials{font-size:15px;font-weight:700;fill:var(--soft)}
+  .net .e{fill:none;stroke-width:2;transition:opacity .2s}
+  .net .ok{stroke:var(--ok)}
+  .net .warn{stroke:var(--warn);stroke-dasharray:7 5}
+  .net .bad{stroke:var(--bad);stroke-dasharray:2 5;stroke-linecap:round}
+  .net .t-bad{fill:var(--bad);font-size:12px;font-weight:600}
+  .net .p{cursor:pointer}
+  .net.focus .e{opacity:.1}
+  .net.focus .e.on{opacity:1;stroke-width:3}
+  .net.focus .p,.net.focus .doc{opacity:.35}
+  .net.focus .p.on,.net.focus .doc.on{opacity:1}
+  .net.focus .p.on .ring{stroke:var(--accent);stroke-width:3}
+  .hint{font-size:.8rem;color:var(--soft);margin:.6rem 0 0}
+
+  /* people */
+  .people{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:1rem}
+  .person{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .person img,.person .ph{width:64px;height:64px;border-radius:50%;object-fit:cover;object-position:50% 22%;flex:none;background:var(--accent-soft)}
+  .person .ph{display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--soft)}
+  .person p{font-size:.9rem;line-height:1.65;margin:0}
+  .person h3{font-size:1rem;margin:0}
+  .role{font-size:.78rem;color:var(--accent);font-weight:600;margin:.1rem 0 .35rem}
+
+  /* timeline */
+  .tl{list-style:none;padding:0;margin:1rem 0;border-left:2px solid var(--line)}
+  .tl li{position:relative;padding:0 0 1rem 1.2rem;font-size:.97rem}
+  .tl li::before{content:"";position:absolute;left:-7px;top:.55em;width:12px;height:12px;border-radius:50%;background:var(--ok)}
+  .tl li.y::before{background:var(--warn)}
+  .tl b{margin-right:.4rem}
+
+  /* verdict cards */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1rem 1.25rem;margin:.8rem 0;font-size:.97rem}
+  .card p:last-child,.card ul:last-child{margin-bottom:0}
+  .chip{display:inline-block;font-size:.72rem;font-weight:700;padding:1px 9px;border-radius:999px;margin-right:6px;border:1.5px solid currentColor;line-height:1.6}
+  .c-ok{color:var(--ok)}.c-warn{color:var(--warn)}.c-bad{color:var(--bad)}
+  .add{color:var(--warn);font-weight:600}
+  table{width:100%;border-collapse:collapse;font-size:.92rem;background:var(--card)}
+  th,td{padding:.7rem .8rem;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{font-size:.8rem;color:var(--soft);font-weight:600}
+  .tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+  ul{padding-left:1.2rem}
+  .src li{font-size:.86rem;margin:.25rem 0}
+  @media (max-width:640px){
+    body{font-size:17px}
+    h1{font-size:1.7rem}
+    .people{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:reduce){.net .e{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<div class="wrap" style="padding-bottom:1rem">
+  <header>
+    <div class="kicker">NOTES · 证据核查 · 白话版</div>
+    <h1>伊拉克战争背后：谁和谁有关系，证据说到哪一步</h1>
+    <p class="dek">美国新保守派、以色列右翼和 2003 年伊拉克战争之间，常被说成「一条指挥链」。这篇把公开证据逐条摊开：哪些关系有白纸黑字，哪些只是合理推论，哪些根本没有证据。</p>
+    <div class="meta"><span>Eden Tan</span><span>2026-09-29</span><span>来源以官方档案为主</span></div>
+  </header>
+
+  <blockquote><p><b>一句话结论：</b>一批美国政策人物 1990 年代就公开主张推翻萨达姆，其中几位也参与过给以色列写的战略建议，后来他们进了小布什政府。这是有文件可查的<b>人员与思想重叠</b>。但「以色列下令 → 新保守派执行 → 美国被操控」这条<b>指挥链</b>，公开证据支撑不了。</p></blockquote>
+
+  <p>先说怎么读这张图。证据分三种强度，全文都用同一套颜色：</p>
+  <div class="legend">
+    <span class="l-ok"><b>直接证据</b>：署名、公开信、法律、官方履历</span>
+    <span class="l-warn"><b>有依据的推论</b>：影响存在，但量化不了</span>
+    <span class="l-bad"><b>证据不足</b>：没有公开文件支撑</span>
+  </div>
+</div>
+
+<div class="wide">
+  <h2 style="max-width:44rem;margin-left:auto;margin-right:auto">关系网：文件 → 人 → 职位 → 决策</h2>
+  <div class="net-box">
+  <svg class="net" id="net" viewBox="0 0 1000 800" role="img" aria-labelledby="net-title net-desc">
+    <title id="net-title">伊拉克战争证据关系网</title>
+    <desc id="net-desc">左列是 1996 年《A Clean Break》和 1998 年的倒萨公开信与法律；中列是参与这些文件的人；右列是他们在小布什政府的职位，以及 2003 年战争的决策链。以色列总理与美国总统之间的「指挥」连线标为证据不足。</desc>
+    <defs>
+      <clipPath id="clip" clipPathUnits="objectBoundingBox"><circle cx=".5" cy=".5" r=".5"/></clipPath>
+    </defs>
+
+    <text class="t-col" x="40" y="100">1990 年代 · 文件</text>
+    <text class="t-col" x="430" y="100">人物</text>
+    <text class="t-col" x="650" y="100">2001–03 · 职位与决策</text>
+
+    <!-- the claim with no evidence -->
+    <path class="e bad" data-k="netanyahu bush" d="M132 150 C 220 20, 900 20, 900 148"/>
+    <text class="t-bad" x="500" y="34" text-anchor="middle">「以色列下令、美国执行」——没有公开证据</text>
+
+    <!-- 1996 -->
+    <path class="e ok" data-k="netanyahu cleanbreak" d="M96 186 L 96 226"/>
+    <!-- Clean Break authors -->
+    <path class="e ok" data-k="perle cleanbreak" d="M190 250 C 320 250, 330 140, 430 140"/>
+    <path class="e ok" data-k="feith cleanbreak" d="M190 256 C 320 256, 330 215, 430 215"/>
+    <path class="e ok" data-k="wurmser cleanbreak" d="M190 262 C 320 262, 330 290, 430 290"/>
+    <!-- 1998 letters -->
+    <path class="e ok" data-k="perle pnac" d="M190 440 C 320 440, 320 150, 430 150"/>
+    <path class="e ok" data-k="wolfowitz pnac" d="M190 444 C 320 444, 330 365, 430 365"/>
+    <path class="e ok" data-k="rumsfeld pnac" d="M190 448 C 320 448, 330 440, 430 440"/>
+    <path class="e ok" data-k="bolton pnac" d="M190 452 C 320 452, 330 515, 430 515"/>
+    <path class="e ok" data-k="abrams pnac" d="M190 456 C 320 456, 330 590, 430 590"/>
+    <path class="e ok" data-k="kristol pnac" d="M190 460 C 320 460, 330 665, 430 665"/>
+    <path class="e ok" data-k="kagan pnac" d="M190 464 C 320 464, 330 740, 430 740"/>
+    <path class="e warn" data-k="pnac ila" d="M110 488 L 110 606"/>
+
+    <!-- offices -->
+    <path class="e ok" data-k="perle dpb" d="M565 140 L 650 140"/>
+    <path class="e ok" data-k="feith dod" d="M565 215 C 610 215, 605 262, 650 262"/>
+    <path class="e ok" data-k="wolfowitz dod" d="M565 365 C 610 365, 605 272, 650 272"/>
+    <path class="e ok" data-k="rumsfeld dod" d="M565 440 C 610 440, 605 282, 650 282"/>
+    <path class="e ok" data-k="wurmser state" d="M565 290 C 610 290, 605 404, 650 404"/>
+    <path class="e ok" data-k="bolton state" d="M565 515 C 610 515, 605 414, 650 414"/>
+    <path class="e ok" data-k="wurmser ovp" d="M565 296 C 610 296, 605 520, 650 520"/>
+    <path class="e ok" data-k="abrams nsc" d="M565 590 C 610 590, 605 620, 650 620"/>
+
+    <!-- offices to decision -->
+    <path class="e warn" data-k="dpb bush" d="M840 150 C 880 150, 880 180, 880 186"/>
+    <path class="e warn" data-k="dod bush" d="M840 272 C 870 272, 870 230, 878 214"/>
+    <path class="e warn" data-k="state bush" d="M840 410 C 880 410, 880 380, 890 360"/>
+    <path class="e ok" data-k="ovp cheney" d="M840 520 C 880 520, 880 380, 900 350"/>
+    <path class="e warn" data-k="nsc bush" d="M840 620 C 890 620, 900 400, 905 360"/>
+    <path class="e ok" data-k="bush war cheney" d="M900 262 L 900 290"/>
+    <path class="e ok" data-k="war saddam bush cheney" d="M900 690 L 900 710"/>
+    <path class="e ok" data-k="bush cheney war" d="M900 380 L 900 650"/>
+
+    <!-- documents -->
+    <g class="doc" data-k="cleanbreak"><rect x="30" y="226" width="160" height="64" rx="10"/><text x="46" y="253">A Clean Break</text><text class="t-soft" x="46" y="274">1996 · 写给以色列新政府</text></g>
+    <g class="doc" data-k="pnac"><rect x="30" y="418" width="160" height="70" rx="10"/><text x="46" y="445">PNAC 公开信</text><text class="t-soft" x="46" y="466">1998 · 1 月致克林顿</text><text class="t-soft" x="46" y="481">5 月致国会领袖</text></g>
+    <g class="doc" data-k="ila"><rect x="30" y="606" width="160" height="70" rx="10"/><text x="46" y="633">伊拉克解放法</text><text class="t-soft" x="46" y="654">1998-10 · 国会立法</text><text class="t-soft" x="46" y="669">不授权出兵</text></g>
+    <text class="t-soft" x="118" y="552">同年、同方向</text>
+
+    <g class="doc" data-k="dpb"><rect x="650" y="118" width="190" height="46" rx="10"/><text x="664" y="138">国防政策委员会</text><text class="t-soft" x="664" y="155">咨询机构 · Perle 任主席</text></g>
+    <g class="doc" data-k="dod"><rect x="650" y="226" width="190" height="90" rx="10"/><text x="664" y="248">国防部</text><text class="t-soft" x="664" y="267">部长 Rumsfeld</text><text class="t-soft" x="664" y="284">副部长 Wolfowitz</text><text class="t-soft" x="664" y="301">政策副部长 Feith</text></g>
+    <g class="doc" data-k="state"><rect x="650" y="384" width="190" height="52" rx="10"/><text x="664" y="405">国务院</text><text class="t-soft" x="664" y="424">Bolton · Wurmser（助理）</text></g>
+    <g class="doc" data-k="ovp"><rect x="650" y="498" width="190" height="46" rx="10"/><text x="664" y="518">副总统办公室</text><text class="t-soft" x="664" y="535">Wurmser 任中东顾问</text></g>
+    <g class="doc" data-k="nsc"><rect x="650" y="598" width="190" height="46" rx="10"/><text x="664" y="618">国家安全委员会</text><text class="t-soft" x="664" y="635">Abrams 任中东主任</text></g>
+
+    <g class="doc" data-k="war"><rect x="855" y="650" width="120" height="40" rx="10"/><text x="870" y="675">2003 开战</text></g>
+
+    <!-- people -->
+    <g class="p" data-k="netanyahu"><circle class="ring" cx="96" cy="150" r="36"/><image href="images/iraq-war-map/netanyahu.jpg" x="62" y="116" width="68" height="68" clip-path="url(#clip)" preserveAspectRatio="xMidYMin slice"/><text x="140" y="176">内塔尼亚胡</text><text class="t-soft" x="140" y="194">1996 年当选总理</text></g>
+
+    <g class="p" data-k="perle"><circle class="ring" cx="454" cy="145" r="26"/><image href="images/iraq-war-map/perle.jpg" x="430" y="121" width="48" height="48" clip-path="url(#clip)" preserveAspectRatio="xMidYMin slice"/><text x="488" y="142">Perle</text><text class="t-soft" x="488" y="158">研究组组长</text></g>
+    <g class="p" data-k="feith"><circle class="ring" cx="454" cy="220" r="26"/><image href="images/iraq-war-map/feith.jpg" x="430" y="196" width="48" height="48" clip-path="url(#clip)" preserveAspectRatio="xMidYMin slice"/><text x="488" y="217">Feith</text><text class="t-soft" x="488" y="233">报告参与者</text></g>
+    <g class="p" data-k="wurmser"><circle class="ring" cx="454" cy="295" r="26"/><text class="initials" x="454" y="300" text-anchor="middle">DW</text><text x="488" y="292">D. Wurmser</text><text class="t-soft" x="488" y="308">报告参与者</text></g>
+    <g class="p" data-k="wolfowitz"><circle class="ring" cx="454" cy="370" r="26"/><image href="images/iraq-war-map/wolfowitz.jpg" x="430" y="346" width="48" height="48" clip-path="url(#clip)" preserveAspectRatio="xMidYMin slice"/><text x="488" y="367">Wolfowitz</text><text class="t-soft" x="488" y="383">1998 签名</text></g>
+    <g class="p" data-k="rumsfeld"><circle class="ring" cx="454" cy="445" r="26"/><image href="images/iraq-war-map/rumsfeld.jpg" x="430" y="421" width="48" height="48" clip-path="url(#clip)" preserveAspectRatio="xMidYMin slice"/><text x="488" y="442">Rumsfeld</text><text class="t-soft" x="488" y="458">1998 签名</text></g>
+    <g class="p" data-k="bolton"><circle class="ring" cx="454" cy="520" r="26"/><image href="images/iraq-war-map/bolton.jpg" x="430" y="496" width="48" height="48" clip-path="url(#clip)" preserveAspectRatio="xMidYMin slice"/><text x="488" y="517">Bolton</text><text class="t-soft" x="488" y="533">1998 签名</text></g>
+    <g class="p" data-k="abrams"><circle class="ring" cx="454" cy="595" r="26"/><image href="images/iraq-war-map/abrams.jpg" x="430" y="571" width="48" height="48" clip-path="url(#clip)" preserveAspectRatio="xMidYMin slice"/><text x="488" y="592">Abrams</text><text class="t-soft" x="488" y="608">1998 签名</text></g>
+    <g class="p" data-k="kristol"><circle class="ring" cx="454" cy="670" r="26"/><image href="images/iraq-war-map/kristol.jpg" x="430" y="646" width="48" height="48" clip-path="url(#clip)" preserveAspectRatio="xMidYMin slice"/><text x="488" y="667">Kristol</text><text class="t-soft" x="488" y="683">PNAC 创办人</text></g>
+    <g class="p" data-k="kagan"><circle class="ring" cx="454" cy="745" r="26"/><image href="images/iraq-war-map/kagan.jpg" x="430" y="721" width="48" height="48" clip-path="url(#clip)" preserveAspectRatio="xMidYMin slice"/><text x="488" y="742">Kagan</text><text class="t-soft" x="488" y="758">PNAC 创办人</text></g>
+
+    <g class="p" data-k="bush"><circle class="ring" cx="900" cy="222" r="36"/><image href="images/iraq-war-map/bush.jpg" x="866" y="188" width="68" height="68" clip-path="url(#clip)" preserveAspectRatio="xMidYMin slice"/><text x="900" y="176" text-anchor="middle">小布什</text></g>
+    <g class="p" data-k="cheney"><circle class="ring" cx="900" cy="336" r="36"/><image href="images/iraq-war-map/cheney.jpg" x="866" y="302" width="68" height="68" clip-path="url(#clip)" preserveAspectRatio="xMidYMin slice"/><text x="944" y="340">切尼</text></g>
+    <g class="p" data-k="saddam"><circle class="ring" cx="900" cy="742" r="32"/><image href="images/iraq-war-map/saddam.jpg" x="870" y="712" width="60" height="60" clip-path="url(#clip)" preserveAspectRatio="xMidYMin slice"/><text x="900" y="792" text-anchor="middle">萨达姆</text></g>
+  </svg>
+  </div>
+  <p class="hint" style="max-width:44rem;margin-left:auto;margin-right:auto">点一下人物或方框，只看它的连线；再点一次恢复。手机上可以左右滑动看全图。</p>
+</div>
+
+<div class="wrap" style="padding-top:0">
+  <p style="margin-top:1.6rem">这张图想说明两件事。第一，中间这一列人确实把三样东西串了起来：1996 年给以色列的建议、1998 年的美国倒萨倡议、2001 年后的政府职位，每一条绿线都有文件可查。第二，从「职位」到「开战决定」是黄线：他们在决策圈里，也在推动，但最后拍板的是总统和他的核心团队，影响有多大量化不了。而最上面那条红线，是网上最常见、却最没有证据的说法。</p>
+
+  <h2>图上的人</h2>
+  <div class="people">
+    <div class="person"><img src="images/iraq-war-map/perle.jpg" alt="Richard Perle" style="object-position:50% 10%"><div><h3>Richard Perle</h3><div class="role">Clean Break 组长 · 1998 签名 · 国防政策委员会主席</div><p>唯一同时连上三处的人。在布什政府里没有正式行政职务，2001–03 年任国防政策委员会（咨询机构）主席，2003 年 3 月因利益冲突争议辞去主席。</p></div></div>
+    <div class="person"><img src="images/iraq-war-map/feith.jpg" alt="Douglas Feith"><div><h3>Douglas Feith</h3><div class="role">Clean Break 参与者 · 国防部政策副部长</div><p>2001–05 年主管国防部政策。他的办公室做过和情报界共识不一致的「另类情报评估」，2007 年国防部监察长认定这种做法不恰当、但不违法。</p></div></div>
+    <div class="person"><div class="ph">DW</div><div><h3>David Wurmser</h3><div class="role">Clean Break 参与者 · 国务院 → 副总统办公室</div><p>先任 Bolton 在国务院的特别助理，2003–07 年任切尼的中东顾问。（没有找到授权清楚的照片，这里用首字母代替。）</p></div></div>
+    <div class="person"><img src="images/iraq-war-map/wolfowitz.jpg" alt="Paul Wolfowitz"><div><h3>Paul Wolfowitz</h3><div class="role">1998 签名 · 国防部副部长</div><p>2001–05 年任国防部副部长，9·11 之前就属于对伊拉克强硬的一派。他<b>不是</b> Clean Break 的作者。</p></div></div>
+    <div class="person"><img src="images/iraq-war-map/rumsfeld.jpg" alt="Donald Rumsfeld"><div><h3>Donald Rumsfeld</h3><div class="role">1998 签名 · 国防部长</div><p>两封 1998 年公开信都有他的名字，后来成为主持伊拉克战争的国防部长。</p></div></div>
+    <div class="person"><img src="images/iraq-war-map/bolton.jpg" alt="John Bolton"><div><h3>John Bolton</h3><div class="role">1998 签名 · 国务院军控副国务卿</div><p>2001–05 年在国务院主管军控与国际安全。照片摄于 2023 年。</p></div></div>
+    <div class="person"><img src="images/iraq-war-map/abrams.jpg" alt="Elliott Abrams"><div><h3>Elliott Abrams</h3><div class="role">1998 签名 · 国安会中东事务主任</div><p>2002 年底起在白宫国家安全委员会负责近东与北非事务。</p></div></div>
+    <div class="person"><img src="images/iraq-war-map/kristol.jpg" alt="William Kristol"><div><h3>William Kristol</h3><div class="role">PNAC 创办人</div><p>1998 年 1 月给克林顿的传真由他代表 PNAC 发出。没有担任政府职务，影响来自智库、刊物和公开论述。</p></div></div>
+    <div class="person"><img src="images/iraq-war-map/kagan.jpg" alt="Robert Kagan"><div><h3>Robert Kagan</h3><div class="role">PNAC 创办人</div><p>和 Kristol 一起推动更积极的美国全球战略。同样没有政府职务。</p></div></div>
+    <div class="person"><img src="images/iraq-war-map/netanyahu.jpg" alt="Benjamin Netanyahu"><div><h3>Benjamin Netanyahu</h3><div class="role">Clean Break 的报告对象</div><p>报告是写给他刚上台的政府的，但<b>从未被以色列政府正式采纳</b>。「写给他」不等于「他指挥了美国」。照片摄于 2023 年。</p></div></div>
+    <div class="person"><img src="images/iraq-war-map/bush.jpg" alt="George W. Bush"><div><h3>George W. Bush</h3><div class="role">美国总统 · 最终决策者</div><p>以「大规模杀伤性武器」和「与恐怖组织的关系」为主要公开理由，2003 年 3 月下令开战。</p></div></div>
+    <div class="person"><img src="images/iraq-war-map/cheney.jpg" alt="Dick Cheney"><div><h3>Dick Cheney</h3><div class="role">副总统</div><p>布什决策圈的核心人物之一。1998 年的公开信上<b>没有</b>他的名字。</p></div></div>
+  </div>
+
+  <h2>时间线</h2>
+  <ul class="tl">
+    <li><b>1991</b>海湾战争，之后联合国制裁和武器核查，美国早就在对付萨达姆。</li>
+    <li><b>1996</b>Perle 带领的研究组写成《A Clean Break》，写给内塔尼亚胡，提到把萨达姆赶下台是「重要的战略目标」。</li>
+    <li><b>1998-01</b>PNAC 传真克林顿，要求美国政策以推翻萨达姆为目标。</li>
+    <li><b>1998-05</b>PNAC 再写信给国会领袖 Gingrich 和 Lott，签名者包括 Rumsfeld、Wolfowitz、Bolton、Abrams、Perle、Kristol、Kagan 等。</li>
+    <li><b>1998-10</b>《伊拉克解放法》生效：支持推翻萨达姆政权，但明文<b>不授权动用美军</b>。</li>
+    <li><b>2001</b>上述多人进入小布什政府。</li>
+    <li class="y"><b>2001-09</b>9·11 事件，原本就有的强硬路线获得政治窗口。</li>
+    <li><b>2003-03</b>美国和盟军入侵伊拉克，推翻萨达姆政权。</li>
+    <li><b>2004</b>9·11 委员会报告、Duelfer 报告相继发布，开战理由被打折扣。</li>
+    <li><b>2007–08</b>国防部监察长报告、参议院情报委员会第二阶段报告发布。</li>
+  </ul>
+
+  <h2>逐条核查</h2>
+
+  <div class="card"><p><span class="chip c-ok">属实</span><b>1996《A Clean Break》</b></p>
+  <p>由以色列智库 IASPS 的研究组撰写，Perle 领头，Feith、David Wurmser、Meyrav Wurmser 等人参与。报告写道：把萨达姆赶下台是「一个重要的战略目标」，可以借此压制叙利亚。<span class="add">补充：</span>这份报告从未被以色列政府正式采纳。</p></div>
+
+  <div class="card"><p><span class="chip c-ok">属实</span><b>1998 年两封 PNAC 公开信</b></p>
+  <p>克林顿总统图书馆确认：1998-01-26 PNAC 传真克林顿，要求以推翻萨达姆为美国政策目标（档案页只写发件人是 Kristol / PNAC）。同年 5 月 29 日的第二封信写给国会领袖，签名名单可查。<span class="add">注意：</span>这是两封不同的信，常被混为一谈。</p></div>
+
+  <div class="card"><p><span class="chip c-ok">属实</span><span class="chip c-warn">常被说过头</span><b>1998《伊拉克解放法》</b></p>
+  <p>第 3 条：美国政策应当「支持推翻萨达姆政权，促进民主政府出现」。但第 8 条明写，这部法律<b>不授权动用美军</b>，只允许给反对派提供物资和训练。所以 1998 年定下的是「倒萨」这个目标，手段是扶持反对派，不是入侵。</p></div>
+
+  <div class="card"><p><span class="chip c-ok">属实</span><b>9·11 委员会：伊拉克和基地组织</b></p>
+  <p>双方有过接触的报道，但委员会写道：「至今没有看到证据显示这些接触发展成了协同作战关系」，也没有证据显示伊拉克协助基地组织攻击美国。</p></div>
+
+  <div class="card"><p><span class="chip c-ok">属实</span><b>大规模杀伤性武器</b></p>
+  <p>2004 年 Duelfer 报告：伊拉克 1991 年后已销毁库存，没有找到现存的 WMD 库存。2004–2011 年美军陆续发现约 5000 枚<b>1991 年以前</b>生产的废弃化学弹药，但这证明不了战前说的「现存 WMD 项目」。「过去用过」和「2003 年还有」是两回事。</p></div>
+
+  <div class="card"><p><span class="chip c-ok">属实</span><b>国会与国防部的复盘</b></p>
+  <ul>
+    <li>参议院情报委员会 2008 年第二阶段报告：政府一些公开说法「没有得到情报支持」，例如伊拉克与基地组织是伙伴关系、萨达姆准备把 WMD 交给恐怖分子。报告以 10 比 5 通过，部分共和党委员批评它有政治动机。</li>
+    <li>国防部监察长 2007 年报告：Feith 的办公室制作「另类情报评估」，结论与情报界共识不一致，并送给了高层决策者。结论是这种做法<b>不恰当，但不违法</b>。</li>
+  </ul></div>
+
+  <div class="card"><p><span class="chip c-ok">属实</span><span class="chip c-bad">不能扩大解读</span><b>Lawrence Franklin 案</b></p>
+  <p>美国司法部 2005 年公告：国防部伊朗科分析员 Franklin 被控把机密国防信息泄露给无权接收的人。他 2006 年认罪，被判约 12.5 年；2009 年两名 AIPAC 前游说人员被检方撤诉，他的刑期随后大幅减为缓刑。这是一桩真实的个案，不能用来证明整个新保守派网络是间谍网。</p></div>
+
+  <h2>哪些结论站得住</h2>
+  <div class="tbl"><table>
+    <tr><th>说法</th><th>强度</th><th>理由</th></tr>
+    <tr><td>90 年代就有美国人公开推动推翻萨达姆，其中一些人后来进了布什政府</td><td class="c-ok">强</td><td>两封公开信、法律条文、官方履历都对得上。</td></tr>
+    <tr><td>美国新保守派和以色列右翼的安全政策讨论有人员和思想交集</td><td class="c-ok">强</td><td>《A Clean Break》的作者名单就是直接证据。</td></tr>
+    <tr><td>这个网络对布什的伊拉克政策有重要影响</td><td class="c-warn">推论</td><td>Feith 办公室推动偏向开战的情报解读，让推论更有分量，但影响有多大量化不了。</td></tr>
+    <tr><td>战前的公开说法和后来的调查结果有重要落差</td><td class="c-ok">强</td><td>参议院、9·11 委员会、Duelfer 报告、国防部监察长四方面都指向这一点。</td></tr>
+    <tr><td>以色列下令 → 新保守派执行 → 布什被控制 → 开战</td><td class="c-bad">不足</td><td>没有任何命令、会议记录或服从关系的公开证据；《A Clean Break》连以色列政府都没采纳。</td></tr>
+    <tr><td>「犹太人控制美国」</td><td class="c-bad">不成立</td><td>把少数具体人物的政治行为扩大成对整个族群的指控，逻辑不通，也是典型的反犹叙事。</td></tr>
+  </table></div>
+
+  <h2>换个角度想一想</h2>
+  <p><b>如果没有以色列右翼这层关系呢？</b>美国自己就有一条很长的倒萨轨迹：1991 年海湾战争、制裁、联合国武器核查、克林顿时期的空袭、1998 年的法律。所以以色列因素不是美国反萨达姆的必要条件。</p>
+  <p><b>如果没有新保守派这批人呢？</b>没法知道 2003 年会不会以同样方式开战。这批人准备了多年的人手、论述和政权更替方案，是重要变量，但没有可靠的方法给它算一个「战争原因占百分之几」。</p>
+  <p><b>最稳妥的解释：</b>美国自身的战略利益，加上 90 年代累积的倒萨政策、新保守派政策网络、和以色列右翼的部分立场重合、9·11 的冲击、布什和切尼和拉姆斯菲尔德的决策，再加上战前情报失误和选择性呈现，一起导致了 2003 年的战争。</p>
+
+  <blockquote><p>人员重叠是事实，指挥链是想象。分清这两件事，才看得清这场战争真正的来路。</p></blockquote>
+
+  <h2>来源</h2>
+  <ul class="src">
+    <li><a href="https://www.clintonlibrary.gov/research/archives/finding-aids/project-new-american-century-pnac">Clinton Presidential Library — PNAC 档案说明</a></li>
+    <li><a href="https://www.globalsecurity.org/wmd/library/news/iraq/1998/980526-pnac.htm">PNAC 1998-05-29 致 Gingrich / Lott 信（GlobalSecurity 镜像）</a></li>
+    <li><a href="https://www.govinfo.gov/content/pkg/PLAW-105publ338/html/PLAW-105publ338.htm">Iraq Liberation Act, Public Law 105-338</a></li>
+    <li><a href="https://history.defense.gov/DOD-History/Deputy-Secretaries-of-Defense/Article-View/Article/585201/paul-d-wolfowitz/">DoD Historical Office — Paul Wolfowitz</a></li>
+    <li><a href="https://www.justice.gov/archive/opa/pr/2005/May/05_crm_238.htm">U.S. DOJ 2005 — Lawrence Franklin 案公告</a> · <a href="https://www.washingtonpost.com/wp-dyn/content/article/2009/06/11/AR2009061104280.html">Washington Post 2009 — 减刑</a></li>
+    <li><a href="https://www.9-11commission.gov/report/911Report_Ch2.htm">9/11 Commission Report, Chapter 2</a></li>
+    <li><a href="https://www.intelligence.senate.gov/2008/06/05/press-senate-intelligence-committee-unveils-final-phase-ii-reports-prewar-iraq-intelligence/">Senate Intelligence Committee — Phase II（2008）</a> · <a href="https://www.armscontrol.org/act/2008-08/senate-committee-completes-iraq-intel-probe">Arms Control Association 摘要</a></li>
+    <li><a href="https://www.csmonitor.com/2007/0209/p99s01-duts.html">CS Monitor 2007 — 国防部监察长报告</a> · <a href="https://fas.org/blogs/secrecy/2007/04/ig_report_on_dod_intel_office_">FAS — 报告解密</a></li>
+    <li><a href="https://www.armscontrol.org/act/2004-11/duelfer-disproves-us-wmd-claims">Arms Control Association — Duelfer 报告</a> · <a href="https://www.npr.org/sections/thetwo-way/2014/10/15/356360949/pentagon-reportedly-hushed-up-chemical-weapons-finds-in-iraq">NPR 2014 — 旧化学弹药</a></li>
+    <li><a href="https://georgewbush-whitehouse.archives.gov/news/releases/2003/01/20030128-19.html">Bush White House Archive — 2003 国情咨文</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/A_Clean_Break:_A_New_Strategy_for_Securing_the_Realm">A Clean Break（背景索引）</a> · <a href="https://www.npr.org/2003/03/28/1211827/perle-steps-down-as-defense-advisory-board-head">NPR 2003 — Perle 辞任主席</a></li>
+  </ul>
+
+  <h2>照片来源</h2>
+  <p class="small">全部来自 Wikimedia Commons，已缩小尺寸。美国政府官方照片属于公有领域：Feith、Wolfowitz、Rumsfeld（Scott Davis, U.S. Army）、Bush（Eric Draper, White House）、Cheney（White House / U.S. Air Force）。萨达姆照片（Iraqi News Agency, 1998）在 Commons 标为公有领域。其余照片按授权署名：Richard Perle — New America，CC BY 2.0；William Kristol — Gage Skidmore，CC BY-SA 3.0；Robert Kagan — Mariusz Kubik，CC BY 3.0；Benjamin Netanyahu — Avi Ohayon / 以色列政府新闻办公室，CC BY-SA 3.0；John Bolton — 中华民国总统府，CC BY 2.0；Elliott Abrams — Council on Foreign Relations，CC BY-SA 4.0。本页是公开资料的整理与核查，不代表对任何人物的立场评价。</p>
+  <p class="small">说明：参议院情报委员会网站拒绝了自动抓取，那部分内容通过搜索摘要和二手报道核对，没有逐字读原报告。</p>
+</div>
+</main>
+<script>
+(function(){
+  var svg=document.getElementById('net');if(!svg)return;
+  var active=null;
+  function keys(el){return (el.getAttribute('data-k')||'').split(' ');}
+  function clear(){active=null;svg.classList.remove('focus');svg.querySelectorAll('.on').forEach(function(n){n.classList.remove('on');});}
+  svg.querySelectorAll('.p,.doc').forEach(function(node){
+    node.style.cursor='pointer';
+    node.addEventListener('click',function(){
+      var k=keys(node)[0];
+      if(active===k){clear();return;}
+      clear();active=k;svg.classList.add('focus');node.classList.add('on');
+      svg.querySelectorAll('.e').forEach(function(e){
+        var ks=keys(e);if(ks.indexOf(k)<0)return;e.classList.add('on');
+        ks.forEach(function(o){var n=svg.querySelector('.p[data-k="'+o+'"],.doc[data-k="'+o+'"]');if(n)n.classList.add('on');});
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

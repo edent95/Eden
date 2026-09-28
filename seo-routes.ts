@@ -26,7 +26,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-09-27';
+export const SITE_CONTENT_LASTMOD = '2026-09-29';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -457,6 +457,13 @@ export const ROUTE_SEO: RouteSeo[] = [
       en: 'Published essays and build notes by Eden Tan on products, AI, human behavior, and turning messy realities into useful systems.',
       zh: 'Eden Tan 发布的文章与构建笔记，关于产品、AI、人的行为，以及怎样把混乱慢慢变成可用的系统。',
     },
+  },
+  {
+    path: '/notes/iraq-war-evidence-map',
+    og: 'notes',
+    priority: '0.7',
+    title: { en: 'Neocons, Israel and the Iraq War: an evidence map | Eden Tan', zh: '新保守派、以色列与伊拉克战争：证据地图 | Eden Tan' },
+    desc: { en: 'Checking the neocon–Israel–Iraq War story against public records: the overlap of people is documented, the chain of command is not.', zh: '把「新保守派 × 以色列右翼 × 伊拉克战争」逐条对照公开档案：人员重叠有文件可查，指挥链没有证据。附关系网与人物照片。' },
   },
   {
     path: '/notes/korea-2026-crash',
