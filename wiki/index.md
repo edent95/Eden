@@ -13,6 +13,7 @@ This directory is the editable, Markdown-first content source for the public Wik
 
 ## Essays
 
+- [Three rivers, one confluence: the Bible, Israel, and America's Middle East politics](essays/bible-israel-us-evidence-map.md) — `/notes/bible-israel-us-evidence-map`
 - [Overlap is not command: an evidence map of neocons, Israel's right, and the Iraq War](essays/iraq-war-evidence-map.md) — `/notes/iraq-war-evidence-map`
 - [The "mad bull" hits a wall: Korea's 2026 market, and the gap between price and value](essays/korea-2026-crash.md) — `/notes/korea-2026-crash`
 - [Old scam, new clothes: MBI and the coin that "only goes up"](essays/mbi-case.md) — `/notes/mbi-case`
