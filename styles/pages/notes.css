@@ -231,16 +231,6 @@
   color: var(--notes-accent);
 }
 
-.notes-essay-mark {
-  display: grid;
-  place-items: center;
-  border-radius: 20px;
-  background: var(--notes-accent-soft);
-  color: var(--notes-accent-ink);
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: -.04em;
-}
 
 .notes-article-sources {
   display: flex;

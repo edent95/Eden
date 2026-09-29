@@ -215,7 +215,7 @@
 .ng-arc.a2 { width: 124vmax; height: 124vmax; left: calc(61.8% - 62vmax); top: calc(38.2% + 60vmax); }
 .ng-arc.a3 { width: 76vmax; height: 76vmax; left: calc(38.2% - 38vmax); top: calc(38.2% + 140vmax); }
 
-/* thesis: a stack of parchment sheets with a wax seal */
+/* thesis: a stack of parchment sheets */
 .notes-grimoire .notes-article-thesis {
   position: relative;
   rotate: -0.8deg;
@@ -227,24 +227,6 @@
     18px 22px 0 -6px color-mix(in srgb, var(--notes-accent-soft) 60%, #000),
     0 44px 70px -30px rgba(0, 0, 0, .55);
 }
-.ng-seal {
-  position: absolute; right: -20px; top: -26px; width: 84px; height: 84px;
-  background:
-    repeating-radial-gradient(circle at 50% 50%, rgba(255, 255, 255, .16) 0 1px, transparent 1px 4px),
-    radial-gradient(circle at 34% 30%, #f7dc93, #c7962f 55%, #86601b);
-  clip-path: polygon(50% 0, 61% 6%, 74% 3%, 81% 14%, 94% 18%, 94% 31%, 100% 42%, 95% 54%, 99% 67%, 89% 76%, 86% 90%, 72% 92%, 61% 100%, 49% 94%, 37% 100%, 27% 91%, 13% 90%, 10% 77%, 1% 67%, 5% 54%, 0 42%, 6% 30%, 6% 18%, 19% 13%, 26% 3%, 39% 6%);
-  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, .35));
-  transform: scale(1.8) rotate(-40deg); opacity: 0;
-  transition: transform .45s cubic-bezier(.3, 1.6, .5, 1) .5s, opacity .2s ease .5s;
-}
-.ng-seal::after {
-  content: ""; position: absolute; inset: 26%;
-  background: color-mix(in srgb, #86601b 80%, transparent);
-  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-}
-.notes-article-thesis.is-in .ng-seal,
-.notes-grimoire:not(.notes-motion-ready) .ng-seal { transform: none; opacity: 1; }
-
 /* storyboard stage: tilts in 3D; the layers inside separate with the pointer */
 .notes-grimoire .notes-sb-stage { perspective: 1400px; }
 .notes-grimoire .notes-sb-stage .notes-frame {
@@ -287,13 +269,12 @@
   .notes-grimoire .notes-article-hero h1,
   .notes-grimoire .notes-article-deck,
   .notes-grimoire .notes-article-sources { max-width: none; }
-  .ng-seal { right: -8px; top: -30px; width: 64px; height: 64px; }
   .notes-grimoire .notes-article-thesis { box-shadow: 6px 8px 0 -2px color-mix(in srgb, var(--notes-accent-soft) 78%, #000), 0 30px 50px -24px rgba(0, 0, 0, .5); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .ng-arc { translate: none; }
-  .ng-seal, .ng-medal { transition: none; }
+  .ng-medal { transition: none; }
   .notes-grimoire .notes-sb-stage .notes-frame { transform: none; }
   .notes-grimoire :is(.nf-main, .nf-prop, .nf-circle-wrap, .nf-rays) { translate: none; }
 }
@@ -317,12 +298,6 @@
   background: var(--ng-noise) 0 0 / 200px;
   mix-blend-mode: soft-light;
   opacity: 0.35;
-}
-.ng-seal {
-  background:
-    radial-gradient(circle, rgba(60, 40, 10, 0.55) 0 30%, transparent 36%) 0 0 / 4px 4px,
-    repeating-radial-gradient(circle at 50% 50%, rgba(255, 255, 255, .16) 0 1px, transparent 1px 4px),
-    radial-gradient(circle at 34% 30%, #f7dc93, #c7962f 55%, #86601b);
 }
 /* dark pages: soft-light grain lifts near-black toward grey, so keep it faint */
 :root[data-theme="dark"] .ng-backdrop .ng-grain { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.6 0 0 0 -0.62'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") 0 0 / 200px; mix-blend-mode: normal; opacity: 0.55; }
