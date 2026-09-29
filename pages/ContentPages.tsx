@@ -6,7 +6,8 @@ import { HeaderControls, joinBasePath, resolveAssetPath, type Language, type The
 import { NotesReadingBar, NotesRecap, renderKeySentences, useNotesReading } from '../components/NotesReading';
 import { NotesStoryboard, extractKeySentence, type NotesStoryFrameData } from '../components/NotesStoryboard';
 import { useNotesDepth } from '../components/NotesDepth';
-import { NotesGrimoireCover, NotesStoryFrame, notesStoryFormula } from '../components/css-art/index';
+import { NotesGrimoireCover, notesStoryFormula } from '../components/css-art/index';
+import { NotesMathEmblem } from '../components/css-art/notes-math-emblems';
 import type { NotesCoverVariant } from '../components/css-art/notes-cover-scenes';
 
 /** A cover ring built from the formulas of the motifs this note actually uses. */
@@ -824,7 +825,7 @@ export const WikiPage: React.FC<{
                     {noteGrimoire && noteStoryboard && (
                       <div className="ng-margin" aria-hidden>
                         <div className={`ng-medal${noteReading.active === index ? ' is-reading' : ''}`}>
-                          <NotesStoryFrame motif={noteStoryboard[index].motif} label="" active={noteReading.active === index} />
+                          <NotesMathEmblem motif={noteStoryboard[index].motif} active={noteReading.active === index} />
                         </div>
                       </div>
                     )}
@@ -1382,7 +1383,7 @@ export const SiteEssayNotePage: React.FC<{
                   {grimoire && note.storyboard && (
                     <div className="ng-margin" aria-hidden>
                       <div className={`ng-medal${active === index ? ' is-reading' : ''}`}>
-                        <NotesStoryFrame motif={note.storyboard[index].motif} label="" active={active === index} />
+                        <NotesMathEmblem motif={note.storyboard[index].motif} active={active === index} />
                       </div>
                     </div>
                   )}

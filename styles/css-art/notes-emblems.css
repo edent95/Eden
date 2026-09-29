@@ -1,0 +1,84 @@
+/* =============================================================
+   Notes math emblems (components/css-art/notes-math-emblems.tsx)
+   Round margin plates that plot a motif exactly — Mandelbrot
+   lemniscates, golden spiral over Fibonacci squares, catenoid
+   wireframe, a family of catenaries, a Penrose tiling, phyllotaxis
+   with its 21/34 parastichies, a Lissajous family — over φ-spaced
+   construction circles, with the formula engraved around the rim.
+   Ink follows the Notes theme (green on cream / pink on rose-black),
+   gold foil for the principal curve. When the section is being read
+   (.is-active) the curves draw themselves (pathLength = 1) and a pen
+   point travels the main curve; the rim text turns slowly (120s).
+   ============================================================= */
+
+.em {
+  --em-ink: #1f4d38;
+  --em-paper: #f6efdc;
+  --em-rim: #e7dcc0;
+  --em-foil: #b8862f;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+:root[data-theme="dark"] .em {
+  --em-ink: #f3a6b5;
+  --em-paper: #1f1418;
+  --em-rim: #2c1b21;
+  --em-foil: #f2cf7a;
+}
+
+.em-rim { fill: var(--em-rim); }
+.em-face { fill: var(--em-paper); }
+.em-rim-text { transform-origin: 0 0; animation: em-turn 120s linear infinite; }
+.em-rim-text text {
+  fill: color-mix(in srgb, var(--em-ink) 72%, transparent);
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-size: 7.4px;
+  font-style: italic;
+  letter-spacing: 0.6px;
+}
+
+.em-construction circle,
+.em-construction line { fill: none; stroke: color-mix(in srgb, var(--em-ink) 14%, transparent); stroke-width: 0.45; }
+.em-construction circle:first-child { stroke: color-mix(in srgb, var(--em-foil) 45%, transparent); stroke-width: 0.6; }
+.em-grid-line { fill: none; stroke: color-mix(in srgb, var(--em-ink) 30%, transparent); stroke-width: 0.5; }
+
+.em-draw { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.em-ink { stroke: color-mix(in srgb, var(--em-ink) 70%, transparent); stroke-width: 0.7; }
+.em-faint { stroke: color-mix(in srgb, var(--em-ink) 38%, transparent); stroke-width: 0.55; }
+.em-foil { stroke: var(--em-foil); stroke-width: 1.1; }
+.em-foil.em-faint { stroke: color-mix(in srgb, var(--em-foil) 55%, transparent); }
+.em-bold { stroke-width: 1.8; }
+.em-dash { stroke-dasharray: 0.012 0.008; }
+.em-dot-foil { fill: var(--em-foil); }
+.em-pen { fill: var(--em-foil); stroke: var(--em-paper); stroke-width: 1.2; }
+.em-ring { fill: none; stroke: var(--em-foil); stroke-width: 2.2; }
+
+.em-pat-bg { fill: color-mix(in srgb, var(--em-ink) 12%, var(--em-paper)); }
+.em-pat-line { stroke: color-mix(in srgb, var(--em-ink) 60%, transparent); stroke-width: 1; }
+.em-pat-bg2 { fill: color-mix(in srgb, var(--em-foil) 26%, var(--em-paper)); }
+.em-pat-line2 { stroke: color-mix(in srgb, var(--em-foil) 70%, transparent); stroke-width: 0.8; }
+.em-fill { opacity: 0.9; }
+.em-tile { stroke: var(--em-paper); stroke-width: 0.7; stroke-linejoin: round; }
+
+.em-seed { fill: color-mix(in srgb, var(--em-ink) 55%, var(--em-paper)); }
+.em-seed.is-fib { fill: var(--em-foil); }
+
+/* reading this section: replay the construction */
+.em.is-active .em-draw:not(.em-dash) { animation: em-draw 2.6s cubic-bezier(0.45, 0, 0.25, 1) calc(var(--i, 0) * 0.28s) both; }
+.em.is-active .em-dash { animation: em-fade 1.6s ease calc(var(--i, 0) * 0.28s + 0.6s) both; }
+.em.is-active .em-fill { animation: em-fade 1.2s ease 1.8s both; }
+.em.is-active .em-grow { transform-origin: 0 0; animation: em-grow 2.4s cubic-bezier(0.3, 1.1, 0.4, 1) both; }
+.em.is-active .em-seed { animation: em-pop 0.4s cubic-bezier(0.3, 1.6, 0.5, 1) calc(var(--n) * 9ms) both; transform-box: fill-box; transform-origin: center; }
+
+@keyframes em-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes em-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes em-grow { from { transform: scale(0.15) rotate(-36deg); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes em-pop { from { transform: scale(0); } to { transform: none; } }
+@keyframes em-turn { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .em *, .em.is-active * { animation: none !important; }
+  .em-pen { display: none; }
+}
