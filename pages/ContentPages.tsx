@@ -806,7 +806,6 @@ export const WikiPage: React.FC<{
               <blockquote className="notes-article-thesis notes-reveal">
                 <span>{isZh ? '一句话结论' : 'Core thesis'}</span>
                 <p><mark className="notes-thesis-text">{entry.thesis[language]}</mark></p>
-                {noteGrimoire && <i className="ng-seal" aria-hidden />}
               </blockquote>
               {noteGrimoire && noteStoryboard && (
                 <NotesStoryboard
@@ -1332,7 +1331,6 @@ export const SiteEssayNotePage: React.FC<{
           <NotesReadingBar titles={titles} active={active} progress={progress} language={language} sectionId={sectionId} />
 
           <header className="notes-article-hero">
-            <div className="notes-article-mark notes-essay-mark" aria-hidden>ET</div>
             <p className="notes-eyebrow">{note.category[language]}</p>
             <h1>{note.title[language]}</h1>
             <p className="notes-article-deck">{note.summary[language]}</p>
@@ -1367,7 +1365,6 @@ export const SiteEssayNotePage: React.FC<{
             <blockquote className="notes-article-thesis notes-reveal">
               <span>{isZh ? '一句话结论' : 'Core thesis'}</span>
               <p><mark className="notes-thesis-text">{note.thesis[language]}</mark></p>
-              {grimoire && <i className="ng-seal" aria-hidden />}
             </blockquote>
             {note.storyboard && note.storyboard.length === note.sections.length && (
               <NotesStoryboard
