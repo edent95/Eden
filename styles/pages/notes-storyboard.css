@@ -219,9 +219,7 @@
 .notes-grimoire .notes-article-thesis {
   position: relative;
   rotate: -0.8deg;
-  background:
-    repeating-linear-gradient(0deg, color-mix(in srgb, var(--notes-accent-ink) 5%, transparent) 0 1px, transparent 1px 7px),
-    var(--notes-accent-soft);
+  background: var(--notes-accent-soft);
   box-shadow:
     9px 11px 0 -3px color-mix(in srgb, var(--notes-accent-soft) 78%, #000),
     18px 22px 0 -6px color-mix(in srgb, var(--notes-accent-soft) 60%, #000),
@@ -277,16 +275,14 @@
   .notes-grimoire :is(.nf-main, .nf-prop, .nf-circle-wrap, .nf-rays) { translate: none; }
 }
 
-/* dimensional grain on the page: paper fibre on the parchment thesis, and a very
+/* dimensional grain on the page: grain (no ruled or fibre lines) on the parchment thesis, and a very
    faint fixed grain behind the content so the page reads as a printed sheet */
 .notes-grimoire .notes-article-thesis::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background:
-    var(--ng-noise) 0 0 / 160px,
-    repeating-linear-gradient(83deg, transparent 0 11px, color-mix(in srgb, var(--notes-accent-ink) 5%, transparent) 11px 12px);
+  background: var(--ng-noise) 0 0 / 160px;
   mix-blend-mode: soft-light;
   opacity: 0.7;
   pointer-events: none;
