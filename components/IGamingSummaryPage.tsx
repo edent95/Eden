@@ -7,7 +7,8 @@ import {
   IGAMING_UNLOCK_VALUE,
   type IGamingLocalized,
 } from './igaming-content';
-import { IGamingEngravedBanner, IGamingHeroPlate, IGamingSeal } from './css-art/index';
+import { IGamingEngravedBanner, IGamingSeal } from './css-art/index';
+import { IGamingHeroStage } from './css-art/igaming-hero-stage';
 import { KaleidoFrame } from './css-art/kaleido-frame';
 import { kaleidoSpecFor } from '../app/kaleido-routes';
 
@@ -47,7 +48,7 @@ const IGamingSummaryPage: React.FC<{
 
       <main className="igaming-main">
         <header className="igaming-hero">
-          <IGamingHeroPlate />
+          <IGamingHeroStage />
           <KaleidoFrame spec={kaleidoSpecFor('/igaming')} />
           {unlocked ? <p className="igaming-unlocked">{t(IGAMING_PAGE.unlocked)}</p> : null}
           <p className="igaming-kicker">{t(page.kicker)}</p>
