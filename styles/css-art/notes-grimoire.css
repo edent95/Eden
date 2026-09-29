@@ -1,13 +1,13 @@
 /* =============================================================
    Notes grimoire cover — full-bleed layered scene (NotesGrimoireCover)
-   Depth, not decoration: three layers (sky, floating book, near props)
+   Depth, not decoration: three layers (sky, the note's line-art hero, near props)
    move at different rates with the pointer (--nd-px / --nd-py, −1…1) and
    with scroll (--nd-scroll, px), set on the page root by useNotesDepth.
-   No outlines: forms come from hatching, tone and cast shadows. The book is
-   real CSS 3D (preserve-3d): its leaves turn on the Y axis.
+   The mid-ground hero is formula line art (notes-covers.css, .cvx); sky and
+   near props have no outlines: forms come from hatching, tone and cast shadows.
    Ink follows the Notes theme (green on cream / pink on rose-black) with
-   gold foil. Self-running motion is slow (orbits 60–180s, leaves 15s,
-   bob 9s) or tiny (stars, flames). All of it stops under reduced motion.
+   gold foil. Self-running motion is slow (orbits 60–180s, bob 9s) or tiny
+   (stars, flames). All of it stops under reduced motion.
    ============================================================= */
 
 .ng-cover {
@@ -87,72 +87,7 @@
   animation: ng-spin 40s linear infinite;
 }
 
-/* ---------- mid: a floating grimoire in real 3D ---------- */
-.ng-book {
-  left: calc(75% - 19cqi); top: calc(48% - 11cqi); width: 38cqi; height: 24cqi;
-  perspective: 90cqi;
-}
-.ng-book-inner {
-  inset: 0;
-  transform-style: preserve-3d;
-  transform: rotateX(56deg) rotateZ(-16deg);
-  animation: ng-bob 9s ease-in-out infinite;
-}
-.ng-book-inner > span { transform-style: preserve-3d; }
-.ng-board {
-  top: -2%; bottom: -2%; width: 51%;
-  background:
-    repeating-linear-gradient(45deg, color-mix(in srgb, var(--ng-ink) 26%, transparent) 0 0.12cqi, transparent 0.12cqi 0.55cqi),
-    color-mix(in srgb, var(--ng-ink) 58%, var(--ng-paper));
-  transform: translateZ(-0.6cqi);
-  box-shadow: 0 0.5cqi 0 color-mix(in srgb, var(--ng-ink) 70%, black), 0 1.2cqi 2.4cqi var(--ng-shadow);
-}
-.ng-board-l { left: -1%; border-radius: 1cqi 0.2cqi 0.2cqi 1cqi; }
-.ng-board-r { right: -1%; border-radius: 0.2cqi 1cqi 1cqi 0.2cqi; }
-.ng-block {
-  top: 2%; bottom: 2%; width: 48%;
-  background:
-    repeating-linear-gradient(0deg, transparent 0 1.1cqi, var(--ng-t2) 1.1cqi 1.2cqi) 16% 16% / 68% 66% no-repeat,
-    linear-gradient(90deg, var(--ng-paper), color-mix(in srgb, var(--ng-paper) 88%, var(--ng-ink)));
-  box-shadow:
-    0 0.18cqi 0 color-mix(in srgb, var(--ng-paper) 80%, var(--ng-ink)),
-    0 0.36cqi 0 color-mix(in srgb, var(--ng-paper) 70%, var(--ng-ink)),
-    0 0.54cqi 0 color-mix(in srgb, var(--ng-paper) 60%, var(--ng-ink));
-}
-.ng-block-l { left: 2%; transform: translateZ(0.2cqi); border-radius: 0.6cqi 0 0 0.6cqi; background-position: 16% 60%, 0 0; }
-.ng-block-r { right: 2%; transform: translateZ(0.2cqi); border-radius: 0 0.6cqi 0.6cqi 0; }
-.ng-page-art { border-radius: 50%; }
-.ng-page-spiral {
-  left: 22%; top: 12%; width: 9cqi; height: 9cqi;
-  background:
-    radial-gradient(circle at 70% 30%, var(--ng-foil) 0 6%, transparent 7%),
-    repeating-radial-gradient(circle at 62% 38%, transparent 0 0.9cqi, color-mix(in srgb, var(--ng-foil) 70%, transparent) 0.9cqi 1.05cqi);
-  -webkit-mask: conic-gradient(from 200deg, transparent 0 25%, black 25%);
-  mask: conic-gradient(from 200deg, transparent 0 25%, black 25%);
-}
-.ng-page-star {
-  left: 30%; top: 50%; width: 7cqi; height: 7cqi; border-radius: 0;
-  background: var(--ng-foil);
-  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-  opacity: 0.8;
-}
-.ng-leaf {
-  left: 50%; top: 3%; bottom: 3%; width: 47%;
-  transform-origin: 0 50%;
-  background:
-    repeating-linear-gradient(0deg, transparent 0 1.1cqi, var(--ng-t2) 1.1cqi 1.2cqi) 18% 18% / 64% 64% no-repeat,
-    linear-gradient(90deg, color-mix(in srgb, var(--ng-paper) 90%, var(--ng-ink)), var(--ng-paper));
-  border-radius: 0 0.6cqi 0.6cqi 0;
-  transform: translateZ(0.4cqi) rotateY(0deg);
-  animation: ng-turn 7.5s cubic-bezier(0.45, 0, 0.3, 1) calc(var(--i) * 1.5s) infinite alternate;
-  box-shadow: -0.4cqi 0 1.2cqi var(--ng-shadow);
-}
-.ng-ribbon {
-  left: 60%; bottom: -9%; width: 1.3cqi; height: 7cqi;
-  background: var(--ng-foil);
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%);
-  transform: translateZ(0.3cqi);
-}
+/* ---------- mid: the note's line-art hero (notes-covers.css) sits on this shadow ---------- */
 .ng-book-shadow {
   left: calc(75% - 14cqi); top: calc(48% + 11cqi); width: 28cqi; height: 5cqi; border-radius: 50%;
   background: radial-gradient(closest-side, var(--ng-shadow), transparent);
@@ -199,10 +134,9 @@
 .ng-cover-preview { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 18px; overflow: hidden; background: var(--theme-page); }
 .ng-cover-preview > .ng-cover { inset: 0; }
 
-/* narrow screens: the scene sits above the title, book centred */
+/* narrow screens: the scene sits above the title, hero centred */
 @container (max-width: 820px) {
   .ng-orrery { left: calc(50% - 38cqi); top: calc(48% - 38cqi); width: 76cqi; height: 76cqi; }
-  .ng-book { left: calc(50% - 30cqi); top: calc(46% - 17cqi); width: 60cqi; height: 38cqi; }
   .ng-book-shadow { left: calc(50% - 22cqi); top: calc(46% + 18cqi); width: 44cqi; height: 8cqi; }
   .ng-books { right: 2cqi; width: 30cqi; height: 14cqi; }
   .ng-tome { height: 4cqi; }
@@ -214,15 +148,7 @@
 @keyframes ng-spin { to { transform: rotate(360deg); } }
 @keyframes ng-spin-back { to { transform: rotate(-360deg); } }
 @keyframes ng-twinkle { 0%, 100% { opacity: 0.25; } 50% { opacity: 0.9; } }
-@keyframes ng-bob {
-  0%, 100% { transform: rotateX(56deg) rotateZ(-16deg) translateZ(0); }
-  50% { transform: rotateX(56deg) rotateZ(-16deg) translateZ(2.2cqi); }
-}
 @keyframes ng-shadow { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.86); opacity: 0.7; } }
-@keyframes ng-turn {
-  0%, 12% { transform: translateZ(0.4cqi) rotateY(0deg); }
-  40%, 100% { transform: translateZ(0.4cqi) rotateY(-178deg); }
-}
 @keyframes ng-flicker {
   0%, 100% { transform: scale(1) rotate(0); }
   30% { transform: scale(0.92, 1.08) rotate(-3deg); }
@@ -264,8 +190,8 @@
 .ng-near { --g-size: 230px; }
 
 /* grain inside each solid object, sized by its depth layer */
-:is(.ng-board, .ng-block, .ng-leaf, .ng-tome, .ng-wax) { overflow: hidden; }
-:is(.ng-board, .ng-block, .ng-tome, .ng-wax)::after {
+:is(.ng-tome, .ng-wax) { overflow: hidden; }
+:is(.ng-tome, .ng-wax)::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -276,7 +202,7 @@
 }
 
 /* stipple shading: dot density rises toward the side away from the light */
-:is(.ng-board, .ng-tome, .ng-wax)::before {
+:is(.ng-tome, .ng-wax)::before {
   content: "";
   position: absolute;
   inset: 0;
