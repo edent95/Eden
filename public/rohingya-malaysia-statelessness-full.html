@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>罗兴亚人在马来西亚</title>
+<meta name="description" content="罗兴亚人在马来西亚：缅甸不承认、海路致命、马来西亚不给法律身份、2026 年登记政策收紧、第三国安置几乎停摆。与历史上「无国家保护」的结构比较，每一条都附来源。">
+<style>
+  :root{
+    --bg:#faf9f6;--card:#fff;--ink:#1f1d1a;--soft:#5c584f;--line:#e5e1d8;
+    --accent:#b8622b;--accent-soft:#f3ece2;--ok:#2f7d4f;--warn:#a87400;--bad:#b23a3a;--fix:#2f5f8a;
+    --maxw:46rem;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#15130f;--card:#1e1b16;--ink:#ece6da;--soft:#aaa192;--line:#3a352c;
+    --accent:#e0915a;--accent-soft:#3a2a1c;--ok:#5cc28a;--warn:#e7b54a;--bad:#ef7b7b;--fix:#7fb0de;
+  }}
+  :root[data-theme="dark"]{
+    --bg:#15130f;--card:#1e1b16;--ink:#ece6da;--soft:#aaa192;--line:#3a352c;
+    --accent:#e0915a;--accent-soft:#3a2a1c;--ok:#5cc28a;--warn:#e7b54a;--bad:#ef7b7b;--fix:#7fb0de;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,sans-serif;line-height:1.85;font-size:18px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:4.5rem 16px 6rem}
+  .kicker{font-size:.72rem;letter-spacing:.24em;color:var(--accent);font-weight:600;margin-bottom:1.2rem}
+  h1{font-size:2.1rem;line-height:1.34;margin:0 0 1rem}
+  h2{font-size:1.4rem;line-height:1.4;margin:3.4rem 0 1rem}
+  h2 .n{color:var(--accent);font-variant-numeric:tabular-nums;margin-right:.5rem}
+  h3{font-size:1.02rem;margin:0 0 .3rem}
+  .dek{font-size:1.06rem;color:var(--soft);line-height:1.75;margin:0}
+  .meta{margin-top:1.6rem;padding-top:1.2rem;border-top:1px solid var(--line);font-size:.82rem;color:var(--soft);display:flex;gap:1.2rem;flex-wrap:wrap}
+  p{margin:0 0 1.15rem}
+  a{color:var(--accent)}
+  sup a{text-decoration:none;font-size:.72rem;padding:0 1px}
+  .small{font-size:.84rem;color:var(--soft)}
+  blockquote{margin:2rem 0;padding:1.2rem 1.4rem;background:var(--card);border-left:3px solid var(--accent);border-radius:0 6px 6px 0}
+  blockquote p:last-child{margin:0}
+  .legend{display:flex;gap:.6rem 1rem;flex-wrap:wrap;font-size:.85rem;color:var(--soft);margin:.4rem 0 1rem}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1rem 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;font-size:.94rem;line-height:1.7}
+  .card p{margin:.3rem 0 0}
+  .card p:last-child{margin-bottom:0}
+  .t-ok{color:var(--ok)}.t-warn{color:var(--warn)}.t-bad{color:var(--bad)}
+
+  .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:1rem 0;counter-reset:f}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.8rem .85rem;position:relative;font-size:.86rem;line-height:1.55}
+  .step b{display:block;font-size:.94rem}
+  .step span{color:var(--soft)}
+  .step:not(:last-child)::after{content:"→";position:absolute;right:-11px;top:50%;transform:translateY(-50%);color:var(--soft);font-size:1rem;background:var(--bg);line-height:1;padding:2px 0;z-index:1}
+  .flow.break .step:nth-child(n+3){border-style:dashed}
+
+  .claim{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--line);border-radius:0 10px 10px 0;padding:.85rem 1.1rem;margin:.7rem 0;font-size:.96rem;line-height:1.75}
+  .claim p:last-child{margin:0}
+  .claim.ok{border-left-color:var(--ok)}.claim.warn{border-left-color:var(--warn)}.claim.bad{border-left-color:var(--bad)}.claim.fix{border-left-color:var(--fix)}
+  .chip{display:inline-block;font-size:.72rem;font-weight:700;padding:0 9px;border-radius:999px;margin-right:6px;border:1.5px solid currentColor;line-height:1.6;vertical-align:1px}
+  .c-ok{color:var(--ok)}.c-warn{color:var(--warn)}.c-bad{color:var(--bad)}.c-fix{color:var(--fix)}
+
+  .big{font-size:1.18rem;line-height:1.7;border-left:3px solid var(--accent);padding:.4rem 0 .4rem 1.1rem;margin:1.2rem 0}
+
+  .tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;margin:1rem 0}
+  table{width:100%;border-collapse:collapse;font-size:.9rem;background:var(--card)}
+  th,td{padding:.7rem .8rem;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;line-height:1.6}
+  tr:last-child td{border-bottom:0}
+  th{font-size:.78rem;color:var(--soft);font-weight:600}
+  td:first-child{font-weight:600;white-space:nowrap}
+  td .num{font-variant-numeric:tabular-nums;color:var(--soft);font-weight:400;display:block;font-size:.78rem}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:1rem 0}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.9rem 1rem}
+  .stat b{display:block;font-size:1.45rem;line-height:1.2;font-variant-numeric:tabular-nums}
+  .stat small{display:block;color:var(--soft);font-size:.78rem;line-height:1.5;margin-top:.3rem}
+
+  .gap{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;margin:1rem 0}
+  .bar{height:14px;border-radius:7px;background:var(--accent-soft);margin:.35rem 0 .9rem;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--accent);border-radius:7px 0 0 7px;min-width:3px}
+  .bar-label{display:flex;justify-content:space-between;font-size:.84rem;gap:1rem}
+  .bar-label span:last-child{font-variant-numeric:tabular-nums;color:var(--soft)}
+
+  .src{padding-left:1.2rem}
+  .src li{font-size:.86rem;margin:.3rem 0;line-height:1.6}
+
+  @media (max-width:760px){
+    body{font-size:17px}
+    h1{font-size:1.7rem}
+    .grid,.stats{grid-template-columns:1fr 1fr}
+    .flow{grid-template-columns:1fr}
+    .step:not(:last-child)::after{content:"↓";right:auto;left:50%;top:auto;bottom:-13px;transform:translateX(-50%)}
+  }
+  @media (max-width:480px){.grid,.stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<div class="wrap">
+  <header>
+    <div class="kicker">NOTES · 马来西亚案例 · 罗兴亚 × 无国籍 × 难民政策</div>
+    <h1>罗兴亚人在马来西亚<br>和历史上的「无国家保护」有什么相同？</h1>
+    <p class="dek">最重要的共同点不是民族、宗教或财富，而是：<b>当原来的国家无法或不愿可靠保护一个群体时，这群人怎样获得身份、安全和长期未来？</b>每一条说法都拿去和联合国、法院与新闻记录核对过。</p>
+    <div class="meta"><span>Eden Tan</span><span>2026-09-29</span><span>数字截至 2026 年 9 月</span><span>上一篇：<a href="refugee-statelessness-evidence-map-full.html">难民与无国籍证据地图</a></span></div>
+  </header>
+
+  <blockquote><p><b>一句话结论：</b>罗兴亚人在缅甸没有国籍，在马来西亚手上有联合国文件，却没有当地的法律身份。2026 年，马来西亚改用自己的登记系统，7 月又要求 UNHCR 暂停登记；第三国安置几乎停摆。回不去、融不进、走不了，「临时」正在变成一代人。</p></blockquote>
+
+  <div class="legend">
+    <span><span class="chip c-ok">有文件</span>官方数据、法院与可靠报道</span>
+    <span><span class="chip c-warn">推论 / 设计</span>解释或制度设想，不是现行政策</span>
+    <span><span class="chip c-fix">已更新</span>原稿说法已过时，按最新来源改过</span>
+    <span><span class="chip c-bad">不要混为一谈</span>比较不等于等同</span>
+  </div>
+
+  <div class="grid">
+    <div class="card"><h3 class="t-ok">马来西亚现实</h3><p>2026 年 2 月底，UNHCR 登记难民与寻求庇护者 <b>215,600</b> 人，其中罗兴亚人 <b>126,144</b> 人。<sup><a href="#s1">1</a></sup></p></div>
+    <div class="card"><h3 class="t-warn">核心状态</h3><p>UNHCR 卡是国际保护文件，<b>不是</b>马来西亚的移民身份，更不是公民身份。<sup><a href="#s3">3</a></sup></p></div>
+    <div class="card"><h3 class="t-bad">长期风险</h3><p>回不去、融不进、安置有限时，「临时」可能持续一代以上。</p></div>
+  </div>
+
+  <h2><span class="n">01</span>罗兴亚人的悬空链</h2>
+  <div class="flow break">
+    <div class="step"><b>缅甸</b><span>1982 年公民法不承认，全球最大的无国籍群体</span></div>
+    <div class="step"><b>逃离</b><span>2017 年超过 70 万人逃往孟加拉</span></div>
+    <div class="step"><b>海路</b><span>2025 年近 900 人死亡或失踪</span></div>
+    <div class="step"><b>马来西亚</b><span>实际居住，没有合法身份</span></div>
+    <div class="step"><b>长期出口？</b><span>回国、融合、安置都卡住</span></div>
+  </div>
+  <div class="claim ok"><p><span class="chip c-ok">有文件</span>缅甸 1982 年《公民法》承认的 135 个「民族」里没有罗兴亚人<sup><a href="#s5">5</a></sup>。联合国实况调查团 2018 年认为最高层将领应因种族灭绝受到调查与起诉<sup><a href="#s6">6</a></sup>。</p></div>
+  <div class="claim fix"><p><span class="chip c-fix">已更新</span>国际法院「冈比亚诉缅甸」案：2020 年 1 月下达临时措施，<b>2026 年 1 月实体审理开庭，截至 2026 年 9 月尚未判决</b><sup><a href="#s7">7</a></sup>。</p></div>
+  <div class="claim ok"><p><span class="chip c-ok">有文件</span>回去不现实：若开军控制若开邦大部分地区，对罗兴亚人强迫劳动、任意拘押与勒索；军政府自 2023 年底封锁援助<sup><a href="#s9">9</a></sup>。孟加拉营地约 120 万人，2023 年底以来又到了约 15 万<sup><a href="#s10">10</a></sup>。</p></div>
+
+  <h2><span class="n">02</span>海路：一年比一年致命</h2>
+  <div class="gap">
+    <div class="bar-label"><span>2023 · 约 4,500 人出海</span><span>569 人死亡 / 失踪</span></div>
+    <div class="bar"><i style="width:63%"></i></div>
+    <div class="bar-label"><span>2024 · 超过 7,800 人出海</span><span>657 人死亡 / 失踪</span></div>
+    <div class="bar"><i style="width:73%"></i></div>
+    <div class="bar-label"><span>2025 · 超过 6,500 人出海</span><span>近 900 人死亡 / 失踪</span></div>
+    <div class="bar"><i style="width:100%"></i></div>
+    <p class="small" style="margin:0"><span class="chip c-fix">已更新</span>2023 年曾是 2014 年以来最致命的一年，如今已被 2025 年超过：约每七人就有一人没能上岸，是有记录以来最糟的一年。条长按死亡 / 失踪人数比例画。<sup><a href="#s8">8</a></sup></p>
+  </div>
+
+  <h2><span class="n">03</span>为什么马来西亚特别能显示全球制度的漏洞</h2>
+  <div class="claim ok"><p><span class="chip c-ok">有文件</span><b>马来西亚没有加入 1951 年难民公约、1967 年议定书，也没有加入 1954、1961 年两部无国籍公约。</b>国内没有难民身份认定的法律框架；按《1959/63 年移民法》，无证入境或逗留是犯罪<sup><a href="#s3">3</a></sup>。</p></div>
+  <div class="claim warn"><p><span class="chip c-warn">推论</span><b>于是出现「国际体系承认你需要保护，你实际生活的地方却不给你法律身份」的状态。</b>这会影响就业、教育、出行与长期规划。</p></div>
+  <div class="claim fix"><p><span class="chip c-fix">已更新：2026 年变了</span>政府以 UNHCR 数据共享太慢为由<sup><a href="#s4">4</a></sup>，自建「难民登记文件」（DPP）系统，<b>2026 年 1 月生效</b><sup><a href="#s3">3</a></sup>。<b>2026 年 7 月 23 日，内阁决定要求 UNHCR「暂时」停止登记难民</b><sup><a href="#s2">2</a></sup>。原稿「靠 UNHCR 登记获得保护」这一条，对新到的人已经不成立。</p></div>
+
+  <div class="tbl"><table>
+    <tr><th>年份</th><th>马来西亚的做法</th><th>方向</th></tr>
+    <tr><td>2005</td><td>海啸后给约 3 万名亚齐人发 IMM13 准证，可合法工作，是当地少见的先例</td><td><span class="chip c-ok">开</span></td></tr>
+    <tr><td>2017</td><td>试点让 300 名罗兴亚人合法到种植园与工厂工作，成效有限；同年推出 TRIS 生物识别登记</td><td><span class="chip c-ok">开</span></td></tr>
+    <tr><td>2020</td><td>疫情期间把载有罗兴亚人的船推回海上，上岸者被扣押</td><td><span class="chip c-bad">关</span></td></tr>
+    <tr><td>2021</td><td>在高等法院暂缓令下仍遣返 1,086 名缅甸国民<sup><a href="#s13">13</a></sup></td><td><span class="chip c-bad">关</span></td></tr>
+    <tr><td>2022</td><td>双溪巴甲扣留所 528 名罗兴亚人出逃，六人在高速公路身亡，其中两个是孩子<sup><a href="#s12">12</a></sup></td><td><span class="chip c-bad">扣留</span></td></tr>
+    <tr><td>2025</td><td>宣布让登记难民在种植、建筑、制造、服务业合法工作的计划，名额与 DPP 挂钩；<b>尚未见到实施</b></td><td><span class="chip c-warn">宣布</span></td></tr>
+    <tr><td>2026</td><td>1 月 DPP 生效；7 月要求 UNHCR 停止登记；约 5,000 名被扣押的缅甸国民待遣返<sup><a href="#s2">2</a></sup><sup><a href="#s3">3</a></sup></td><td><span class="chip c-warn">收紧</span></td></tr>
+  </table></div>
+
+  <h2><span class="n">04</span>和历史上部分欧洲犹太人的结构比较</h2>
+  <div class="tbl"><table>
+    <tr><th></th><th>1930 年代部分欧洲犹太社群</th><th>今天的罗兴亚人</th></tr>
+    <tr><td>原居地保护</td><td>多个时期遭歧视、驱逐与暴力；纳粹时期国家本身成了迫害机器，1941 年整批剥夺国籍</td><td>1982 年起不被承认为公民；2017 年军方清剿，联合国调查团提出种族灭绝</td></tr>
+    <tr><td>逃往</td><td>欧洲其他国家与海外</td><td>孟加拉、马来西亚、印尼、印度、泰国</td></tr>
+    <tr><td>接收国</td><td>1938 年埃维昂会议 32 国几乎都不肯多收；美国 1924 年起按原籍限额</td><td>各国担心永久接收与更多来者；2023 年底亚齐有学生强行赶走收容所里的罗兴亚人</td></tr>
+    <tr><td>底层问题</td><td>谁保证长期安全？</td><td>谁保证长期身份与安全？</td></tr>
+    <tr><td>历史分叉</td><td>锡安主义走向民族国家答案，又造成另一个民族的流离</td><td>没有一个对应的「罗兴亚国」可以建立</td></tr>
+  </table></div>
+  <div class="claim bad"><p><span class="chip c-bad">比较 ≠ 等同</span>大屠杀、欧洲反犹史与缅甸若开邦的历史背景完全不同。这里只比较「失去可靠国家保护」的制度结构，不是说两段苦难相等。</p></div>
+
+  <h2><span class="n">05</span>马来西亚面对的真实两难</h2>
+  <div class="grid">
+    <div class="card"><h3>人道面</h3><p>不能把真正面临迫害的人送回危险，或推回海上。</p></div>
+    <div class="card"><h3>治理面</h3><p>住房、工作、学校、医疗、安全审查、人口规模与社会融合都有真实成本。</p></div>
+    <div class="card"><h3>区域公平</h3><p>缅甸造成的问题，马来西亚该承担多少？孟加拉、印尼、澳大利亚和其他国家又承担多少？东盟没有难民框架来回答。</p></div>
+  </div>
+  <div class="claim bad"><p><b class="t-bad">完全排除：</b>把人推回迫害、危险海路或人口贩运网络。</p></div>
+  <div class="claim warn"><p><b class="t-warn">无限制永久开放：</b>没有区域分担、规模管理和长期财政设计，政策会引来反弹，最后保不住。</p></div>
+  <div class="claim ok"><p><b class="t-ok">真正的问题：</b>怎样建立一个既能救人、又能长期维持的制度？</p></div>
+
+  <h2><span class="n">06</span>「临时」如果持续二十年</h2>
+  <div class="flow">
+    <div class="step"><b>临时避难</b></div>
+    <div class="step"><b>非正规工作</b><span>没有合法工作权</span></div>
+    <div class="step"><b>教育受限</b><span>公立学校不收</span></div>
+    <div class="step"><b>下一代出生</b><span>登记者近三分之一是儿童</span></div>
+    <div class="step"><b>问题跨代</b></div>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>47%</b><small>难民儿童接受小学教育</small></div>
+    <div class="stat"><b>26%</b><small>进入中学</small></div>
+    <div class="stat"><b>179</b><small>UNHCR 支持的学习中心（原稿写约 130，已更新）</small></div>
+    <div class="stat"><b>约 2.1 万</b><small>移民扣留中心人数，没有期限上限</small></div>
+  </div>
+  <p class="small">UNHCR 马来西亚《2025 年度成果报告》<sup><a href="#s11">11</a></sup>；扣留人数据人权观察<sup><a href="#s3">3</a></sup>。</p>
+
+  <h2><span class="n">07</span>护照到底代表什么？</h2>
+  <div class="big">在道德上，「我是一个人」应该就够了；可现实制度往往还要问：「哪个国家承认你是谁？」</div>
+  <div class="grid">
+    <div class="card"><h3>身份</h3><p>出生登记、身份证明、旅行文件</p></div>
+    <div class="card"><h3>经济</h3><p>合法工作、银行、合同、财产</p></div>
+    <div class="card"><h3>下一代</h3><p>教育、身份、长期的社会流动</p></div>
+  </div>
+
+  <h2><span class="n">08</span>第三国这条出口几乎关上了</h2>
+  <div class="gap">
+    <div class="bar-label"><span>2024 年从马来西亚安置到第三国</span><span>8,627 人</span></div>
+    <div class="bar"><i style="width:100%"></i></div>
+    <div class="bar-label"><span>2025 年（美国 1 月暂停接收难民后）</span><span>1,970 人</span></div>
+    <div class="bar"><i style="width:22.8%"></i></div>
+    <p class="small" style="margin:0">来源：人权观察，2026 年 5 月<sup><a href="#s3">3</a></sup>。</p>
+  </div>
+  <p>如果罗兴亚人仍然不能安全回缅甸、第三国安置又这么少，问题就不再只是「临时难民管理」，而会变成：</p>
+  <div class="big">一群长期生活在马来西亚、却不真正属于任何国家保护体系的人，应该拥有什么身份、工作权、教育权和长期出口？</div>
+
+  <h2><span class="n">09</span>可能更完整的区域模型</h2>
+  <div class="claim warn"><p><span class="chip c-warn">设计思考</span>下面是制度设想，不是现行政策。</p></div>
+  <div class="tbl"><table>
+    <tr><th>层</th><th>目标</th></tr>
+    <tr><td>最低保护</td><td>不遣返到迫害；身份证件、医疗与儿童教育</td></tr>
+    <tr><td>受监管的工作权</td><td>成年人合法就业、纳税，减少地下经济与剥削</td></tr>
+    <tr><td>区域责任分担</td><td>东盟和更广泛的国际社会共同承担资金、安置与外交压力</td></tr>
+    <tr><td>第三国安置</td><td>为无法回国的一部分人提供永久出口</td></tr>
+    <tr><td>安全自愿回返</td><td>若开条件真正允许后，自愿、安全、有尊严地回去</td></tr>
+    <tr><td>期限与复审</td><td>避免「临时身份」在没有决定的情况下无限期自动延长</td></tr>
+  </table></div>
+
+  <h2><span class="n">10</span>整个系列最后指向的问题</h2>
+  <div class="flow">
+    <div class="step"><b>犹太历史</b><span>没有可靠的国家保护</span></div>
+    <div class="step"><b>以色列</b><span>民族国家的答案</span></div>
+    <div class="step"><b>巴勒斯坦</b><span>另一个群体的流离</span></div>
+    <div class="step"><b>全球难民</b><span>难道人人都要建国？</span></div>
+    <div class="step"><b>罗兴亚人</b><span>没有自己的国家时怎么办？</span></div>
+  </div>
+  <p><b>最终问题：</b>人类能不能设计一种制度，让一个人不需要先拥有「自己的民族国家」，也能拥有安全、身份、工作，以及下一代的未来？</p>
+
+  <h2>来源</h2>
+  <ol class="src">
+    <li id="s1"><a href="https://www.unhcr.org/my/what-we-do/figures-glance-malaysia">UNHCR 马来西亚 — 数字一览（2026 年 2 月底）</a> · <a href="https://help.unhcr.org/malaysia/">Help Malaysia</a></li>
+    <li id="s2"><a href="https://www.thestar.com.my/news/nation/2026/07/23/malaysia-directs-unhcr-to-stop-refugee-registration-for-now">The Star — 马来西亚要求 UNHCR 暂停登记（2026-07-23）</a></li>
+    <li id="s3"><a href="https://www.hrw.org/news/2026/05/04/malaysia-new-refugee-registration-system-raises-concerns">Human Rights Watch — 马来西亚新难民登记系统引发关注（2026-05-04）</a></li>
+    <li id="s4"><a href="https://www.malaymail.com/news/malaysia/2025/07/08/malaysia-cites-unhcr-data-sharing-delays-in-move-to-launch-own-refugee-registration-system/183225">Malay Mail — 以数据共享延误为由自建登记系统（2025-07-08）</a></li>
+    <li id="s5"><a href="https://www.unrefugees.org/news/rohingya-refugee-crisis-explained/">USA for UNHCR — 罗兴亚难民危机说明</a></li>
+    <li id="s6"><a href="https://news.un.org/en/story/2018/08/1017802">UN News — 缅甸问题实况调查团报告（2018-08-27）</a></li>
+    <li id="s7"><a href="https://iimm.un.org/en/icj-gambia-v-myanmar">联合国缅甸独立调查机制 — 冈比亚诉缅甸案</a></li>
+    <li id="s8"><a href="https://news.un.org/en/story/2026/04/1167320">UN News — 2025 年罗兴亚海上死亡人数创纪录（2026-04）</a> · <a href="https://www.aljazeera.com/news/2024/1/24/unhcr-569-rohingya-died-at-sea-in-2023-highest-in-nine-years">Al Jazeera — 2023 年 569 人</a></li>
+    <li id="s9"><a href="https://www.hrw.org/world-report/2026/country-chapters/myanmar">Human Rights Watch — 2026 年世界人权报告：缅甸</a></li>
+    <li id="s10"><a href="https://news.un.org/en/story/2026/06/1167623">UN News — 孟加拉的罗兴亚难民（2026-06）</a></li>
+    <li id="s11"><a href="https://www.unhcr.org/sites/default/files/2026-06/unhcr-annual-results-report-2025-malaysia.pdf">UNHCR 马来西亚《2025 年度成果报告》</a></li>
+    <li id="s12"><a href="https://www.freemalaysiatoday.com/category/nation/2022/04/20/528-rohingya-detainees-escape-from-sungai-bakap-immigration-depot">Free Malaysia Today — 双溪巴甲扣留所出逃事件（2022-04-20）</a></li>
+    <li id="s13"><a href="https://www.amnesty.my/2021/02/23/1086-people-deported-to-myanmar-in-defiance-of-court-order/">国际特赦组织马来西亚 — 违反法院命令遣返 1,086 人（2021-02-23）</a></li>
+    <li>其他：<a href="https://www.hrw.org/news/2020/04/18/malaysia-allow-rohingya-refugees-ashore">HRW — 2020 年推回船只</a> · <a href="https://www.refworld.org/docid/42c928925.html">Refworld — 2005 年亚齐人 IMM13</a> · <a href="https://themalaysianreserve.com/2025/09/30/malaysia-to-legalise-refugee-workers-to-fill-labour-gaps/">Malaysian Reserve — 2025 年工作计划</a> · <a href="https://www.aljazeera.com/news/2023/12/27/indonesian-students-evict-rohingya-from-shelter-demanding-deportation">Al Jazeera — 亚齐学生赶走罗兴亚人</a> · <a href="https://encyclopedia.ushmm.org/content/en/article/the-evian-conference">USHMM — 埃维昂会议</a></li>
+  </ol>
+  <p class="small">核查说明：UNHCR 网站拒绝自动读取，马来西亚相关数字经搜索摘要与新闻报道核对，链接需在浏览器中打开。数字以 2026 年 9 月为准，登记政策在 2026 年 1 月和 7 月都变过，之后可能再变。2021 年被遣返的是「缅甸国民」，官方称其中没有 UNHCR 登记的罗兴亚人，本页不把他们称为罗兴亚人。</p>
+  <p class="small" style="margin-top:2rem"><b>案例原则：</b>比较制度结构，不把不同民族的历史苦难等同；同时考虑人道保护、马来西亚的治理能力与区域责任分担。</p>
+</div>
+</main>
+</body>
+</html>

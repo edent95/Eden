@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>难民与无国籍证据地图</title>
+<meta name="description" content="从犹太人的无国籍经验看今天的全球难民问题：难民与无国籍者的区别、1930 年代的教训、1948 年的流离、现行公约能做什么、做不到什么，每一条都附来源。">
+<style>
+  :root{
+    --bg:#faf9f6;--card:#fff;--ink:#1f1d1a;--soft:#5c584f;--line:#e5e1d8;
+    --accent:#b8622b;--accent-soft:#f3ece2;--ok:#2f7d4f;--warn:#a87400;--bad:#b23a3a;--fix:#2f5f8a;
+    --maxw:46rem;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#15130f;--card:#1e1b16;--ink:#ece6da;--soft:#aaa192;--line:#3a352c;
+    --accent:#e0915a;--accent-soft:#3a2a1c;--ok:#5cc28a;--warn:#e7b54a;--bad:#ef7b7b;--fix:#7fb0de;
+  }}
+  :root[data-theme="dark"]{
+    --bg:#15130f;--card:#1e1b16;--ink:#ece6da;--soft:#aaa192;--line:#3a352c;
+    --accent:#e0915a;--accent-soft:#3a2a1c;--ok:#5cc28a;--warn:#e7b54a;--bad:#ef7b7b;--fix:#7fb0de;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,sans-serif;line-height:1.85;font-size:18px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:4.5rem 16px 6rem}
+  .kicker{font-size:.72rem;letter-spacing:.24em;color:var(--accent);font-weight:600;margin-bottom:1.2rem}
+  h1{font-size:2.1rem;line-height:1.34;margin:0 0 1rem}
+  h2{font-size:1.4rem;line-height:1.4;margin:3.4rem 0 1rem}
+  h2 .n{color:var(--accent);font-variant-numeric:tabular-nums;margin-right:.5rem}
+  h3{font-size:1.02rem;margin:0 0 .3rem}
+  .dek{font-size:1.06rem;color:var(--soft);line-height:1.75;margin:0}
+  .meta{margin-top:1.6rem;padding-top:1.2rem;border-top:1px solid var(--line);font-size:.82rem;color:var(--soft);display:flex;gap:1.2rem;flex-wrap:wrap}
+  p{margin:0 0 1.15rem}
+  a{color:var(--accent)}
+  sup a{text-decoration:none;font-size:.72rem;padding:0 1px}
+  .small{font-size:.84rem;color:var(--soft)}
+  blockquote{margin:2rem 0;padding:1.2rem 1.4rem;background:var(--card);border-left:3px solid var(--accent);border-radius:0 6px 6px 0}
+  blockquote p:last-child{margin:0}
+  .legend{display:flex;gap:.6rem 1rem;flex-wrap:wrap;font-size:.85rem;color:var(--soft);margin:.4rem 0 1rem}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1rem 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;font-size:.94rem;line-height:1.7}
+  .card p{margin:.3rem 0 0}
+  .card p:last-child{margin-bottom:0}
+  .t-ok{color:var(--ok)}.t-warn{color:var(--warn)}.t-bad{color:var(--bad)}
+
+  .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:1rem 0;counter-reset:f}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.8rem .85rem;position:relative;font-size:.86rem;line-height:1.55}
+  .step b{display:block;font-size:.94rem}
+  .step span{color:var(--soft)}
+  .step:not(:last-child)::after{content:"→";position:absolute;right:-11px;top:50%;transform:translateY(-50%);color:var(--soft);font-size:1rem;background:var(--bg);line-height:1;padding:2px 0;z-index:1}
+  .flow.break .step:nth-child(n+3){border-style:dashed}
+
+  .claim{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--line);border-radius:0 10px 10px 0;padding:.85rem 1.1rem;margin:.7rem 0;font-size:.96rem;line-height:1.75}
+  .claim p:last-child{margin:0}
+  .claim.ok{border-left-color:var(--ok)}.claim.warn{border-left-color:var(--warn)}.claim.bad{border-left-color:var(--bad)}.claim.fix{border-left-color:var(--fix)}
+  .chip{display:inline-block;font-size:.72rem;font-weight:700;padding:0 9px;border-radius:999px;margin-right:6px;border:1.5px solid currentColor;line-height:1.6;vertical-align:1px}
+  .c-ok{color:var(--ok)}.c-warn{color:var(--warn)}.c-bad{color:var(--bad)}.c-fix{color:var(--fix)}
+
+  .big{font-size:1.18rem;line-height:1.7;border-left:3px solid var(--accent);padding:.4rem 0 .4rem 1.1rem;margin:1.2rem 0}
+
+  .tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;margin:1rem 0}
+  table{width:100%;border-collapse:collapse;font-size:.9rem;background:var(--card)}
+  th,td{padding:.7rem .8rem;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;line-height:1.6}
+  tr:last-child td{border-bottom:0}
+  th{font-size:.78rem;color:var(--soft);font-weight:600}
+  td:first-child{font-weight:600;white-space:nowrap}
+  td .num{font-variant-numeric:tabular-nums;color:var(--soft);font-weight:400;display:block;font-size:.78rem}
+
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:1rem 0}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.9rem 1rem}
+  .stat b{display:block;font-size:1.45rem;line-height:1.2;font-variant-numeric:tabular-nums}
+  .stat small{display:block;color:var(--soft);font-size:.78rem;line-height:1.5;margin-top:.3rem}
+
+  .gap{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;margin:1rem 0}
+  .bar{height:14px;border-radius:7px;background:var(--accent-soft);margin:.35rem 0 .9rem;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--accent);border-radius:7px 0 0 7px;min-width:3px}
+  .bar-label{display:flex;justify-content:space-between;font-size:.84rem;gap:1rem}
+  .bar-label span:last-child{font-variant-numeric:tabular-nums;color:var(--soft)}
+
+  .src{padding-left:1.2rem}
+  .src li{font-size:.86rem;margin:.3rem 0;line-height:1.6}
+
+  @media (max-width:760px){
+    body{font-size:17px}
+    h1{font-size:1.7rem}
+    .grid,.stats{grid-template-columns:1fr 1fr}
+    .flow{grid-template-columns:1fr}
+    .step:not(:last-child)::after{content:"↓";right:auto;left:50%;top:auto;bottom:-13px;transform:translateX(-50%)}
+  }
+  @media (max-width:480px){.grid,.stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<div class="wrap">
+  <header>
+    <div class="kicker">NOTES · 证据核查 · 没有国家的人权</div>
+    <h1>从犹太人的无国籍经验<br>看今天的全球难民问题</h1>
+    <p class="dek">真正的大问题不是「哪个民族比较会生存」，而是：<b>一个人失去原国家的有效保护以后，谁负责保证他仍然能作为一个正常的人生活？</b>这一页把每一步都拿去和公约原文、联合国数据、博物馆与国会图书馆档案核对了一遍。</p>
+    <div class="meta"><span>Eden Tan</span><span>2026-09-29</span><span>数字截至 2026 年 9 月</span><span>配套阅读：<a href="bible-israel-us-evidence-map-full.html">《圣经》与中东证据地图</a></span><span>下一篇：<a href="rohingya-malaysia-statelessness-full.html">罗兴亚人在马来西亚</a></span></div>
+  </header>
+
+  <blockquote><p><b>一句话结论：</b>现行制度能挡住「被送回危险之地」，却保证不了「走出等待」。欧洲犹太人在 1930 年代经历的，正是有权利、却没有国家替你兑现权利；今天仍有 1.178 亿人处在不同程度的同一个缺口里。</p></blockquote>
+
+  <p>每一条说法都标了核查结果：</p>
+  <div class="legend">
+    <span><span class="chip c-ok">有文件</span>公约、法律、官方数据可查</span>
+    <span><span class="chip c-warn">推论 / 设计</span>合理的解释或制度设想，不是现行法</span>
+    <span><span class="chip c-fix">已修正</span>原稿说法不够准，按来源改过</span>
+    <span><span class="chip c-bad">站不住</span>没有证据，或是刻板印象</span>
+  </div>
+
+  <div class="grid">
+    <div class="card"><h3 class="t-ok">难民 Refugee</h3><p>因有正当理由害怕受迫害而身在本国之外，无法或不愿接受本国保护。<b>难民可能仍有国籍。</b><sup><a href="#s1">1</a></sup></p></div>
+    <div class="card"><h3 class="t-warn">无国籍者 Stateless</h3><p>任何国家依据其法律都不认为是其国民的人。<b>无国籍者不一定跨过国境。</b><sup><a href="#s3">3</a></sup></p></div>
+    <div class="card"><h3 class="t-bad">两者会重叠</h3><p>1951 年定义明文包括「没有国籍」的难民。可以只是其一，也可以两者同时是。<sup><a href="#s1">1</a></sup></p></div>
+  </div>
+
+  <h2><span class="n">01</span>现代国家体系的隐藏前提</h2>
+  <div class="flow">
+    <div class="step"><b>出生</b><span>取得法律身份</span></div>
+    <div class="step"><b>国籍</b><span>某国承认你</span></div>
+    <div class="step"><b>文件</b><span>出生登记、护照、身份证</span></div>
+    <div class="step"><b>实际权利</b><span>工作、财产、教育、旅行、投票</span></div>
+    <div class="step"><b>国家保护</b><span>法院与外交去执行这些权利</span></div>
+  </div>
+  <div class="claim warn"><p><span class="chip c-warn">推论</span><b>漏洞：</b>理论上「人权属于人」；现实中，大量权利要有一个国家、法院、行政机构或有效证件才用得上。任何一环断掉，后面几环就跟着失灵。</p></div>
+
+  <h2><span class="n">02</span>当国家保护断掉</h2>
+  <div class="flow break">
+    <div class="step"><b>战争 / 迫害</b></div>
+    <div class="step"><b>逃亡</b></div>
+    <div class="step"><b>跨境避难</b></div>
+    <div class="step"><b>临时身份</b></div>
+    <div class="step"><b>长期等待</b><span>可能持续多年，甚至传给下一代</span></div>
+  </div>
+  <div class="claim ok"><p><span class="chip c-ok">有文件</span>2025 年底，<b>70% 的难民处于五年以上的长期流亡</b>。问题往往不是「国际法完全没有保护」，而是从临时保护走到稳定身份和长期出路非常难。<sup><a href="#s5">5</a></sup></p></div>
+
+  <h2><span class="n">03</span>犹太人的经验为什么成了极端案例</h2>
+  <div class="tbl"><table>
+    <tr><th>年份</th><th>发生了什么</th><th>核查</th></tr>
+    <tr><td>1922</td><td>国际联盟为被苏联法令剥夺国籍的俄国人设立「南森护照」，这是国际社会第一次给无国籍者发旅行证件。</td><td><span class="chip c-ok">有文件</span></td></tr>
+    <tr><td>1933</td><td>纳粹德国通过撤销入籍、剥夺国籍的法律，用来剥夺个别人（包括出逃的犹太人）的国籍。<sup><a href="#s8">8</a></sup></td><td><span class="chip c-ok">有文件</span></td></tr>
+    <tr><td>1935</td><td>纽伦堡法里的《帝国公民法》把犹太人降为没有政治权利的「国民」，<b>但他们仍是德国国民，并没有因此变成无国籍者</b>。<sup><a href="#s8">8</a></sup></td><td><span class="chip c-fix">已修正</span></td></tr>
+    <tr><td>1938</td><td>埃维昂会议：32 国讨论德奥犹太难民，只有多米尼加表示愿意大量接收。<sup><a href="#s9">9</a></sup></td><td><span class="chip c-ok">有文件</span></td></tr>
+    <tr><td>1939</td><td>圣路易斯号载 937 名乘客，被古巴、美国、加拿大拒于港外；回到欧洲后，其中 254 人死于大屠杀。<sup><a href="#s9">9</a></sup></td><td><span class="chip c-ok">有文件</span></td></tr>
+    <tr><td>1941</td><td>第十一号法令（11 月 25 日）：凡住在国外的犹太人，包括被驱逐出境的，一律失去国籍，财产充公。<sup><a href="#s8">8</a></sup></td><td><span class="chip c-ok">有文件</span></td></tr>
+    <tr><td>1933–45</td><td>约六百万欧洲犹太人遇害。<sup><a href="#s9">9</a></sup></td><td><span class="chip c-ok">有文件</span></td></tr>
+  </table></div>
+  <div class="claim ok"><p><span class="chip c-ok">有文件</span><b>阿伦特的结论（1951）：</b>直到数百万人失去「拥有权利的权利」（right to have rights）而且无法再取回，人们才意识到这种权利存在。见《极权主义的起源》第九章。</p></div>
+  <div class="claim warn"><p><span class="chip c-warn">政治答案</span>现代锡安主义从赫茨尔 1896 年的《犹太国》开始，1897 年巴塞尔纲领要求在巴勒斯坦建立一个「受公法保障的家园」，1917 年贝尔福宣言表态支持「民族家园」<sup><a href="#s10">10</a></sup>。核心想法是：让犹太人的安全不再完全依赖别国多数社会的善意。</p></div>
+  <div class="claim bad"><p><span class="chip c-bad">站不住</span><b>「犹太人天生会理财，所以买得到土地」</b>是刻板印象，不是解释。犹太人内部贫富差距极大；到 1947 年，犹太个人与犹太民族基金（1901 年成立）、PICA 等机构合计只持有委任统治巴勒斯坦约 <b>6% 到 7%</b> 的土地（1945 年官方统计约 5.7%），另有接近一半是国有地或产权不明。国家不是买地买出来的，决定性的是 1947 年分治决议和 1948 年战争。</p></div>
+
+  <h2><span class="n">04</span>这里出现了一个历史悲剧</h2>
+  <div class="big">一个长期缺乏可靠国家保护的民族建立了国家，并不自动解决同一片土地上另一个民族的政治权利与流离失所问题。</div>
+  <div class="claim ok"><p><span class="chip c-ok">有文件</span>1947 年 11 月 29 日联大第 181 号分治决议。1948 年战争中，按联合国自己的记述，「超过一半的巴勒斯坦阿拉伯人口逃离或被驱逐」，UNRWA 的统计是 70 万人以上<sup><a href="#s10">10</a></sup>。今天联合国统计的巴勒斯坦难民约 600 万<sup><a href="#s5">5</a></sup>。</p></div>
+  <div class="claim ok"><p><span class="chip c-ok">有文件</span><b>法律上的特殊角落：</b>1951 年公约第 1D 条把正在接受其他联合国机构援助的人排除在外。巴勒斯坦难民归 UNRWA 负责，而不是 UNHCR；援助一旦中止，公约才重新适用<sup><a href="#s1">1</a></sup>。</p></div>
+  <div class="claim warn"><p><span class="chip c-warn">常被引用，有争议</span>1948 年之后，也有大量犹太人离开或被迫离开阿拉伯与穆斯林国家（如 1950–51 年伊拉克、1956 年埃及取消国籍），常见数字约 85 万，估计范围约 65 万到 90 万，其中驱逐与移民各占多少仍有争议<sup><a href="#s11">11</a></sup>。</p></div>
+  <p>这不是说两段历史「完全相同」，而是说：<b>解决一个群体的安全问题，如果没有同时设计另一个群体的权利，可能会制造一个延续数代的新问题。</b></p>
+
+  <h2><span class="n">05</span>今天已经有难民制度</h2>
+  <div class="tbl"><table>
+    <tr><th>制度</th><th>解决什么</th><th>没有自动解决什么</th></tr>
+    <tr><td>1951 难民公约<span class="num">146 个缔约国</span></td><td>定义难民，规定难民的权利与国家义务<sup><a href="#s1">1</a></sup><sup><a href="#s2">2</a></sup></td><td>不会让难民自动获得新国籍；第 34 条只要求「尽可能」便利入籍</td></tr>
+    <tr><td>1967 议定书<span class="num">147 个缔约国</span></td><td>取消「1951 年以前事件」的时间限制和欧洲的地域限制</td><td>同上</td></tr>
+    <tr><td>不推回原则<span class="num">公约第 33 条</span></td><td>不得把难民送回生命或自由受威胁的地方</td><td>不等于哪个国家必须永久收下此人</td></tr>
+    <tr><td>UNHCR<span class="num">1950 年章程</span></td><td>保护、援助，并「协助各国政府」寻求长期解决<sup><a href="#s7">7</a></sup></td><td>不是世界政府，不能直接给任何人国籍</td></tr>
+    <tr><td>1954 无国籍人公约<span class="num">99 个缔约国</span></td><td>给无国籍者一个法律身份与待遇标准<sup><a href="#s3">3</a></sup></td><td>消除不了各国国内造成无国籍的法律与政治原因</td></tr>
+    <tr><td>1961 减少无国籍公约<span class="num">82 个缔约国</span></td><td>防止新的无国籍，例如在本国出生、否则会无国籍的儿童<sup><a href="#s4">4</a></sup></td><td>只约束加入的国家，执行仍靠国内制度</td></tr>
+  </table></div>
+  <p class="small">缔约国数量据联合国条约集，截至 2026 年 9 月 28 日。</p>
+
+  <h2><span class="n">06</span>数字：缺口有多大</h2>
+  <div class="stats">
+    <div class="stat"><b>1.178 亿</b><small>2025 年底被迫流离失所者，十年来首次下降</small></div>
+    <div class="stat"><b>4160 万</b><small>难民，含约 600 万巴勒斯坦难民</small></div>
+    <div class="stat"><b>≥ 450 万</b><small>已报告的无国籍者，实际更多</small></div>
+    <div class="stat"><b>70%</b><small>难民流亡已超过五年</small></div>
+  </div>
+  <div class="gap">
+    <div class="bar-label"><span>2026 年需要第三国安置</span><span>约 2,500,000</span></div>
+    <div class="bar"><i style="width:100%"></i></div>
+    <div class="bar-label"><span>2025 年所有安置与担保入境</span><span>约 81,800</span></div>
+    <div class="bar"><i style="width:3.3%"></i></div>
+    <div class="bar-label"><span>2025 年经 UNHCR 协助安置离境</span><span>约 37,000</span></div>
+    <div class="bar"><i style="width:1.5%"></i></div>
+    <p class="small" style="margin:0">来源：UNHCR《全球趋势 2025》与《全球安置需求预测》，经联合国新闻报道核对<sup><a href="#s5">5</a></sup><sup><a href="#s6">6</a></sup>。3.7 万只算 UNHCR 协助的离境，8.18 万包括各国自己的安置与担保项目，两个口径不能混用。</p>
+  </div>
+
+  <h2><span class="n">07</span>制度最难的地方：谁承担责任？</h2>
+  <div class="grid">
+    <div class="card"><h3>国家 A</h3><p>「为什么应该由我接收？」</p></div>
+    <div class="card"><h3>国家 B</h3><p>「A 比我更有钱。」</p></div>
+    <div class="card"><h3>国家 C</h3><p>「战争不是我发动的。」</p></div>
+  </div>
+  <div class="claim warn"><p><span class="chip c-warn">推论</span>每个国家单独看都有理由；所有国家都把责任往外推时，难民本人仍然没有长期答案。这是典型的<b>集体行动问题</b>，不是哪一条法律少写了一句。</p></div>
+
+  <h2><span class="n">08</span>三条传统长期出路</h2>
+  <div class="tbl"><table>
+    <tr><th>出路</th><th>含义</th><th>现实限制</th></tr>
+    <tr><td>自愿回国</td><td>安全、自愿地回到原国家</td><td>战争或迫害可能长期不结束。2025 年有 1470 万人回到家乡，但未必都安全、稳定<sup><a href="#s5">5</a></sup></td></tr>
+    <tr><td>当地融合</td><td>在接收国逐步取得稳定身份并融入</td><td>接收国担心资源、政治与长期人口影响</td></tr>
+    <tr><td>第三国安置</td><td>由另一个国家接收</td><td>名额只够需求的几十分之一（见 06）</td></tr>
+  </table></div>
+  <p class="small">UNHCR 的长期解决方案框架<sup><a href="#s12">12</a></sup>。</p>
+
+  <h2><span class="n">09</span>一层更完整的「最低权利」</h2>
+  <div class="claim warn"><p><span class="chip c-warn">设计思考</span>下面属于制度设计，不是现行国际法已经完整保证的现实。</p></div>
+  <div class="grid">
+    <div class="card"><h3>可验证身份</h3><p>没有有效护照，也能证明「我是谁」。</p></div>
+    <div class="card"><h3>基本工作权</h3><p>不必长期完全依赖救济与地下经济。</p></div>
+    <div class="card"><h3>儿童教育</h3><p>不让「临时身份」毁掉下一代。</p></div>
+    <div class="card"><h3>基本医疗</h3><p>最低的生命与健康保障。</p></div>
+    <div class="card"><h3>财产与金融身份</h3><p>合法持有财产、付款和储蓄。</p></div>
+    <div class="card"><h3>明确的长期出路</h3><p>回国、融合或安置，不能无限期悬着。</p></div>
+  </div>
+
+  <h2><span class="n">10</span>答案也不是「取消所有边界」</h2>
+  <div class="claim bad"><p><b class="t-bad">完全封闭：</b>让真正逃离迫害的人被困在危险里。</p></div>
+  <div class="claim warn"><p><b class="t-warn">完全无条件开放：</b>国家仍要面对住房、教育、财政、社会融合、安全审查与迁移规模这些真实的治理问题。</p></div>
+  <div class="claim ok"><p><b class="t-ok">更值得问的问题：</b>怎样保留国家边界与民主治理，同时保证一个人不会因为失去国家保护，就连正常生活的资格也一起失去？</p></div>
+
+  <h2><span class="n">11</span>把历史教训压成一条链</h2>
+  <div class="flow">
+    <div class="step"><b>失去保护</b></div>
+    <div class="step"><b>失去稳定身份</b></div>
+    <div class="step"><b>长期边缘化</b></div>
+    <div class="step"><b>下一代继承问题</b></div>
+    <div class="step"><b>冲突固化</b><span>变成领土、民族主义与武装问题</span></div>
+  </div>
+  <p>更好的国际制度，目标是尽早切断这条链，而不是等几十年后，问题变成领土、民族主义、武装力量与国家生存的问题。</p>
+
+  <h2>来源</h2>
+  <ol class="src">
+    <li id="s1"><a href="http://hrlibrary.umn.edu/instree/v1crs.htm">1951 年《关于难民地位的公约》全文</a>：第 1A(2)、1D、33、34 条（明尼苏达大学人权图书馆）</li>
+    <li id="s2"><a href="https://treaties.un.org/Pages/ViewDetailsII.aspx?src=TREATY&amp;mtdsg_no=V-2&amp;chapter=5&amp;Temp=mtdsg2&amp;clang=_en">联合国条约集：1951 年公约批准状况</a> · <a href="https://treaties.un.org/Pages/ViewDetailsII.aspx?src=TREATY&amp;mtdsg_no=V-5&amp;chapter=5&amp;Temp=mtdsg2&amp;clang=_en">1967 年议定书</a></li>
+    <li id="s3"><a href="https://treaties.un.org/Pages/ViewDetails.aspx?src=TREATY&amp;mtdsg_no=V-3&amp;chapter=5&amp;clang=_en">联合国条约集：1954 年《关于无国籍人地位的公约》</a></li>
+    <li id="s4"><a href="https://treaties.un.org/Pages/ViewDetails.aspx?src=TREATY&amp;mtdsg_no=V-4&amp;chapter=5&amp;clang=_en">联合国条约集：1961 年《减少无国籍状态公约》</a></li>
+    <li id="s5"><a href="https://news.un.org/en/story/2026/06/1167693">UN News — UNHCR《全球趋势 2025》（2026 年 6 月）</a> · <a href="https://www.unhcr.org/sites/default/files/2026-06/global-trends-report-2025.pdf">报告 PDF</a></li>
+    <li id="s6"><a href="https://news.un.org/en/story/2026/06/1167729">UN News — 全球安置需求预测（2026 年 6 月）</a></li>
+    <li id="s7"><a href="https://hrlibrary.umn.edu/instree/v3sunhcr.htm">《联合国难民署章程》，联大第 428(V) 号决议（1950）</a></li>
+    <li id="s8"><a href="https://tile.loc.gov/storage-services/service/ll/llglrd/2019670401/2019670401.pdf">美国国会图书馆 — 纳粹时期国籍法与剥夺国籍（法律报告）</a></li>
+    <li id="s9"><a href="https://encyclopedia.ushmm.org/content/en/article/the-evian-conference">美国大屠杀纪念馆 — 埃维昂会议</a> · <a href="https://encyclopedia.ushmm.org/content/en/article/voyage-of-the-st-louis">圣路易斯号</a> · <a href="https://encyclopedia.ushmm.org/content/en/article/introduction-to-the-holocaust">大屠杀概述</a></li>
+    <li id="s10"><a href="https://www.un.org/unispal/history2/">联合国 — 巴勒斯坦问题历史（UNISPAL）</a></li>
+    <li id="s11"><a href="https://en.wikipedia.org/wiki/Jewish_exodus_from_the_Muslim_world">犹太人离开穆斯林世界（背景索引，应与其引用来源交叉核对）</a></li>
+    <li id="s12"><a href="https://www.unhcr.org/what-we-do/build-better-futures/long-term-solutions">UNHCR — 长期解决方案</a> · <a href="https://www.unhcr.org/what-we-do/protect-human-rights/ending-statelessness">终结无国籍状态</a> · <a href="https://statelessnessalliance.org/faq/">终结无国籍全球联盟（2024 年 10 月接替 #IBelong 运动）</a></li>
+  </ol>
+  <p class="small">核查说明：UNHCR 与美国大屠杀纪念馆网站拒绝自动读取，相关数字改用联合国新闻、联合国条约集与美国国会图书馆核对，链接需在浏览器中打开。缔约国数量与流离失所数字以 2026 年 9 月为准，之后会变。土地持有比例来自委任统治时期统计，经二手资料转引。本页是公开资料的整理与核查，不代表对任何民族、宗教或国家的立场评价。</p>
+
+  <p class="small" style="margin-top:2rem"><b>核心区分：</b>难民 ≠ 无国籍者；民族身份 ≠ 经济能力；人道保护 ≠ 取消边界。真正的问题是怎样让「失去国家保护」不再等于「失去正常人生」。</p>
+</div>
+</main>
+</body>
+</html>
