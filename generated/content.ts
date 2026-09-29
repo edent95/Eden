@@ -16,6 +16,7 @@ export type SiteEssayNoteData = {
   }>;
   originalSource?: { url: string; label: Record<'en' | 'zh', string> };
   storySource?: { url: string; label: Record<'en' | 'zh', string> };
+  cover?: 'book' | 'rivers' | 'coin-tower' | 'coin-spin' | 'chart-wall' | 'balance' | 'hourglass' | 'maze' | 'lens' | 'gears' | 'chess' | 'button' | 'vinyl' | 'chest' | 'bolt';
   storyboard?: Array<{ motif: 'mandelbrot' | 'spiral' | 'catenoid' | 'catenary' | 'penrose' | 'phyllotaxis' | 'lissajous'; kind: 'method' | 'fact' | 'overturned' | 'gap' | 'verdict' | 'idea' | 'example' | 'principle' | 'warning' | 'action'; beat: Record<'en' | 'zh', string> }>;
   references?: Array<{ id: string; url: string; label: Record<'en' | 'zh', string> }>;
   referencesNote?: Record<'en' | 'zh', string>;
@@ -24,6 +25,7 @@ export type SiteEssayNoteData = {
 export const wikiEntries = [
   {
     "slug": "vite",
+    "cover": "bolt",
     "eyebrow": {
       "en": "Build skill",
       "zh": "构建技能"
@@ -189,6 +191,7 @@ export const wikiEntries = [
   },
   {
     "slug": "background-music",
+    "cover": "vinyl",
     "eyebrow": {
       "en": "Experience layer",
       "zh": "体验层"
@@ -266,6 +269,7 @@ export const wikiEntries = [
   },
   {
     "slug": "button-feedback",
+    "cover": "button",
     "eyebrow": {
       "en": "Interaction skill",
       "zh": "交互技能"
@@ -343,6 +347,7 @@ export const wikiEntries = [
   },
   {
     "slug": "firebase-lifetime-storage",
+    "cover": "chest",
     "eyebrow": {
       "en": "Data memory",
       "zh": "数据记忆"
@@ -689,6 +694,7 @@ export const wikiEntries = [
 export const siteEssayNotes: SiteEssayNoteData[] = [
   {
     "slug": "bible-israel-us-evidence-map",
+    "cover": "rivers",
     "title": {
       "en": "Three rivers, one confluence: the Bible, Israel, and America's Middle East politics",
       "zh": "三条河，一个汇流口：《圣经》、以色列与美国的中东政治"
@@ -974,6 +980,7 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
   },
   {
     "slug": "iraq-war-evidence-map",
+    "cover": "book",
     "title": {
       "en": "Overlap is not command: an evidence map of neocons, Israel's right, and the Iraq War",
       "zh": "人员重叠不等于指挥链：新保守派、以色列右翼与伊拉克战争的证据地图"
@@ -1226,6 +1233,7 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
   },
   {
     "slug": "korea-2026-crash",
+    "cover": "chart-wall",
     "title": {
       "en": "The \"mad bull\" hits a wall: Korea's 2026 market, and the gap between price and value",
       "zh": "「疯牛」撞墙：韩国股市 2026，一堂价格与价值的公开课"
@@ -1444,6 +1452,7 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
   },
   {
     "slug": "mbi-case",
+    "cover": "coin-spin",
     "title": {
       "en": "Old scam, new clothes: MBI and the coin that \"only goes up\"",
       "zh": "旧骗局，新外衣：MBI 与那枚「会一直涨」的币"
@@ -1642,6 +1651,7 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
   },
   {
     "slug": "carrian-case",
+    "cover": "coin-tower",
     "title": {
       "en": "An empire built on borrowed money: the Carrian case",
       "zh": "一座建在借来的钱上的帝国：佳宁案"
@@ -1847,6 +1857,7 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
   },
   {
     "slug": "modern-finance-ponzi",
+    "cover": "balance",
     "title": {
       "en": "Is modern finance a Ponzi scheme?",
       "zh": "现代金融是庞氏骗局吗"
@@ -2061,6 +2072,7 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
   },
   {
     "slug": "what-is-wealth",
+    "cover": "hourglass",
     "title": {
       "en": "What is wealth, really?",
       "zh": "财富到底是什么"
@@ -2280,6 +2292,7 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
   },
   {
     "slug": "turn-chaos-into-systems",
+    "cover": "gears",
     "title": {
       "en": "Turn chaos into systems",
       "zh": "把混乱变成系统"
@@ -2382,6 +2395,7 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
   },
   {
     "slug": "judgment-is-not-more-information",
+    "cover": "lens",
     "title": {
       "en": "Judgment is not knowing more",
       "zh": "判断不是知道更多"
@@ -2484,6 +2498,7 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
   },
   {
     "slug": "human-nature-is-a-design-condition",
+    "cover": "maze",
     "title": {
       "en": "Human nature is a design condition",
       "zh": "人性不是借口，是设计条件"
@@ -2586,6 +2601,7 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
   },
   {
     "slug": "win-before-you-fight",
+    "cover": "chess",
     "title": {
       "en": "Win before you fight",
       "zh": "先胜后战"

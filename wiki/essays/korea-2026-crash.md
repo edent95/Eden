@@ -17,6 +17,7 @@ The JSON block below is the structured bilingual source consumed by the site com
 ```json
 {
   "slug": "korea-2026-crash",
+  "cover": "chart-wall",
   "title": {
     "en": "The \"mad bull\" hits a wall: Korea's 2026 market, and the gap between price and value",
     "zh": "「疯牛」撞墙：韩国股市 2026，一堂价格与价值的公开课"

@@ -7,6 +7,7 @@ import { NotesReadingBar, NotesRecap, renderKeySentences, useNotesReading } from
 import { NotesStoryboard, extractKeySentence, type NotesStoryFrameData } from '../components/NotesStoryboard';
 import { useNotesDepth } from '../components/NotesDepth';
 import { NotesGrimoireCover, NotesStoryFrame, notesStoryFormula } from '../components/css-art/index';
+import type { NotesCoverVariant } from '../components/css-art/notes-cover-scenes';
 
 /** A cover ring built from the formulas of the motifs this note actually uses. */
 const coverFormula = (frames: readonly NotesStoryFrameData[]) =>
@@ -769,7 +770,7 @@ export const WikiPage: React.FC<{
               <span className="ng-grain" />
               <span className="ng-arc a1" /><span className="ng-arc a2" /><span className="ng-arc a3" />
             </div>
-            <NotesGrimoireCover formula={coverFormula(noteStoryboard)} />
+            <NotesGrimoireCover formula={coverFormula(noteStoryboard)} variant={entry && 'cover' in entry ? (entry.cover as NotesCoverVariant) : 'book'} />
           </>
         )}
         <main className="notes-article-main">
@@ -1111,6 +1112,8 @@ type SiteEssayNote = {
   storySource?: { url: string; label: Record<Language, string> };
   // Optional Notes-format storyboard: one engraved scene per section, same order as `sections`.
   storyboard?: NotesStoryFrameData[];
+  // Optional cover scene for the grimoire layout; defaults to the floating book.
+  cover?: NotesCoverVariant;
   // Optional reference list. Paragraphs may embed [[n]] tokens that link to the
   // matching reference id, and each reference renders a ↩ backlink to that spot.
   references?: Array<{ id: string; url: string; label: Record<Language, string> }>;
@@ -1305,7 +1308,7 @@ export const SiteEssayNotePage: React.FC<{
             <span className="ng-grain" />
             <span className="ng-arc a1" /><span className="ng-arc a2" /><span className="ng-arc a3" />
           </div>
-          <NotesGrimoireCover formula={coverFormula(note.storyboard ?? [])} />
+          <NotesGrimoireCover formula={coverFormula(note.storyboard ?? [])} variant={note.cover ?? 'book'} />
         </>
       )}
       <main className="notes-article-main">

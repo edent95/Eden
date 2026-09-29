@@ -17,6 +17,7 @@ The JSON block below is the structured bilingual source consumed by the site com
 ```json
 {
   "slug": "firebase-lifetime-storage",
+  "cover": "chest",
   "eyebrow": {
     "en": "Data memory",
     "zh": "数据记忆"

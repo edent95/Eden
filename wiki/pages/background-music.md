@@ -17,6 +17,7 @@ The JSON block below is the structured bilingual source consumed by the site com
 ```json
 {
   "slug": "background-music",
+  "cover": "vinyl",
   "eyebrow": {
     "en": "Experience layer",
     "zh": "体验层"

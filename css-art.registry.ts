@@ -29,6 +29,7 @@ import {
   IGamingLoopBanner,
   IGamingTableBanner,
   MathFractalRuneCssIcon,
+  NotesCoverScenesArt,
   NotesGrimoireCoverArt,
   NotesStoryCatenaryArt,
   NotesStoryCatenoidArt,
@@ -1323,6 +1324,20 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
     Component: NotesStoryLissajousArt,
     label: { en: 'Engraved storyboard frame: lissajous', zh: '凹版分镜：Lissajous' },
     copy: { en: 'A 3 : 2 Lissajous figure x = sin(3t + π/2), y = sin(2t) traced dot by dot with rhythm rails; flanked by an hourglass and a candle.', zh: '3 : 2 李萨如曲线 x = sin(3t + π/2)、y = sin(2t)，逐点描出并带节拍刻度；两旁是沙漏与蜡烛。' },
+  },
+  {
+    id: 'notes-cover-scenes',
+    title: 'Notes cover scenes',
+    category: 'notes-storyboard',
+    sourceRoute: '/notes',
+    ratio: 'banner',
+    background: 'scene',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/notes-covers.css',
+    Component: NotesCoverScenesArt,
+    label: { en: 'Per-note grimoire cover scenes', zh: '每篇 Notes 各自的魔法书封面场景' },
+    copy: { en: 'Fourteen mid-ground heroes (rivers, coin tower, spinning coin, chart and wall, balance, hourglass, maze, lens, gears, chessboard, button, vinyl, chest, bolt) with coin, scroll or desk near props, drawn in tone, stipple and grain inside the grimoire cover.', zh: '十四种中景主角（河流、钱币塔、旋转金币、K 线撞墙、天平、沙漏、迷宫、放大镜、齿轮、棋盘、按钮、黑胶、宝箱、闪电）配钱币、卷轴或书桌近景，在魔法书封面里用明暗、点刻与颗粒绘制。' },
   },
 ];
 

@@ -17,6 +17,7 @@ The JSON block below is the structured bilingual source consumed by the site com
 ```json
 {
   "slug": "iraq-war-evidence-map",
+  "cover": "book",
   "title": {
     "en": "Overlap is not command: an evidence map of neocons, Israel's right, and the Iraq War",
     "zh": "人员重叠不等于指挥链：新保守派、以色列右翼与伊拉克战争的证据地图"

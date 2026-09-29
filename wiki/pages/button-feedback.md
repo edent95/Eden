@@ -17,6 +17,7 @@ The JSON block below is the structured bilingual source consumed by the site com
 ```json
 {
   "slug": "button-feedback",
+  "cover": "button",
   "eyebrow": {
     "en": "Interaction skill",
     "zh": "交互技能"

@@ -17,6 +17,7 @@ The JSON block below is the structured bilingual source consumed by the site com
 ```json
 {
   "slug": "win-before-you-fight",
+  "cover": "chess",
   "title": {
     "en": "Win before you fight",
     "zh": "先胜后战"

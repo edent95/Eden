@@ -17,6 +17,7 @@ The JSON block below is the structured bilingual source consumed by the site com
 ```json
 {
   "slug": "what-is-wealth",
+  "cover": "hourglass",
   "title": {
     "en": "What is wealth, really?",
     "zh": "财富到底是什么"

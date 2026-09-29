@@ -17,6 +17,7 @@ The JSON block below is the structured bilingual source consumed by the site com
 ```json
 {
   "slug": "vite",
+  "cover": "bolt",
   "eyebrow": {
     "en": "Build skill",
     "zh": "构建技能"

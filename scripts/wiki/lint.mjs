@@ -69,6 +69,9 @@ for (const file of files) {
       for (const text of allParagraphs) {
         if (((text.match(/==/g) ?? []).length) % 2 !== 0) problems.push(`${relative} has an unclosed ==key sentence== mark: ${text.slice(0, 60)}`);
       }
+      // Notes format: optional per-note cover scene.
+      const covers = ['book', 'rivers', 'coin-tower', 'coin-spin', 'chart-wall', 'balance', 'hourglass', 'maze', 'lens', 'gears', 'chess', 'button', 'vinyl', 'chest', 'bolt'];
+      if (payload.cover !== undefined && !covers.includes(payload.cover)) problems.push(`${relative} has unknown cover ${payload.cover} (known: ${covers.join(', ')})`);
       // Notes format: optional storyboard, one frame per section.
       if (payload.storyboard !== undefined) {
         const motifs = ['mandelbrot', 'spiral', 'catenoid', 'catenary', 'penrose', 'phyllotaxis', 'lissajous'];

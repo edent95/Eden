@@ -17,6 +17,7 @@ The JSON block below is the structured bilingual source consumed by the site com
 ```json
 {
   "slug": "bible-israel-us-evidence-map",
+  "cover": "rivers",
   "title": {
     "en": "Three rivers, one confluence: the Bible, Israel, and America's Middle East politics",
     "zh": "三条河，一个汇流口：《圣经》、以色列与美国的中东政治"
