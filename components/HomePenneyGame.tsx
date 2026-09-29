@@ -4,6 +4,8 @@
  */
 
 import React from 'react';
+import { kaleidoSpecFor } from '../app/kaleido-routes';
+import { KaleidoFrame } from './css-art/kaleido-frame';
 import { allSequences, type Face, type Sequence } from '../services/penneyGame';
 import {
   fetchMiniArena,
@@ -219,6 +221,7 @@ const HomePenneyGame: React.FC<HomePenneyGameProps> = ({ isZh, igamingHref }) =>
       </div>
 
       <div className="eden-penney-arena">
+        <KaleidoFrame spec={kaleidoSpecFor('/')} />
         <div className="eden-penney-metrics" aria-label={t('Your record', '你的战绩')}>
           <div>
             <span>{t('Credits', 'Credit')}</span>

@@ -3,9 +3,13 @@
    Every page shell gets, beneath its content:
    · ::before — the page-wide golden-ratio grid, two φ-spaced construction
      rings and a fine grain (fixed to the viewport);
-   · ::after — the page's own kaleidoscope emblem: a spirograph / Maurer rose
-     over a rotating guilloché family, formula engraved on the rim, drawn in on
-     load (SMIL inside the SVG) and drifting slowly with scroll.
+   · ::after — the page's own kaleidoscope mandala: a spirograph / Maurer rose
+     over a rotating guilloché family, ringed by a star polygon, petals, scallops
+     and beads (shapes only, no text), drawn in on load (SMIL inside the SVG) and
+     drifting slowly with scroll.
+   · .kf — KaleidoFrame (components/css-art/kaleido-frame.tsx): a card border in
+     the same language — hairlines, a sine-wave guilloché band, beads, and corner
+     rosettes from the page's emblem curves.
    Page content stays above (base.css gives .page-shell > * z-index 1).
    Art-directed Notes (.notes-grimoire) keep their own cover instead.
    Grain in dark mode uses dark specks only (grey noise lifts near-black).
@@ -154,4 +158,31 @@
 @media (prefers-reduced-motion: reduce) {
   .kaleido-site .page-shell::after { translate: none; }
   .kaleido-site *::before { animation: none; }
+}
+
+/* ---------- KaleidoFrame: a computed card border ---------- */
+.kf {
+  --kf-ink: color-mix(in srgb, var(--theme-text-primary) 30%, transparent);
+  --kf-faint: color-mix(in srgb, var(--theme-text-primary) 14%, transparent);
+  --kf-foil: #b8862f;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+[data-theme="dark"] .kf { --kf-foil: #f2cf7a; }
+.kf-line { fill: none; stroke: var(--kf-ink); stroke-width: 0.8; }
+.kf-line.is-faint { stroke: var(--kf-faint); }
+.kf-wave { fill: none; stroke: var(--kf-ink); stroke-width: 0.6; opacity: 0.75; }
+.kf-bead { fill: var(--kf-ink); }
+.kf-bead.is-gold { fill: var(--kf-foil); }
+.kf-disc { fill: var(--eden-panel, var(--theme-page)); stroke: var(--kf-faint); stroke-width: 0.6; }
+.kf-rosette-outer { fill: none; stroke: var(--kf-ink); stroke-width: 0.5; }
+.kf-rosette-inner { fill: none; stroke: var(--kf-foil); stroke-width: 0.7; }
+.kf-rosette { animation: kf-turn 90s linear infinite; transform-origin: 0 0; }
+@keyframes kf-turn { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .kf-rosette { animation: none !important; }
 }

@@ -216,7 +216,9 @@
 .eden-penney-thesis { margin-top: 22px !important; color: var(--eden-ink) !important; }
 .eden-penney-thesis strong { font-weight: 760; }
 
-.eden-penney-arena { padding: clamp(22px, 2.6vw, 34px); border: 1px solid color-mix(in srgb, var(--eden-ink) 12%, transparent); border-radius: 28px; background: var(--eden-panel); }
+.eden-penney-arena { position: relative; padding: clamp(28px, 3vw, 38px); border-radius: 28px; background: var(--eden-panel); }
+/* the border is the computed KaleidoFrame (styles/css-art/kaleido.css), not a CSS border */
+.eden-penney-arena > :not(.kf) { position: relative; z-index: 1; }
 .eden-penney-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .eden-penney-metrics > div { min-width: 0; padding: 14px 16px; border-radius: 18px; background: color-mix(in srgb, var(--eden-paper) 78%, transparent); }
 .eden-penney-metrics span, .eden-penney-name span, .eden-penney-ticket > span { display: block; color: color-mix(in srgb, var(--eden-ink) 52%, transparent); font-size: 10px; font-weight: 820; letter-spacing: .14em; text-transform: uppercase; }
@@ -291,7 +293,7 @@
   .eden-penney-body p + p { margin-top: 12px; }
   .eden-penney-thesis { margin-top: 16px !important; }
 
-  .eden-penney-arena { padding: 16px; }
+  .eden-penney-arena { padding: 24px 22px; }
   .eden-penney-metrics { gap: 8px; }
   .eden-penney-metrics > div { padding: 10px 12px; border-radius: 14px; }
   .eden-penney-metrics strong { margin-top: 4px; font-size: 22px; }
