@@ -8,7 +8,7 @@
    Ink follows the Notes theme (green on cream / pink on rose-black),
    gold foil for the principal curve. When the section is being read
    (.is-active) the curves draw themselves (pathLength = 1) and a pen
-   point travels the main curve; the rim text turns slowly (120s).
+   point travels the main curve; the bead rim turns slowly (120s).
    ============================================================= */
 
 .em {
@@ -30,14 +30,9 @@
 
 .em-rim { fill: var(--em-rim); }
 .em-face { fill: var(--em-paper); }
-.em-rim-text { transform-origin: 0 0; animation: em-turn 120s linear infinite; }
-.em-rim-text text {
-  fill: color-mix(in srgb, var(--em-ink) 72%, transparent);
-  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-  font-size: 7.4px;
-  font-style: italic;
-  letter-spacing: 0.6px;
-}
+.em-beads { transform-origin: 0 0; animation: em-turn 120s linear infinite; }
+.em-beads circle { fill: color-mix(in srgb, var(--em-ink) 55%, transparent); }
+.em-beads circle.is-major { fill: var(--em-foil); }
 
 .em-construction circle,
 .em-construction line { fill: none; stroke: color-mix(in srgb, var(--em-ink) 14%, transparent); stroke-width: 0.45; }

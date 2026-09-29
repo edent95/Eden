@@ -109,13 +109,16 @@
   transform: rotate(calc(var(--k) * var(--step)));
   transform-origin: 50% 100%;
   color: var(--en-line);
-  font-family: var(--nf-serif);
-  font-size: 1.45cqi;
-  font-style: italic;
-  line-height: 1;
-  text-align: center;
   opacity: 0.8;
 }
+/* a dot per mark; every sixth a short radial tick, every twelfth a gold bead */
+.nf-runes i::before {
+  content: ""; position: absolute; left: 50%; top: 0.4cqi;
+  width: 0.45cqi; height: 0.45cqi; margin-left: -0.225cqi; border-radius: 50%;
+  background: currentColor;
+}
+.nf-runes i.is-tick::before { width: 0.18cqi; height: 1.4cqi; margin-left: -0.09cqi; border-radius: 0.1cqi; }
+.nf-runes i.is-bead::before { width: 0.95cqi; height: 0.95cqi; margin-left: -0.475cqi; background: var(--nf-foil, currentColor); }
 .nf-dots {
   inset: 2.6cqi; border-radius: 50%;
   background: repeating-conic-gradient(var(--en-ink-3) 0 0.9deg, transparent 0.9deg 6deg);

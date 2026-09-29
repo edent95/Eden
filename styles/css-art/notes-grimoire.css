@@ -74,7 +74,8 @@
 .ng-orbit.o3 .ng-planet { width: 0.9cqi; height: 0.9cqi; left: calc(50% - 0.45cqi); }
 .ng-orrery-runes { inset: -3cqi; animation: ng-spin-back 240s linear infinite; }
 .ng-orrery-runes .nf-runes { inset: 0; -webkit-mask: none; mask: none; }
-.ng-orrery-runes .nf-runes i { color: var(--ng-ink); font-size: 1.1cqi; opacity: 0.5; }
+.ng-orrery-runes .nf-runes i { color: var(--ng-ink); opacity: 0.5; }
+.ng-orrery-runes .nf-runes i.is-bead::before { background: var(--ng-foil); }
 .ng-sun {
   left: calc(50% - 2cqi); top: calc(50% - 2cqi); width: 4cqi; height: 4cqi; border-radius: 50%;
   background:
@@ -201,7 +202,6 @@
 /* narrow screens: the scene sits above the title, book centred */
 @container (max-width: 820px) {
   .ng-orrery { left: calc(50% - 38cqi); top: calc(48% - 38cqi); width: 76cqi; height: 76cqi; }
-  .ng-orrery-runes .nf-runes i { font-size: 2.2cqi; }
   .ng-book { left: calc(50% - 30cqi); top: calc(46% - 17cqi); width: 60cqi; height: 38cqi; }
   .ng-book-shadow { left: calc(50% - 22cqi); top: calc(46% + 18cqi); width: 44cqi; height: 8cqi; }
   .ng-books { right: 2cqi; width: 30cqi; height: 14cqi; }
