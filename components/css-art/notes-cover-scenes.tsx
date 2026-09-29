@@ -1,10 +1,12 @@
 import React from 'react';
+import { CoverChartArt, CoverRiversArt } from './notes-cover-art';
 
 /* ---- Notes cover scenes (styles/css-art/notes-covers.css) ----
    Each Note gets its own mid-ground hero and near-ground props inside the
    grimoire cover (NotesGrimoireCover). 'book' is the original floating
    grimoire; every other variant draws an object that retells the note's
-   subject. Everything is CSS: tone, stipple and grain, no outlines. */
+   subject. Most are CSS (tone, stipple and grain, no outlines); 'rivers' and
+   'chart-wall' are formula line art (notes-cover-art.tsx). */
 
 export type NotesCoverVariant =
   | 'book' | 'rivers' | 'coin-tower' | 'coin-spin' | 'chart-wall' | 'balance' | 'hourglass'
@@ -35,18 +37,8 @@ const Stack: React.FC<{ h: number; x: number; lean?: number; cls?: string }> = (
 );
 
 const heroes: Record<Exclude<NotesCoverVariant, 'book'>, React.ReactNode> = {
-  // three rivers pour from three ledges into one basin
-  rivers: (
-    <span className="cv-hero cv-rivers">
-      {[0, 1, 2].map((i) => (
-        <span key={i} className={`cv-fall f${i}`}>
-          <span className="cv-ledge cv-stip cv-grain" /><span className="cv-water" />
-        </span>
-      ))}
-      <span className="cv-basin cv-stip cv-grain" /><span className="cv-pool" />
-      {[0, 1, 2].map((i) => <span key={`r${i}`} className="cv-ripple" style={v('--i', i)} />)}
-    </span>
-  ),
+  // three rivers fall into one basin and spiral to its centre (formula line art)
+  rivers: <span className="cv-hero cv-art"><CoverRiversArt /></span>,
   // an empire of borrowed money: coin stacks, the tallest leaning
   'coin-tower': (
     <span className="cv-hero cv-tower">
@@ -66,17 +58,8 @@ const heroes: Record<Exclude<NotesCoverVariant, 'book'>, React.ReactNode> = {
       )))}
     </span>
   ),
-  // the mad bull: candles climb, then hit the wall
-  'chart-wall': (
-    <span className="cv-hero cv-chart">
-      {[6, 9, 8, 12, 15, 19, 23, 14, 8].map((h, i) => (
-        <span key={i} className={`cv-candle${i >= 7 ? ' is-down' : ''}`} style={{ ...v('--i', i), ...v('--h', `${h}cqi`) }}>
-          <span className="cv-wick" /><span className="cv-body cv-grain" /><span className="cv-side" />
-        </span>
-      ))}
-      <span className="cv-wall cv-stip cv-grain" />
-    </span>
-  ),
+  // the mad bull: an exponential climb hits a wall and shatters (formula line art)
+  'chart-wall': <span className="cv-hero cv-art"><CoverChartArt /></span>,
   // a balance: money on one pan, a growing seedling (future output) on the other
   balance: (
     <span className="cv-hero cv-balance">
