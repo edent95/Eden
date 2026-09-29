@@ -145,6 +145,43 @@
   -webkit-backdrop-filter: blur(18px) saturate(1.12);
 }
 
+/* Blend variant of the same menu, for art-directed pages whose artwork runs to the
+   top edge (Notes "grimoire" layout). Same controls, sizes and sticky behaviour;
+   only the surface changes: fully transparent over the cover while the page is at
+   the top, then the surface fades in with scroll (--nd-scroll, px, set by the page's
+   depth hook; missing value = fully opaque, e.g. under reduced motion), spans the
+   full viewport width instead of the content island, and carries the page's grain
+   (--menu-texture) so it reads as part of the sheet rather than a band laid on it. */
+.menu-blend {
+  --menu-blend-a: clamp(0, calc(var(--nd-scroll, 9999) / 260), 1);
+  background: transparent !important;
+  border-bottom-color: transparent !important;
+  box-shadow: none !important;
+  /* no backdrop-filter / clip-path here: either would make this bar a backdrop root and
+     stop the full-bleed ::before from blurring what lies behind it */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.menu-blend::before,
+.menu-blend::after {
+  content: "";
+  position: absolute;
+  inset: 0 -100vmax;
+  z-index: -1;
+  pointer-events: none;
+}
+.menu-blend::before {
+  background: color-mix(in srgb, var(--theme-page) calc(var(--menu-blend-a) * 84%), transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--theme-text-primary) calc(var(--menu-blend-a) * 8%), transparent);
+  backdrop-filter: blur(calc(var(--menu-blend-a) * 16px)) saturate(1.08);
+  -webkit-backdrop-filter: blur(calc(var(--menu-blend-a) * 16px)) saturate(1.08);
+}
+.menu-blend::after {
+  background: var(--menu-texture, none) 0 0 / 200px;
+  mix-blend-mode: soft-light;
+  opacity: calc(var(--menu-blend-a) * 0.6);
+}
+
 /* The Theme/Language controls are a borderless shell around their own pills: the
    selected option is the visible chip. Applies to every page, not only `.page-shell`,
    otherwise the Tailwind `bg-white` on the shell shows through on route pages that

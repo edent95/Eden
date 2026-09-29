@@ -776,7 +776,7 @@ export const WikiPage: React.FC<{
         )}
         <main className="notes-article-main">
           <div className="notes-article-island">
-            <div className="notes-topbar">
+            <div className={`notes-topbar${noteGrimoire ? ' menu-blend' : ''}`}>
               <a href={wikiHref} className="notes-back-link">
                 <ArrowLeft size={17} />
                 {isZh ? '返回知识库' : 'Back to Wiki'}
@@ -1313,7 +1313,7 @@ export const SiteEssayNotePage: React.FC<{
       )}
       <main className="notes-article-main">
         <div className="notes-article-island">
-          <div className="notes-topbar">
+          <div className={`notes-topbar${grimoire ? ' menu-blend' : ''}`}>
             <a href={notesHref} className="notes-back-link">
               <ArrowLeft size={17} />
               {isZh ? '返回 Notes' : 'Back to Notes'}
