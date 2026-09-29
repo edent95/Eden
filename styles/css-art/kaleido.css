@@ -1,0 +1,157 @@
+/* =============================================================
+   Site kaleidoscope skeleton (app/kaleido.ts, app/kaleido-routes.ts)
+   Every page shell gets, beneath its content:
+   · ::before — the page-wide golden-ratio grid, two φ-spaced construction
+     rings and a fine grain (fixed to the viewport);
+   · ::after — the page's own kaleidoscope emblem: a spirograph / Maurer rose
+     over a rotating guilloché family, formula engraved on the rim, drawn in on
+     load (SMIL inside the SVG) and drifting slowly with scroll.
+   Page content stays above (base.css gives .page-shell > * z-index 1).
+   Art-directed Notes (.notes-grimoire) keep their own cover instead.
+   Grain in dark mode uses dark specks only (grey noise lifts near-black).
+   ============================================================= */
+
+.kaleido-site {
+  --kaleido-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --kaleido-noise-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.6 0 0 0 -0.62'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --kaleido-line: color-mix(in srgb, var(--theme-text-primary) 7%, transparent);
+  --menu-texture: var(--kaleido-noise);
+}
+.kaleido-site[data-theme="dark"] { --kaleido-line: color-mix(in srgb, var(--theme-text-primary) 6%, transparent); --menu-texture: none; }
+
+.kaleido-site .page-shell::before {
+  content: "";
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 61.8% 38.2%, transparent calc(38.2vmax - 1px), var(--kaleido-line) calc(38.2vmax - 0.5px) calc(38.2vmax + 0.5px), transparent calc(38.2vmax + 1px)),
+    radial-gradient(circle at 61.8% 38.2%, transparent calc(61.8vmax - 1px), var(--kaleido-line) calc(61.8vmax - 0.5px) calc(61.8vmax + 0.5px), transparent calc(61.8vmax + 1px)),
+    linear-gradient(90deg, transparent calc(38.2% - 0.5px), var(--kaleido-line) 0 calc(38.2% + 0.5px), transparent 0),
+    linear-gradient(90deg, transparent calc(61.8% - 0.5px), var(--kaleido-line) 0 calc(61.8% + 0.5px), transparent 0),
+    var(--kaleido-noise) 0 0 / 200px;
+  background-blend-mode: normal, normal, normal, normal, soft-light;
+  opacity: calc(0.9 * var(--kaleido-texture, 1));
+}
+.kaleido-site[data-theme="dark"] .page-shell::before {
+  background:
+    radial-gradient(circle at 61.8% 38.2%, transparent calc(38.2vmax - 1px), var(--kaleido-line) calc(38.2vmax - 0.5px) calc(38.2vmax + 0.5px), transparent calc(38.2vmax + 1px)),
+    radial-gradient(circle at 61.8% 38.2%, transparent calc(61.8vmax - 1px), var(--kaleido-line) calc(61.8vmax - 0.5px) calc(61.8vmax + 0.5px), transparent calc(61.8vmax + 1px)),
+    linear-gradient(90deg, transparent calc(38.2% - 0.5px), var(--kaleido-line) 0 calc(38.2% + 0.5px), transparent 0),
+    linear-gradient(90deg, transparent calc(61.8% - 0.5px), var(--kaleido-line) 0 calc(61.8% + 0.5px), transparent 0),
+    var(--kaleido-noise-dark) 0 0 / 200px;
+  opacity: calc(0.6 * var(--kaleido-texture, 1));
+}
+
+.kaleido-site .page-shell::after {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: 0;
+  top: var(--kaleido-top, 60px);
+  left: 50%;
+  width: var(--kaleido-size, 600px);
+  height: var(--kaleido-size, 600px);
+  margin-left: calc(var(--kaleido-size, 600px) / -2);
+  background: var(--kaleido-img, none) center / contain no-repeat;
+  pointer-events: none;
+  opacity: var(--kaleido-opacity, 1);
+  translate: 0 calc(var(--nd-scroll, 0) * 0.14px);
+}
+.kaleido-site[data-kaleido-pos="corner"] .page-shell::after {
+  left: calc(100% - var(--kaleido-size, 600px) * 0.3);
+}
+/* emblems placed right or in the corner may run past the page edge: clip, don't scroll */
+.kaleido-site .page-shell { overflow-x: clip; }
+.kaleido-site[data-kaleido-pos="right"] .page-shell::after {
+  left: calc(50% + clamp(170px, 24vw, 400px));
+}
+
+/* section dividers: a rosette in the page's own symmetry between stacked sections,
+   drawn in the gap (absolute, so layout is untouched); the rules open from the centre
+   as the divider scrolls into view */
+.kaleido-site :is(
+  .ep-shell > section,
+  .brand-guide-section,
+  .jiju-section,
+  .etreport-section,
+  .project-css-section,
+  .project-css-impact,
+  .life-section,
+  .life-note,
+  .eden-penney,
+  .eden-about,
+  .conway-binary-essay
+) { position: relative; }
+.kaleido-site :is(
+  .ep-shell > section + section,
+  .brand-guide-section + .brand-guide-section,
+  .jiju-section + .jiju-section,
+  .etreport-section + .etreport-section,
+  .project-css-section + :is(.project-css-section, .project-css-impact),
+  .life-section + .life-note,
+  .eden-collage-section + .eden-penney,
+  .eden-penney + .eden-about,
+  .conway-rules-shell > .conway-binary-essay
+)::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: calc(var(--kd-gap, 0px) / -2);
+  width: min(72%, 620px);
+  height: 56px;
+  translate: -50% -50%;
+  pointer-events: none;
+  background:
+    var(--kaleido-divider, none) center / 56px 56px no-repeat,
+    linear-gradient(90deg, transparent, var(--kaleido-rule) 30%, transparent calc(50% - 34px), transparent calc(50% + 34px), var(--kaleido-rule) 70%, transparent) center / 100% 1px no-repeat;
+}
+.kaleido-site { --kaleido-rule: color-mix(in srgb, var(--theme-text-primary) 18%, transparent); }
+/* sections separated by margins (measured gaps) put the divider in the middle of the gap;
+   padded sections (gap 0) put it on the shared edge */
+.kaleido-site .ep-shell > section + section { --kd-gap: 100px; }
+.kaleido-site .project-css-section + :is(.project-css-section, .project-css-impact) { --kd-gap: 112px; }
+.kaleido-site .conway-rules-shell > .conway-binary-essay { --kd-gap: 144px; }
+
+@supports (animation-timeline: view()) {
+  .kaleido-site :is(
+    .ep-shell > section + section,
+    .brand-guide-section + .brand-guide-section,
+    .jiju-section + .jiju-section,
+    .etreport-section + .etreport-section,
+    .project-css-section + :is(.project-css-section, .project-css-impact),
+    .life-section + .life-note,
+    .eden-collage-section + .eden-penney,
+    .eden-penney + .eden-about,
+    .conway-rules-shell > .conway-binary-essay
+  )::before {
+    animation: kaleido-open linear forwards;
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+  }
+}
+@keyframes kaleido-open { from { clip-path: inset(0 50%); } to { clip-path: inset(0); } }
+
+/* art-directed Notes already carry a full cover, grid and grain */
+.kaleido-site .notes-grimoire.page-shell::before,
+.kaleido-site .notes-grimoire.page-shell::after { display: none; }
+
+@media (max-width: 760px) {
+  .kaleido-site .page-shell::after {
+    width: min(118vw, var(--kaleido-size, 600px));
+    height: min(118vw, var(--kaleido-size, 600px));
+    margin-left: calc(min(118vw, var(--kaleido-size, 600px)) / -2);
+    top: 20px;
+    opacity: 0.55;
+  }
+  .kaleido-site[data-kaleido-pos="right"] .page-shell::after { left: 50%; }
+  .kaleido-site[data-kaleido-pos="corner"] .page-shell::after { left: calc(100% - min(118vw, var(--kaleido-size, 600px)) * 0.22); top: -40px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kaleido-site .page-shell::after { translate: none; }
+  .kaleido-site *::before { animation: none; }
+}

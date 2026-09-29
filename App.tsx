@@ -20,6 +20,7 @@ import {
 
 import { siteEssayNotes, wikiEntries } from './generated/content';
 import { HeaderControls, joinBasePath, resolveAssetPath, type Language, type Theme, type ThemePreference } from './app/shared';
+import { useSiteKaleido } from './app/kaleido-routes';
 import NotFoundPage from './pages/NotFoundPage';
 import IconPromptsPage from './pages/IconPromptsPage';
 import {
@@ -322,6 +323,9 @@ const App: React.FC = () => {
   React.useEffect(() => {
     applyPageSeo(seoPath, language, activeArchivedWork);
   }, [seoPath, language, activeArchivedWork]);
+
+  // Site-wide kaleidoscope skeleton: the page's own math emblem, grid, grain and blended menu.
+  useSiteKaleido(pathWithoutBase, theme);
 
   if (isJijuPetFullPage) {
     return (

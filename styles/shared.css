@@ -146,13 +146,29 @@
 }
 
 /* Blend variant of the same menu, for art-directed pages whose artwork runs to the
-   top edge (Notes "grimoire" layout). Same controls, sizes and sticky behaviour;
+   top edge (Notes "grimoire" layout; and every page once the site kaleidoscope
+   skeleton marks <html> with .kaleido-site). Same controls, sizes and sticky behaviour;
    only the surface changes: fully transparent over the cover while the page is at
    the top, then the surface fades in with scroll (--nd-scroll, px, set by the page's
    depth hook; missing value = fully opaque, e.g. under reduced motion), spans the
    full viewport width instead of the content island, and carries the page's grain
    (--menu-texture) so it reads as part of the sheet rather than a band laid on it. */
-.menu-blend {
+.menu-blend,
+.kaleido-site :is(
+  .topics-market-topbar,
+  .projects-topbar,
+  .etreport-topbar,
+  .notes-topbar,
+  .conway-rules-topbar,
+  .film-gallery-topbar,
+  .life-topbar,
+  .brand-guide-topbar,
+  .jiju-topbar,
+  .ep-bar,
+  .conway-topbar,
+  .penney-topbar,
+  .eden-home-nav
+) {
   --menu-blend-a: clamp(0, calc(var(--nd-scroll, 9999) / 260), 1);
   background: transparent !important;
   border-bottom-color: transparent !important;
@@ -163,20 +179,80 @@
   -webkit-backdrop-filter: none !important;
 }
 .menu-blend::before,
-.menu-blend::after {
+.menu-blend::after,
+.kaleido-site :is(
+  .topics-market-topbar,
+  .projects-topbar,
+  .etreport-topbar,
+  .notes-topbar,
+  .conway-rules-topbar,
+  .film-gallery-topbar,
+  .life-topbar,
+  .brand-guide-topbar,
+  .jiju-topbar,
+  .ep-bar,
+  .conway-topbar,
+  .penney-topbar,
+  .eden-home-nav
+)::before,
+.kaleido-site :is(
+  .topics-market-topbar,
+  .projects-topbar,
+  .etreport-topbar,
+  .notes-topbar,
+  .conway-rules-topbar,
+  .film-gallery-topbar,
+  .life-topbar,
+  .brand-guide-topbar,
+  .jiju-topbar,
+  .ep-bar,
+  .conway-topbar,
+  .penney-topbar,
+  .eden-home-nav
+)::after {
   content: "";
   position: absolute;
   inset: 0 -100vmax;
   z-index: -1;
   pointer-events: none;
 }
-.menu-blend::before {
+.menu-blend::before,
+.kaleido-site :is(
+  .topics-market-topbar,
+  .projects-topbar,
+  .etreport-topbar,
+  .notes-topbar,
+  .conway-rules-topbar,
+  .film-gallery-topbar,
+  .life-topbar,
+  .brand-guide-topbar,
+  .jiju-topbar,
+  .ep-bar,
+  .conway-topbar,
+  .penney-topbar,
+  .eden-home-nav
+)::before {
   background: color-mix(in srgb, var(--theme-page) calc(var(--menu-blend-a) * 84%), transparent);
   border-bottom: 1px solid color-mix(in srgb, var(--theme-text-primary) calc(var(--menu-blend-a) * 8%), transparent);
   backdrop-filter: blur(calc(var(--menu-blend-a) * 16px)) saturate(1.08);
   -webkit-backdrop-filter: blur(calc(var(--menu-blend-a) * 16px)) saturate(1.08);
 }
-.menu-blend::after {
+.menu-blend::after,
+.kaleido-site :is(
+  .topics-market-topbar,
+  .projects-topbar,
+  .etreport-topbar,
+  .notes-topbar,
+  .conway-rules-topbar,
+  .film-gallery-topbar,
+  .life-topbar,
+  .brand-guide-topbar,
+  .jiju-topbar,
+  .ep-bar,
+  .conway-topbar,
+  .penney-topbar,
+  .eden-home-nav
+)::after {
   background: var(--menu-texture, none) 0 0 / 200px;
   mix-blend-mode: soft-light;
   opacity: calc(var(--menu-blend-a) * 0.6);
