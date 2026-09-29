@@ -2,9 +2,10 @@ import React from 'react';
 import { KALEIDO_PALETTE, kaleidoDataUri, kaleidoDividerSvg, kaleidoSvg, type KaleidoSpec } from './kaleido';
 
 // One kaleidoscope mandala per page: each route gets its own curve pair, so no two
-// pages share a symmetry. Every page places it the same way (owner, 2026-09-29: centred
-// behind the hero it crowded the content): tucked into the top-right corner, partly past
-// the page edge, at 72% opacity — the home page's placement, applied site-wide.
+// pages share a symmetry. Placement comes from looking at the whole page first (protagonist,
+// reading path, white space, existing decoration, mobile) — owner, clarified 2026-09-30. For the
+// current layouts that gave the top-right corner, partly past the page edge, at 72% opacity,
+// so it is the default below; a page with a different layout should be looked at again.
 const C = (s: Pick<KaleidoSpec, 'primary' | 'family' | 'copies'> & Partial<KaleidoSpec>): KaleidoSpec =>
   ({ pos: 'corner', opacity: 0.72, top: -40, size: 600, ...s });
 
