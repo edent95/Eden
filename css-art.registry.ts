@@ -1,4 +1,5 @@
 import type { CssArtComponent } from './components/css-art/index';
+import { IGamingHeroStageArt } from './components/css-art/igaming-hero-stage';
 import {
   ElementFireCssIcon,
   ElementWindCssIcon,
@@ -1073,6 +1074,26 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
     copy: {
       en: 'Hero plate: rice-paper face with a double frame, guilloché bands and corner rosettes; rays, rosette and two φ rings (23.6 → 38.2) centre on the upper golden point, leaving the headline on clean paper.',
       zh: '首屏版面：米纸底、双线框、上下扭索纹带与四角小玫瑰；放射线、扭索纹玫瑰和两圈 φ 刻度环（23.6 → 38.2）都以上方黄金点为圆心，中间留白给标题。',
+    },
+  },
+  {
+    id: 'igaming-hero-stage',
+    title: 'iGaming · Hero stage',
+    category: 'engraved-banner',
+    sourceRoute: '/igaming',
+    ratio: 'banner',
+    background: 'scene',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/igaming-hero.css',
+    Component: IGamingHeroStageArt,
+    label: {
+      en: 'Lit, layered banknote stage behind the iGaming key-points hero',
+      zh: 'iGaming 重点版首屏背后的多层光影钞票舞台',
+    },
+    copy: {
+      en: 'Paper, a moiré of two guilloché families turning against each other, rays, φ circles with a golden spiral, two half-cut mandala ovals in a pointer-lit metallic gradient, a pool of light for the headline, and floating chips, cards and coins with cast shadows; the plate tilts toward the pointer so the layers separate.',
+      zh: '米纸底、两组反向旋转的扭索纹叠出的莫尔纹、放射线、φ 圆与黄金螺旋、左右半切的曼陀罗椭圆（金属渐变随光标转动）、标题下的一池柔光，以及带投影的悬浮筹码、扑克牌与金币；整块版面随光标 3D 倾斜，各层分开。',
     },
   },
   {
