@@ -1,35 +1,37 @@
 import React from 'react';
 import { KALEIDO_PALETTE, kaleidoDataUri, kaleidoDividerSvg, kaleidoSvg, type KaleidoSpec } from './kaleido';
 
-// One kaleidoscope emblem per page: each route gets its own curve pair, so no two
-// pages share a symmetry. 'center' pages have a centred hero (the emblem sits behind
-// the title like a banknote rosette); 'right' pages have a left-aligned hero.
-const C = (s: Omit<KaleidoSpec, 'pos'> & Partial<Pick<KaleidoSpec, 'pos'>>): KaleidoSpec => ({ pos: 'center', ...s });
+// One kaleidoscope mandala per page: each route gets its own curve pair, so no two
+// pages share a symmetry. Every page places it the same way (owner, 2026-09-29: centred
+// behind the hero it crowded the content): tucked into the top-right corner, partly past
+// the page edge, at 72% opacity — the home page's placement, applied site-wide.
+const C = (s: Pick<KaleidoSpec, 'primary' | 'family' | 'copies'> & Partial<KaleidoSpec>): KaleidoSpec =>
+  ({ pos: 'corner', opacity: 0.72, top: -40, size: 600, ...s });
 
 export const KALEIDO_ROUTES: Record<string, KaleidoSpec | null> = {
-  '/': C({ pos: 'corner', opacity: 0.72, texture: 0.3, primary: { kind: 'epi', R: 5, r: 3, d: 5 }, family: { kind: 'hypo', R: 7, r: 2, d: 1.2 }, copies: 7, size: 620, top: -40 }),
-  '/project': C({ primary: { kind: 'epi', R: 8, r: 3, d: 5 }, family: { kind: 'hypo', R: 9, r: 4, d: 3 }, copies: 6, size: 700, top: 40 }),
-  '/etreporthub': C({ primary: { kind: 'hypo', R: 7, r: 3, d: 4.5 }, family: { kind: 'epi', R: 6, r: 1, d: 2 }, copies: 5, size: 640, top: 60 }),
-  '/etreporthub-sales': C({ primary: { kind: 'maurer', n: 6, deg: 71 }, family: { kind: 'hypo', R: 5, r: 2, d: 3 }, copies: 8, size: 720, top: 70 }),
-  '/igaming': C({ primary: { kind: 'hypo', R: 10, r: 3, d: 6 }, family: { kind: 'epi', R: 7, r: 2, d: 3 }, copies: 6, size: 700, top: 60 }),
-  '/igaming/full': C({ primary: { kind: 'epi', R: 11, r: 4, d: 7 }, family: { kind: 'hypo', R: 8, r: 3, d: 2 }, copies: 6, size: 700, top: 60 }),
-  '/igaming/cases': C({ primary: { kind: 'maurer', n: 5, deg: 97 }, family: { kind: 'hypo', R: 6, r: 1, d: 2.5 }, copies: 7, size: 680, top: 60 }),
-  '/dr-racing': C({ primary: { kind: 'hypo', R: 9, r: 4, d: 6 }, family: { kind: 'epi', R: 4, r: 1, d: 1.5 }, copies: 8, size: 640, top: 60 }),
-  '/poker': C({ primary: { kind: 'epi', R: 7, r: 4, d: 6 }, family: { kind: 'hypo', R: 11, r: 3, d: 5 }, copies: 5, size: 640, top: 60 }),
-  '/life-os': C({ primary: { kind: 'hypo', R: 11, r: 4, d: 7 }, family: { kind: 'epi', R: 5, r: 2, d: 2 }, copies: 6, size: 640, top: 60 }),
-  '/jiju-pet': C({ primary: { kind: 'hypo', R: 8, r: 5, d: 5 }, family: { kind: 'epi', R: 3, r: 1, d: 1.2 }, copies: 9, size: 640, top: 60 }),
-  '/jiju-revamp': C({ primary: { kind: 'rose', k: 4, n: 7 }, family: { kind: 'hypo', R: 7, r: 3, d: 2 }, copies: 6, size: 720, top: 40 }),
-  '/brand-guide': C({ primary: { kind: 'epi', R: 9, r: 4, d: 7 }, family: { kind: 'hypo', R: 5, r: 3, d: 1.5 }, copies: 7, size: 680, top: 30 }),
-  '/life': C({ primary: { kind: 'maurer', n: 4, deg: 97 }, family: { kind: 'epi', R: 8, r: 3, d: 2 }, copies: 6, size: 660, top: 20 }),
-  '/project-css': C({ primary: { kind: 'hypo', R: 12, r: 5, d: 8 }, family: { kind: 'epi', R: 6, r: 5, d: 4 }, copies: 5, size: 700, top: 40 }),
-  '/wiki': C({ pos: 'right', primary: { kind: 'rose', k: 5, n: 4 }, family: { kind: 'hypo', R: 8, r: 3, d: 4 }, copies: 6, size: 540, top: 70 }),
-  '/notes': C({ pos: 'right', primary: { kind: 'epi', R: 6, r: 5, d: 4 }, family: { kind: 'hypo', R: 9, r: 2, d: 1.5 }, copies: 7, size: 560, top: 70 }),
-  '/film-gallery': C({ pos: 'right', primary: { kind: 'maurer', n: 7, deg: 19 }, family: { kind: 'epi', R: 5, r: 1, d: 2 }, copies: 6, size: 520, top: 40 }),
-  '/penneys-game': C({ pos: 'right', primary: { kind: 'hypo', R: 5, r: 3, d: 2 }, family: { kind: 'epi', R: 7, r: 5, d: 3 }, copies: 8, size: 460, top: 30 }),
-  '/conways-game-of-life': C({ pos: 'right', primary: { kind: 'rose', k: 7, n: 3 }, family: { kind: 'hypo', R: 10, r: 7, d: 5 }, copies: 5, size: 480, top: 20 }),
-  '/cellular-automata-lab': C({ pos: 'right', primary: { kind: 'maurer', n: 8, deg: 29 }, family: { kind: 'hypo', R: 6, r: 5, d: 3 }, copies: 6, size: 480, top: 20 }),
-  '/icon-prompts': C({ pos: 'right', primary: { kind: 'epi', R: 10, r: 3, d: 7 }, family: { kind: 'hypo', R: 4, r: 1, d: 1 }, copies: 8, size: 480, top: 40 }),
-  '/project/miya': C({ pos: 'right', primary: { kind: 'epi', R: 5, r: 2, d: 3 }, family: { kind: 'hypo', R: 11, r: 4, d: 3 }, copies: 6, size: 460, top: 40 }),
+  '/': C({ texture: 0.3, primary: { kind: 'epi', R: 5, r: 3, d: 5 }, family: { kind: 'hypo', R: 7, r: 2, d: 1.2 }, copies: 7 }),
+  '/project': C({ primary: { kind: 'epi', R: 8, r: 3, d: 5 }, family: { kind: 'hypo', R: 9, r: 4, d: 3 }, copies: 6 }),
+  '/etreporthub': C({ primary: { kind: 'hypo', R: 7, r: 3, d: 4.5 }, family: { kind: 'epi', R: 6, r: 1, d: 2 }, copies: 5 }),
+  '/etreporthub-sales': C({ primary: { kind: 'maurer', n: 6, deg: 71 }, family: { kind: 'hypo', R: 5, r: 2, d: 3 }, copies: 8 }),
+  '/igaming': C({ primary: { kind: 'hypo', R: 10, r: 3, d: 6 }, family: { kind: 'epi', R: 7, r: 2, d: 3 }, copies: 6 }),
+  '/igaming/full': C({ primary: { kind: 'epi', R: 11, r: 4, d: 7 }, family: { kind: 'hypo', R: 8, r: 3, d: 2 }, copies: 6 }),
+  '/igaming/cases': C({ primary: { kind: 'maurer', n: 5, deg: 97 }, family: { kind: 'hypo', R: 6, r: 1, d: 2.5 }, copies: 7 }),
+  '/dr-racing': C({ primary: { kind: 'hypo', R: 9, r: 4, d: 6 }, family: { kind: 'epi', R: 4, r: 1, d: 1.5 }, copies: 8 }),
+  '/poker': C({ primary: { kind: 'epi', R: 7, r: 4, d: 6 }, family: { kind: 'hypo', R: 11, r: 3, d: 5 }, copies: 5 }),
+  '/life-os': C({ primary: { kind: 'hypo', R: 11, r: 4, d: 7 }, family: { kind: 'epi', R: 5, r: 2, d: 2 }, copies: 6 }),
+  '/jiju-pet': C({ primary: { kind: 'hypo', R: 8, r: 5, d: 5 }, family: { kind: 'epi', R: 3, r: 1, d: 1.2 }, copies: 9 }),
+  '/jiju-revamp': C({ primary: { kind: 'rose', k: 4, n: 7 }, family: { kind: 'hypo', R: 7, r: 3, d: 2 }, copies: 6 }),
+  '/brand-guide': C({ primary: { kind: 'epi', R: 9, r: 4, d: 7 }, family: { kind: 'hypo', R: 5, r: 3, d: 1.5 }, copies: 7 }),
+  '/life': C({ primary: { kind: 'maurer', n: 4, deg: 97 }, family: { kind: 'epi', R: 8, r: 3, d: 2 }, copies: 6 }),
+  '/project-css': C({ primary: { kind: 'hypo', R: 12, r: 5, d: 8 }, family: { kind: 'epi', R: 6, r: 5, d: 4 }, copies: 5 }),
+  '/wiki': C({ primary: { kind: 'rose', k: 5, n: 4 }, family: { kind: 'hypo', R: 8, r: 3, d: 4 }, copies: 6 }),
+  '/notes': C({ primary: { kind: 'epi', R: 6, r: 5, d: 4 }, family: { kind: 'hypo', R: 9, r: 2, d: 1.5 }, copies: 7 }),
+  '/film-gallery': C({ primary: { kind: 'maurer', n: 7, deg: 19 }, family: { kind: 'epi', R: 5, r: 1, d: 2 }, copies: 6 }),
+  '/penneys-game': C({ primary: { kind: 'hypo', R: 5, r: 3, d: 2 }, family: { kind: 'epi', R: 7, r: 5, d: 3 }, copies: 8 }),
+  '/conways-game-of-life': C({ primary: { kind: 'rose', k: 7, n: 3 }, family: { kind: 'hypo', R: 10, r: 7, d: 5 }, copies: 5 }),
+  '/cellular-automata-lab': C({ primary: { kind: 'maurer', n: 8, deg: 29 }, family: { kind: 'hypo', R: 6, r: 5, d: 3 }, copies: 6 }),
+  '/icon-prompts': C({ primary: { kind: 'epi', R: 10, r: 3, d: 7 }, family: { kind: 'hypo', R: 4, r: 1, d: 1 }, copies: 8 }),
+  '/project/miya': C({ primary: { kind: 'epi', R: 5, r: 2, d: 3 }, family: { kind: 'hypo', R: 11, r: 4, d: 3 }, copies: 6 }),
   // a full-screen app (dark topic board): no emblem, the backdrop and menu still apply
   '/topics': null,
 };
@@ -43,12 +45,13 @@ const fallbackSpec = (path: string): KaleidoSpec => {
   const r = 2 + ((h >> 3) % Math.max(1, R - 3));
   const d = 1 + ((h >> 6) % 6);
   return {
-    pos: 'right',
+    pos: 'corner',
+    opacity: 0.72,
     primary: (h >> 9) % 2 ? { kind: 'hypo', R, r: r === R ? r - 1 : r, d } : { kind: 'epi', R, r, d },
     family: { kind: 'maurer', n: 3 + ((h >> 11) % 6), deg: [29, 37, 47, 71, 97, 121][(h >> 13) % 6] },
     copies: 5 + ((h >> 15) % 4),
-    size: 480,
-    top: 60,
+    size: 600,
+    top: -40,
   };
 };
 
