@@ -223,12 +223,12 @@ const HomePenneyGame: React.FC<HomePenneyGameProps> = ({ isZh, igamingHref }) =>
       <div className="eden-penney-arena">
         <KaleidoFrame spec={kaleidoSpecFor('/')} />
         <div className="eden-penney-metrics" aria-label={t('Your record', '你的战绩')}>
-          <div>
+          <div className="kf-box">
             <span>{t('Credits', 'Credit')}</span>
             <strong>{player.credits}</strong>
             <small>/ {player.dailyLimit}</small>
           </div>
-          <div>
+          <div className="kf-box">
             <span>{t('Win rate', '胜率')}</span>
             <strong>{player.plays > 0 ? percent(player.winRate) : '—'}</strong>
             <small>{player.wins} / {player.plays}</small>
@@ -238,6 +238,7 @@ const HomePenneyGame: React.FC<HomePenneyGameProps> = ({ isZh, igamingHref }) =>
         <label className="eden-penney-name">
           <span>{t('Board name', '排行榜名字')}</span>
           <input
+            className="kf-box is-lite"
             value={name}
             maxLength={16}
             placeholder="Ah Beng"
@@ -246,17 +247,17 @@ const HomePenneyGame: React.FC<HomePenneyGameProps> = ({ isZh, igamingHref }) =>
         </label>
 
         <div className="eden-penney-tickets">
-          <div className="eden-penney-ticket is-player">
+          <div className="eden-penney-ticket kf-box is-player">
             <span>{t('Your ticket', '你的票')}</span>
             <SequenceCoins sequence={selected} />
           </div>
-          <div className="eden-penney-ticket is-house">
+          <div className="eden-penney-ticket kf-box is-house">
             <span>{t('House ticket', '庄家票')}</span>
             {round ? <SequenceCoins sequence={round.houseSequence} /> : <em>???</em>}
           </div>
         </div>
 
-        <div className="eden-penney-stream" aria-live="polite">
+        <div className="eden-penney-stream kf-box" aria-live="polite">
           {visibleFlips.length > 0 ? (
             visibleFlips.map((face, index) => (
               <Coin
@@ -278,7 +279,7 @@ const HomePenneyGame: React.FC<HomePenneyGameProps> = ({ isZh, igamingHref }) =>
             <button
               key={sequence}
               type="button"
-              className={sequence === selected ? 'is-selected' : undefined}
+              className={sequence === selected ? 'kf-box is-lite is-selected' : 'kf-box is-lite'}
               aria-pressed={sequence === selected}
               disabled={phase === 'requesting' || phase === 'revealing'}
               onClick={() => {
@@ -315,7 +316,7 @@ const HomePenneyGame: React.FC<HomePenneyGameProps> = ({ isZh, igamingHref }) =>
         ) : null}
 
         {player.plays >= QUALIFYING_PLAYS ? (
-          <a className="eden-penney-unlock" href={`${igamingHref}?from=coin-slot`}>
+          <a className="eden-penney-unlock kf-box" href={`${igamingHref}?from=coin-slot`}>
             <span>{t('Ten rounds in. You have seen the house win.', '十局打完，你已经见过庄家赢。')}</span>
             <strong>{t('Open the iGaming starter pack', '打开 iGaming 入门包')} <span aria-hidden="true">→</span></strong>
           </a>
