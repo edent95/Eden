@@ -17,6 +17,7 @@ The JSON block below is the structured bilingual source consumed by the site com
 ```json
 {
   "slug": "turn-chaos-into-systems",
+  "cover": "gears",
   "title": {
     "en": "Turn chaos into systems",
     "zh": "把混乱变成系统"

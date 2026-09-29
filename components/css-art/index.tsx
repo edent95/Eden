@@ -1,4 +1,5 @@
 import React from 'react';
+import { NOTES_COVER_NEAR, NotesCoverHero, NotesCoverNearProps, type NotesCoverVariant } from './notes-cover-scenes';
 
 export type CssArtComponent = React.FC<{ label: string }>;
 
@@ -1196,7 +1197,7 @@ const GRIMOIRE_STARS: Array<[number, number, number]> = [
   [35, 10, 1], [28, 22, 0], [22, 8, 1], [14, 16, 0], [8, 28, 1], [5, 9, 0],
 ];
 
-export const NotesGrimoireCover: React.FC<{ formula: string }> = ({ formula }) => (
+export const NotesGrimoireCover: React.FC<{ formula: string; variant?: NotesCoverVariant }> = ({ formula, variant = 'book' }) => (
   <div className="ng-cover" aria-hidden>
     <div className="ng-layer ng-sky" style={{ ...cssVar('--z', 0.3), ...cssVar('--sy', 0.35) }}>
       {GRIMOIRE_STARS.map(([x, y, big]) => (
@@ -1211,6 +1212,7 @@ export const NotesGrimoireCover: React.FC<{ formula: string }> = ({ formula }) =
       </span>
     </div>
     <div className="ng-layer ng-mid" style={{ ...cssVar('--z', 1), ...cssVar('--sy', 0.16) }}>
+      {variant !== 'book' ? <NotesCoverHero variant={variant} /> : (<>
       <span className="ng-book-shadow" />
       <span className="ng-book">
         <span className="ng-book-inner">
@@ -1221,8 +1223,10 @@ export const NotesGrimoireCover: React.FC<{ formula: string }> = ({ formula }) =
           <span className="ng-ribbon" />
         </span>
       </span>
+      </>)}
     </div>
     <div className="ng-layer ng-near" style={{ ...cssVar('--z', 2.2), ...cssVar('--sy', 0.05) }}>
+      {NOTES_COVER_NEAR[variant] !== 'desk' ? <NotesCoverNearProps set={NOTES_COVER_NEAR[variant] as 'coins' | 'scrolls'} /> : (<>
       <span className="ng-books">
         <span className="ng-tome t1" /><span className="ng-tome t2" /><span className="ng-tome t3" />
       </span>
@@ -1231,6 +1235,7 @@ export const NotesGrimoireCover: React.FC<{ formula: string }> = ({ formula }) =
           <span className="ng-wax" /><span className="ng-flame" />
         </span>
       ))}
+      </>)}
     </div>
     {[[62, 88, 11], [70, 80, 13], [78, 92, 10], [86, 84, 14], [66, 70, 12], [90, 74, 9], [74, 96, 12.5]].map(([x, y, d], i) => (
       <span key={i} className="ng-mote" style={{ left: `${x}%`, top: `${y}%`, ...cssVar('--d', `${d}s`), ...cssVar('--w', `${i * 1.3}s`) }} />
@@ -1241,5 +1246,11 @@ export const NotesGrimoireCover: React.FC<{ formula: string }> = ({ formula }) =
 export const NotesGrimoireCoverArt: CssArtComponent = ({ label }) => (
   <div className="ng-cover-preview" role="img" aria-label={label}>
     <NotesGrimoireCover formula="φ = (1 + √5) / 2 ✦ e^(iπ) + 1 = 0 ✦ zₙ₊₁ = zₙ² + c ✦ " />
+  </div>
+);
+
+export const NotesCoverScenesArt: CssArtComponent = ({ label }) => (
+  <div className="ng-cover-preview" role="img" aria-label={label}>
+    <NotesGrimoireCover formula="φ = (1 + √5) / 2 ✦ " variant="coin-spin" />
   </div>
 );

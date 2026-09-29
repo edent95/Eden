@@ -17,6 +17,7 @@ The JSON block below is the structured bilingual source consumed by the site com
 ```json
 {
   "slug": "human-nature-is-a-design-condition",
+  "cover": "maze",
   "title": {
     "en": "Human nature is a design condition",
     "zh": "人性不是借口，是设计条件"

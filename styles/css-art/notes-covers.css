@@ -1,0 +1,373 @@
+/* =============================================================
+   Notes cover scenes — per-note mid-ground heroes and near props
+   (components/css-art/notes-cover-scenes.tsx), drawn inside the
+   grimoire cover (.ng-cover, notes-grimoire.css) and using its tone
+   variables: --ng-ink / --ng-paper / --ng-foil / --ng-t1..3,
+   --ng-shadow, --ng-noise, --ng-stipple-ink. No outlines: tone,
+   stipple (.cv-stip) and grain (.cv-grain) model every volume.
+   Motion is slow and small (bob 9s, spins 6–40s, flows); all of it
+   stops under prefers-reduced-motion.
+   ============================================================= */
+
+.ng-cover .cv-hero {
+  left: calc(75% - 19cqi); top: calc(48% - 15cqi); width: 38cqi; height: 30cqi;
+  animation: cv-bob 9s ease-in-out infinite;
+}
+.ng-cover .cv-hero-shadow { left: calc(75% - 15cqi); top: calc(48% + 15.5cqi); width: 30cqi; }
+.ng-cover .cv-hero span, .ng-cover .cv-near span { position: absolute; display: block; }
+
+/* shared tone helpers */
+.ng-cover .cv-stip::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(circle, var(--ng-stipple-ink) 0 32%, transparent 38%) 0 0 / 0.45cqi 0.45cqi;
+  -webkit-mask: linear-gradient(115deg, transparent 30%, rgba(0, 0, 0, 0.55) 70%, black);
+  mask: linear-gradient(115deg, transparent 30%, rgba(0, 0, 0, 0.55) 70%, black);
+  opacity: 0.55;
+}
+.ng-cover .cv-grain { overflow: hidden; }
+.ng-cover .cv-grain::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: var(--ng-noise) 0 0 / 150px; mix-blend-mode: soft-light; opacity: 0.5;
+}
+.ng-cover .cv-hero, .ng-cover .cv-near {
+  --cv-foil: radial-gradient(circle at 34% 28%, color-mix(in srgb, var(--ng-foil) 45%, white), var(--ng-foil) 46%, color-mix(in srgb, var(--ng-foil) 65%, black));
+  --cv-inkbody: linear-gradient(90deg, color-mix(in srgb, var(--ng-ink) 40%, var(--ng-paper)), color-mix(in srgb, var(--ng-ink) 62%, var(--ng-paper)) 45%, color-mix(in srgb, var(--ng-ink) 80%, black));
+  --cv-paperbody: linear-gradient(90deg, var(--ng-paper), color-mix(in srgb, var(--ng-paper) 80%, var(--ng-ink)));
+}
+
+/* coin stack primitive (also used by near props) */
+.ng-cover .cv-stack { bottom: 0; width: 6cqi; height: var(--h); transform-origin: 50% 100%; rotate: var(--lean, 0deg); }
+.ng-cover .cv-stack-body {
+  left: 0; right: 0; top: 0.9cqi; bottom: 0; border-radius: 0 0 50% 50% / 0 0 0.9cqi 0.9cqi;
+  background:
+    repeating-linear-gradient(180deg, transparent 0 0.55cqi, color-mix(in srgb, var(--ng-foil) 55%, black) 0.55cqi 0.68cqi),
+    linear-gradient(90deg, color-mix(in srgb, var(--ng-foil) 70%, white), var(--ng-foil) 40%, color-mix(in srgb, var(--ng-foil) 55%, black));
+}
+.ng-cover .cv-stack-top { left: 0; right: 0; top: 0; height: 1.8cqi; border-radius: 50%; background: var(--cv-foil); }
+.ng-cover .cv-stack.is-lean { animation: cv-sway 5s ease-in-out infinite; }
+
+/* ---------- rivers: three falls into one basin ---------- */
+.cv-rivers .cv-fall { top: 0; width: 7cqi; height: 72%; }
+.cv-rivers .f0 { left: 12%; top: 14%; height: 58%; }
+.cv-rivers .f1 { left: calc(50% - 3.5cqi); top: 0; height: 72%; }
+.cv-rivers .f2 { right: 12%; top: 8%; height: 64%; }
+.cv-rivers .cv-ledge { left: -2cqi; right: -2cqi; top: 0; height: 3cqi; border-radius: 0.8cqi; background: var(--cv-inkbody); }
+.cv-rivers .cv-water {
+  left: 0.8cqi; right: 0.8cqi; top: 2.4cqi; bottom: 0;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 0.5cqi, color-mix(in srgb, var(--ng-paper) 70%, transparent) 0.5cqi 0.7cqi, transparent 0.7cqi 1.3cqi),
+    repeating-linear-gradient(180deg, color-mix(in srgb, var(--ng-paper) 55%, transparent) 0 2.4cqi, transparent 2.4cqi 3.6cqi),
+    linear-gradient(90deg, color-mix(in srgb, var(--ng-ink) 22%, transparent), color-mix(in srgb, var(--ng-foil) 26%, transparent) 50%, color-mix(in srgb, var(--ng-ink) 22%, transparent));
+  border-radius: 0 0 40% 40% / 0 0 1.2cqi 1.2cqi;
+  -webkit-mask: linear-gradient(180deg, black 80%, transparent);
+  mask: linear-gradient(180deg, black 80%, transparent);
+  animation: cv-flow 1.6s linear infinite;
+}
+.cv-rivers .f0 .cv-water { background-color: color-mix(in srgb, var(--ng-ink) 16%, transparent); }
+.cv-rivers .f2 .cv-water { background-color: color-mix(in srgb, var(--ng-foil) 20%, transparent); }
+.cv-rivers .cv-basin { left: 6%; right: 6%; bottom: 0; height: 30%; border-radius: 0 0 50% 50% / 0 0 100% 100%; background: var(--cv-inkbody); }
+.cv-rivers .cv-pool { left: 8%; right: 8%; bottom: 20%; height: 20%; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--ng-foil) 40%, var(--ng-paper)), var(--ng-t2)); }
+.cv-rivers .cv-ripple {
+  left: calc(50% - 8cqi); bottom: 22%; width: 16cqi; height: 4.4cqi; border-radius: 50%;
+  background: radial-gradient(closest-side, transparent 80%, color-mix(in srgb, var(--ng-paper) 70%, transparent) 88%, transparent 96%);
+  animation: cv-ripple 4.5s ease-out calc(var(--i) * 1.5s) infinite;
+}
+
+/* ---------- coin tower ---------- */
+.cv-tower .cv-crack { left: 70%; bottom: 0; width: 9cqi; height: 0.4cqi; background: var(--ng-shadow); border-radius: 50%; }
+
+/* ---------- spinning coin over a coin pyramid ---------- */
+.cv-spin .cv-coin3d {
+  left: calc(50% - 7cqi); top: 0; width: 14cqi; height: 14cqi;
+  transform-style: preserve-3d;
+  animation: cv-spin 6s linear infinite;
+}
+.cv-spin .cv-coin-layer {
+  inset: 0; border-radius: 50%;
+  background: color-mix(in srgb, var(--ng-foil) 60%, black);
+  transform: translateZ(calc((var(--z) - 2) * 0.22cqi));
+}
+.cv-spin .cv-coin-face {
+  inset: 0; border-radius: 50%;
+  background:
+    radial-gradient(circle, transparent 0 62%, color-mix(in srgb, var(--ng-foil) 60%, black) 64% 68%, transparent 70%),
+    var(--cv-foil);
+  backface-visibility: hidden;
+}
+.cv-spin .cv-coin-face::after {
+  content: ""; position: absolute; inset: 28%;
+  background: color-mix(in srgb, var(--ng-foil) 55%, black);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+.cv-spin .front { transform: translateZ(0.5cqi); }
+.cv-spin .back { transform: rotateY(180deg) translateZ(0.5cqi); }
+.cv-spin .cv-pcoin {
+  width: 5cqi; height: 1.7cqi; border-radius: 50%;
+  left: calc(50% - 2.5cqi + var(--col) * 5.2cqi);
+  top: calc(56% + var(--row) * 2.2cqi);
+  background: var(--cv-foil);
+  box-shadow: 0 0.35cqi 0 color-mix(in srgb, var(--ng-foil) 55%, black);
+}
+
+/* ---------- candle chart hitting a wall ---------- */
+.cv-chart .cv-candle { bottom: 8%; left: calc(4% + var(--i) * 9%); width: 3.2cqi; height: var(--h); }
+.cv-chart .cv-body {
+  left: 0; right: 0; top: 18%; bottom: 0; border-radius: 0.3cqi;
+  background: var(--cv-paperbody);
+}
+.cv-chart .cv-side { right: -0.9cqi; top: calc(18% - 0.45cqi); bottom: 0.45cqi; width: 0.9cqi; background: color-mix(in srgb, var(--ng-ink) 55%, black); transform: skewY(-30deg); }
+.cv-chart .cv-wick { left: calc(50% - 0.12cqi); top: 0; bottom: 0; width: 0.24cqi; background: var(--ng-t3); }
+.cv-chart .is-down .cv-body { background: linear-gradient(90deg, color-mix(in srgb, var(--ng-foil) 70%, white), var(--ng-foil) 45%, color-mix(in srgb, var(--ng-foil) 55%, black)); }
+.cv-chart .cv-wall {
+  left: 67%; top: 0; bottom: 8%; width: 3cqi; border-radius: 0.3cqi;
+  background:
+    repeating-linear-gradient(180deg, transparent 0 1.6cqi, color-mix(in srgb, var(--ng-ink) 60%, black) 1.6cqi 1.8cqi),
+    var(--cv-inkbody);
+}
+.cv-chart .cv-candle { animation: cv-rise 8s ease-in-out calc(var(--i) * 0.15s) infinite; transform-origin: 50% 100%; }
+
+/* ---------- balance ---------- */
+.cv-balance .cv-post { left: calc(50% - 0.6cqi); top: 16%; bottom: 6%; width: 1.2cqi; border-radius: 0.6cqi; background: var(--cv-inkbody); }
+.cv-balance .cv-foot { left: calc(50% - 7cqi); bottom: 0; width: 14cqi; height: 2.4cqi; border-radius: 50% 50% 0.4cqi 0.4cqi; background: var(--cv-inkbody); }
+.cv-balance .cv-finial { left: calc(50% - 1.3cqi); top: 10%; width: 2.6cqi; height: 2.6cqi; border-radius: 50%; background: var(--cv-foil); }
+.cv-balance .cv-beam { left: 6%; right: 6%; top: 18%; height: 1cqi; transform-origin: 50% 50%; animation: cv-tip 7s ease-in-out infinite; }
+.cv-balance .cv-bar { inset: 0; border-radius: 0.5cqi; background: linear-gradient(180deg, color-mix(in srgb, var(--ng-foil) 60%, white), var(--ng-foil) 50%, color-mix(in srgb, var(--ng-foil) 55%, black)); }
+.cv-balance .cv-pan { top: 0.5cqi; width: 12cqi; height: 15cqi; animation: cv-tip-back 7s ease-in-out infinite; transform-origin: 50% 0; }
+.cv-balance .cv-pan.left { left: -4cqi; }
+.cv-balance .cv-pan.right { right: -4cqi; }
+.cv-balance .cv-string { left: calc(50% - 0.08cqi); top: 0; height: 11cqi; width: 0.16cqi; background: var(--ng-t3); }
+.cv-balance .cv-dish { left: 0; right: 0; top: 11cqi; height: 2.8cqi; border-radius: 0 0 50% 50% / 0 0 100% 100%; background: var(--cv-inkbody); }
+.cv-balance .cv-pan .cv-stack { bottom: auto; top: calc(11cqi - var(--h) + 0.6cqi); width: 4cqi; left: calc(50% - 2cqi) !important; }
+.cv-balance .cv-sprout { left: calc(50% - 2cqi); top: 4.6cqi; width: 4cqi; height: 7cqi; }
+.cv-balance .cv-stem { left: calc(50% - 0.18cqi); bottom: 0; width: 0.36cqi; height: 6cqi; background: color-mix(in srgb, #3f9b76 70%, var(--ng-ink)); }
+.cv-balance .cv-leaf { top: 0.6cqi; width: 2.4cqi; height: 1.5cqi; border-radius: 100% 0; background: color-mix(in srgb, #3f9b76 80%, var(--ng-paper)); }
+.cv-balance .cv-leaf.l { left: 0; transform: rotate(-20deg); }
+.cv-balance .cv-leaf.r { right: 0; transform: scaleX(-1) rotate(-20deg); }
+
+/* ---------- hourglass with orbiting coins ---------- */
+.cv-glass .cv-cap { left: calc(50% - 9cqi); width: 18cqi; height: 2.4cqi; border-radius: 0.8cqi; background: var(--cv-inkbody); }
+.cv-glass .cv-cap.top { top: 0; }
+.cv-glass .cv-cap.bot { bottom: 0; }
+.cv-glass .cv-pillar { top: 2cqi; bottom: 2cqi; width: 1cqi; border-radius: 0.5cqi; background: var(--cv-inkbody); }
+.cv-glass .cv-pillar.l { left: calc(50% - 8cqi); }
+.cv-glass .cv-pillar.r { left: calc(50% + 7cqi); }
+.cv-glass .cv-bulb {
+  left: calc(50% - 6cqi); top: 2.4cqi; bottom: 2.4cqi; width: 12cqi;
+  clip-path: polygon(0 0, 100% 0, 100% 8%, 56% 50%, 100% 92%, 100% 100%, 0 100%, 0 92%, 44% 50%, 0 8%);
+  background: linear-gradient(90deg, var(--ng-t2), color-mix(in srgb, var(--ng-paper) 60%, transparent) 35%, var(--ng-t1) 60%, var(--ng-t2));
+}
+.cv-glass .cv-sand-top, .cv-glass .cv-sand-bot { left: calc(50% - 6cqi); width: 12cqi; background: var(--cv-foil); }
+.cv-glass .cv-sand-top { top: calc(2.4cqi + 4cqi); height: 7cqi; clip-path: polygon(6% 0, 94% 0, 54% 100%, 46% 100%); transform-origin: 50% 100%; animation: cv-sand-top 14s linear infinite; }
+.cv-glass .cv-sand-bot { bottom: 2.4cqi; height: 8cqi; clip-path: polygon(50% 0, 96% 100%, 4% 100%); transform-origin: 50% 100%; animation: cv-sand-bot 14s linear infinite; }
+.cv-glass .cv-stream { left: calc(50% - 0.12cqi); top: 48%; height: 30%; width: 0.24cqi; background: var(--ng-foil); }
+.cv-glass .cv-orbit { left: calc(50% - 15cqi); top: calc(50% - 5cqi); width: 30cqi; height: 10cqi; border-radius: 50%; }
+.cv-glass .cv-ocoin {
+  left: calc(50% - 1.4cqi); top: calc(50% - 1.4cqi); width: 2.8cqi; height: 2.8cqi; border-radius: 50%;
+  background: var(--cv-foil);
+  offset-path: ellipse(15cqi 5cqi at 50% 50%);
+  animation: cv-orbit 18s linear calc(var(--i) * -6s) infinite;
+}
+@supports not (offset-path: ellipse(1px 1px at 50% 50%)) { .cv-glass .cv-orbit { display: none; } }
+
+/* ---------- maze on a tilted plane ---------- */
+.cv-maze { perspective: 80cqi; }
+.cv-maze .cv-plane {
+  left: calc(50% - 13cqi); top: calc(50% - 13cqi); width: 26cqi; height: 26cqi;
+  transform: rotateX(58deg) rotateZ(-35deg);
+  background:
+    radial-gradient(circle, var(--ng-t2) 0 18%, transparent 22%) 0 0 / 1.3cqi 1.3cqi,
+    color-mix(in srgb, var(--ng-paper) 80%, var(--ng-ink));
+  border-radius: 0.6cqi;
+  box-shadow: 0 1.2cqi 0 color-mix(in srgb, var(--ng-ink) 55%, black), 0 3cqi 4cqi var(--ng-shadow);
+}
+.cv-maze .cv-wallseg { background: color-mix(in srgb, var(--ng-ink) 70%, var(--ng-paper)); box-shadow: 0.35cqi 0.35cqi 0 color-mix(in srgb, var(--ng-ink) 80%, black), 0.7cqi 0.7cqi 0 color-mix(in srgb, var(--ng-ink) 60%, black); border-radius: 0.2cqi; }
+.cv-maze .cv-path {
+  left: 9%; top: 9%; width: 82%; height: 82%;
+  background:
+    linear-gradient(var(--ng-foil), var(--ng-foil)) 0 0 / 0.5cqi 60% no-repeat,
+    linear-gradient(var(--ng-foil), var(--ng-foil)) 0 60% / 55% 0.5cqi no-repeat,
+    linear-gradient(var(--ng-foil), var(--ng-foil)) 55% 60% / 0.5cqi 40% no-repeat,
+    linear-gradient(var(--ng-foil), var(--ng-foil)) 55% 100% / 45% 0.5cqi no-repeat;
+  -webkit-mask: linear-gradient(135deg, black 0 var(--p, 100%), transparent 0);
+  mask: linear-gradient(135deg, black 0 var(--p, 100%), transparent 0);
+  animation: cv-path 6s ease-in-out infinite alternate;
+}
+@property --p { syntax: "<percentage>"; inherits: false; initial-value: 100%; }
+
+/* ---------- lens over a data field ---------- */
+.cv-lens { perspective: 80cqi; }
+.cv-lens .cv-field {
+  left: -6%; right: -6%; top: 36%; height: 60%;
+  transform: rotateX(62deg);
+  background: radial-gradient(circle, var(--ng-t3) 0 22%, transparent 26%) 0 0 / 1.6cqi 1.6cqi;
+  -webkit-mask: radial-gradient(closest-side, black 55%, transparent);
+  mask: radial-gradient(closest-side, black 55%, transparent);
+}
+.cv-lens .cv-magnifier { left: calc(50% - 8cqi); top: 4%; width: 16cqi; height: 26cqi; animation: cv-drift 10s ease-in-out infinite; }
+.cv-lens .cv-glass-in {
+  left: 1.2cqi; top: 1.2cqi; width: 13.6cqi; height: 13.6cqi; border-radius: 50%;
+  background:
+    radial-gradient(circle at 32% 28%, color-mix(in srgb, var(--ng-paper) 85%, transparent) 0 12%, transparent 16%),
+    radial-gradient(circle, var(--ng-foil) 0 22%, transparent 26%) 0 0 / 2.8cqi 2.8cqi,
+    color-mix(in srgb, var(--ng-paper) 30%, transparent);
+}
+.cv-lens .cv-rim { left: 0; top: 0; width: 16cqi; height: 16cqi; border-radius: 50%; background: radial-gradient(closest-side, transparent 0 84%, var(--ng-foil) 86% 96%, transparent 98%); }
+.cv-lens .cv-handle { left: calc(50% - 1cqi); top: 15.5cqi; width: 2cqi; height: 10cqi; border-radius: 1cqi; background: var(--cv-inkbody); transform-origin: 50% 0; rotate: -28deg; }
+
+/* ---------- meshing gears ---------- */
+.cv-gears .cv-gear { border-radius: 50%; }
+.cv-gears .big { left: 10%; top: 6%; width: 20cqi; height: 20cqi; animation: cv-turn 40s linear infinite; }
+.cv-gears .small { left: calc(10% + 18.4cqi); top: calc(6% + 10cqi); width: 13cqi; height: 13cqi; animation: cv-turn-back 26s linear infinite; }
+.cv-gears .cv-teeth {
+  inset: 0; border-radius: 50%;
+  background: repeating-conic-gradient(color-mix(in srgb, var(--ng-ink) 62%, var(--ng-paper)) 0 7deg, transparent 7deg 15deg);
+  -webkit-mask: radial-gradient(closest-side, transparent 72%, black 73%);
+  mask: radial-gradient(closest-side, transparent 72%, black 73%);
+}
+.cv-gears .small .cv-teeth { background: repeating-conic-gradient(color-mix(in srgb, var(--ng-foil) 80%, black) 0 11deg, transparent 11deg 23deg); }
+.cv-gears .cv-disc { inset: 11%; border-radius: 50%; background: radial-gradient(circle, transparent 0 18%, color-mix(in srgb, var(--ng-ink) 55%, var(--ng-paper)) 20% 60%, transparent 62% 70%, color-mix(in srgb, var(--ng-ink) 55%, var(--ng-paper)) 72%); }
+.cv-gears .small .cv-disc { background: radial-gradient(circle, transparent 0 18%, var(--ng-foil) 20%); }
+.cv-gears .cv-hub { inset: 42%; border-radius: 50%; background: var(--cv-foil); }
+.cv-gears .cv-shard {
+  left: calc(72% + var(--i) * 4%); top: calc(8% + var(--i) * 13%); width: 1.8cqi; height: 1.2cqi;
+  background: var(--ng-t3); clip-path: polygon(0 20%, 100% 0, 80% 100%, 10% 80%);
+  animation: cv-shard 7s ease-in-out calc(var(--i) * 1.3s) infinite;
+}
+
+/* ---------- chessboard in perspective ---------- */
+.cv-chess { perspective: 80cqi; }
+.cv-chess .cv-board {
+  left: calc(50% - 15cqi); top: 30%; width: 30cqi; height: 30cqi;
+  transform: rotateX(62deg) rotateZ(45deg);
+  background: conic-gradient(color-mix(in srgb, var(--ng-ink) 55%, var(--ng-paper)) 25%, var(--ng-paper) 0 50%, color-mix(in srgb, var(--ng-ink) 55%, var(--ng-paper)) 0 75%, var(--ng-paper) 0) 0 0 / 5cqi 5cqi;
+  box-shadow: 0 0 0 1cqi color-mix(in srgb, var(--ng-ink) 70%, black), 1.4cqi 1.4cqi 0 1cqi color-mix(in srgb, var(--ng-ink) 50%, black);
+}
+.cv-chess .cv-piece { width: 3.6cqi; height: 7cqi; margin: -7cqi 0 0 -1.8cqi; }
+.cv-chess .cv-piece-body {
+  inset: 0;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--ng-ink) 55%, var(--ng-paper)), color-mix(in srgb, var(--ng-ink) 85%, black));
+  clip-path: polygon(38% 0, 62% 0, 70% 12%, 62% 24%, 70% 30%, 60% 34%, 66% 78%, 88% 86%, 90% 100%, 10% 100%, 12% 86%, 34% 78%, 40% 34%, 30% 30%, 38% 24%, 30% 12%);
+}
+.cv-chess .k1 .cv-piece-body { background: linear-gradient(90deg, var(--ng-paper), color-mix(in srgb, var(--ng-paper) 70%, var(--ng-ink))); }
+.cv-chess .k2 { height: 9.5cqi; margin-top: -9.5cqi; }
+.cv-chess .k2 .cv-piece-body {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--ng-foil) 70%, white), var(--ng-foil) 45%, color-mix(in srgb, var(--ng-foil) 55%, black));
+  clip-path: polygon(46% 0, 54% 0, 54% 6%, 62% 6%, 62% 10%, 54% 10%, 54% 16%, 68% 22%, 60% 34%, 66% 80%, 88% 88%, 90% 100%, 10% 100%, 12% 88%, 34% 80%, 40% 34%, 32% 22%, 46% 16%, 46% 10%, 38% 10%, 38% 6%, 46% 6%);
+}
+
+/* ---------- a big button and its ripples ---------- */
+.cv-button .cv-housing { left: calc(50% - 13cqi); top: 52%; width: 26cqi; height: 11cqi; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--ng-ink) 80%, black) 55%, color-mix(in srgb, var(--ng-ink) 50%, var(--ng-paper)) 60%, color-mix(in srgb, var(--ng-ink) 70%, black)); }
+.cv-button .cv-cap-wrap { left: calc(50% - 9cqi); top: 36%; width: 18cqi; height: 12cqi; animation: cv-press 3.2s ease-in-out infinite; }
+.cv-button .cv-cap-side { left: 0; right: 0; top: 3.5cqi; height: 6cqi; border-radius: 0 0 50% 50% / 0 0 3.5cqi 3.5cqi; background: linear-gradient(90deg, color-mix(in srgb, var(--ng-foil) 60%, white), var(--ng-foil) 40%, color-mix(in srgb, var(--ng-foil) 50%, black)); }
+.cv-button .cv-cap-top { left: 0; right: 0; top: 0; height: 7cqi; border-radius: 50%; background: var(--cv-foil); }
+.cv-button .cv-wave {
+  left: calc(50% - 16cqi); top: calc(52% - 1cqi); width: 32cqi; height: 13cqi; border-radius: 50%;
+  background: radial-gradient(closest-side, transparent 84%, color-mix(in srgb, var(--ng-foil) 60%, transparent) 90%, transparent 97%);
+  opacity: 0; animation: cv-wave 3.2s ease-out calc(1.1s + var(--i) * 0.35s) infinite;
+}
+
+/* ---------- vinyl ---------- */
+.cv-vinyl { perspective: 80cqi; }
+.cv-vinyl .cv-plinth { left: 4%; right: 4%; top: 46%; height: 10cqi; border-radius: 1cqi; background: var(--cv-inkbody); transform: skewX(-12deg); }
+.cv-vinyl .cv-deck { left: calc(46% - 12cqi); top: calc(46% - 12cqi); width: 24cqi; height: 24cqi; transform: rotateX(62deg); }
+.cv-vinyl .cv-record {
+  inset: 0; border-radius: 50%;
+  background:
+    radial-gradient(circle, var(--ng-foil) 0 16%, color-mix(in srgb, var(--ng-foil) 60%, black) 17% 18%, transparent 19%),
+    repeating-radial-gradient(circle, color-mix(in srgb, var(--ng-ink) 85%, black) 0 0.35cqi, color-mix(in srgb, var(--ng-ink) 70%, black) 0.35cqi 0.5cqi),
+    #111;
+  animation: cv-turn 4s linear infinite;
+}
+.cv-vinyl .cv-record::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 40deg, transparent 0 10%, rgba(255, 255, 255, 0.12) 14%, transparent 20% 60%, rgba(255, 255, 255, 0.1) 64%, transparent 70%); }
+.cv-vinyl .cv-arm { left: 76%; top: 10%; width: 12cqi; height: 16cqi; transform-origin: 80% 10%; rotate: 18deg; }
+.cv-vinyl .cv-arm-rod { right: 1.4cqi; top: 0; width: 0.6cqi; height: 14cqi; border-radius: 0.3cqi; background: var(--cv-foil); }
+.cv-vinyl .cv-arm-head { right: 0.4cqi; top: 13cqi; width: 2.6cqi; height: 1.8cqi; border-radius: 0.3cqi; background: color-mix(in srgb, var(--ng-ink) 70%, black); }
+.cv-vinyl .cv-note {
+  left: calc(30% + var(--i) * 14%); top: 20%; width: 2.4cqi; height: 3.6cqi;
+  background: var(--ng-foil);
+  clip-path: polygon(62% 0, 100% 12%, 100% 26%, 72% 18%, 72% 80%, 58% 96%, 30% 100%, 8% 90%, 6% 74%, 26% 64%, 50% 66%, 60% 70%, 60% 0);
+  opacity: 0; animation: cv-note 6s ease-in calc(var(--i) * 2s) infinite;
+}
+
+/* ---------- treasure chest ---------- */
+.cv-chest .cv-front { left: calc(50% - 13cqi); top: 44%; width: 26cqi; height: 13cqi; border-radius: 0.6cqi; background: var(--cv-inkbody); }
+.cv-chest .cv-side { left: calc(50% + 13cqi); top: calc(44% - 2cqi); width: 5cqi; height: 13cqi; background: color-mix(in srgb, var(--ng-ink) 80%, black); transform: skewY(-24deg); transform-origin: 0 100%; }
+.cv-chest .cv-chest-in { left: calc(50% - 12cqi); top: calc(44% - 3.4cqi); width: 30cqi; height: 4cqi; background: radial-gradient(closest-side, color-mix(in srgb, var(--ng-foil) 80%, white), var(--ng-foil) 60%, color-mix(in srgb, var(--ng-foil) 50%, black)); border-radius: 50%; }
+.cv-chest .cv-lid {
+  left: calc(50% - 13cqi); top: calc(44% - 12cqi); width: 26cqi; height: 9cqi; border-radius: 13cqi 13cqi 0.4cqi 0.4cqi / 7cqi 7cqi 0.4cqi 0.4cqi;
+  background: var(--cv-inkbody);
+  transform-origin: 50% 100%; transform: rotate(-9deg) translateY(-1.4cqi);
+  animation: cv-lid 6s ease-in-out infinite;
+}
+.cv-chest .cv-band { top: 44%; width: 1.4cqi; height: 13cqi; background: var(--cv-foil); }
+.cv-chest .cv-band.a { left: calc(50% - 9cqi); }
+.cv-chest .cv-band.b { left: calc(50% + 7.6cqi); }
+.cv-chest .cv-keyhole { left: calc(50% - 1.3cqi); top: calc(44% + 3.4cqi); width: 2.6cqi; height: 3.6cqi; background: var(--cv-foil); clip-path: polygon(50% 0, 80% 12%, 88% 36%, 70% 56%, 76% 100%, 24% 100%, 30% 56%, 12% 36%, 20% 12%); }
+.cv-chest .cv-glint {
+  left: calc(38% + var(--i) * 8%); top: calc(44% - 5cqi); width: 1.4cqi; height: 1.4cqi; background: var(--ng-foil);
+  clip-path: polygon(50% 0, 58% 42%, 100% 50%, 58% 58%, 50% 100%, 42% 58%, 0 50%, 42% 42%);
+  animation: cv-glint 3.6s ease-in-out calc(var(--i) * 0.9s) infinite;
+}
+
+/* ---------- a bolt over stacked modules ---------- */
+.cv-bolt .cv-cube { width: 8cqi; height: 8cqi; animation: cv-cube 6s ease-in-out calc(var(--i) * 0.25s) infinite; }
+.cv-bolt .cv-cube-top { left: 0; top: 0; width: 8cqi; height: 4.6cqi; clip-path: polygon(50% 0, 100% 25%, 50% 50%, 0 25%); background: color-mix(in srgb, var(--ng-paper) 85%, var(--ng-ink)); height: 8cqi; }
+.cv-bolt .cv-cube-l { left: 0; top: 2cqi; width: 4cqi; height: 6cqi; clip-path: polygon(0 0, 100% 33%, 100% 100%, 0 67%); background: color-mix(in srgb, var(--ng-ink) 45%, var(--ng-paper)); }
+.cv-bolt .cv-cube-r { left: 4cqi; top: 2cqi; width: 4cqi; height: 6cqi; clip-path: polygon(0 33%, 100% 0, 100% 67%, 0 100%); background: color-mix(in srgb, var(--ng-ink) 70%, black); }
+.cv-bolt .cv-strike {
+  left: calc(56% - 3cqi); top: -18%; width: 6cqi; height: 16cqi;
+  background: var(--cv-foil);
+  clip-path: polygon(40% 0, 100% 0, 62% 40%, 90% 40%, 20% 100%, 42% 52%, 12% 52%);
+  animation: cv-strike 3.4s steps(1) infinite;
+}
+
+/* ---------- near props ---------- */
+.ng-cover .cv-near { right: 3cqi; bottom: 0; width: 34cqi; height: 12cqi; }
+.cv-near-coins .cv-stack { width: 5cqi; }
+.cv-near-coins .cv-loose { bottom: 0; width: 4.6cqi; height: 1.6cqi; border-radius: 50%; background: var(--cv-foil); box-shadow: 0 0.3cqi 0 color-mix(in srgb, var(--ng-foil) 55%, black); }
+.cv-near-scrolls .cv-scroll { bottom: 0; height: 3.4cqi; border-radius: 1.7cqi; background: linear-gradient(180deg, var(--ng-paper), color-mix(in srgb, var(--ng-paper) 75%, var(--ng-ink)) 70%, color-mix(in srgb, var(--ng-paper) 60%, var(--ng-ink))); box-shadow: 0 0.6cqi 1.2cqi var(--ng-shadow); }
+.cv-near-scrolls .s1 { left: 0; width: 20cqi; }
+.cv-near-scrolls .s2 { left: 3cqi; bottom: 3cqi; width: 16cqi; rotate: -4deg; }
+.cv-near-scrolls .cv-inkwell { left: 24cqi; bottom: 0; width: 6cqi; height: 5cqi; border-radius: 1.6cqi 1.6cqi 0.6cqi 0.6cqi; background: var(--cv-inkbody); }
+.cv-near-scrolls .cv-quill {
+  left: 25.6cqi; bottom: 4cqi; width: 3.6cqi; height: 13cqi; transform-origin: 30% 100%; rotate: 14deg;
+  background: repeating-linear-gradient(-58deg, var(--ng-t3) 0 0.14cqi, transparent 0.14cqi 0.5cqi), linear-gradient(100deg, var(--ng-paper), color-mix(in srgb, var(--ng-paper) 75%, var(--ng-ink)));
+  clip-path: polygon(20% 100%, 26% 70%, 40% 40%, 70% 12%, 100% 0, 88% 30%, 64% 58%, 36% 84%);
+}
+
+/* narrow screens: hero centred, like the book */
+@container (max-width: 820px) {
+  .ng-cover .cv-hero { left: calc(50% - 30cqi); top: calc(46% - 23cqi); width: 60cqi; height: 46cqi; }
+  .ng-cover .cv-hero-shadow { left: calc(50% - 22cqi); top: calc(46% + 23cqi); width: 44cqi; }
+  .ng-cover .cv-near { width: 46cqi; height: 16cqi; }
+}
+
+@keyframes cv-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.2cqi); } }
+@keyframes cv-sway { 0%, 100% { rotate: 9deg; } 50% { rotate: 6deg; } }
+@keyframes cv-flow { to { background-position: 0 0, 0 3.6cqi, 0 0; } }
+@keyframes cv-ripple { 0% { transform: scale(0.3); opacity: 0.9; } 100% { transform: scale(1.4); opacity: 0; } }
+@keyframes cv-spin { to { transform: rotateY(360deg); } }
+@keyframes cv-rise { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.06); } }
+@keyframes cv-tip { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(3deg); } }
+@keyframes cv-tip-back { 0%, 100% { transform: rotate(4deg); } 50% { transform: rotate(-3deg); } }
+@keyframes cv-sand-top { 0% { transform: scaleY(1); } 90%, 100% { transform: scaleY(0.12); } }
+@keyframes cv-sand-bot { 0% { transform: scaleY(0.2); } 90%, 100% { transform: scaleY(1); } }
+@keyframes cv-orbit { to { offset-distance: 100%; } }
+@keyframes cv-path { from { --p: 0%; } to { --p: 100%; } }
+@keyframes cv-drift { 0%, 100% { transform: translate(-6cqi, 0); } 50% { transform: translate(6cqi, 1.5cqi); } }
+@keyframes cv-turn { to { transform: rotate(360deg); } }
+@keyframes cv-turn-back { to { transform: rotate(-360deg); } }
+@keyframes cv-shard { 0%, 100% { transform: translate(0, 0) rotate(0); opacity: 0.4; } 50% { transform: translate(-3cqi, 2cqi) rotate(90deg); opacity: 1; } }
+@keyframes cv-press { 0%, 30%, 60%, 100% { transform: translateY(0); } 38%, 48% { transform: translateY(1.8cqi); } }
+@keyframes cv-wave { 0% { transform: scale(0.5); opacity: 0; } 20% { opacity: 1; } 100% { transform: scale(1.35); opacity: 0; } }
+@keyframes cv-note { 0% { transform: translateY(4cqi); opacity: 0; } 20% { opacity: 0.9; } 100% { transform: translate(3cqi, -10cqi) rotate(12deg); opacity: 0; } }
+@keyframes cv-lid { 0%, 100% { transform: rotate(-9deg) translateY(-1.4cqi); } 50% { transform: rotate(-13deg) translateY(-2.2cqi); } }
+@keyframes cv-glint { 0%, 100% { opacity: 0; transform: scale(0.3); } 30% { opacity: 1; transform: scale(1) rotate(45deg); } 60% { opacity: 0; } }
+@keyframes cv-cube { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-0.8cqi); } }
+@keyframes cv-strike { 0%, 68%, 86%, 100% { opacity: 1; } 72%, 80% { opacity: 0.25; } 76% { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .ng-cover .cv-hero, .ng-cover .cv-hero *, .ng-cover .cv-near * { animation: none !important; }
+  .cv-bolt .cv-strike { opacity: 1; }
+  .cv-vinyl .cv-note, .cv-button .cv-wave { opacity: 0.6; }
+}

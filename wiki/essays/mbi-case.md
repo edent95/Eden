@@ -17,6 +17,7 @@ The JSON block below is the structured bilingual source consumed by the site com
 ```json
 {
   "slug": "mbi-case",
+  "cover": "coin-spin",
   "title": {
     "en": "Old scam, new clothes: MBI and the coin that \"only goes up\"",
     "zh": "旧骗局，新外衣：MBI 与那枚「会一直涨」的币"

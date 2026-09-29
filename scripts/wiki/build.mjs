@@ -61,6 +61,7 @@ export type SiteEssayNoteData = {
   }>;
   originalSource?: { url: string; label: Record<'en' | 'zh', string> };
   storySource?: { url: string; label: Record<'en' | 'zh', string> };
+  cover?: 'book' | 'rivers' | 'coin-tower' | 'coin-spin' | 'chart-wall' | 'balance' | 'hourglass' | 'maze' | 'lens' | 'gears' | 'chess' | 'button' | 'vinyl' | 'chest' | 'bolt';
   storyboard?: Array<{ motif: 'mandelbrot' | 'spiral' | 'catenoid' | 'catenary' | 'penrose' | 'phyllotaxis' | 'lissajous'; kind: 'method' | 'fact' | 'overturned' | 'gap' | 'verdict' | 'idea' | 'example' | 'principle' | 'warning' | 'action'; beat: Record<'en' | 'zh', string> }>;
   references?: Array<{ id: string; url: string; label: Record<'en' | 'zh', string> }>;
   referencesNote?: Record<'en' | 'zh', string>;

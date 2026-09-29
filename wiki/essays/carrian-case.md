@@ -17,6 +17,7 @@ The JSON block below is the structured bilingual source consumed by the site com
 ```json
 {
   "slug": "carrian-case",
+  "cover": "coin-tower",
   "title": {
     "en": "An empire built on borrowed money: the Carrian case",
     "zh": "一座建在借来的钱上的帝国：佳宁案"

@@ -17,6 +17,7 @@ The JSON block below is the structured bilingual source consumed by the site com
 ```json
 {
   "slug": "judgment-is-not-more-information",
+  "cover": "lens",
   "title": {
     "en": "Judgment is not knowing more",
     "zh": "判断不是知道更多"

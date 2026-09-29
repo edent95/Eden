@@ -17,6 +17,7 @@ The JSON block below is the structured bilingual source consumed by the site com
 ```json
 {
   "slug": "modern-finance-ponzi",
+  "cover": "balance",
   "title": {
     "en": "Is modern finance a Ponzi scheme?",
     "zh": "现代金融是庞氏骗局吗"
