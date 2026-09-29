@@ -30,6 +30,7 @@ import {
   IGamingTableBanner,
   MathFractalRuneCssIcon,
   NotesCoverScenesArt,
+  NotesMathEmblemArt,
   NotesGrimoireCoverArt,
   NotesStoryCatenaryArt,
   NotesStoryCatenoidArt,
@@ -1338,6 +1339,20 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
     Component: NotesCoverScenesArt,
     label: { en: 'Per-note grimoire cover scenes', zh: '每篇 Notes 各自的魔法书封面场景' },
     copy: { en: 'Fourteen mid-ground heroes (rivers, coin tower, spinning coin, chart and wall, balance, hourglass, maze, lens, gears, chessboard, button, vinyl, chest, bolt) with coin, scroll or desk near props, drawn in tone, stipple and grain inside the grimoire cover.', zh: '十四种中景主角（河流、钱币塔、旋转金币、K 线撞墙、天平、沙漏、迷宫、放大镜、齿轮、棋盘、按钮、黑胶、宝箱、闪电）配钱币、卷轴或书桌近景，在魔法书封面里用明暗、点刻与颗粒绘制。' },
+  },
+  {
+    id: 'notes-math-emblems',
+    title: 'Notes math emblems',
+    category: 'notes-storyboard',
+    sourceRoute: '/notes',
+    ratio: '1:1',
+    background: 'framed',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/notes-emblems.css',
+    Component: NotesMathEmblemArt,
+    label: { en: 'Math emblem: golden spiral over Fibonacci squares', zh: '数学纹章：斐波那契正方形上的黄金螺旋' },
+    copy: { en: 'Round margin plates that plot each motif exactly — Mandelbrot lemniscates, golden spiral, catenoid wireframe, catenary family, Penrose tiling, phyllotaxis parastichies, Lissajous family — with the formula engraved around the rim; curves draw themselves while the section is read.', zh: '页边圆形纹章：精确绘出每个母题——曼德博双纽线、黄金螺旋、悬链曲面线框、悬链线族、彭罗斯镶嵌、叶序斜列线、李萨如曲线族——外圈刻公式；读到该节时曲线一笔一笔画出。' },
   },
 ];
 

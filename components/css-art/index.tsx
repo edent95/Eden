@@ -1,4 +1,5 @@
 import React from 'react';
+import { NotesMathEmblem as NotesMathEmblemInline } from './notes-math-emblems';
 import { NOTES_COVER_NEAR, NotesCoverHero, NotesCoverNearProps, type NotesCoverVariant } from './notes-cover-scenes';
 
 export type CssArtComponent = React.FC<{ label: string }>;
@@ -1252,5 +1253,12 @@ export const NotesGrimoireCoverArt: CssArtComponent = ({ label }) => (
 export const NotesCoverScenesArt: CssArtComponent = ({ label }) => (
   <div className="ng-cover-preview" role="img" aria-label={label}>
     <NotesGrimoireCover formula="φ = (1 + √5) / 2 ✦ " variant="coin-spin" />
+  </div>
+);
+
+export { NotesMathEmblem } from './notes-math-emblems';
+export const NotesMathEmblemArt: CssArtComponent = ({ label }) => (
+  <div role="img" aria-label={label} style={{ width: 200, height: 200 }}>
+    <NotesMathEmblemInline motif="spiral" />
   </div>
 );
