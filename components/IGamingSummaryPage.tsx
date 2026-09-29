@@ -8,6 +8,8 @@ import {
   type IGamingLocalized,
 } from './igaming-content';
 import { IGamingEngravedBanner, IGamingHeroPlate, IGamingSeal } from './css-art/index';
+import { KaleidoFrame } from './css-art/kaleido-frame';
+import { kaleidoSpecFor } from '../app/kaleido-routes';
 
 type Lang = 'en' | 'zh';
 
@@ -46,6 +48,7 @@ const IGamingSummaryPage: React.FC<{
       <main className="igaming-main">
         <header className="igaming-hero">
           <IGamingHeroPlate />
+          <KaleidoFrame spec={kaleidoSpecFor('/igaming')} />
           {unlocked ? <p className="igaming-unlocked">{t(IGAMING_PAGE.unlocked)}</p> : null}
           <p className="igaming-kicker">{t(page.kicker)}</p>
           <h1>{t(page.claim)}</h1>
@@ -67,6 +70,8 @@ const IGamingSummaryPage: React.FC<{
         <div className="igaming-points">
           {page.sections.map((section) => (
             <section key={section.id} id={section.id} className="igaming-point" aria-labelledby={`igaming-point-${section.id}`}>
+              {/* each card's corner rosettes come from its own path, so no two cards match */}
+              <KaleidoFrame spec={kaleidoSpecFor(`/igaming/point/${section.id}`)} />
               <div className="igaming-point-banner">
                 <IGamingEngravedBanner variant={section.banner} label={t(IGAMING_PAGE.bannerLabels[section.id])} />
               </div>
@@ -89,6 +94,7 @@ const IGamingSummaryPage: React.FC<{
         </div>
 
         <aside className="igaming-full-panel">
+          <KaleidoFrame spec={kaleidoSpecFor('/igaming/full')} />
           <h2>{t(page.fullTitle)}</h2>
           <p>{t(page.fullBody)}</p>
           <div className="igaming-case-links">

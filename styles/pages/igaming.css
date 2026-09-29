@@ -1080,3 +1080,27 @@
     transform: none;
   }
 }
+
+/* ---- /igaming (key points): computed KaleidoFrame borders (styles/css-art/kaleido.css) ----
+   The hero plate, the six point cards and the full-version panel are framed by the
+   formula-drawn border — hairlines, a two-frequency sine braid, beads, mid-edge
+   medallions and corner rosettes — inked in this page's green / foil. The plate's
+   own CSS bands and corner marks give way to it. */
+.igaming-summary .kf {
+  --kf-ink: var(--ig-line-2);
+  --kf-faint: var(--ig-line-3);
+  --kf-foil: var(--ig-foil);
+}
+.igaming-summary .kf-disc { fill: var(--ig-card); }
+.igaming-summary .igaming-hero { border-radius: 18px; }
+.igaming-summary .igaming-hero > .kf { z-index: 0; }
+.igaming-summary :is(.engraved-ig-plate-band, .engraved-ig-plate-corner) { display: none; }
+.igaming-summary :is(.igaming-point, .igaming-full-panel) {
+  position: relative;
+  box-shadow: none;
+}
+.igaming-summary .igaming-point { padding: 1.55rem 1.55rem 1.9rem; }
+.igaming-summary :is(.igaming-hero, .igaming-point, .igaming-full-panel) > :not(.kf, .engraved-art) {
+  position: relative;
+  z-index: 1;
+}
