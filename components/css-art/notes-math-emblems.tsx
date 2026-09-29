@@ -22,6 +22,8 @@ const RIM: Record<NotesStoryMotif, string> = {
 };
 
 const CONSTRUCTION = [96, 96 / 1.618, 96 / 2.618, 96 / 4.236];
+const RING_RX = 58 * 0.62 * Math.cosh(1 / 0.62);
+const RING_RY = 0.3 * RING_RX;
 
 const Draw: React.FC<{ d: string; className: string; i?: number }> = ({ d, className, i = 0 }) => (
   <path d={d} pathLength={1} className={`em-draw ${className}`} style={{ '--i': i } as React.CSSProperties} />
@@ -33,7 +35,7 @@ const Pen: React.FC<{ path: string; dur: number }> = ({ path, dur }) => (
   </circle>
 );
 
-const body = (motif: NotesStoryMotif, ids: { hatch: string; hatch2: string }, active: boolean): React.ReactNode => {
+const body = (motif: NotesStoryMotif, ids: { hatch: string; hatch2: string; left: string; right: string }, active: boolean, plate: boolean): React.ReactNode => {
   switch (motif) {
     case 'mandelbrot':
       return (
@@ -53,20 +55,32 @@ const body = (motif: NotesStoryMotif, ids: { hatch: string; hatch2: string }, ac
         </>
       );
     case 'catenoid':
+      // the plate tells the story: pulled too far apart, the film pinches at the waist and snaps into two discs
       return (
         <>
-          <Draw d={catenoidBack} className="em-ink em-faint" i={0} />
-          <Draw d={catenoidFront} className="em-ink" i={2} />
-          <ellipse cx={0} cy={-66.7} rx={58 * 0.62 * Math.cosh(1 / 0.62)} ry={58 * 0.3 * 0.62 * Math.cosh(1 / 0.62)} className="em-ring" />
-          <ellipse cx={0} cy={66.7} rx={58 * 0.62 * Math.cosh(1 / 0.62)} ry={58 * 0.3 * 0.62 * Math.cosh(1 / 0.62)} className="em-ring" />
+          <g className="em-film">
+            <Draw d={catenoidBack} className="em-ink em-faint" i={0} />
+            <Draw d={catenoidFront} className="em-ink" i={2} />
+          </g>
+          {plate && <><ellipse cx={0} cy={-66.7} rx={RING_RX} ry={RING_RY} className="em-disc em-ring-top" /><ellipse cx={0} cy={66.7} rx={RING_RX} ry={RING_RY} className="em-disc em-ring-bot" /></>}
+          <ellipse cx={0} cy={-66.7} rx={RING_RX} ry={RING_RY} className="em-ring em-ring-top" />
+          <ellipse cx={0} cy={66.7} rx={RING_RX} ry={RING_RY} className="em-ring em-ring-bot" />
         </>
       );
     case 'catenary':
+      // the plate tells the story: the principal chain has no middle link, and its halves swing apart
       return (
         <>
-          {catenaryFamily.map((d, k) => <Draw key={k} d={d} className={k === 3 ? 'em-foil em-bold' : 'em-ink em-faint'} i={k} />)}
+          {catenaryFamily.map((d, k) => (k === 3 && plate ? null : <Draw key={k} d={d} className={k === 3 ? 'em-foil em-bold' : 'em-ink em-faint'} i={k} />))}
+          {plate && (
+            <>
+              <g className="em-half em-half-l" clipPath={`url(#${ids.left})`}><Draw d={catenaryFamily[3]} className="em-foil em-bold" i={3} /></g>
+              <g className="em-half em-half-r" clipPath={`url(#${ids.right})`}><Draw d={catenaryFamily[3]} className="em-foil em-bold" i={3} /></g>
+              <line x1={0} y1={-30} x2={0} y2={10} className="em-gap" />
+            </>
+          )}
           <circle cx={-82} cy={-46} r={3.2} className="em-dot-foil" /><circle cx={82} cy={-46} r={3.2} className="em-dot-foil" />
-          {active && <Pen path={catenaryFamily[3]} dur={6} />}
+          {active && !plate && <Pen path={catenaryFamily[3]} dur={6} />}
         </>
       );
     case 'penrose':
@@ -97,12 +111,14 @@ const body = (motif: NotesStoryMotif, ids: { hatch: string; hatch2: string }, ac
   }
 };
 
-export const NotesMathEmblem: React.FC<{ motif: NotesStoryMotif; active?: boolean }> = ({ motif, active = false }) => {
+/** `emblem`: a round plate with rim and engraved formula (margins). `plate`: the bare plot, for the storyboard stage. */
+export const NotesMathEmblem: React.FC<{ motif: NotesStoryMotif; active?: boolean; variant?: 'emblem' | 'plate' }> = ({ motif, active = false, variant = 'emblem' }) => {
+  const plate = variant === 'plate';
   const raw = React.useId().replace(/[^a-zA-Z0-9_-]/g, '');
-  const ids = { hatch: `emh${raw}`, hatch2: `emk${raw}`, clip: `emc${raw}`, ring: `emr${raw}` };
+  const ids = { hatch: `emh${raw}`, hatch2: `emk${raw}`, clip: `emc${raw}`, ring: `emr${raw}`, left: `eml${raw}`, right: `emx${raw}` };
   const rim = RIM[motif].repeat(3);
   return (
-    <svg className={`em em-${motif}${active ? ' is-active' : ''}`} viewBox="-110 -110 220 220" aria-hidden>
+    <svg className={`em em-${motif}${plate ? ' em-plate' : ''}${active ? ' is-active' : ''}`} viewBox="-110 -110 220 220" aria-hidden>
       <defs>
         <pattern id={ids.hatch} width="3.2" height="3.2" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
           <rect width="3.2" height="3.2" className="em-pat-bg" /><line x1="0" y1="0" x2="0" y2="3.2" className="em-pat-line" />
@@ -112,18 +128,24 @@ export const NotesMathEmblem: React.FC<{ motif: NotesStoryMotif; active?: boolea
         </pattern>
         <clipPath id={ids.clip}><circle r={96} /></clipPath>
         <path id={ids.ring} d="M 0 -102 A 102 102 0 1 1 -0.01 -102" />
+        <clipPath id={ids.left}><rect x={-110} y={-110} width={104} height={220} /></clipPath>
+        <clipPath id={ids.right}><rect x={6} y={-110} width={104} height={220} /></clipPath>
       </defs>
-      <circle r={109} className="em-rim" />
-      <circle r={97} className="em-face" />
-      <g className="em-rim-text">
-        <text><textPath href={`#${ids.ring}`}>{rim}</textPath></text>
-      </g>
-      <g clipPath={`url(#${ids.clip})`}>
+      {!plate && (
+        <>
+          <circle r={109} className="em-rim" />
+          <circle r={97} className="em-face" />
+          <g className="em-rim-text">
+            <text><textPath href={`#${ids.ring}`}>{rim}</textPath></text>
+          </g>
+        </>
+      )}
+      <g clipPath={plate ? undefined : `url(#${ids.clip})`}>
         <g className="em-construction">
           {CONSTRUCTION.map((r) => <circle key={r} r={r} />)}
           {[0, 30, 60, 90, 120, 150].map((a) => <line key={a} x1={-96} y1={0} x2={96} y2={0} transform={`rotate(${a})`} />)}
         </g>
-        {body(motif, ids, active)}
+        {body(motif, ids, active, plate)}
       </g>
     </svg>
   );

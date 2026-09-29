@@ -1018,109 +1018,14 @@ const notesStoryPropClass: Record<NotesStoryProp, string> = {
 const cssVar = (name: string, value: string | number) => ({ [name]: value }) as React.CSSProperties;
 
 
-// Phyllotaxis: 89 seeds, seed n at n × 137.508° (the golden angle, 360°/φ²) and radius ∝ √n.
-const PHYLLO_FIB = new Set([1, 2, 3, 5, 8, 13, 21, 34, 55, 89]);
-const PHYLLO_SEEDS = Array.from({ length: 89 }, (_, i) => {
-  const n = i + 1;
-  const angle = (n * 137.508 * Math.PI) / 180;
-  const r = 47 * Math.sqrt(n / 89);
-  return { n, x: 50 + r * Math.cos(angle), y: 50 + r * Math.sin(angle), size: 0.7 + 1.1 * Math.sqrt(n / 89), fib: PHYLLO_FIB.has(n) };
-});
-// Lissajous figure x = sin(3t + π/2), y = sin(2t), sampled at 180 points.
-const LISSA_DOTS = Array.from({ length: 180 }, (_, i) => {
-  const t = (i / 180) * Math.PI * 2;
-  return { n: i, x: 50 + 47 * Math.sin(3 * t + Math.PI / 2), y: 50 + 46 * Math.sin(2 * t), beat: i % 30 === 0 };
-});
-
-const notesStoryScenes: Record<NotesStoryMotif, { body: React.ReactNode; props: [NotesStoryProp, NotesStoryProp]; formula: string }> = {
-  // a simple rule that grows endless detail: the Mandelbrot set (cardioid + bulbs, sampled from c = e^{it}/2 − e^{2it}/4)
-  mandelbrot: {
-    props: ['quill', 'candle'],
-    formula: 'zₙ₊₁ = zₙ² + c ✦ |z| ≤ 2 ✦ c ∈ ℂ ✦ ',
-    body: (
-      <span className="nf-mandel">
-        <span className="m-bands" />
-        <span className="m-antenna" /><span className="m-mini" />
-        <span className="m-cardioid m-fill" />
-        {['b2', 'b3a', 'b3b', 'b4', 'b4a', 'b4b', 'b5a', 'b5b', 'b5c', 'b5d', 'b8'].map((b) => <span key={b} className={`m-bulb m-fill ${b}`} />)}
-      </span>
-    ),
-  },
-  // documents accumulating: Fibonacci squares and the golden spiral
-  spiral: {
-    props: ['scroll', 'quill'],
-    formula: 'Fₙ₊₁ = Fₙ + Fₙ₋₁ ✦ 1 · 1 · 2 · 3 · 5 · 8 · 13 ✦ Fₙ₊₁ / Fₙ → φ ✦ ',
-    body: (
-      <span className="nf-spiral">
-        {['q1', 'q2', 'q3', 'q4', 'q5', 'q6'].map((q) => <span key={q} className={`s-sq ${q}`} />)}
-        {['a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'a8'].map((a) => <span key={a} className={`s-arc ${a}`} />)}
-        <span className="s-seal" />
-      </span>
-    ),
-  },
-  // two reasons holding a film between them: the catenoid snaps when pulled too far apart
-  catenoid: {
-    props: ['orb', 'glass'],
-    formula: 'H = 0 ✦ r = c · cosh(z / c) ✦ area → min ✦ ',
-    body: (
-      <span className="nf-catenoid">
-        <span className="f-film" />
-        <span className="f-disc d-top" /><span className="f-disc d-bot" />
-        <span className="f-ring r-top" /><span className="f-ring r-bot" />
-        {[['38%', '44%'], ['47%', '52%'], ['55%', '46%'], ['62%', '55%'], ['43%', '60%']].map(([left, top], i) => <span key={left} className="f-drop" style={{ left, top, ...cssVar('--i', i) }} />)}
-      </span>
-    ),
-  },
-  // the chain of command: a catenary with its middle link missing
-  catenary: {
-    props: ['key', 'candle'],
-    formula: 'y = a · cosh(x / a) ✦ T₀ = ρ g a ✦ ',
-    body: (
-      <span className="nf-catenary">
-        <span className="c-half c-left"><span className="c-peg" style={{ left: '6%', top: '12%' }} /><span className="c-link" style={{ left: '8.3%', top: '21.1%', '--a': '-66.7deg' } as React.CSSProperties} /><span className="c-link is-edge" style={{ left: '13.6%', top: '38.9%', '--a': '-61.7deg' } as React.CSSProperties} /><span className="c-link" style={{ left: '20.1%', top: '55.6%', '--a': '-54.3deg' } as React.CSSProperties} /><span className="c-link is-edge" style={{ left: '28.1%', top: '70.4%', '--a': '-42.9deg' } as React.CSSProperties} /><span className="c-link" style={{ left: '38.1%', top: '81.5%', '--a': '-24.9deg' } as React.CSSProperties} /></span>
-        <span className="c-half c-right"><span className="c-peg" style={{ left: '94%', top: '12%' }} /><span className="c-link" style={{ left: '61.9%', top: '81.5%', '--a': '24.9deg' } as React.CSSProperties} /><span className="c-link is-edge" style={{ left: '71.9%', top: '70.4%', '--a': '42.9deg' } as React.CSSProperties} /><span className="c-link" style={{ left: '79.9%', top: '55.6%', '--a': '54.3deg' } as React.CSSProperties} /><span className="c-link is-edge" style={{ left: '86.4%', top: '38.9%', '--a': '61.7deg' } as React.CSSProperties} /><span className="c-link" style={{ left: '91.7%', top: '21.1%', '--a': '66.7deg' } as React.CSSProperties} /></span>
-        <span className="c-gap" />
-      </span>
-    ),
-  },
-  // many small units, one rule: the golden-angle sunflower
-  phyllotaxis: {
-    props: ['quill', 'orb'],
-    formula: 'θₙ = n · 137.5° ✦ rₙ = c √n ✦ 360° / φ² ✦ ',
-    body: (
-      <span className="nf-phyllo">
-        {PHYLLO_SEEDS.map((seed) => (
-          <span key={seed.n} className={`p-seed${seed.fib ? ' is-fib' : ''}`} style={{ left: `${seed.x.toFixed(2)}%`, top: `${seed.y.toFixed(2)}%`, ...cssVar('--s', `${seed.size.toFixed(2)}cqi`), ...cssVar('--n', seed.n) }} />
-        ))}
-      </span>
-    ),
-  },
-  // rhythm and response: a 3 : 2 Lissajous figure traced dot by dot
-  lissajous: {
-    props: ['glass', 'candle'],
-    formula: 'x = sin(3t + π/2) ✦ y = sin(2t) ✦ a : b = 3 : 2 ✦ ',
-    body: (
-      <span className="nf-lissa">
-        <span className="l-rail r-x" /><span className="l-rail r-y" />
-        {LISSA_DOTS.map((dot) => (
-          <span key={dot.n} className={`l-dot${dot.beat ? ' is-beat' : ''}`} style={{ left: `${dot.x.toFixed(2)}%`, top: `${dot.y.toFixed(2)}%`, ...cssVar('--n', dot.n) }} />
-        ))}
-        <span className="l-bead" style={{ left: '50%', top: '50%' }} />
-      </span>
-    ),
-  },
-  // the overlap: two circles, and in their lens a Penrose sun (5 fat rhombs + 5 thin rhombs)
-  penrose: {
-    props: ['candle', 'astro'],
-    formula: 'fat : thin = φ ✦ 36° · 72° · 108° · 144° ✦ d = r ✦ h = √3 · r ✦ ',
-    body: (
-      <span className="nf-penrose">
-        <span className="v-c v-l" /><span className="v-c v-r" />
-        {[0, 1, 2, 3, 4].map((k) => <span key={`f${k}`} className="p-fat" style={cssVar('--k', k)} />)}
-        {[0, 1, 2, 3, 4].map((k) => <span key={`t${k}`} className="p-thin" style={cssVar('--k', k)} />)}
-      </span>
-    ),
-  },
+const notesStoryScenes: Record<NotesStoryMotif, { props: [NotesStoryProp, NotesStoryProp]; formula: string }> = {
+  mandelbrot: { props: ['quill', 'candle'], formula: 'zₙ₊₁ = zₙ² + c ✦ |z| ≤ 2 ✦ c ∈ ℂ ✦ ' },
+  spiral: { props: ['scroll', 'quill'], formula: 'Fₙ₊₁ = Fₙ + Fₙ₋₁ ✦ 1 · 1 · 2 · 3 · 5 · 8 · 13 ✦ Fₙ₊₁ / Fₙ → φ ✦ ' },
+  catenoid: { props: ['orb', 'glass'], formula: 'H = 0 ✦ r = c · cosh(z / c) ✦ area → min ✦ ' },
+  catenary: { props: ['key', 'candle'], formula: 'y = a · cosh(x / a) ✦ T₀ = ρ g a ✦ ' },
+  phyllotaxis: { props: ['quill', 'orb'], formula: 'θₙ = n · 137.5° ✦ rₙ = c √n ✦ 360° / φ² ✦ ' },
+  lissajous: { props: ['glass', 'candle'], formula: 'x = sin(3t + π/2) ✦ y = sin(2t) ✦ a : b = 3 : 2 ✦ ' },
+  penrose: { props: ['candle', 'astro'], formula: 'fat : thin = φ ✦ 36° · 72° · 108° · 144° ✦ d = r ✦ h = √3 · r ✦ ' },
 };
 
 /** The formula engraved for a motif (used by covers to build a note-specific ring). */
@@ -1172,7 +1077,7 @@ export const NotesStoryFrame: React.FC<{
         {!thumb && <NotesStoryRunes formula={scene.formula} />}
       </span>
       <span className="nf-shadow" />
-      <span className="nf-main">{scene.body}</span>
+      <span className="nf-main"><NotesMathEmblemInline motif={motif} active={active && !thumb} variant="plate" /></span>
       <span className={`nf-prop nf-prop-l ${notesStoryPropClass[scene.props[0]]}`}>{notesStoryProps[scene.props[0]]}</span>
       <span className={`nf-prop nf-prop-r ${notesStoryPropClass[scene.props[1]]}`}>{notesStoryProps[scene.props[1]]}</span>
     </div>
