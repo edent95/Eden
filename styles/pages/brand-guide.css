@@ -1010,3 +1010,7 @@
 @media (max-width: 720px) {
   .brand-guide-engraved-grid { grid-template-columns: 1fr; }
 }
+
+/* site kaleidoscope skeleton: let the page's emblem and grid show behind the hero */
+.kaleido-site .brand-guide-page main,
+.kaleido-site .brand-guide-page .brand-guide-hero { background: transparent; }

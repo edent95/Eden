@@ -29,6 +29,7 @@ import {
   IGamingLoopBanner,
   IGamingTableBanner,
   MathFractalRuneCssIcon,
+  KaleidoEmblemArt,
   NotesCoverScenesArt,
   NotesMathEmblemArt,
   NotesGrimoireCoverArt,
@@ -1353,6 +1354,20 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
     Component: NotesMathEmblemArt,
     label: { en: 'Math emblem: golden spiral over Fibonacci squares', zh: '数学纹章：斐波那契正方形上的黄金螺旋' },
     copy: { en: 'Round margin plates that plot each motif exactly — Mandelbrot lemniscates, golden spiral, catenoid wireframe, catenary family, Penrose tiling, phyllotaxis parastichies, Lissajous family — with the formula engraved around the rim; curves draw themselves while the section is read.', zh: '页边圆形纹章：精确绘出每个母题——曼德博双纽线、黄金螺旋、悬链曲面线框、悬链线族、彭罗斯镶嵌、叶序斜列线、李萨如曲线族——外圈刻公式；读到该节时曲线一笔一笔画出。' },
+  },
+  {
+    id: 'site-kaleido-emblem',
+    title: 'Site kaleidoscope emblem',
+    category: 'notes-storyboard',
+    sourceRoute: '/',
+    ratio: '1:1',
+    background: 'transparent',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/kaleido.css',
+    Component: KaleidoEmblemArt,
+    label: { en: 'Kaleidoscope emblem: an epitrochoid over a rotating hypotrochoid guilloché', zh: '万花筒纹章：旋转的内摆线扭索纹上叠一条外摆线' },
+    copy: { en: 'Site-wide page skeleton: each route gets its own spirograph / Maurer-rose emblem with the formula on its rim behind the hero, a golden-ratio grid with grain behind every page, section-divider rosettes in the same symmetry, and the blended menu.', zh: '全站页面骨架：每个路由有自己的繁花曲线 / Maurer 玫瑰纹章（外圈刻公式）衬在标题后，全站底层黄金网格与颗粒，同一对称的章节分隔玫瑰，以及融入式菜单。' },
   },
 ];
 

@@ -1,5 +1,7 @@
 import React from 'react';
 import { NotesMathEmblem as NotesMathEmblemInline } from './notes-math-emblems';
+import { KALEIDO_PALETTE, kaleidoSvg } from '../../app/kaleido';
+import { KALEIDO_ROUTES } from '../../app/kaleido-routes';
 import { NOTES_COVER_NEAR, NotesCoverHero, NotesCoverNearProps, type NotesCoverVariant } from './notes-cover-scenes';
 
 export type CssArtComponent = React.FC<{ label: string }>;
@@ -1167,3 +1169,10 @@ export const NotesMathEmblemArt: CssArtComponent = ({ label }) => (
     <NotesMathEmblemInline motif="spiral" />
   </div>
 );
+
+/** Review preview of the site kaleidoscope skeleton: the homepage emblem as an image. */
+export const KaleidoEmblemArt: CssArtComponent = ({ label }) => {
+  const spec = KALEIDO_ROUTES['/'];
+  const src = spec ? `data:image/svg+xml;charset=utf-8,${encodeURIComponent(kaleidoSvg(spec, KALEIDO_PALETTE.light, false))}` : '';
+  return <img src={src} alt={label} width={320} height={320} />;
+};
