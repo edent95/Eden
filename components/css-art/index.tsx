@@ -779,7 +779,7 @@ export const EngravedBorder: React.FC<{ label: string; tone?: EngravedTone }> = 
 
 export type IGamingBannerVariant = 'table' | 'chips' | 'loop' | 'ledger' | 'gears' | 'compass';
 
-const IGAMING_BANNER_TONE: Record<IGamingBannerVariant, EngravedTone> = {
+export const IGAMING_BANNER_TONE: Record<IGamingBannerVariant, EngravedTone> = {
   table: 'ink',
   chips: 'bronze',
   loop: 'teal',

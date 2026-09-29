@@ -7,8 +7,8 @@ import {
   IGAMING_UNLOCK_VALUE,
   type IGamingLocalized,
 } from './igaming-content';
-import { IGamingEngravedBanner, IGamingSeal } from './css-art/index';
-import { IGamingHeroStage } from './css-art/igaming-hero-stage';
+import { IGamingSeal } from './css-art/index';
+import { IGamingBannerStage, IGamingHeroStage } from './css-art/igaming-hero-stage';
 import { KaleidoFrame } from './css-art/kaleido-frame';
 import { kaleidoSpecFor } from '../app/kaleido-routes';
 
@@ -74,7 +74,7 @@ const IGamingSummaryPage: React.FC<{
               {/* each card's corner rosettes come from its own path, so no two cards match */}
               <KaleidoFrame spec={kaleidoSpecFor(`/igaming/point/${section.id}`)} />
               <div className="igaming-point-banner">
-                <IGamingEngravedBanner variant={section.banner} label={t(IGAMING_PAGE.bannerLabels[section.id])} />
+                <IGamingBannerStage variant={section.banner} label={t(IGAMING_PAGE.bannerLabels[section.id])} hoverRoot=".igaming-point" />
               </div>
               <p className="igaming-point-number">{section.number}</p>
               <h2 id={`igaming-point-${section.id}`}>{t(section.title)}</h2>
