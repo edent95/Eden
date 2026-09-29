@@ -13,6 +13,8 @@ This directory is the editable, Markdown-first content source for the public Wik
 
 ## Essays
 
+- [Protected but not recognised: the Rohingya in Malaysia](essays/rohingya-malaysia-statelessness.md) — `/notes/rohingya-malaysia-statelessness`
+- [Rights without a state: from the Jewish experience of statelessness to today's refugee system](essays/refugee-statelessness-evidence-map.md) — `/notes/refugee-statelessness-evidence-map`
 - [Three rivers, one confluence: the Bible, Israel, and America's Middle East politics](essays/bible-israel-us-evidence-map.md) — `/notes/bible-israel-us-evidence-map`
 - [Overlap is not command: an evidence map of neocons, Israel's right, and the Iraq War](essays/iraq-war-evidence-map.md) — `/notes/iraq-war-evidence-map`
 - [The "mad bull" hits a wall: Korea's 2026 market, and the gap between price and value](essays/korea-2026-crash.md) — `/notes/korea-2026-crash`

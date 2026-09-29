@@ -459,6 +459,20 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
   },
   {
+    path: '/notes/rohingya-malaysia-statelessness',
+    og: 'notes',
+    priority: '0.7',
+    title: { en: 'Protected, not recognised: Rohingya in Malaysia | Eden Tan', zh: '被保护，却不被承认：罗兴亚人在马来西亚 | Eden Tan' },
+    desc: { en: 'Stateless in Myanmar, UN-protected but without legal status in Malaysia: registration changes in 2026, deadly sea routes, and a closing resettlement exit.', zh: '在缅甸没有国籍，在马来西亚有联合国文件却没有合法身份：2026 年登记政策收紧、海路创纪录的死亡、几乎关上的第三国安置。' },
+  },
+  {
+    path: '/notes/refugee-statelessness-evidence-map',
+    og: 'notes',
+    priority: '0.7',
+    title: { en: 'Rights without a state: refugees, statelessness | Eden Tan', zh: '没有国家的人权：难民与无国籍证据地图 | Eden Tan' },
+    desc: { en: 'From Jewish statelessness to today\'s refugee system: what the treaties guarantee, what they do not, and the resettlement gap, checked against UN sources.', zh: '从犹太人的无国籍经验看今天的全球难民问题：公约能保证什么、保证不了什么，以及安置缺口，逐条对照联合国资料核查。' },
+  },
+  {
     path: '/notes/bible-israel-us-evidence-map',
     og: 'notes',
     priority: '0.7',
