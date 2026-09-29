@@ -8,18 +8,14 @@ import type { NotesStoryMotif } from './index';
 /* ---- Notes math emblems (styles/css-art/notes-emblems.css) ----
    Round plates for the Notes margins: each one plots its motif exactly
    (geometry from scripts/css-art/notes-emblems.py) over a construction grid
-   of φ-spaced circles, with the formula engraved around the rim. When
+   of φ-spaced circles, inside a rim of beads and ticks (no text). When
    `active`, the curves draw themselves and a pen point travels the main curve. */
 
-const RIM: Record<NotesStoryMotif, string> = {
-  mandelbrot: 'zₙ₊₁ = zₙ² + c  ·  |zₙ(c)| = 2  ·  n = 1 … 7  ·  ',
-  spiral: 'r = a·e^(bθ)  ·  b = ln φ ÷ (π/2)  ·  Fₙ₊₁ = Fₙ + Fₙ₋₁  ·  ',
-  catenoid: 'r = c·cosh(z/c)  ·  H = (κ₁ + κ₂)/2 = 0  ·  ',
-  catenary: 'y = a·cosh(x/a)  ·  s = a·sinh(x/a)  ·  T₀ = ρga  ·  ',
-  penrose: 'fat : thin = φ  ·  36° · 72° · 108° · 144°  ·  deflate ×4  ·  ',
-  phyllotaxis: 'θₙ = n · 137.508°  ·  rₙ = c√n  ·  13 · 21 · 34  ·  ',
-  lissajous: 'x = sin(3t + δ)  ·  y = sin(2t)  ·  δ → δ + π/16  ·  ',
-};
+// the rim is a ring of beads (every fifth one gold) and tick marks: shapes, not text
+const BEADS = Array.from({ length: 60 }, (_, i) => {
+  const a = (i / 60) * Math.PI * 2;
+  return { x: 103 * Math.sin(a), y: -103 * Math.cos(a), major: i % 5 === 0 };
+});
 
 const CONSTRUCTION = [96, 96 / 1.618, 96 / 2.618, 96 / 4.236];
 const RING_RX = 58 * 0.62 * Math.cosh(1 / 0.62);
@@ -111,12 +107,11 @@ const body = (motif: NotesStoryMotif, ids: { hatch: string; hatch2: string; left
   }
 };
 
-/** `emblem`: a round plate with rim and engraved formula (margins). `plate`: the bare plot, for the storyboard stage. */
+/** `emblem`: a round plate with a beaded rim (margins). `plate`: the bare plot, for the storyboard stage. */
 export const NotesMathEmblem: React.FC<{ motif: NotesStoryMotif; active?: boolean; variant?: 'emblem' | 'plate' }> = ({ motif, active = false, variant = 'emblem' }) => {
   const plate = variant === 'plate';
   const raw = React.useId().replace(/[^a-zA-Z0-9_-]/g, '');
-  const ids = { hatch: `emh${raw}`, hatch2: `emk${raw}`, clip: `emc${raw}`, ring: `emr${raw}`, left: `eml${raw}`, right: `emx${raw}` };
-  const rim = RIM[motif].repeat(3);
+  const ids = { hatch: `emh${raw}`, hatch2: `emk${raw}`, clip: `emc${raw}`, left: `eml${raw}`, right: `emx${raw}` };
   return (
     <svg className={`em em-${motif}${plate ? ' em-plate' : ''}${active ? ' is-active' : ''}`} viewBox="-110 -110 220 220" aria-hidden>
       <defs>
@@ -127,7 +122,6 @@ export const NotesMathEmblem: React.FC<{ motif: NotesStoryMotif; active?: boolea
           <rect width="2.6" height="2.6" className="em-pat-bg2" /><line x1="0" y1="0" x2="0" y2="2.6" className="em-pat-line2" />
         </pattern>
         <clipPath id={ids.clip}><circle r={96} /></clipPath>
-        <path id={ids.ring} d="M 0 -102 A 102 102 0 1 1 -0.01 -102" />
         <clipPath id={ids.left}><rect x={-110} y={-110} width={104} height={220} /></clipPath>
         <clipPath id={ids.right}><rect x={6} y={-110} width={104} height={220} /></clipPath>
       </defs>
@@ -135,8 +129,8 @@ export const NotesMathEmblem: React.FC<{ motif: NotesStoryMotif; active?: boolea
         <>
           <circle r={109} className="em-rim" />
           <circle r={97} className="em-face" />
-          <g className="em-rim-text">
-            <text><textPath href={`#${ids.ring}`}>{rim}</textPath></text>
+          <g className="em-beads">
+            {BEADS.map(({ x, y, major }, i) => <circle key={i} cx={x} cy={y} r={major ? 2 : 0.8} className={major ? 'is-major' : undefined} />)}
           </g>
         </>
       )}
