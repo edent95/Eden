@@ -7,7 +7,7 @@ import { KALEIDO_PALETTE, kaleidoDataUri, kaleidoDividerSvg, kaleidoSvg, type Ka
 const C = (s: Omit<KaleidoSpec, 'pos'> & Partial<Pick<KaleidoSpec, 'pos'>>): KaleidoSpec => ({ pos: 'center', ...s });
 
 export const KALEIDO_ROUTES: Record<string, KaleidoSpec | null> = {
-  '/': C({ primary: { kind: 'epi', R: 5, r: 3, d: 5 }, family: { kind: 'hypo', R: 7, r: 2, d: 1.2 }, copies: 7, size: 760, top: 60 }),
+  '/': C({ pos: 'corner', opacity: 0.72, texture: 0.3, primary: { kind: 'epi', R: 5, r: 3, d: 5 }, family: { kind: 'hypo', R: 7, r: 2, d: 1.2 }, copies: 7, size: 620, top: -40 }),
   '/project': C({ primary: { kind: 'epi', R: 8, r: 3, d: 5 }, family: { kind: 'hypo', R: 9, r: 4, d: 3 }, copies: 6, size: 700, top: 40 }),
   '/etreporthub': C({ primary: { kind: 'hypo', R: 7, r: 3, d: 4.5 }, family: { kind: 'epi', R: 6, r: 1, d: 2 }, copies: 5, size: 640, top: 60 }),
   '/etreporthub-sales': C({ primary: { kind: 'maurer', n: 6, deg: 71 }, family: { kind: 'hypo', R: 5, r: 2, d: 3 }, copies: 8, size: 720, top: 70 }),
@@ -76,9 +76,13 @@ export const useSiteKaleido = (path: string, theme: 'light' | 'dark') => {
       root.style.setProperty('--kaleido-top', `${spec.top}px`);
       root.style.setProperty('--kaleido-divider', kaleidoDataUri(kaleidoDividerSvg(spec, KALEIDO_PALETTE[theme])));
       root.dataset.kaleidoPos = spec.pos;
+      root.style.setProperty('--kaleido-opacity', String(spec.opacity ?? 1));
+      root.style.setProperty('--kaleido-texture', String(spec.texture ?? 1));
     } else {
       root.style.setProperty('--kaleido-img', 'none');
       root.style.setProperty('--kaleido-divider', 'none');
+      root.style.setProperty('--kaleido-opacity', '1');
+      root.style.setProperty('--kaleido-texture', '1');
       delete root.dataset.kaleidoPos;
     }
   }, [path, theme]);

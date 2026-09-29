@@ -14,8 +14,13 @@ export type KaleidoSpec = {
   /** guilloché family: this curve drawn `copies` times, each rotated a little further */
   family: KaleidoCurve;
   copies: number;
-  /** 'center' sits behind a centred hero, 'right' beside a left-aligned one */
-  pos: 'center' | 'right';
+  /** 'center' sits behind a centred hero, 'right' beside a left-aligned one,
+   *  'corner' tucks into the top-right corner of the page */
+  pos: 'center' | 'right' | 'corner';
+  /** emblem opacity, default 1 */
+  opacity?: number;
+  /** strength of the page grid + grain behind this page, default 1 */
+  texture?: number;
   size: number;   // px
   top: number;    // px from the top of the page
 };

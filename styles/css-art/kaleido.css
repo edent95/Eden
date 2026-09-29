@@ -33,7 +33,7 @@
     linear-gradient(90deg, transparent calc(61.8% - 0.5px), var(--kaleido-line) 0 calc(61.8% + 0.5px), transparent 0),
     var(--kaleido-noise) 0 0 / 200px;
   background-blend-mode: normal, normal, normal, normal, soft-light;
-  opacity: 0.9;
+  opacity: calc(0.9 * var(--kaleido-texture, 1));
 }
 .kaleido-site[data-theme="dark"] .page-shell::before {
   background:
@@ -42,7 +42,7 @@
     linear-gradient(90deg, transparent calc(38.2% - 0.5px), var(--kaleido-line) 0 calc(38.2% + 0.5px), transparent 0),
     linear-gradient(90deg, transparent calc(61.8% - 0.5px), var(--kaleido-line) 0 calc(61.8% + 0.5px), transparent 0),
     var(--kaleido-noise-dark) 0 0 / 200px;
-  opacity: 0.6;
+  opacity: calc(0.6 * var(--kaleido-texture, 1));
 }
 
 .kaleido-site .page-shell::after {
@@ -57,8 +57,14 @@
   margin-left: calc(var(--kaleido-size, 600px) / -2);
   background: var(--kaleido-img, none) center / contain no-repeat;
   pointer-events: none;
+  opacity: var(--kaleido-opacity, 1);
   translate: 0 calc(var(--nd-scroll, 0) * 0.14px);
 }
+.kaleido-site[data-kaleido-pos="corner"] .page-shell::after {
+  left: calc(100% - var(--kaleido-size, 600px) * 0.3);
+}
+/* emblems placed right or in the corner may run past the page edge: clip, don't scroll */
+.kaleido-site .page-shell { overflow-x: clip; }
 .kaleido-site[data-kaleido-pos="right"] .page-shell::after {
   left: calc(50% + clamp(170px, 24vw, 400px));
 }
@@ -142,6 +148,7 @@
     opacity: 0.55;
   }
   .kaleido-site[data-kaleido-pos="right"] .page-shell::after { left: 50%; }
+  .kaleido-site[data-kaleido-pos="corner"] .page-shell::after { left: calc(100% - min(118vw, var(--kaleido-size, 600px)) * 0.22); top: -40px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
