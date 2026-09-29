@@ -1099,8 +1099,8 @@ export const NotesStoryLissajousArt: CssArtComponent = ({ label }) => <NotesStor
 
 /* ---- Notes grimoire cover (styles/css-art/notes-grimoire.css) ----
    Full-bleed cover scene for an art-directed Notes article: three depth layers
-   (sky with stars and an orrery engraved with formulas; a floating 3D grimoire
-   whose leaves turn; near candles and a stack of old books). Layers read
+   (sky with stars and an orrery; the note's formula line-art hero from
+   notes-cover-scenes.tsx; near candles and a stack of old books). Layers read
    --nd-px / --nd-py / --nd-scroll from the page for pointer and scroll parallax. */
 const GRIMOIRE_STARS: Array<[number, number, number]> = [
   [52, 8, 1], [58, 22, 0], [64, 12, 1], [71, 6, 0], [77, 18, 1], [83, 9, 0], [89, 24, 1], [94, 14, 0], [97, 34, 1],
@@ -1123,18 +1123,7 @@ export const NotesGrimoireCover: React.FC<{ formula: string; variant?: NotesCove
       </span>
     </div>
     <div className="ng-layer ng-mid" style={{ ...cssVar('--z', 1), ...cssVar('--sy', 0.16) }}>
-      {variant !== 'book' ? <NotesCoverHero variant={variant} /> : (<>
-      <span className="ng-book-shadow" />
-      <span className="ng-book">
-        <span className="ng-book-inner">
-          <span className="ng-board ng-board-l" /><span className="ng-board ng-board-r" />
-          <span className="ng-block ng-block-l"><span className="ng-page-art ng-page-spiral" /></span>
-          <span className="ng-block ng-block-r"><span className="ng-page-art ng-page-star" /></span>
-          {[0, 1, 2, 3, 4].map((i) => <span key={i} className="ng-leaf" style={cssVar('--i', i)} />)}
-          <span className="ng-ribbon" />
-        </span>
-      </span>
-      </>)}
+      <NotesCoverHero variant={variant} />
     </div>
     <div className="ng-layer ng-near" style={{ ...cssVar('--z', 2.2), ...cssVar('--sy', 0.05) }}>
       {NOTES_COVER_NEAR[variant] !== 'desk' ? <NotesCoverNearProps set={NOTES_COVER_NEAR[variant] as 'coins' | 'scrolls'} /> : (<>

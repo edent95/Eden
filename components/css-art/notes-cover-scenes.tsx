@@ -1,12 +1,15 @@
 import React from 'react';
-import { CoverChartArt, CoverRiversArt } from './notes-cover-art';
+import {
+  CoverBalanceArt, CoverBoltArt, CoverBookArt, CoverButtonArt, CoverChartArt, CoverChessArt, CoverChestArt,
+  CoverCoinSpinArt, CoverCoinTowerArt, CoverGearsArt, CoverHourglassArt, CoverLensArt, CoverMazeArt,
+  CoverRiversArt, CoverVinylArt,
+} from './notes-cover-art';
 
 /* ---- Notes cover scenes (styles/css-art/notes-covers.css) ----
    Each Note gets its own mid-ground hero and near-ground props inside the
-   grimoire cover (NotesGrimoireCover). 'book' is the original floating
-   grimoire; every other variant draws an object that retells the note's
-   subject. Most are CSS (tone, stipple and grain, no outlines); 'rivers' and
-   'chart-wall' are formula line art (notes-cover-art.tsx). */
+   grimoire cover (NotesGrimoireCover). Every variant draws an object that retells the note's
+   subject as formula line art (notes-cover-art.tsx); the near props stay CSS
+   (tone, stipple and grain, no outlines). */
 
 export type NotesCoverVariant =
   | 'book' | 'rivers' | 'coin-tower' | 'coin-spin' | 'chart-wall' | 'balance' | 'hourglass'
@@ -27,8 +30,6 @@ export const NOTES_COVER_NEAR: Record<NotesCoverVariant, NotesCoverNear> = {
 
 const v = (name: string, value: string | number) => ({ [name]: value }) as React.CSSProperties;
 
-const range = (n: number) => Array.from({ length: n }, (_, i) => i);
-
 const Stack: React.FC<{ h: number; x: number; lean?: number; cls?: string }> = ({ h, x, lean = 0, cls = '' }) => (
   <span className={`cv-stack ${cls}`} style={{ left: `${x}%`, ...v('--h', `${h}cqi`), ...v('--lean', `${lean}deg`) }}>
     <span className="cv-stack-body cv-stip cv-grain" />
@@ -36,134 +37,34 @@ const Stack: React.FC<{ h: number; x: number; lean?: number; cls?: string }> = (
   </span>
 );
 
-const heroes: Record<Exclude<NotesCoverVariant, 'book'>, React.ReactNode> = {
-  // three rivers fall into one basin and spiral to its centre (formula line art)
-  rivers: <span className="cv-hero cv-art"><CoverRiversArt /></span>,
-  // an empire of borrowed money: coin stacks, the tallest leaning
-  'coin-tower': (
-    <span className="cv-hero cv-tower">
-      <Stack h={8} x={12} /><Stack h={13} x={30} /><Stack h={19} x={50} /><Stack h={25} x={70} lean={9} cls="is-lean" />
-      <span className="cv-crack" />
-    </span>
-  ),
-  // the coin that "only goes up", spinning over a pyramid of smaller coins
-  'coin-spin': (
-    <span className="cv-hero cv-spin">
-      <span className="cv-coin3d">
-        {range(5).map((i) => <span key={i} className="cv-coin-layer" style={v('--z', i)} />)}
-        <span className="cv-coin-face front" /><span className="cv-coin-face back" />
-      </span>
-      {[[1, 0], [2, 1], [3, 2], [4, 3]].map(([count, row]) => range(count).map((i) => (
-        <span key={`${row}-${i}`} className="cv-pcoin" style={{ ...v('--row', row), ...v('--col', i - (count - 1) / 2) }} />
-      )))}
-    </span>
-  ),
-  // the mad bull: an exponential climb hits a wall and shatters (formula line art)
-  'chart-wall': <span className="cv-hero cv-art"><CoverChartArt /></span>,
-  // a balance: money on one pan, a growing seedling (future output) on the other
-  balance: (
-    <span className="cv-hero cv-balance">
-      <span className="cv-post cv-grain" /><span className="cv-foot cv-stip" />
-      <span className="cv-beam">
-        <span className="cv-bar" />
-        <span className="cv-pan left"><span className="cv-string" /><span className="cv-dish cv-stip" /><Stack h={5} x={34} /></span>
-        <span className="cv-pan right"><span className="cv-string" /><span className="cv-dish cv-stip" /><span className="cv-sprout"><span className="cv-stem" /><span className="cv-leaf l" /><span className="cv-leaf r" /></span></span>
-      </span>
-      <span className="cv-finial" />
-    </span>
-  ),
-  // wealth as time: a great hourglass with coins orbiting it
-  hourglass: (
-    <span className="cv-hero cv-glass">
-      <span className="cv-cap top cv-stip cv-grain" /><span className="cv-cap bot cv-stip cv-grain" />
-      <span className="cv-pillar l" /><span className="cv-pillar r" />
-      <span className="cv-bulb" /><span className="cv-sand-top" /><span className="cv-sand-bot" /><span className="cv-stream" />
-      <span className="cv-orbit">{range(3).map((i) => <span key={i} className="cv-ocoin" style={v('--i', i)} />)}</span>
-    </span>
-  ),
-  // human nature as terrain: a maze on a tilted plane, one golden path through it
-  maze: (
-    <span className="cv-hero cv-maze">
-      <span className="cv-plane">
-        {[[0, 0, 100, 5], [0, 95, 100, 5], [0, 0, 5, 80], [95, 20, 5, 80], [18, 18, 5, 62], [18, 18, 40, 5], [36, 36, 5, 64], [54, 18, 5, 45], [54, 58, 28, 5], [72, 0, 5, 42], [72, 76, 5, 24]].map(([x, y, w, h], i) => (
-          <span key={i} className="cv-wallseg" style={{ left: `${x}%`, top: `${y}%`, width: `${w}%`, height: `${h}%` }} />
-        ))}
-        <span className="cv-path" />
-      </span>
-    </span>
-  ),
-  // judgment: a lens over a field of data points
-  lens: (
-    <span className="cv-hero cv-lens">
-      <span className="cv-field" />
-      <span className="cv-magnifier">
-        <span className="cv-glass-in" /><span className="cv-rim" /><span className="cv-handle cv-stip cv-grain" />
-      </span>
-    </span>
-  ),
-  // chaos into systems: two meshing gears turning in opposite directions
-  gears: (
-    <span className="cv-hero cv-gears">
-      <span className="cv-gear big"><span className="cv-teeth" /><span className="cv-disc cv-stip cv-grain" /><span className="cv-hub" /></span>
-      <span className="cv-gear small"><span className="cv-teeth" /><span className="cv-disc cv-stip cv-grain" /><span className="cv-hub" /></span>
-      {range(5).map((i) => <span key={i} className="cv-shard" style={v('--i', i)} />)}
-    </span>
-  ),
-  // win before you fight: a board in perspective and a few pieces
-  chess: (
-    <span className="cv-hero cv-chess">
-      <span className="cv-board cv-grain" />
-      {[[30, 62, 0], [48, 70, 0], [64, 58, 1], [42, 50, 2]].map(([x, y, kind], i) => (
-        <span key={i} className={`cv-piece k${kind}`} style={{ left: `${x}%`, top: `${y}%` }}><span className="cv-piece-body cv-stip" /></span>
-      ))}
-    </span>
-  ),
-  // button feedback: a big button presses, ripples answer
-  button: (
-    <span className="cv-hero cv-button">
-      {[0, 1, 2].map((i) => <span key={i} className="cv-wave" style={v('--i', i)} />)}
-      <span className="cv-housing cv-stip cv-grain" />
-      <span className="cv-cap-wrap"><span className="cv-cap-side" /><span className="cv-cap-top" /></span>
-    </span>
-  ),
-  // background music: a spinning record, a tonearm and notes drifting up
-  vinyl: (
-    <span className="cv-hero cv-vinyl">
-      <span className="cv-plinth cv-stip cv-grain" />
-      <span className="cv-deck"><span className="cv-record" /></span>
-      <span className="cv-arm"><span className="cv-arm-rod" /><span className="cv-arm-head" /></span>
-      {range(3).map((i) => <span key={i} className="cv-note" style={v('--i', i)} />)}
-    </span>
-  ),
-  // lifetime storage: a chest, lid ajar, coins inside, a golden keyhole
-  chest: (
-    <span className="cv-hero cv-chest">
-      <span className="cv-chest-in" />
-      {range(4).map((i) => <span key={i} className="cv-glint" style={v('--i', i)} />)}
-      <span className="cv-lid cv-stip cv-grain" />
-      <span className="cv-front cv-stip cv-grain" /><span className="cv-side cv-grain" />
-      <span className="cv-band a" /><span className="cv-band b" /><span className="cv-keyhole" />
-    </span>
-  ),
-  // vite: a bolt strikes a stack of modules
-  bolt: (
-    <span className="cv-hero cv-bolt">
-      {[[20, 62], [44, 62], [68, 62], [32, 36], [56, 36], [44, 10]].map(([x, y], i) => (
-        <span key={i} className="cv-cube" style={{ left: `${x}%`, top: `${y}%`, ...v('--i', i) }}>
-          <span className="cv-cube-top" /><span className="cv-cube-l cv-grain" /><span className="cv-cube-r cv-stip" />
-        </span>
-      ))}
-      <span className="cv-strike" />
-    </span>
-  ),
+// every hero is formula line art (notes-cover-art.tsx), one per note's story
+const heroes: Record<NotesCoverVariant, React.FC> = {
+  book: CoverBookArt, // an open book whose pages fan as curves, an evidence network above
+  rivers: CoverRiversArt, // three rivers fall into one basin and spiral to its centre
+  'coin-tower': CoverCoinTowerArt, // an empire of borrowed money: coin stacks, the tallest leaning and cracked
+  'coin-spin': CoverCoinSpinArt, // the coin that "only goes up", spinning over a recruitment pyramid
+  'chart-wall': CoverChartArt, // the mad bull: an exponential climb hits a wall and shatters
+  balance: CoverBalanceArt, // money on one pan, a sprouting fern (future output) on the other
+  hourglass: CoverHourglassArt, // wealth as time: a ruled hyperboloid hourglass, sand as dots
+  maze: CoverMazeArt, // human nature as terrain: a labyrinth with one golden way in
+  lens: CoverLensArt, // judgment: many rays through one lens, a caustic, one focus
+  gears: CoverGearsArt, // chaos into systems: a Lorenz attractor fed through gears into a clean sine
+  chess: CoverChessArt, // win before you fight: a board in perspective, a turned king, a knight's path
+  button: CoverButtonArt, // button feedback: a key pressed into a damped ripple surface
+  vinyl: CoverVinylArt, // background music: a groove spiral, a tonearm, sound as Fourier partial sums
+  chest: CoverChestArt, // lifetime storage: an open chest, a honeycomb of cells lit from inside
+  bolt: CoverBoltArt, // vite: a branching bolt by midpoint displacement, with speed streaks
 };
 
-export const NotesCoverHero: React.FC<{ variant: Exclude<NotesCoverVariant, 'book'> }> = ({ variant }) => (
-  <>
-    <span className="ng-book-shadow cv-hero-shadow" />
-    {heroes[variant]}
-  </>
-);
+export const NotesCoverHero: React.FC<{ variant: NotesCoverVariant }> = ({ variant }) => {
+  const Hero = heroes[variant];
+  return (
+    <>
+      <span className="ng-book-shadow cv-hero-shadow" />
+      <span className="cv-hero cv-art"><Hero /></span>
+    </>
+  );
+};
 
 export const NotesCoverNearProps: React.FC<{ set: Exclude<NotesCoverNear, 'desk'> }> = ({ set }) =>
   set === 'coins' ? (
