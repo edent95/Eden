@@ -299,3 +299,21 @@
 }
 /* dark pages: soft-light grain lifts near-black toward grey, so keep it faint */
 :root[data-theme="dark"] .ng-backdrop .ng-grain { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.6 0 0 0 -0.62'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") 0 0 / 200px; mix-blend-mode: normal; opacity: 0.55; }
+
+/* the menu blends into the sheet (menu-blend variant lives in styles/shared.css);
+   the reading bar below it follows the same surface, full width, with the grain */
+.notes-grimoire { --menu-texture: var(--ng-noise); }
+:root[data-theme="dark"] .notes-grimoire { --menu-texture: none; }
+.notes-grimoire .notes-readbar { background: transparent; backdrop-filter: none; }
+.notes-grimoire .notes-readbar::before {
+  content: "";
+  position: absolute;
+  inset: 0 -100vmax;
+  z-index: -1;
+  background: color-mix(in srgb, var(--theme-page) 84%, transparent);
+  backdrop-filter: blur(16px) saturate(1.08);
+  -webkit-backdrop-filter: blur(16px) saturate(1.08);
+  pointer-events: none;
+}
+.notes-grimoire .notes-readbar-row { border-bottom-color: transparent; }
+.notes-grimoire .notes-readbar-track { margin: 0 calc(-50vw + 50%); }
