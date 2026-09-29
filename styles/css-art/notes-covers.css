@@ -47,31 +47,6 @@
 .ng-cover .cv-stack.is-lean { animation: cv-sway 5s ease-in-out infinite; }
 
 /* ---------- rivers: three falls into one basin ---------- */
-.cv-rivers .cv-fall { top: 0; width: 7cqi; height: 72%; }
-.cv-rivers .f0 { left: 12%; top: 14%; height: 58%; }
-.cv-rivers .f1 { left: calc(50% - 3.5cqi); top: 0; height: 72%; }
-.cv-rivers .f2 { right: 12%; top: 8%; height: 64%; }
-.cv-rivers .cv-ledge { left: -2cqi; right: -2cqi; top: 0; height: 3cqi; border-radius: 0.8cqi; background: var(--cv-inkbody); }
-.cv-rivers .cv-water {
-  left: 0.8cqi; right: 0.8cqi; top: 2.4cqi; bottom: 0;
-  background:
-    repeating-linear-gradient(90deg, transparent 0 0.5cqi, color-mix(in srgb, var(--ng-paper) 70%, transparent) 0.5cqi 0.7cqi, transparent 0.7cqi 1.3cqi),
-    repeating-linear-gradient(180deg, color-mix(in srgb, var(--ng-paper) 55%, transparent) 0 2.4cqi, transparent 2.4cqi 3.6cqi),
-    linear-gradient(90deg, color-mix(in srgb, var(--ng-ink) 22%, transparent), color-mix(in srgb, var(--ng-foil) 26%, transparent) 50%, color-mix(in srgb, var(--ng-ink) 22%, transparent));
-  border-radius: 0 0 40% 40% / 0 0 1.2cqi 1.2cqi;
-  -webkit-mask: linear-gradient(180deg, black 80%, transparent);
-  mask: linear-gradient(180deg, black 80%, transparent);
-  animation: cv-flow 1.6s linear infinite;
-}
-.cv-rivers .f0 .cv-water { background-color: color-mix(in srgb, var(--ng-ink) 16%, transparent); }
-.cv-rivers .f2 .cv-water { background-color: color-mix(in srgb, var(--ng-foil) 20%, transparent); }
-.cv-rivers .cv-basin { left: 6%; right: 6%; bottom: 0; height: 30%; border-radius: 0 0 50% 50% / 0 0 100% 100%; background: var(--cv-inkbody); }
-.cv-rivers .cv-pool { left: 8%; right: 8%; bottom: 20%; height: 20%; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--ng-foil) 40%, var(--ng-paper)), var(--ng-t2)); }
-.cv-rivers .cv-ripple {
-  left: calc(50% - 8cqi); bottom: 22%; width: 16cqi; height: 4.4cqi; border-radius: 50%;
-  background: radial-gradient(closest-side, transparent 80%, color-mix(in srgb, var(--ng-paper) 70%, transparent) 88%, transparent 96%);
-  animation: cv-ripple 4.5s ease-out calc(var(--i) * 1.5s) infinite;
-}
 
 /* ---------- coin tower ---------- */
 .cv-tower .cv-crack { left: 70%; bottom: 0; width: 9cqi; height: 0.4cqi; background: var(--ng-shadow); border-radius: 50%; }
@@ -110,21 +85,6 @@
 }
 
 /* ---------- candle chart hitting a wall ---------- */
-.cv-chart .cv-candle { bottom: 8%; left: calc(4% + var(--i) * 9%); width: 3.2cqi; height: var(--h); }
-.cv-chart .cv-body {
-  left: 0; right: 0; top: 18%; bottom: 0; border-radius: 0.3cqi;
-  background: var(--cv-paperbody);
-}
-.cv-chart .cv-side { right: -0.9cqi; top: calc(18% - 0.45cqi); bottom: 0.45cqi; width: 0.9cqi; background: color-mix(in srgb, var(--ng-ink) 55%, black); transform: skewY(-30deg); }
-.cv-chart .cv-wick { left: calc(50% - 0.12cqi); top: 0; bottom: 0; width: 0.24cqi; background: var(--ng-t3); }
-.cv-chart .is-down .cv-body { background: linear-gradient(90deg, color-mix(in srgb, var(--ng-foil) 70%, white), var(--ng-foil) 45%, color-mix(in srgb, var(--ng-foil) 55%, black)); }
-.cv-chart .cv-wall {
-  left: 67%; top: 0; bottom: 8%; width: 3cqi; border-radius: 0.3cqi;
-  background:
-    repeating-linear-gradient(180deg, transparent 0 1.6cqi, color-mix(in srgb, var(--ng-ink) 60%, black) 1.6cqi 1.8cqi),
-    var(--cv-inkbody);
-}
-.cv-chart .cv-candle { animation: cv-rise 8s ease-in-out calc(var(--i) * 0.15s) infinite; transform-origin: 50% 100%; }
 
 /* ---------- balance ---------- */
 .cv-balance .cv-post { left: calc(50% - 0.6cqi); top: 16%; bottom: 6%; width: 1.2cqi; border-radius: 0.6cqi; background: var(--cv-inkbody); }
@@ -342,12 +302,50 @@
   .ng-cover .cv-near { width: 46cqi; height: 16cqi; }
 }
 
+/* ---------- formula line-art heroes (notes-cover-art.tsx): rivers, chart-wall ----------
+   Hairline bundles in the Notes ink, foil where the story turns, dotted construction;
+   lines draw in once, a foil glint keeps flowing along the rivers, a pen climbs the chart. */
+.ng-cover .cv-art { overflow: visible; }
+.ng-cover .cv-art .cvx { position: absolute; inset: -6% -4%; width: 108%; height: 112%; overflow: visible; }
+.cvx { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.cvx-hair { stroke: color-mix(in srgb, var(--ng-ink) 62%, transparent); stroke-width: 0.7; }
+.cvx-hair.is-foil { stroke: color-mix(in srgb, var(--ng-foil) 80%, transparent); }
+.cvx-hair.is-lead { stroke: var(--ng-foil); stroke-width: 1.4; }
+.cvx-hair.is-shard { stroke: color-mix(in srgb, var(--ng-ink) 55%, transparent); stroke-width: 0.8; }
+.cvx-dots { stroke: color-mix(in srgb, var(--ng-ink) 34%, transparent); stroke-width: 1.3; stroke-dasharray: 0.1 5; }
+.cvx-dots.is-rim { stroke: color-mix(in srgb, var(--ng-foil) 70%, transparent); stroke-width: 1.6; stroke-dasharray: 0.1 4; }
+.cvx-disc { fill: var(--ng-paper); stroke: color-mix(in srgb, var(--ng-ink) 30%, transparent); stroke-width: 0.6; }
+.cvx-rosette { stroke: var(--ng-foil); stroke-width: 0.7; }
+.cvx-foil-dot { fill: var(--ng-foil); }
+.cvx-construct { stroke: color-mix(in srgb, var(--ng-ink) 16%, transparent); stroke-width: 0.6; stroke-dasharray: 2 4; }
+.cvx-hatch { stroke: color-mix(in srgb, var(--ng-ink) 55%, transparent); stroke-width: 0.8; }
+.cvx-wall { stroke: color-mix(in srgb, var(--ng-ink) 50%, transparent); stroke-width: 0.8; }
+.cvx-course { stroke: color-mix(in srgb, var(--ng-ink) 45%, transparent); stroke-width: 0.6; }
+.cvx-wall-edge { stroke: var(--ng-foil); stroke-width: 1.2; }
+.cvx-candle line { stroke: color-mix(in srgb, var(--ng-ink) 45%, transparent); stroke-width: 0.7; }
+.cvx-candle rect { fill: var(--ng-paper); stroke: color-mix(in srgb, var(--ng-ink) 70%, transparent); stroke-width: 0.7; }
+.cvx-candle rect.is-foil { fill: color-mix(in srgb, var(--ng-foil) 35%, var(--ng-paper)); stroke: var(--ng-foil); }
+.cvx-burst { stroke: var(--ng-foil); stroke-width: 0.9; }
+.cvx-pen { fill: var(--ng-foil); stroke: var(--ng-paper); stroke-width: 1; }
+
+/* draw-in once, strand by strand */
+.cvx-draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: cvx-draw 2.6s cubic-bezier(0.45, 0, 0.25, 1) calc(0.3s + var(--i, 0) * 0.035s) forwards; }
+.cvx-shard-end { opacity: 0; animation: cvx-fade 0.4s ease calc(3.6s + var(--i) * 0.1s) forwards; }
+.cvx-candle { opacity: 0; animation: cvx-fade 0.5s ease calc(0.6s + var(--i) * 0.12s) forwards; }
+.cvx-burst { opacity: 0; transform-box: fill-box; transform-origin: center; animation: cvx-burst 0.7s cubic-bezier(0.3, 1.5, 0.5, 1) 2.3s forwards; }
+/* the flow: a foil glint slides down each river, then spirals in */
+.cvx-flow { stroke: color-mix(in srgb, var(--ng-foil) 90%, white); stroke-width: 1.8; stroke-dasharray: 0.07 0.93; stroke-dashoffset: 1; opacity: 0.9; animation: cvx-flow 3.6s linear calc(2.8s + var(--i) * 1.2s) infinite; }
+.cvx-flow.is-spiral { stroke-width: 1.4; animation-duration: 5.2s; animation-delay: calc(3.4s + var(--i) * 1.2s); }
+
+@keyframes cvx-draw { to { stroke-dashoffset: 0; } }
+@keyframes cvx-fade { to { opacity: 1; } }
+@keyframes cvx-burst { from { opacity: 0; transform: scale(0.3); } to { opacity: 1; transform: none; } }
+@keyframes cvx-flow { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+
 @keyframes cv-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.2cqi); } }
 @keyframes cv-sway { 0%, 100% { rotate: 9deg; } 50% { rotate: 6deg; } }
 @keyframes cv-flow { to { background-position: 0 0, 0 3.6cqi, 0 0; } }
-@keyframes cv-ripple { 0% { transform: scale(0.3); opacity: 0.9; } 100% { transform: scale(1.4); opacity: 0; } }
 @keyframes cv-spin { to { transform: rotateY(360deg); } }
-@keyframes cv-rise { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.06); } }
 @keyframes cv-tip { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(3deg); } }
 @keyframes cv-tip-back { 0%, 100% { transform: rotate(4deg); } 50% { transform: rotate(-3deg); } }
 @keyframes cv-sand-top { 0% { transform: scaleY(1); } 90%, 100% { transform: scaleY(0.12); } }
@@ -368,6 +366,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .ng-cover .cv-hero, .ng-cover .cv-hero *, .ng-cover .cv-near * { animation: none !important; }
+  .cvx-draw { stroke-dashoffset: 0; }
+  .cvx-shard-end, .cvx-candle, .cvx-burst { opacity: 1; }
+  .cvx-flow, .cvx-pen { display: none; }
   .cv-bolt .cv-strike { opacity: 1; }
   .cv-vinyl .cv-note, .cv-button .cv-wave { opacity: 0.6; }
 }
