@@ -1033,15 +1033,18 @@ const notesStoryScenes: Record<NotesStoryMotif, { props: [NotesStoryProp, NotesS
 /** The formula engraved for a motif (used by covers to build a note-specific ring). */
 export const notesStoryFormula = (motif: NotesStoryMotif) => notesStoryScenes[motif].formula;
 
-/** Spreads a formula around the ring, repeating it to fill 72 positions. */
+/** A ring of 72 marks — dots, with a longer tick every sixth and a gold bead every
+ *  twelfth. It used to spell the formula; the owner wants shapes, not text (2026-09-29),
+ *  so `formula` now only seeds where the pattern starts. */
 export const NotesStoryRunes: React.FC<{ formula: string }> = ({ formula }) => {
   const target = 72;
-  let text = formula;
-  while (Array.from(text).length < target) text += formula;
-  const chars = Array.from(text).slice(0, target);
+  const offset = formula.split("").reduce((h: number, ch: string) => (h + ch.charCodeAt(0)) % 12, 0);
   return (
-    <span className="nf-runes" aria-hidden style={cssVar('--step', `${360 / chars.length}deg`)}>
-      {chars.map((char, index) => <i key={index} style={cssVar('--k', index)}>{char}</i>)}
+    <span className="nf-runes" aria-hidden style={cssVar('--step', `${360 / target}deg`)}>
+      {Array.from({ length: target }, (_, index) => {
+        const n = (index + offset) % 12;
+        return <i key={index} className={n === 0 ? 'is-bead' : n % 6 === 0 ? 'is-tick' : undefined} style={cssVar('--k', index)} />;
+      })}
     </span>
   );
 };
