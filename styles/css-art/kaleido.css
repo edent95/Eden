@@ -7,6 +7,10 @@
      over a rotating guilloché family, ringed by a star polygon, petals, scallops
      and beads (shapes only, no text), drawn in on load (SMIL inside the SVG) and
      drifting slowly with scroll.
+   · .kf-box — the small-box version, pure CSS: a double hairline (inset line +
+     inset outline), bead rows along the top and bottom edges (a gold bead every
+     fourth) and a gold dot in each corner between the two lines; `.is-lite` keeps
+     only the double line and corner dots for small, repeated buttons.
    · .kf — KaleidoFrame (components/css-art/kaleido-frame.tsx): a card border in
      the same language — hairlines, a sine-wave guilloché band, beads, and corner
      rosettes from the page's emblem curves.
@@ -182,6 +186,45 @@
 .kf-rosette-inner { fill: none; stroke: var(--kf-foil); stroke-width: 0.7; }
 .kf-rosette { animation: kf-turn 90s linear infinite; transform-origin: 0 0; }
 @keyframes kf-turn { to { transform: rotate(360deg); } }
+
+/* ---------- kf-box: the same language on small inner boxes, CSS only ---------- */
+.kf-box {
+  --kfb-line: color-mix(in srgb, var(--theme-text-primary) 18%, transparent);
+  --kfb-faint: color-mix(in srgb, var(--theme-text-primary) 10%, transparent);
+  --kfb-bead: color-mix(in srgb, var(--theme-text-primary) 26%, transparent);
+  --kfb-foil: #b8862f;
+  position: relative;
+  box-shadow: inset 0 0 0 1px var(--kfb-line);
+  outline: 0.5px solid var(--kfb-faint);
+  outline-offset: -5px;
+}
+[data-theme="dark"] .kf-box { --kfb-foil: #f2cf7a; }
+.kf-box::before,
+.kf-box::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+/* bead rows between the two lines, top and bottom, kept clear of the rounded corners */
+.kf-box::before {
+  inset: 0 16px;
+  background:
+    radial-gradient(circle, var(--kfb-foil) 0 1.2px, transparent 1.6px) center 0 / 28px 5px repeat-x,
+    radial-gradient(circle, var(--kfb-foil) 0 1.2px, transparent 1.6px) center 100% / 28px 5px repeat-x,
+    radial-gradient(circle, var(--kfb-bead) 0 0.7px, transparent 1.1px) center 0 / 7px 5px repeat-x,
+    radial-gradient(circle, var(--kfb-bead) 0 0.7px, transparent 1.1px) center 100% / 7px 5px repeat-x;
+}
+/* four gold dots, one in each corner between the lines */
+.kf-box::after {
+  inset: 0;
+  background:
+    radial-gradient(circle at 6px 6px, var(--kfb-foil) 0 1.5px, transparent 2px),
+    radial-gradient(circle at calc(100% - 6px) 6px, var(--kfb-foil) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 6px calc(100% - 6px), var(--kfb-foil) 0 1.5px, transparent 2px),
+    radial-gradient(circle at calc(100% - 6px) calc(100% - 6px), var(--kfb-foil) 0 1.5px, transparent 2px);
+}
+.kf-box.is-lite::before { display: none; }
+.kf-box > * { position: relative; z-index: 1; }
 
 @media (prefers-reduced-motion: reduce) {
   .kf-rosette { animation: none !important; }
