@@ -82,3 +82,36 @@
   .em *, .em.is-active * { animation: none !important; }
   .em-pen { display: none; }
 }
+
+/* ---------- plate variant (storyboard stage): bare plot, and the two story actions ---------- */
+.em-plate .em-construction circle,
+.em-plate .em-construction line { stroke: color-mix(in srgb, var(--em-ink) 10%, transparent); }
+.em-plate .em-ink { stroke-width: 0.9; }
+.em-plate .em-bold { stroke-width: 2.2; }
+
+/* catenoid: pulled too far apart, the film pinches at the waist and snaps into two discs */
+.em-plate .em-film, .em-plate .em-ring-top, .em-plate .em-ring-bot { transform-box: view-box; transform-origin: 110px 110px; }
+.em-plate .em-disc { fill: color-mix(in srgb, var(--em-foil) 22%, transparent); opacity: 0; }
+.em-plate.is-active .em-film { animation: em-snap 1.3s cubic-bezier(0.5, 0, 0.8, 0.4) 2.8s both; }
+.em-plate.is-active .em-ring-top { animation: em-apart-up 1.3s cubic-bezier(0.4, 0, 0.3, 1) 2.8s both; }
+.em-plate.is-active .em-ring-bot { animation: em-apart-down 1.3s cubic-bezier(0.4, 0, 0.3, 1) 2.8s both; }
+.em-plate.is-active .em-disc { animation: em-disc 0.6s ease 3.9s both; }
+@keyframes em-snap { 0% { transform: scaleX(1); opacity: 1; } 75% { transform: scaleX(0.22); opacity: 1; } 100% { transform: scaleX(0.02); opacity: 0; } }
+@keyframes em-apart-up { to { transform: translateY(-9px); } }
+@keyframes em-apart-down { to { transform: translateY(9px); } }
+@keyframes em-disc { to { opacity: 1; } }
+.em-plate.is-active .em-disc.em-ring-top { animation: em-apart-up 1.3s cubic-bezier(0.4, 0, 0.3, 1) 2.8s both, em-disc 0.6s ease 3.9s both; }
+.em-plate.is-active .em-disc.em-ring-bot { animation: em-apart-down 1.3s cubic-bezier(0.4, 0, 0.3, 1) 2.8s both, em-disc 0.6s ease 3.9s both; }
+
+/* catenary: the principal chain has no middle link; its halves swing apart from the pegs */
+.em-plate .em-half { transform-box: view-box; transition: transform 1.2s cubic-bezier(0.3, 1.25, 0.5, 1) 1.2s; }
+.em-plate .em-half-l { transform-origin: 28px 64px; }
+.em-plate .em-half-r { transform-origin: 192px 64px; }
+.em-plate.is-active .em-half-l { transform: rotate(9deg); }
+.em-plate.is-active .em-half-r { transform: rotate(-9deg); }
+.em-gap { stroke: var(--em-foil); stroke-width: 1.1; stroke-dasharray: 3 3; opacity: 0; }
+.em-plate.is-active .em-gap { animation: em-fade 0.6s ease 2.2s both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .em-plate .em-half { transition: none; }
+}
