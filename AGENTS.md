@@ -3,6 +3,14 @@
 This repository should be handled as an `LLM Wiki` project and concept workspace.
 Future agents working here should treat this file as the operating schema for how to think, write, and maintain the system.
 
+## 开工前:读面板上的项目简介
+
+    curl -s http://127.0.0.1:3939/api/projects/Eden/brief
+
+个人面板按日志、任务、git 现拼的「这个项目现在在做什么、往哪走」:用户写的目标与不做的事、未完成任务、最近改动的 ripples、待验收与风险。
+连不上(面板没开、在 CI 或别的机器上)就跳过,不影响干活。硬规则仍以本文件为准;简介和本文件冲突时听本文件,并在日志里记一笔。
+碰到简介「不做的事」里列的方向,先停下问用户。
+
 ## Default Behavior
 
 - Default reply language: Chinese.
