@@ -9,6 +9,7 @@ log_includes:
 progress: 0
 tags: []
 milestones: []
+objective: "给别人一个震撼的第一印象,让人看到我的作品集、品味、创意和技术。"
 ---
 # Change Log
 
