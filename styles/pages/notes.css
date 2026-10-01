@@ -173,7 +173,11 @@
   .notes-entry-arrow { transition: none; }
 }
 
+/* Notes is not inside .eden-home, so the --eden-* pair is defined here from the
+   site theme tokens (they follow light/dark on their own). */
 :is(.notes-page, .notes-article-page) {
+  --eden-ink: var(--theme-text-primary);
+  --eden-paper: var(--theme-page);
   --notes-accent: #3f9b76;
   --notes-accent-soft: #7bdcb5;
   --notes-accent-ink: #0f2b21;

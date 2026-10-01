@@ -11,8 +11,6 @@ import {
   routeSeoForPath,
   stripLocaleFromRoutePath,
 } from './seo-routes';
-import ProductStorePage from './components/ProductStorePage';
-import type { CssArtComponent } from './components/css-art/index';
 import { 
   Linkedin, 
   UserRound
