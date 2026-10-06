@@ -6,8 +6,9 @@
 import React from 'react';
 import {
   CHAT_MAX_LENGTH,
-  ChatSendError,
+  chatSendNotice,
   loadChatName,
+  onLiveChatOpen,
   pickChatName,
   saveChatName,
   sendChatMessage,
@@ -15,19 +16,29 @@ import {
   type ChatMessage,
 } from '../services/homeChat';
 
-export type HomeLiveChatProps = {
-  isZh: boolean;
+/** The floating chat sits outside App, so it follows the language App writes onto <html lang>. */
+const useDocumentIsZh = (): boolean => {
+  const read = () => document.documentElement.lang.toLowerCase().startsWith('zh');
+  const [isZh, setIsZh] = React.useState(read);
+  React.useEffect(() => {
+    const observer = new MutationObserver(() => setIsZh(read()));
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+    setIsZh(read());
+    return () => observer.disconnect();
+  }, []);
+  return isZh;
 };
 
 const timeLabel = (createdAt: number): string =>
   new Date(createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
 
 /**
- * Floating orb in the corner; tapping it opens the anonymous visitor room.
+ * Floating orb in the corner of every page; tapping it opens the anonymous visitor room.
  * The stream only connects after the first open, so idle visitors hold no
- * RTDB connection.
+ * RTDB connection. Inline boards open it with `openLiveChat(message)`.
  */
-const HomeLiveChat: React.FC<HomeLiveChatProps> = ({ isZh }) => {
+const HomeLiveChat: React.FC = () => {
+  const isZh = useDocumentIsZh();
   const t = React.useCallback((en: string, zh: string) => (isZh ? zh : en), [isZh]);
   const [open, setOpen] = React.useState(false);
   const [connected, setConnected] = React.useState(false);
@@ -47,6 +58,21 @@ const HomeLiveChat: React.FC<HomeLiveChatProps> = ({ isZh }) => {
   React.useEffect(() => {
     if (open && !connected) setConnected(true);
   }, [open, connected]);
+
+  // A message sent from an inline board lands here as the visitor's own, and the panel opens on it.
+  React.useEffect(
+    () =>
+      onLiveChatOpen((message) => {
+        if (message) {
+          setMine((current) => new Set(current).add(message.id));
+          if (message.id.startsWith('local-')) setEchoes((current) => [...current, message]);
+          setName(loadChatName());
+        }
+        stickToBottom.current = true;
+        setOpen(true);
+      }),
+    [],
+  );
 
   React.useEffect(() => {
     if (!connected) return undefined;
@@ -102,14 +128,7 @@ const HomeLiveChat: React.FC<HomeLiveChatProps> = ({ isZh }) => {
       setDraft('');
       stickToBottom.current = true;
     } catch (error) {
-      const reason = error instanceof ChatSendError ? error.message : '';
-      setNotice(
-        reason === 'too-fast'
-          ? t('Slow down a little — one message every 5 seconds.', '慢慢来，5 秒一句。')
-          : reason === 'daily-limit-reached'
-            ? t('That’s your 60 messages for today. Back after midnight.', '今天 60 句讲完了，午夜后再来。')
-            : t('Could not send. Check your connection and try again.', '发不出去，网络好像有问题，再试一次。'),
-      );
+      setNotice(chatSendNotice(error, isZh));
     } finally {
       setSending(false);
     }

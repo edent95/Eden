@@ -154,3 +154,28 @@ export const sendChatMessage = async (input: { name: string; text: string }): Pr
     window.clearTimeout(timeout);
   }
 };
+
+/** The visitor-facing line for a failed send; shared by the floating panel and inline boards. */
+export const chatSendNotice = (error: unknown, isZh: boolean): string => {
+  const reason = error instanceof ChatSendError ? error.message : '';
+  if (reason === 'too-fast') return isZh ? '慢慢来，5 秒一句。' : 'Slow down a little — one message every 5 seconds.';
+  if (reason === 'daily-limit-reached') return isZh ? '今天 60 句讲完了，午夜后再来。' : 'That’s your 60 messages for today. Back after midnight.';
+  return isZh ? '发不出去，网络好像有问题，再试一次。' : 'Could not send. Check your connection and try again.';
+};
+
+/*
+ * Inline boards (e.g. on /conways-game-of-life) post into the same room, then ask the
+ * floating chat to open and show the message as the visitor's own. A window event keeps
+ * the two decoupled: the floating chat is mounted once in index.tsx, outside any page.
+ */
+const OPEN_EVENT = 'eden-chat:open';
+
+export const openLiveChat = (message?: ChatMessage): void => {
+  window.dispatchEvent(new CustomEvent<{ message?: ChatMessage }>(OPEN_EVENT, { detail: { message } }));
+};
+
+export const onLiveChatOpen = (handler: (message?: ChatMessage) => void): (() => void) => {
+  const listener = (event: Event) => handler((event as CustomEvent<{ message?: ChatMessage }>).detail?.message);
+  window.addEventListener(OPEN_EVENT, listener);
+  return () => window.removeEventListener(OPEN_EVENT, listener);
+};

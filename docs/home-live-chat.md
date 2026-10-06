@@ -1,8 +1,19 @@
-# Home live chat — anonymous visitor room
+# Site live chat — anonymous visitor room
 
-The homepage has a floating Siri-like orb in the bottom-right corner (`components/HomeLiveChat.tsx`,
-styles at the end of `styles/pages/home.css`). Tapping it opens a small anonymous chat panel; Escape or
-the orb again closes it. The RTDB stream only connects after the first open.
+Every page has a floating Siri-like orb in the bottom-right corner (`components/HomeLiveChat.tsx`,
+styles in `styles/pages/live-chat.css`). It is mounted once in `index.tsx`, beside `App`, so it
+follows every route; it reads the page language from `<html lang>`, which `seo.ts` keeps in sync.
+Tapping it opens a small anonymous chat panel; Escape or the orb again closes it. The RTDB stream
+only connects after the first open.
+
+## Inline boards
+
+`components/ChatBoard.tsx` is a page section onto the same room (currently on
+`/conways-game-of-life`): the latest five messages, the visitor's chat name, and a composer. A message
+posted there goes through the same `homeChatApi`, then `openLiveChat(message)` (a window event in
+`services/homeChat.ts`) opens the floating panel with that message marked as the visitor's own. The
+board's stream only connects once it scrolls near the viewport. No backend change: messages carry no
+page field, so the room does not show which page a note came from.
 
 ## Product contract
 

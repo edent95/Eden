@@ -49,7 +49,6 @@ const IGamingPage = React.lazy(() => import('./components/IGamingPage'));
 const IGamingSummaryPage = React.lazy(() => import('./components/IGamingSummaryPage'));
 const IGamingCasesPage = React.lazy(() => import('./components/IGamingCasesPage'));
 const HomePenneyGame = React.lazy(() => import('./components/HomePenneyGame'));
-const HomeLiveChat = React.lazy(() => import('./components/HomeLiveChat'));
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -804,9 +803,6 @@ const App: React.FC = () => {
 
       <footer className="eden-footer"><div className="eden-home-island"><div><strong>EDEN</strong><p>Building systems for people, products, and uncertain futures.</p></div><div className="eden-footer-links"><a href={aboutHref}>About</a><a href="mailto:d.tytern@gmail.com">Email</a><a href="https://www.linkedin.com/in/edentan95/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/edent95" target="_blank" rel="noreferrer">GitHub</a><a href={notesHref}>Notes</a></div></div></footer>
 
-      <React.Suspense fallback={null}>
-        <HomeLiveChat isZh={isZh} />
-      </React.Suspense>
     </div>
   );
 };

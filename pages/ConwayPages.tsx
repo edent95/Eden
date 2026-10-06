@@ -1,4 +1,5 @@
 import React from 'react';
+import { ChatBoard } from '../components/ChatBoard';
 import { ProjectsCrmCssIcon } from '../components/css-art/index';
 import { HeaderControls, type Language, type Theme, type ThemePreference } from '../app/shared';
 import { ArrowLeft, ArrowRight, Pause, Play, RotateCcw } from 'lucide-react';
@@ -737,6 +738,18 @@ export const ConwayGameOfLifeFullPage: React.FC<{
               </div>
             </div>
           </section>
+
+          <ChatBoard
+            isZh={isZh}
+            className="conway-chat-board"
+            kicker={isZh ? '留言' : 'Leave a note'}
+            title={isZh ? '你看到了什么图案？' : 'What pattern did you find?'}
+            lead={
+              isZh
+                ? '一个滑翔机、一次意外的稳定、或者只是一个问题，都可以留下来。留言会同步到每一页右下角的悬浮留言板。'
+                : 'A glider, an accidental still life, or just a question — leave it here. Notes also show up in the floating chat on every page.'
+            }
+          />
         </div>
       </main>
     </div>
