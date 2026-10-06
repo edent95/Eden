@@ -129,7 +129,7 @@ function homeJsonLd(siteRoot: string) {
         image: imageUrl,
         jobTitle: 'Systems Architect & Digital Strategist',
         address: { '@type': 'PostalAddress', addressCountry: 'MY' },
-        sameAs: ['https://www.linkedin.com/in/daniel-yi-tern-tan-461567199/'],
+        sameAs: ['https://github.com/edent95', 'https://www.linkedin.com/in/edentan95/'],
       },
     ],
   };

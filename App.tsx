@@ -37,6 +37,7 @@ import { ArchivedWorkPage, ProjectCssGalleryPage } from './pages/ArchiveAndGalle
 import { archivedWorks } from './app/archive';
 import { JijuRevampFullPage } from './pages/JijuRevampPage';
 import { LifeFullPage } from './pages/LifePage';
+import { AboutPage } from './pages/AboutPage';
 import { ProjectHomePage } from './pages/ProjectHomePage';
 import { DelayedAboutProfileVideo, HomeCollage } from './app/home-collage';
 import { IGAMING_CASES as igamingCases } from './components/igaming-cases-content';
@@ -182,6 +183,7 @@ const App: React.FC = () => {
   const pokerHref = joinBasePath(baseUrl, 'poker');
   const filmGalleryHref = joinBasePath(baseUrl, 'film-gallery');
   const notesHref = joinBasePath(baseUrl, 'notes');
+  const aboutHref = joinBasePath(baseUrl, 'about');
   const lifeHref = joinBasePath(baseUrl, 'life');
   const brandGuideHref = joinBasePath(baseUrl, 'brand-guide');
   const topicsHref = joinBasePath(baseUrl, 'topics');
@@ -297,6 +299,7 @@ const App: React.FC = () => {
   const isLifeOsFullPage = pathWithoutBase === '/life-os';
   const isLifeFullPage = pathWithoutBase === '/life';
   const isBrandGuideFullPage = pathWithoutBase === '/brand-guide';
+  const isAboutPage = pathWithoutBase === '/about';
   const isTopicsFullPage = pathWithoutBase === '/topics';
   const isConwayGameOfLifeFullPage = pathWithoutBase === '/conways-game-of-life';
   const isPenneysGamePage = pathWithoutBase === '/penneys-game';
@@ -503,6 +506,20 @@ const App: React.FC = () => {
   if (isLifeOsFullPage) {
     return (
       <LifeOsFullPage
+        homeHref={homeHref}
+        baseUrl={baseUrl}
+        language={language}
+        setLanguage={setLanguage}
+        themePreference={themePreference}
+        theme={theme}
+        setThemePreference={setThemePreference}
+      />
+    );
+  }
+
+  if (isAboutPage) {
+    return (
+      <AboutPage
         homeHref={homeHref}
         baseUrl={baseUrl}
         language={language}
@@ -767,6 +784,7 @@ const App: React.FC = () => {
                   <p>技术不是终点，是我吃饭的家伙。问题是饭还没吃到。</p>
                   <p>你的公司乱到自己都看不懂？拿来给我，我帮你画出来，顺便帮你看清楚你自己。</p>
                   <p className="eden-about-now"><strong>看得清系统，就改得了系统。看得清人，就搞人。</strong></p>
+                  <p><a className="eden-about-more" href={aboutHref}>完整故事 ›</a></p>
                 </>
               ) : (
                 <>
@@ -776,6 +794,7 @@ const App: React.FC = () => {
                   <p>Technology is not the destination. It is a language for expressing better models of reality.</p>
                   <p>I build frameworks that help people see themselves, their businesses, and the world more clearly.</p>
                   <p className="eden-about-now"><strong>Because once you can see the system, you can change it.</strong></p>
+                  <p><a className="eden-about-more" href={aboutHref}>The full story ›</a></p>
                 </>
               )}
             </div>
@@ -783,7 +802,7 @@ const App: React.FC = () => {
         </section>
       </main>
 
-      <footer className="eden-footer"><div className="eden-home-island"><div><strong>EDEN</strong><p>Building systems for people, products, and uncertain futures.</p></div><div className="eden-footer-links"><a href="mailto:hello@edentan.site">Email</a><a href="https://www.linkedin.com/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/edent95" target="_blank" rel="noreferrer">GitHub</a><a href={notesHref}>Notes</a></div></div></footer>
+      <footer className="eden-footer"><div className="eden-home-island"><div><strong>EDEN</strong><p>Building systems for people, products, and uncertain futures.</p></div><div className="eden-footer-links"><a href={aboutHref}>About</a><a href="mailto:d.tytern@gmail.com">Email</a><a href="https://www.linkedin.com/in/edentan95/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/edent95" target="_blank" rel="noreferrer">GitHub</a><a href={notesHref}>Notes</a></div></div></footer>
 
       <React.Suspense fallback={null}>
         <HomeLiveChat isZh={isZh} />
