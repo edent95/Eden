@@ -8,6 +8,8 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
 
+const SiteLiveChat = React.lazy(() => import('./components/HomeLiveChat'));
+
 const rootElement = document.getElementById('root');
 if (!rootElement) {
   throw new Error("Could not find root element to mount to");
@@ -33,6 +35,10 @@ const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <App />
+    {/* The anonymous visitor room floats on every page, so it mounts beside App, not inside a route. */}
+    <React.Suspense fallback={null}>
+      <SiteLiveChat />
+    </React.Suspense>
   </React.StrictMode>
 );
 
