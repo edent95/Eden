@@ -1,6 +1,7 @@
 import type { SeoLanguage } from './seo-routes.ts';
 import { MIYA_PRIVACY, miyaPlainText, type MiyaBlock } from './components/miya-privacy-content.ts';
 import { IGAMING_PAGE, IGAMING_SUMMARY } from './components/igaming-content.ts';
+import { ABOUT_PAGE, aboutLinkLine } from './components/about-content.ts';
 import { IGAMING_CASES, IGAMING_CASES_INDEX, type CaseBlock, type IGamingCase } from './components/igaming-cases-content.ts';
 
 type Localized = Record<SeoLanguage, string>;
@@ -293,8 +294,32 @@ function igamingStaticCopy(): StaticRouteCopy {
  * `components/miya-privacy-content.ts` / `components/igaming-content.ts`, the same copy
  * the React pages render, so the static text cannot drift.
  */
+/** Static body for /about, generated from the same copy the React page renders. */
+function aboutStaticCopy(): StaticRouteCopy {
+  const page = ABOUT_PAGE;
+  return {
+    eyebrow: page.kicker,
+    thesis: page.title,
+    sections: [
+      { title: L('About Eden Tan', '关于 Eden Tan'), paragraphs: [page.lede] },
+      ...page.sections.map((section) => ({
+        title: section.title,
+        paragraphs: [
+          ...section.paragraphs,
+          ...('pull' in section && section.pull ? [section.pull] : []),
+          ...('links' in section && section.links
+            ? section.links.map((link) => L(aboutLinkLine(link, 'en'), aboutLinkLine(link, 'zh')))
+            : []),
+        ],
+      })),
+      { title: page.closing.title, paragraphs: [page.closing.body] },
+    ],
+  };
+}
+
 export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
   '/project/miya': miyaStaticCopy(),
+  '/about': aboutStaticCopy(),
   '/igaming': igamingSummaryStaticCopy(),
   '/igaming/full': igamingStaticCopy(),
   '/igaming/cases': igamingCasesIndexStaticCopy(),

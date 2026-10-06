@@ -66,6 +66,7 @@ npm run preview
 - `/` — 主页
 - `/jiju-pet` — Jiju 产品详情：可信宠物友好地点发现、宠物档案、到访记忆与社区资料
 - `/jiju-revamp` — Jiju 从宠物友好目录转向本地生活探索的平台提案
+- `/about` — 关于 Eden：Dan Koe 式的个人观点页（不是简历），核心主张 → 来路 → 五条规则 → 作品为证 → 写作主题 → 联系方式；文案在 `components/about-content.ts`，React 页与静态预渲染共用
 - `/project` — Eden 已构建产品的 app shelf
 - `/project/miya` — MiYa（iOS 本机健康报告）隐私政策兼技术支持页，中英双语（`/zh/project/miya/` 为中文版）；App Store Connect 的 Privacy Policy URL 与 Support URL 都指向这里，正文同时预渲染成静态 HTML，不开 JS 也能完整阅读
 - `/project-css` — Projects / Home / Interests CSS art 直达检查页（隐藏直达页；不进 sitemap）

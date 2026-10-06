@@ -26,7 +26,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-09-29';
+export const SITE_CONTENT_LASTMOD = '2026-10-06';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -577,6 +577,20 @@ export const ROUTE_SEO: RouteSeo[] = [
     desc: {
       en: 'Eight natal systems — BaZi, Zi Wei Dou Shu, natal hexagram, Human Design and more — read into a plain-language life manual, plus a 78-card tarot desk.',
       zh: '八套本命系统——八字、紫微斗数（含四化飞星）、易经本命卦、数字学、人类图、基因钥匙、西洋与吠陀占星——写成白话人生说明书，另有 78 张塔罗提问台。',
+    },
+  },
+  {
+    path: '/about',
+    datePublished: '2026-10-06',
+    dateModified: '2026-10-06',
+    priority: '0.9',
+    title: {
+      en: 'About Eden Tan | Most problems are scattered, not hard',
+      zh: '关于 Eden Tan | 多数问题不难，只是散',
+    },
+    desc: {
+      en: 'Eden Tan turns messy human behavior into systems people can run: the story from iGaming operator and provider work to products, essays and beliefs.',
+      zh: 'Eden Tan 把乱糟糟的人和事整理成跑得起来的系统：从 iGaming operator 到 provider，再到自己做产品、写文章，以及他相信的几条规则。',
     },
   },
   {

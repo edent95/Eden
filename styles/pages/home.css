@@ -129,6 +129,8 @@
 .eden-about-body-compact p + p { margin-top: 10px; }
 .eden-about-body-compact .eden-about-now { margin-top: 18px; }
 .eden-about-now strong { font-weight: 760; }
+.eden-about-more { font-size: 14px; font-weight: 700; color: var(--theme-accent-teal); text-decoration: none; }
+.eden-about-more:hover { text-decoration: underline; }
 
 .eden-footer { border-top: 1px solid color-mix(in srgb, var(--eden-ink) 12%, transparent); padding: 65px 0; }
 .eden-footer > div { display: flex; justify-content: space-between; gap: 40px; }.eden-footer strong { letter-spacing: .16em; }.eden-footer p { margin-top: 12px; color: color-mix(in srgb, var(--eden-ink) 58%, transparent); }.eden-footer-links { display: flex; gap: 24px; font-size: 14px; font-weight: 700; }

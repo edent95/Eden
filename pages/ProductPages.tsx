@@ -521,7 +521,7 @@ export const ETReportHubSalesPage: React.FC<{
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
 }> = ({ homeHref, projectsHref, productHref, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
-  const linkedinHref = 'https://www.linkedin.com/in/daniel-yi-tern-tan-461567199/';
+  const contactHref = 'mailto:d.tytern@gmail.com?subject=ETReportHub';
 
   return (
     <div className="page-shell etreport-page etreport-sales-page min-h-screen selection:bg-eden-mint/30 selection:text-stone-900">
@@ -789,8 +789,8 @@ export const ETReportHubSalesPage: React.FC<{
                   : 'Best for teams with stable Transaction / Customer exports that need clearer KPI, member, channel, and CRM-ready data. Start with data structure, then decide deployment.'}
               </p>
               <div className="mt-7 flex flex-wrap gap-5">
-                <a href={linkedinHref} target="_blank" rel="noreferrer" className="etreport-text-cta">
-                  {isZh ? '联系讨论' : 'Discuss on LinkedIn'} <span aria-hidden>›</span>
+                <a href={contactHref} className="etreport-text-cta">
+                  {isZh ? '联系讨论' : 'Discuss by email'} <span aria-hidden>›</span>
                 </a>
                 <a href={productHref} className="etreport-text-cta etreport-text-cta-muted">
                   {isZh ? '看产品页' : 'View product page'} <span aria-hidden>›</span>

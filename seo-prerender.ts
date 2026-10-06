@@ -29,7 +29,7 @@ export type StaticRouteContent = {
 const CLUSTERS: Array<{ prefix?: string; paths: string[] }> = [
   {
     paths: [
-      '/', '/project', '/jiju-pet', '/jiju-revamp', '/etreporthub', '/etreporthub-sales',
+      '/', '/about', '/project', '/jiju-pet', '/jiju-revamp', '/etreporthub', '/etreporthub-sales',
       '/poker', '/film-gallery', '/life-os', '/brand-guide',
       '/archive/11-bonus-key-combo-builder', '/archive/atlantis-ui-ux-prototype',
       '/archive/soccerking-project',
@@ -344,7 +344,7 @@ export function buildStaticJsonLd(route: RouteSeo, language: SeoLanguage, siteBa
     jobTitle: 'Systems Architect & Digital Strategist',
     sameAs: [
       'https://github.com/edent95',
-      'https://www.linkedin.com/in/daniel-yi-tern-tan-461567199/',
+      'https://www.linkedin.com/in/edentan95/',
     ],
   };
   const breadcrumbs = breadcrumbItems(route, language, siteBase);
