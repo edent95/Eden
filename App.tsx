@@ -740,13 +740,7 @@ const App: React.FC = () => {
         <motion.section className="eden-hero eden-home-island" initial="initial" animate="animate" variants={staggerContainer}>
           <motion.p variants={fadeIn} className="eden-eyebrow">{isZh ? '啊不然请我吃饭也可以' : 'EDEN · HUMAN SYSTEMS & PRODUCT'}</motion.p>
           <motion.h1 variants={fadeIn}>
-            {isZh ? (
-              <span className="eden-hero-beat">
-                {Array.from('屌撚㞗閪𨶙').map((char, index) => (
-                  <span key={char} style={{ '--beat': index } as React.CSSProperties}>{char}</span>
-                ))}
-              </span>
-            ) : <><span>Build systems</span><br /><span>from chaos.</span></>}
+            {isZh ? <span>一个有趣的蛋散</span> : <><span>Build systems</span><br /><span>from chaos.</span></>}
           </motion.h1>
           <motion.p variants={fadeIn} className="eden-hero-copy">
             {isZh ? '我冇錢，可唔可以請我做嘢？' : 'I turn complex human behavior and messy realities into useful products, data, and AI systems.'}
