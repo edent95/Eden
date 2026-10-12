@@ -574,16 +574,16 @@ export const ROUTE_SEO: RouteSeo[] = [
   {
     path: '/life-os',
     datePublished: '2026-06-03',
-    dateModified: '2026-09-23',
+    dateModified: '2026-10-12',
     og: 'life-os',
     priority: '0.8',
     title: {
-      en: 'LifeOs | Read yourself like a manual',
-      zh: 'LifeOs · 人生说明书 | 把你这个人读成一本说明书',
+      en: 'LifeOs | Is fate fixed? Testing natal systems with data',
+      zh: 'LifeOs | 命运是注定的吗？用数据检验命理',
     },
     desc: {
-      en: 'Eight natal systems — BaZi, Zi Wei Dou Shu, natal hexagram, Human Design and more — read into a plain-language life manual, plus a 78-card tarot desk.',
-      zh: '八套本命系统——八字、紫微斗数（含四化飞星）、易经本命卦、数字学、人类图、基因钥匙、西洋与吠陀占星——写成白话人生说明书，另有 78 张塔罗提问台。',
+      en: 'LifeOs locks natal charts, records real life events, and measures the match. Working hypothesis: ~73% of outcomes match the chart; 27% you can change.',
+      zh: 'LifeOs 先锁定八套本命系统的命盘，再记录现实里发生的事，量出两者的吻合率。目前的工作假设：约 73% 的结果与命盘吻合，约 27% 是人可以改变命运的空间。',
     },
   },
   {

@@ -710,9 +710,22 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
   },
 
   '/life-os': {
-    eyebrow: L('Personal system · Self-knowledge', '个人系统 · 自我认识'),
-    thesis: L('Read yourself like a manual.', '把你这个人，读成一本说明书。'),
+    eyebrow: L('Natal data · Real-life records', '命理数据 · 现实记录'),
+    thesis: L('Is fate fixed? Let the data answer.', '命运是不是注定的？让数据来回答。'),
     sections: [
+      {
+        title: L('Why it exists', '为什么做它'),
+        paragraphs: [
+          L(
+            'Fortune telling is either sold as destiny or dismissed as superstition, and almost nobody checks it. LifeOs exists to test, with data, whether a person\u2019s life is written in advance: compute the natal chart once and lock it, record what actually happens with dates, then score every hit and every miss.',
+            '算命、命理，要么被包装成天命，要么被一句迷信打发掉，几乎没有人认真验证。LifeOs 就是为了用数据检验一个人的命运是不是注定的：本命盘只算一次并锁定，把现实里真正发生的事连同日期记下来，再对每一次命中和落空打分。',
+          ),
+          L(
+            'The working hypothesis: natal systems match real outcomes about 73% of the time, and the remaining 27% is where people change their own course. These numbers are under test, not a finished result, and will be revised as more lives are recorded.',
+            '目前的工作假设：命理对现实结果的吻合率约 73%，剩下约 27% 是人真正能改变自己命运的空间。这两个数字正在检验中，不是定案的结论，记录的人生越多，会被修正得越准。',
+          ),
+        ],
+      },
       {
         title: L('What it reads', '它读什么'),
         paragraphs: [
