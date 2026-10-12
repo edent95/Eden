@@ -21,6 +21,7 @@ const required = [
   'dist/operator-menu.html',
   'dist/sitemap.xml',
   'dist/robots.txt',
+  'dist/llms.txt',
   'dist/site.webmanifest',
   'dist/eden-home-app-icon.svg',
   'dist/film-gallery.webmanifest',
@@ -67,6 +68,18 @@ if (problems.length === 0) {
   }
   if (!robots.includes('Disallow: /*?p=')) {
     problems.push('robots.txt does not disallow the /?p= SPA shim');
+  }
+  // llms.txt (GEO): plain text, starts with the site name, lists only this site's URLs, and every
+  // indexable sitemap route is in it (generated from ROUTE_SEO in vite.config.ts)
+  const llms = readFileSync(path.join(root, 'dist/llms.txt'), 'utf8');
+  if (!llms.startsWith('# Eden Tan')) problems.push('llms.txt must start with "# Eden Tan"');
+  for (const match of llms.matchAll(/\]\((https?:\/\/[^)]+)\)/g)) {
+    if (!match[1].startsWith(`${expectedSiteUrl}/`)) problems.push(`llms.txt links outside the site: ${match[1]}`);
+  }
+  for (const route of ROUTE_SEO.filter((r) => r.index !== false && r.sitemap !== false && r.path !== '/')) {
+    if (!llms.includes(`${expectedSiteUrl}${localizedCanonicalRoutePath(route.path, 'en')}`)) {
+      problems.push(`llms.txt is missing ${route.path}`);
+    }
   }
   for (const route of ROUTE_SEO) {
     for (const language of ['en', 'zh']) {

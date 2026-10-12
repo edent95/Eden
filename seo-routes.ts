@@ -26,7 +26,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-10-06';
+export const SITE_CONTENT_LASTMOD = '2026-10-12';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -541,6 +541,13 @@ export const ROUTE_SEO: RouteSeo[] = [
     priority: '0.7',
     title: { en: 'Human nature is a design condition | Eden Tan', zh: '人性不是借口，是设计条件 | Eden Tan' },
     desc: { en: 'Good products and systems are designed for real human behavior, not ideal users.', zh: '好的产品与系统应该设计在真实人性上，而不是只适合理想中的用户。' },
+  },
+  {
+    path: '/notes/elementary-cellular-automata-256-rules',
+    og: 'conway',
+    priority: '0.7',
+    title: { en: 'Elementary cellular automata: 256 rules explained | Eden Tan', zh: '一维元胞自动机：256 条规则怎么读 | Eden Tan' },
+    desc: { en: 'How 8 neighbourhoods make 256 rules, how to read a rule number like Rule 30, why Rule 110 is universal and why 256 is really 88.', zh: '8 种邻域怎么变成 256 条规则、Rule 30 这种编号怎么读、Rule 110 为什么能通用计算、256 为什么其实是 88。' },
   },
   {
     path: '/notes/win-before-you-fight',

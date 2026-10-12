@@ -26,6 +26,7 @@ This directory is the editable, Markdown-first content source for the public Wik
 - [Judgment is not knowing more](essays/judgment-is-not-more-information.md) — `/notes/judgment-is-not-more-information`
 - [Human nature is a design condition](essays/human-nature-is-a-design-condition.md) — `/notes/human-nature-is-a-design-condition`
 - [Win before you fight](essays/win-before-you-fight.md) — `/notes/win-before-you-fight`
+- [256 rules, one byte each](essays/elementary-cellular-automata-256-rules.md) — `/notes/elementary-cellular-automata-256-rules`
 
 ## Editing workflow
 
