@@ -5,6 +5,7 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { OG_IMAGE_FILE, OG_IMAGE_HEIGHT, OG_IMAGE_WIDTH } from './seo';
 import {
+  HOME_DESC,
   localizedCanonicalRoutePath,
   ROUTE_SEO,
   SITE_CONTENT_LASTMOD,
@@ -56,6 +57,37 @@ Disallow: /*&p=
 Sitemap: ${siteBaseNoSlash}/sitemap.xml
 `;
   writeFileSync(path.join(outDir, 'robots.txt'), robots, 'utf8');
+  writeFileSync(path.join(outDir, 'llms.txt'), buildLlmsTxt(siteBaseNoSlash), 'utf8');
+}
+
+/**
+ * `/llms.txt` (llmstxt.org) for AI search / GEO: a plain-text map of the indexable routes,
+ * generated from the same `ROUTE_SEO` registry as the sitemap so the two never drift.
+ * Only routes that are both indexable and in the sitemap are listed, English URLs, grouped by section.
+ */
+export function buildLlmsTxt(siteBaseNoSlash: string): string {
+  const routes = ROUTE_SEO.filter((route) => route.index !== false && route.sitemap !== false && route.path !== '/');
+  const clean = (title: string) => title.replace(/\s*\|\s*Eden Tan\s*$/, '').trim();
+  const line = (route: RouteSeo) =>
+    `- [${clean(route.title.en)}](${languageAlternateUrl(route, 'en', siteBaseNoSlash)}): ${route.desc.en}`;
+  const groups: Array<[string, (route: RouteSeo) => boolean]> = [
+    ['Notes', (route) => route.path === '/notes' || route.path.startsWith('/notes/')],
+    ['Wiki', (route) => route.path === '/wiki' || route.path.startsWith('/wiki/')],
+    ['Products, tools and pages', () => true],
+  ];
+  const used = new Set<string>();
+  const sections = groups.map(([name, match]) => {
+    const picked = routes.filter((route) => !used.has(route.path) && match(route));
+    picked.forEach((route) => used.add(route.path));
+    return picked.length ? `## ${name}\n\n${picked.map(line).join('\n')}\n` : '';
+  }).filter(Boolean);
+  return `# Eden Tan
+
+> ${HOME_DESC.en} Personal site of Eden Tan: essays and notes, an LLM-maintained wiki, and the products and tools he builds. Every page is available in English and Simplified Chinese (add /zh in front of the path).
+
+Home: ${siteBaseNoSlash}/
+
+${sections.join('\n')}`;
 }
 
 function escapeHtml(value: string): string {
