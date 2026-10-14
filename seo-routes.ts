@@ -26,7 +26,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-10-12';
+export const SITE_CONTENT_LASTMOD = '2026-10-14';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -627,6 +627,20 @@ export const ROUTE_SEO: RouteSeo[] = [
     desc: {
       en: 'A lightweight topic market where each card is one question with one icon, and the answer control changes by question type.',
       zh: '一个轻量 topic market：一张卡一个问题和 icon，回答控件按问题类型变化。',
+    },
+  },
+  {
+    path: '/daja',
+    datePublished: '2026-10-14',
+    dateModified: '2026-10-14',
+    priority: '0.7',
+    title: {
+      en: 'Daja | Real-time arena battle game in the browser',
+      zh: 'Daja 实时擂台 | 浏览器里的即时对战游戏',
+    },
+    desc: {
+      en: 'A real-time arena battle game: pick three original partners, then move, dodge and fire four skills against six gym leaders and a champion.',
+      zh: 'Daja 是一款实时擂台对战游戏：挑三只原创伙伴，走位、闪避、跳跃、放四个招式，挑战六位馆主和一位冠军。电脑和手机都能玩。',
     },
   },
   {
