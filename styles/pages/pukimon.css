@@ -1,0 +1,132 @@
+/*
+  Pukimon family — layout only. 游戏本体（公开版，原创角色）在 Shadow DOM 里（public/pukimon/bond-arena.js），自己带样式；
+  这里只给它舞台。三处：共用的 16:9 演示舞台（components/PukimonDemoStage.tsx，首页 #pukimon 和 /pukimon 的 stage 都用）、
+  首页 #pukimon 区块（版式同原来的 Coin Slot）、「开始」盖的全屏层。
+  /pukimon 页面本身的版式是 styles/pages/product-page.css（ProductStorePage）。
+  注意别和 CSS 图标 .projects-pukimon-*（styles/css-art/projects-icons.css）、首页横幅 .tone-pukimon 撞名。
+  Menu system comes from styles/shared.css.
+*/
+
+/* ---------------- 共用舞台：16:9（游戏画面是 384×216）。演示只看不玩，整块都是「开始」 ---------------- */
+
+.pukimon-stage { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: #14201a; }
+
+.pukimon-mount,
+.pukimon-mount > .pukimon-host,
+.pukimon-play-box,
+.pukimon-play-box > .pukimon-host {
+  position: absolute;
+  inset: 0;
+}
+
+.pukimon-mount { transition: opacity 400ms ease; }
+.pukimon-mount > .pukimon-host { pointer-events: none; }
+.pukimon-stage:not([data-state="ready"]) .pukimon-mount { opacity: 0; }
+
+.pukimon-start {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0 0 7%;
+  border: 0;
+  background: linear-gradient(to top, rgba(10, 16, 13, .5), transparent 42%);
+  font: inherit;
+  cursor: pointer;
+}
+.pukimon-start span {
+  min-width: 132px;
+  padding: 13px 28px;
+  border-radius: 999px;
+  background: #f3efe0;
+  color: #14201a;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  transition: transform 180ms cubic-bezier(.2, .8, .2, 1), background 180ms ease, color 180ms ease;
+}
+.pukimon-start:hover span { transform: translateY(-2px); }
+.pukimon-start:focus-visible { outline: 3px solid rgba(243, 239, 224, .7); outline-offset: -6px; }
+
+.pukimon-note {
+  position: absolute;
+  inset: auto 0 45% 0;
+  margin: 0;
+  padding: 0 1.5rem;
+  text-align: center;
+  color: #f3efe0;
+  font-size: 0.9rem;
+  pointer-events: none;
+}
+
+/* /pukimon：舞台放在 ProductStorePage 的浏览器框里（stage kind: 'custom'），按钮跟页面的「立即开玩」同色 */
+.ep-stage-frame .pukimon-start span { background: var(--ep-primary); color: var(--ep-primary-text); }
+.ep-stage-frame .pukimon-start:hover span { background: var(--ep-primary-hover); }
+
+/* ---------------- 首页 #pukimon ---------------- */
+
+/* 文案在上（宽屏时标题 | 正文左右排），演示卡片铺满整块宽度 */
+.eden-pukimon { padding-block: 112px; display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(36px, 4vw, 56px); }
+.eden-pukimon-copy { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); column-gap: clamp(40px, 6vw, 84px); align-items: end; }
+.eden-pukimon-copy > .eden-section-label { grid-column: 1; }
+.eden-pukimon-copy > h2 { grid-column: 1; }
+.eden-pukimon-copy > .eden-pukimon-body { grid-column: 2; grid-row: 1 / span 2; }
+.eden-pukimon h2 { margin-top: 18px; font-size: clamp(44px, 5vw, 64px); line-height: .98; letter-spacing: -.055em; font-weight: 760; }
+.eden-pukimon h2.is-zh { line-height: 1.14; letter-spacing: -.01em; }
+.eden-pukimon-body { max-width: 560px; }
+.eden-pukimon-body p { color: color-mix(in srgb, var(--eden-ink) 68%, transparent); font-size: 17px; line-height: 1.7; }
+.eden-pukimon-body p + p { margin-top: 16px; }
+.eden-pukimon-thesis { margin-top: 22px !important; color: var(--eden-ink) !important; }
+.eden-pukimon-thesis strong { font-weight: 760; }
+
+/* 卡片比正文宽：冲出 1080 的岛，最宽 1400，两边各留 24px */
+.eden-pukimon-arena { position: relative; width: min(1400px, calc(100vw - 48px)); left: 50%; translate: -50% 0; padding: clamp(28px, 3vw, 38px); border-radius: 28px; background: var(--eden-panel); }
+.eden-pukimon-arena > :not(.kf) { position: relative; z-index: 1; }
+
+.eden-pukimon-stage { border-radius: 18px; }
+.eden-pukimon-stage .pukimon-start span { background: var(--eden-ink); color: var(--eden-paper); }
+.eden-pukimon-stage .pukimon-start:hover span { background: var(--eden-blue); }
+.eden-pukimon-stage .pukimon-start:focus-visible { outline-color: color-mix(in srgb, var(--eden-blue) 58%, transparent); }
+
+.eden-pukimon-meta { margin-top: 12px !important; display: flex; justify-content: space-between; gap: 14px; color: color-mix(in srgb, var(--eden-ink) 52%, transparent); font-size: 12px; }
+.eden-pukimon-meta a { color: var(--eden-blue); text-decoration: none; white-space: nowrap; }
+.eden-pukimon-meta a:hover { text-decoration: underline; }
+
+@media (max-width: 900px) {
+  .eden-pukimon { gap: 42px; }
+  .eden-pukimon-copy { display: block; }
+  .eden-pukimon-body { margin-top: 30px; max-width: none; }
+}
+
+@media (max-width: 600px) {
+  .eden-pukimon { padding-block: 90px; }
+  .eden-pukimon h2 { font-size: 42px; }
+  .eden-pukimon-body p { font-size: 16px; }
+  .eden-pukimon-arena { width: calc(100vw - 16px); padding: 14px; border-radius: 20px; }
+  .eden-pukimon-stage { border-radius: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pukimon-mount,
+  .pukimon-start span { transition: none; }
+}
+
+/* ---------------- 「开始」：全屏层（components/pukimonPlayLayer.ts） ---------------- */
+
+.pukimon-play-layer { position: fixed; inset: 0; z-index: 2147483000; background: #14201a; }
+.pukimon-play-exit {
+  position: absolute;
+  left: max(10px, env(safe-area-inset-left));
+  bottom: max(10px, env(safe-area-inset-bottom));
+  z-index: 1;
+  padding: 6px 12px;
+  border: 2px solid #f3efe0;
+  border-radius: 999px;
+  background: rgba(20, 32, 26, .78);
+  color: #f3efe0;
+  font: 700 12px "PingFang SC", system-ui, sans-serif;
+  cursor: pointer;
+}
+.pukimon-play-exit:hover { background: #c43f3f; }

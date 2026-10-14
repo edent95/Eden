@@ -349,8 +349,8 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
         title: L('Where to start', '从哪里开始'),
         paragraphs: [
           L(
-            'Read the essay on turning chaos into systems first, then open any app on the Projects shelf. The homepage also runs Daja, a real-time arena battle game: watch the computer play itself, then press start to take over in fullscreen.',
-            '先读「把混乱变成系统」这篇文章，再从 Projects 货架打开任何一个 app。首页还有 Daja 实时擂台对战：先看电脑自己对打，点开始就全屏换你上。',
+            'Read the essay on turning chaos into systems first, then open any app on the Projects shelf. The homepage also runs the public edition of Pukimon, a real-time arena battle game with original characters: watch the computer play itself, then press start to take over in fullscreen.',
+            '先读「把混乱变成系统」这篇文章，再从 Projects 货架打开任何一个 app。首页还有 Pukimon 公开版（原创角色的实时擂台对战）：先看电脑自己对打，点开始就全屏换你上。',
           ),
         ],
       },
@@ -800,43 +800,6 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
           L(
             'Voice makes the help clear with avoid-and-prefer pairs. Story content records real moments: log the moment, not the score; only what actually happened; short nicknames; people first, cards second. The guide is reconciled against the live homepage and the change log.',
             '语气用「避免 / 优先」对照，把能帮什么说清楚。故事内容写真实时刻：记时刻不记比分、只写真实发生的事、用短昵称、人在牌前面。指南会和线上首页与改动日志对齐。',
-          ),
-        ],
-      },
-    ],
-  },
-
-  '/daja': {
-    eyebrow: L('Real-time arena · browser game', '实时擂台 · 浏览器游戏'),
-    thesis: L(
-      'Not turn-based. You move, dodge and fire in real time, and slow hands lose.',
-      '不是回合制。走位、闪避、出招全是实时的，手慢就挨打。',
-    ),
-    sections: [
-      {
-        title: L('How a match works', '一局怎么打'),
-        paragraphs: [
-          L(
-            'Pick three partners and fight on a 45° arena. Each partner knows eight skills and brings four into battle; skills cost energy and aim themselves at the opponent. Dodging gives a moment of invulnerability, jumping clears ground attacks, and walking drains stamina that only refills while you stand still. When a partner faints the referee pauses and you send in the next one.',
-            '挑三只伙伴，在 45° 斜视角的场地上对打。每只伙伴会八个招式，上场带四个；招式消耗能量、自动瞄准对手。闪避有一瞬间无敌，跳起来能躲开地面攻击，走路会消耗体力，站着不动才回。伙伴倒下时裁判暂停，你再派下一只上场。',
-          ),
-        ],
-      },
-      {
-        title: L('Partners and opponents', '伙伴与对手'),
-        paragraphs: [
-          L(
-            'Six original partners, each drawn in eight directions with nine actions: Emberlynx (fire), Tidenewt (water), Mossfawn (grass / fairy), Voltglider (electric / flying), Lanternwisp (ghost) and Boulderhorn (rock / ground). Opponents are six gym leaders, each with a home arena that boosts one type, plus a champion and a wandering trainer with a random team.',
-            '六只原创伙伴，每只都有八个方向、九种动作：烬猞（火）、潮鳃蝾（水）、苔角鹿（草 / 妖精）、电翔鼯（电 / 飞行）、提灯幽（幽灵）、磐角犀（岩石 / 地面）。对手是六位道馆馆主，每座道馆的场地会加强一种属性；另外还有一位冠军，和每局随机带三只的流浪训练家。',
-          ),
-        ],
-      },
-      {
-        title: L('Modes and controls', '模式与操作'),
-        paragraphs: [
-          L(
-            'Play a one-on-one or a three-way brawl on easy, normal or hard, under standard rules, a hot-zone race or a shrinking-fog showdown. On desktop use the keyboard (WASD to move, U I O P for skills) or a gamepad; on a phone, turn it sideways and use the stick and buttons. Keys can be remapped.',
-            '可以单打，也可以三方混战；难度分简单、普通、困难；玩法有标准对战、热区争夺和毒雾收缩的荒野决斗。电脑上用键盘（WASD 移动，U I O P 放招）或手柄；手机横过来用摇杆和按钮。按键都可以改。',
           ),
         ],
       },

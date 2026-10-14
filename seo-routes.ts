@@ -587,6 +587,22 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
   },
   {
+    path: '/pukimon',
+    datePublished: '2026-10-14',
+    dateModified: '2026-10-14',
+    priority: '0.5',
+    index: false,
+    sitemap: false,
+    title: {
+      en: 'Pukimon | The Pokémon battle game I dreamed of as a kid',
+      zh: 'Pukimon | 小时候梦想中的宝可梦对战游戏',
+    },
+    desc: {
+      en: 'A personal real-time Pokémon battle game, built to finish a childhood dream. Full version for friends only; an original-character edition plays here.',
+      zh: 'Pukimon 是个人做的宝可梦实时擂台对战游戏，目标是完成小时候的梦想。完整版只分享给朋友；原创角色的公开版在这一页就能玩。',
+    },
+  },
+  {
     path: '/about',
     datePublished: '2026-10-06',
     dateModified: '2026-10-06',
@@ -627,20 +643,6 @@ export const ROUTE_SEO: RouteSeo[] = [
     desc: {
       en: 'A lightweight topic market where each card is one question with one icon, and the answer control changes by question type.',
       zh: '一个轻量 topic market：一张卡一个问题和 icon，回答控件按问题类型变化。',
-    },
-  },
-  {
-    path: '/daja',
-    datePublished: '2026-10-14',
-    dateModified: '2026-10-14',
-    priority: '0.7',
-    title: {
-      en: 'Daja | Real-time arena battle game in the browser',
-      zh: 'Daja 实时擂台 | 浏览器里的即时对战游戏',
-    },
-    desc: {
-      en: 'A real-time arena battle game: pick three original partners, then move, dodge and fire four skills against six gym leaders and a champion.',
-      zh: 'Daja 是一款实时擂台对战游戏：挑三只原创伙伴，走位、闪避、跳跃、放四个招式，挑战六位馆主和一位冠军。电脑和手机都能玩。',
     },
   },
   {

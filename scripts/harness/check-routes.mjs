@@ -94,7 +94,7 @@ for (const routePath of Object.keys(ROUTE_STATIC_COPY)) {
 }
 
 const registeredPaths = new Set(ROUTE_SEO.map((route) => route.path));
-const allowedAliases = new Set(['/analog-tech']);
+const allowedAliases = new Set(['/analog-tech', '/daja']);
 for (const match of app.matchAll(/pathWithoutBase\s*===\s*'([^']+)'/g)) {
   if (!registeredPaths.has(match[1]) && !allowedAliases.has(match[1])) {
     problems.push(`${match[1]} is implemented in App.tsx but missing from seo-routes.ts`);

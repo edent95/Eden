@@ -35,7 +35,6 @@ export const KALEIDO_ROUTES: Record<string, KaleidoSpec | null> = {
   '/project/miya': C({ primary: { kind: 'epi', R: 5, r: 2, d: 3 }, family: { kind: 'hypo', R: 11, r: 4, d: 3 }, copies: 6 }),
   // a full-screen app (dark topic board): no emblem, the backdrop and menu still apply
   '/topics': null,
-  '/daja': null,
 };
 
 /** Detail pages without their own entry (other wiki pages, archive, case studies) get a
