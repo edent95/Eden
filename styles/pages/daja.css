@@ -76,16 +76,22 @@
 
 /* ---------------- 首页 #daja ---------------- */
 
-.eden-daja { padding-block: 112px; display: grid; grid-template-columns: minmax(0, .86fr) minmax(0, 1.14fr); gap: clamp(44px, 6vw, 84px); align-items: center; }
+/* 文案在上（宽屏时标题 | 正文左右排），演示卡片铺满整块宽度 */
+.eden-daja { padding-block: 112px; display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(36px, 4vw, 56px); }
+.eden-daja-copy { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); column-gap: clamp(40px, 6vw, 84px); align-items: end; }
+.eden-daja-copy > .eden-section-label { grid-column: 1; }
+.eden-daja-copy > h2 { grid-column: 1; }
+.eden-daja-copy > .eden-daja-body { grid-column: 2; grid-row: 1 / span 2; }
 .eden-daja h2 { margin-top: 18px; font-size: clamp(44px, 5vw, 64px); line-height: .98; letter-spacing: -.055em; font-weight: 760; }
 .eden-daja h2.is-zh { line-height: 1.14; letter-spacing: -.01em; }
-.eden-daja-body { margin-top: 30px; max-width: 510px; }
+.eden-daja-body { max-width: 560px; }
 .eden-daja-body p { color: color-mix(in srgb, var(--eden-ink) 68%, transparent); font-size: 17px; line-height: 1.7; }
 .eden-daja-body p + p { margin-top: 16px; }
 .eden-daja-thesis { margin-top: 22px !important; color: var(--eden-ink) !important; }
 .eden-daja-thesis strong { font-weight: 760; }
 
-.eden-daja-arena { position: relative; padding: clamp(28px, 3vw, 38px); border-radius: 28px; background: var(--eden-panel); }
+/* 卡片比正文宽：冲出 1080 的岛，最宽 1400，两边各留 24px */
+.eden-daja-arena { position: relative; width: min(1400px, calc(100vw - 48px)); left: 50%; translate: -50% 0; padding: clamp(28px, 3vw, 38px); border-radius: 28px; background: var(--eden-panel); }
 .eden-daja-arena > :not(.kf) { position: relative; z-index: 1; }
 
 /* 舞台：16:9（游戏画面是 384×216）。演示只看不玩，整块都是「开始」 */
@@ -125,15 +131,16 @@
 .eden-daja-meta a:hover { text-decoration: underline; }
 
 @media (max-width: 900px) {
-  .eden-daja { grid-template-columns: 1fr; gap: 42px; }
-  .eden-daja-body { max-width: none; }
+  .eden-daja { gap: 42px; }
+  .eden-daja-copy { display: block; }
+  .eden-daja-body { margin-top: 30px; max-width: none; }
 }
 
 @media (max-width: 600px) {
   .eden-daja { padding-block: 90px; }
   .eden-daja h2 { font-size: 42px; }
   .eden-daja-body p { font-size: 16px; }
-  .eden-daja-arena { padding: 14px; border-radius: 20px; }
+  .eden-daja-arena { width: calc(100vw - 16px); padding: 14px; border-radius: 20px; }
   .eden-daja-stage { border-radius: 12px; }
 }
 

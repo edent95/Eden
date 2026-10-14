@@ -94,7 +94,7 @@ const HomeDajaGame: React.FC<Props> = ({ isZh, baseUrl, dajaHref }) => {
             )}
           </p>
           <p className="eden-daja-thesis">
-            <strong>{t('That is the computer playing itself. Press start and take over.', '右边是电脑在自己打。点开始，换你上。')}</strong>
+            <strong>{t('Below, the computer is playing itself. Press start and take over.', '下面是电脑在自己打。点开始，换你上。')}</strong>
           </p>
         </div>
       </div>
