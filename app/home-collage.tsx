@@ -24,6 +24,16 @@ const homeCollageItems: Array<{
     ctaLabel: { en: 'Learn more', zh: '了解更多' },
   },
   {
+    title: 'Pukimon',
+    tone: 'pukimon',
+    image: 'home-banners/pukimon-banner-poster.jpg',
+    video: 'home-banners/pukimon-banner.mp4',
+    imageAlt: { en: 'A 3D fan animation: a trainer in a red cap dodges and fights through a wrecked room, sparks flying', zh: '3D 同人动画：戴红帽的训练家在一片狼藉的房间里闪躲、对打，火花四溅' },
+    href: 'https://pukimon.eden-tan.com/',
+    linkLabel: { en: 'Open Pukimon', zh: '打开 Pukimon' },
+    ctaLabel: { en: 'Play now', zh: '立即开玩' },
+  },
+  {
     title: 'ETReportHub',
     tone: 'ocean',
     image: 'home-banners/etreporthub-banner-poster.jpg',
