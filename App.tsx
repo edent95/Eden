@@ -44,11 +44,12 @@ import { IGAMING_CASES as igamingCases } from './components/igaming-cases-conten
 
 
 const PenneysGamePage = React.lazy(() => import('./components/PenneysGamePage'));
+const DajaPage = React.lazy(() => import('./components/DajaPage'));
 const MiyaPrivacyPage = React.lazy(() => import('./components/MiyaPrivacyPage'));
 const IGamingPage = React.lazy(() => import('./components/IGamingPage'));
 const IGamingSummaryPage = React.lazy(() => import('./components/IGamingSummaryPage'));
 const IGamingCasesPage = React.lazy(() => import('./components/IGamingCasesPage'));
-const HomePenneyGame = React.lazy(() => import('./components/HomePenneyGame'));
+const HomeDajaGame = React.lazy(() => import('./components/HomeDajaGame'));
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -302,6 +303,7 @@ const App: React.FC = () => {
   const isTopicsFullPage = pathWithoutBase === '/topics';
   const isConwayGameOfLifeFullPage = pathWithoutBase === '/conways-game-of-life';
   const isPenneysGamePage = pathWithoutBase === '/penneys-game';
+  const isDajaPage = pathWithoutBase === '/daja';
   const isCellularAutomataLabFullPage = pathWithoutBase === '/cellular-automata-lab';
   const isProjectHomePage = pathWithoutBase === '/project';
   const isMiyaPrivacyPage = pathWithoutBase === '/project/miya';
@@ -558,6 +560,29 @@ const App: React.FC = () => {
     );
   }
 
+  if (isDajaPage) {
+    return (
+      <React.Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
+        <DajaPage
+          isZh={isZh}
+          homeHref={homeHref}
+          baseUrl={baseUrl}
+          controls={
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+              compactThemeOnSelection
+              compactLanguageOnSelection
+            />
+          }
+        />
+      </React.Suspense>
+    );
+  }
+
   if (isPenneysGamePage) {
     return (
       <React.Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
@@ -755,7 +780,7 @@ const App: React.FC = () => {
         </section>
 
         <React.Suspense fallback={<section className="min-h-64" aria-busy="true" />}>
-          <HomePenneyGame isZh={isZh} igamingHref={igamingHref} />
+          <HomeDajaGame isZh={isZh} baseUrl={baseUrl} dajaHref={joinBasePath(baseUrl, 'daja')} />
         </React.Suspense>
 
         <section className="eden-about eden-home-island" id="about">

@@ -91,6 +91,7 @@
   .life-section,
   .life-note,
   .eden-penney,
+  .eden-daja,
   .eden-about,
   .conway-binary-essay
 ) { position: relative; }
@@ -103,6 +104,8 @@
   .life-section + .life-note,
   .eden-collage-section + .eden-penney,
   .eden-penney + .eden-about,
+  .eden-collage-section + .eden-daja,
+  .eden-daja + .eden-about,
   .conway-rules-shell > .conway-binary-essay
 )::before {
   content: "";
@@ -135,6 +138,8 @@
     .life-section + .life-note,
     .eden-collage-section + .eden-penney,
     .eden-penney + .eden-about,
+    .eden-collage-section + .eden-daja,
+    .eden-daja + .eden-about,
     .conway-rules-shell > .conway-binary-essay
   )::before {
     animation: kaleido-open linear forwards;

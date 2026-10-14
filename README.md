@@ -73,7 +73,7 @@ npm run preview
 - `/icon-prompts` — ETReportHub / Jiju / Friday Poker Club 四宫格 icon prompt 复制页（隐藏直达页；不进 sitemap）
 - `/etreporthub` — ETReportHub 日报数据系统产品页
 - `/etreporthub-sales` — ETReportHub 售卖页与价格说明
-- `/igaming` — iGaming 入门包重点版：六节各三个重点（入门包、促销、工作流程、报表、B2B、排查），每节可跳到完整版对应位置（不放联系方式、不链接过往项目）；首页 Mini Coin Slot 玩满 10 局后出现入口（带 `?from=coin-slot` 时显示解锁提示）
+- `/igaming` — iGaming 入门包重点版：六节各三个重点（入门包、促销、工作流程、报表、B2B、排查），每节可跳到完整版对应位置（不放联系方式、不链接过往项目）；原本由首页 Mini Coin Slot 玩满 10 局后出现入口（带 `?from=coin-slot` 时显示解锁提示；Coin Slot 下了首页后这个入口暂时没有了）
 - `/igaming/cases` — iGaming 实战案例索引：四篇匿名案例（首存增长、新市场本地化、50+ operator 促销协调、operator → provider），说明写作原则与后续选题
 - `/igaming/cases/:slug` — 单篇匿名案例：背景、排查过程、做了什么、学到什么、「不能证明什么」，并链回完整版对应小节；案例页是 iGaming 里唯一会链到过往项目（`/etreporthub`）的地方
 - `/igaming/full` — iGaming 入门包完整版：行业角色、游戏类型、术语、资金流、风控合规、provider 与 operator 促销、每日报表 / 活动上线 / CRM 工作流程与报表指标、B2B（签约到上线与客户经营）、按症状排查与 playbook；返回键回到 `/igaming` 重点版
@@ -98,7 +98,8 @@ npm run preview
 - `/conways-game-of-life` 可通过页面内 `Install app / 安装 App` 安装为 standalone PWA；不支持安装提示的 Safari 会显示加入主画面 / Dock 指引
 - `/penneys-game` — Penney's Game 硬币骗局：5 关筹码对赌战役、限时盲选排位赛与全球排行榜、自由对战实验室
 - `/penneys-game` 的胜率用 Conway leading-numbers 公式精确计算（`services/penneyGame.ts`）；排行榜走 Firebase RTDB REST，无新增 npm 依赖，规则与部署见 `docs/penney-leaderboard.md`
-- 首页 `/#penney` 是不公开攻略的 Mini Coin Slot：服务端按 IP 每天发放 100 credits，记录 lifetime plays / wins / win rate，满 10 局后进入访客排行榜并出现通往 `/igaming` 的入口；API、隐私边界与部署方式见 `docs/penney-mini-arena.md`
+- （2026-10-14 起首页这一块换成 Daja，Coin Slot 不再挂在首页；`components/HomePenneyGame.tsx` 与 `penneyMiniApi` 保留未删）原首页 `/#penney` 是不公开攻略的 Mini Coin Slot：服务端按 IP 每天发放 100 credits，记录 lifetime plays / wins / win rate，满 10 局后进入访客排行榜并出现通往 `/igaming` 的入口；API、隐私边界与部署方式见 `docs/penney-mini-arena.md`
+- `/daja` — Daja 实时擂台对战（原创角色，可收录）；首页 `#daja` 放电脑对打的实时演示，点「开始」全屏开打。游戏包 `public/daja/` 由 Daja 项目 `npm run public:build && npm run embed:build -- --src public --out <Eden>/public/daja` 产出后提交；接口见 `services/dajaGame.ts`
 - `/cellular-automata-lab` — 独立的 256 elementary cellular automata rules explorer
 - `/archive/:slug` — 归档项目详情
 - PWA manifest 按路由映射（`vite.config.ts` 的 `web-app-manifest-with-base`）：`/film-gallery` → `film-gallery.webmanifest`，`/conways-game-of-life` → `conway.webmanifest`，其余所有路由（含首页）→ `site.webmanifest`（Eden Tan，`start_url: ./`）
