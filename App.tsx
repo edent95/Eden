@@ -28,6 +28,7 @@ import {
   JijuPetFullPage,
   LifeOsFullPage,
   PokerFullPage,
+  PukimonFullPage,
 } from './pages/ProductPages';
 import { GuestTopicsPage, NotesPage, SiteEssayNotePage, WikiPage } from './pages/ContentPages';
 import { CellularAutomataLabFullPage, ConwayGameOfLifeFullPage } from './pages/ConwayPages';
@@ -44,12 +45,11 @@ import { IGAMING_CASES as igamingCases } from './components/igaming-cases-conten
 
 
 const PenneysGamePage = React.lazy(() => import('./components/PenneysGamePage'));
-const DajaPage = React.lazy(() => import('./components/DajaPage'));
 const MiyaPrivacyPage = React.lazy(() => import('./components/MiyaPrivacyPage'));
 const IGamingPage = React.lazy(() => import('./components/IGamingPage'));
 const IGamingSummaryPage = React.lazy(() => import('./components/IGamingSummaryPage'));
 const IGamingCasesPage = React.lazy(() => import('./components/IGamingCasesPage'));
-const HomeDajaGame = React.lazy(() => import('./components/HomeDajaGame'));
+const HomePukimonGame = React.lazy(() => import('./components/HomePukimonGame'));
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -280,6 +280,19 @@ const App: React.FC = () => {
     );
   }, [baseUrl, pathWithoutBase]);
 
+  React.useEffect(() => {
+    if (pathWithoutBase !== '/daja') return;
+    // 保留语言：/zh/daja → /zh/pukimon/，/daja → /pukimon/
+    const { language: urlLanguage } = stripLocaleFromRoutePath(pathWithOptionalLocale);
+    const localized = localizedCanonicalRoutePath('/pukimon', urlLanguage);
+    const nextPath = normalizedBase === '/' ? localized : `${normalizedBase}${localized}`;
+    window.history.replaceState(
+      window.history.state,
+      '',
+      `${nextPath}${window.location.search}${window.location.hash}`,
+    );
+  }, [normalizedBase, pathWithOptionalLocale, pathWithoutBase]);
+
   const isJijuPetFullPage = pathWithoutBase === '/jiju-pet';
   const isJijuRevampFullPage = pathWithoutBase === '/jiju-revamp';
   const isProjectCssGalleryPage = pathWithoutBase === '/project-css';
@@ -297,13 +310,14 @@ const App: React.FC = () => {
   const activeSiteEssay = siteEssayNotes.find((note) => note.slug === siteEssaySlug);
   const isNotesPage = pathWithoutBase === '/notes';
   const isLifeOsFullPage = pathWithoutBase === '/life-os';
+  // 旧的 /daja（Pukimon 公开版的独立页）并进了 /pukimon：照样渲染 /pukimon，上面的 effect 把网址换过去
+  const isPukimonFullPage = pathWithoutBase === '/pukimon' || pathWithoutBase === '/daja';
   const isLifeFullPage = pathWithoutBase === '/life';
   const isBrandGuideFullPage = pathWithoutBase === '/brand-guide';
   const isAboutPage = pathWithoutBase === '/about';
   const isTopicsFullPage = pathWithoutBase === '/topics';
   const isConwayGameOfLifeFullPage = pathWithoutBase === '/conways-game-of-life';
   const isPenneysGamePage = pathWithoutBase === '/penneys-game';
-  const isDajaPage = pathWithoutBase === '/daja';
   const isCellularAutomataLabFullPage = pathWithoutBase === '/cellular-automata-lab';
   const isProjectHomePage = pathWithoutBase === '/project';
   const isMiyaPrivacyPage = pathWithoutBase === '/project/miya';
@@ -319,7 +333,9 @@ const App: React.FC = () => {
     ? pathWithoutBase.replace('/archive/', '')
     : '';
   const activeArchivedWork = archivedWorks.find((item) => item.slug === archivedWorkSlug);
-  const seoPath = pathWithoutBase === '/analog-tech' ? '/film-gallery' : pathWithoutBase;
+  const seoPath = pathWithoutBase === '/analog-tech'
+    ? '/film-gallery'
+    : pathWithoutBase === '/daja' ? '/pukimon' : pathWithoutBase;
   const isHomePath = pathWithoutBase === '' || pathWithoutBase === '/';
 
   React.useEffect(() => {
@@ -518,6 +534,20 @@ const App: React.FC = () => {
     );
   }
 
+  if (isPukimonFullPage) {
+    return (
+      <PukimonFullPage
+        homeHref={homeHref}
+        baseUrl={baseUrl}
+        language={language}
+        setLanguage={setLanguage}
+        themePreference={themePreference}
+        theme={theme}
+        setThemePreference={setThemePreference}
+      />
+    );
+  }
+
   if (isAboutPage) {
     return (
       <AboutPage
@@ -560,28 +590,6 @@ const App: React.FC = () => {
     );
   }
 
-  if (isDajaPage) {
-    return (
-      <React.Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
-        <DajaPage
-          isZh={isZh}
-          homeHref={homeHref}
-          baseUrl={baseUrl}
-          controls={
-            <HeaderControls
-              language={language}
-              setLanguage={setLanguage}
-              themePreference={themePreference}
-              theme={theme}
-              setThemePreference={setThemePreference}
-              compactThemeOnSelection
-              compactLanguageOnSelection
-            />
-          }
-        />
-      </React.Suspense>
-    );
-  }
 
   if (isPenneysGamePage) {
     return (
@@ -780,7 +788,7 @@ const App: React.FC = () => {
         </section>
 
         <React.Suspense fallback={<section className="min-h-64" aria-busy="true" />}>
-          <HomeDajaGame isZh={isZh} baseUrl={baseUrl} dajaHref={joinBasePath(baseUrl, 'daja')} />
+          <HomePukimonGame isZh={isZh} baseUrl={baseUrl} pukimonHref={joinBasePath(baseUrl, 'pukimon')} />
         </React.Suspense>
 
         <section className="eden-about eden-home-island" id="about">

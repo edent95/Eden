@@ -60,6 +60,7 @@ import {
   ProjectsLifeOsCssIcon,
   ProjectsMiyaCssIcon,
   ProjectsPokerCssIcon,
+  ProjectsPukimonCssIcon,
   WikiBackgroundMusicCssIcon,
   WikiButtonFeedbackCssIcon,
   WikiFirebaseStorageCssIcon,
@@ -144,6 +145,27 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
     copy: {
       en: 'The framed table-and-pocket-aces icon used by the poker project card.',
       zh: 'Friday Poker Club project card 使用的固定底牌桌和对 A app icon。',
+    },
+  },
+  {
+    id: 'projects-pukimon',
+    title: 'Pukimon',
+    projectTitle: 'Pukimon',
+    category: 'project-icon',
+    sourceRoute: '/pukimon',
+    ratio: '1:1',
+    background: 'framed',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/projects-icons.css',
+    Component: ProjectsPukimonCssIcon,
+    label: {
+      en: 'Pukimon CSS app icon',
+      zh: 'Pukimon CSS app 图标',
+    },
+    copy: {
+      en: 'The framed spinning-ball-in-the-arena icon used by the Pukimon product page.',
+      zh: 'Pukimon 产品页使用的固定底擂台和旋转精灵球 app icon。',
     },
   },
   {

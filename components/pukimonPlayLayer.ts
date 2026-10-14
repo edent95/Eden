@@ -1,7 +1,7 @@
-import { mountDaja } from '../services/dajaGame';
+import { mountPukimon } from '../services/pukimonGame';
 
 /**
- * 首页「开始」：盖一层全屏的 Daja，从组队开始玩；退出全屏或点「退出」就整局卸掉、回到首页原位。
+ * 首页 / /pukimon 的「开始」：盖一层全屏的 Pukimon 公开版，从组队开始玩；退出全屏或点「退出」就整局卸掉、回到原位。
  *
  * 必须在点击事件里同步调用：requestFullscreen 只认用户手势，所以这一层是直接操作 DOM 建的，
  * 不走 React 渲染（等 React 提交再请求全屏，浏览器就不认了）。
@@ -13,16 +13,16 @@ const GAME_CSS = '#fsBtn { display: none !important; }';
 
 type FullscreenEl = HTMLElement & { webkitRequestFullscreen?: () => Promise<void> | void };
 
-export function openDajaPlayLayer({ baseUrl, isZh, onClose }: { baseUrl: string; isZh: boolean; onClose?: () => void }) {
+export function openPukimonPlayLayer({ baseUrl, isZh, onClose }: { baseUrl: string; isZh: boolean; onClose?: () => void }) {
   const layer = document.createElement('div') as FullscreenEl;
-  layer.className = 'daja-play-layer';
+  layer.className = 'pukimon-play-layer';
   layer.setAttribute('role', 'dialog');
-  layer.setAttribute('aria-label', 'Daja');
+  layer.setAttribute('aria-label', 'Pukimon');
   const box = document.createElement('div');
-  box.className = 'daja-play-box';
+  box.className = 'pukimon-play-box';
   const exit = document.createElement('button');
   exit.type = 'button';
-  exit.className = 'daja-play-exit';
+  exit.className = 'pukimon-play-exit';
   exit.textContent = isZh ? '✕ 退出' : '✕ Exit';
   layer.append(box, exit);
   document.body.appendChild(layer);
@@ -40,7 +40,7 @@ export function openDajaPlayLayer({ baseUrl, isZh, onClose }: { baseUrl: string;
     // 没有全屏接口：就当普通的盖满视口
   }
 
-  const unmount = mountDaja(box, baseUrl, { css: GAME_CSS }, (state) => {
+  const unmount = mountPukimon(box, baseUrl, { css: GAME_CSS }, (state) => {
     if (state === 'missing') box.textContent = isZh ? '游戏载入失败，稍后再试。' : 'The game failed to load. Try again later.';
   });
 
@@ -62,7 +62,7 @@ export function openDajaPlayLayer({ baseUrl, isZh, onClose }: { baseUrl: string;
     onClose?.();
   }
   exit.addEventListener('click', close);
-  // 焦点不能留在按钮上：游戏用空格闪避，空格会「点」到获得焦点的按钮（首页的「开始」、这里的「退出」）
+  // 焦点不能留在按钮上：游戏用空格闪避，空格会「点」到获得焦点的按钮（舞台上的「开始」、这里的「退出」）
   (document.activeElement as HTMLElement | null)?.blur?.();
   exit.addEventListener('focus', () => exit.blur());
   return close;

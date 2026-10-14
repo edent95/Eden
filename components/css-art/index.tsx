@@ -414,6 +414,17 @@ export const ProjectsPokerCssIcon: React.FC<{ label: string }> = ({ label }) => 
   </div>
 );
 
+export const ProjectsPukimonCssIcon: React.FC<{ label: string }> = ({ label }) => (
+  <div className="projects-card-icon projects-pukimon-css-icon" role="img" aria-label={label}>
+    <span className="projects-pukimon-spark spark-a" />
+    <span className="projects-pukimon-spark spark-b" />
+    <span className="projects-pukimon-ball">
+      <span className="projects-pukimon-band" />
+      <span className="projects-pukimon-button" />
+    </span>
+  </div>
+);
+
 export const ProjectsEtReportCssIcon: React.FC<{ label: string }> = ({ label }) => (
   <div className="projects-card-icon projects-etreport-css-icon" role="img" aria-label={label}>
     <span className="projects-etreport-topbar" />

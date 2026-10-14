@@ -276,6 +276,15 @@
   background: #fff;
 }
 
+.ep-stage-embed-wrap { position: relative; }
+
+.ep-stage-frame iframe.ep-stage-embed {
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
 .ep-stage-caption { margin-top: 14px; text-align: center; font-size: 0.84rem; color: var(--ep-soft-ink); }
 
 /* ---------- prose body ---------- */
@@ -288,6 +297,12 @@
 
 .ep-prose > p { margin-top: 22px; font-size: 1.12rem; line-height: 1.72; color: var(--ep-ink); }
 .ep-prose > p:first-child { margin-top: 0; }
+
+/* body `kind: 'video'`: a 16:9 third-party player inside the prose column (EpEmbedPlayer) */
+.ep-video { margin: 34px 0 0; }
+.ep-video .ep-stage-embed-wrap { overflow: hidden; border: 1px solid var(--ep-line); border-radius: 16px; background: #000; }
+.ep-video iframe.ep-stage-embed { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; background: #000; }
+.ep-video figcaption { margin-top: 12px; font-size: 0.84rem; line-height: 1.6; color: var(--ep-soft-ink); }
 
 .ep-prose h2 {
   margin-top: 54px;
@@ -409,9 +424,17 @@
 
 .ep-tutorial-foot { margin-top: 18px; font-size: 0.86rem; line-height: 1.6; color: var(--ep-soft-ink); }
 
+/* ---------- #play: playable block at the bottom (stage-width frame, column-width copy) ---------- */
+
+.ep-play { margin: clamp(60px, 8vw, 100px) auto 0; }
+.ep-play > h2,
+.ep-play-intro { max-width: var(--ep-column); margin-left: auto; margin-right: auto; }
+.ep-play-intro { margin-top: 14px; margin-bottom: 26px; font-size: 1.02rem; line-height: 1.7; color: var(--ep-muted); }
+
 /* ---------- FAQ ---------- */
 
 .ep-tutorial h2,
+.ep-play h2,
 .ep-faq h2,
 .ep-specs h2,
 .ep-also h2 {

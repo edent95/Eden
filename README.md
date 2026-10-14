@@ -91,6 +91,7 @@ npm run preview
 - `/notes` — Eden 发布的文章与 Build Notes 归档
 - `/notes/:slug` — Eden 原创 synthesis note 独立文章页
 - `/life-os` — 人生 RPG 能力系统 / Life OS 角色档案页
+- `/pukimon` — Pukimon 游戏页（照 `/life-os` 的产品页格式）：目标是完成小时候梦想中的宝可梦对战游戏。顶部舞台放 B 站同人动画（自动静音播放，用播放器自己的音量键开声音），页面最底部 `#play` 是能玩的公开版（原创角色、不用登录；电脑对打的演示，点「开始」全屏开打）；「立即开玩」去只给朋友的完整版 pukimon.eden-tan.com（Google 登录）；noindex，不进 sitemap，不放进「你可能也会喜欢」。旧的 `/daja`、`/zh/daja` 会自动换到 `/pukimon/`、`/zh/pukimon/`（`App.tsx` 里的别名，同 `/analog-tech`）。公开版游戏包 `public/pukimon/`（`bond-arena.js` + `assets/`）由 Pukimon 项目 `npm run public:build && npm run embed:build -- --src public --out <Eden>/public/pukimon` 产出后提交；接口见 `services/pukimonGame.ts`
 - `/life` — Life 视频页（隐藏直达页；不在首页入口，不进 sitemap，客户端 SEO 设为 noindex）
 - `/brand-guide` — 持续与月度 change log 对齐的 Brand Guide：核心主张、视觉、语气、版式、资产类型、动效与实现规则
 - `/topics` — Topic Market：一张卡一个问题和 icon，回答控件按问题类型变化（当前浏览器本地保存；noindex，不进 sitemap）
@@ -98,8 +99,7 @@ npm run preview
 - `/conways-game-of-life` 可通过页面内 `Install app / 安装 App` 安装为 standalone PWA；不支持安装提示的 Safari 会显示加入主画面 / Dock 指引
 - `/penneys-game` — Penney's Game 硬币骗局：5 关筹码对赌战役、限时盲选排位赛与全球排行榜、自由对战实验室
 - `/penneys-game` 的胜率用 Conway leading-numbers 公式精确计算（`services/penneyGame.ts`）；排行榜走 Firebase RTDB REST，无新增 npm 依赖，规则与部署见 `docs/penney-leaderboard.md`
-- （2026-10-14 起首页这一块换成 Daja，Coin Slot 不再挂在首页；`components/HomePenneyGame.tsx` 与 `penneyMiniApi` 保留未删）原首页 `/#penney` 是不公开攻略的 Mini Coin Slot：服务端按 IP 每天发放 100 credits，记录 lifetime plays / wins / win rate，满 10 局后进入访客排行榜并出现通往 `/igaming` 的入口；API、隐私边界与部署方式见 `docs/penney-mini-arena.md`
-- `/daja` — Daja 实时擂台对战（原创角色，可收录）；首页 `#daja` 放电脑对打的实时演示，点「开始」全屏开打。游戏包 `public/daja/` 由 Daja 项目 `npm run public:build && npm run embed:build -- --src public --out <Eden>/public/daja` 产出后提交；接口见 `services/dajaGame.ts`
+- （2026-10-14 起首页这一块换成 Pukimon 公开版 `#pukimon`，Coin Slot 不再挂在首页；`components/HomePenneyGame.tsx` 与 `penneyMiniApi` 保留未删）原首页 `/#penney` 是不公开攻略的 Mini Coin Slot：服务端按 IP 每天发放 100 credits，记录 lifetime plays / wins / win rate，满 10 局后进入访客排行榜并出现通往 `/igaming` 的入口；API、隐私边界与部署方式见 `docs/penney-mini-arena.md`
 - `/cellular-automata-lab` — 独立的 256 elementary cellular automata rules explorer
 - `/archive/:slug` — 归档项目详情
 - PWA manifest 按路由映射（`vite.config.ts` 的 `web-app-manifest-with-base`）：`/film-gallery` → `film-gallery.webmanifest`，`/conways-game-of-life` → `conway.webmanifest`，其余所有路由（含首页）→ `site.webmanifest`（Eden Tan，`start_url: ./`）
