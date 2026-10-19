@@ -9,6 +9,7 @@ import {
   localizedCanonicalRoutePath,
   ROUTE_SEO,
   SITE_CONTENT_LASTMOD,
+  STATIC_PAGES,
   type RouteSeo,
   type SeoLanguage,
 } from './seo-routes';
@@ -41,6 +42,15 @@ function generateSitemapAndRobots(outDir: string, siteBaseNoSlash: string) {
     <xhtml:link rel="alternate" hreflang="x-default" href="${en}" />
   </url>`;
   }));
+  // Single-language static pages from public/: no hreflang alternates
+  for (const page of STATIC_PAGES) {
+    lines.push(`  <url>
+    <loc>${siteBaseNoSlash}${page.path}</loc>
+    <lastmod>${page.lastmod}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>${page.priority}</priority>
+  </url>`);
+  }
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${lines.join('\n')}
