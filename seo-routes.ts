@@ -171,8 +171,8 @@ export const ROUTE_SEO: RouteSeo[] = [
       zh: 'MiYa 隐私政策 | Eden Tan',
     },
     desc: {
-      en: 'MiYa for iOS privacy policy and support: no data collected, Health data is read and kept on your device only. Contact d.tytern@gmail.com.',
-      zh: 'MiYa iOS 版隐私政策与技术支持：不收集任何数据，健康数据只在你的设备上读取和保存。联系邮箱 d.tytern@gmail.com。',
+      en: 'MiYa for iPhone and Apple Watch privacy policy and support: no data collected, Health data is read and kept on your own devices only. Contact d.tytern@gmail.com.',
+      zh: 'MiYa iPhone 与 Apple Watch 版隐私政策与技术支持：不收集任何数据，健康数据只在你自己的设备上读取和保存。联系邮箱 d.tytern@gmail.com。',
     },
   },
   {
