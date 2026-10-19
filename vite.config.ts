@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, writeFileSync } from 'fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
@@ -340,6 +340,22 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react(),
       tailwindcss(),
+      {
+        // Dev only: hand-written pages under public/ (STATIC_PAGES, e.g. /project/miya/brand/) are
+        // served by GitHub Pages as directory indexes, but the dev server's SPA fallback 404s them.
+        name: 'dev-public-directory-index',
+        configureServer(server) {
+          server.middlewares.use((req, _res, next) => {
+            const [pathname, query] = (req.url ?? '').split('?');
+            if (!pathname.startsWith(base) || !pathname.endsWith('/') || pathname === base) return next();
+            const rel = `${pathname.slice(base.length)}index.html`;
+            if (existsSync(path.resolve(__dirname, 'public', rel))) {
+              req.url = `${base}${rel}${query ? `?${query}` : ''}`;
+            }
+            next();
+          });
+        },
+      },
       {
         name: 'favicon-with-base',
         transformIndexHtml(html) {
