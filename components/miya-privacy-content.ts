@@ -209,6 +209,7 @@ export const MIYA_PRIVACY = {
       { label: L('Email', '邮箱'), value: L(MIYA_SUPPORT_EMAIL, MIYA_SUPPORT_EMAIL), href: `mailto:${MIYA_SUPPORT_EMAIL}` },
       { label: L('App', 'App'), value: L('MiYa (iOS)', 'MiYa（iOS）') },
       { label: L('Developer', '开发者'), value: L('Eden', 'Eden') },
+      { label: L('Brand guide', '品牌指南'), value: L('MiYa brand guide', 'MiYa 品牌指南'), href: '/project/miya/brand/' },
     ] as Array<{ label: MiyaLocalized; value: MiyaLocalized; href?: string }>,
     footer: L(
       'This page serves as both the privacy policy and the support page for MiYa.',

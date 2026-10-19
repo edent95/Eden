@@ -3,6 +3,7 @@ import path from 'node:path';
 import {
   localizedCanonicalRoutePath,
   ROUTE_SEO,
+  STATIC_PAGES,
 } from '../../seo-routes.ts';
 import {
   routeDates,
@@ -166,6 +167,18 @@ if (problems.length === 0) {
       if ((staticBlock.match(/<a\s+[^>]*href=/g) ?? []).length < 2) {
         problems.push(`${artifact} has fewer than two crawlable static links`);
       }
+    }
+  }
+  // Static public/ pages: still the hand-written file (not the SPA shell), and listed in the sitemap
+  for (const page of STATIC_PAGES) {
+    const built = path.join(root, 'dist', page.file);
+    if (!exists(path.join('dist', page.file))) {
+      problems.push(`static page ${page.path} is missing dist/${page.file}`);
+    } else if (readFileSync(built, 'utf8').includes('id="root"')) {
+      problems.push(`static page ${page.path} was overwritten by the SPA shell`);
+    }
+    if (!sitemap.includes(`<loc>${expectedSiteUrl}${page.path}</loc>`)) {
+      problems.push(`sitemap.xml is missing static page ${page.path}`);
     }
   }
   for (const route of ROUTE_SEO.filter((entry) => entry.sitemap !== false)) {
