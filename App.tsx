@@ -46,6 +46,7 @@ import { IGAMING_CASES as igamingCases } from './components/igaming-cases-conten
 
 const PenneysGamePage = React.lazy(() => import('./components/PenneysGamePage'));
 const MiyaPrivacyPage = React.lazy(() => import('./components/MiyaPrivacyPage'));
+const MiyaBrandPage = React.lazy(() => import('./components/MiyaBrandPage'));
 const IGamingPage = React.lazy(() => import('./components/IGamingPage'));
 const IGamingSummaryPage = React.lazy(() => import('./components/IGamingSummaryPage'));
 const IGamingCasesPage = React.lazy(() => import('./components/IGamingCasesPage'));
@@ -321,6 +322,7 @@ const App: React.FC = () => {
   const isCellularAutomataLabFullPage = pathWithoutBase === '/cellular-automata-lab';
   const isProjectHomePage = pathWithoutBase === '/project';
   const isMiyaPrivacyPage = pathWithoutBase === '/project/miya';
+  const isMiyaBrandPage = pathWithoutBase === '/project/miya/brand';
   const isIGamingPage = pathWithoutBase === '/igaming';
   const isIGamingFullPage = pathWithoutBase === '/igaming/full';
   const isIGamingCasesPage = pathWithoutBase === '/igaming/cases';
@@ -711,6 +713,27 @@ const App: React.FC = () => {
             controls={igamingControls}
           />
         )}
+      </React.Suspense>
+    );
+  }
+
+  if (isMiyaBrandPage) {
+    return (
+      <React.Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
+        <MiyaBrandPage
+          language={language}
+          baseUrl={baseUrl}
+          privacyHref={miyaHref}
+          controls={
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
+          }
+        />
       </React.Suspense>
     );
   }
