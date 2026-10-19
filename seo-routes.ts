@@ -26,7 +26,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-10-12';
+export const SITE_CONTENT_LASTMOD = '2026-10-14';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -584,6 +584,22 @@ export const ROUTE_SEO: RouteSeo[] = [
     desc: {
       en: 'LifeOs locks natal charts, records real life events, and measures the match. Working hypothesis: ~73% of outcomes match the chart; 27% you can change.',
       zh: 'LifeOs 先锁定八套本命系统的命盘，再记录现实里发生的事，量出两者的吻合率。目前的工作假设：约 73% 的结果与命盘吻合，约 27% 是人可以改变命运的空间。',
+    },
+  },
+  {
+    path: '/pukimon',
+    datePublished: '2026-10-14',
+    dateModified: '2026-10-14',
+    priority: '0.5',
+    index: false,
+    sitemap: false,
+    title: {
+      en: 'Pukimon | The Pokémon battle game I dreamed of as a kid',
+      zh: 'Pukimon | 小时候梦想中的宝可梦对战游戏',
+    },
+    desc: {
+      en: 'A personal real-time Pokémon battle game, built to finish a childhood dream. Full version for friends only; an original-character edition plays here.',
+      zh: 'Pukimon 是个人做的宝可梦实时擂台对战游戏，目标是完成小时候的梦想。完整版只分享给朋友；原创角色的公开版在这一页就能玩。',
     },
   },
   {

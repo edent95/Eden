@@ -1,6 +1,7 @@
 import React from 'react';
 import ProductStorePage, { type EpTutorial } from '../components/ProductStorePage';
-import { ProjectsDrRacingCssIcon, ProjectsEtReportCssIcon, ProjectsJijuCssIcon, ProjectsLifeOsCssIcon, ProjectsPokerCssIcon } from '../components/css-art/index';
+import PukimonDemoStage from '../components/PukimonDemoStage';
+import { ProjectsDrRacingCssIcon, ProjectsEtReportCssIcon, ProjectsJijuCssIcon, ProjectsLifeOsCssIcon, ProjectsPokerCssIcon, ProjectsPukimonCssIcon } from '../components/css-art/index';
 import { HeaderControls, type Language, type Theme, type ThemePreference } from '../app/shared';
 import { productSiblingCards } from '../app/product-siblings';
 import { ArrowLeft, Download } from 'lucide-react';
@@ -977,6 +978,100 @@ export const LifeOsFullPage: React.FC<{
         [{ en: 'Developer', zh: '开发者' }, { en: 'Eden Tan', zh: 'Eden Tan' }],
       ]}
       also={productSiblingCards(baseUrl, 'life-os')}
+    />
+  );
+};
+
+export const PukimonFullPage: React.FC<{
+  homeHref: string;
+  baseUrl: string;
+  language: Language;
+  setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+  themePreference: ThemePreference;
+  theme: Theme;
+  setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
+}> = ({ homeHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
+  const isZh = language === 'zh';
+  const appUrl = 'https://pukimon.eden-tan.com/';
+
+  return (
+    <ProductStorePage
+      isZh={isZh}
+      controls={<HeaderControls language={language} setLanguage={setLanguage} themePreference={themePreference} theme={theme} setThemePreference={setThemePreference} />}
+      backHref={homeHref}
+      backLabel={{ en: 'Back home', zh: '返回主页' }}
+      icon={<ProjectsPukimonCssIcon label="Pukimon CSS app icon" />}
+      name="Pukimon"
+      kicker={{ en: 'Real-time battles · Friends only', zh: '实时对战 · 只给朋友玩' }}
+      tagline={{ en: 'The Pokémon battle game I dreamed of as a kid, finally built.', zh: '把小时候梦想中的宝可梦对战游戏，真的做出来。' }}
+      meta={{ en: 'Full version for friends only, behind Google sign-in · Public edition with original characters playable on this page · Computer, phone and gamepad', zh: '完整版只分享给朋友（Google 登录）· 原创角色的公开版在这一页就能玩 · 电脑、手机、手柄都能玩' }}
+      primary={{ href: appUrl, external: true, label: { en: 'Play Pukimon', zh: '立即开玩' } }}
+      quickLinks={[
+        { href: '#overview', label: { en: 'Overview', zh: '游戏简介' } },
+        { href: '#faq', label: { en: 'FAQ', zh: '常见问题' } },
+        { href: '#information', label: { en: 'Information', zh: '游戏资料' } },
+        { href: '#play', label: { en: 'Play here', zh: '直接试玩' } },
+      ]}
+      stage={{
+        kind: 'embed',
+        src: 'https://player.bilibili.com/player.html?bvid=BV1dHao6TEYg&autoplay=1&muted=0&high_quality=1&danmaku=0',
+        domain: 'bilibili.com/video/BV1dHao6TEYg',
+        title: { en: 'The kind of battle Pukimon is chasing', zh: 'Pukimon 想做出来的那种对战' },
+        caption: { en: 'The feeling I was after: 「琵琶曲丨超级真新人VS瑟蕾娜」, a fan-made 3D animation on Bilibili, played from its original creator — not game footage. A playable public edition is at the bottom of this page.', zh: '想做出来的就是这种感觉：B 站网友做的 3D 同人动画《琵琶曲丨超级真新人VS瑟蕾娜》，播放的是原作者的视频，不是游戏画面。能直接玩的公开版在这页最下面。' },
+      }}
+      body={[
+        { kind: 'p', text: { en: 'As a kid, every Pokémon battle I watched on TV moved: Pikachu dodging, Charizard diving in, attacks colliding in mid-air. Every battle I could actually play was a menu — pick a move, wait, watch. I always wanted the version in my head, where you are the one dodging.', zh: '小时候在电视上看到的宝可梦对战都是会动的：皮卡丘闪开、喷火龙俯冲、两招在半空中撞在一起。可是真正玩得到的对战都是选单——选一招、等、看动画。我一直想要脑子里的那个版本：躲招的人，是你自己。' } },
+        { kind: 'p', text: { en: 'Pukimon is that version. It is not a product and it is not for sale. The objective is one sentence: finish the Pokémon battle game I dreamed about as a kid, and play it with friends.', zh: 'Pukimon 就是那个版本。它不是产品，也不卖。目标只有一句话：完成小时候梦想中的宝可梦对战游戏，然后和朋友一起玩。' } },
+        { kind: 'callout', label: { en: 'Objective', zh: '目标' }, text: { en: 'Finish the Pokémon battle game I dreamed of as a kid. It is shared with friends only and will not be opened to the public.', zh: '完成小时候梦想中的宝可梦战斗游戏。只分享给朋友玩，不对外开放。' } },
+        { kind: 'h', text: { en: 'How a battle feels', zh: '一场对战是什么感觉' } },
+        { kind: 'p', text: { en: 'You bring up to three Pokémon into an arena and fight in real time. Move freely, dodge, jump over ground attacks, and fire four moves that you aim yourself. Switch partners mid-fight. Type matchups still matter — eighteen types, super-effective hits land in gold — but timing and footwork decide most fights.', zh: '最多带三只宝可梦进场，实时对打。自由走位、闪避、跳起来躲地面攻击，四个招式自己瞄、自己放；打到一半可以换宠。属性克制照样算——十八种属性，打出克制会跳金色数字——但大部分胜负，看的是时机和走位。' } },
+        { kind: 'steps', items: [
+          { title: { en: 'Gyms, the Elite Four and Mewtwo', zh: '道馆、四天王和超梦' }, text: { en: 'Kanto gym leaders from Brock to Giovanni, Lance and Lorelei, and Mewtwo waiting on New Island with its cloned Charizard and Blastoise — the arena from the first movie.', zh: '关都道馆从小刚到坂木，四天王科拿和渡，还有在新岛竞技场等你的超梦，带着复制出来的喷火龙和水箭龟——就是第一部电影里那个场地。' } },
+          { title: { en: 'Moves that look like the anime', zh: '招式像动画里那样' }, text: { en: 'Meteor showers with warning circles, lightning that chases you, beams that leave the ground burning. Some moments trigger by themselves, the way they do on TV: Blaze ignites at low HP, Lucario\u2019s aura awakens, Pikachu throws up a counter shield, two charges collide into a whirlwind.', zh: '流星雨有落点预警圈、落雷会追着人砸、光束扫过的地上烧起一条火。有些场面会像 TV 动画一样自己发动：低血量时猛火燃起、路卡利欧波导觉醒、皮卡丘撑起反击护盾、两边同时冲撞撞出龙卷。' } },
+          { title: { en: 'Catch to unlock', zh: '打赢才能收服' }, text: { en: 'You start with the four classic partners: Charmander, Squirtle, Bulbasaur and Pikachu. Win a battle and you can catch one of your opponent\u2019s team. Win twenty and Mewtwo joins you.', zh: '一开始只有四只老朋友：小火龙、杰尼龟、妙蛙种子、皮卡丘。打赢一场，可以收服对手队里的一只；赢满 20 场，超梦加入你的队伍。' } },
+          { title: { en: 'Rules borrowed from Brawl Stars', zh: '借 Brawl Stars 的玩法' }, text: { en: 'Standard knockout, a hot zone you have to hold, a showdown where poison gas closes in, three-way free-for-alls, and a three-lane 3v3 tower push with towers, bases and minions in the original style.', zh: '标准对战之外，还有要站住的热区争夺、毒雾往里缩的荒野决斗、三方混战，以及三路推塔 3v3：塔、基地、小兵都换成宝可梦原作的样子。' } },
+          { title: { en: 'Arenas that change the fight', zh: '会改变打法的场地' }, text: { en: 'Waterfall canyon, volcano crater, a limestone cave, a glacier and grassland. Water pushes you, lava burns non-Fire types, ice makes you slide, tall grass hides you — and each type has a home field.', zh: '瀑布峡谷、火山口、岩溶洞窟、冰河、草原。水流会推人、熔岩烫伤非火系、冰面打滑、草丛里能藏身——每种属性都有自己的主场。' } },
+          { title: { en: 'Play with friends', zh: '和朋友对打' }, text: { en: 'Fight the computer, or open an online battle and fight a friend directly. Keyboard and mouse, touch controls with a floating stick, or a gamepad.', zh: '可以打电脑，也可以开联机，直接和朋友对打。键盘鼠标、手机的浮动摇杆、手柄都能用。' } },
+        ] },
+        { kind: 'h', text: { en: 'Why it is friends only', zh: '为什么只给朋友玩' } },
+        { kind: 'p', text: { en: 'The Pokémon, their sprites, cries and move animations belong to Nintendo, Game Freak and The Pokémon Company; some sound effects come from Dota 2 and belong to Valve. None of it is mine to publish. So the whole site sits behind a Google sign-in, nothing is sold, and the page you are reading is not listed in search engines.', zh: '宝可梦本身、它们的立绘、叫声和招式动画属于任天堂、Game Freak 和 The Pokémon Company；一部分音效来自 Dota 2，属于 Valve。这些都不是我能公开发布的。所以整个网站挡在 Google 登录后面，不收钱，你正在看的这一页也不进搜索引擎。' } },
+        { kind: 'callout', tone: 'warning', label: { en: 'Not an official game', zh: '不是官方游戏' }, text: { en: 'Pukimon is a personal fan project made for learning and for playing with friends. It is not affiliated with or endorsed by Nintendo, Game Freak, The Pokémon Company or Valve, and it will not be released publicly.', zh: 'Pukimon 是个人做的同人练习，只为学习和跟朋友一起玩。它和任天堂、Game Freak、The Pokémon Company、Valve 没有任何关系，也没有得到授权，不会公开发行。' } },
+        { kind: 'h', text: { en: 'What this made me think about', zh: '这件事让我想到的' } },
+        { kind: 'p', text: { en: 'Building this made me think the future may really be one app. If I want a song, I write it and produce it myself. If I like a style of image, I make it with AI. I already have my own news desk. And now, finally, my own game.', zh: '做这个游戏，让我联想到：未来的世界，可能真的只剩一个 app。我喜欢听什么歌，自己写、自己做；喜欢什么风格的图，自己跟 AI 一起弄；我现在已经有自己的新闻台，最后，还有了自己的游戏。' } },
+        { kind: 'p', text: { en: 'Not one app that everyone shares, but one per person — made for the one person using it. Pukimon is the first piece of that I can actually play.', zh: '不是大家共用的同一个 app，而是一人一个——只为用它的那一个人而做。Pukimon 是这件事里，我第一个真的能玩的部分。' } },
+      ]}
+      faq={[
+        { q: { en: 'Can I play it?', zh: '我可以玩吗？' }, a: { en: 'The public edition with original characters, yes: it is at the bottom of this page, press Start. The Pokémon version only if Eden sent you the link: sign in with Google and you are in. That one is shared with friends only and is not open to the public.', zh: '原创角色的公开版可以：就在这一页最下面，点「开始」。用宝可梦的完整版要是 Eden 发给你的链接才行：用 Google 登录就能进，它只分享给朋友，不对外开放。' } },
+        { q: { en: 'Is it free?', zh: '要钱吗？' }, a: { en: 'Yes, and it will stay that way. There is nothing to buy and no ads. It is a personal project, not a product.', zh: '不要钱，以后也不会要。没有内购、没有广告。这是个人项目，不是产品。' } },
+        { q: { en: 'Why do I need to sign in?', zh: '为什么要登录？' }, a: { en: 'Because the game uses Pokémon and Dota 2 assets that cannot be published openly. The sign-in keeps every file — pages, sprites, sounds — away from the public internet. Only your Google email is checked; nothing else is stored.', zh: '因为游戏用了宝可梦和 Dota 2 的素材，不能公开发布。登录这一层把所有文件——网页、图片、音效——挡在公网外面。只核对你的 Google 邮箱，不存别的资料。' } },
+        { q: { en: 'What do I play it on?', zh: '用什么玩？' }, a: { en: 'A browser on a computer or a phone. On a computer use WASD and the mouse, or the original U I O P keys; on a phone, a floating stick and drag-to-aim skill buttons in landscape; a gamepad works too. Controls can be remapped.', zh: '电脑或手机的浏览器。电脑用 WASD 加鼠标，也可以用原作的 U I O P；手机横过来，用浮动摇杆和按住拖动瞄准的技能键；手柄也能玩。按键都可以自己改。' } },
+        { q: { en: 'How many Pokémon are there?', zh: '有多少只宝可梦？' }, a: { en: 'More than sixty, each with eight moves; you pick four to bring into battle. You start with four and catch the rest by winning.', zh: '六十多只，每只有 8 个招式，上场前挑 4 招带上。开局只有四只，其余要靠打赢去收服。' } },
+        { q: { en: 'Can I play against a friend?', zh: '能和朋友对打吗？' }, a: { en: 'Yes. Besides the computer opponents there is an online mode: open a battle and fight a friend directly.', zh: '可以。除了打电脑，还有联机模式：开一场对战，直接和朋友打。' } },
+        { q: { en: 'Will it ever be public?', zh: '以后会公开吗？' }, a: { en: 'Not the Pokémon version. The Pokémon belong to their owners. What is open is the public edition at the bottom of this page: the same real-time battles with original characters instead.', zh: '宝可梦这个版本不会。宝可梦属于它们的版权方。对外开放的是这一页最下面的公开版：同一套实时对战，换成原创角色。' } },
+      ]}
+      specs={[
+        [{ en: 'Category', zh: '类别' }, { en: 'Real-time Pokémon arena battle game (personal fan project)', zh: '宝可梦实时擂台对战游戏（个人同人项目）' }],
+        [{ en: 'Objective', zh: '目标' }, { en: 'Finish the Pokémon battle game I dreamed of as a kid', zh: '完成小时候梦想中的宝可梦战斗游戏' }],
+        [{ en: 'Access', zh: '开放范围' }, { en: 'Friends only, behind Google sign-in; not open to the public, not indexed', zh: '只分享给朋友，挡在 Google 登录后面；不对外开放，不进搜索引擎' }],
+        [{ en: 'Public edition', zh: '公开版' }, { en: 'Original characters, playable at the bottom of this page with no sign-in: six partners, six gyms and a champion, plus a three-way brawl', zh: '原创角色，这一页最下面就能玩、不用登录：六只伙伴、六座道馆加一位冠军，还有三方混战' }],
+        [{ en: 'Roster', zh: '阵容' }, { en: '60+ Pokémon · 8 moves each, 4 in battle · up to 3 per team · 18 types', zh: '六十多只宝可梦 · 每只 8 招、上场带 4 招 · 一队最多 3 只 · 18 种属性' }],
+        [{ en: 'Opponents', zh: '对手' }, { en: 'Kanto gym leaders · Elite Four Lorelei and Lance · Mewtwo on New Island · random wild trainers · online friends', zh: '关都道馆馆主 · 四天王科拿与渡 · 新岛的超梦 · 随机野生训练家 · 联机的朋友' }],
+        [{ en: 'Modes', zh: '玩法' }, { en: 'Standard · Hot zone · Showdown · Three-way free-for-all · Three-lane 3v3 tower push', zh: '标准对战 · 热区争夺 · 荒野决斗 · 三方混战 · 三路推塔 3v3' }],
+        [{ en: 'Progress', zh: '进度' }, { en: 'Start with Charmander, Squirtle, Bulbasaur, Pikachu; win to catch; 20 wins unlock Mewtwo', zh: '开局小火龙、杰尼龟、妙蛙种子、皮卡丘；打赢收服；赢满 20 场解锁超梦' }],
+        [{ en: 'Controls', zh: '操作' }, { en: 'Keyboard and mouse · touch with floating stick · gamepad · remappable', zh: '键盘鼠标 · 手机浮动摇杆 · 手柄 · 可改键' }],
+        [{ en: 'Price', zh: '价格' }, { en: 'Free · no purchases · no ads', zh: '免费 · 没有内购 · 没有广告' }],
+        [{ en: 'Platform', zh: '平台' }, { en: 'Browser on computer and phone; plain web, no install', zh: '电脑与手机浏览器；纯网页，不用安装' }],
+        [{ en: 'Credits', zh: '版权' }, { en: 'Pokémon © Nintendo / Game Freak / The Pokémon Company; some effects and sounds © Valve', zh: '宝可梦 © 任天堂 / Game Freak / The Pokémon Company；部分特效与音效 © Valve' }],
+        [{ en: 'Developer', zh: '开发者' }, { en: 'Eden Tan', zh: 'Eden Tan' }],
+      ]}
+      play={{
+        title: { en: 'Play the public edition', zh: '直接试玩：公开版' },
+        intro: { en: 'The same real-time battles with original characters instead of Pokémon, so anyone can play — no sign-in. Right now the computer is playing itself; press Start to take over in fullscreen with keyboard, gamepad or touch.', zh: '同一套实时对战，把宝可梦换成原创角色，所以谁都能玩，不用登录。现在是电脑在自己打，点「开始」全屏换你上，键盘、手柄、触屏都行。' },
+        domain: 'eden-tan.com/pukimon · public edition',
+        node: <PukimonDemoStage isZh={isZh} baseUrl={baseUrl} />,
+        note: { en: 'The Pokémon version is for friends only, behind a sign-in (Play Pukimon at the top).', zh: '用宝可梦的完整版只给朋友，在登录后面（页面顶部的「立即开玩」）。' },
+      }}
+      also={productSiblingCards(baseUrl, 'pukimon')}
     />
   );
 };

@@ -11,7 +11,9 @@ export type EpBlock =
   | { kind: 'p'; text: EpText }
   | { kind: 'h'; text: EpText }
   | { kind: 'callout'; tone?: 'note' | 'warning'; label: EpText; text: EpText }
-  | { kind: 'steps'; items: { title: EpText; text: EpText }[] };
+  | { kind: 'steps'; items: { title: EpText; text: EpText }[] }
+  /** A 16:9 third-party video player (e.g. Bilibili) placed in the prose flow. */
+  | { kind: 'video'; src: string; title: EpText; caption?: EpText };
 
 export type EpLesson = {
   id: string;
@@ -50,18 +52,46 @@ export type ProductStorePageProps = {
   primary: EpAction;
   secondary?: EpAction;
   quickLinks?: EpLink[];
-  stage?: { src: string; domain: string; title: EpText; caption: EpText };
+  /**
+   * Default `iframe` embeds the live app; `embed` is a 16:9 third-party video player (e.g. Bilibili,
+   * see EpEmbedPlayer); `custom` renders any node in the frame (e.g. /pukimon's playable demo).
+   */
+  stage?: (
+    | { kind?: 'iframe' | 'embed'; src: string }
+    /** Any element (e.g. a playable game) rendered inside the browser frame instead of an iframe. */
+    | { kind: 'custom'; node: React.ReactNode }
+  ) & { domain: string; title: EpText; caption: EpText };
   body: EpBlock[];
   /** Optional video lessons, rendered as #tutorial between the prose body and the FAQ. */
   tutorial?: EpTutorial;
   faq: { q: EpText; a: EpText }[];
   specs: [EpText, EpText][];
+  /** Optional playable block at the very bottom (#play, after Information), e.g. /pukimon's public edition. */
+  play?: { title: EpText; intro: EpText; domain: string; node: React.ReactNode; note?: EpText };
   also?: { href: string; name: string; blurb: EpText; icon: React.ReactNode }[];
   alsoTitle?: EpText;
 };
 
 const linkProps = (external?: boolean) =>
   external ? { target: '_blank' as const, rel: 'noopener noreferrer' } : {};
+
+/**
+ * 16:9 third-party video player (stage `kind: 'embed'` and body `kind: 'video'`).
+ * Browsers mute autoplay until the visitor interacts; the player's own volume control unmutes it.
+ */
+const EpEmbedPlayer: React.FC<{ src: string; title: string }> = ({ src, title }) => (
+  <div className="ep-stage-embed-wrap">
+    <iframe
+      className="ep-stage-embed"
+      src={src}
+      title={title}
+      loading="lazy"
+      allow="autoplay; fullscreen; picture-in-picture"
+      allowFullScreen
+      referrerPolicy="no-referrer-when-downgrade"
+    />
+  </div>
+);
 
 const ProductStorePage: React.FC<ProductStorePageProps> = ({
   isZh,
@@ -82,6 +112,7 @@ const ProductStorePage: React.FC<ProductStorePageProps> = ({
   tutorial,
   faq,
   specs,
+  play,
   also = [],
   alsoTitle,
 }) => {
@@ -204,7 +235,13 @@ const ProductStorePage: React.FC<ProductStorePageProps> = ({
                   <span />
                   <p>{stage.domain}</p>
                 </div>
-                <iframe src={stage.src} title={t(stage.title)} loading="lazy" />
+                {stage.kind === 'custom' ? (
+                  stage.node
+                ) : stage.kind === 'embed' ? (
+                  <EpEmbedPlayer src={stage.src} title={t(stage.title)} />
+                ) : (
+                  <iframe src={stage.src} title={t(stage.title)} loading="lazy" />
+                )}
               </div>
               <p className="ep-stage-caption">{t(stage.caption)}</p>
             </section>
@@ -214,6 +251,14 @@ const ProductStorePage: React.FC<ProductStorePageProps> = ({
             {body.map((block, index) => {
               if (block.kind === 'p') return <p key={index}>{t(block.text)}</p>;
               if (block.kind === 'h') return <h2 key={index}>{t(block.text)}</h2>;
+              if (block.kind === 'video') {
+                return (
+                  <figure key={index} className="ep-video">
+                    <EpEmbedPlayer src={block.src} title={t(block.title)} />
+                    {block.caption && <figcaption>{t(block.caption)}</figcaption>}
+                  </figure>
+                );
+              }
               if (block.kind === 'callout') {
                 return (
                   <div
@@ -303,6 +348,23 @@ const ProductStorePage: React.FC<ProductStorePageProps> = ({
                   </div>
                 ))}
               </dl>
+            </section>
+          )}
+
+          {play && (
+            <section className="ep-play" id="play" aria-label={t(play.title)}>
+              <h2>{t(play.title)}</h2>
+              <p className="ep-play-intro">{t(play.intro)}</p>
+              <div className="ep-stage-frame">
+                <div className="ep-stage-toolbar" aria-hidden="true">
+                  <span />
+                  <span />
+                  <span />
+                  <p>{play.domain}</p>
+                </div>
+                {play.node}
+              </div>
+              {play.note && <p className="ep-stage-caption">{t(play.note)}</p>}
             </section>
           )}
 

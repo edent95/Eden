@@ -349,8 +349,8 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
         title: L('Where to start', '从哪里开始'),
         paragraphs: [
           L(
-            'Read the essay on turning chaos into systems first, then open any app on the Projects shelf. The homepage also hosts a small Mini Coin Slot built on Penney’s Game, with a daily credit quota and a visitor leaderboard.',
-            '先读「把混乱变成系统」这篇文章，再从 Projects 货架打开任何一个 app。首页还有一个基于 Penney’s Game 的 Mini Coin Slot，每天有 credits 上限，并带访客排行榜。',
+            'Read the essay on turning chaos into systems first, then open any app on the Projects shelf. The homepage also runs the public edition of Pukimon, a real-time arena battle game with original characters: watch the computer play itself, then press start to take over in fullscreen.',
+            '先读「把混乱变成系统」这篇文章，再从 Projects 货架打开任何一个 app。首页还有 Pukimon 公开版（原创角色的实时擂台对战）：先看电脑自己对打，点开始就全屏换你上。',
           ),
         ],
       },

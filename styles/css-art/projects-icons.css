@@ -1589,3 +1589,110 @@
     animation: none !important;
   }
 }
+
+.projects-pukimon-css-icon {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 118%, #3f8f5a 0 46%, transparent 47%),
+    linear-gradient(180deg, #1d2a4a 0%, #26375f 58%, #2f6b48 100%);
+  box-shadow:
+    0 18px 50px rgb(28 25 23 / 0.14),
+    inset 0 0 0 1px rgb(255 255 255 / 0.22);
+}
+
+.projects-pukimon-css-icon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.18),
+    inset 0 -18px 34px rgb(0 0 0 / 0.3);
+}
+
+.projects-pukimon-ball,
+.projects-pukimon-band,
+.projects-pukimon-button,
+.projects-pukimon-spark {
+  position: absolute;
+}
+
+.projects-pukimon-ball {
+  z-index: 3;
+  left: 22%;
+  top: 20%;
+  width: 56%;
+  height: 56%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(180deg, #e8382f 0 50%, #f7f4ec 50% 100%);
+  box-shadow:
+    0 14px 22px rgb(0 0 0 / 0.32),
+    inset -6px -8px 14px rgb(0 0 0 / 0.18),
+    inset 5px 6px 10px rgb(255 255 255 / 0.28),
+    0 0 0 2px #1c1917;
+  animation: projects-pukimon-ball-wobble 3.6s ease-in-out infinite;
+  transform-origin: 50% 90%;
+}
+
+.projects-pukimon-band {
+  left: -4%;
+  right: -4%;
+  top: 45%;
+  height: 10%;
+  background: #1c1917;
+}
+
+.projects-pukimon-button {
+  left: 50%;
+  top: 50%;
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+  background: #f7f4ec;
+  box-shadow: 0 0 0 3px #1c1917, inset 0 0 0 3px #f7f4ec, inset 0 0 0 4px rgb(28 25 23 / 0.25);
+  transform: translate(-50%, -50%);
+  animation: projects-pukimon-button-blink 3.6s ease-in-out infinite;
+}
+
+.projects-pukimon-spark {
+  z-index: 2;
+  width: 9%;
+  height: 9%;
+  background: #ffd84a;
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  animation: projects-pukimon-spark-twinkle 2.4s ease-in-out infinite;
+}
+
+.projects-pukimon-spark.spark-a { left: 14%; top: 16%; }
+.projects-pukimon-spark.spark-b { right: 13%; top: 30%; width: 7%; height: 7%; animation-delay: -1.2s; }
+
+@keyframes projects-pukimon-ball-wobble {
+  0%, 46%, 100% { transform: rotate(0deg); }
+  54% { transform: rotate(-12deg); }
+  62% { transform: rotate(10deg); }
+  70% { transform: rotate(-6deg); }
+  78% { transform: rotate(0deg); }
+}
+
+@keyframes projects-pukimon-button-blink {
+  0%, 80%, 100% { background: #f7f4ec; }
+  86% { background: #ffe9a8; }
+  92% { background: #f7f4ec; }
+}
+
+@keyframes projects-pukimon-spark-twinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.7); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projects-pukimon-ball,
+  .projects-pukimon-button,
+  .projects-pukimon-spark {
+    animation: none !important;
+  }
+}
