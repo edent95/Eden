@@ -38,10 +38,18 @@ jobs:
         env:
           HARNESS_BASE_REF: ${{ github.event.before }}
 
+      # Same artifact actions/upload-pages-artifact builds, but with the system tar:
+      # that action calls GNU `gtar` on macOS, which the self-hosted M1 runner does not have.
+      - name: Archive Pages artifact
+        run: tar -C dist -chf "$RUNNER_TEMP/artifact.tar" --exclude=.git --exclude=.github .
+
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          path: dist
+          name: github-pages
+          path: ${{ runner.temp }}/artifact.tar
+          retention-days: 1
+          if-no-files-found: error
 
   deploy:
     needs: build
