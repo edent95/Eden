@@ -1,0 +1,339 @@
+/* /project/miya/brand — MiYa brand guide. Layout comes from brand-guide.css; only MiYa-specific
+   pieces live here. Colour values mirror the MiYa app (edent95/Health web/style.css, engraved.css). */
+
+.miya-brand-page {
+  --miya-accent: #f2385a;
+  --miya-line: #2f6b55;
+  --miya-gold: #c9a44c;
+  --brand-primary: var(--miya-accent);
+  --brand-primary-hover: #dc2a4c;
+  --brand-primary-text: #ffffff;
+  --brand-primary-outline: var(--miya-accent);
+}
+
+:root[data-theme="dark"] .miya-brand-page {
+  --miya-accent: #ff4768;
+  --miya-line: #d9b56f;
+  --miya-gold: #f2cf7a;
+  --brand-primary-hover: #ff6480;
+  --brand-primary-text: #16171a;
+}
+
+.miya-brand-page code {
+  padding: 0.1em 0.35em;
+  border-radius: 6px;
+  background: rgb(0 0 0 / 0.06);
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+}
+
+:root[data-theme="dark"] .miya-brand-page code {
+  background: rgb(255 255 255 / 0.1);
+}
+
+.miya-brand-mark {
+  background: #0b0d11;
+  overflow: hidden;
+}
+
+.miya-brand-mark img {
+  width: 100%;
+  height: 100%;
+}
+
+/* Voice: the "avoid" side is struck through in brand red */
+.miya-brand-avoid {
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--miya-accent) 60%, transparent);
+}
+
+.miya-brand-quote {
+  padding: 1rem 1.15rem;
+  border-left: 3px solid var(--miya-accent);
+  border-radius: 0 var(--brand-radius-sm) var(--brand-radius-sm) 0;
+  background: var(--brand-paper);
+  color: var(--brand-ink) !important;
+}
+
+/* Name */
+.miya-brand-page .miya-brand-name-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.miya-brand-wrong {
+  text-decoration: line-through;
+  text-decoration-color: var(--miya-accent);
+}
+
+/* Colour */
+.miya-brand-key {
+  display: grid;
+  grid-template-columns: minmax(0, 2.618fr) minmax(0, 1.618fr) minmax(0, 1fr);
+  gap: 16px;
+}
+
+.miya-brand-key-card {
+  display: flex;
+  min-height: 180px;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  padding: clamp(1.25rem, 2.4vw, 1.75rem);
+  border-radius: var(--brand-radius-md);
+  background: var(--miya-key-light);
+  color: #16171a;
+}
+
+.miya-brand-key-card:nth-child(2) {
+  color: #f7f8fa;
+}
+
+:root[data-theme="dark"] .miya-brand-key-card {
+  background: var(--miya-key-dark);
+  color: #16171a;
+}
+
+.miya-brand-key-card b {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  line-height: 1.05;
+}
+
+.miya-brand-page .miya-brand-key-card code {
+  padding: 0;
+  background: none;
+  color: inherit;
+  opacity: 0.8;
+}
+
+.miya-brand-swatch-group {
+  margin-top: 3rem;
+}
+
+.miya-brand-swatch-group > p {
+  margin-top: 0.6rem;
+  max-width: 46rem;
+  color: var(--brand-muted);
+}
+
+.miya-brand-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+  margin-top: 1.25rem;
+}
+
+.miya-brand-swatches .brand-guide-swatch {
+  border-radius: var(--brand-radius-sm);
+  padding: 1rem;
+}
+
+.miya-brand-swatches h4 {
+  margin-top: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.miya-brand-swatches .brand-guide-swatch p:not(.brand-guide-card-index) {
+  margin-top: 0.2rem;
+  font-size: 0.9rem;
+}
+
+.miya-brand-chip {
+  display: flex;
+  width: 3.5rem;
+  height: 3.5rem;
+  overflow: hidden;
+}
+
+.miya-brand-chip i {
+  flex: 1;
+}
+
+/* Type */
+.miya-brand-type {
+  border-radius: var(--brand-radius-md);
+  padding: 0 clamp(1.25rem, 3vw, 2rem);
+  background: var(--brand-paper);
+}
+
+.miya-brand-type-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.3fr) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 1.25rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--brand-line);
+}
+
+.miya-brand-type-row:last-child {
+  border-bottom: 0;
+}
+
+.miya-brand-type-row .brand-guide-card-index span {
+  display: block;
+  margin-top: 0.35rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.miya-brand-type-sample {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-family: system-ui, -apple-system, "PingFang SC", "Hiragino Sans GB", sans-serif;
+  font-variant-numeric: tabular-nums;
+  color: var(--brand-ink);
+}
+
+.miya-brand-type-sample small {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--brand-muted);
+}
+
+/* Spacing */
+.miya-brand-bar {
+  display: block;
+  height: 13px;
+  border-radius: 3px;
+  background: repeating-linear-gradient(45deg, color-mix(in srgb, var(--miya-line) 60%, transparent) 0 1.3px, transparent 1.3px 4px);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--miya-line) 60%, transparent);
+}
+
+.miya-brand-radius {
+  display: block;
+  width: 56px;
+  height: 56px;
+  background: var(--brand-soft);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--miya-line) 60%, transparent);
+}
+
+.miya-brand-bar + p,
+.miya-brand-radius + p {
+  margin-top: 0.75rem !important;
+}
+
+.miya-brand-golden {
+  max-width: 560px;
+}
+
+.miya-brand-golden svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.miya-brand-golden .g-frame { fill: none; stroke: color-mix(in srgb, var(--miya-line) 56%, transparent); stroke-width: 1; }
+.miya-brand-golden .g-guide { stroke: color-mix(in srgb, var(--miya-line) 25%, transparent); stroke-width: 1; stroke-dasharray: 3 4; }
+.miya-brand-golden .g-spiral { fill: none; stroke: var(--miya-gold); stroke-width: 2.2; }
+.miya-brand-golden .g-dot { fill: var(--miya-accent); }
+
+/* Logos */
+.miya-brand-logo-stage {
+  display: grid;
+  place-items: center;
+  min-height: 200px;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  border-radius: var(--brand-radius-sm);
+  background: var(--brand-paper);
+}
+
+.miya-brand-logo-stage img {
+  display: block;
+  max-width: 156px;
+  height: auto;
+}
+
+.miya-brand-logo-round { border-radius: 22.5%; }
+.miya-brand-logo-circle { border-radius: 50%; }
+
+.miya-brand-logo-sizes {
+  display: flex;
+  align-items: end;
+  gap: 1rem;
+}
+
+.miya-brand-logo-sizes img {
+  width: auto;
+}
+
+.miya-brand-donts {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.miya-brand-dont {
+  margin: 0;
+  text-align: center;
+  color: var(--brand-muted);
+  font-size: 0.9rem;
+}
+
+.miya-brand-dont > div {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  margin-bottom: 0.6rem;
+  overflow: hidden;
+  border-radius: var(--brand-radius-sm);
+  background: var(--brand-paper);
+}
+
+.miya-brand-dont > div::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top right, transparent calc(50% - 1.5px), var(--miya-accent) calc(50% - 1.5px) calc(50% + 1.5px), transparent calc(50% + 1.5px));
+  opacity: 0.8;
+}
+
+.miya-brand-dont img {
+  width: 52%;
+  border-radius: 22.5%;
+}
+
+.miya-brand-dont-stretch img { transform: scaleX(1.45); }
+.miya-brand-dont-rotate img { transform: rotate(18deg); }
+.miya-brand-dont-glow img { box-shadow: 0 0 22px 6px var(--miya-accent); }
+.miya-brand-dont-recolor img { filter: hue-rotate(150deg) saturate(1.4); }
+.miya-brand-dont-low > div { background: #3a1820; }
+.miya-brand-dont-low img { opacity: 0.35; }
+
+/* Tools */
+.miya-brand-tool .brand-guide-card-index {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.miya-brand-pill {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.miya-brand-pill-main { background: color-mix(in srgb, var(--miya-accent) 14%, transparent); color: var(--brand-ink); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--miya-accent) 35%, transparent); }
+.miya-brand-pill-use { background: color-mix(in srgb, var(--miya-line) 16%, transparent); color: var(--brand-ink); }
+.miya-brand-pill-maybe { background: var(--brand-soft); }
+.miya-brand-pill-borrow,
+.miya-brand-pill-no { box-shadow: inset 0 0 0 1px var(--brand-line); }
+
+@media (max-width: 900px) {
+  .miya-brand-page .miya-brand-name-grid { grid-template-columns: minmax(0, 1fr); }
+  .miya-brand-key { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .miya-brand-key-card:first-child { grid-column: 1 / -1; }
+  .miya-brand-donts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .miya-brand-type-row { grid-template-columns: minmax(0, 1fr); gap: 0.5rem; }
+  .miya-brand-swatches { grid-template-columns: minmax(0, 1fr); }
+}
