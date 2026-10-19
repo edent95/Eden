@@ -12,6 +12,8 @@ export type EpBlock =
   | { kind: 'h'; text: EpText }
   | { kind: 'callout'; tone?: 'note' | 'warning'; label: EpText; text: EpText }
   | { kind: 'steps'; items: { title: EpText; text: EpText }[] }
+  /** A row of big numbers that count up from 0 when scrolled into view (see useCountUp). */
+  | { kind: 'stats'; items: { value: number; unit?: EpText; text: EpText }[] }
   /** A 16:9 third-party video player (e.g. Bilibili) placed in the prose flow. */
   | { kind: 'video'; src: string; title: EpText; caption?: EpText };
 
@@ -52,6 +54,8 @@ export type ProductStorePageProps = {
   primary: EpAction;
   secondary?: EpAction;
   quickLinks?: EpLink[];
+  /** Optional full-width block between the hero and the stage, e.g. /life-os's animated 73% / 27% split. */
+  feature?: React.ReactNode;
   /**
    * Default `iframe` embeds the live app; `embed` is a 16:9 third-party video player (e.g. Bilibili,
    * see EpEmbedPlayer); `custom` renders any node in the frame (e.g. /pukimon's playable demo).
@@ -70,6 +74,65 @@ export type ProductStorePageProps = {
   play?: { title: EpText; intro: EpText; domain: string; node: React.ReactNode; note?: EpText };
   also?: { href: string; name: string; blurb: EpText; icon: React.ReactNode }[];
   alsoTitle?: EpText;
+};
+
+/**
+ * 0 → 1 eased progress that starts once `ref` scrolls into view; jumps straight to 1 under
+ * prefers-reduced-motion or without IntersectionObserver.
+ */
+export const useCountUp = (ref: React.RefObject<HTMLElement | null>, duration = 2400) => {
+  const [progress, setProgress] = React.useState(0);
+
+  React.useEffect(() => {
+    const node = ref.current;
+    if (typeof window === 'undefined' || !node) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+      setProgress(1);
+      return;
+    }
+    let frame = 0;
+    const run = () => {
+      const start = performance.now();
+      const tick = (now: number) => {
+        const x = Math.min(1, (now - start) / duration);
+        setProgress(1 - Math.pow(1 - x, 3));
+        if (x < 1) frame = window.requestAnimationFrame(tick);
+      };
+      frame = window.requestAnimationFrame(tick);
+    };
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        observer.disconnect();
+        run();
+      }
+    }, { threshold: 0.35 });
+    observer.observe(node);
+    return () => {
+      observer.disconnect();
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, [ref, duration]);
+
+  return progress;
+};
+
+const EpStats: React.FC<{ items: { value: number; unit?: EpText; text: EpText }[]; t: (value: EpText) => string }> = ({ items, t }) => {
+  const ref = React.useRef<HTMLDListElement | null>(null);
+  const progress = useCountUp(ref, 1800);
+  return (
+    <dl ref={ref} className="ep-stats">
+      {items.map((item) => (
+        <div key={item.text.en}>
+          <dt>
+            <span className="ep-stats-num" aria-hidden="true">{Math.round(item.value * progress)}</span>
+            <span className="sr-only">{item.value}</span>
+            {item.unit && <span className="ep-stats-unit">{t(item.unit)}</span>}
+          </dt>
+          <dd>{t(item.text)}</dd>
+        </div>
+      ))}
+    </dl>
+  );
 };
 
 const linkProps = (external?: boolean) =>
@@ -107,6 +170,7 @@ const ProductStorePage: React.FC<ProductStorePageProps> = ({
   primary,
   secondary,
   quickLinks = [],
+  feature,
   stage,
   body,
   tutorial,
@@ -226,6 +290,8 @@ const ProductStorePage: React.FC<ProductStorePageProps> = ({
           </header>
           <div ref={sentinelRef} aria-hidden="true" />
 
+          {feature}
+
           {stage && (
             <section className="ep-stage" aria-label={t(stage.title)}>
               <div className="ep-stage-frame">
@@ -251,6 +317,7 @@ const ProductStorePage: React.FC<ProductStorePageProps> = ({
             {body.map((block, index) => {
               if (block.kind === 'p') return <p key={index}>{t(block.text)}</p>;
               if (block.kind === 'h') return <h2 key={index}>{t(block.text)}</h2>;
+              if (block.kind === 'stats') return <EpStats key={index} items={block.items} t={t} />;
               if (block.kind === 'video') {
                 return (
                   <figure key={index} className="ep-video">
