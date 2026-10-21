@@ -32,6 +32,9 @@ if (entryFiles.length > 0) {
       problems.push(`${file} has no \`## YYYY-MM-DD\` heading (the dashboard cannot see it)`);
     }
   }
+} else if (!exists(currentLog)) {
+  // 月度文件 2026-09 起冻结,当月文件通常不存在:上面已经报了「没写条目」,别再 read() 抛 ENOENT 把真正的原因盖掉
+  latest = null;
 } else {
   const log = read(currentLog);
   const headingMatches = [...log.matchAll(/^#{2,3} .+$/gm)];
@@ -59,14 +62,15 @@ const FORMATS = [
   ]],
 ];
 
-const misses = FORMATS.map(([name, fields]) => [name, fields.filter(([, re]) => !re.test(latest)).map(([l]) => l)]);
-if (misses.every(([, m]) => m.length > 0)) {
+const misses = latest === null ? [] : FORMATS.map(([name, fields]) => [name, fields.filter(([, re]) => !re.test(latest)).map(([l]) => l)]);
+if (misses.length > 0 && misses.every(([, m]) => m.length > 0)) {
   const ragMiss = misses.find(([name]) => name === 'rag-v1')[1];
   problems.push(`Latest log entry is missing ${ragMiss.join(', ')} (rag-v1 fields; see AGENTS.md)`);
 }
 
 // logs/index.md 只由月度文件生成;条目文件不进索引(否则每个 PR 都改它,又回到冲突)
-if (entryFiles.length === 0 && !changed.includes('logs/index.md')) {
+// 只有真走了老路径(改了当月文件)才要求重建索引;一条都没写时第一条报错已经够了
+if (entryFiles.length === 0 && changed.includes(currentLog) && !changed.includes('logs/index.md')) {
   problems.push('The generated logs/index.md was not updated');
 }
 
