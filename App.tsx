@@ -570,7 +570,6 @@ const App: React.FC = () => {
     return (
       <RiskTerminalPage
         homeHref={homeHref}
-        baseUrl={baseUrl}
         language={language}
         setLanguage={setLanguage}
         themePreference={themePreference}
