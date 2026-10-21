@@ -30,6 +30,8 @@
   --action-subtle: rgba(242, 140, 56, .16);
   --link: #c4b5fd;
   --focus: #c4b5fd;
+  --action-ink: #f28c38;
+  --deep: #050505;
   --status-danger: #ff5470;
   --status-success: #4ade80;
   --status-warning: #ffd84a;
@@ -55,24 +57,24 @@
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
     color-scheme: light;
-    --canvas: #f5f5f7; --surface: #ffffff; --surface-raised: #f5f5f7;
+    --canvas: #ffffff; --surface: #f5f5f7; --surface-raised: #ffffff; --action-ink: #1d7a57;
     --text-primary: #111113; --text-secondary: #6e6e73; --text-tertiary: #6e6e73;
     --border-subtle: #d9d9df; --border-strong: #8e8e93;
     --action: #7bdcb5; --action-hover: #5fcfa2; --action-text: #111113; --action-subtle: rgba(123, 220, 181, .2); --link: #6d4fd8; --focus: #7c5ce0;
     --status-danger: #d1264b; --status-success: #0f7a43; --status-warning: #9a5300;
-    --heat-0: #ececf0; --heat-1: #dcebd9; --heat-2: #f4dfb9; --heat-3: #ffa340; --heat-4: #d1264b;
+    --heat-0: #e6e6eb; --heat-1: #dcebd9; --heat-2: #f4dfb9; --heat-3: #ffa340; --heat-4: #d1264b;
     --chart-bar: #a1a1a6; --chart-area: rgba(123, 220, 181, .24);
     --pattern: rgba(17, 17, 19, .06); --header-bg: rgba(255, 255, 255, .8); --shadow-overlay: 0 8px 28px rgba(17, 17, 19, .12);
   }
 }
 :root[data-theme="light"] {
   color-scheme: light;
-  --canvas: #f5f5f7; --surface: #ffffff; --surface-raised: #f5f5f7;
+  --canvas: #ffffff; --surface: #f5f5f7; --surface-raised: #ffffff; --action-ink: #1d7a57;
   --text-primary: #111113; --text-secondary: #6e6e73; --text-tertiary: #6e6e73;
   --border-subtle: #d9d9df; --border-strong: #8e8e93;
   --action: #7bdcb5; --action-hover: #5fcfa2; --action-text: #111113; --action-subtle: rgba(123, 220, 181, .2); --link: #6d4fd8; --focus: #7c5ce0;
   --status-danger: #d1264b; --status-success: #0f7a43; --status-warning: #9a5300;
-  --heat-0: #ececf0; --heat-1: #dcebd9; --heat-2: #f4dfb9; --heat-3: #ffa340; --heat-4: #d1264b;
+  --heat-0: #e6e6eb; --heat-1: #dcebd9; --heat-2: #f4dfb9; --heat-3: #ffa340; --heat-4: #d1264b;
   --chart-bar: #a1a1a6; --chart-area: rgba(123, 220, 181, .24);
   --pattern: rgba(17, 17, 19, .06); --header-bg: rgba(255, 255, 255, .8); --shadow-overlay: 0 8px 28px rgba(17, 17, 19, .12);
 }
@@ -314,6 +316,28 @@ html.embedded .wrap { max-width: none; padding-left: 0; padding-right: 0; }
 html.embedded header.top { position: static; background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; }
 html.embedded header.top::after { display: none; }
 html.embedded main { padding-bottom: 8px; }
+/* /brand-guide#brand-philosophy, applied inside the tool:
+   - the verdict hero is the one Deep, inverted moment per view (number said inside the sentence);
+   - panels are soft cards with a hairline and a mono primary-colour chapter number (01, 02…);
+   - KPI rows are hairline items, not more cards; tabs are pills with an Ink "you are here". */
+.hero { --text-primary: #fff; --text-secondary: rgba(255, 255, 255, .72); --text-tertiary: rgba(255, 255, 255, .58); --border-strong: rgba(255, 255, 255, .4); --surface-raised: rgba(255, 255, 255, .1); --pattern: rgba(255, 255, 255, .09);
+  gap: 16px; padding: clamp(24px, 5vw, 56px); background: var(--deep); color: #fff; border: 0; border-radius: 44px; }
+.hero .eyebrow { font-weight: 700; letter-spacing: .08em; }
+.hero h1 { max-width: 20em; font-size: clamp(24px, 3.4vw, 42px); line-height: 1.1; font-weight: 800; letter-spacing: -0.03em; }
+.hero p { max-width: 40em; font-size: 15px; line-height: 22px; font-weight: 600; }
+@media (max-width: 640px) { .hero { border-radius: var(--r-surface); } }
+section.view { gap: 20px; counter-reset: chapter; }
+.panel { padding: clamp(20px, 3vw, 32px); }
+.panel > h2 { counter-increment: chapter; font-size: clamp(19px, 2vw, 24px); line-height: 1.2; font-weight: 750; letter-spacing: -0.02em; margin-bottom: 6px; }
+.panel > h2::before { content: counter(chapter, decimal-leading-zero); display: block; margin-bottom: 8px; font-family: var(--font-mono); font-size: 11px; line-height: 16px; font-weight: 700; letter-spacing: .08em; color: var(--action-ink); }
+.panel .sub { font-size: 14px; line-height: 21px; font-weight: 500; }
+.kpis { gap: 20px; }
+.kpi { padding: 14px 0 0; background: transparent; border: 0; border-top: 1px solid var(--border-subtle); border-radius: 0; }
+.kpi .v { font-size: 26px; line-height: 32px; font-weight: 750; }
+nav.tabs { padding: 4px; border: 0; border-radius: var(--r-pill); background: var(--surface); }
+nav.tabs a { border-radius: var(--r-pill); font-weight: 500; }
+nav.tabs a.on { background: var(--text-primary); color: var(--canvas); box-shadow: none; }
+html.embedded .brand { display: none; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } .btn:active, .plan:active { transform: none; } }
 </style>
 
