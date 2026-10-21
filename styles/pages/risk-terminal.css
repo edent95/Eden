@@ -1,0 +1,101 @@
+/* /4d-risk-terminal — one claim, then the tool at full gutter width.
+   The tool itself lives in public/embeds/4d-risk-terminal.html with the same brand tokens;
+   this page only owns the hero and the stage the frame sits on. */
+
+.risk-terminal-page {
+  background: var(--theme-page);
+  color: var(--theme-text-primary);
+}
+
+.kaleido-site .risk-terminal-page { background: transparent; }
+
+.risk-terminal-topbar {
+  padding: 0 clamp(1.25rem, 5vw, 3rem);
+}
+
+.risk-terminal-back-link {
+  color: var(--theme-text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.risk-terminal-back-link:hover { color: var(--theme-text-primary); }
+
+.page-shell > main.risk-terminal-main {
+  padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 4vw, 3rem) clamp(3rem, 8vw, 6rem);
+}
+
+.risk-terminal-hero {
+  max-width: 980px;
+  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.risk-terminal-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--theme-text-soft);
+}
+
+.risk-terminal-title {
+  margin-top: 1.1rem;
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 4.2rem);
+  font-weight: 760;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.risk-terminal-lede {
+  max-width: 44em;
+  margin-top: 1.5rem;
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
+  line-height: 1.65;
+  color: var(--theme-text-secondary);
+}
+
+.risk-terminal-notes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-top: clamp(2rem, 5vw, 3rem);
+  padding: 1.5rem 0 0;
+  list-style: none;
+  border-top: 1px solid color-mix(in srgb, var(--theme-text-primary) 12%, transparent);
+}
+
+.risk-terminal-notes li { display: grid; gap: 0.35rem; }
+
+.risk-terminal-notes strong {
+  font-size: 0.95rem;
+  font-weight: 650;
+}
+
+.risk-terminal-notes span {
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--theme-text-secondary);
+}
+
+.risk-terminal-lang-note {
+  margin-bottom: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--theme-text-soft);
+}
+
+.risk-terminal-stage iframe {
+  display: block;
+  width: 100%;
+  height: 1400px;
+  border: 0;
+  background: transparent;
+  color-scheme: normal;
+}
+
+@media (max-width: 720px) {
+  .risk-terminal-notes { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+}
