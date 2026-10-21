@@ -26,7 +26,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-10-20';
+export const SITE_CONTENT_LASTMOD = '2026-10-21';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -621,6 +621,22 @@ export const ROUTE_SEO: RouteSeo[] = [
     desc: {
       en: 'A personal real-time Pokémon battle game, built to finish a childhood dream. Full version for friends only; an original-character edition plays here.',
       zh: 'Pukimon 是个人做的宝可梦实时擂台对战游戏，目标是完成小时候的梦想。完整版只分享给朋友；原创角色的公开版在这一页就能玩。',
+    },
+  },
+  {
+    path: '/4d-risk-terminal',
+    datePublished: '2026-10-21',
+    dateModified: '2026-10-21',
+    priority: '0.5',
+    index: false,
+    sitemap: false,
+    title: {
+      en: '4D Risk Terminal | Find the number that could wipe you out',
+      zh: '4D Risk Terminal | 一万个号码，先找出会让你赔光的那一个',
+    },
+    desc: {
+      en: 'An interactive 4D risk tool on sample data: exposure map, simulated draws, per-number limits, backtests and settlement, computed in your browser.',
+      zh: '用示例数据跑的 4D 风险试算台：号码风险地图、电脑试开奖、每个号码的上限、旧开奖回测和单期算账，全部在浏览器里算。',
     },
   },
   {

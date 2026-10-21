@@ -39,6 +39,7 @@ import { archivedWorks } from './app/archive';
 import { JijuRevampFullPage } from './pages/JijuRevampPage';
 import { LifeFullPage } from './pages/LifePage';
 import { AboutPage } from './pages/AboutPage';
+import { RiskTerminalPage } from './pages/RiskTerminalPage';
 import { ProjectHomePage } from './pages/ProjectHomePage';
 import { DelayedAboutProfileVideo, HomeCollage } from './app/home-collage';
 import { IGAMING_CASES as igamingCases } from './components/igaming-cases-content';
@@ -316,6 +317,7 @@ const App: React.FC = () => {
   const isLifeFullPage = pathWithoutBase === '/life';
   const isBrandGuideFullPage = pathWithoutBase === '/brand-guide';
   const isAboutPage = pathWithoutBase === '/about';
+  const isRiskTerminalPage = pathWithoutBase === '/4d-risk-terminal';
   const isTopicsFullPage = pathWithoutBase === '/topics';
   const isConwayGameOfLifeFullPage = pathWithoutBase === '/conways-game-of-life';
   const isPenneysGamePage = pathWithoutBase === '/penneys-game';
@@ -555,6 +557,19 @@ const App: React.FC = () => {
       <AboutPage
         homeHref={homeHref}
         baseUrl={baseUrl}
+        language={language}
+        setLanguage={setLanguage}
+        themePreference={themePreference}
+        theme={theme}
+        setThemePreference={setThemePreference}
+      />
+    );
+  }
+
+  if (isRiskTerminalPage) {
+    return (
+      <RiskTerminalPage
+        homeHref={homeHref}
         language={language}
         setLanguage={setLanguage}
         themePreference={themePreference}
