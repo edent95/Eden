@@ -66,7 +66,7 @@ npm run preview
 - `/` — 主页
 - `/jiju-pet` — Jiju 产品详情：可信宠物友好地点发现、宠物档案、到访记忆与社区资料
 - `/jiju-revamp` — Jiju 从宠物友好目录转向本地生活探索的平台提案
-- `/4d-risk-terminal` — 4D 风险试算台(`pages/RiskTerminalPage.tsx`):上面一段 hero,下面 iframe 嵌 `public/embeds/4d-risk-terminal.html`(自包含的工具本体，配色 / 字体 / 圆角按 /brand-guide,页面把站点主题写进它的 `data-theme`、按内容撑高);全是示例数据、只在浏览器里算;noindex,不进 sitemap,主站不链出(4D 庄家视角，涉法律敏感，公开入口先问用户)
+- `/4d-risk-terminal` — 4D 风险试算台:`pages/RiskTerminalPage.tsx` 是外壳(hero + 懒加载),工具本体 `components/fourd/RiskTerminal.tsx`(按 /brand-guide#brand-philosophy 排成 01 结论 / 02 风险 / 03 号码地图 / 04 试算 / 05 算账与设置五章),计算引擎 `services/fourdRisk.ts`(纯函数，单测 `tests/unit/fourd-risk.test.ts`),画布图表 `components/fourd/charts.ts`;全是示例数据、只在浏览器里算;noindex,不进 sitemap,主站不链出(4D 庄家视角，涉法律敏感，公开入口先问用户)
 - `/about` — 关于 Eden：Dan Koe 式的个人观点页（不是简历），核心主张 → 来路 → 五条规则 → 作品为证 → 写作主题 → 联系方式；文案在 `components/about-content.ts`，React 页与静态预渲染共用
 - `/project` — Eden 已构建产品的 app shelf
 - `/project/miya` — MiYa（iOS 本机健康报告）隐私政策兼技术支持页，中英双语（`/zh/project/miya/` 为中文版）；App Store Connect 的 Privacy Policy URL 与 Support URL 都指向这里，正文同时预渲染成静态 HTML，不开 JS 也能完整阅读
