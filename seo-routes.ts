@@ -26,7 +26,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-10-14';
+export const SITE_CONTENT_LASTMOD = '2026-10-20';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -84,6 +84,13 @@ export const HOME_DESC: Record<SeoLanguage, string> = {
   en: 'Eden Tan turns complex human behavior and messy realities into useful products, data, and AI systems.',
   zh: 'Eden Tan 把复杂的人性、行为与现实问题，转化成可以被理解、验证和使用的数据、产品与 AI 系统。',
 };
+
+/**
+ * Hand-written single-file pages under `public/` (served as-is, one language, not React routes).
+ * They go into sitemap.xml only. Never add them to ROUTE_SEO: the prerender step would
+ * overwrite their `index.html` with the SPA shell. `file` is relative to `public/`.
+ */
+export const STATIC_PAGES: Array<{ path: string; file: string; lastmod: string; priority: string }> = [];
 
 export const ROUTE_SEO: RouteSeo[] = [
   {
@@ -155,15 +162,29 @@ export const ROUTE_SEO: RouteSeo[] = [
   {
     path: '/project/miya',
     datePublished: '2026-09-18',
-    dateModified: '2026-09-18',
+    dateModified: '2026-10-19',
     priority: '0.6',
     title: {
       en: 'MiYa Privacy Policy | Eden Tan',
       zh: 'MiYa 隐私政策 | Eden Tan',
     },
     desc: {
-      en: 'MiYa for iOS privacy policy and support: no data collected, Health data is read and kept on your device only. Contact d.tytern@gmail.com.',
-      zh: 'MiYa iOS 版隐私政策与技术支持：不收集任何数据，健康数据只在你的设备上读取和保存。联系邮箱 d.tytern@gmail.com。',
+      en: 'MiYa for iPhone and Apple Watch privacy policy and support: no data collected; Health data is read and kept on your own devices. Contact d.tytern@gmail.com.',
+      zh: 'MiYa iPhone 与 Apple Watch 版隐私政策与技术支持：不收集任何数据，健康数据只在你自己的设备上读取和保存。联系邮箱 d.tytern@gmail.com。',
+    },
+  },
+  {
+    path: '/project/miya/brand',
+    datePublished: '2026-10-19',
+    dateModified: '2026-10-20',
+    priority: '0.5',
+    title: {
+      en: 'MiYa Brand Guide | Eden Tan',
+      zh: 'MiYa 品牌指南 | Eden Tan',
+    },
+    desc: {
+      en: 'Brand guide for MiYa Health Report: voice, name, colour, type, Fibonacci spacing, logos, engraved icons, motion and the tools used to make them.',
+      zh: 'MiYa 健康报告的品牌指南：怎么说话、名字、色彩、字体、斐波那契间距、标志、凹版图标、动效与制作工具。',
     },
   },
   {

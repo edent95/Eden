@@ -1014,3 +1014,69 @@
 /* site kaleidoscope skeleton: let the page's emblem and grid show behind the hero */
 .kaleido-site .brand-guide-page main,
 .kaleido-site .brand-guide-page .brand-guide-hero { background: transparent; }
+
+/* 11 / Numbers that move — specimen of the /life-os count-up language (useCountUp). */
+.brand-guide-number-specimen {
+  padding: clamp(28px, 5vw, 56px) clamp(20px, 4vw, 48px);
+  border: 1px solid var(--brand-line);
+  border-radius: var(--brand-radius-md);
+  background: var(--brand-soft);
+  text-align: center;
+}
+
+.brand-guide-number-line {
+  margin: 18px auto 30px;
+  max-width: 22ch;
+  font-size: clamp(1.8rem, 4.6vw, 3.2rem);
+  font-weight: 760;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.brand-guide-number-line b {
+  display: inline-block;
+  min-width: 2.6ch;
+  font-size: 1.35em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.brand-guide-number-cells {
+  display: grid;
+  grid-template-columns: repeat(20, 1fr);
+  gap: 6px;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.brand-guide-number-cells span {
+  aspect-ratio: 1;
+  border-radius: 30%;
+  background: var(--brand-line);
+  opacity: 0.5;
+  transform: scale(0.55);
+  transition: transform 260ms ease, opacity 260ms ease, background-color 260ms ease;
+}
+
+.brand-guide-number-cells .is-lit { opacity: 1; transform: scale(1); }
+.brand-guide-number-cells .is-fixed.is-lit { background: var(--brand-ink); }
+.brand-guide-number-cells .is-open.is-lit { background: var(--brand-primary); }
+
+.brand-guide-number-specimen[data-done='true'] .is-open {
+  animation: brand-guide-breathe 2.8s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 90ms);
+}
+
+@keyframes brand-guide-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(0.72); }
+}
+
+@media (max-width: 560px) {
+  .brand-guide-number-cells { grid-template-columns: repeat(10, 1fr); max-width: 280px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-guide-number-cells span { transition: none; }
+  .brand-guide-number-specimen[data-done='true'] .is-open { animation: none; }
+}

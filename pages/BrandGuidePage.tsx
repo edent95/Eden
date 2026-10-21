@@ -2,6 +2,7 @@ import React from 'react';
 import { EngravedBorder, EngravedEye, EngravedHatchScale, EngravedRosette } from '../components/css-art/index';
 import { HeaderControls, joinBasePath, type Language, type Theme, type ThemePreference } from '../app/shared';
 import { ArrowLeft } from 'lucide-react';
+import { useCountUp } from '../components/ProductStorePage';
 
 const brandGuidePrinciples = [
   {
@@ -635,6 +636,80 @@ const brandGuideStoryExample = {
   },
 } as const;
 
+const brandGuideNumberRules = [
+  {
+    title: { en: 'The number sits in the sentence', zh: '数字放在句子里' },
+    copy: {
+      en: 'One headline, one number, said like a claim: “73% of your life was written the day you were born.” Not a lonely stat tile.',
+      zh: '一句标题一个数字，像下判断一样说出来：「你的人生，73% 早已写好。」不要单独摆一个孤零零的数据块。',
+    },
+  },
+  {
+    title: { en: 'Numbers count up once', zh: '数字只往上数一次' },
+    copy: {
+      en: 'From 0 when it scrolls into view, about 2 seconds, fast then slow, then it stops. Tabular figures so nothing jitters.',
+      zh: '滚进屏幕时从 0 开始，约 2 秒，先快后慢，数完就停。用等宽数字，数的时候不抖。',
+    },
+  },
+  {
+    title: { en: 'Draw the ratio as cells', zh: '比例画成格子' },
+    copy: {
+      en: 'A percentage becomes 100 cells. Two colours only: ink for what is settled, the primary colour for what can still change.',
+      zh: '百分比画成 100 格。只用两种颜色：墨色是已经定下来的，主色是还能改变的。',
+    },
+  },
+  {
+    title: { en: 'Only the open part keeps moving', zh: '只有还能变的部分继续动' },
+    copy: {
+      en: 'After counting, the settled cells stay still; the open ones breathe slowly. Motion carries the meaning.',
+      zh: '数完以后，定下来的格子不动，还能变的格子慢慢呼吸。动效本身就在讲意思。',
+    },
+  },
+  {
+    title: { en: 'Soft cards, numbered chapters', zh: '柔底卡片，章节编号' },
+    copy: {
+      en: 'Soft background, one hairline border, large radius. Article headings get a mono primary-colour index (01, 02…) and a big tight title.',
+      zh: '柔和底色、一条细边、大圆角。文章小标题上方加主色等宽编号（01、02…），标题本身放大、字距收紧。',
+    },
+  },
+  {
+    title: { en: 'Say where the number comes from', zh: '数字要说来源' },
+    copy: {
+      en: 'Real numbers only. One quiet line under them says whether it is measured or a working hypothesis.',
+      zh: '只用真实的数字。下面一行小字说清楚它是量出来的，还是正在检验的假设。',
+    },
+  },
+  {
+    title: { en: 'Reduced motion shows the answer', zh: '减少动效就直接给答案' },
+    copy: {
+      en: 'Under prefers-reduced-motion the final numbers and cells render immediately, with no breathing and no rise-in.',
+      zh: '开了「减少动态效果」时，直接显示最终数字和格子，不呼吸、不浮现。',
+    },
+  },
+];
+
+const BrandGuideNumberSpecimen: React.FC<{ isZh: boolean }> = ({ isZh }) => {
+  const ref = React.useRef<HTMLDivElement | null>(null);
+  const progress = useCountUp(ref);
+  const fixed = Math.round(73 * progress);
+  const lit = Math.round(100 * progress);
+  return (
+    <div ref={ref} className="brand-guide-number-specimen" data-done={progress === 1 ? 'true' : 'false'}>
+      <p className="brand-guide-card-index">{isZh ? '样例 · /life-os' : 'Specimen · /life-os'}</p>
+      <p className="brand-guide-number-line font-display" aria-label={isZh ? '你的人生，73% 早已写好。' : '73% of your life was written the day you were born.'}>
+        <span aria-hidden="true">
+          {isZh ? <>你的人生，<b>{fixed}%</b> 早已写好。</> : <><b>{fixed}%</b> of your life was written the day you were born.</>}
+        </span>
+      </p>
+      <div className="brand-guide-number-cells" aria-hidden="true">
+        {Array.from({ length: 100 }, (_, i) => (
+          <span key={i} className={`${i < 73 ? 'is-fixed' : 'is-open'}${i < lit ? ' is-lit' : ''}`} style={{ '--i': i - 73 } as React.CSSProperties} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const brandGuideMotionRules = [
   {
     title: { en: 'Object motion first', zh: '先动实体物件' },
@@ -1194,10 +1269,35 @@ export const BrandGuideFullPage: React.FC<{
             </div>
           </section>
 
+          <section id="brand-numbers" className="brand-guide-section py-16 md:py-24">
+            <div className="brand-guide-section-head">
+              <p className="brand-guide-kicker">{isZh ? '11 / Numbers that move' : '11 / Numbers that move'}</p>
+              <h2 className="brand-guide-section-title font-display font-bold tracking-tight">
+                {isZh ? '让数字自己说话。' : 'Let the numbers talk.'}
+              </h2>
+              <p className="brand-guide-section-copy">
+                {isZh
+                  ? '一个真实的数字，放进一句敢下判断的话里，再让它动起来。'
+                  : 'One real number, inside a sentence that dares to claim something, then set it moving.'}
+              </p>
+            </div>
+            <div className="mt-12">
+              <BrandGuideNumberSpecimen isZh={isZh} />
+            </div>
+            <div className="brand-guide-rule-grid mt-8">
+              {brandGuideNumberRules.map((item) => (
+                <article key={item.title.en} className="brand-guide-rule-card">
+                  <h3 className="font-display text-2xl font-bold tracking-tight">{item.title[language]}</h3>
+                  <p>{item.copy[language]}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
           <p className="pb-10 text-center text-xs text-stone-500">
             {isZh
-              ? '最后对齐：2026-09-17 · 以当前首页、代码库和 logs/ 为准。'
-              : 'Last reconciled: 17 Sep 2026 · Source: current Home + repo + logs/.'}
+              ? '最后对齐：2026-10-19 · 以当前首页、代码库和 logs/ 为准。'
+              : 'Last reconciled: 19 Oct 2026 · Source: current Home + repo + logs/.'}
           </p>
         </div>
       </main>

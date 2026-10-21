@@ -1,5 +1,6 @@
 import type { SeoLanguage } from './seo-routes.ts';
 import { MIYA_PRIVACY, miyaPlainText, type MiyaBlock } from './components/miya-privacy-content.ts';
+import { MIYA_BRAND, miyaBrandPlain } from './components/miya-brand-content.ts';
 import { IGAMING_PAGE, IGAMING_SUMMARY } from './components/igaming-content.ts';
 import { ABOUT_PAGE, aboutLinkLine } from './components/about-content.ts';
 import { IGAMING_CASES, IGAMING_CASES_INDEX, type CaseBlock, type IGamingCase } from './components/igaming-cases-content.ts';
@@ -294,6 +295,48 @@ function igamingStaticCopy(): StaticRouteCopy {
  * `components/miya-privacy-content.ts` / `components/igaming-content.ts`, the same copy
  * the React pages render, so the static text cannot drift.
  */
+/** Static body for /project/miya/brand, generated from the same copy the React page renders. */
+function miyaBrandStaticCopy(): StaticRouteCopy {
+  const b = MIYA_BRAND;
+  const plain = (value: Localized): Localized => ({ en: miyaBrandPlain(value.en), zh: miyaBrandPlain(value.zh) });
+  const rules = (list: ReadonlyArray<{ title: Localized; copy: Localized }>) =>
+    list.map((rule) => L(`${rule.title.en}: ${miyaBrandPlain(rule.copy.en)}`, `${rule.title.zh}：${miyaBrandPlain(rule.copy.zh)}`));
+  return {
+    eyebrow: b.kicker,
+    thesis: b.subtitle,
+    sections: [
+      { title: b.title, paragraphs: [b.copy] },
+      {
+        title: b.voice.title,
+        paragraphs: [
+          b.voice.copy,
+          ...b.voice.pairs.map((pair) => L(`${pair.ctx.en}: “${pair.prefer.en}”, not “${pair.avoid.en}”`, `${pair.ctx.zh}：写「${pair.prefer.zh}」，不写「${pair.avoid.zh}」`)),
+          ...rules(b.voice.rules),
+          ...b.voice.boundaries.flatMap((item) => [L(`${item.title.en}: ${item.copy.en}`, `${item.title.zh}：${item.copy.zh}`), item.quote]),
+        ],
+      },
+      { title: b.name.title, paragraphs: [b.name.copy] },
+      {
+        title: b.color.title,
+        paragraphs: [
+          b.color.copy,
+          ...b.color.groups.map((group) => L(
+            `${group.title.en}: ${group.swatches.map((s) => `${s.name} ${s.light}/${s.dark}`).join(', ')}.`,
+            `${group.title.zh}：${group.swatches.map((s) => `${s.name} ${s.light}/${s.dark}`).join('，')}。`,
+          )),
+          ...rules(b.color.rules),
+        ],
+      },
+      { title: b.type.title, paragraphs: [b.type.copy, ...rules(b.type.rules)] },
+      { title: b.space.title, paragraphs: [b.space.copy, ...rules(b.space.rules)] },
+      { title: b.logo.title, paragraphs: [b.logo.copy, ...b.logo.marks.map((mark) => L(`${mark.title.en}: ${mark.copy.en}`, `${mark.title.zh}：${mark.copy.zh}`))] },
+      { title: b.icons.title, paragraphs: [b.icons.copy, ...b.icons.motifs.map((m) => L(`${m.name.en}: ${m.formula.en}`, `${m.name.zh}：${m.formula.zh}`)), ...rules(b.icons.rules)] },
+      { title: b.motion.title, paragraphs: [b.motion.copy, ...rules(b.motion.rules)] },
+      { title: b.tools.title, paragraphs: [b.tools.copy, ...b.tools.list.map((tool) => L(`${tool.skill}: ${tool.copy.en}`, `${tool.skill}：${tool.copy.zh}`))] },
+    ].map((section) => ({ title: section.title, paragraphs: section.paragraphs.map(plain) })),
+  };
+}
+
 /** Static body for /about, generated from the same copy the React page renders. */
 function aboutStaticCopy(): StaticRouteCopy {
   const page = ABOUT_PAGE;
@@ -319,6 +362,7 @@ function aboutStaticCopy(): StaticRouteCopy {
 
 export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
   '/project/miya': miyaStaticCopy(),
+  '/project/miya/brand': miyaBrandStaticCopy(),
   '/about': aboutStaticCopy(),
   '/igaming': igamingSummaryStaticCopy(),
   '/igaming/full': igamingStaticCopy(),

@@ -69,6 +69,7 @@ npm run preview
 - `/about` — 关于 Eden：Dan Koe 式的个人观点页（不是简历），核心主张 → 来路 → 五条规则 → 作品为证 → 写作主题 → 联系方式；文案在 `components/about-content.ts`，React 页与静态预渲染共用
 - `/project` — Eden 已构建产品的 app shelf
 - `/project/miya` — MiYa（iOS 本机健康报告）隐私政策兼技术支持页，中英双语（`/zh/project/miya/` 为中文版）；App Store Connect 的 Privacy Policy URL 与 Support URL 都指向这里，正文同时预渲染成静态 HTML，不开 JS 也能完整阅读
+- `/project/miya/brand` — MiYa 品牌指南（怎么说话、名字、色彩、字体、间距、标志、图标、动效、制作工具），版式沿用 `/brand-guide` 的 `brand-guide-*` 样式，中英双语；文案在 `components/miya-brand-content.ts`，图片在 `public/project/miya/brand/`
 - `/project-css` — Projects / Home / Interests CSS art 直达检查页（隐藏直达页；不进 sitemap）
 - `/icon-prompts` — ETReportHub / Jiju / Friday Poker Club 四宫格 icon prompt 复制页（隐藏直达页；不进 sitemap）
 - `/etreporthub` — ETReportHub 日报数据系统产品页

@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductStorePage, { type EpTutorial } from '../components/ProductStorePage';
+import ProductStorePage, { type EpTutorial, useCountUp } from '../components/ProductStorePage';
 import PukimonDemoStage from '../components/PukimonDemoStage';
 import { ProjectsDrRacingCssIcon, ProjectsEtReportCssIcon, ProjectsJijuCssIcon, ProjectsLifeOsCssIcon, ProjectsPokerCssIcon, ProjectsPukimonCssIcon } from '../components/css-art/index';
 import { HeaderControls, type Language, type Theme, type ThemePreference } from '../app/shared';
@@ -894,6 +894,58 @@ export const PokerFullPage: React.FC<{
   );
 };
 
+/** /life-os hero split: counts 0 → 73% / 27% and fills a 100-cell grid once it scrolls into view. */
+const FATE_FIXED = 73;
+
+const LifeOsFateMeter: React.FC<{ isZh: boolean }> = ({ isZh }) => {
+  const ref = React.useRef<HTMLElement | null>(null);
+  const progress = useCountUp(ref);
+
+  const fixed = Math.round(FATE_FIXED * progress);
+  const yours = Math.round((100 - FATE_FIXED) * progress);
+  const lit = Math.round(100 * progress);
+  const label = isZh
+    ? `你的人生，${FATE_FIXED}% 早已写好；剩下 ${100 - FATE_FIXED}%，只有你能改。`
+    : `${FATE_FIXED}% of your life was written the day you were born. The other ${100 - FATE_FIXED}% is yours to rewrite.`;
+
+  return (
+    <section ref={ref} className="lf-meter" data-done={progress === 1 ? 'true' : 'false'} aria-label={label}>
+      <p className="lf-eyebrow">{isZh ? '用数据检验命运' : 'Fate, tested with data'}</p>
+      <h2 className="lf-headline" aria-hidden="true">
+        {isZh ? (
+          <>
+            <span className="lf-line">你的人生，<span className="lf-num">{fixed}%</span> 早已写好。</span>
+            <span className="lf-line lf-line-yours">剩下 <span className="lf-num lf-num-yours">{yours}%</span>，只有你能改。</span>
+          </>
+        ) : (
+          <>
+            <span className="lf-line"><span className="lf-num">{fixed}%</span> of your life was written the day you were born.</span>
+            <span className="lf-line lf-line-yours">The other <span className="lf-num lf-num-yours">{yours}%</span> is yours to rewrite.</span>
+          </>
+        )}
+      </h2>
+      <div className="lf-grid" aria-hidden="true">
+        {Array.from({ length: 100 }, (_, i) => (
+          <span
+            key={i}
+            className={`lf-cell ${i < FATE_FIXED ? 'lf-cell-fixed' : 'lf-cell-yours'}${i < lit ? ' is-lit' : ''}`}
+            style={{ '--i': i - FATE_FIXED } as React.CSSProperties}
+          />
+        ))}
+      </div>
+      <ul className="lf-legend" aria-hidden="true">
+        <li><span className="lf-swatch" />{isZh ? '命盘与现实吻合' : 'Chart matched reality'}</li>
+        <li><span className="lf-swatch lf-swatch-yours" />{isZh ? '人自己改变的部分' : 'Changed by the person'}</li>
+      </ul>
+      <p className="lf-note">
+        {isZh
+          ? '命盘先算好锁定，现实后来发生什么再记下来，逐条对照打分。这两个数字是正在检验的工作假设，记录的人生越多越准。'
+          : 'The chart is locked first, real life is recorded afterwards, and every claim is scored against it. Both numbers are a working hypothesis, sharpened with every life recorded.'}
+      </p>
+    </section>
+  );
+};
+
 export const LifeOsFullPage: React.FC<{
   homeHref: string;
   baseUrl: string;
@@ -923,6 +975,8 @@ export const LifeOsFullPage: React.FC<{
         { href: '#faq', label: { en: 'FAQ', zh: '常见问题' } },
         { href: '#information', label: { en: 'Information', zh: '产品资料' } },
       ]}
+      pageClassName="lifeos-page"
+      feature={<LifeOsFateMeter isZh={isZh} />}
       stage={{
         src: appUrl,
         domain: 'dankuku.com',
@@ -934,6 +988,11 @@ export const LifeOsFullPage: React.FC<{
         { kind: 'p', text: { en: 'The method is simple to say and slow to do. Compute the natal chart once and lock it. Record what actually happens in a life — events, turning points, outcomes — with dates. Then compare what the chart said against what reality did, and score every hit and every miss.', zh: '方法说起来简单，做起来慢：本命盘只算一次，算完锁定；把一个人现实里真正发生的事——事件、转折、结果——连同日期记录下来；再拿命盘说过的，对照现实发生的，每一次命中和落空都打分。' } },
         { kind: 'callout', label: { en: 'The working hypothesis', zh: '目前的工作假设' }, text: { en: 'Fate is largely set, but not completely. Our working estimate is that natal systems match real outcomes about 73% of the time, and the remaining 27% is where people actually change their own course. These numbers are the hypothesis under test, not a finished result; they will be revised as more lives are recorded.', zh: '命运大部分是注定的，但不是全部。我们目前的估计是：命理对现实结果的吻合率约 73%，剩下约 27%，就是人真正能改变自己命运的空间。这两个数字是正在检验的假设，不是已经定案的结论；记录的人生越多，它们会被修正得越准。' } },
         { kind: 'h', text: { en: 'What the data comes from', zh: '数据从哪里来' } },
+        { kind: 'stats', items: [
+          { value: 8, unit: { en: 'systems', zh: '套' }, text: { en: 'natal systems, each answering on its own', zh: '本命系统，各自作答' } },
+          { value: 1, unit: { en: 'chart', zh: '张' }, text: { en: 'natal chart, computed once and locked', zh: '本命盘，只算一次就锁定' } },
+          { value: 78, unit: { en: 'cards', zh: '张' }, text: { en: 'tarot cards for one-off questions', zh: '塔罗牌，问一次性的事' } },
+        ] },
         { kind: 'p', text: { en: 'Give LifeOs a birth date, time, and place, and it runs eight natal systems separately — BaZi, Zi Wei Dou Shu with its flying stars, the natal hexagram, numerology, Human Design, Gene Keys, Western and Vedic astrology. Each one answers in its own voice, keeps its own sources, and states its own uncertainty.', zh: '给 LifeOs 出生日期、时间和地点，它会分别跑八套本命系统——八字、紫微斗数（含四化飞星）、易经本命卦、数字学、人类图、基因钥匙、西洋占星、吠陀占星。每一套各自作答、各自留下出处，也各自标明不确定的地方。' } },
         { kind: 'p', text: { en: 'What it refuses to do matters as much. It does not blend the systems into one score, does not treat them as votes, and does not invent a new personality theory on top of them. Where they disagree, you see the disagreement. What you get back is a plain-language manual about how you tend to operate.', zh: '它不做的事同样重要：不把八套系统混成一个分数、不拿它们投票、也不在上面另造一套人格理论。彼此矛盾的地方，你看到的就是矛盾。最后得到的是一本白话的说明书，讲你通常怎么运作。' } },
         { kind: 'h', text: { en: 'What is inside', zh: '里面有什么' } },

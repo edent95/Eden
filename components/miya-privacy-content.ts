@@ -23,14 +23,14 @@ export const MIYA_SUPPORT_EMAIL = 'd.tytern@gmail.com';
 
 export const MIYA_PRIVACY = {
   title: L('MiYa Privacy Policy', 'MiYa 隐私政策'),
-  kicker: L('MiYa for iOS · Privacy & Support', 'MiYa iOS 版 · 隐私与支持'),
+  kicker: L('MiYa for iPhone & Apple Watch · Privacy & Support', 'MiYa iPhone 与 Apple Watch 版 · 隐私与支持'),
   standfirst: L(
     'MiYa takes the health data your Apple Watch and iPhone have already recorded and turns it into a report you can browse, entirely on your own device.',
     '「MiYa」把你的 Apple Watch 和 iPhone 已经记录下来的健康数据，在你自己的设备上整理成一份可以翻看的报告。',
   ),
   meta: [
-    { label: L('Effective', '生效日期'), value: L('September 5, 2026', '2026 年 9 月 5 日') },
-    { label: L('Applies to', '适用于'), value: L('MiYa for iOS 1.0', 'MiYa iOS 版 1.0') },
+    { label: L('Effective', '生效日期'), value: L('October 19, 2026', '2026 年 10 月 19 日') },
+    { label: L('Applies to', '适用于'), value: L('MiYa 1.0 and later, iPhone and Apple Watch', 'MiYa 1.0 及以后版本，iPhone 与 Apple Watch') },
   ],
   supportCta: L('Need help? Email support', '需要帮助？发邮件给我们'),
   claim: L(
@@ -38,8 +38,8 @@ export const MIYA_PRIVACY = {
     '这个 App 不收集任何数据，因为它根本没有能力把数据送出去——它不联网，没有服务器，没有账号系统，也没有任何第三方分析或广告组件。',
   ),
   claimFine: L(
-    'Your health data is read from the Health app, all calculations happen on this device, and the results are written to a database file on this device. No step of the process leaves your phone.',
-    '你的健康数据从「健康」App 读出来，在这台设备上完成全部计算，结果写进这台设备上的一个数据库文件。整个过程没有一步会离开这部手机。',
+    'Your health data is read from the Health app, all calculations happen on this device, and the results are written to a database file on this device. If you use the Apple Watch app, a small summary of today goes from your iPhone to your own watch, and nowhere else.',
+    '你的健康数据从「健康」App 读出来，在这台设备上完成全部计算，结果写进这台设备上的一个数据库文件。如果你用了 Apple Watch 版，会有一份「今天」的小摘要从你的 iPhone 发到你自己的手表上，此外哪儿也不去。',
   ),
   flowTitle: L('Where your data goes', '数据流向'),
   flow: [
@@ -80,9 +80,14 @@ export const MIYA_PRIVACY = {
           head: [L('Category', '类别'), L('Used for', '用来做什么')],
           rows: [
             [L('Steps, distance, active energy, exercise minutes, stand hours', '步数、距离、活动能量、锻炼分钟、站立'), L('Activity trends, calendar heat map, Activity ring progress', '活动趋势、日历热力图、活动圆环完成度')],
-            [L('Heart rate, resting heart rate, HRV, blood oxygen, respiratory rate', '心率、静息心率、心率变异性、血氧、呼吸频率'), L('Daily heart rhythm, heart rate zones, recovery and stress estimates', '心率节律、心率区间分布、恢复与压力估算')],
+            [L('Flights climbed, swimming and cycling distance, swim strokes, time in daylight', '爬楼层数、游泳与骑行距离、划水次数、日光下时间'), L('Activity details and long-term trends', '活动明细与长期趋势')],
+            [L('Heart rate, resting heart rate, walking heart rate, HRV, heart rate recovery, blood oxygen, respiratory rate, sleeping wrist temperature', '心率、静息心率、步行心率、心率变异性、心率恢复、血氧、呼吸频率、睡眠时手腕温度'), L('Daily heart rhythm, heart rate zones, recovery and stress estimates', '心率节律、心率区间分布、恢复与压力估算')],
+            [L('High, low and irregular heart rhythm notifications', '心率过高、过低与心律不齐通知'), L('Listing the events on the heart page (the app does not interpret them)', '在心率页面列出这些事件（App 不做判读）')],
+            [L('VO₂ max, walking speed, step length, double support time, walking asymmetry, walking steadiness, stair speed, physical effort', '最大摄氧量、步行速度、步长、双脚支撑时间、步行不对称性、步行稳定性、上下楼速度、体能消耗'), L('Fitness and mobility trends', '体能与步态趋势')],
+            [L('Headphone and environmental audio levels and notifications', '耳机与环境音量及其通知'), L('Hearing exposure trends', '听力暴露趋势')],
+            [L('Mindful minutes', '正念分钟'), L('Showing mindfulness sessions alongside recovery', '在恢复旁边显示正念记录')],
             [L('Sleep', '睡眠'), L('Sleep duration and stages', '睡眠时长与阶段分布')],
-            [L('Workouts and workout segments', '锻炼记录与分段'), L('Workout details and Strain estimates', '逐次锻炼详情、体能负荷估算')],
+            [L('Workouts and workout segments, including underwater depth and water temperature', '锻炼记录与分段，包括水下深度与水温'), L('Workout details and Strain estimates', '逐次锻炼详情、体能负荷估算')],
             [L('Workout GPS routes', '锻炼的 GPS 轨迹'), L('Route, elevation and pace maps in workout details', '在锻炼详情里画出路线、海拔与配速剖面')],
             [L('ECG waveforms', '心电图波形'), L('Displaying the waveform on the heart page', '在心率页面里显示波形图')],
             [L('Height, weight, date of birth, biological sex', '身高、体重、出生日期、生理性别'), L('Estimating maximum heart rate and heart rate zones', '估算最大心率与心率区间，换算相对指标')],
@@ -111,6 +116,24 @@ export const MIYA_PRIVACY = {
         { kind: 'p', text: L(
           'The app doesn\'t use CloudKit, iCloud Drive, or any other cloud sync. The report won\'t follow you to a new phone; you\'ll sync once more on the new device. That trade-off is deliberate.',
           'App 不使用 CloudKit、不使用 iCloud Drive、不使用任何形式的云端同步。换手机不会带走这份报告，需要在新设备上重新同步一次——这是刻意的取舍。',
+        ) },
+      ],
+    },
+    {
+      id: 'watch',
+      title: L('Apple Watch app and watch face widget', 'Apple Watch 版与表盘小组件'),
+      blocks: [
+        { kind: 'p', text: L(
+          'The Apple Watch app and its watch face widget don\'t read Health data themselves. After each sync, the iPhone app sends your watch a small summary of today through Apple\'s WatchConnectivity, the direct link between an iPhone and its paired watch:',
+          'Apple Watch 版和表盘小组件自己不读取「健康」数据。iPhone 每次同步完，会通过 Apple 的 WatchConnectivity（iPhone 与配对手表之间的直连通道）把一份「今天」的小摘要发到你的手表上：',
+        ) },
+        { kind: 'ul', items: [
+          L('Recovery, stress and battery scores, and the suggested intensity for today', '恢复、压力、电量三项分数，以及今天建议的运动强度'),
+          L('This week\'s steps and workouts against their goals', '本周步数、锻炼次数与目标'),
+        ] },
+        { kind: 'p', text: L(
+          'The summary goes only to the watch paired with your iPhone, never through any server of ours. On the watch it is stored in the MiYa app\'s own storage, shared only with the MiYa watch face widget, and each new sync replaces the previous one. Deleting MiYa from your watch removes it.',
+          '这份摘要只发给与你的 iPhone 配对的手表，不经过我们的任何服务器。手表上它存在 MiYa 自己的存储里，只和 MiYa 表盘小组件共用，每次新的同步都会覆盖上一份。从手表上删除 MiYa 即可移除。',
         ) },
       ],
     },
@@ -145,8 +168,8 @@ export const MIYA_PRIVACY = {
         ) },
         { kind: 'h3', text: L('Remove completely', '彻底移除') },
         { kind: 'p', text: L(
-          'Delete the app. iOS removes its sandbox, database included, leaving nothing behind.',
-          '删除 App 即可。沙盒目录连同数据库一起被系统清除，不留残余。',
+          'Delete the app. iOS removes its sandbox, database included, leaving nothing behind. If you installed the Apple Watch app, delete MiYa from the watch too to remove today\'s summary stored there.',
+          '删除 App 即可。沙盒目录连同数据库一起被系统清除，不留残余。如果装了 Apple Watch 版，把手表上的 MiYa 也删掉，手表里存的「今天」摘要就一并清除。',
         ) },
         { kind: 'p', text: L(
           'Because the developer never holds any of your data, there is nothing to request deletion of.',
@@ -207,8 +230,9 @@ export const MIYA_PRIVACY = {
     ),
     details: [
       { label: L('Email', '邮箱'), value: L(MIYA_SUPPORT_EMAIL, MIYA_SUPPORT_EMAIL), href: `mailto:${MIYA_SUPPORT_EMAIL}` },
-      { label: L('App', 'App'), value: L('MiYa (iOS)', 'MiYa（iOS）') },
+      { label: L('App', 'App'), value: L('MiYa (iPhone & Apple Watch)', 'MiYa（iPhone 与 Apple Watch）') },
       { label: L('Developer', '开发者'), value: L('Eden', 'Eden') },
+      { label: L('Brand guide', '品牌指南'), value: L('MiYa brand guide', 'MiYa 品牌指南'), href: '/project/miya/brand/' },
     ] as Array<{ label: MiyaLocalized; value: MiyaLocalized; href?: string }>,
     footer: L(
       'This page serves as both the privacy policy and the support page for MiYa.',
