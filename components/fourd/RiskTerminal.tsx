@@ -17,11 +17,11 @@ import {
 
 type ChapterId = 'verdict' | 'risk' | 'map' | 'sim' | 'settle';
 const CHAPTERS: Array<{ id: ChapterId; en: string; zh: string }> = [
-  { id: 'verdict', en: 'Verdict', zh: '结论' },
-  { id: 'risk', en: 'Exposure', zh: '风险' },
-  { id: 'map', en: 'Map', zh: '号码地图' },
-  { id: 'sim', en: 'Simulate', zh: '试算' },
-  { id: 'settle', en: 'Settle', zh: '算账与设置' },
+  { id: 'verdict', en: 'Can you pay', zh: '赔得起吗' },
+  { id: 'risk', en: 'Heavy numbers', zh: '哪些字太重' },
+  { id: 'map', en: 'Look up', zh: '查单个号码' },
+  { id: 'sim', en: 'Set the limit', zh: '上限定多少' },
+  { id: 'settle', en: 'Settle', zh: '开奖对账' },
 ];
 
 const store = {
@@ -236,6 +236,13 @@ const RiskTerminal: React.FC<{ theme: string }> = ({ theme }) => {
     if (r && r.limit !== cfg.limit) setLimit(r.limit);
   }, [plan, rows]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // the hero's "放进我的下注" links to #import: open the import block in chapter 05
+  React.useEffect(() => {
+    const onHash = () => { if (window.location.hash === '#import') goto('settle', 'rt-book'); };
+    onHash(); window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   React.useEffect(() => {
     const el = rootRef.current; if (!el) return;
     const ro = new ResizeObserver(() => setWidth(el.clientWidth)); ro.observe(el);
@@ -264,7 +271,9 @@ const RiskTerminal: React.FC<{ theme: string }> = ({ theme }) => {
             </button>
           ))}
         </div>
-        <p className="rt-nav-status">本期 #{drawId} · {sample ? '示例数据' : '你的下注'} · 上限 {limLabel(cfg.limit)}</p>
+        <p className="rt-nav-status">
+          本期 #{drawId} · {sample ? <button type="button" className="rt-link" onClick={() => goto('settle', 'rt-book')}>示例数据 · 换成我的</button> : '你的下注'} · 上限 {limLabel(cfg.limit)}
+        </p>
       </nav>
 
       {!run || !book || !palette ? (
@@ -328,9 +337,10 @@ const Verdict: React.FC<any> = ({ cfg, run, rows, plan, setPlan, sample, drawId,
   const keepShare = book.T ? book.R / book.T : 1;
 
   const headline = short > 0
-    ? `这期收了 ${rmK(book.T)},平均会赚，可是钱压在少数字上：最惨的一期会亏 ${rmK(curLoss)},备用金不够。`
-    : `这期收了 ${rmK(book.T)},平均每月赚 ${rmK(perMonth(book.Eprofit))},最惨的一期也赔得起。`;
+    ? `最惨的一期会亏 ${rmK(curLoss)},比你的备用金多 ${rmK(short)}。`
+    : curLoss > 0 ? `最惨的一期亏 ${rmK(curLoss)},备用金还剩 ${rmK(-short)}。` : '最惨的一期也不会亏。';
   const summary = [
+    `这期收了 ${rmK(book.T)},平均会赚`,
     `大约每 ${sim.pLoss > 0 ? Math.round(1 / sim.pLoss) : '∞'} 期亏一次`,
     hotN ? `${hotN} 类字收太多` : '没有哪类字收太多',
     `连做一年赔光的机会 ${ruinP > 0 ? pct(ruinP, 2) : '几乎是零'}`,
@@ -406,32 +416,62 @@ const Verdict: React.FC<any> = ({ cfg, run, rows, plan, setPlan, sample, drawId,
 
   return (
     <section className="rt-chapter" aria-labelledby="rt-ch-verdict">
-      <ChapterHead index={1} title="先看这期赔不赔得起。" copy="现在的情况、要准备多少钱、接下来做什么。" />
+      <ChapterHead index={1} title="先看答案。" copy="把最惨的一期跟你的备用金比。赔不起，就照建议改上限。" />
 
       <article className="rt-verdict">
         <div className="rt-verdict-text">
-          <p className="rt-verdict-eyebrow">本期 #{drawId} · {sample ? '示例数据' : '你的下注'} · 每个字最多赔 {limLabel(c.limit)}</p>
+          <p className="rt-verdict-eyebrow">本期 #{drawId} · {sample ? '示例数据' : '你的下注'} · 现在每个字最多自己赔 {limLabel(c.limit)}</p>
+          <p className={`rt-verdict-pill ${short > 0 ? 'is-crit' : 'is-ok'}`}>{short > 0 ? '赔不起' : '赔得起'}</p>
           <h3 id="rt-ch-verdict" className="font-display">{headline}</h3>
-          <p className="rt-verdict-summary">{summary}</p>
-          <div className="rt-actions">
-            {rec && !applied
-              ? <button type="button" className="rt-btn" onClick={() => setPlan(recPicked)}>按「{recName}」改好</button>
-              : <button type="button" className="rt-btn" onClick={() => goto('map')}>看最危险的号码</button>}
-            <button type="button" className="rt-btn rt-btn-ghost" onClick={() => document.getElementById('rt-plans')?.scrollIntoView({ block: 'start' })}>选一种做法</button>
+          <div className="rt-compare" role="img" aria-label={`最惨一期亏 ${rmK(curLoss)},备用金 ${rmK(c.reserve)}`}>
+            {([['最惨一期亏', curLoss, short > 0 ? 'is-crit' : 'is-loss'], ['你的备用金', c.reserve, 'is-reserve']] as const).map(([k, v, cls]) => (
+              <div key={k} className="rt-compare-row">
+                <span>{k}</span>
+                <i><b className={cls} style={{ width: `${(v / Math.max(curLoss, c.reserve, 1)) * 100}%` }} /></i>
+                <strong>{rmK(v)}</strong>
+              </div>
+            ))}
           </div>
+          <p className="rt-verdict-summary">{summary}</p>
         </div>
-        <figure className="rt-verdict-cells">
-          <Cells share={1 - keepShare} label={`这期收的钱，自己留 ${pct(keepShare, 0)},交给上家 ${pct(1 - keepShare, 0)}`} />
-          <figcaption>100 格 = 这期收的钱<br /><span>白：自己留 {pct(keepShare, 0)}</span> · <span className="rt-open">主色：交给上家 {pct(1 - keepShare, 0)}</span></figcaption>
-        </figure>
+        <aside className="rt-advice">
+          <p className="rt-advice-k">我们的建议</p>
+          {!rows ? <p className="rt-advice-lead">正在帮你比较所有上限…</p>
+            : !rec ? <p className="rt-advice-lead">现在的备用金和合同下，没有一种上限赔得起最惨的一期。先补备用金，或者找肯多收的上家。</p>
+            : applied ? (
+              <>
+                <p className="rt-advice-lead">已经照建议做了：每个字最多自己赔 {limLabel(rec.limit)}。</p>
+                <p className="rt-advice-note">下一步：看哪几个字太重，收到平线就停。</p>
+                <button type="button" className="rt-btn" onClick={() => goto('risk')}>看哪些字太重</button>
+              </>
+            ) : (
+              <>
+                <p className="rt-advice-lead">把每个字最多自己赔的钱，从 {limLabel(c.limit)} 改成 {limLabel(rec.limit)}。</p>
+                <dl className="rt-advice-list">
+                  <div><dt>最惨一期</dt><dd>亏 {rmK(curLoss)} → <b className={-rec.worst <= c.reserve ? 'rt-pos' : 'rt-neg'}>亏 {rmK(-rec.worst)}</b>{-rec.worst <= c.reserve ? ',赔得起' : ''}</dd></div>
+                  <div><dt>每月平均赚</dt><dd>{rmK(perMonth(book.Eprofit))} → {rmK(perMonth(rec.E))}{perMonth(rec.E - book.Eprofit) < -1000 ? `,少赚 ${rmK(perMonth(book.Eprofit - rec.E))}` : ''}</dd></div>
+                  <div><dt>交给上家</dt><dd>{rmK(rec.U)}</dd></div>
+                </dl>
+                <button type="button" className="rt-btn" onClick={() => setPlan(recPicked)}>照建议改</button>
+              </>
+            )}
+          <button type="button" className="rt-link rt-advice-alt" onClick={() => document.getElementById('rt-plans')?.scrollIntoView({ block: 'start' })}>不想照建议？自己挑一种 ↓</button>
+        </aside>
       </article>
 
-      <Block id="rt-plans" title="你想怎么做?" sub="选一种，系统按它定每个号码最多赔多少。">
+      <Block id="rt-plans" title="不想照建议？自己挑一种" sub="四种做法就是四种上限：越往右平均赚越多，最惨也亏越多。">
         <Plans cfg={c} rows={rows} plan={plan} setPlan={setPlan} run={run} goto={goto} />
       </Block>
 
       <Block title="要准备多少、要交出去多少" sub={rec ? `按建议的「${recName}」(每个字最多赔 ${limLabel(rec.limit)})算。` : rows ? '' : '正在比较所有上限…'}>
         {rec ? <Money cfg={c} rec={rec} /> : rows ? <p className="rt-callout rt-crit">在现在的备用金和合同下，没有一种上限能让最惨的一期赔得起。先加备用金，或者找肯多收的上家。</p> : null}
+      </Block>
+
+      <Block title="这期收的钱，留了多少在自己手上" sub="自己留得越多，开出热门字时自己赔得越多。">
+        <figure className="rt-share">
+          <Cells share={1 - keepShare} label={`这期收的钱，自己留 ${pct(keepShare, 0)},交给上家 ${pct(1 - keepShare, 0)}`} />
+          <figcaption>100 格 = 这期收的 {rmK(book.T)}<br /><span>灰：自己留 {pct(keepShare, 0)}</span> · <span className="rt-open">主色：交给上家 {pct(1 - keepShare, 0)}</span></figcaption>
+        </figure>
       </Block>
 
       <div className="rt-two">
@@ -629,7 +669,7 @@ const Risk: React.FC<any> = ({ cfg, run, rows, cats, scan, lim, even, bookOp, se
 
   return (
     <section className="rt-chapter">
-      <ChapterHead index={2} title="钱压在哪些字上。" copy="庄家要的是：开哪个字，赔的都差不多。" />
+      <ChapterHead index={2} title="哪些字收太多了？" copy="客人最爱买 8888、1234 这类字。收太多，开出来就赔很大。下面告诉你哪些要停收、哪些交给上家。" />
 
       <Stats items={[
         { k: '一共收', v: rmK(book.T), d: OPS.map((o, op) => `${o.id} ${rmK(book.opT[op])}`).join(' · ') },
@@ -780,7 +820,7 @@ const MapChapter: React.FC<any> = ({ cfg, run, palette, onTip, heatOp, setHeatOp
 
   return (
     <section className="rt-chapter">
-      <ChapterHead index={3} title="一万个号码，一格一个。" copy="左上 0000,右下 9999。颜色越深，开头奖赔越多。" />
+      <ChapterHead index={3} title="查任何一个号码。" copy="一格一个号码，左上 0000，右下 9999。颜色越深，开出头奖你赔越多。点一格，看它收了多少、开出来要赔多少。" />
       <div className="rt-controls">
         <Select label="哪家公司" value={heatOp} onChange={(v) => setHeatOp(+v)} options={opOptions} />
         <Select label="看什么" value={heatMetric} onChange={(v) => setHeatMetric(v as HeatMetric)} options={[['ret', '开头奖时，我自己要赔多少'], ['gross', '开头奖时，一共要赔多少(交上家前)'], ['stake', '客人在这个号码下了多少钱']]} />
@@ -877,7 +917,7 @@ const Simulate: React.FC<any> = (props) => {
 
   return (
     <section className="rt-chapter">
-      <ChapterHead index={4} title="让电脑先开奖几万次。" copy="赚亏多常见、最惨多惨、上限定多少。" />
+      <ChapterHead index={4} title="上限定多少最划算？" copy="电脑先帮你开奖几万次。上限越高平均赚越多，最惨也亏越多。在赔得起的范围里，挑赚最多的那一档。" />
 
       <Block title="这期要赔多少钱?" sub={<>多数时候赔 <b>{rmK(q(0.25))}–{rmK(q(0.75))}</b>,收进来有 <b>{rmK(book.base)}</b>,{sim.pLoss < 0.5 ? `约每 ${Math.max(1, Math.round(1 / Math.max(sim.pLoss, 1e-9))).toLocaleString()} 期亏一次` : '多半会亏'}。</>}>
         <canvas ref={payRef} className="rt-canvas" />
@@ -1043,7 +1083,7 @@ const Settle: React.FC<any> = (props) => {
 
   return (
     <section className="rt-chapter">
-      <ChapterHead index={5} title="开奖以后，算清楚这期的账。" copy="填开出的号码算账;也在这里换成你的下注和合同。" />
+      <ChapterHead index={5} title="开奖以后，对账。" copy="填开出的号码，马上算出这期赚亏、上家要帮你赔多少。你自己的下注和上家合同也在这里放。" />
 
       <Block title="这期开出什么号码?" sub="三家各开各的;也可以先试「随便开一期」。">
         <div className="rt-controls">

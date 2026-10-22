@@ -26,7 +26,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-10-21';
+export const SITE_CONTENT_LASTMOD = '2026-10-22';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -626,13 +626,13 @@ export const ROUTE_SEO: RouteSeo[] = [
   {
     path: '/4d-risk-terminal',
     datePublished: '2026-10-21',
-    dateModified: '2026-10-21',
+    dateModified: '2026-10-22',
     priority: '0.5',
     index: false,
     sitemap: false,
     title: {
-      en: '4D Risk Terminal | Find the number that could wipe you out',
-      zh: '4D Risk Terminal | 一万个号码，先找出会让你赔光的那一个',
+      en: '4D Risk Terminal | If this draw goes wrong, can you pay?',
+      zh: '4D Risk Terminal | 这期开出来，你赔得起吗？',
     },
     desc: {
       en: 'An interactive 4D risk tool on sample data: exposure map, simulated draws, per-number limits, backtests and settlement, computed in your browser.',
