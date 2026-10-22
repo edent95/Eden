@@ -91,7 +91,7 @@
 .risk-terminal-hero-title {
   max-width: 1000px;
   margin: 20px auto 0;
-  font-size: clamp(3.1rem, 8vw, 7rem);
+  font-size: clamp(2.6rem, 6.4vw, 5.6rem);
   font-weight: 800;
   line-height: 0.96;
   letter-spacing: -0.04em;
@@ -116,7 +116,30 @@
   line-height: 1.45;
 }
 
-.risk-terminal-actions { display: flex; justify-content: center; margin-top: 28px; }
+.risk-terminal-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 32px; }
+
+/* what we do for the agent: four hairline rows, read top to bottom */
+.risk-terminal-help {
+  max-width: 680px;
+  margin: 24px auto 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--rt-line);
+  text-align: left;
+}
+
+.risk-terminal-help li {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 11em) minmax(0, 1fr);
+  gap: 14px;
+  align-items: baseline;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rt-line);
+}
+
+.risk-terminal-help-index { color: var(--rt-primary-ink); font-family: var(--font-mono); font-size: 0.78rem; font-weight: 800; }
+.risk-terminal-help b { font-size: 1.05rem; font-weight: 800; }
+.risk-terminal-help li > span:last-child { color: var(--rt-muted); font-weight: 600; line-height: 1.5; }
 
 .risk-terminal-hero-note {
   margin-top: 16px;
@@ -445,9 +468,9 @@ code {
 /* ---------- verdict: the one Deep moment ---------- */
 .rt-verdict {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(180px, 260px);
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
   gap: clamp(2rem, 5vw, 4rem);
-  align-items: end;
+  align-items: stretch;
   padding: clamp(2rem, 5vw, 4rem);
   border-radius: var(--rt-radius-lg);
   background: var(--rt-deep);
@@ -485,7 +508,54 @@ code {
 .rt-verdict .rt-btn-ghost { border-color: rgb(255 255 255 / 0.45); color: #fff; }
 .rt-verdict .rt-btn-ghost:hover { background: rgb(255 255 255 / 0.1); }
 
-.rt-verdict-cells { margin: 0; }
+.rt-verdict-pill {
+  display: inline-flex;
+  margin: 18px 0 0;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+.rt-verdict-pill.is-crit { background: var(--rt-danger); color: #fff; }
+.rt-verdict-pill.is-ok { background: var(--rt-primary); color: var(--rt-primary-text); }
+
+/* worst draw vs float: two bars on one scale */
+.rt-compare { display: grid; gap: 12px; margin-top: 26px; max-width: 34em; }
+.rt-compare-row { display: grid; grid-template-columns: 6.5em minmax(0, 1fr) 6em; gap: 14px; align-items: center; }
+.rt-compare-row > span { color: rgb(255 255 255 / 0.66); font-size: 0.92rem; font-weight: 700; }
+.rt-compare-row > i { height: 14px; border-radius: 999px; background: rgb(255 255 255 / 0.1); overflow: hidden; }
+.rt-compare-row b { display: block; height: 100%; border-radius: 999px; }
+.rt-compare-row b.is-crit { background: var(--rt-danger); }
+.rt-compare-row b.is-loss { background: rgb(255 255 255 / 0.55); }
+.rt-compare-row b.is-reserve { background: var(--rt-primary); }
+.rt-compare-row > strong { font-size: 1.05rem; font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; }
+
+/* the advice: one recommendation with its before → after */
+.rt-advice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: clamp(1.4rem, 3vw, 2rem);
+  border: 1px solid rgb(255 255 255 / 0.16);
+  border-radius: var(--rt-radius-md);
+}
+.rt-advice-k { margin: 0; color: var(--rt-primary); font-family: var(--font-mono); font-size: 0.78rem; font-weight: 800; letter-spacing: 0.06em; }
+.rt-advice-lead { margin: 0; font-size: 1.2rem; font-weight: 800; line-height: 1.35; }
+.rt-advice-note { margin: 0; color: rgb(255 255 255 / 0.72); font-weight: 650; }
+.rt-advice-list { display: grid; gap: 10px; width: 100%; margin: 0; }
+.rt-advice-list > div { display: grid; gap: 2px; padding-top: 10px; border-top: 1px solid rgb(255 255 255 / 0.14); }
+.rt-advice-list dt { color: rgb(255 255 255 / 0.58); font-size: 0.82rem; font-weight: 700; }
+.rt-advice-list dd { margin: 0; font-weight: 750; font-variant-numeric: tabular-nums; }
+.rt-advice .rt-pos { color: var(--rt-primary); }
+.rt-advice .rt-neg { color: #ff8aa0; }
+.rt-advice .rt-advice-alt { margin-top: auto; color: rgb(255 255 255 / 0.72); }
+
+.rt-share { max-width: 260px; margin: 18px 0 0; }
+.rt-share .rt-cells span { background: var(--rt-line); }
+.rt-share .rt-cells span.is-open { background: var(--rt-primary); }
+.rt-share figcaption { margin-top: 12px; color: var(--rt-muted); font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.6; }
+.rt-share figcaption .rt-open { color: var(--rt-primary-ink); }
 
 .rt-cells {
   display: grid;
@@ -501,16 +571,6 @@ code {
 
 .rt-cells span.is-open { background: var(--rt-primary); }
 
-.rt-verdict-cells figcaption {
-  margin-top: 12px;
-  color: rgb(255 255 255 / 0.58);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  line-height: 1.6;
-}
-
-.rt-verdict-cells figcaption span { color: rgb(255 255 255 / 0.86); }
-.rt-verdict-cells figcaption .rt-open { color: var(--rt-primary); }
 
 /* ---------- plans: the one place soft cards group a choice ---------- */
 .rt-plans {
@@ -899,7 +959,6 @@ code {
   .rt-explain,
   .rt-map { grid-template-columns: minmax(0, 1fr); }
   .rt-verdict { grid-template-columns: minmax(0, 1fr); }
-  .rt-verdict-cells { max-width: 240px; }
   .rt-detail { position: static; }
 }
 
@@ -907,6 +966,9 @@ code {
   .rt-plans { grid-template-columns: minmax(0, 1fr); }
   .rt-verdict { border-radius: var(--rt-radius-md); }
   .rt-nav-status { display: none; }
+  .risk-terminal-help li { grid-template-columns: 32px minmax(0, 1fr); gap: 4px 10px; }
+  .risk-terminal-help li > span:last-child { grid-column: 2; }
+  .rt-compare-row { grid-template-columns: 5.5em minmax(0, 1fr) 5em; gap: 10px; }
   .rt-bar-row { grid-template-columns: 84px minmax(0, 1fr) 84px; gap: 10px; }
   .rt-alert { grid-template-columns: minmax(0, 1fr); gap: 4px; }
   .rt-todo > li { grid-template-columns: 30px minmax(0, 1fr); }
