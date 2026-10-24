@@ -2,7 +2,7 @@
    Centered hero (one claim, one action), then five numbered chapters: mono "01 / …" kicker, big tight
    title, bold muted line. One Deep card per chapter at most (the verdict); soft cards only where they
    group a choice (plans); everything else is hairline rows. Colour is signal: Mint / Orange is the
-   brand accent, Dream Purple carries links, crimson only ever means loss. Canvas charts read the
+   brand accent and also carries links (one voice for "you can act here"), crimson only ever means loss. Canvas charts read the
    --rt-* variables below at draw time. */
 
 .risk-terminal-page {
@@ -16,7 +16,7 @@
   --rt-primary: var(--color-eden-mint);
   --rt-primary-text: #111113;
   --rt-primary-ink: #1d7a57;
-  --rt-link: #6d4fd8;
+  --rt-link: var(--rt-primary-ink);
   --rt-danger: #d1264b;
   --rt-success: #0f7a43;
   --rt-warn: #9a5300;
@@ -40,7 +40,6 @@
   --rt-line-strong: #78716c;
   --rt-primary-text: #1a1206;
   --rt-primary-ink: var(--color-eden-mint);
-  --rt-link: #c4b5fd;
   --rt-danger: #ff5470;
   --rt-success: #4ade80;
   --rt-warn: #ffd84a;
@@ -54,6 +53,8 @@
 }
 
 .kaleido-site .risk-terminal-page { background: transparent; }
+/* a working tool, not a printed sheet: keep the site's grid lines and emblem, drop the grain */
+.risk-terminal-page { --kaleido-noise: none; --kaleido-noise-dark: none; --menu-texture: none; }
 
 .risk-terminal-topbar { padding: 0 clamp(1.25rem, 5vw, 3rem); }
 
@@ -67,11 +68,14 @@
 
 .page-shell > main.risk-terminal-main {
   padding: 0 clamp(1.25rem, 4vw, 3rem) clamp(4rem, 9vw, 7rem);
+  /* page-enter's "both" fill leaves a transform on <main> after it ends, which turns <main> into
+     the containing block of the fixed chart tooltip (.rt-tip) and throws it off screen */
+  animation-fill-mode: backwards;
 }
 
 /* ---------- hero ---------- */
 .risk-terminal-hero {
-  padding: clamp(4rem, 10vw, 7.5rem) 0 clamp(3rem, 7vw, 5rem);
+  padding: clamp(2rem, 4.5vw, 3.25rem) 0 clamp(1.25rem, 2.5vw, 2rem);
   text-align: center;
 }
 
@@ -91,7 +95,7 @@
 .risk-terminal-hero-title {
   max-width: 1000px;
   margin: 20px auto 0;
-  font-size: clamp(2.6rem, 6.4vw, 5.6rem);
+  font-size: clamp(2.4rem, 5.6vw, 4.8rem);
   font-weight: 800;
   line-height: 0.96;
   letter-spacing: -0.04em;
@@ -101,45 +105,22 @@
 .risk-terminal-hero-subtitle {
   max-width: 820px;
   margin: 22px auto 0;
-  font-size: clamp(1.3rem, 2.6vw, 2rem);
+  font-size: clamp(1.2rem, 2.2vw, 1.7rem);
   font-weight: 750;
   line-height: 1.25;
   text-wrap: balance;
 }
 
 .risk-terminal-hero-copy {
-  max-width: 620px;
-  margin: 16px auto 0;
+  max-width: 760px;
+  margin: 14px auto 0;
   color: var(--rt-muted);
   font-size: clamp(1.02rem, 1.6vw, 1.18rem);
   font-weight: 650;
   line-height: 1.45;
 }
 
-.risk-terminal-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 32px; }
-
-/* what we do for the agent: four hairline rows, read top to bottom */
-.risk-terminal-help {
-  max-width: 680px;
-  margin: 24px auto 0;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid var(--rt-line);
-  text-align: left;
-}
-
-.risk-terminal-help li {
-  display: grid;
-  grid-template-columns: 40px minmax(0, 11em) minmax(0, 1fr);
-  gap: 14px;
-  align-items: baseline;
-  padding: 14px 0;
-  border-bottom: 1px solid var(--rt-line);
-}
-
-.risk-terminal-help-index { color: var(--rt-primary-ink); font-family: var(--font-mono); font-size: 0.78rem; font-weight: 800; }
-.risk-terminal-help b { font-size: 1.05rem; font-weight: 800; }
-.risk-terminal-help li > span:last-child { color: var(--rt-muted); font-weight: 600; line-height: 1.5; }
+.risk-terminal-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 28px; }
 
 .risk-terminal-hero-note {
   margin-top: 16px;
@@ -285,7 +266,7 @@
 .rt-nav-tabs button {
   display: inline-flex;
   flex: none;
-  align-items: baseline;
+  align-items: center;
   gap: 8px;
   min-height: 40px;
   padding: 0 16px;
@@ -304,7 +285,6 @@
 .rt-nav-tabs button.is-on { background: var(--rt-ink); color: var(--rt-paper); }
 
 .rt-nav-index {
-  align-self: center;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 700;
@@ -331,6 +311,18 @@
   line-height: 1;
   letter-spacing: -0.035em;
   text-wrap: balance;
+}
+
+/* chapter 01 sits right under the hero, which already asks its question: keep the heading for
+   screen readers, show the answer instead */
+.rt-chapter:has(> .rt-chapter-head.is-compact) { padding-top: 20px; }
+.rt-chapter-head.is-compact {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .rt-chapter-copy {
@@ -471,7 +463,7 @@ code {
   grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
   gap: clamp(2rem, 5vw, 4rem);
   align-items: stretch;
-  padding: clamp(2rem, 5vw, 4rem);
+  padding: clamp(1.75rem, 4vw, 3.25rem);
   border-radius: var(--rt-radius-lg);
   background: var(--rt-deep);
   color: #fff;
@@ -516,6 +508,7 @@ code {
   font-size: 0.95rem;
   font-weight: 800;
 }
+.rt-verdict-pill { animation: rt-pill-in 0.42s cubic-bezier(0.2, 0.9, 0.3, 1.25); }
 .rt-verdict-pill.is-crit { background: var(--rt-danger); color: #fff; }
 .rt-verdict-pill.is-ok { background: var(--rt-primary); color: var(--rt-primary-text); }
 
@@ -524,11 +517,16 @@ code {
 .rt-compare-row { display: grid; grid-template-columns: 6.5em minmax(0, 1fr) 6em; gap: 14px; align-items: center; }
 .rt-compare-row > span { color: rgb(255 255 255 / 0.66); font-size: 0.92rem; font-weight: 700; }
 .rt-compare-row > i { height: 14px; border-radius: 999px; background: rgb(255 255 255 / 0.1); overflow: hidden; }
-.rt-compare-row b { display: block; height: 100%; border-radius: 999px; }
+.rt-compare-row b { display: block; height: 100%; border-radius: 999px; transition: background-color 0.3s ease; }
 .rt-compare-row b.is-crit { background: var(--rt-danger); }
 .rt-compare-row b.is-loss { background: rgb(255 255 255 / 0.55); }
 .rt-compare-row b.is-reserve { background: var(--rt-primary); }
 .rt-compare-row > strong { font-size: 1.05rem; font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; }
+
+@keyframes rt-pill-in {
+  from { opacity: 0; transform: scale(0.82); }
+  to { opacity: 1; transform: none; }
+}
 
 /* the advice: one recommendation with its before → after */
 .rt-advice {
@@ -549,13 +547,27 @@ code {
 .rt-advice-list dd { margin: 0; font-weight: 750; font-variant-numeric: tabular-nums; }
 .rt-advice .rt-pos { color: var(--rt-primary); }
 .rt-advice .rt-neg { color: #ff8aa0; }
-.rt-advice .rt-advice-alt { margin-top: auto; color: rgb(255 255 255 / 0.72); }
+.rt-advice .rt-advice-alt { display: grid; justify-items: start; gap: 8px; margin-top: auto; }
+.rt-advice .rt-advice-alt .rt-link { color: rgb(255 255 255 / 0.72); text-align: left; }
+.rt-advice .rt-advice-alt .rt-link:hover { color: #fff; }
 
-.rt-share { max-width: 260px; margin: 18px 0 0; }
-.rt-share .rt-cells span { background: var(--rt-line); }
+.rt-share {
+  display: grid;
+  grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+  margin: 22px 0 0;
+}
+.rt-share .rt-cells span { background: color-mix(in srgb, var(--rt-ink) 24%, transparent); }
 .rt-share .rt-cells span.is-open { background: var(--rt-primary); }
-.rt-share figcaption { margin-top: 12px; color: var(--rt-muted); font-family: var(--font-mono); font-size: 0.72rem; line-height: 1.6; }
-.rt-share figcaption .rt-open { color: var(--rt-primary-ink); }
+.rt-share-k { margin: 0; color: var(--rt-muted); font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; }
+.rt-share dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; max-width: 30em; margin: 14px 0 0; }
+.rt-share dl > div { padding-top: 12px; border-top: 1px solid var(--rt-line); }
+.rt-share dt { display: flex; align-items: center; gap: 8px; color: var(--rt-muted); font-size: 0.9rem; font-weight: 600; }
+.rt-share dt i { width: 11px; height: 11px; border-radius: 3px; background: color-mix(in srgb, var(--rt-ink) 24%, transparent); }
+.rt-share dt i.is-open { background: var(--rt-primary); }
+.rt-share dd { margin: 6px 0 0; font-family: var(--font-display); font-size: clamp(1.8rem, 3.4vw, 2.6rem); font-weight: 800; line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.rt-share dd small { display: block; margin-top: 6px; color: var(--rt-muted); font-family: var(--font-mono); font-size: 0.78rem; font-weight: 600; letter-spacing: 0; }
 
 .rt-cells {
   display: grid;
@@ -690,6 +702,9 @@ code {
 .rt-more[open] > summary::after { transform: rotate(90deg); }
 .rt-more > summary:hover { text-decoration: underline; }
 
+.rt-more.is-quiet > summary { min-height: 28px; color: var(--rt-muted); font-size: 0.8rem; font-weight: 500; }
+.rt-more.is-quiet > summary:hover { color: var(--rt-ink); text-decoration: none; }
+
 .rt-more-body { padding-top: 4px; color: var(--rt-muted); font-size: 0.92rem; line-height: 1.65; }
 .rt-more-body p { max-width: 52em; margin: 0 0 8px; }
 .rt-more-body b { color: var(--rt-ink); }
@@ -771,6 +786,63 @@ code {
 
 .rt-todo-why { margin: 0; color: var(--rt-muted); font-size: 0.95rem; line-height: 1.6; }
 .rt-todo .rt-actions { margin-top: 12px; }
+
+/* this draw's steps read left to right, one column each */
+.rt-steps .rt-todo { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0 clamp(1.25rem, 3vw, 2.5rem); }
+.rt-steps .rt-todo > li { grid-template-columns: minmax(0, 1fr); align-content: start; gap: 6px; padding-top: 16px; border-top: 2px solid var(--rt-ink); }
+.rt-steps .rt-todo > li.is-done { border-top-color: var(--rt-success); }
+.rt-steps .rt-todo-index { line-height: 1.2; }
+
+/* later draws: short reminders side by side, no proof to unfold */
+.rt-later {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px clamp(1.25rem, 3vw, 2.5rem);
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rt-later > li { display: grid; align-content: start; gap: 8px; padding-top: 14px; border-top: 1px solid var(--rt-line); }
+.rt-later h4 { margin: 0; font-size: 1.02rem; font-weight: 750; line-height: 1.4; }
+.rt-later p { margin: 0; color: var(--rt-muted); font-size: 0.92rem; line-height: 1.55; }
+.rt-later .rt-link { justify-self: start; font-size: 0.92rem; }
+
+/* the reasoning behind the advice, folded into one row the agent opens on purpose */
+.rt-why { margin-top: clamp(3rem, 6vw, 4.5rem); border-top: 2px solid var(--rt-ink); border-bottom: 1px solid var(--rt-line); }
+
+.rt-why > summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 16px;
+  align-items: center;
+  padding: 22px 0;
+  list-style: none;
+  cursor: pointer;
+}
+
+.rt-why > summary::-webkit-details-marker { display: none; }
+.rt-why > summary::after { content: "+"; grid-row: 1 / span 2; grid-column: 2; font-size: 1.6rem; font-weight: 400; line-height: 1; transition: transform 0.2s ease; }
+.rt-why[open] > summary::after { transform: rotate(45deg); }
+.rt-why-title { font-family: var(--font-display); font-size: clamp(1.45rem, 2.4vw, 2rem); font-weight: 800; letter-spacing: -0.02em; }
+.rt-why-sub { color: var(--rt-muted); font-size: 0.95rem; }
+.rt-why[open] { padding-bottom: clamp(2rem, 4vw, 3rem); }
+.rt-why > .rt-block:first-of-type { margin-top: 8px; }
+
+/* chapter 04 opens with its answer */
+.rt-answer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px 24px;
+  margin-top: 20px;
+  padding: 18px 22px;
+  border-radius: var(--rt-radius-sm);
+  background: var(--rt-soft);
+}
+
+.rt-answer p { margin: 0; max-width: 46em; font-size: 1.05rem; font-weight: 600; line-height: 1.55; }
 
 /* ---------- alerts ---------- */
 .rt-alerts { display: grid; margin: 18px 0 0; padding: 0; list-style: none; }
@@ -901,6 +973,37 @@ code {
 
 .rt-tip b { color: var(--rt-ink); }
 
+/* ---------- limit chart (LimitChart.tsx): two panels, one shared limit axis ---------- */
+.rt-limit-chart { margin: 26px 0 0; }
+.rt-limit-chart svg { display: block; width: 100%; height: auto; overflow: visible; font-family: inherit; }
+.rt-limit-chart .lc-fit { fill: color-mix(in srgb, var(--rt-primary) 13%, transparent); }
+.rt-limit-chart .lc-hover { fill: color-mix(in srgb, var(--rt-ink) 6%, transparent); }
+.rt-limit-chart .lc-hit { fill: transparent; cursor: pointer; }
+.rt-limit-chart .lc-grid { stroke: var(--rt-line); stroke-width: 1; }
+.rt-limit-chart .lc-axis { stroke: var(--rt-line-strong); stroke-width: 1; }
+.rt-limit-chart .lc-title { fill: var(--rt-ink); font-size: 13px; font-weight: 750; }
+.rt-limit-chart .lc-y { fill: var(--rt-muted); font-size: 11px; text-anchor: end; font-variant-numeric: tabular-nums; }
+.rt-limit-chart .lc-x { fill: var(--rt-muted); font-size: 11px; text-anchor: middle; font-variant-numeric: tabular-nums; }
+.rt-limit-chart .lc-x.is-now { fill: var(--rt-ink); font-weight: 750; }
+.rt-limit-chart .lc-x-title { fill: var(--rt-muted); font-size: 12px; text-anchor: middle; }
+.rt-limit-chart .lc-profit { fill: none; stroke: var(--rt-primary-ink); stroke-width: 2; stroke-linejoin: round; }
+.rt-limit-chart .lc-profit-dot { fill: var(--rt-primary-ink); stroke: var(--rt-paper); stroke-width: 2; }
+.rt-limit-chart .lc-loss { fill: none; stroke: var(--rt-line-strong); stroke-width: 1.5; }
+.rt-limit-chart .lc-ok { fill: var(--rt-primary-ink); stroke: var(--rt-paper); stroke-width: 2; }
+.rt-limit-chart .lc-over { fill: var(--rt-danger); stroke: var(--rt-paper); stroke-width: 2; }
+.rt-limit-chart .lc-clip { fill: var(--rt-danger); font-size: 10px; font-weight: 700; text-anchor: middle; }
+.rt-limit-chart .lc-reserve { stroke: var(--rt-ink); stroke-width: 1.5; stroke-dasharray: 6 4; }
+.rt-limit-chart .lc-reserve-label { fill: var(--rt-ink); font-size: 12px; font-weight: 750; text-anchor: end; }
+.rt-limit-chart .lc-now line { stroke: var(--rt-ink); stroke-width: 1.5; }
+.rt-limit-chart .lc-now text,
+.rt-limit-chart .lc-rec { fill: var(--rt-ink); font-size: 11px; font-weight: 750; text-anchor: middle; }
+.rt-limit-chart .lc-rec { fill: var(--rt-primary-ink); }
+.rt-limit-chart figcaption .rt-note { margin-top: 6px; }
+.rt-legend i.lc-key-fit { background: color-mix(in srgb, var(--rt-primary) 30%, transparent); }
+.rt-legend i.lc-key-profit { background: var(--rt-primary-ink); }
+.rt-legend i.lc-key-over { background: var(--rt-danger); border-radius: 50%; }
+.rt-legend i.lc-key-reserve { height: 0; border-top: 2px dashed var(--rt-ink); border-radius: 0; vertical-align: 3px; }
+
 /* ---------- map ---------- */
 .rt-map {
   display: grid;
@@ -942,6 +1045,33 @@ code {
   font-variant-numeric: tabular-nums;
 }
 
+.rt-detail-say {
+  margin: 14px 0 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--rt-soft);
+  box-shadow: inset 3px 0 0 var(--rt-success);
+  font-weight: 650;
+  line-height: 1.55;
+}
+
+.rt-detail-say.rt-band-3 { box-shadow: inset 3px 0 0 var(--rt-warn); }
+.rt-detail-say.rt-band-4 { box-shadow: inset 3px 0 0 var(--rt-danger); }
+
+/* chapter 06: what follows is setup, not the answer */
+.rt-setup-title {
+  margin: clamp(4rem, 8vw, 6rem) 0 0;
+  padding-top: 22px;
+  border-top: 2px solid var(--rt-ink);
+  color: var(--rt-muted);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.rt-setup-title + .rt-block { margin-top: 18px; border-top: 0; padding-top: 0; }
+
 .rt-settle-line {
   margin: 28px 0 0;
   font-size: clamp(1.8rem, 3.6vw, 2.8rem);
@@ -966,11 +1096,11 @@ code {
   .rt-plans { grid-template-columns: minmax(0, 1fr); }
   .rt-verdict { border-radius: var(--rt-radius-md); }
   .rt-nav-status { display: none; }
-  .risk-terminal-help li { grid-template-columns: 32px minmax(0, 1fr); gap: 4px 10px; }
-  .risk-terminal-help li > span:last-child { grid-column: 2; }
   .rt-compare-row { grid-template-columns: 5.5em minmax(0, 1fr) 5em; gap: 10px; }
   .rt-bar-row { grid-template-columns: 84px minmax(0, 1fr) 84px; gap: 10px; }
   .rt-alert { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .rt-share { grid-template-columns: minmax(0, 1fr); }
+  .rt-share .rt-cells { max-width: 240px; }
   .rt-todo > li { grid-template-columns: 30px minmax(0, 1fr); }
   .rt-field input[type="number"] { width: 100%; }
   .rt-controls .rt-field { flex: 1 1 140px; }
@@ -980,7 +1110,10 @@ code {
   .rt-btn,
   .rt-plan,
   .rt-nav-tabs button,
-  .rt-more > summary::after { transition: none; }
+  .rt-more > summary::after,
+  .rt-why > summary::after,
+  .rt-compare-row b { transition: none; }
+  .rt-verdict-pill { animation: none; }
   .rt-btn:active,
   .rt-plan:active { transform: none; }
 }

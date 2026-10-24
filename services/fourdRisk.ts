@@ -424,6 +424,69 @@ export function evenScenario(cfg: Config, lim: number, scan: Scan) {
   return { now: run(cfg), even: run({ ...cfg, B, S }), moved: scan.ops.reduce((s, o) => s + Math.min(o.excess, o.room), 0) };
 }
 
+// ---------- keep everything: no upline, so the excess is refused instead of passed on ----------
+// The stop line X is the highest first-prize payout a number may carry such that the exact worst draw,
+// with every heavier number cut back to X, still fits in the reserve. Numbers over X are "拿掉";
+// the money they would have brought is then offered to numbers still under the line ("加"),
+// as much of it as keeps the worst draw inside the reserve.
+const solo = (cfg: Config): Config => ({ ...cfg, providers: [], limit: Infinity });
+function cutTo(cfg: Config, X: number) {
+  const B = Float64Array.from(cfg.B), S = Float64Array.from(cfg.S);
+  for (let i = 0; i < TOT; i++) { const g = gross1(cfg, i); if (g > X) { const f = X / g; B[i] *= f; S[i] *= f; } }
+  return { ...cfg, B, S };
+}
+const worstProfit = (cfg: Config) => worstCase(computeBook(cfg, Infinity)).profit;
+
+export type KeepAll = ReturnType<typeof keepAllPlan>;
+export function keepAllPlan(cfg: Config) {
+  const base = solo(cfg), fits = (c: Config) => worstProfit(c) >= -cfg.reserve;
+  let maxG = 0; for (let i = 0; i < TOT; i++) maxG = Math.max(maxG, gross1(base, i));
+  let X = Infinity;
+  if (!fits(base)) {
+    let lo = 0, hi = maxG;
+    for (let k = 0; k < 24; k++) { const m = (lo + hi) / 2; if (fits(cutTo(base, m))) lo = m; else hi = m; }
+    X = Math.floor(lo / 100) * 100;
+  }
+  const cut = X === Infinity ? base : cutTo(base, X);
+
+  const stops: Array<{ i: number; now: number; max: number; cut: number }> = [];
+  if (X !== Infinity) for (let i = 0; i < TOT; i++) {
+    const g = gross1(base, i); if (g <= X) continue;
+    const now = stake(base, i), max = (now * X) / g; stops.push({ i, now, max, cut: now - max });
+  }
+  stops.sort((a, b) => b.cut - a.cut);
+  const cutTotal = stops.reduce((s, x) => s + x.cut, 0);
+
+  // offer the refused money to numbers below the line, per operator, in proportion to their room;
+  // halve it until the worst draw still fits
+  const lim = X === Infinity ? houseLimit(cfg, null).lim : X;
+  const scan = houseScan(cut, lim);
+  const offer = (frac: number) => {
+    const B = Float64Array.from(cut.B), S = Float64Array.from(cut.S), byCat = CATS.map(() => 0);
+    const opCut = OPS.map(() => 0); stops.forEach((x) => { opCut[opOf(x.i)] += x.cut; });
+    for (const o of scan.ops) {
+      const move = Math.min(opCut[o.op], o.room) * frac; if (!move) continue;
+      for (let n = 0; n < N; n++) {
+        const i = o.op * N + n, room = Math.max(0, o.line - stake(cut, i)); if (!room || scan.ratio[i] > 1) continue;
+        const a = (room / o.room) * move; B[i] += a * o.bShare; S[i] += a * (1 - o.bShare); byCat[CAT_OF[n]] += a;
+      }
+    }
+    return { cfg: { ...cut, B, S }, byCat };
+  };
+  let frac = 1, pushed = offer(1);
+  while (frac > 0.01 && !fits(pushed.cfg)) { frac /= 2; pushed = offer(frac); }
+  if (!fits(pushed.cfg)) { frac = 0; pushed = offer(0); }
+  const addTotal = pushed.byCat.reduce((s, x) => s + x, 0);
+
+  return {
+    X, stops, cutTotal,
+    before: evalLimit(base, Infinity),
+    after: evalLimit(cut, Infinity),
+    pushed: evalLimit(pushed.cfg, Infinity),
+    add: { total: addTotal, frac, byCat: CATS.map((c, k) => ({ ...c, add: pushed.byCat[k] })).filter((c) => c.add > 1).sort((a, b) => b.add - a.add) },
+  };
+}
+
 // ---------- the book itself ----------
 export function topBy(fn: (i: number) => number, k: number) {
   const out: Array<[number, number]> = [];

@@ -2,14 +2,6 @@ import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { HeaderControls, type Language, type Theme, type ThemePreference } from '../app/shared';
 
-// what the page does for an agent, in their words; the terminal below answers each in order
-const HELP: Array<[[string, string], [string, string]]> = [
-  [['最惨会亏多少', '跟你的备用金比，一眼看出这期赔不赔得起。'], ['The worst draw', 'Set against your float, so you see at once whether you can pay it.']],
-  [['哪几个字太重', '告诉你哪些字要停收，哪些要交给上家。'], ['Which numbers are too heavy', 'Which ones to stop taking and which to pass to your upline.']],
-  [['每个字自己留多少', '帮你定上限，算好少赚多少、少冒多少险。'], ['How much to keep per number', 'A limit, with what it costs you in profit and saves you in risk.']],
-  [['开奖后对账', '算清这期赚亏，提醒你哪个上家的合同没讲清楚。'], ['Settling after the draw', 'Profit or loss for the draw, and which upline contract is not clear yet.']],
-];
-
 // the terminal carries the whole simulation engine, so it loads as its own chunk
 const RiskTerminal = React.lazy(() => import('../components/fourd/RiskTerminal'));
 
@@ -49,20 +41,13 @@ export const RiskTerminalPage: React.FC<{
               : 'The danger for a 4D agent is not earning less. It is one hot number wiping out the float.'}
           </p>
           <p className="risk-terminal-hero-copy">
-            {isZh ? '开卖前把这期的下注放进来，我们帮你算清楚：' : 'Put in this draw’s bets before sales close. We work out:'}
+            {isZh
+              ? '把这期的下注放进来：先告诉你赔不赔得起，再告诉你上限怎么改、哪些字交给上家。'
+              : 'Put in this draw’s bets: first whether you can pay the worst case, then what limit to set and what to pass on.'}
           </p>
-          <ol className="risk-terminal-help">
-            {HELP.map(([zh, en], i) => (
-              <li key={i}>
-                <span className="risk-terminal-help-index">{String(i + 1).padStart(2, '0')}</span>
-                <b>{isZh ? zh[0] : en[0]}</b>
-                <span>{isZh ? zh[1] : en[1]}</span>
-              </li>
-            ))}
-          </ol>
           <div className="risk-terminal-actions">
             <a href="#terminal" className="rt-btn rt-btn-lg">
-              {isZh ? '用示例看一遍' : 'Walk through the sample'} <span aria-hidden>›</span>
+              {isZh ? '看示例的答案' : 'See the sample answer'} <span aria-hidden>↓</span>
             </a>
             <a href="#import" className="rt-btn rt-btn-lg rt-btn-ghost" onClick={() => { if (window.location.hash === '#import') window.dispatchEvent(new HashChangeEvent('hashchange')); }}>
               {isZh ? '放进我的下注' : 'Use my own bets'}

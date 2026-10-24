@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   N, OPS, SAMPLE_SEED, classify, computeBook, defaultOdds, defaultProviders, parseBookCsv, parseHistory,
-  resultInput, sampleBook, settle, simulate, stats, worstCase, type Config,
+  gross1, keepAllPlan, resultInput, sampleBook, settle, simulate, stats, worstCase, type Config,
 } from '../../services/fourdRisk.ts';
 
 const config = (limit: number): Config => {
@@ -62,4 +62,20 @@ test('imports read operators by name and skip bad rows', () => {
   assert.equal(hist.rows.length, 2);
   assert.deepEqual(hist.rows.map((r) => r.op), [0, 1]);
   assert.deepEqual(hist.bad, [3, 4]);
+});
+
+test('keeping everything: the stop line makes the worst draw fit the reserve, pushing keeps it there', () => {
+  const cfg = config(Infinity), k = keepAllPlan(cfg);
+  assert.ok(k.before.worst < -cfg.reserve, 'the sample book cannot carry everything');
+  assert.ok(Number.isFinite(k.X) && k.X > 0);
+  assert.ok(k.after.worst >= -cfg.reserve && k.pushed.worst >= -cfg.reserve, `${k.after.worst} / ${k.pushed.worst}`);
+  for (const x of k.stops) assert.ok(gross1(cfg, x.i) > k.X && x.cut > 0 && Math.abs(x.max + x.cut - x.now) < 1e-6);
+  assert.ok(Math.abs(k.stops.reduce((s, x) => s + x.cut, 0) - k.cutTotal) < 1e-6);
+  assert.ok(k.add.total <= k.cutTotal + 1e-6);
+});
+
+test('keeping everything with a reserve that already covers the worst draw stops nothing', () => {
+  const k = keepAllPlan({ ...config(Infinity), reserve: 1e9 });
+  assert.equal(k.X, Infinity);
+  assert.equal(k.stops.length, 0);
 });
