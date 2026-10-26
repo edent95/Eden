@@ -23,14 +23,61 @@
       name="twitter:description"
       content="Eden Tan turns complex human behavior and messy realities into useful products, data, and AI systems."
     />
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6QXR6LQ83T"></script>
+    <!-- GA4 (property 373181566, stream eden-tan.com, G-6QXR6LQ83T). Two gates keep Eden's own
+         visits out of the numbers:
+         1. Host gate: only eden-tan.com / www tag; localhost, worktree previews and builds never do.
+         2. Owner device opt-out: open any page with ?notrack=1 once on a device and it never sends
+            a hit again (localStorage eden_ga_opt_out); ?notrack=0 turns tracking back on. -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag('js', new Date());
-      gtag('config', 'G-6QXR6LQ83T');
+      (function () {
+        var MEASUREMENT_ID = 'G-6QXR6LQ83T';
+        var OPT_OUT_KEY = 'eden_ga_opt_out';
+
+        var host = window.location.hostname;
+        if (host !== 'eden-tan.com' && host !== 'www.eden-tan.com') return;
+
+        var params = new URLSearchParams(window.location.search);
+        var flag = params.get('notrack');
+        if (flag === '1' || flag === '0') {
+          try {
+            if (flag === '1') window.localStorage.setItem(OPT_OUT_KEY, '1');
+            else window.localStorage.removeItem(OPT_OUT_KEY);
+          } catch (error) {
+            /* storage unavailable — nothing to persist */
+          }
+          params.delete('notrack');
+          var query = params.toString();
+          window.history.replaceState(
+            window.history.state,
+            '',
+            window.location.pathname + (query ? '?' + query : '') + window.location.hash
+          );
+        }
+
+        var optedOut = false;
+        try {
+          optedOut = window.localStorage.getItem(OPT_OUT_KEY) === '1';
+        } catch (error) {
+          optedOut = false;
+        }
+        if (optedOut) {
+          window['ga-disable-' + MEASUREMENT_ID] = true;
+          return;
+        }
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          window.dataLayer.push(arguments);
+        }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', MEASUREMENT_ID);
+
+        var tag = document.createElement('script');
+        tag.async = true;
+        tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + MEASUREMENT_ID;
+        document.head.appendChild(tag);
+      })();
     </script>
     <script src="https://analytics.ahrefs.com/analytics.js" data-key="S8VvmuzLTY1b7/rRTMb12Q" async></script>
     <script>
