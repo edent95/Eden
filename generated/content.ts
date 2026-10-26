@@ -2864,7 +2864,8 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
     "sources": [
       "数字会说话",
       "营销管理",
-      "商弈"
+      "商弈",
+      "David Allen, Getting Things Done (2001)"
     ],
     "storyboard": [
       {
@@ -2889,6 +2890,14 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
         "beat": {
           "en": "Look where work repeats daily and judgment lives in one person's memory. A good system is like this figure: the complexity stays inside, and the person outside sees a clear edge.",
           "zh": "去找每天重复的动作、只靠某个人记得的判断。好的 system 就像这张图：复杂都留在里面，外面的人只看到清楚的轮廓。"
+        }
+      },
+      {
+        "motif": "spiral",
+        "kind": "action",
+        "beat": {
+          "en": "The same three links run a personal week: catch everything fast, sort it on a rhythm into do, keep or delete, then act. If the pile keeps growing, sorting is too slow or too little gets thrown away.",
+          "zh": "同样三个环，也能管一个人的一周：先快速接住，再按固定节奏分成要做、要留、要删，最后才行动。堆积一直变多，就是分得太慢，或者丢得太少。"
         }
       }
     ],
@@ -2940,10 +2949,26 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
             "==好的 system 会把复杂留在里面，把清楚交给外面的人。==它让人少想一点不重要的重复，把注意力留给真正需要判断的地方。"
           ]
         }
+      },
+      {
+        "title": {
+          "en": "The same three links, for one person",
+          "zh": "同样三个环，用在一个人身上"
+        },
+        "paragraphs": {
+          "en": [
+            "A personal system, the thing people call a Life OS, is the same separation at a smaller scale. Input is capture: one place where every idea, task and promise lands quickly, so it stops living in your head. Judgment is a sorting pass on a fixed rhythm, where each item becomes a next action, a reference to keep, or something to delete. Action is the work itself. David Allen's Getting Things Done (2001) is the best-known version of this loop.",
+            "==Watch the balance between the links: if items arrive faster than you sort them, the inbox grows until you stop trusting it.== Make capture short enough that you would really do it mid-conversation, give unsorted items an expiry date you choose, and notice when tuning the tool takes more time than the work it holds. A system you spend all week decorating has become another source of chaos."
+          ],
+          "zh": [
+            "个人用的系统，也就是很多人说的 Life OS，其实是同一种拆法放小一号。输入是收集：一个地方，接住所有想法、任务和答应过别人的事，让它们不再挂在脑子里。判断是按固定节奏做一次分拣，每一项都变成下一步行动、要留的参考资料，或者直接删掉。行动才是真正去做。David Allen 的 Getting Things Done（2001）是这个回路最有名的版本。",
+            "==要看的是几个环之间的平衡：进来的比分掉的快，收件箱就会一直涨，直到你再也不信任它。==收集要短到你在聊天中途真的愿意做；没分拣的东西给一个你自己定的过期日；也留意调整工具的时间是不是已经比工具里装的工作还多。一个整周都在装修的系统，本身就成了另一个混乱的来源。"
+          ]
+        }
       }
     ],
     "datePublished": "2026-07-21",
-    "dateModified": "2026-08-14"
+    "dateModified": "2026-10-26"
   },
   {
     "slug": "judgment-is-not-more-information",
@@ -3446,5 +3471,739 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
     ],
     "datePublished": "2026-10-12",
     "dateModified": "2026-10-12"
+  },
+  {
+    "slug": "systems-thinking-for-solo-founders",
+    "cover": "rivers",
+    "title": {
+      "en": "Build loops, not lists: systems thinking for solo founders",
+      "zh": "做回路，不做清单：一个人创业的系统思考"
+    },
+    "summary": {
+      "en": "When one person is the developer, the marketer and the support desk, the enemy is not competition but complexity. Systems thinking gives a solo founder four tools: see the connections, find the loops, push on the right lever, and keep each part replaceable.",
+      "zh": "一个人同时是工程师、市场和客服的时候，最大的敌人不是竞争，而是复杂度。系统思考给一人公司四样工具：看见连接、找出回路、推对杠杆、让每个部分都可以单独换掉。"
+    },
+    "category": {
+      "en": "System thinking",
+      "zh": "系统思考"
+    },
+    "thesis": {
+      "en": "A solo founder cannot out-work complexity. The only way through is to change the structure that keeps producing the work.",
+      "zh": "一个人拼不过复杂度。唯一的出路，是改掉那个一直在制造工作的结构。"
+    },
+    "sources": [
+      "Donella Meadows, Leverage Points: Places to Intervene in a System (1997)",
+      "Donella Meadows, Thinking in Systems: A Primer (2008)",
+      "Jay W. Forrester, Industrial Dynamics (1961)"
+    ],
+    "references": [
+      {
+        "id": "1",
+        "url": "https://en.wikipedia.org/wiki/Twelve_leverage_points",
+        "label": {
+          "en": "Twelve leverage points (Wikipedia): Donella Meadows' list, first published in 1997, ranked from numbers and parameters (weakest) up to goals and paradigms (strongest).",
+          "zh": "Twelve leverage points（维基百科）：Donella Meadows 1997 年首次发表的清单，从最弱的数字与参数，一路排到最强的目标与范式。"
+        }
+      },
+      {
+        "id": "2",
+        "url": "https://en.wikipedia.org/wiki/System_dynamics",
+        "label": {
+          "en": "System dynamics (Wikipedia): the stocks, flows and feedback loops method Jay Forrester developed at MIT from the 1950s.",
+          "zh": "System dynamics（维基百科）：Jay Forrester 从 1950 年代起在 MIT 发展的方法，用存量、流量与反馈回路描述系统。"
+        }
+      }
+    ],
+    "storyboard": [
+      {
+        "motif": "phyllotaxis",
+        "kind": "idea",
+        "beat": {
+          "en": "Five parts of a business have ten possible connections; ten parts have forty-five. The work grows with the parts, the confusion grows with the connections.",
+          "zh": "一门生意五个部分，彼此之间有十条可能的连接；十个部分就有四十五条。工作跟着部分长，混乱跟着连接长。"
+        }
+      },
+      {
+        "motif": "catenary",
+        "kind": "warning",
+        "beat": {
+          "en": "Answering every email by hand works at ten users and breaks at a thousand. Linear effort hits a ceiling; a team hires through it, a solo founder burns out against it.",
+          "zh": "每封邮件都亲手回，十个用户没问题，一千个就崩。线性的努力一定撞顶；团队靠招人穿过去，一个人只会撞到倦怠。"
+        }
+      },
+      {
+        "motif": "spiral",
+        "kind": "principle",
+        "beat": {
+          "en": "Some loops feed themselves and grow, others push back and hold things still. Name the engines, pour energy there, and give the loops that drain you an exit.",
+          "zh": "有的回路会自己喂自己、越转越大，有的会往回推、让一切停住。找出引擎，把力气放在那里，再给那些耗你的回路留一个出口。"
+        }
+      },
+      {
+        "motif": "penrose",
+        "kind": "principle",
+        "beat": {
+          "en": "Working more hours is the weakest lever there is. Changing a rule, or what information reaches you, moves far more.",
+          "zh": "多做几个小时，是最弱的一根杠杆。改一条规则，或者改变什么信息会送到你面前，推得动的多得多。"
+        }
+      },
+      {
+        "motif": "mandelbrot",
+        "kind": "method",
+        "beat": {
+          "en": "Keep each part behind a clear edge and keep one source of truth. When strategy changes, you rewrite one page, not a hundred tasks.",
+          "zh": "每个部分都有清楚的边界，事实只放一个地方。策略一变，你改的是一页，而不是一百个任务。"
+        }
+      },
+      {
+        "motif": "lissajous",
+        "kind": "action",
+        "beat": {
+          "en": "Simplify before you automate, and judge experiments as a process, not a single win. Automation protects attention; it does not fix a broken step.",
+          "zh": "先简化再自动化，用整个过程来评判实验，而不是看某一次赢没赢。自动化保护的是注意力，它修不好一个本来就坏的步骤。"
+        }
+      }
+    ],
+    "sections": [
+      {
+        "title": {
+          "en": "Complexity is the real competitor",
+          "zh": "真正的对手是复杂度"
+        },
+        "paragraphs": {
+          "en": [
+            "When you are the developer, the marketer, the support desk and the strategist, every new feature or channel adds more than one task. It adds connections: the new pricing page touches billing, the billing touches support, support touches the roadmap.",
+            "Connections grow faster than parts. Five parts can have up to ten pairwise links; ten parts can have forty-five. ==The work grows with the parts, but the confusion grows with the connections.== Systems thinking is simply the habit of looking at those links instead of the boxes."
+          ],
+          "zh": [
+            "你同时是工程师、市场、客服和策略的时候，每多一个功能、一个渠道，增加的都不只是一件事，而是一堆连接：新的价格页牵动收款，收款牵动客服，客服又牵动产品路线。",
+            "连接长得比部分快。五个部分最多有十条两两之间的连接；十个部分就有四十五条。==工作跟着部分长，混乱却跟着连接长。==所谓系统思考，就是习惯去看这些连线，而不是只看方框。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Linear effort always hits a ceiling",
+          "zh": "线性的努力一定会撞顶"
+        },
+        "paragraphs": {
+          "en": [
+            "Take support email. If each reply costs a few minutes of your attention, a hundred times more users means a hundred times more minutes. A funded startup solves that by hiring; a solo founder just runs out of day.",
+            "The systems answer spends time once: a searchable FAQ, reply templates, tags that route the common questions. ==The goal is to decouple output from your direct manual input, so volume can grow without your hours growing with it.=="
+          ],
+          "zh": [
+            "拿客服邮件来说。如果每封回复都要花你几分钟注意力，用户多一百倍，分钟数也多一百倍。拿了融资的团队靠招人解决；一个人创业，只会先把一天用完。",
+            "系统的做法是把时间花一次：可以搜索的 FAQ、回复模板、自动把常见问题分好类的标签。==目标是让产出和你亲手投入的时间脱钩，量变大了，你的工时不用跟着变大。=="
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Find the engines and the brakes",
+          "zh": "找出引擎和刹车"
+        },
+        "paragraphs": {
+          "en": [
+            "System dynamics, the method Jay Forrester built at MIT from the 1950s, describes behaviour through feedback loops.[[2]] A reinforcing loop feeds itself: a better product earns word of mouth, which brings users, whose feedback makes the product better. A balancing loop pushes back: every feature you ship adds maintenance, and maintenance eats the time meant for new features.",
+            "You cannot run every loop at once. ==Name the two or three loops that actually drive your growth and spend most of your limited energy there.== For the balancing loops, design the exit in advance: decide what usage or cost would make you retire a feature, before it quietly becomes a second job."
+          ],
+          "zh": [
+            "System dynamics 是 Jay Forrester 从 1950 年代起在 MIT 建立的方法，用反馈回路来描述系统怎么变化。[[2]] 增强回路会自己喂自己：产品更好，口碑更好，用户更多，反馈更多，产品又更好。调节回路会往回推：每上线一个功能就多一份维护，维护又吃掉本来留给新功能的时间。",
+            "你不可能同时照顾每一个回路。==找出真正推动你成长的那两三个回路，把有限的力气大部分放在那里。==至于调节回路，先把出口设计好：在某个功能悄悄变成第二份工作之前，就先决定用量低到多少、成本高到多少，你就把它下线。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Push on the lever that moves",
+          "zh": "推那根推得动的杠杆"
+        },
+        "paragraphs": {
+          "en": [
+            "Donella Meadows ranked twelve places to intervene in a system, from weakest to strongest.[[1]] At the bottom are numbers and parameters: more hours, a slightly higher price, one more post a week. Higher up are the structure of information flows, the rules of the system, and its goal.",
+            "For a solo founder this is practical. ==Working longer is a parameter change, the weakest lever on the list; changing a rule or an information flow usually moves far more.== A rule might be that support only comes in through one form. An information flow might be a single page that shows what actually broke this week, so you stop guessing."
+          ],
+          "zh": [
+            "Donella Meadows 把介入一个系统的十二个位置，从弱到强排了出来。[[1]] 最底层是数字和参数：多做几个小时、价格调高一点、每周多发一篇。往上是信息怎么流动、系统的规则，以及系统的目标。",
+            "对一个人创业来说，这很实际。==多做几个小时只是改参数，是清单上最弱的一根杠杆；改一条规则或一条信息流，通常推得动的多得多。==规则可以是：客服问题只从一个表单进来。信息流可以是：一页只显示这周真正坏了什么的面板，让你不用再靠猜。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Modules and one source of truth",
+          "zh": "模块化，和唯一的事实来源"
+        },
+        "paragraphs": {
+          "en": [
+            "Complexity becomes dangerous when everything is tightly coupled: one change in the backend breaks billing and the newsletter at the same time. Treat product, marketing and your own operations as separate modules with clear edges, so one can change without dragging the others along.",
+            "The same goes for knowledge. Do not copy your strategy into a hundred task descriptions. ==Let tasks point to one source of truth, so that when the strategy changes you rewrite one page instead of a hundred tasks.== That is a smaller surface for your attention to cover."
+          ],
+          "zh": [
+            "所有东西紧紧绑在一起的时候，复杂度才真正危险：后端改一行，收款和电子报一起坏。把产品、市场和你自己的运营当成几个边界清楚的模块，一个改了，不会把其他的一起拖下水。",
+            "知识也一样。不要把策略抄进一百个任务描述里。==让任务指向唯一的事实来源，策略一变，你改的是一页，而不是一百个任务。==你的注意力要照顾的面，就小了很多。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Automate after you simplify",
+          "zh": "先简化，再自动化"
+        },
+        "paragraphs": {
+          "en": [
+            "Automation is not about replacing work; for one person it is about protecting attention. But automating a broken process only produces errors faster. Shorten the steps first, then automate what is left. A useful test: the task repeats, it follows the same logic every time, and over a horizon you choose, the time it saves is larger than the time it takes to build.",
+            "Treat experiments the same way. A single landing-page test proves little on its own. ==Decide before you start what result counts as a win and how much time one experiment may cost, then judge the process over many runs rather than any one outcome.== If this sounds like the idea in [[note:turn-chaos-into-systems|Turn chaos into systems]], it is: the point is that the same confusion should not need handling twice."
+          ],
+          "zh": [
+            "自动化不是为了取代工作；对一个人来说，它是为了保护注意力。可是把一个坏掉的流程自动化，只会更快地产生错误。先把步骤砍短，再把剩下的自动化。一个好用的判断：这件事会重复、每次的逻辑都一样，而且在你自己定的一段时间里，它省下的时间比做出来花的时间多。",
+            "实验也一样。单独一次落地页测试证明不了什么。==开始之前就先决定什么结果算赢、一次实验最多花多少时间，然后用很多次的结果来评判这个过程，而不是看某一次。==如果这听起来很像[[note:turn-chaos-into-systems|《把混乱变成系统》]]，那是因为它就是同一个想法：同一种混乱，不应该处理第二次。"
+          ]
+        }
+      }
+    ],
+    "datePublished": "2026-10-26",
+    "dateModified": "2026-10-26"
+  },
+  {
+    "slug": "penneys-game-probability-intuition",
+    "cover": "coin-spin",
+    "title": {
+      "en": "Penney's game: why the second player wins",
+      "zh": "Penney's game：为什么后手稳赢"
+    },
+    "summary": {
+      "en": "Every run of three coin flips is equally likely, yet in Penney's game the player who chooses second can always pick a sequence that tends to appear first, winning at least two times in three. Here is the reply rule, the full table checked by exact calculation, and Conway's trick for computing any match-up.",
+      "zh": "三次抛硬币的每一种结果机会都一样，可是在 Penney's game 里，后选的人永远能挑到一个比较早出现的序列，至少三次赢两次。这里有后手的应对法则、逐行精确核算过的整张表，以及 Conway 算任何一局胜率的方法。"
+    },
+    "category": {
+      "en": "Probability",
+      "zh": "概率"
+    },
+    "thesis": {
+      "en": "Equally likely is not the same as equally early. In a race between patterns, what matters is how each pattern overlaps the other.",
+      "zh": "机会一样，不等于来得一样早。序列赛跑时，决定胜负的是两个序列怎么互相重叠。"
+    },
+    "sources": [
+      "Walter Penney, Journal of Recreational Mathematics (October 1969)",
+      "L. J. Guibas and A. M. Odlyzko, String overlaps, pattern matching, and nontransitive games (1981)",
+      "Elwyn Berlekamp, John Conway and Richard Guy, Winning Ways for your Mathematical Plays",
+      "Martin Gardner, Time Travel and Other Mathematical Bewilderments (1988)"
+    ],
+    "references": [
+      {
+        "id": "1",
+        "url": "https://en.wikipedia.org/wiki/Penney%27s_game",
+        "label": {
+          "en": "Penney's game (Wikipedia): Walter Penney's 1969 game, the reply rule for three-flip sequences, the odds table, and Guibas and Odlyzko's result for longer sequences.",
+          "zh": "Penney's game（维基百科）：Walter Penney 1969 年提出的游戏、三次序列的后手法则、胜率表，以及 Guibas 与 Odlyzko 对更长序列的结果。"
+        }
+      },
+      {
+        "id": "2",
+        "url": "https://eden-tan.com/penneys-game",
+        "label": {
+          "en": "Eden Tan — Penney's Game: play the levels, then use the lab to compute any match-up exactly with Conway's leading numbers.",
+          "zh": "Eden Tan — Penney's Game：先闯关，再用实验室以 Conway 的 leading numbers 精确算出任何一局的胜率。"
+        }
+      }
+    ],
+    "storyboard": [
+      {
+        "motif": "phyllotaxis",
+        "kind": "idea",
+        "beat": {
+          "en": "Any three flips in a row come out HHH one time in eight, and THH one time in eight. The race is not about how often a pattern happens, but which one shows up first.",
+          "zh": "连续三次抛硬币，出现 HHH 的机会是八分之一，THH 也是八分之一。赛跑比的不是谁出现得多，而是谁先出现。"
+        }
+      },
+      {
+        "motif": "spiral",
+        "kind": "method",
+        "beat": {
+          "en": "Take the first player's first two flips, and put the opposite of their middle flip in front. HHT becomes THH; HTH becomes HHT.",
+          "zh": "拿先手序列的前两个，在前面补上先手中间那个的相反面。HHT 变成 THH，HTH 变成 HHT。"
+        }
+      },
+      {
+        "motif": "mandelbrot",
+        "kind": "fact",
+        "beat": {
+          "en": "Run the rule on all eight choices and the second player wins with 7/8, 3/4 or 2/3. Never less than two times in three.",
+          "zh": "把法则套在八种选择上，后手的胜率是 7/8、3/4 或 2/3。永远不低于三次赢两次。"
+        }
+      },
+      {
+        "motif": "penrose",
+        "kind": "principle",
+        "beat": {
+          "en": "THH beats HHT, HHT beats HTT, HTT beats TTH, and TTH beats THH. Like rock, paper, scissors, there is no best sequence, only a best reply.",
+          "zh": "THH 赢 HHT，HHT 赢 HTT，HTT 赢 TTH，TTH 又赢回 THH。像剪刀石头布一样，没有最强的序列，只有最好的回应。"
+        }
+      },
+      {
+        "motif": "catenoid",
+        "kind": "method",
+        "beat": {
+          "en": "Conway turned the odds into arithmetic: compare how each sequence overlaps itself and the other, write each overlap as a binary number, subtract.",
+          "zh": "Conway 把胜率变成算术：比较每个序列和自己、和对方怎么重叠，把每种重叠写成一个二进制数，再相减。"
+        }
+      },
+      {
+        "motif": "lissajous",
+        "kind": "warning",
+        "beat": {
+          "en": "The edge needs sequences of three or more and a fair coin. With two flips, or a coin that lands heads four times in five, the second player's sure thing disappears.",
+          "zh": "这个优势要求序列至少三个、硬币公平。只有两个，或者硬币五次有四次正面，后手的必胜就消失了。"
+        }
+      }
+    ],
+    "sections": [
+      {
+        "title": {
+          "en": "Equally likely, not equally early",
+          "zh": "机会一样，不等于来得一样早"
+        },
+        "paragraphs": {
+          "en": [
+            "Flip a fair coin three times and every outcome, HHH or HTH or THH, has the same chance: one in eight. If two people each bet on a pattern for one block of three flips, nobody has an edge.",
+            "Penney's game, introduced by Walter Penney in 1969,[[1]] changes one thing. Each player picks a three-flip pattern, then the coin is flipped again and again, and whoever's pattern appears first in the running stream wins. ==Once the patterns race in one continuous stream, equal chances stop meaning equal speed, and the player who chooses second can always use that.=="
+          ],
+          "zh": [
+            "公平的硬币抛三次，每一种结果，HHH 也好、HTH 也好、THH 也好，机会都一样：八分之一。如果两个人各押一个序列、只比一组三次，谁都没有优势。",
+            "Walter Penney 在 1969 年提出的这个游戏，[[1]] 只改了一件事：两人各挑一个三次的序列，然后一直抛下去，谁的序列先在这一长串结果里出现，谁就赢。==一旦序列是在同一串结果里赛跑，机会一样就不再等于速度一样，而后选的人永远可以利用这一点。=="
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "The reply rule",
+          "zh": "后手的应对法则"
+        },
+        "paragraphs": {
+          "en": [
+            "The second player sees the first player's pattern before choosing. Call the first player's flips one, two, three. The reply is: the opposite of flip two, followed by flips one and two.",
+            "==In short: copy the first player's first two flips and put the opposite of their middle flip in front.== Against HHT you play THH; against HTH you play HHT; against TTT you play HTT. A common mistake is to flip the first symbol instead of the middle one. That gives THT against HHT, which wins only 3/8 of the time, worse than a coin toss."
+          ],
+          "zh": [
+            "后手是看过先手的序列之后才选。把先手的三次叫做第一、第二、第三个。后手的回应是：第二个的相反面，接着第一个和第二个。",
+            "==简单说：抄先手的前两个，在前面补上先手中间那个的相反面。==先手 HHT，你就选 THH；先手 HTH，你就选 HHT；先手 TTT，你就选 HTT。常见的错误是把第一个反过来，而不是中间那个：那样对 HHT 会选出 THT，胜率只有 3/8，比猜硬币还差。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "The whole table, checked",
+          "zh": "整张表，逐行核过"
+        },
+        "paragraphs": {
+          "en": [
+            "Here are all eight match-ups, with the second player's chance of winning. Against HHH, THH wins 7/8. Against HHT, THH wins 3/4. Against HTH, HHT wins 2/3. Against HTT, HHT wins 2/3. Against THH, TTH wins 2/3. Against THT, TTH wins 2/3. Against TTH, HTT wins 3/4. Against TTT, HTT wins 7/8. Each of these was computed exactly, and in every case the reply given by the rule is also the best possible reply.",
+            "The extreme case is the easiest to see. HHH can only win if the very first three flips are HHH, which happens one time in eight. If a tail appears anywhere before that, then the first run of three heads must come right after a tail, and that tail plus two heads is THH, already finished. ==So the second player is never worse than two wins in three, and against HHH or TTT it is seven in eight.=="
+          ],
+          "zh": [
+            "八种对局全部列出来，数字是后手的胜率。先手 HHH，后手 THH 赢 7/8；先手 HHT，THH 赢 3/4；先手 HTH，HHT 赢 2/3；先手 HTT，HHT 赢 2/3；先手 THH，TTH 赢 2/3；先手 THT，TTH 赢 2/3；先手 TTH，HTT 赢 3/4；先手 TTT，HTT 赢 7/8。每一行都是精确算出来的，而且每一行里，法则给出的回应也正好是所有选择里最好的那一个。",
+            "最极端的那一行最好懂。HHH 只有在头三次刚好是 HHH 时才会赢，机会是八分之一。只要在那之前出现过一次反面，第一次出现的三连正面前面一定紧贴着一个反面，那个反面加上两个正面就是 THH，已经先完成了。==所以后手最差也有三次赢两次，碰上 HHH 或 TTT 更是八次赢七次。=="
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "No best sequence, only a best reply",
+          "zh": "没有最强的序列，只有最好的回应"
+        },
+        "paragraphs": {
+          "en": [
+            "Part of the intuition comes from waiting times. On average you wait 14 flips to see HHH, 10 to see HTH, and 8 to see THH. A pattern that overlaps itself, like HHH, tends to arrive in clumps, so its first appearance comes late.",
+            "But waiting time cannot be the whole story, because the wins go in a circle. THH beats HHT 3/4 of the time, HHT beats HTT 2/3, HTT beats TTH 3/4, and TTH beats THH 2/3. ==The relation is non-transitive, like rock, paper, scissors: there is no strongest sequence to pick first, only a best answer to whatever was picked.=="
+          ],
+          "zh": [
+            "一部分直觉来自等待时间。平均要抛 14 次才看到 HHH，10 次看到 HTH，8 次看到 THH。像 HHH 这种和自己重叠的序列，出现时往往扎堆，所以第一次出现会比较晚。",
+            "可是等待时间解释不了全部，因为胜负会绕成一个圈。THH 以 3/4 赢 HHT，HHT 以 2/3 赢 HTT，HTT 以 3/4 赢 TTH，TTH 又以 2/3 赢回 THH。==这种关系没有传递性，就像剪刀石头布：先选的人没有最强的序列可挑，只有针对对方的最好回应。=="
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Conway's leading numbers",
+          "zh": "Conway 的 leading numbers"
+        },
+        "paragraphs": {
+          "en": [
+            "John Conway found a way to compute any match-up by hand, described in Winning Ways and in Martin Gardner's writing. For two patterns A and B, write a correlation A:B. Slide B under A: at each position of A, ask whether the rest of A, from that position to the end, matches the start of B. Write 1 for yes and 0 for no, and read the digits as a binary number.",
+            "==The odds that B appears before A are (A:A minus A:B) to (B:B minus B:A).== For A as HHH and B as THH: A:A is 111, or 7; A:B is 000, or 0; B:B is 100, or 4; B:A is 011, or 3. The odds are 7 to 1, which is 7/8, matching the table. The lab on the Penney's Game page does this for any pair you choose.[[2]]"
+          ],
+          "zh": [
+            "John Conway 找到一种可以手算任何一局的方法，收在 Winning Ways 里，也出现在 Martin Gardner 的文章中。对两个序列 A 和 B，定义一个相关数 A:B：把 B 垫在 A 下面一格一格挪，在 A 的每一个位置问一次：A 从这里到结尾的部分，是不是正好等于 B 的开头？是就写 1，不是就写 0，再把这串数字当成二进制数来读。",
+            "==B 比 A 先出现的赔率，是（A:A 减 A:B）比（B:B 减 B:A）。==以 A 为 HHH、B 为 THH：A:A 是 111，也就是 7；A:B 是 000，也就是 0；B:B 是 100，也就是 4；B:A 是 011，也就是 3。赔率是 7 比 1，也就是 7/8，和表上一样。Penney's Game 那一页的实验室，可以替你算任何一对序列。[[2]]"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Where the edge stops",
+          "zh": "优势在哪里消失"
+        },
+        "paragraphs": {
+          "en": [
+            "The edge has limits, and they are worth knowing. For patterns of length three or more, Guibas and Odlyzko proved in 1981 that the second player always has a winning reply, built from the first player's first symbols with one symbol added in front.[[1]] For length two it fails: against HT or TH, the best reply only ties at one half.",
+            "It also depends on a fair coin. ==If the coin lands heads four times in five, THH beats HHH only 61 times in 125, under one half, so the first player's HHH becomes the favourite.== The lesson travels beyond coins: when events race in a stream, ask how the patterns overlap, and ask whether the process is really as fair as you assumed."
+          ],
+          "zh": [
+            "这个优势有边界，值得知道。序列长度是三或以上时，Guibas 和 Odlyzko 在 1981 年证明了后手永远有一个会赢的回应，做法是拿先手开头的几个符号，在前面补上一个。[[1]] 长度只有二的时候就不成立：先手选 HT 或 TH，后手最好也只能打平，各一半。",
+            "它也要求硬币公平。==如果硬币五次有四次正面，THH 对 HHH 只剩 125 次赢 61 次，不到一半，先手的 HHH 反而成了热门。==这个教训不只适用于硬币：事件在一串过程里赛跑时，先问这些模式怎么重叠，也要问这个过程是不是真的像你以为的那么公平。"
+          ]
+        }
+      }
+    ],
+    "datePublished": "2026-10-26",
+    "dateModified": "2026-10-26"
+  },
+  {
+    "slug": "conway-game-of-life-patterns-explained",
+    "cover": "lens",
+    "title": {
+      "en": "Still, pulsing, moving: the three species of Life",
+      "zh": "不动、脉动、移动：Life 里的三种生物"
+    },
+    "summary": {
+      "en": "Conway's Game of Life has four rules and no plan, yet it fills up with recognisable creatures. Still lifes never change, oscillators repeat, spaceships travel. Learn the three species and a chaotic board becomes readable.",
+      "zh": "Conway's Game of Life 只有四条规则，没有任何设计，却会长出一眼认得出的生物。静物永远不变，振荡子会重复，飞船会移动。认得这三种，一张乱糟糟的棋盘就读得懂了。"
+    },
+    "category": {
+      "en": "Systems",
+      "zh": "系统"
+    },
+    "thesis": {
+      "en": "You do not read a Life board cell by cell. You read it by species: what stays, what repeats, and what moves.",
+      "zh": "Life 的棋盘不是一格一格读的，是按物种读的：什么不动、什么重复、什么在移动。"
+    },
+    "sources": [
+      "Martin Gardner, Mathematical Games, Scientific American (October 1970)",
+      "Elwyn Berlekamp, John Conway and Richard Guy, Winning Ways for your Mathematical Plays (1982)",
+      "Eden Tan, Conway's Game of Life and the Cellular Automata Lab"
+    ],
+    "references": [
+      {
+        "id": "1",
+        "url": "https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life",
+        "label": {
+          "en": "Conway's Game of Life (Wikipedia): devised by John Conway in 1970 and published in Martin Gardner's October 1970 column; the four rules, still lifes, oscillators, the Gosper glider gun and Turing completeness.",
+          "zh": "Conway's Game of Life（维基百科）：John Conway 1970 年设计，同年 10 月刊登在 Martin Gardner 的专栏；四条规则、静物、振荡子、Gosper glider gun 与图灵完备。"
+        }
+      },
+      {
+        "id": "2",
+        "url": "https://eden-tan.com/conways-game-of-life",
+        "label": {
+          "en": "Eden Tan — Conway's Game of Life: a playable B3/S23 board to try every pattern in this note.",
+          "zh": "Eden Tan — Conway's Game of Life：可以玩的 B3/S23 棋盘，本文每个图案都能自己摆上去试。"
+        }
+      }
+    ],
+    "storyboard": [
+      {
+        "motif": "phyllotaxis",
+        "kind": "method",
+        "beat": {
+          "en": "Each cell counts its eight neighbours. Three brings a dead cell to life, two or three keeps a live one alive, anything else means death or empty.",
+          "zh": "每个格子数它的八个邻居。死格有三个就活过来，活格有两个或三个就活下去，其他情况就死掉或继续空着。"
+        }
+      },
+      {
+        "motif": "penrose",
+        "kind": "fact",
+        "beat": {
+          "en": "A still life is a pattern whose next generation is exactly itself. In the block every live cell has three neighbours and no empty cell nearby has three.",
+          "zh": "静物，是下一代和自己一模一样的图案。方块里每个活格都有三个邻居，旁边没有任何一个空格刚好有三个。"
+        }
+      },
+      {
+        "motif": "lissajous",
+        "kind": "fact",
+        "beat": {
+          "en": "The blinker turns from a row of three into a column of three and back. Period two. Larger oscillators take three, fifteen, or many more generations to come home.",
+          "zh": "闪烁子从一横排三格变成一直排三格，再变回去，周期是二。更大的振荡子要三代、十五代，甚至更多代才回到原样。"
+        }
+      },
+      {
+        "motif": "spiral",
+        "kind": "fact",
+        "beat": {
+          "en": "The glider is five cells that, after four generations, are the same shape one step further along the diagonal. It carries a pattern across the board.",
+          "zh": "滑翔机是五个格子，四代之后还是同一个形状，只是沿对角线挪了一格。它把一个图案搬过整张棋盘。"
+        }
+      },
+      {
+        "motif": "mandelbrot",
+        "kind": "principle",
+        "beat": {
+          "en": "A random board burns down to a few percent of its cells: blocks, beehives, blinkers, and gliders flying off. The same parts, arranged with care, can compute anything.",
+          "zh": "一张随机棋盘会烧到只剩百分之几的格子：方块、蜂巢、闪烁子，还有飞走的滑翔机。同样这些零件，用心排列，就能计算任何东西。"
+        }
+      }
+    ],
+    "sections": [
+      {
+        "title": {
+          "en": "Four rules, no plan",
+          "zh": "四条规则，没有设计"
+        },
+        "paragraphs": {
+          "en": [
+            "John Conway devised the Game of Life in 1970, and Martin Gardner introduced it to the world in his Scientific American column that October.[[1]] The board is a grid of cells, each alive or dead, and every cell looks at its eight neighbours.",
+            "There are four rules. A live cell with fewer than two live neighbours dies. A live cell with two or three survives. A live cell with more than three dies. A dead cell with exactly three becomes alive. ==Nothing in those rules mentions shapes, yet the board fills with shapes that behave like species, and naming them is how you read the board.=="
+          ],
+          "zh": [
+            "John Conway 在 1970 年设计了 Game of Life，同年 10 月 Martin Gardner 在 Scientific American 的专栏把它介绍给全世界。[[1]] 棋盘是一格一格的细胞，每格不是活就是死，每格都看它周围的八个邻居。",
+            "规则只有四条。活格的活邻居少于两个，死。活格有两个或三个，活下去。活格多于三个，死。死格刚好有三个，活过来。==这四条规则里没有提到任何形状，棋盘上却长满了像物种一样的形状；认得它们，就是读懂棋盘的方法。=="
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Still lifes: nothing changes",
+          "zh": "静物：什么都不变"
+        },
+        "paragraphs": {
+          "en": [
+            "A still life is a pattern whose next generation is exactly the same as the current one: no cell dies and no cell is born. ==For that to happen, every live cell needs two or three live neighbours, and no dead cell may have exactly three.==",
+            "The block is the simplest: a 2 by 2 square. Each of its four cells has three live neighbours, so all survive, and every empty cell around it touches at most two, so nothing is born. The beehive is six cells in a stretched hexagon. Each live cell has exactly two neighbours; the two empty cells inside it have five, the empty cells outside have at most two, none have three, so not a single cell changes. The loaf, the boat and the tub work the same way. Still lifes are the debris a chaotic board leaves behind once it settles."
+          ],
+          "zh": [
+            "静物，是下一代和这一代完全一样的图案：没有格子死，也没有格子生。==要做到这样，每个活格都要有两个或三个活邻居，而且没有任何一个死格刚好有三个。==",
+            "最简单的是方块：一个 2 乘 2 的正方形。四个格子各有三个活邻居，全部活下去；周围每个空格最多只碰到两个，所以什么都不会生出来。蜂巢是六个格子排成的拉长六边形。每个活格刚好两个邻居；中间那两个空格各有五个，外面的空格最多两个，没有一个是三，所以一个格子都不会变。面包（loaf）、小船（boat）、浴缸（tub）都是同样的道理。静物，是一张混乱的棋盘安定下来之后留下的残骸。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Oscillators: a heartbeat in place",
+          "zh": "振荡子：在原地跳动的心"
+        },
+        "paragraphs": {
+          "en": [
+            "An oscillator returns to its starting shape after a fixed number of generations, its period, without moving anywhere. The blinker is a row of three cells. The two end cells have only one neighbour each and die; the centre has two and survives; the cells directly above and below the centre each see three and are born. The row becomes a column, and one generation later the column becomes a row again.",
+            "==Period two is only the start: the toad and the beacon also repeat every two generations, the pulsar every three, and the pentadecathlon every fifteen.==[[1]] Oscillators give the board a rhythm. A frozen picture can tell you where cells are; it cannot tell you which ones are pulsing."
+          ],
+          "zh": [
+            "振荡子在固定的代数之后回到原来的形状，这个代数叫周期，而且它不会移动。闪烁子是一横排三个格子。两端各只有一个邻居，死掉；中间那格有两个，活下去；正上方和正下方的空格各看到三个，生出来。横排变成直排，再过一代，直排又变回横排。",
+            "==周期二只是开始：蟾蜍（toad）和信标（beacon）也是每两代重复一次，脉冲星（pulsar）每三代，十五项全能（pentadecathlon）每十五代。==[[1]] 振荡子给棋盘加上了节奏。一张静止的截图能告诉你格子在哪里，却看不出哪些格子在跳动。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Spaceships: patterns that travel",
+          "zh": "飞船：会移动的图案"
+        },
+        "paragraphs": {
+          "en": [
+            "A spaceship returns to its own shape, but somewhere else. The glider is five cells; after four generations it has the same shape, shifted one cell diagonally. The lightweight spaceship moves along a row instead, twice as fast. ==A spaceship is how information crosses a Life board: an arrangement of cells carried from one place to another.==",
+            "Conway offered fifty dollars in 1970 to anyone who could prove or disprove that a pattern can grow without limit. That November a team led by Bill Gosper at MIT won it with the glider gun, a pattern that fires a new glider every thirty generations forever.[[1]] Endless growth turned out to need nothing more than a machine for making spaceships."
+          ],
+          "zh": [
+            "飞船也会回到自己的形状，只是换了地方。滑翔机是五个格子；四代之后形状一样，沿对角线挪了一格。轻型飞船（lightweight spaceship）则是沿着一横排走，速度是滑翔机的两倍。==飞船就是信息穿过 Life 棋盘的方式：一组排列好的格子，从一个地方被搬到另一个地方。==",
+            "Conway 在 1970 年悬赏五十美元，征求证明或否定「图案可以无限长大」。同年 11 月，Bill Gosper 带领的 MIT 团队用 glider gun 拿下了奖金：这个图案每三十代就射出一架新的滑翔机，永远不停。[[1]] 原来无限的成长，只需要一台会制造飞船的机器。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "From soup to ash, and to computation",
+          "zh": "从一锅汤到一堆灰，再到计算"
+        },
+        "paragraphs": {
+          "en": [
+            "Fill a board at random and the first generations are a boil of births and deaths. Then it burns down. In one simple run, a half-filled 256 by 256 board with wrapped edges kept only about three percent of its cells alive after 4,000 generations, and the most common leftovers were blocks, beehives and blinkers, with gliders flying off. You can watch the same thing happen on the Life board.[[2]]",
+            "The same parts, arranged on purpose, do far more. In Winning Ways (1982), Berlekamp, Conway and Guy showed how streams of gliders, guns and carefully placed still lifes can act as wires and logic gates, which makes Life capable of universal computation. ==The cost of that power is that, in general, you cannot predict a pattern's future without running it.== The one-dimensional version of this idea, with 256 rules that fit in a byte, is in [[note:elementary-cellular-automata-256-rules|256 rules, one byte each]]."
+          ],
+          "zh": [
+            "随机把棋盘填满，头几代是一锅不停生生死死的沸汤。然后它会慢慢烧完。在一次简单的模拟里，一张填了一半、边界相连的 256 乘 256 棋盘，跑了 4,000 代之后，只剩大约百分之三的格子还活着；留下来最多的是方块、蜂巢和闪烁子，还有几架飞走的滑翔机。你也可以在 Life 棋盘上看着同一件事发生。[[2]]",
+            "同样的零件，刻意排好，能做的事多得多。Berlekamp、Conway 和 Guy 在 Winning Ways（1982）里说明了，一串串滑翔机、glider gun 和摆好位置的静物，可以当成电线和逻辑闸，所以 Life 能做通用计算。==这种能力的代价是：一般来说，不把一个图案跑起来，就没办法预测它的未来。==这个想法的一维版本，256 条规则刚好装进一个 byte，写在[[note:elementary-cellular-automata-256-rules|《256 条规则，每条一个 byte》]]。"
+          ]
+        }
+      }
+    ],
+    "datePublished": "2026-10-26",
+    "dateModified": "2026-10-26"
+  },
+  {
+    "slug": "elementary-cellular-automata-rule-30-complexity",
+    "cover": "bolt",
+    "title": {
+      "en": "Rule 30: one line of logic that never settles",
+      "zh": "Rule 30：一行逻辑，永远安定不下来"
+    },
+    "summary": {
+      "en": "Rule 30 fits in one formula, left XOR (centre OR right), yet from a single black cell it grows a pattern whose right side looks like noise. Why it is lopsided, how its centre column became a random-number generator, why that is not cryptography, and the open problems still attached to it.",
+      "zh": "Rule 30 写得进一条公式：左 XOR（中 OR 右）。可是从一个黑格开始，它长出来的图案右半边看起来像杂讯。它为什么一边整齐一边乱、中间那一列怎么变成随机数、为什么那不等于密码学，以及它身上到现在还没解开的问题。"
+    },
+    "category": {
+      "en": "Systems",
+      "zh": "系统"
+    },
+    "thesis": {
+      "en": "Rule 30 is completely determined and still unpredictable in practice. Knowing a rule exactly is not the same as knowing where it goes.",
+      "zh": "Rule 30 完全确定，实际上却无法预测。把规则知道得一清二楚，不等于知道它会走到哪里。"
+    },
+    "sources": [
+      "Stephen Wolfram, Statistical Mechanics of Cellular Automata (1983)",
+      "Stephen Wolfram, Random Sequence Generation by Cellular Automata (1986)",
+      "Willi Meier and Othmar Staffelbach, Analysis of Pseudo Random Sequences Generated by Cellular Automata (1991)",
+      "Wolfram Rule 30 Prizes (2019)"
+    ],
+    "references": [
+      {
+        "id": "1",
+        "url": "https://en.wikipedia.org/wiki/Rule_30",
+        "label": {
+          "en": "Rule 30 (Wikipedia): introduced by Stephen Wolfram in 1983, the formula p XOR (q OR r), its use for random integers in Mathematica, the cryptographic proposals, and the Conus textile shell.",
+          "zh": "Rule 30（维基百科）：Stephen Wolfram 1983 年提出，公式 p XOR (q OR r)、在 Mathematica 里用来生成随机整数、密码学上的提议，以及 Conus textile 芋螺的花纹。"
+        }
+      },
+      {
+        "id": "2",
+        "url": "https://www.rule30prize.org/",
+        "label": {
+          "en": "The Wolfram Rule 30 Prizes: three open problems about the centre column, announced in October 2019, $10,000 each.",
+          "zh": "Wolfram Rule 30 Prizes：关于中间那一列的三个公开问题，2019 年 10 月宣布，每题奖金一万美元。"
+        }
+      },
+      {
+        "id": "3",
+        "url": "https://eden-tan.com/cellular-automata-lab",
+        "label": {
+          "en": "Eden Tan — Cellular Automata Lab: type 30 and watch it grow, then try 86, its mirror image.",
+          "zh": "Eden Tan — 元胞自动机实验室：输入 30 看它长出来，再试 86，它的镜像。"
+        }
+      }
+    ],
+    "storyboard": [
+      {
+        "motif": "phyllotaxis",
+        "kind": "method",
+        "beat": {
+          "en": "Eight neighbourhoods, eight answers: 0 0 0 1 1 1 1 0. Read as binary that is 30, and it is the same as one short formula: left XOR (centre OR right).",
+          "zh": "八种邻域，八个答案：0 0 0 1 1 1 1 0。当成二进制读是 30，也等于一条短公式：左 XOR（中 OR 右）。"
+        }
+      },
+      {
+        "motif": "spiral",
+        "kind": "fact",
+        "beat": {
+          "en": "From a single black cell, the left edge settles into neat diagonal stripes while the right side never stops churning.",
+          "zh": "从一个黑格开始，左边很快排成整齐的斜纹，右边却一直翻搅，从来不安定。"
+        }
+      },
+      {
+        "motif": "mandelbrot",
+        "kind": "example",
+        "beat": {
+          "en": "Read the centre column top to bottom and you get bits that look like coin flips. Mathematica used it to generate random integers.",
+          "zh": "把中间那一列从上读到下，得到的 bit 看起来就像抛硬币。Mathematica 曾经拿它来产生随机整数。"
+        }
+      },
+      {
+        "motif": "catenary",
+        "kind": "warning",
+        "beat": {
+          "en": "Random-looking is not secret. Rule 30 was proposed as a stream cipher in 1985, and later analysis showed it was weaker than it looked.",
+          "zh": "看起来随机，不等于安全。Rule 30 在 1985 年被提议当成串流密码，之后的分析显示它比看起来的弱。"
+        }
+      },
+      {
+        "motif": "penrose",
+        "kind": "gap",
+        "beat": {
+          "en": "Nobody has proved the centre column never repeats, that its black and white even out, or that there is no shortcut to row n. Three open prizes still wait.",
+          "zh": "到现在没人证明中间那一列永远不会重复、黑白最终各占一半，或者到第 n 行没有捷径。三个奖金还在等人领。"
+        }
+      }
+    ],
+    "sections": [
+      {
+        "title": {
+          "en": "The whole rule in one line",
+          "zh": "整条规则，就一行"
+        },
+        "paragraphs": {
+          "en": [
+            "Like every elementary cellular automaton, Rule 30 decides each new cell from three cells above it: left, centre, right. In the standard order the answers are 111 to 0, 110 to 0, 101 to 0, 100 to 1, 011 to 1, 010 to 1, 001 to 1, and 000 to 0. Read the outputs as one binary number, 00011110, and you get 30. How that numbering works for all 256 rules is in [[note:elementary-cellular-automata-256-rules|256 rules, one byte each]].",
+            "Stephen Wolfram introduced Rule 30 in 1983.[[1]] The table collapses into one formula: ==the new cell is the left cell XOR (the centre cell OR the right cell).== Check any row: for 100 the centre and right are both 0, so the result is the left cell, 1; for 101 the right is 1, so the result is 1 XOR 1, which is 0."
+          ],
+          "zh": [
+            "和所有一维元胞自动机一样，Rule 30 用上一排的三个格子决定新格子：左、中、右。按标准顺序，答案是 111 得 0、110 得 0、101 得 0、100 得 1、011 得 1、010 得 1、001 得 1、000 得 0。把这些输出当成一个二进制数 00011110 来读，就是 30。256 条规则都怎么这样编号，写在[[note:elementary-cellular-automata-256-rules|《256 条规则，每条一个 byte》]]。",
+            "Stephen Wolfram 在 1983 年提出 Rule 30。[[1]] 整张表可以缩成一条公式：==新格子等于左格 XOR（中格 OR 右格）。==随便验一行：100 的中格和右格都是 0，结果就是左格，1；101 的右格是 1，结果是 1 XOR 1，等于 0。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Neat on the left, noise on the right",
+          "zh": "左边整齐，右边杂乱"
+        },
+        "paragraphs": {
+          "en": [
+            "Start from a single black cell and the pattern grows as a triangle. Its left edge quickly settles into regular diagonal stripes. Its right side never settles at all: triangles of every size open and close with no visible order.",
+            "The formula explains the lopsidedness. ==Because the new cell is the left cell XOR something, changing the left cell always changes the result, so every difference keeps travelling to the right and never fades.== The rule is not mirror-symmetric; its mirror image is Rule 86, which is chaotic on the left instead."
+          ],
+          "zh": [
+            "从一个黑格开始，图案长成一个三角形。左边的边缘很快排成规律的斜纹。右半边却从来没有安定下来：大大小小的三角形不停开开合合，看不出任何秩序。",
+            "公式解释了这种一边倒。==因为新格子等于左格 XOR 某个东西，左格一变，结果就一定跟着变，所以每一个差异都会一路往右传、永远不会消失。==这条规则左右不对称；它的镜像是 Rule 86，乱的那一边换到了左边。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "A column of coin flips",
+          "zh": "一整列的抛硬币"
+        },
+        "paragraphs": {
+          "en": [
+            "Now read only the centre cell, one row at a time. The sequence starts 1101110011000101 and keeps going without any visible pattern. Over the first 4,000 rows, about half the cells are black, the four possible pairs 00, 01, 10 and 11 each appear about a quarter of the time, and no short repeating cycle shows up.",
+            "Wolfram proposed exactly this use in his 1986 paper on random sequence generation, and Mathematica used Rule 30 to generate random integers.[[1]] ==A rule with no randomness in it at all produces a column that passes for coin flips in many statistical tests.== That is the strange part: the disorder is not added from outside, it is computed."
+          ],
+          "zh": [
+            "现在只看中间那一格，一排一排往下读。这个序列开头是 1101110011000101，之后一直延续，看不出任何规律。前 4,000 排里，大约一半是黑格；00、01、10、11 四种相邻组合，各自大约占四分之一；也找不到短的重复周期。",
+            "Wolfram 在 1986 年那篇讲随机序列生成的论文里，提出的正是这种用法，而 Mathematica 也曾用 Rule 30 来产生随机整数。[[1]] ==一条完全不含随机的规则，产生出来的一列数字，在很多统计检验里都能冒充抛硬币。==奇怪的地方就在这里：这些混乱不是从外面加进来的，是算出来的。"
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Random-looking is not secret",
+          "zh": "看起来随机，不等于安全"
+        },
+        "paragraphs": {
+          "en": [
+            "Everything about Rule 30 is determined. Give the same starting row and you get the same picture every time, which is what makes it pseudo-random rather than random. That is fine for simulations, games and sampling, where you want repeatable noise.",
+            "Cryptography asks for more. Wolfram proposed a Rule 30 stream cipher in 1985, and in 1991 Willi Meier and Othmar Staffelbach published an analysis showing that such generators are weaker than they look.[[1]] ==Passing statistical tests means an observer cannot easily see a pattern; it does not mean an attacker cannot find one.=="
+          ],
+          "zh": [
+            "Rule 30 的一切都是确定的。给同一排起点，每次都得到同一张图，所以它是伪随机，不是真随机。用在模拟、游戏、抽样上没问题，那些场合本来就想要可以重现的杂讯。",
+            "密码学要求的更多。Wolfram 在 1985 年提出过以 Rule 30 做的串流密码，1991 年 Willi Meier 和 Othmar Staffelbach 发表分析，说明这类产生器比看起来的弱。[[1]] ==通过统计检验，只代表旁观者不容易看出规律；不代表攻击者找不到。=="
+          ]
+        }
+      },
+      {
+        "title": {
+          "en": "Three questions still open",
+          "zh": "三个还没解开的问题"
+        },
+        "paragraphs": {
+          "en": [
+            "Wolfram calls this kind of behaviour computational irreducibility: the only general way to know row one million is to compute the rows before it. For Rule 30 nobody has proved even the basic facts. In October 2019 he offered three prizes of $10,000 each: does the centre column never become periodic, do black and white occur equally often on average, and does computing the nth cell really take at least on the order of n steps?[[2]]",
+            "==A rule that fits in one line still has questions about it that nobody can answer.== Nature seems to run something similar; the shell of the cone snail Conus textile carries a pattern that looks much like Rule 30.[[1]] The quickest way to feel the difference between knowing a rule and knowing its future is to type 30 into the lab and watch.[[3]]"
+          ],
+          "zh": [
+            "Wolfram 把这种行为叫做计算不可约（computational irreducibility）：要知道第一百万排长什么样，一般来说唯一的办法就是把前面每一排都算出来。连 Rule 30 最基本的性质，到现在都还没人证明。2019 年 10 月他设了三个各一万美元的奖金：中间那一列是不是永远不会变成周期性？黑格和白格平均下来是不是一样多？算出第 n 格，是不是真的至少要花和 n 同阶的步数？[[2]]",
+            "==一条写得进一行的规则，身上还挂着没人答得出的问题。==大自然好像也在跑类似的东西：芋螺 Conus textile 的壳上，花纹看起来就很像 Rule 30。[[1]] 想亲身感受「知道规则」和「知道未来」之间的差距，最快的方法是在实验室输入 30，看它长出来。[[3]]"
+          ]
+        }
+      }
+    ],
+    "datePublished": "2026-10-26",
+    "dateModified": "2026-10-26"
   }
 ];

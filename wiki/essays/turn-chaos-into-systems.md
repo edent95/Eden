@@ -4,7 +4,7 @@ type: essay
 route: /notes/turn-chaos-into-systems
 order: 7
 published: 2026-07-21
-updated: 2026-08-14
+updated: 2026-10-26
 status: published
 ---
 
@@ -37,7 +37,8 @@ The JSON block below is the structured bilingual source consumed by the site com
   "sources": [
     "数字会说话",
     "营销管理",
-    "商弈"
+    "商弈",
+    "David Allen, Getting Things Done (2001)"
   ],
   "storyboard": [
     {
@@ -62,6 +63,14 @@ The JSON block below is the structured bilingual source consumed by the site com
       "beat": {
         "en": "Look where work repeats daily and judgment lives in one person's memory. A good system is like this figure: the complexity stays inside, and the person outside sees a clear edge.",
         "zh": "去找每天重复的动作、只靠某个人记得的判断。好的 system 就像这张图：复杂都留在里面，外面的人只看到清楚的轮廓。"
+      }
+    },
+    {
+      "motif": "spiral",
+      "kind": "action",
+      "beat": {
+        "en": "The same three links run a personal week: catch everything fast, sort it on a rhythm into do, keep or delete, then act. If the pile keeps growing, sorting is too slow or too little gets thrown away.",
+        "zh": "同样三个环，也能管一个人的一周：先快速接住，再按固定节奏分成要做、要留、要删，最后才行动。堆积一直变多，就是分得太慢，或者丢得太少。"
       }
     }
   ],
@@ -111,6 +120,22 @@ The JSON block below is the structured bilingual source consumed by the site com
         "zh": [
           "我现在会找四种地方：每天都在重复的动作、只能靠某个人记得的判断、人一离开就没人看得懂的资料，以及理论上不该发生第二次的错误。",
           "==好的 system 会把复杂留在里面，把清楚交给外面的人。==它让人少想一点不重要的重复，把注意力留给真正需要判断的地方。"
+        ]
+      }
+    },
+    {
+      "title": {
+        "en": "The same three links, for one person",
+        "zh": "同样三个环，用在一个人身上"
+      },
+      "paragraphs": {
+        "en": [
+          "A personal system, the thing people call a Life OS, is the same separation at a smaller scale. Input is capture: one place where every idea, task and promise lands quickly, so it stops living in your head. Judgment is a sorting pass on a fixed rhythm, where each item becomes a next action, a reference to keep, or something to delete. Action is the work itself. David Allen's Getting Things Done (2001) is the best-known version of this loop.",
+          "==Watch the balance between the links: if items arrive faster than you sort them, the inbox grows until you stop trusting it.== Make capture short enough that you would really do it mid-conversation, give unsorted items an expiry date you choose, and notice when tuning the tool takes more time than the work it holds. A system you spend all week decorating has become another source of chaos."
+        ],
+        "zh": [
+          "个人用的系统，也就是很多人说的 Life OS，其实是同一种拆法放小一号。输入是收集：一个地方，接住所有想法、任务和答应过别人的事，让它们不再挂在脑子里。判断是按固定节奏做一次分拣，每一项都变成下一步行动、要留的参考资料，或者直接删掉。行动才是真正去做。David Allen 的 Getting Things Done（2001）是这个回路最有名的版本。",
+          "==要看的是几个环之间的平衡：进来的比分掉的快，收件箱就会一直涨，直到你再也不信任它。==收集要短到你在聊天中途真的愿意做；没分拣的东西给一个你自己定的过期日；也留意调整工具的时间是不是已经比工具里装的工作还多。一个整周都在装修的系统，本身就成了另一个混乱的来源。"
         ]
       }
     }

@@ -26,7 +26,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-10-22';
+export const SITE_CONTENT_LASTMOD = '2026-10-26';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -569,6 +569,34 @@ export const ROUTE_SEO: RouteSeo[] = [
     priority: '0.7',
     title: { en: 'Elementary cellular automata: 256 rules explained | Eden Tan', zh: '一维元胞自动机：256 条规则怎么读 | Eden Tan' },
     desc: { en: 'How 8 neighbourhoods make 256 rules, how to read a rule number like Rule 30, why Rule 110 is universal and why 256 is really 88.', zh: '8 种邻域怎么变成 256 条规则、Rule 30 这种编号怎么读、Rule 110 为什么能通用计算、256 为什么其实是 88。' },
+  },
+  {
+    path: '/notes/systems-thinking-for-solo-founders',
+    og: 'notes',
+    priority: '0.7',
+    title: { en: 'Systems thinking for solo founders | Eden Tan', zh: '一个人创业的系统思考 | Eden Tan' },
+    desc: { en: 'How a solo founder manages complexity: see the connections, find the feedback loops, push the leverage points that move, and keep one source of truth.', zh: '一个人创业怎么对付复杂度：看见连接、找出反馈回路、推真正推得动的杠杆点，事实只放一个地方。' },
+  },
+  {
+    path: '/notes/penneys-game-probability-intuition',
+    og: 'notes',
+    priority: '0.7',
+    title: { en: "Penney's game: why the second player wins | Eden Tan", zh: "Penney's game：为什么后手稳赢 | Eden Tan" },
+    desc: { en: "The reply rule that wins Penney's coin game at least 2 times in 3, the full 8-row odds table checked exactly, non-transitivity, and Conway's leading numbers.", zh: "Penney's game 后手至少三次赢两次的应对法则、逐行精确核算的八行胜率表、非传递性，以及 Conway 的 leading numbers 算法。" },
+  },
+  {
+    path: '/notes/conway-game-of-life-patterns-explained',
+    og: 'conway',
+    priority: '0.7',
+    title: { en: "Game of Life patterns explained | Eden Tan", zh: 'Game of Life 图案：静物、振荡子与飞船 | Eden Tan' },
+    desc: { en: "Conway's Game of Life read by species: still lifes that never change, oscillators that repeat, spaceships like the glider that travel, and how they compute.", zh: 'Conway 生命游戏按物种来读：永远不变的静物、会重复的振荡子、像滑翔机一样移动的飞船，以及它们怎么做计算。' },
+  },
+  {
+    path: '/notes/elementary-cellular-automata-rule-30-complexity',
+    og: 'conway',
+    priority: '0.7',
+    title: { en: 'Rule 30: chaos from one line of logic | Eden Tan', zh: 'Rule 30：一行逻辑长出的混沌 | Eden Tan' },
+    desc: { en: 'Rule 30 is left XOR (centre OR right). Why it is ordered on one side and chaotic on the other, its random centre column, and the open Rule 30 prize problems.', zh: 'Rule 30 就是左 XOR（中 OR 右）。它为什么一边整齐一边混乱、中间那一列的随机数，以及还没解开的 Rule 30 奖金问题。' },
   },
   {
     path: '/notes/win-before-you-fight',
