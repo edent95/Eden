@@ -1,7 +1,7 @@
 // Canvas charts for the 4D Risk Terminal. Colours are read from the page's CSS variables at draw
 // time, so a theme flip only needs a redraw. Hover text goes through `onTip` (null hides it).
 import {
-  N, OPS, PLANS, pad, rm, rmK, limLabel, perMonth, oneIn, freqShort, pickPlan,
+  N, OPS, PLANS, pad, rm, rmK, limLabel, capOf, perMonth, oneIn, freqShort, pickPlan,
   type Backtest, type Book, type Config, type SweepRow,
 } from '../../services/fourdRisk';
 
@@ -201,12 +201,12 @@ export function heatBands(cfg: Config, bk: Book, op: number, metric: HeatMetric)
     const q = (x: number) => arr[Math.floor(x * (arr.length - 1))] || 0;
     cuts = [q(0.9), q(0.98), q(0.995)];
   }
-  const band = (v: number) => {
-    if (metric !== 'stake') return liabBand(v, cfg.limit);
+  const band = (v: number, n: number) => {
+    if (metric !== 'stake') return liabBand(v, capOf(cfg, op * N + n));
     if (v <= 0) return 0;
     return v >= cuts[2] ? 4 : v >= cuts[1] ? 3 : v >= cuts[0] ? 2 : 1;
   };
-  const bands = Uint8Array.from(vals, band), counts = [0, 0, 0, 0, 0];
+  const bands = Uint8Array.from(vals, (v, n) => band(v, n)), counts = [0, 0, 0, 0, 0];
   bands.forEach((b) => counts[b]++);
   return { bands, counts, cuts };
 }
@@ -234,6 +234,6 @@ export function heatCell(cv: HTMLCanvasElement, e: MouseEvent) {
 
 export const heatTip = (cfg: Config, bk: Book, op: number, n: number) => {
   const i = op * N + n;
-  return [`${OPS[op].id}·${pad(n)}`, `客人下注 ${rm(cfg.B[i] + cfg.S[i])}(Big ${rm(cfg.B[i])} · Small ${rm(cfg.S[i])})`, `开头奖我要赔 ${rm(bk.L[0][i])}`];
+  return [`${OPS[op].id}·${pad(n)}`, `客人下注 ${rm(cfg.B[i] + cfg.S[i])}(Big ${rm(cfg.B[i])} · Small ${rm(cfg.S[i])})`, `开头奖我要赔 ${rm(bk.L[0][i])}`, ...(cfg.caps?.[i] !== undefined ? [`单独上限 ${limLabel(cfg.caps[i])}`] : [])];
 };
 
