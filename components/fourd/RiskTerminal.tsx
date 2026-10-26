@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   N, NO, OPS, TOT, PRIZE, COUNT, DRAWS_PER_MONTH, SWEEP_SIMS, SAMPLE_SEED, UNIVERSE, PLANS, PLAN_BY_ID, CATS, CAT_OF, CAT_SIZE,
-  pad, tag, opOf, numOf, rm, rmK, pct, tone, limLabel, perMonth, freqShort, freqLong, worstLog10, countLoss, gross1, stake,
+  pad, tag, opOf, numOf, rm, rmK, pct, tone, limLabel, perMonth, freqShort, freqLong, worstLog10, countLoss, gross1, stake, capOf,
   sampleBook, defaultOdds, defaultProviders, runCurrent, runSweep, sweepKey, evalLimit, pickPlan, allocFor,
   houseLimit, houseScan, catStats, catCall, evenScenario, bookStats, topBy,
   parseHistory, syntheticHistory, runBacktest, uniformity, parseBookCsv, randomDraw, resultInput, settle, keepAllPlan,
@@ -232,6 +232,11 @@ const RiskTerminal: React.FC<{ theme: string }> = ({ theme }) => {
   };
   const patch = (p: Partial<Config>) => setCfg((c) => ({ ...c, ...p }));
   const setLimit = (l: number) => patch({ limit: l });
+  // a number's own limit; null drops it back to the shared one
+  const setCap = (i: number, v: number | null) => setCfg((c) => {
+    const caps = { ...c.caps }; if (v === null) delete caps[i]; else caps[i] = v;
+    return { ...c, caps };
+  });
   const onTip: Tip = React.useCallback((e, lines) => {
     if (!e || !lines) return setTipState(null);
     setTipState({ x: e.clientX, y: e.clientY, lines });
@@ -302,7 +307,7 @@ const RiskTerminal: React.FC<{ theme: string }> = ({ theme }) => {
           ))}
         </div>
         <p className="rt-nav-status">
-          本期 #{drawId} · {sample ? <button type="button" className="rt-link" onClick={() => goto('settle', 'rt-book')}>示例数据 · 换成我的</button> : '你的下注'} · 上限 {limLabel(cfg.limit)}
+          本期 #{drawId} · {sample ? <button type="button" className="rt-link" onClick={() => goto('settle', 'rt-book')}>示例数据 · 换成我的</button> : '你的下注'} · 上限 {limLabel(cfg.limit)}{cfg.caps && Object.keys(cfg.caps).length ? ` · ${Object.keys(cfg.caps).length} 个字单独设` : ''}
         </p>
       </nav>
 
@@ -315,10 +320,10 @@ const RiskTerminal: React.FC<{ theme: string }> = ({ theme }) => {
       ) : chapter === 'risk' ? (
         <Risk {...{ cfg, run, rows, cats, scan, lim, even, bookOp, setBookOp, palette, onTip, goto, setSelected, setHeatOp, width }} />
       ) : chapter === 'map' ? (
-        <MapChapter {...{ cfg, run, palette, onTip, heatOp, setHeatOp, heatMetric, setHeatMetric, selected, setSelected, width }} />
+        <MapChapter {...{ cfg, run, palette, onTip, heatOp, setHeatOp, heatMetric, setHeatMetric, selected, setSelected, width, setCap }} />
       ) : chapter === 'sim' ? (
         <Simulate {...{
-          cfg, run, rows, sweepMs: sweep?.ms ?? 0, runMs, palette, onTip, width, patch, setPlan, setLimit, goto, setSelected, setHeatOp,
+          cfg, run, rows, sweepMs: sweep?.ms ?? 0, runMs, palette, onTip, width, patch, setPlan, setLimit, setCap, goto, setSelected, setHeatOp,
           simDraft, setSimDraft, bt, history, historySynthetic, histText, setHistText, histInfo,
           importHistory: (text: string) => {
             const { rows: h, bad } = parseHistory(text);
@@ -394,7 +399,7 @@ const Verdict: React.FC<any> = ({ cfg, run, rows, plan, setPlan, sample, drawId,
     });
     if (rec.U > 1) {
       const unconf = c.providers.filter((p) => !p.confirmed && allocFor(c, rec.U).out.some((a) => a.p === p));
-      let overN = 0; for (let i = 0; i < TOT; i++) if (gross1(c, i) > rec.limit) overN++;
+      let overN = 0; for (let i = 0; i < TOT; i++) if (gross1(c, i) > capOf(c, i, rec.limit)) overN++;
       now.push({
         title: `把 ${rmK(rec.U)} 交给上家`,
         why: '太重的字超过上限的部分，不交就要自己赔。',
@@ -561,7 +566,7 @@ const Money: React.FC<{ cfg: Config; rec: SweepRow }> = ({ cfg, rec }) => {
   const need = Math.max(0, -rec.worst), enough = cfg.reserve >= need;
   const { out, left } = allocFor(cfg, rec.U), netComm = out.reduce((s, a) => s + a.take * (a.p.comm - a.p.fee), 0);
   let overN = 0, top = -1, topG = 0;
-  for (let i = 0; i < TOT; i++) { const g = gross1(cfg, i); if (g > rec.limit) overN++; if (g > topG) { topG = g; top = i; } }
+  for (let i = 0; i < TOT; i++) { const g = gross1(cfg, i); if (g > capOf(cfg, i, rec.limit)) overN++; if (g > topG) { topG = g; top = i; } }
   return (
     <div className="rt-two rt-money">
       <div className="rt-money-item">
@@ -578,7 +583,7 @@ const Money: React.FC<{ cfg: Config; rec: SweepRow }> = ({ cfg, rec }) => {
         <p>占这期的 {pct(rec.U / (rec.T || 1), 0)}</p>
         <p><b>交给谁:</b>{out.length ? out.map((a, i) => <span key={i}>{i ? ' · ' : ''}{a.p.name} {rmK(a.take)}{a.p.confirmed ? '' : <span className="rt-warn">(合同还没写清楚)</span>}</span>) : '不用交'}{left > 1 ? <span className="rt-neg"> · 还有 {rmK(left)} 上家装不下</span> : null}</p>
         <More>
-          <p>只交 {overN.toLocaleString()} 个太重的字超过上限的部分{top >= 0 && topG > rec.limit ? `,例如 ${tag(top)} 交 ${pct(1 - rec.limit / topG, 0)}` : ''}。这些字开出来你赔不起，交出去还能拿回扣约 {rmK(netComm)}。</p>
+          <p>只交 {overN.toLocaleString()} 个太重的字超过上限的部分{top >= 0 && topG > capOf(cfg, top, rec.limit) ? `,例如 ${tag(top)} 交 ${pct(1 - capOf(cfg, top, rec.limit) / topG, 0)}` : ''}。这些字开出来你赔不起，交出去还能拿回扣约 {rmK(netComm)}。</p>
         </More>
       </div>
     </div>
@@ -834,7 +839,7 @@ const Risk: React.FC<any> = ({ cfg, run, rows, cats, scan, lim, even, bookOp, se
 
   const pos = (x: number) => ((Math.log10(Math.max(x, 0.05)) + 1.30103) / 2.60206) * 100;
   const top = topBy((i) => book.L[0][i], 10);
-  const maxG = Math.max(...top.map((i) => gross1(c, i)), c.limit === Infinity ? 0 : c.limit, 1);
+  const maxG = Math.max(...top.map((i) => gross1(c, i)), ...top.map((i) => (capOf(c, i) === Infinity ? 0 : capOf(c, i))), 1);
   const heavy = topBy((i) => scan.ratio[i], 15).filter((i) => scan.ratio[i] > 1);
   const verdictWord = st ? st.verdict.word : '';
   const heavyN = sum('heavy'), excess = sum('excess');
@@ -866,8 +871,8 @@ const Risk: React.FC<any> = ({ cfg, run, rows, cats, scan, lim, even, bookOp, se
         <Block title="最危险的 10 个号码" sub="深色自己赔，浅线全部要赔，竖线是上限。">
           <div className="rt-bars">
             {top.map((i) => {
-              const g = gross1(c, i), r = book.L[0][i];
-              return <Bar key={i} label={<NumLink i={i} />} fill={(r / maxG) * 100} thin={(g / maxG) * 100} mark={c.limit === Infinity ? undefined : (c.limit / maxG) * 100} tone={r > c.limit + 0.5 ? 'hot' : 'ink'} value={rmK(r)} />;
+              const g = gross1(c, i), r = book.L[0][i], cap = capOf(c, i);
+              return <Bar key={i} label={<NumLink i={i} />} fill={(r / maxG) * 100} thin={(g / maxG) * 100} mark={cap === Infinity ? undefined : (cap / maxG) * 100} tone={r > cap + 0.5 ? 'hot' : 'ink'} value={rmK(r)} />;
             })}
           </div>
         </Block>
@@ -981,7 +986,7 @@ const Risk: React.FC<any> = ({ cfg, run, rows, cats, scan, lim, even, bookOp, se
 };
 
 // ---------- 04 map ----------
-const MapChapter: React.FC<any> = ({ cfg, run, palette, onTip, heatOp, setHeatOp, heatMetric, setHeatMetric, selected, setSelected, width }) => {
+const MapChapter: React.FC<any> = ({ cfg, run, palette, onTip, heatOp, setHeatOp, heatMetric, setHeatMetric, selected, setSelected, width, setCap }) => {
   const c = cfg as Config, { book } = run as Run;
   const ref = React.useRef<HTMLCanvasElement>(null);
   const heat = React.useMemo(() => heatBands(c, book, heatOp, heatMetric), [c, book, heatOp, heatMetric]);
@@ -990,9 +995,10 @@ const MapChapter: React.FC<any> = ({ cfg, run, palette, onTip, heatOp, setHeatOp
   React.useEffect(() => { setJump(pad(selected)); }, [selected]);
 
   const i = heatOp * N + selected, o = c.odds[heatOp];
-  const B = c.B[i], S = c.S[i], r1 = book.L[0][i], band = liabBand(r1, c.limit);
+  const L = capOf(c, i), own = c.caps?.[i] !== undefined;
+  const B = c.B[i], S = c.S[i], r1 = book.L[0][i], band = liabBand(r1, L);
   const eContrib = PRIZE.reduce((s, _, k) => s + (book.L[k][i] * COUNT[k]) / N, 0);
-  const L = c.limit, g = gross1(c, i), per = B + S > 0 ? g / (B + S) : o.big[0] * 0.7 + o.small[0] * 0.3;
+  const g = gross1(c, i), per = B + S > 0 ? g / (B + S) : o.big[0] * 0.7 + o.small[0] * 0.3;
   const say = B + S === 0 ? '没人买，开出来不用赔。'
     : L === Infinity ? `开头奖你要赔 ${rmK(r1)},是备用金的 ${pct(r1 / (c.reserve || 1), 0)}。`
     : g > L ? `开头奖一共要赔 ${rmK(g)},超过上限 ${rmK(L)}。多出的 ${pct(1 - L / g, 0)} 交给上家，或者这期别再收。`
@@ -1002,7 +1008,7 @@ const MapChapter: React.FC<any> = ({ cfg, run, palette, onTip, heatOp, setHeatOp
   const bandName = over ? '超过上限' : ['不用赔', '一点点', '要留意', '接近上限', '超过上限'][band];
   const legend = heatMetric === 'stake'
     ? ['没人买', '买的人少', `比较多 ≥ ${rm(heat.cuts[0])}`, `很多 ≥ ${rm(heat.cuts[1])}`, `最多 ≥ ${rm(heat.cuts[2])}`]
-    : ['不用赔', `一点点 ≤ ${rmK(L * 0.1)}`, `要留意 ≤ ${rmK(L * 0.5)}`, `接近上限 ≤ ${rmK(L)}`, `超过上限 ${rmK(L)}`];
+    : ['不用赔', `一点点 ≤ ${rmK(c.limit * 0.1)}`, `要留意 ≤ ${rmK(c.limit * 0.5)}`, `接近上限 ≤ ${rmK(c.limit)}`, `超过上限 ${rmK(c.limit)}`];
 
   return (
     <section className="rt-chapter">
@@ -1029,7 +1035,13 @@ const MapChapter: React.FC<any> = ({ cfg, run, palette, onTip, heatOp, setHeatOp
           <p className="rt-kicker">{OPS[heatOp].name} · {bandName}</p>
           <p className="rt-detail-num font-display">{pad(selected)}</p>
           <p className={`rt-detail-say rt-band-${over ? 4 : band}`}>{say}</p>
-          <p className="rt-block-sub">自己留 {B + S > 0 ? pct((book.Br[i] + book.Sr[i]) / (B + S), 0) : '—'}{c.limit === Infinity ? '' : ` · 用掉上限的 ${pct(r1 / (c.limit || 1), 0)}`}</p>
+          <p className="rt-block-sub">自己留 {B + S > 0 ? pct((book.Br[i] + book.Sr[i]) / (B + S), 0) : '—'}{L === Infinity ? '' : ` · 用掉上限的 ${pct(r1 / (L || 1), 0)}`}</p>
+          <div className="rt-controls">
+            <NumField label={`${pad(selected)} 单独的上限(RM)`} value={own ? L : Infinity} step={5000} empty={`照共用的 ${limLabel(c.limit)}`}
+              onCommit={(v) => setCap(i, v === Infinity ? null : v)} />
+            {own ? <button type="button" className="rt-link" onClick={() => setCap(i, null)}>改回共用上限</button> : null}
+          </div>
+          <p className="rt-note">{own ? `这个字单独设了 ${limLabel(L)},共用上限怎么改都不影响它。` : '只改这个字：比如特别怕开的字设低一点，冷门字设高一点。留空 = 照共用上限。'}</p>
           <Table head={['', '一共', '自己留', '交给上家']} rows={[
             { key: 'b', cells: ['客人买 Big', rm(B), rm(book.Br[i]), rm(book.Bt[i])] },
             { key: 's', cells: ['客人买 Small', rm(S), rm(book.Sr[i]), rm(book.St[i])] },
@@ -1048,7 +1060,7 @@ const MapChapter: React.FC<any> = ({ cfg, run, palette, onTip, heatOp, setHeatOp
 
 // ---------- 05 simulate ----------
 const Simulate: React.FC<any> = (props) => {
-  const { cfg, run, rows, sweepMs, runMs, palette, onTip, width, patch, setPlan, setLimit, goto, setSelected, setHeatOp, simDraft, setSimDraft, bt, history, historySynthetic, histText, setHistText, histInfo, importHistory, sampleHistory } = props;
+  const { cfg, run, rows, sweepMs, runMs, palette, onTip, width, patch, setPlan, setLimit, setCap, goto, setSelected, setHeatOp, simDraft, setSimDraft, bt, history, historySynthetic, histText, setHistText, histInfo, importHistory, sampleHistory } = props;
   const c = cfg as Config, { book, sim, worst, ruinP } = run as Run;
   const payRef = React.useRef<HTMLCanvasElement>(null), profRef = React.useRef<HTMLCanvasElement>(null);
   const frontRef = React.useRef<HTMLCanvasElement>(null), cumRef = React.useRef<HTMLCanvasElement>(null);
@@ -1101,10 +1113,23 @@ const Simulate: React.FC<any> = (props) => {
   const allocTop = topBy((i) => stake(c, i), 12);
   const picks = rows ? PLANS.map((p) => [p, pickPlan(c, rows, p.id)] as const) : [];
   const NumLink: React.FC<{ i: number }> = ({ i }) => <button type="button" className="rt-link rt-num" onClick={() => { setSelected(numOf(i)); setHeatOp(opOf(i)); goto('map'); }}>{tag(i)}</button>;
+  const ownCaps = Object.entries(c.caps ?? {}).map(([k, v]) => [+k, v] as [number, number]).sort((a, b) => a[0] - b[0]);
 
   return (
     <section className="rt-chapter">
       <ChapterHead index={5} title="上限定多少最划算？" copy="电脑先帮你开奖几万次。上限越高平均赚越多，最惨也亏越多。在赔得起的范围里，挑赚最多的那一档。" />
+      <Block id="rt-caps" title="自己填上限" sub="所有字共用一个上限;个别字可以另外设，没设的照共用的。">
+        <div className="rt-controls">
+          <NumField label="每个字开头奖，我最多赔(RM)" value={c.limit} step={5000} empty="不设上限" onCommit={(v) => { setPlan(null); setLimit(v); }} />
+        </div>
+        {ownCaps.length ? (
+          <Table head={['号码', '单独的上限', '开头奖一共要赔', '我自己赔', '']} rows={ownCaps.map(([i, v]) => ({
+            key: i, cells: [<NumLink i={i} />, limLabel(v), rm(gross1(c, i)), <span className={book.L[0][i] > v + 0.5 ? 'rt-neg' : ''}>{rm(book.L[0][i])}</span>,
+              <button type="button" className="rt-link" onClick={() => setCap(i, null)}>改回共用</button>],
+          }))} foot="下面比较各档上限时，这些字一直用自己的上限。" />
+        ) : <p className="rt-note">还没有字单独设上限。到「查单个号码」点一个字，就能给它另设。<button type="button" className="rt-link" onClick={() => goto('map')}>去设 →</button></p>}
+      </Block>
+
       <Block id="rt-sweep" title="所有上限，一次比较" sub="上限越高平均赚越多，倒霉时也亏越狠。从 0 试到不设上限，每种开几万期。">
         {tableRows ? (
           <>

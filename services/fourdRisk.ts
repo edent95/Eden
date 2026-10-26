@@ -27,6 +27,7 @@ export type Config = {
   odds: Odds[];
   providers: Provider[];
   limit: number;
+  caps?: Record<number, number>; // numbers with their own limit (index op*N+num -> RM); the rest use `limit`
   reserve: number;
   opCost: number;
   seed: number;
@@ -107,6 +108,8 @@ export function sampleBook(seed = SAMPLE_SEED) {
 
 export const gross1 = (cfg: Config, i: number) => { const o = cfg.odds[opOf(i)]; return o.big[0] * cfg.B[i] + o.small[0] * cfg.S[i]; };
 export const stake = (cfg: Config, i: number) => cfg.B[i] + cfg.S[i];
+// the most this number may pay out on first prize: its own limit if set, otherwise the shared one
+export const capOf = (cfg: Config, i: number, limit = cfg.limit) => cfg.caps?.[i] ?? limit;
 
 // ---------- allocation + liability ----------
 export type Book = ReturnType<typeof computeBook>;
@@ -115,9 +118,9 @@ export function computeBook(cfg: Config, limit: number) {
   const f = new Float64Array(TOT), opT = new Float64Array(NO);
   let want = 0, T = 0, overGross = 0;
   for (let i = 0; i < TOT; i++) {
-    const o = cfg.odds[opOf(i)], L1 = o.big[0] * B[i] + o.small[0] * S[i];
-    f[i] = L1 <= limit || L1 === 0 ? 1 : limit / L1;
-    if (L1 > limit) overGross++;
+    const o = cfg.odds[opOf(i)], L1 = o.big[0] * B[i] + o.small[0] * S[i], cap = capOf(cfg, i, limit);
+    f[i] = L1 <= cap || L1 === 0 ? 1 : cap / L1;
+    if (L1 > cap) overGross++;
     want += (1 - f[i]) * (B[i] + S[i]);
     T += B[i] + S[i]; opT[opOf(i)] += B[i] + S[i];
   }
@@ -132,7 +135,7 @@ export function computeBook(cfg: Config, limit: number) {
     Bt[i] = B[i] * tf; St[i] = S[i] * tf; Br[i] = B[i] - Bt[i]; Sr[i] = S[i] - St[i];
     R += Br[i] + Sr[i]; opR[op] += Br[i] + Sr[i];
     for (let k = 0; k < 5; k++) { const v = o.big[k] * Br[i] + o.small[k] * Sr[i]; L[k][i] = v; const e = (v * COUNT[k]) / N; Ecl += e; opE[op] += e; }
-    if (L[0][i] > limit + 0.5) overRet++;
+    if (L[0][i] > capOf(cfg, i, limit) + 0.5) overRet++;
   }
   const U = T - R;
   const alloc = cfg.providers.map((p) => ({ name: p.name, U: 0, comm: 0, fee: 0, confirmed: p.confirmed }));
@@ -339,7 +342,7 @@ export const PLANS: Plan[] = [
 ];
 export const PLAN_BY_ID = Object.fromEntries(PLANS.map((p) => [p.id, p])) as Record<PlanId, Plan>;
 
-export const sweepKey = (cfg: Config, bookVer: number) => JSON.stringify([bookVer, cfg.odds, cfg.providers, cfg.reserve, cfg.opCost, cfg.seed, cfg.horizon, cfg.ruinTarget]);
+export const sweepKey = (cfg: Config, bookVer: number) => JSON.stringify([bookVer, cfg.caps, cfg.odds, cfg.providers, cfg.reserve, cfg.opCost, cfg.seed, cfg.horizon, cfg.ruinTarget]);
 export const runSweep = (cfg: Config): SweepRow[] => SWEEP_CAPS.map((l) => evalLimit(cfg, l));
 export function pickPlan(cfg: Config, sweep: SweepRow[] | null, id: PlanId) {
   if (!sweep) return null;
@@ -429,7 +432,7 @@ export function evenScenario(cfg: Config, lim: number, scan: Scan) {
 // with every heavier number cut back to X, still fits in the reserve. Numbers over X are "拿掉";
 // the money they would have brought is then offered to numbers still under the line ("加"),
 // as much of it as keeps the worst draw inside the reserve.
-const solo = (cfg: Config): Config => ({ ...cfg, providers: [], limit: Infinity });
+const solo = (cfg: Config): Config => ({ ...cfg, providers: [], limit: Infinity, caps: undefined });
 function cutTo(cfg: Config, X: number) {
   const B = Float64Array.from(cfg.B), S = Float64Array.from(cfg.S);
   for (let i = 0; i < TOT; i++) { const g = gross1(cfg, i); if (g > X) { const f = X / g; B[i] *= f; S[i] *= f; } }

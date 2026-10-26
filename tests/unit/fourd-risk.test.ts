@@ -79,3 +79,19 @@ test('keeping everything with a reserve that already covers the worst draw stops
   assert.equal(k.X, Infinity);
   assert.equal(k.stops.length, 0);
 });
+
+test('a number with its own limit hands on more; the shared limit still covers the rest', () => {
+  const base = config(50000), heavy = topIndex(base);
+  const own = computeBook({ ...base, caps: { [heavy]: 10000 } }, 50000), shared = computeBook(base, 50000);
+  assert.ok(own.L[0][heavy] <= 10000 + 0.5, `own-limit number pays ${own.L[0][heavy]}`);
+  assert.ok(own.U > shared.U);
+  for (let i = 0; i < own.L[0].length; i++) if (i !== heavy) assert.equal(own.L[0][i], shared.L[0][i]);
+  // a higher own limit lets that one number keep more than the shared limit
+  const looser = computeBook({ ...base, caps: { [heavy]: Infinity } }, 50000);
+  assert.equal(looser.L[0][heavy], gross1(base, heavy));
+});
+
+function topIndex(cfg: Config) {
+  let best = 0; for (let i = 0; i < cfg.B.length; i++) if (gross1(cfg, i) > gross1(cfg, best)) best = i;
+  return best;
+}
