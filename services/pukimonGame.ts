@@ -5,9 +5,9 @@
  * 产出 `public/pukimon/bond-arena.js`（ES 模块，公开版：原创角色与素材）+ `public/pukimon/assets/`。
  * 用宝可梦素材的完整版不在这里，在 pukimon.eden-tan.com（Google 登录）。
  *
- * 另一个包 `public/pukimon-showdown/`：/pukimon 舞台上的「尼多力诺 vs 耿鬼」演示（用户 2026-10-27 决定公开放这两只、风险自己承担），
+ * 另一个包 `public/pukimon-showdown/`：/pukimon 舞台上的「赤红 vs 青绿」三回合演示（用户 2026-10-27 决定公开放这六只、风险自己承担），
  *   在 Pukimon 跑 npm run embed:showdown -- --out <Eden>/public/pukimon-showdown
- * 只带这两只的素材，背景音乐是原创的开场曲；只给看，不能玩。
+ * 只带这六只的素材，背景音乐是原创的开场曲；只给看，不能玩。
  *
  * 接口只有一个 `mount(host, opts) → handle`：游戏的 DOM 和样式装在 host 的 Shadow DOM 里，
  * `destroy()` 撤掉它起的计时器、事件监听、音频和 WebGL。host 每次都要用新元素（attachShadow 只能调一次）。
@@ -23,7 +23,7 @@ export type PukimonOptions = {
   quality?: number;
   /** 追加进游戏 Shadow DOM 的样式。 */
   css?: string;
-  /** 放引擎里写好剧本的演出（例如 'nidogengar'，showdown 包才有），照剧本打、到点重来。 */
+  /** 放引擎里写好剧本的演出（例如 'redblue'，showdown 包才有），照剧本打、到点重来。 */
   scene?: string;
 };
 
@@ -39,7 +39,7 @@ export type PukimonHandle = {
 
 type PukimonModule = { mount: (host: HTMLElement, opts?: PukimonOptions) => PukimonHandle };
 
-/** 两个包：公开版（原创角色，能玩）和「尼多力诺 vs 耿鬼」演示。 */
+/** 两个包：公开版（原创角色，能玩）和「赤红 vs 青绿」演示。 */
 export type PukimonBundle = 'pukimon' | 'pukimon-showdown';
 
 const modulePromises = new Map<PukimonBundle, Promise<PukimonModule>>();
