@@ -1069,14 +1069,13 @@ export const PukimonFullPage: React.FC<{
         { href: '#overview', label: { en: 'Overview', zh: '游戏简介' } },
         { href: '#faq', label: { en: 'FAQ', zh: '常见问题' } },
         { href: '#information', label: { en: 'Information', zh: '游戏资料' } },
-        { href: '#play', label: { en: 'Watch a battle', zh: '看一场对战' } },
       ]}
       stage={{
-        kind: 'embed',
-        src: 'https://player.bilibili.com/player.html?bvid=BV1dHao6TEYg&autoplay=1&muted=0&high_quality=1&danmaku=0',
-        domain: 'bilibili.com/video/BV1dHao6TEYg',
-        title: { en: 'The kind of battle Pukimon is chasing', zh: 'Pukimon 想做出来的那种对战' },
-        caption: { en: 'The feeling I was after: 「琵琶曲丨超级真新人VS瑟蕾娜」, a fan-made 3D animation on Bilibili, played from its original creator — not game footage. A playable public edition is on the home page.', zh: '想做出来的就是这种感觉：B 站网友做的 3D 同人动画《琵琶曲丨超级真新人VS瑟蕾娜》，播放的是原作者的视频，不是游戏画面。能直接玩的公开版在首页。' },
+        kind: 'custom',
+        node: <PukimonDemoStage isZh={isZh} baseUrl={baseUrl} showdown />,
+        domain: 'eden-tan.com/pukimon · Red vs Blue',
+        title: { en: 'Red vs Blue: three rounds', zh: '赤红 vs 青绿：三回合' },
+        caption: { en: 'A scripted three-round battle on Mewtwo\u2019s New Island arena, three Pokémon a side like the games: Nidorino vs Gengar from the Red and Blue opening, Mew vs Mewtwo from the first movie, and Charizard vs Blastoise to finish. The music is an original theme I wrote in that Game Boy style. Watch only; turn the sound on at the top right. Nidorino, Gengar, Mew, Mewtwo, Charizard and Blastoise © Nintendo / Game Freak / The Pokémon Company; the music is original. The full Pokémon version is for friends only, behind a sign-in (Play Pukimon at the top).', zh: '在超梦的新岛上照剧本打的三回合，像游戏一样一人三只：红 / 蓝版开场的尼多力诺 vs 耿鬼、第一部电影的梦幻 vs 超梦，最后是喷火龙 vs 水箭龟。背景音乐是我照 Game Boy 那种风格自己写的原创曲。只能看、不能玩，右上角开声音。尼多力诺、耿鬼、梦幻、超梦、喷火龙、水箭龟 © 任天堂 / Game Freak / The Pokémon Company；背景音乐是原创的。完整的宝可梦版只给朋友，在登录后面（页面顶部的「立即开玩」）。' },
       }}
       body={[
         { kind: 'p', text: { en: 'As a kid, every Pokémon battle I watched on TV moved: Pikachu dodging, Charizard diving in, attacks colliding in mid-air. Every battle I could actually play was a menu — pick a move, wait, watch. I always wanted the version in my head, where you are the one dodging.', zh: '小时候在电视上看到的宝可梦对战都是会动的：皮卡丘闪开、喷火龙俯冲、两招在半空中撞在一起。可是真正玩得到的对战都是选单——选一招、等、看动画。我一直想要脑子里的那个版本：躲招的人，是你自己。' } },
@@ -1123,13 +1122,6 @@ export const PukimonFullPage: React.FC<{
         [{ en: 'Credits', zh: '版权' }, { en: 'Pokémon © Nintendo / Game Freak / The Pokémon Company; some effects and sounds © Valve', zh: '宝可梦 © 任天堂 / Game Freak / The Pokémon Company；部分特效与音效 © Valve' }],
         [{ en: 'Developer', zh: '开发者' }, { en: 'Eden Tan', zh: 'Eden Tan' }],
       ]}
-      play={{
-        title: { en: 'Red vs Blue: three rounds', zh: '赤红 vs 青绿：三回合' },
-        intro: { en: 'A scripted three-round battle on Mewtwo\u2019s New Island arena, three Pokémon a side like the games: Nidorino vs Gengar from the Red and Blue opening, Mew vs Mewtwo from the first movie, and Charizard vs Blastoise to finish. The music is an original theme I wrote in that Game Boy style. Watch only; turn the sound on at the top right.', zh: '在超梦的新岛上照剧本打的三回合，像游戏一样一人三只：红 / 蓝版开场的尼多力诺 vs 耿鬼、第一部电影的梦幻 vs 超梦，最后是喷火龙 vs 水箭龟。背景音乐是我照 Game Boy 那种风格自己写的原创曲。只能看、不能玩，右上角开声音。' },
-        domain: 'eden-tan.com/pukimon · Red vs Blue',
-        node: <PukimonDemoStage isZh={isZh} baseUrl={baseUrl} showdown />,
-        note: { en: 'Nidorino, Gengar, Mew, Mewtwo, Charizard and Blastoise © Nintendo / Game Freak / The Pokémon Company; the music is original. The full Pokémon version is for friends only, behind a sign-in (Play Pukimon at the top).', zh: '尼多力诺、耿鬼、梦幻、超梦、喷火龙、水箭龟 © 任天堂 / Game Freak / The Pokémon Company；背景音乐是原创的。完整的宝可梦版只给朋友，在登录后面（页面顶部的「立即开玩」）。' },
-      }}
       also={productSiblingCards(baseUrl, 'pukimon')}
     />
   );
