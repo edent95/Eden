@@ -64,7 +64,7 @@ export type ProductStorePageProps = {
     | { kind?: 'iframe' | 'embed'; src: string }
     /** Any element (e.g. a playable game) rendered inside the browser frame instead of an iframe. */
     | { kind: 'custom'; node: React.ReactNode }
-  ) & { domain: string; title: EpText; caption: EpText };
+  ) & { domain: string; title: EpText; caption?: EpText };
   body: EpBlock[];
   /** Optional video lessons, rendered as #tutorial between the prose body and the FAQ. */
   tutorial?: EpTutorial;
@@ -309,7 +309,7 @@ const ProductStorePage: React.FC<ProductStorePageProps> = ({
                   <iframe src={stage.src} title={t(stage.title)} loading="lazy" />
                 )}
               </div>
-              <p className="ep-stage-caption">{t(stage.caption)}</p>
+              {stage.caption && <p className="ep-stage-caption">{t(stage.caption)}</p>}
             </section>
           )}
 
