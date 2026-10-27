@@ -1,16 +1,16 @@
 import React from 'react';
 import { kaleidoSpecFor } from '../app/kaleido-routes';
 import { KaleidoFrame } from './css-art/kaleido-frame';
-import PukimonDemoStage from './PukimonDemoStage';
+import PukimonShowdownFrame from './PukimonShowdownFrame';
 
 /**
- * 首页 #pukimon：文案在上，下面一张卡片 —— 「赤红 vs 青绿」三回合演出（public/pukimon-showdown，照剧本打、只能看），
- * 右上角开声音。舞台本身在 components/PukimonDemoStage.tsx（showdown），/pukimon 页面顶部的舞台也是同一个。
+ * 首页 #pukimon：文案在上，下面一张卡片 —— 「赤红 vs 青绿」三回合演出（照剧本打、只能看，右上角开声音）。
+ * 舞台是 components/PukimonShowdownFrame.tsx（iframe 嵌另一个网域上的演出网站），/pukimon 页面顶部也是同一个。
  */
 
 type Props = { isZh: boolean; baseUrl: string; pukimonHref: string };
 
-const HomePukimonGame: React.FC<Props> = ({ isZh, baseUrl, pukimonHref }) => {
+const HomePukimonGame: React.FC<Props> = ({ isZh, pukimonHref }) => {
   const t = (en: string, zh: string) => (isZh ? zh : en);
 
   return (
@@ -41,7 +41,7 @@ const HomePukimonGame: React.FC<Props> = ({ isZh, baseUrl, pukimonHref }) => {
 
       <div className="eden-pukimon-arena">
         <KaleidoFrame spec={kaleidoSpecFor('/')} />
-        <PukimonDemoStage isZh={isZh} baseUrl={baseUrl} className="eden-pukimon-stage kf-box" showdown />
+        <PukimonShowdownFrame isZh={isZh} className="eden-pukimon-stage kf-box" />
         <p className="eden-pukimon-meta">
           <span>{t('Red vs Blue · three rounds · watch only', '赤红 vs 青绿 · 三回合 · 只能看')}</span>
           <a href={pukimonHref}>{t('About Pukimon', 'Pukimon 介绍页')}</a>

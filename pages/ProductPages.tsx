@@ -1,6 +1,6 @@
 import React from 'react';
 import ProductStorePage, { type EpTutorial, useCountUp } from '../components/ProductStorePage';
-import PukimonDemoStage from '../components/PukimonDemoStage';
+import PukimonShowdownFrame from '../components/PukimonShowdownFrame';
 import { ProjectsDrRacingCssIcon, ProjectsEtReportCssIcon, ProjectsJijuCssIcon, ProjectsLifeOsCssIcon, ProjectsPokerCssIcon, ProjectsPukimonCssIcon } from '../components/css-art/index';
 import { HeaderControls, type Language, type Theme, type ThemePreference } from '../app/shared';
 import { productSiblingCards } from '../app/product-siblings';
@@ -1072,7 +1072,7 @@ export const PukimonFullPage: React.FC<{
       ]}
       stage={{
         kind: 'custom',
-        node: <PukimonDemoStage isZh={isZh} baseUrl={baseUrl} showdown />,
+        node: <PukimonShowdownFrame isZh={isZh} />,
         domain: 'eden-tan.com/pukimon · Red vs Blue',
         title: { en: 'Red vs Blue: three rounds', zh: '赤红 vs 青绿：三回合' },
       }}
