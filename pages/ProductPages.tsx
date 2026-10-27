@@ -1063,20 +1063,20 @@ export const PukimonFullPage: React.FC<{
       name="Pukimon"
       kicker={{ en: 'Real-time battles · Friends only', zh: '实时对战 · 只给朋友玩' }}
       tagline={{ en: 'The Pokémon battle game I dreamed of as a kid, finally built.', zh: '把小时候梦想中的宝可梦对战游戏，真的做出来。' }}
-      meta={{ en: 'Full version for friends only, behind Google sign-in · Public edition with original characters playable on this page · Computer, phone and gamepad', zh: '完整版只分享给朋友（Google 登录）· 原创角色的公开版在这一页就能玩 · 电脑、手机、手柄都能玩' }}
+      meta={{ en: 'Full version for friends only, behind Google sign-in · Public edition with original characters playable on the home page · Computer, phone and gamepad', zh: '完整版只分享给朋友（Google 登录）· 原创角色的公开版在首页就能玩 · 电脑、手机、手柄都能玩' }}
       primary={{ href: appUrl, external: true, label: { en: 'Play Pukimon', zh: '立即开玩' } }}
       quickLinks={[
         { href: '#overview', label: { en: 'Overview', zh: '游戏简介' } },
         { href: '#faq', label: { en: 'FAQ', zh: '常见问题' } },
         { href: '#information', label: { en: 'Information', zh: '游戏资料' } },
-        { href: '#play', label: { en: 'Play here', zh: '直接试玩' } },
+        { href: '#play', label: { en: 'Watch a battle', zh: '看一场对战' } },
       ]}
       stage={{
         kind: 'embed',
         src: 'https://player.bilibili.com/player.html?bvid=BV1dHao6TEYg&autoplay=1&muted=0&high_quality=1&danmaku=0',
         domain: 'bilibili.com/video/BV1dHao6TEYg',
         title: { en: 'The kind of battle Pukimon is chasing', zh: 'Pukimon 想做出来的那种对战' },
-        caption: { en: 'The feeling I was after: 「琵琶曲丨超级真新人VS瑟蕾娜」, a fan-made 3D animation on Bilibili, played from its original creator — not game footage. A playable public edition is at the bottom of this page.', zh: '想做出来的就是这种感觉：B 站网友做的 3D 同人动画《琵琶曲丨超级真新人VS瑟蕾娜》，播放的是原作者的视频，不是游戏画面。能直接玩的公开版在这页最下面。' },
+        caption: { en: 'The feeling I was after: 「琵琶曲丨超级真新人VS瑟蕾娜」, a fan-made 3D animation on Bilibili, played from its original creator — not game footage. A playable public edition is on the home page.', zh: '想做出来的就是这种感觉：B 站网友做的 3D 同人动画《琵琶曲丨超级真新人VS瑟蕾娜》，播放的是原作者的视频，不是游戏画面。能直接玩的公开版在首页。' },
       }}
       body={[
         { kind: 'p', text: { en: 'As a kid, every Pokémon battle I watched on TV moved: Pikachu dodging, Charizard diving in, attacks colliding in mid-air. Every battle I could actually play was a menu — pick a move, wait, watch. I always wanted the version in my head, where you are the one dodging.', zh: '小时候在电视上看到的宝可梦对战都是会动的：皮卡丘闪开、喷火龙俯冲、两招在半空中撞在一起。可是真正玩得到的对战都是选单——选一招、等、看动画。我一直想要脑子里的那个版本：躲招的人，是你自己。' } },
@@ -1100,19 +1100,19 @@ export const PukimonFullPage: React.FC<{
         { kind: 'p', text: { en: 'Not one app that everyone shares, but one per person — made for the one person using it. Pukimon is the first piece of that I can actually play.', zh: '不是大家共用的同一个 app，而是一人一个——只为用它的那一个人而做。Pukimon 是这件事里，我第一个真的能玩的部分。' } },
       ]}
       faq={[
-        { q: { en: 'Can I play it?', zh: '我可以玩吗？' }, a: { en: 'The public edition with original characters, yes: it is at the bottom of this page, press Start. The Pokémon version only if Eden sent you the link: sign in with Google and you are in. That one is shared with friends only and is not open to the public.', zh: '原创角色的公开版可以：就在这一页最下面，点「开始」。用宝可梦的完整版要是 Eden 发给你的链接才行：用 Google 登录就能进，它只分享给朋友，不对外开放。' } },
+        { q: { en: 'Can I play it?', zh: '我可以玩吗？' }, a: { en: 'The public edition with original characters, yes: it is on the home page, press Start. The Pokémon version only if Eden sent you the link: sign in with Google and you are in. That one is shared with friends only and is not open to the public.', zh: '原创角色的公开版可以：就在首页，点「开始」。用宝可梦的完整版要是 Eden 发给你的链接才行：用 Google 登录就能进，它只分享给朋友，不对外开放。' } },
         { q: { en: 'Is it free?', zh: '要钱吗？' }, a: { en: 'Yes, and it will stay that way. There is nothing to buy and no ads. It is a personal project, not a product.', zh: '不要钱，以后也不会要。没有内购、没有广告。这是个人项目，不是产品。' } },
         { q: { en: 'Why do I need to sign in?', zh: '为什么要登录？' }, a: { en: 'Because the game uses Pokémon and Dota 2 assets that cannot be published openly. The sign-in keeps every file — pages, sprites, sounds — away from the public internet. Only your Google email is checked; nothing else is stored.', zh: '因为游戏用了宝可梦和 Dota 2 的素材，不能公开发布。登录这一层把所有文件——网页、图片、音效——挡在公网外面。只核对你的 Google 邮箱，不存别的资料。' } },
         { q: { en: 'What do I play it on?', zh: '用什么玩？' }, a: { en: 'A browser on a computer or a phone. On a computer use WASD and the mouse, or the original U I O P keys; on a phone, a floating stick and drag-to-aim skill buttons in landscape; a gamepad works too. Controls can be remapped.', zh: '电脑或手机的浏览器。电脑用 WASD 加鼠标，也可以用原作的 U I O P；手机横过来，用浮动摇杆和按住拖动瞄准的技能键；手柄也能玩。按键都可以自己改。' } },
         { q: { en: 'How many Pokémon are there?', zh: '有多少只宝可梦？' }, a: { en: 'More than sixty, each with eight moves; you pick four to bring into battle. You start with four and catch the rest by winning.', zh: '六十多只，每只有 8 个招式，上场前挑 4 招带上。开局只有四只，其余要靠打赢去收服。' } },
         { q: { en: 'Can I play against a friend?', zh: '能和朋友对打吗？' }, a: { en: 'Yes. Besides the computer opponents there is an online mode: open a battle and fight a friend directly.', zh: '可以。除了打电脑，还有联机模式：开一场对战，直接和朋友打。' } },
-        { q: { en: 'Will it ever be public?', zh: '以后会公开吗？' }, a: { en: 'Not the Pokémon version. The Pokémon belong to their owners. What is open is the public edition at the bottom of this page: the same real-time battles with original characters instead.', zh: '宝可梦这个版本不会。宝可梦属于它们的版权方。对外开放的是这一页最下面的公开版：同一套实时对战，换成原创角色。' } },
+        { q: { en: 'Will it ever be public?', zh: '以后会公开吗？' }, a: { en: 'Not the Pokémon version. The Pokémon belong to their owners. What is open is the public edition on the home page: the same real-time battles with original characters instead.', zh: '宝可梦这个版本不会。宝可梦属于它们的版权方。对外开放的是首页的公开版：同一套实时对战，换成原创角色。' } },
       ]}
       specs={[
         [{ en: 'Category', zh: '类别' }, { en: 'Real-time Pokémon arena battle game (personal fan project)', zh: '宝可梦实时擂台对战游戏（个人同人项目）' }],
         [{ en: 'Objective', zh: '目标' }, { en: 'Finish the Pokémon battle game I dreamed of as a kid', zh: '完成小时候梦想中的宝可梦战斗游戏' }],
         [{ en: 'Access', zh: '开放范围' }, { en: 'Friends only, behind Google sign-in; not open to the public, not indexed', zh: '只分享给朋友，挡在 Google 登录后面；不对外开放，不进搜索引擎' }],
-        [{ en: 'Public edition', zh: '公开版' }, { en: 'Original characters, playable at the bottom of this page with no sign-in: six partners, six gyms and a champion, plus a three-way brawl', zh: '原创角色，这一页最下面就能玩、不用登录：六只伙伴、六座道馆加一位冠军，还有三方混战' }],
+        [{ en: 'Public edition', zh: '公开版' }, { en: 'Original characters, playable on the home page with no sign-in: six partners, six gyms and a champion, plus a three-way brawl', zh: '原创角色，首页就能玩、不用登录：六只伙伴、六座道馆加一位冠军，还有三方混战' }],
         [{ en: 'Roster', zh: '阵容' }, { en: '60+ Pokémon · 8 moves each, 4 in battle · up to 3 per team · 18 types', zh: '六十多只宝可梦 · 每只 8 招、上场带 4 招 · 一队最多 3 只 · 18 种属性' }],
         [{ en: 'Opponents', zh: '对手' }, { en: 'Kanto gym leaders · Elite Four Lorelei and Lance · Mewtwo on New Island · random wild trainers · online friends', zh: '关都道馆馆主 · 四天王科拿与渡 · 新岛的超梦 · 随机野生训练家 · 联机的朋友' }],
         [{ en: 'Modes', zh: '玩法' }, { en: 'Standard · Hot zone · Showdown · Three-way free-for-all · Three-lane 3v3 tower push', zh: '标准对战 · 热区争夺 · 荒野决斗 · 三方混战 · 三路推塔 3v3' }],
@@ -1124,11 +1124,11 @@ export const PukimonFullPage: React.FC<{
         [{ en: 'Developer', zh: '开发者' }, { en: 'Eden Tan', zh: 'Eden Tan' }],
       ]}
       play={{
-        title: { en: 'Play the public edition', zh: '直接试玩：公开版' },
-        intro: { en: 'The same real-time battles with original characters instead of Pokémon, so anyone can play — no sign-in. Right now the computer is playing itself; press Start to take over in fullscreen with keyboard, gamepad or touch.', zh: '同一套实时对战，把宝可梦换成原创角色，所以谁都能玩，不用登录。现在是电脑在自己打，点「开始」全屏换你上，键盘、手柄、触屏都行。' },
-        domain: 'eden-tan.com/pukimon · public edition',
-        node: <PukimonDemoStage isZh={isZh} baseUrl={baseUrl} />,
-        note: { en: 'The Pokémon version is for friends only, behind a sign-in (Play Pukimon at the top).', zh: '用宝可梦的完整版只给朋友，在登录后面（页面顶部的「立即开玩」）。' },
+        title: { en: 'Nidorino vs Gengar', zh: '尼多力诺 vs 耿鬼' },
+        intro: { en: 'The computer playing Nidorino against Gengar — the fight from the Red and Blue opening — on Mewtwo\u2019s New Island arena, to an original theme I wrote in that Game Boy style. Watch only; turn the sound on at the top right.', zh: '电脑在打尼多力诺对耿鬼——红 / 蓝版开场的那一幕，场地是超梦的新岛，背景音乐是我照 Game Boy 那种风格自己写的原创曲。只能看、不能玩，右上角开声音。' },
+        domain: 'eden-tan.com/pukimon · Nidorino vs Gengar',
+        node: <PukimonDemoStage isZh={isZh} baseUrl={baseUrl} showdown />,
+        note: { en: 'Nidorino and Gengar © Nintendo / Game Freak / The Pokémon Company; the music is original. The full Pokémon version is for friends only, behind a sign-in (Play Pukimon at the top).', zh: '尼多力诺、耿鬼 © 任天堂 / Game Freak / The Pokémon Company；背景音乐是原创的。完整的宝可梦版只给朋友，在登录后面（页面顶部的「立即开玩」）。' },
       }}
       also={productSiblingCards(baseUrl, 'pukimon')}
     />

@@ -61,6 +61,23 @@
   pointer-events: none;
 }
 
+/* 「尼多力诺 vs 耿鬼」演示的开声音：右上角，盖在「开始」上面 */
+.pukimon-sound {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 3;
+  padding: 7px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(20, 32, 26, .72);
+  color: #f3efe0;
+  font: 700 13px/1.2 "PingFang SC", system-ui, sans-serif;
+  cursor: pointer;
+}
+.pukimon-sound:hover { background: rgba(20, 32, 26, .92); }
+.pukimon-sound:focus-visible { outline: 3px solid rgba(243, 239, 224, .7); outline-offset: 2px; }
+
 /* /pukimon：舞台放在 ProductStorePage 的浏览器框里（stage kind: 'custom'），按钮跟页面的「立即开玩」同色 */
 .ep-stage-frame .pukimon-start span { background: var(--ep-primary); color: var(--ep-primary-text); }
 .ep-stage-frame .pukimon-start:hover span { background: var(--ep-primary-hover); }
