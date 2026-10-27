@@ -7,14 +7,15 @@ import { openPukimonPlayLayer } from './pukimonPlayLayer';
  * 点「开始」盖一层全屏从组队开始玩（components/pukimonPlayLayer.ts）。
  * 首页 #pukimon（HomePukimonGame）和 /pukimon 的舞台都用它。
  * 游戏包到了视野附近才下载（约 1.7 MB）；系统设了「减少动态效果」时不放演示，只留「开始」。
- * showdown：演示换成「尼多力诺 vs 耿鬼」（public/pukimon-showdown，新岛场地、原创开场曲），右上角可以开声音；只给看，没有「开始」。
+ * showdown：演示换成「尼多力诺 vs 耿鬼」（public/pukimon-showdown，新岛场地、原创开场曲，照剧本打），右上角可以开声音；只给看，没有「开始」。
  */
 
 type Props = { isZh: boolean; baseUrl: string; className?: string; showdown?: boolean };
 
 const DEMO_QUALITY = 0.6;
 
-const SHOWDOWN: PukimonOptions['showdown'] = { me: 'nidorino', foe: 'gengar', arena: 'newisland', bgm: 'intro', trainer: 'mewtwo', even: true };
+// Pukimon js/main.js 的 SCENES.nidogengar：照开场曲拍子写好剧本的打斗，不随机
+const SHOWDOWN_SCENE = 'nidogengar';
 
 const PukimonDemoStage: React.FC<Props> = ({ isZh, baseUrl, className, showdown = false }) => {
   const t = (en: string, zh: string) => (isZh ? zh : en);
@@ -44,7 +45,7 @@ const PukimonDemoStage: React.FC<Props> = ({ isZh, baseUrl, className, showdown 
         visibleRef.current = entry.isIntersecting;
         if (entry.isIntersecting && !unmount) {
           setDemo('loading');
-          const opts: PukimonOptions = { demo: true, quality: DEMO_QUALITY, ...(showdown ? { showdown: SHOWDOWN } : {}) };
+          const opts: PukimonOptions = { demo: true, quality: DEMO_QUALITY, ...(showdown ? { scene: SHOWDOWN_SCENE } : {}) };
           unmount = mountPukimon(box, baseUrl, opts, (state, handle) => {
             if (state === 'missing') { setDemo('missing'); return; }
             demoRef.current = handle ?? null;

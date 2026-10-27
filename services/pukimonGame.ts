@@ -23,8 +23,8 @@ export type PukimonOptions = {
   quality?: number;
   /** 追加进游戏 Shadow DOM 的样式。 */
   css?: string;
-  /** 演示只打这一场（showdown 包才有这些宝可梦）：双方、场地、背景音乐、场边训练家，even = 让两边来回打。 */
-  showdown?: { me: string; foe: string; arena: string; bgm?: string; trainer?: string; even?: boolean };
+  /** 放引擎里写好剧本的演出（例如 'nidogengar'，showdown 包才有），照剧本打、到点重来。 */
+  scene?: string;
 };
 
 export type PukimonHandle = {
