@@ -26,7 +26,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-10-26';
+export const SITE_CONTENT_LASTMOD = '2026-10-27';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -647,8 +647,8 @@ export const ROUTE_SEO: RouteSeo[] = [
       zh: 'Pukimon | 小时候梦想中的宝可梦对战游戏',
     },
     desc: {
-      en: 'A personal real-time Pokémon battle game, built to finish a childhood dream. Full version for friends only; an original-character edition plays here.',
-      zh: 'Pukimon 是个人做的宝可梦实时擂台对战游戏，目标是完成小时候的梦想。完整版只分享给朋友；原创角色的公开版在这一页就能玩。',
+      en: 'A personal real-time Pokémon battle game, built to finish a childhood dream. Full version for friends only; a scripted three-round battle plays here.',
+      zh: 'Pukimon 是个人做的宝可梦实时擂台对战游戏，目标是完成小时候的梦想。完整版只分享给朋友；这一页放一段照剧本打的三回合演出。',
     },
   },
   {
