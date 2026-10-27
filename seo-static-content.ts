@@ -393,8 +393,8 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
         title: L('Where to start', '从哪里开始'),
         paragraphs: [
           L(
-            'Read the essay on turning chaos into systems first, then open any app on the Projects shelf. The homepage also runs the public edition of Pukimon, a real-time arena battle game with original characters: watch the computer play itself, then press start to take over in fullscreen.',
-            '先读「把混乱变成系统」这篇文章，再从 Projects 货架打开任何一个 app。首页还有 Pukimon 公开版（原创角色的实时擂台对战）：先看电脑自己对打，点开始就全屏换你上。',
+            'Read the essay on turning chaos into systems first, then open any app on the Projects shelf. The homepage also plays Pukimon\u2019s scripted three-round battle: Nidorino vs Gengar, Mew vs Mewtwo, Charizard vs Blastoise, with an original theme.',
+            '先读「把混乱变成系统」这篇文章，再从 Projects 货架打开任何一个 app。首页还放着 Pukimon 照剧本打的三回合演出：尼多力诺 vs 耿鬼、梦幻 vs 超梦、喷火龙 vs 水箭龟，配原创开场曲。',
           ),
         ],
       },
