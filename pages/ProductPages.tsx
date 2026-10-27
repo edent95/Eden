@@ -1124,11 +1124,11 @@ export const PukimonFullPage: React.FC<{
         [{ en: 'Developer', zh: '开发者' }, { en: 'Eden Tan', zh: 'Eden Tan' }],
       ]}
       play={{
-        title: { en: 'Nidorino vs Gengar', zh: '尼多力诺 vs 耿鬼' },
-        intro: { en: 'The computer playing Nidorino against Gengar — the fight from the Red and Blue opening — on Mewtwo\u2019s New Island arena, to an original theme I wrote in that Game Boy style. Watch only; turn the sound on at the top right.', zh: '电脑在打尼多力诺对耿鬼——红 / 蓝版开场的那一幕，场地是超梦的新岛，背景音乐是我照 Game Boy 那种风格自己写的原创曲。只能看、不能玩，右上角开声音。' },
-        domain: 'eden-tan.com/pukimon · Nidorino vs Gengar',
+        title: { en: 'Red vs Blue: three rounds', zh: '赤红 vs 青绿：三回合' },
+        intro: { en: 'A scripted three-round battle on Mewtwo\u2019s New Island arena, three Pokémon a side like the games: Nidorino vs Gengar from the Red and Blue opening, Mew vs Mewtwo from the first movie, and Charizard vs Blastoise to finish. The music is an original theme I wrote in that Game Boy style. Watch only; turn the sound on at the top right.', zh: '在超梦的新岛上照剧本打的三回合，像游戏一样一人三只：红 / 蓝版开场的尼多力诺 vs 耿鬼、第一部电影的梦幻 vs 超梦，最后是喷火龙 vs 水箭龟。背景音乐是我照 Game Boy 那种风格自己写的原创曲。只能看、不能玩，右上角开声音。' },
+        domain: 'eden-tan.com/pukimon · Red vs Blue',
         node: <PukimonDemoStage isZh={isZh} baseUrl={baseUrl} showdown />,
-        note: { en: 'Nidorino and Gengar © Nintendo / Game Freak / The Pokémon Company; the music is original. The full Pokémon version is for friends only, behind a sign-in (Play Pukimon at the top).', zh: '尼多力诺、耿鬼 © 任天堂 / Game Freak / The Pokémon Company；背景音乐是原创的。完整的宝可梦版只给朋友，在登录后面（页面顶部的「立即开玩」）。' },
+        note: { en: 'Nidorino, Gengar, Mew, Mewtwo, Charizard and Blastoise © Nintendo / Game Freak / The Pokémon Company; the music is original. The full Pokémon version is for friends only, behind a sign-in (Play Pukimon at the top).', zh: '尼多力诺、耿鬼、梦幻、超梦、喷火龙、水箭龟 © 任天堂 / Game Freak / The Pokémon Company；背景音乐是原创的。完整的宝可梦版只给朋友，在登录后面（页面顶部的「立即开玩」）。' },
       }}
       also={productSiblingCards(baseUrl, 'pukimon')}
     />
