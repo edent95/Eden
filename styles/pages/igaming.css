@@ -1142,3 +1142,221 @@
 @media (prefers-reduced-motion: reduce) {
   .igaming-summary .igaming-hero::after { animation: none; opacity: 0; }
 }
+
+/* ---- /igaming/resume — recruiter page (reuses the .igaming-summary print language) ---- */
+
+.igaming-resume-difference {
+  margin-top: 1.2rem;
+  color: var(--ig-line);
+  font-size: 0.95rem;
+  font-weight: 640;
+}
+
+.igaming-resume-label {
+  color: var(--ig-line);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.igaming-resume-proof {
+  margin-top: clamp(3rem, 8vw, 4.5rem);
+}
+
+.igaming-resume-proof ul {
+  margin-top: 1.2rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.8rem, 2vw, 1.2rem);
+}
+
+.igaming-resume-proof a {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.3rem 1.1rem 1.2rem;
+  border-radius: 12px;
+  background: var(--ig-card);
+  box-shadow: var(--ig-frame);
+  color: inherit;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 180ms cubic-bezier(.2, .8, .2, 1);
+}
+
+.igaming-resume-proof a:hover { transform: translateY(-2px); }
+
+.igaming-resume-proof a:focus-visible,
+.igaming-resume-map a:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--igaming-blue) 60%, transparent);
+  outline-offset: 3px;
+}
+
+.igaming-resume-proof strong {
+  color: var(--ig-line);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.7rem, 3.6vw, 2.3rem);
+  font-weight: 760;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.igaming-resume-proof span {
+  margin-top: 0.5rem;
+  font-size: 0.92rem;
+  font-weight: 650;
+}
+
+.igaming-resume-proof small {
+  margin-top: 0.5rem;
+  color: var(--theme-text-secondary);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.igaming-resume-heading {
+  margin-top: clamp(3.5rem, 9vw, 5rem);
+}
+
+.igaming-resume .igaming-resume-strengths {
+  margin-top: 1.2rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.igaming-resume-block {
+  margin-top: clamp(3.5rem, 9vw, 5rem);
+}
+
+.igaming-resume-block > h2 {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 740;
+  font-size: clamp(1.5rem, 3.6vw, 2.1rem);
+  letter-spacing: -0.02em;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.igaming-resume-lead {
+  max-width: 36rem;
+  margin: 0.8rem auto 0;
+  color: var(--theme-text-secondary);
+  line-height: 1.7;
+  text-align: center;
+}
+
+.igaming-resume-map a {
+  color: var(--ig-line);
+  font-weight: 650;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.igaming-resume-map a:hover { text-decoration: underline; }
+
+.igaming-resume-plan {
+  margin-top: 1.6rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.8rem, 2vw, 1.2rem);
+  counter-reset: none;
+}
+
+.igaming-resume-plan > li {
+  padding: 1.4rem 1.3rem 1.5rem;
+  border-radius: 12px;
+  background: var(--ig-card);
+  box-shadow: inset 3px 0 0 var(--ig-foil), var(--ig-frame);
+}
+
+.igaming-resume-phase {
+  color: var(--ig-line);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.igaming-resume-plan h3 {
+  margin-top: 0.4rem;
+  font-size: 1.12rem;
+  font-weight: 720;
+}
+
+.igaming-resume-plan ul {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.igaming-resume-plan ul li {
+  position: relative;
+  padding-left: 1rem;
+  color: var(--theme-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.igaming-resume-plan ul li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ig-foil);
+}
+
+.igaming-resume-work {
+  margin-top: 1.6rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.8rem, 2vw, 1.2rem);
+}
+
+.igaming-resume-work li {
+  padding-top: 0.9rem;
+  box-shadow: inset 0 1px 0 var(--ig-line-2);
+}
+
+.igaming-resume-work strong {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.igaming-resume-work p {
+  margin-top: 0.4rem;
+  color: var(--theme-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.igaming-resume-note {
+  max-width: 40rem;
+  margin: 1.8rem auto 0;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  background: var(--ig-card);
+  box-shadow: inset 3px 0 0 var(--ig-foil), inset 0 0 0 1px var(--ig-line-3);
+  color: var(--theme-text-secondary);
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
+.igaming-resume .igaming-closing .igaming-case-links {
+  justify-content: center;
+}
+
+@media (max-width: 860px) {
+  .igaming-resume-proof ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .igaming-resume .igaming-resume-strengths,
+  .igaming-resume-plan,
+  .igaming-resume-work { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .igaming-resume-proof a { transition: none; }
+  .igaming-resume-proof a:hover { transform: none; }
+}
