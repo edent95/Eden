@@ -349,7 +349,7 @@ export const ROUTE_SEO: RouteSeo[] = [
   {
     path: '/dr-racing',
     datePublished: '2026-08-20',
-    dateModified: '2026-09-14',
+    dateModified: '2026-10-28',
     og: 'dr-racing',
     priority: '0.8',
     title: {
@@ -357,8 +357,8 @@ export const ROUTE_SEO: RouteSeo[] = [
       zh: 'Dr Racing | Eden Tan 的摩托车贷款仪表台',
     },
     desc: {
-      en: 'Dr Racing runs a motorcycle dealership\u2019s loan pipeline: applications, bank rounds, reject codes, leads, WhatsApp tracking, and commissions in one dashboard.',
-      zh: 'Dr Racing 是摩托车行的贷款运营系统：申请、银行轮次、reject code、leads、WhatsApp 追踪与佣金，全部放进同一个仪表台。',
+      en: 'Dr Racing runs a motorcycle dealership from lead to delivered bike: loan and cash applications, bank rounds, the delivery checklist, stock, and commissions.',
+      zh: 'Dr Racing 是摩托车行从 lead 到交车的运营系统：贷款与现金申请、银行轮次、reject code、交车 checklist、库存、账本同步与佣金，全部放进同一个仪表台。',
     },
   },
   {

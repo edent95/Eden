@@ -621,16 +621,16 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
   '/dr-racing': {
     eyebrow: L('Loan operations · Dealership tool', '贷款运营 · 车行工具'),
     thesis: L(
-      'Run the whole motorcycle-loan pipeline in one dashboard.',
-      '把摩托车贷款流程放进同一个仪表台。',
+      'Run a motorcycle dealership from first lead to delivered bike.',
+      '把摩托车行从第一条 lead 到交车，放进同一个仪表台。',
     ),
     sections: [
       {
         title: L('How a deal moves', '一单生意怎么走'),
         paragraphs: [
           L(
-            'Lead, application, bank rounds, delivery. Leads arrive from TikTok, Facebook, Instagram, Google, and walk-ins. An application collects the IC, payslips, the bike, and the installment plan. Each bank round records the outcome, and a rejection comes back as a reject code translated into a plain next step. Delivery closes the loop with disbursement and commission.',
-            'Lead、申请、银行轮次、交车。Lead 来自 TikTok、Facebook、Instagram、Google 和到店客人；申请收集 IC、薪资单、车型与分期方案；每一轮银行结果都记录下来，被拒时 reject code 会被翻译成一句清楚的下一步；交车后放款与佣金结算收尾。',
+            'Lead, application, bank rounds, delivery, settlement. Leads arrive from TikTok, Facebook, Instagram, Google, the public website, and walk-ins, each through the salesperson’s own tracked link. A loan or cash application collects the IC, payslips, bank account, the bike, and the installment plan. Each bank round records the outcome, and a rejection comes back as a reject code translated into a plain next step. An approved deal opens a delivery checklist where Operations orders the bike and each role records its own step with files attached; the bike is delivered only when every step is done. Settlement checks payments against deposit plus cash, syncs invoices and receipts to the accounting ledger, and pays commission by tier plan.',
+            'Lead、申请、银行轮次、交车、结算。Lead 来自 TikTok、Facebook、Instagram、Google、公开官网和到店客人，各自经由 sales 自己的追踪链接；贷款或现金申请收集 IC、薪资单、银行户口、车型与分期方案；每一轮银行结果都记录下来，被拒时 reject code 会被翻译成一句清楚的下一步；批准后打开交车 checklist，Operations 订车，每个角色附上文件记录自己那一步，全部完成才能交车；结算时按订金加现金核对收款，发票和收据同步到会计账本，佣金按分级方案计算。',
           ),
           L(
             'Before this system, that pipeline lived in WhatsApp chats, paper files, and each salesperson’s memory. Reject codes become knowledge, so a young salesperson handles a rejection the way the most experienced one would.',
@@ -642,8 +642,8 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
         title: L('What it changes day to day', '它每天改变了什么'),
         paragraphs: [
           L(
-            'Six modules: Task Inbox, Applications, Leads, Analytics, Finance, and Commissions, with four roles (Sales, Admin, Operations Manager, Super Admin). Each role sees its own inbox. The dashboard also tracks WhatsApp clicks by channel, monthly marketing spend, staff attendance, per-deal commissions, and an audit log.',
-            '六个模块：Task Inbox、Applications、Leads、Analytics、Finance、Commissions；四种角色：Sales、Admin、Operations Manager、Super Admin，各自有自己的待办。仪表台同时追踪各渠道的 WhatsApp 点击、每月营销支出、员工出勤、每单佣金与审计日志。',
+            'Modules: Task Inbox, Applications, Leads, Delivery, Stock, Finance, Commissions, and a staff Handbook, with four roles (Sales, Admin, Operations Manager, Super Admin). Each role sees its own inbox, and whoever owns the next step gets a phone push. The dashboard also tracks WhatsApp clicks by channel, monthly marketing spend, stock and bikes to source, staff attendance, each deal’s fees and costs, commissions, and an audit log. New staff learn from recorded walkthrough videos of the current flow, chaptered by role.',
+            '模块：Task Inbox、Applications、Leads、交车、库存、财务、佣金和员工手册；四种角色：Sales、Admin、Operations Manager、Super Admin，各自有自己的待办，轮到谁就推送到谁的手机。仪表台同时追踪各渠道的 WhatsApp 点击、每月营销支出、库存与待订的车、员工出勤、每单的费用与成本、佣金与审计日志。新员工看按角色分章节的操作录像学习当前流程。',
           ),
         ],
       },
@@ -651,8 +651,8 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
         title: L('Deployment and demo', '部署与 demo'),
         paragraphs: [
           L(
-            'Production runs on Firebase App Hosting with Firestore security rules tested in CI, and the interface is available in Chinese, English, and Malay. The public demo embedded on this page runs on fixed anonymized data with no login and resets on reload.',
-            '生产环境跑在 Firebase App Hosting，Firestore 安全规则在 CI 里测试；界面提供中文、英文与马来文。页面内嵌的公开 demo 使用固定的匿名数据，无需登录，刷新即重置。',
+            'Production runs on Firebase App Hosting with Firestore security rules tested in CI, staff sign-in with an authenticator code, and nightly verified backups; the interface is available in Chinese, English, and Malay. The public demo embedded on this page (October 2026 build) runs on fixed anonymized data with no login and resets on reload; phone push, file uploads, and the ledger sync are off in the demo.',
+            '生产环境跑在 Firebase App Hosting，Firestore 安全规则在 CI 里测试，员工用验证器动态码登录，数据每晚备份并核验；界面提供中文、英文与马来文。页面内嵌的公开 demo（2026 年 10 月版本）使用固定的匿名数据，无需登录，刷新即重置；手机推送、文件上传和账本同步在 demo 里是关的。',
           ),
         ],
       },
