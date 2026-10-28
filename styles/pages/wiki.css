@@ -63,6 +63,11 @@
 }
 .wiki-library-heading h2 { font-size: clamp(23px, 3vw, 30px); font-weight: 650; letter-spacing: -.025em; }
 .wiki-library-heading > span { color: var(--theme-text-secondary); font-family: var(--font-mono); font-size: 12px; }
+.wiki-library-intro { max-width: 610px; margin-bottom: 24px; color: var(--theme-text-secondary); font-size: 15px; line-height: 1.8; }
+.wiki-build-library { margin-top: 48px; border-top: 1px solid var(--theme-border); }
+.wiki-build-library > summary { padding: 24px 0; cursor: pointer; font-size: 20px; font-weight: 650; }
+.wiki-build-library > summary > span { display: inline-block; margin-left: 16px; color: var(--theme-text-secondary); font-family: var(--font-mono); font-size: 12px; font-weight: 400; }
+.wiki-build-library > summary:focus-visible { outline: 2px solid var(--theme-accent-teal); outline-offset: 6px; border-radius: 3px; }
 
 .wiki-entry-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 64px; }
 .wiki-entry {

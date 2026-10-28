@@ -1,4 +1,6 @@
 import type { SeoLanguage } from './seo-routes.ts';
+import { WIKI_INDEX, wikiTopics } from './components/wiki-content.ts';
+import { wikiEntries } from './generated/content.ts';
 import { MIYA_PRIVACY, miyaPlainText, type MiyaBlock } from './components/miya-privacy-content.ts';
 import { MIYA_BRAND, miyaBrandPlain } from './components/miya-brand-content.ts';
 import { IGAMING_PAGE, IGAMING_SUMMARY } from './components/igaming-content.ts';
@@ -290,7 +292,7 @@ function igamingStaticCopy(): StaticRouteCopy {
  * Hand-written static body copy for routes whose substance lives in React data
  * rather than in `wiki/`. Every fact here mirrors what the live page renders
  * (product modules, numbers, section order); keep the two in step when a page changes.
- * Wiki and Notes routes do not appear here: their body comes from `generated/content.ts`.
+ * Wiki/Notes articles come from `generated/content.ts`; the Wiki hub combines those notes with its shared index copy.
  * `/project/miya`, `/igaming`, `/igaming/full` and the `/igaming/cases` pages are the exceptions: they are generated from
  * `components/miya-privacy-content.ts` / `components/igaming-content.ts`, the same copy
  * the React pages render, so the static text cannot drift.
@@ -361,6 +363,16 @@ function aboutStaticCopy(): StaticRouteCopy {
 }
 
 export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
+  '/wiki': {
+    eyebrow: L('EDEN / WIKI', 'EDEN / WIKI'),
+    sections: [
+      { title: WIKI_INDEX.topicsTitle, paragraphs: [WIKI_INDEX.topicsIntro] },
+      ...wikiTopics.map((note) => ({ title: note.title, paragraphs: [note.summary] })),
+      { title: WIKI_INDEX.buildTitle, paragraphs: [WIKI_INDEX.buildIntro] },
+      ...wikiEntries.map((entry) => ({ title: entry.title, paragraphs: [entry.summary] })),
+      { title: WIKI_INDEX.relationshipTitle, paragraphs: [WIKI_INDEX.relationshipCopy] },
+    ],
+  },
   '/project/miya': miyaStaticCopy(),
   '/project/miya/brand': miyaBrandStaticCopy(),
   '/about': aboutStaticCopy(),
@@ -384,8 +396,8 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
             'Eden Tan 从混乱的人性与现实场景里做出产品、数据工具与 AI 系统：宠物友好地点发现 app、熟人局牌桌、iGaming 日报数据引擎、摩托车贷款仪表台，以及一套个人 Life OS。每一个都以真实运行中的系统来记录，思考过程与构建证据放在一起。',
           ),
           L(
-            'The site has three layers that link to each other. Projects hold the builds. Notes hold the essays on systems, judgment, strategy, and money. The Wiki holds reusable build skills extracted from those projects so the same lesson does not have to be relearned.',
-            '网站分三层，彼此互链：Projects 放作品；Notes 放关于系统、判断、策略与金钱的文章；Wiki 放从这些项目里提炼出来、可以反复使用的构建技能，让同一个教训不必再学一次。',
+            'The site has three layers that link to each other. Projects hold the builds. Notes hold the essays on systems, judgment, strategy, and money. The Wiki connects those essays by theme and keeps practical build notes as a second layer.',
+            '网站分三层，彼此互链：Projects 放作品；Notes 放关于系统、判断、策略与金钱的文章；Wiki 按主题连接文章，并在第二层保留可查阅的构建经验。',
           ),
         ],
       },

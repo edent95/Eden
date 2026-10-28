@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { siteEssayNotes, wikiEntries } from '../../generated/content.ts';
+import { WIKI_INDEX, wikiTopics } from '../../components/wiki-content.ts';
 import { OG_IMAGES, ROUTE_SEO, SITE_CONTENT_LASTMOD } from '../../seo-routes.ts';
 import {
   buildStaticJsonLd,
@@ -32,11 +33,37 @@ test('notes and wiki dates come from Markdown frontmatter, not the site-level da
   assert.equal(routeLastmod(route('/wiki/vite')), wiki.dateModified);
 });
 
-test('hub routes are as fresh as their newest child', () => {
+test('hub dates include linked articles and edits to the Wiki index itself', () => {
   const newestEssay = siteEssayNotes.map((entry) => entry.dateModified).sort().at(-1);
   assert.equal(routeLastmod(route('/notes')), newestEssay);
-  const newestWiki = wikiEntries.map((entry) => entry.dateModified).sort().at(-1);
-  assert.equal(routeLastmod(route('/wiki')), newestWiki);
+  const newestLinked = [...wikiTopics, ...wikiEntries].map((entry) => entry.dateModified).sort().at(-1);
+  assert.equal(routeLastmod({ ...route('/wiki'), dateModified: '2000-01-01' }), newestLinked);
+  assert.equal(routeLastmod({ ...route('/wiki'), dateModified: '2099-01-01' }), '2099-01-01');
+});
+
+test('Wiki leads with four existing Notes and retains the technical routes in both languages', () => {
+  const slugs = [
+    'turn-chaos-into-systems',
+    'judgment-is-not-more-information',
+    'human-nature-is-a-design-condition',
+    'win-before-you-fight',
+  ];
+  assert.deepEqual(wikiTopics.map((note) => note.slug), slugs);
+  for (const note of wikiTopics) {
+    assert.equal(note, siteEssayNotes.find((entry) => entry.slug === note.slug));
+    assert.notEqual(route(`/notes/${note.slug}`).index, false);
+  }
+  for (const language of ['en', 'zh'] as const) {
+    const content = getStaticRouteContent(route('/wiki'), language);
+    assert.equal(content.summary, WIKI_INDEX.summary[language]);
+    assert.deepEqual(content.sections.slice(1, 5).map((section) => section.title), wikiTopics.map((note) => note.title[language]));
+    assert.equal(content.sections[5].title, WIKI_INDEX.buildTitle[language]);
+    assert.deepEqual(content.related.slice(0, 4).map((entry) => entry.path), slugs.map((slug) => `/notes/${slug}`));
+    for (const entry of wikiEntries) {
+      assert.ok(content.related.some((related) => related.path === `/wiki/${entry.slug}`));
+      assert.ok(content.sections.some((section) => section.title === entry.title[language]));
+    }
+  }
 });
 
 test('every route resolves to ordered ISO dates and the sitemap is not stuck on one date', () => {
