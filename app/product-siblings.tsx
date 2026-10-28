@@ -37,7 +37,7 @@ const productSiblings: ProductSibling[] = [
     path: 'dr-racing',
     iconLabel: 'Dr Racing CSS app icon',
     Icon: ProjectsDrRacingCssIcon,
-    blurb: { en: 'Run the whole motorcycle-loan pipeline in one dashboard.', zh: '把摩托车贷款流程放进同一个仪表台。' },
+    blurb: { en: 'Run a motorcycle dealership from first lead to delivered bike.', zh: '把摩托车行从第一条 lead 到交车，放进同一个仪表台。' },
   },
   {
     id: 'jiju',
