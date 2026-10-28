@@ -212,11 +212,12 @@ const HomeLiveChat: React.FC = () => {
         aria-label={open ? t('Close chat', '关闭留言板') : t('Open anonymous chat', '打开匿名留言板')}
         onClick={() => setOpen((value) => !value)}
       >
-        <span className="eden-chat-orb-blob is-a" aria-hidden="true" />
-        <span className="eden-chat-orb-blob is-b" aria-hidden="true" />
-        <span className="eden-chat-orb-blob is-c" aria-hidden="true" />
-        <span className="eden-chat-orb-glass" aria-hidden="true" />
-        <span className="eden-chat-orb-close" aria-hidden="true" />
+        <span className="eden-chat-orb-core" aria-hidden="true">
+          <span className="eden-chat-orb-blob is-a" />
+          <span className="eden-chat-orb-blob is-b" />
+          <span className="eden-chat-orb-blob is-c" />
+          <span className="eden-chat-orb-glass" />
+        </span>
       </button>
     </div>
   );
