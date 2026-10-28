@@ -2,6 +2,17 @@
 
 This directory is the editable, Markdown-first content source for the public Wiki and Notes routes.
 
+## Public Wiki entry points
+
+`/wiki` is a topic map; `/notes` is the essay archive. The four featured entries link to the existing Notes articles, without duplicating their bodies:
+
+- Systems — [Turn chaos into systems](essays/turn-chaos-into-systems.md)
+- Judgment — [Judgment is not knowing more](essays/judgment-is-not-more-information.md)
+- People — [Human nature is a design condition](essays/human-nature-is-a-design-condition.md)
+- Strategy — [Win before you fight](essays/win-before-you-fight.md)
+
+The selection and bilingual index copy live in `components/wiki-content.ts`. The six technical pages below remain at their original URLs under the collapsed **Build experience / 构建经验** section.
+
 ## Wiki pages
 
 - [Vite as the vibe-coding engine](pages/vite.md) — `/wiki/vite`

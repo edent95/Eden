@@ -1,5 +1,6 @@
 import React from 'react';
 import { siteEssayNotes, wikiEntries } from '../generated/content';
+import { WIKI_INDEX, wikiTopics } from '../components/wiki-content';
 import type { CssArtComponent } from '../components/css-art/index';
 import { WikiBackgroundMusicCssIcon, WikiButtonFeedbackCssIcon, WikiFirebaseStorageCssIcon, WikiRagFlowCssIcon, WikiSkillsCssIcon, WikiViteCssIcon } from '../components/css-art/index';
 import { HeaderControls, joinBasePath, resolveAssetPath, type Language, type Theme, type ThemePreference } from '../app/shared';
@@ -878,9 +879,7 @@ export const WikiPage: React.FC<{
             <p className="wiki-eyebrow">{entry ? entry.eyebrow[language] : 'EDEN / WIKI'}</p>
             <h1>{entry ? entry.title[language] : isZh ? <>让经验，<br />成为下一次的起点。</> : <>A little wiser.<br />With every build.</>}</h1>
             <p className="wiki-hero-copy">
-              {entry ? entry.summary[language] : isZh
-                ? '构建时遇到的问题，解决后留下的方法。把散落在项目里的经验，整理成可以反复使用的知识。'
-                : 'Problems met while building. Methods kept after solving them. A growing collection of knowledge to carry into the next project.'}
+              {entry ? entry.summary[language] : WIKI_INDEX.summary[language]}
             </p>
             {!entry && <a className="wiki-text-link" href="#wiki-library">{isZh ? '浏览知识库' : 'Explore the library'} <ArrowDownRight size={17} aria-hidden="true" /></a>}
           </header>
@@ -1030,31 +1029,49 @@ export const WikiPage: React.FC<{
           ) : (
             <section className="wiki-library" id="wiki-library" aria-labelledby="wiki-library-title">
               <div className="wiki-library-heading">
-                <h2 id="wiki-library-title">{isZh ? '构建中的知识' : 'Knowledge from the work'}</h2>
-                <span>{String(wikiEntries.length).padStart(2, '0')} {isZh ? '篇笔记' : 'notes'}</span>
+                <h2 id="wiki-library-title">{WIKI_INDEX.topicsTitle[language]}</h2>
+                <span>{String(wikiTopics.length).padStart(2, '0')} {isZh ? '个主题' : 'themes'}</span>
               </div>
+              <p className="wiki-library-intro">{WIKI_INDEX.topicsIntro[language]}</p>
               <div className="wiki-entry-grid">
-                {wikiEntries.map((item, index) => (
-                  <a key={item.slug} href={joinBasePath(baseUrl, `wiki/${item.slug}`)} className="wiki-entry">
+                {wikiTopics.map((note, index) => (
+                  <a key={note.slug} href={joinBasePath(baseUrl, `notes/${note.slug}`)} className="wiki-entry">
                     <div className="wiki-entry-meta">
-                      <span>{String(index + 1).padStart(2, '0')} / {item.eyebrow[language]}</span>
-                      <div className="wiki-entry-icon" aria-hidden="true"><WikiEntryVisual entry={item} language={language} /></div>
+                      <span>{String(index + 1).padStart(2, '0')} / {note.category[language]}</span>
                     </div>
-                    <h3>{item.title[language]}</h3>
-                    <p>{item.summary[language]}</p>
-                    <span className="wiki-entry-link">{isZh ? '阅读笔记' : 'Read note'} <ArrowUpRight size={17} aria-hidden="true" /></span>
+                    <h3>{note.title[language]}</h3>
+                    <p>{note.summary[language]}</p>
+                    <span className="wiki-entry-link">{isZh ? '阅读完整文章' : 'Read the essay'} <ArrowUpRight size={17} aria-hidden="true" /></span>
                   </a>
                 ))}
               </div>
+              <details className="wiki-build-library">
+                <summary>
+                  {WIKI_INDEX.buildTitle[language]}
+                  <span>{String(wikiEntries.length).padStart(2, '0')} {isZh ? '篇技术笔记' : 'technical notes'}</span>
+                </summary>
+                <p className="wiki-library-intro">{WIKI_INDEX.buildIntro[language]}</p>
+                <div className="wiki-entry-grid">
+                  {wikiEntries.map((item, index) => (
+                    <a key={item.slug} href={joinBasePath(baseUrl, `wiki/${item.slug}`)} className="wiki-entry">
+                      <div className="wiki-entry-meta">
+                        <span>{String(index + 1).padStart(2, '0')} / {item.eyebrow[language]}</span>
+                        <div className="wiki-entry-icon" aria-hidden="true"><WikiEntryVisual entry={item} language={language} /></div>
+                      </div>
+                      <h3>{item.title[language]}</h3>
+                      <p>{item.summary[language]}</p>
+                      <span className="wiki-entry-link">{isZh ? '阅读笔记' : 'Read note'} <ArrowUpRight size={17} aria-hidden="true" /></span>
+                    </a>
+                  ))}
+                </div>
+              </details>
               <div className="wiki-colophon">
                 <div>
                   <p className="wiki-eyebrow">{isZh ? '持续积累' : 'A growing body of knowledge'}</p>
-                  <h2>{isZh ? '做过的事，留下可用的东西。' : 'Keep what the work teaches you.'}</h2>
+                  <h2>{WIKI_INDEX.relationshipTitle[language]}</h2>
                 </div>
                 <div>
-                  <p>{isZh
-                    ? '每篇笔记保留学到了什么、为什么重要、下次怎么复用。原始资料保持不变，Wiki 由 LLM 持续整理，经过检查的方法再成为可执行的 Skill。'
-                    : 'Each note keeps what was learned, why it matters, and how to reuse it. Original sources stay intact; the LLM maintains the wiki. Checked methods can become executable skills.'}</p>
+                  <p>{WIKI_INDEX.relationshipCopy[language]}</p>
                   <div className="wiki-footer-links">
                     <a className="wiki-text-link" href={notesHref}>{isZh ? '阅读 Notes' : 'Read Notes'} <ArrowUpRight size={16} aria-hidden="true" /></a>
                     <a className="wiki-text-link" href={joinBasePath(baseUrl, 'project')}>{isZh ? '探索项目' : 'Explore projects'} <ArrowUpRight size={16} aria-hidden="true" /></a>

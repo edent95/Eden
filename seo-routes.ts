@@ -26,7 +26,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-10-28';
+export const SITE_CONTENT_LASTMOD = '2026-10-29';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -378,16 +378,16 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/wiki',
-    dateModified: '2026-09-14',
+    dateModified: '2026-10-29',
     datePublished: '2026-06-24',
     priority: '0.7',
     title: {
-      en: 'Eden Knowledge Base | Reusable build skills',
-      zh: 'Eden 知识库 | 可复用构建技能',
+      en: 'Eden Wiki | Systems, judgment, people and strategy',
+      zh: 'Eden Wiki | 系统、判断、人性与策略',
     },
     desc: {
-      en: 'A personal knowledge base for reusable build skills: Vite, feedback, Firebase persistence, audio UX, RAG, and product judgment.',
-      zh: 'Eden 的个人知识库，沉淀跨项目可复用构建技能：Vite、背景音乐、按钮反馈、Firebase lifetime storage 和产品判断。',
+      en: 'Explore systems, judgment, human behavior and strategy through four essays, with practical build notes one level deeper.',
+      zh: 'Eden 的主题知识地图：从系统、判断、人性与策略进入完整 Notes 文章，另有开发工具、交互与知识整理的构建经验。',
     },
   },
   {
@@ -686,7 +686,7 @@ export const ROUTE_SEO: RouteSeo[] = [
   {
     path: '/about',
     datePublished: '2026-10-06',
-    dateModified: '2026-10-06',
+    dateModified: '2026-10-29',
     priority: '0.9',
     title: {
       en: 'About Eden Tan | Most problems are scattered, not hard',

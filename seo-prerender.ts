@@ -1,5 +1,6 @@
 import { siteEssayNotes, wikiEntries } from './generated/content.ts';
 import { ROUTE_STATIC_COPY } from './seo-static-content.ts';
+import { WIKI_INDEX, wikiTopics } from './components/wiki-content.ts';
 import {
   canonicalRoutePath,
   localizedCanonicalRoutePath,
@@ -48,10 +49,6 @@ const CLUSTERS: Array<{ prefix?: string; paths: string[] }> = [
 
 /** Fallback context for routes with neither Markdown content nor an entry in `ROUTE_STATIC_COPY` (noindex utility pages). */
 const GENERIC_CONTEXT: Record<string, Localized> = {
-  '/wiki': {
-    en: 'The Wiki keeps reusable build knowledge outside chat history. Each page records a thesis, practical rules, failure modes, and the project evidence behind it.',
-    zh: 'Wiki 把可复用的构建知识留在聊天记录之外。每一页都保留核心判断、实用规则、失败模式与背后的项目证据。',
-  },
   '/notes': {
     en: 'These essays develop a connected body of thought around systems, judgment, strategy, finance, human behavior, and building with AI.',
     zh: '这些文章围绕系统、判断、策略、金融、人性与 AI 构建，逐渐形成一套彼此关联的思考体系。',
@@ -111,7 +108,7 @@ function latestIsoDate(dates: string[], fallback: string): string {
 /**
  * Freshness per route, so sitemap `lastmod` and JSON-LD dates are driven by content:
  * - Wiki / Notes articles: frontmatter `published` / `updated` from the Markdown source.
- * - `/wiki` and `/notes` hubs: modified = the newest child article.
+ * - `/wiki`: the latest index edit or linked article; `/notes`: the newest child article.
  * - Homepage: modified = `SITE_CONTENT_LASTMOD` (the site-level regeneration date).
  * - Everything else: the registry's own `datePublished` / `dateModified`, falling back to
  *   `SITE_CONTENT_LASTMOD` when a route has no date of its own.
@@ -121,7 +118,10 @@ export function routeDates(route: RouteSeo): RouteDates {
   if (fromContent) return fromContent;
   const published = route.datePublished ?? SITE_CONTENT_LASTMOD;
   if (route.path === '/wiki') {
-    return { published, modified: latestIsoDate(wikiEntries.map((entry) => entry.dateModified), published) };
+    return { published, modified: latestIsoDate(
+      [...wikiTopics, ...wikiEntries].map((entry) => entry.dateModified),
+      route.dateModified ?? published,
+    ) };
   }
   if (route.path === '/notes') {
     return { published, modified: latestIsoDate(siteEssayNotes.map((entry) => entry.dateModified), published) };
@@ -201,25 +201,20 @@ export function getStaticRouteContent(route: RouteSeo, language: SeoLanguage): S
   }
 
   if (route.path === '/wiki') {
+    const copy = ROUTE_STATIC_COPY['/wiki'];
+    const topicPaths = wikiTopics.map((note) => `/notes/${note.slug}`);
     return {
       eyebrow: 'EDEN / WIKI',
       heading: language === 'zh' ? '让经验，成为下一次的起点。' : 'A little wiser. With every build.',
-      summary: language === 'zh'
-        ? '构建时遇到的问题，解决后留下的方法。把散落在项目里的经验，整理成可以反复使用的知识。'
-        : 'Problems met while building. Methods kept after solving them. A growing collection of knowledge to carry into the next project.',
-      thesis: language === 'zh'
-        ? '把从项目中学到的东西整理成可复用、可查证、可继续维护的知识。'
-        : 'Turn lessons from real projects into reusable, verifiable, maintainable knowledge.',
-      sections: [...wikiEntries.map((entry) => ({
-        title: entry.title[language],
-        paragraphs: [entry.summary[language], entry.thesis[language]],
-      })), {
-        title: language === 'zh' ? '做过的事，留下可用的东西。' : 'Keep what the work teaches you.',
-        paragraphs: [language === 'zh'
-          ? '每篇笔记保留学到了什么、为什么重要、下次怎么复用。原始资料保持不变，Wiki 由 LLM 持续整理，经过检查的方法再成为可执行的 Skill。'
-          : 'Each note keeps what was learned, why it matters, and how to reuse it. Original sources stay intact; the LLM maintains the wiki. Checked methods can become executable skills.'],
-      }],
-      related: ROUTE_SEO.filter((entry) => entry.path.startsWith('/wiki/') && entry.index !== false),
+      summary: WIKI_INDEX.summary[language],
+      sections: copy.sections.map((section) => ({
+        title: section.title[language],
+        paragraphs: section.paragraphs.map((paragraph) => paragraph[language]),
+      })),
+      related: [
+        ...topicPaths.flatMap((path) => ROUTE_SEO.filter((entry) => entry.path === path && entry.index !== false)),
+        ...ROUTE_SEO.filter((entry) => (entry.path.startsWith('/wiki/') || entry.path === '/notes' || entry.path === '/project') && entry.index !== false),
+      ],
     };
   }
 

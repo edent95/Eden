@@ -180,7 +180,7 @@ export const ABOUT_PAGE = {
       links: [
         { path: '/notes', name: L('All notes', '全部文章'), text: L('Essays and evidence maps.', '长文与证据地图。') },
         { path: '/igaming/cases', name: L('iGaming field notes', 'iGaming 实战案例'), text: L('Anonymised cases from both sides of the industry.', '行业两端的匿名案例。') },
-        { path: '/wiki', name: L('Knowledge base', '知识库'), text: L('Reusable build skills and the RAG flow behind this site.', '可复用的构建技能，以及这个网站背后的 RAG 流程。') },
+        { path: '/wiki', name: L('Knowledge base', '知识库'), text: L('A map of systems, judgment, people, and strategy, with practical build notes.', '系统、判断、人性与策略的主题地图，以及可查阅的构建经验。') },
       ],
     },
     {
