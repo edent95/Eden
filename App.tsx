@@ -51,6 +51,7 @@ const MiyaBrandPage = React.lazy(() => import('./components/MiyaBrandPage'));
 const IGamingPage = React.lazy(() => import('./components/IGamingPage'));
 const IGamingSummaryPage = React.lazy(() => import('./components/IGamingSummaryPage'));
 const IGamingCasesPage = React.lazy(() => import('./components/IGamingCasesPage'));
+const IGamingResumePage = React.lazy(() => import('./components/IGamingResumePage'));
 const HomePukimonGame = React.lazy(() => import('./components/HomePukimonGame'));
 
 const fadeIn = {
@@ -328,6 +329,7 @@ const App: React.FC = () => {
   const isIGamingPage = pathWithoutBase === '/igaming';
   const isIGamingFullPage = pathWithoutBase === '/igaming/full';
   const isIGamingCasesPage = pathWithoutBase === '/igaming/cases';
+  const isIGamingResumePage = pathWithoutBase === '/igaming/resume';
   const igamingCaseSlug = pathWithoutBase.startsWith('/igaming/cases/')
     ? pathWithoutBase.replace('/igaming/cases/', '')
     : '';
@@ -678,6 +680,29 @@ const App: React.FC = () => {
         theme={theme}
         setThemePreference={setThemePreference}
       />
+    );
+  }
+
+  if (isIGamingResumePage) {
+    return (
+      <React.Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
+        <IGamingResumePage
+          language={language}
+          igamingHref={igamingHref}
+          fullHref={igamingFullHref}
+          casesHref={igamingCasesHref}
+          etReportHubHref={etReportHubHref}
+          controls={
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
+          }
+        />
+      </React.Suspense>
     );
   }
 

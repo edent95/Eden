@@ -26,7 +26,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-10-27';
+export const SITE_CONTENT_LASTMOD = '2026-10-28';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -272,6 +272,22 @@ export const ROUTE_SEO: RouteSeo[] = [
     desc: {
       en: 'Anonymised iGaming case studies from operator-side and provider-side work: the problem, the investigation, what got built, and what each case does not prove.',
       zh: '来自 operator 与 provider 两边工作的匿名 iGaming 案例：问题是什么、怎么排查、做了什么，以及每个案例不能证明什么。',
+    },
+  },
+  {
+    path: '/igaming/resume',
+    datePublished: '2026-10-28',
+    dateModified: '2026-10-28',
+    priority: '0.5',
+    index: false,
+    sitemap: false,
+    title: {
+      en: 'iGaming Growth & Market Expansion | Eden Tan',
+      zh: 'iGaming 增长与新市场开拓 | Eden Tan',
+    },
+    desc: {
+      en: '7+ years across B2C and B2B iGaming: acquisition, retention, partnerships, reporting and AI-assisted tooling, with a 90-day plan for entering a new market.',
+      zh: '7 年以上 B2C 与 B2B iGaming 经验：获客、留存、合作、报表与 AI 辅助工具，附进入新市场的 90 天计划。',
     },
   },
   {
