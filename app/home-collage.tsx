@@ -154,7 +154,7 @@ const registerCollageVideoSampler = (sample: () => void) => {
   };
 };
 
-const HomeCollageVideo: React.FC<{ src: string; poster?: string; className?: string }> = ({ src, poster, className = 'eden-collage-video' }) => {
+const HomeCollageVideo: React.FC<{ src: string; poster?: string }> = ({ src, poster }) => {
   const videoRef = React.useRef<HTMLVideoElement>(null);
 
   React.useEffect(() => {
@@ -205,7 +205,7 @@ const HomeCollageVideo: React.FC<{ src: string; poster?: string; className?: str
   return (
     <video
       ref={videoRef}
-      className={className}
+      className="eden-collage-video"
       poster={poster}
       autoPlay
       muted
@@ -220,9 +220,6 @@ const HomeCollageVideo: React.FC<{ src: string; poster?: string; className?: str
 };
 
 type HomeCollageItem = (typeof homeCollageItems)[number];
-
-/** The item the showcase opens on as a full-width video banner; the rest ride the shelf below. */
-const FEATURE_TITLE = 'Pukimon';
 
 const HomeShelfItem: React.FC<{ item: HomeCollageItem; language: Language; baseUrl: string; duplicate?: boolean }> = ({ item, language, baseUrl, duplicate = false }) => {
   const media = item.video ? (
@@ -276,7 +273,7 @@ const HomeShelfItem: React.FC<{ item: HomeCollageItem; language: Language; baseU
 };
 
 /**
- * The shelf under the feature banner: one row of cards with a title and a kind under each.
+ * The homepage shelf: one row of cards with a title and a kind under each.
  *
  * Desktop (fine pointer, wider than a tablet) drifts it as a marquee. The items are rendered
  * twice so translating the track by exactly one run loops with no visible seam, and that
@@ -330,56 +327,20 @@ const HomeShelfRow: React.FC<{ items: HomeCollageItem[]; language: Language; bas
   );
 };
 
-/** Full-width video banner for the featured item, copy and two actions over its lower left. */
-const HomeFeatureBanner: React.FC<{ item: HomeCollageItem; language: Language; baseUrl: string }> = ({ item, language, baseUrl }) => {
-  const isZh = language === 'zh';
-  return (
-    <section className={`eden-feature tone-${item.tone}`} aria-labelledby="eden-feature-title">
-      {item.image ? (
-        <img className="eden-feature-poster" src={resolveAssetPath(baseUrl, item.image)} alt={item.imageAlt?.[language] ?? item.title} decoding="async" />
-      ) : null}
-      {item.video ? (
-        <HomeCollageVideo
-          className="eden-feature-video"
-          src={resolveAssetPath(baseUrl, item.video)}
-          poster={item.image ? resolveAssetPath(baseUrl, item.image) : undefined}
-        />
-      ) : null}
-      <div className="eden-feature-copy">
-        <p className="eden-feature-kicker">
-          <span>{item.title}</span>
-          <span className="eden-feature-chip">{isZh ? '实时擂台' : 'Live arena'}</span>
-        </p>
-        <h2 id="eden-feature-title">{isZh ? <>小时候梦想的那场对战，<br />我把它做出来了。</> : <>The battle I dreamed of as a kid.<br />I built it.</>}</h2>
-        <div className="eden-feature-actions">
-          <a className="eden-feature-button is-primary" href="#pukimon">{isZh ? '立即开玩' : 'Play now'}</a>
-          {item.href ? (
-            <a className="eden-feature-button" href={resolveAssetPath(baseUrl, item.href)} aria-label={item.linkLabel?.[language]}>
-              {isZh ? '了解更多' : 'Learn more'}
-            </a>
-          ) : null}
-        </div>
-      </div>
-    </section>
-  );
-};
-
 /**
- * Homepage showcase, laid out like a services page: one big featured video banner, then a
- * shelf of everything else, then a pause button that stops the drift and every video in the
- * showcase (moving content that runs longer than five seconds needs a way to stop it).
+ * Homepage shelf, laid out like a services page: it sits under the big Pukimon arena
+ * (components/HomePukimonGame.tsx), one row of every item, then a pause button that stops
+ * the drift and every video in it (moving content that runs longer than five seconds needs
+ * a way to stop it).
  */
 export const HomeCollage: React.FC<{ language: Language; baseUrl: string }> = ({ language, baseUrl }) => {
   const [paused, setPaused] = React.useState(false);
-  const feature = homeCollageItems.find((item) => item.title === FEATURE_TITLE);
-  const shelf = homeCollageItems.filter((item) => item !== feature);
   const isZh = language === 'zh';
 
   return (
     <div className={`eden-showcase${paused ? ' is-paused' : ''}`}>
-      {feature ? <HomeFeatureBanner item={feature} language={language} baseUrl={baseUrl} /> : null}
       <div className="eden-collage" aria-label={isZh ? 'Eden 的作品与生活观察' : "Eden's work and field notes"}>
-        <HomeShelfRow items={shelf} language={language} baseUrl={baseUrl} />
+        <HomeShelfRow items={homeCollageItems} language={language} baseUrl={baseUrl} />
       </div>
       <button
         type="button"

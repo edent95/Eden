@@ -846,13 +846,13 @@ const App: React.FC = () => {
           </motion.div>
         </motion.section>
 
-        <section className="eden-collage-section" id="work">
-          <HomeCollage language={language} baseUrl={baseUrl} />
-        </section>
-
         <React.Suspense fallback={<section className="min-h-64" aria-busy="true" />}>
           <HomePukimonGame isZh={isZh} baseUrl={baseUrl} pukimonHref={joinBasePath(baseUrl, 'pukimon')} />
         </React.Suspense>
+
+        <section className="eden-collage-section" id="work">
+          <HomeCollage language={language} baseUrl={baseUrl} />
+        </section>
 
         <section className="eden-about eden-home-island" id="about">
           <div className="eden-about-photo">

@@ -48,27 +48,11 @@
 .eden-text-link span { transition: transform 220ms ease; }
 .eden-text-link:hover span { transform: translateX(4px); }
 
-.eden-collage-section { width: 100%; overflow: hidden; padding: 0 0 120px; }
+.eden-collage-section { width: 100%; overflow: hidden; padding: 48px 0 120px; }
 
-/* Showcase (app/home-collage.tsx): a full-width video banner for the featured item, then a
-   one-row shelf of every other item with a title and kind under each card, then a pause
-   button. Desktop drifts the shelf as a marquee; touch devices and anything up to tablet
-   width get a native swipe row instead (see the media block below). */
-.eden-feature { position: relative; isolation: isolate; width: 100%; aspect-ratio: 16 / 9; max-height: 86vh; overflow: hidden; background: #0d0d10; color: #fff; }
-.eden-feature-poster, .eden-feature-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
-.eden-feature-video { z-index: 1; }
-/* a dark floor under the copy so white text stays readable over any frame */
-.eden-feature::after { content: ""; position: absolute; inset: 0; z-index: 2; background: linear-gradient(180deg, transparent 45%, rgb(0 0 0 / .62) 100%), linear-gradient(90deg, rgb(0 0 0 / .32), transparent 55%); pointer-events: none; }
-.eden-feature-copy { position: absolute; z-index: 3; left: clamp(20px, 6vw, 88px); right: 20px; bottom: clamp(28px, 7vw, 84px); max-width: 680px; }
-.eden-feature-kicker { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; font-size: 17px; font-weight: 700; }
-.eden-feature-chip { padding: 3px 11px; border: 1px solid rgb(255 255 255 / .7); border-radius: 999px; font-size: 13px; font-weight: 650; }
-.eden-feature h2 { margin-top: 14px; color: #fff; font-family: var(--font-display); font-size: clamp(30px, 4.2vw, 52px); font-weight: 760; line-height: 1.08; letter-spacing: -.03em; text-wrap: balance; }
-.eden-feature-actions { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 12px; }
-.eden-feature-button { display: inline-flex; min-height: 46px; align-items: center; padding: 0 22px; border: 1px solid rgb(255 255 255 / .8); border-radius: 999px; color: #fff; font-size: 16px; font-weight: 650; text-decoration: none; transition: background-color 180ms ease, color 180ms ease; }
-.eden-feature-button.is-primary { background: #fff; color: #161616; }
-.eden-feature-button:hover { background: rgb(255 255 255 / .16); }
-.eden-feature-button.is-primary:hover { background: rgb(255 255 255 / .86); }
-.eden-feature-button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+/* Shelf (app/home-collage.tsx) under the big Pukimon arena: one row of every item with a
+   title and kind under each card, then a pause button. Desktop drifts it as a marquee; touch
+   devices and anything up to tablet width get a native swipe row instead (media block below). */
 
 /* The shelf. Each row holds two identical runs, so translating the track by exactly one run
    (gaps included) loops with no visible seam; the gap lives on each item's margin, not a
@@ -109,15 +93,10 @@
   .eden-collage-track { animation: none; will-change: auto; }
   .eden-collage-run[aria-hidden="true"] { display: none; }
   .eden-shelf-item { flex-basis: clamp(220px, 42vw, 360px); scroll-snap-align: start; }
-  .eden-feature { aspect-ratio: 4 / 3; }
   .eden-showcase-pause { margin-left: 16px; }
 }
 
 @media (max-width: 600px) {
-  .eden-feature { aspect-ratio: 4 / 5; max-height: none; }
-  .eden-feature h2 { font-size: clamp(28px, 8.4vw, 36px); }
-  .eden-feature-kicker { font-size: 15px; }
-  .eden-feature-button { min-height: 44px; padding: 0 18px; font-size: 15px; }
   .eden-shelf-item { flex-basis: 72vw; }
   .eden-collage { --eden-collage-gap: 10px; }
 }
@@ -185,7 +164,7 @@
   .eden-home .header-language-label-full { display: none; }
   .eden-home .header-language-label-short { display: inline; }
   .eden-hero { min-height: auto; padding: 104px 0 90px; }.eden-hero h1 { margin-top: 20px; font-size: clamp(52px, 16vw, 72px); }.eden-hero-copy { font-size: 17px; }.eden-hero-actions { flex-direction: column; gap: 18px; }
-  .eden-collage-section { padding: 0 0 80px; }
+  .eden-collage-section { padding: 36px 0 80px; }
 
   .eden-focus, .eden-about { padding-block: 90px; }.eden-focus > h2, .eden-about h2 { font-size: 48px; }.eden-focus-grid { margin-top: 54px; }
   .eden-manifesto { padding: 64px 0; }.eden-manifesto-banner { border-radius: 20px; }.eden-manifesto-line { min-height: 180px; padding: 28px 24px; }.eden-manifesto-line p { font-size: clamp(34px, 10vw, 44px); }
@@ -194,7 +173,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .eden-collage-video, .eden-feature-video { display: none; }
+  .eden-collage-video { display: none; }
   /* the blanket animation:none below stops the drift, so let people scroll the row themselves */
   .eden-collage-row { overflow-x: auto; scrollbar-width: thin; }
   .eden-collage-run[aria-hidden="true"] { display: none; }
