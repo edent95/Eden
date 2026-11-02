@@ -48,48 +48,58 @@
 .eden-text-link span { transition: transform 220ms ease; }
 .eden-text-link:hover span { transform: translateX(4px); }
 
-.eden-collage-section { width: 100%; overflow: hidden; padding: 0 0 120px; }
-/* Two full-bleed marquee rows: the top drifts left, the bottom drifts right.
-   Each row holds two identical runs, so translating the track by exactly one run
-   (gaps included) loops with no visible seam. The gap lives on the card's margin
-   rather than a flex gap — a flex gap would sit between the two runs as well and
-   throw the distance off by half a gap.
+.eden-collage-section { width: 100%; overflow: hidden; padding: 48px 0 120px; }
 
-   That distance is `--eden-run-shift`, measured in px by HomeCollageRow and set on
-   the track. It cannot be `-50%`: iOS Safari resolves a percentage translate on a
-   `width: max-content` flex track against the wrong box and lands on ~25px, which
-   reads as a completely motionless marquee. The 50% fallback below only matters if
-   the measurement never runs. */
-.eden-collage { --eden-collage-gap: 12px; width: 100%; display: grid; gap: var(--eden-collage-gap); }
-.eden-collage-row { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
-.eden-collage-track { display: flex; width: max-content; will-change: transform; animation: eden-collage-drift-left 58s linear infinite; }
-.eden-collage-row-right .eden-collage-track { animation-name: eden-collage-drift-right; animation-duration: 68s; }
+/* Shelf (app/home-collage.tsx) under the big Pukimon arena: one row of every item with a
+   title and kind under each card, then a pause button. Desktop drifts it as a marquee; touch
+   devices and anything up to tablet width get a native swipe row instead (media block below). */
+
+/* The shelf. Each row holds two identical runs, so translating the track by exactly one run
+   (gaps included) loops with no visible seam; the gap lives on each item's margin, not a
+   flex gap, so it does not sit between the runs. The distance is `--eden-run-shift`, measured
+   in px by HomeShelfRow — not `-50%`, which iOS Safari resolves against the wrong box. */
+.eden-collage { --eden-collage-gap: 14px; width: 100%; margin-top: 14px; }
+.eden-collage-row { overflow: hidden; }
+.eden-collage-track { display: flex; width: max-content; will-change: transform; animation: eden-collage-drift-left 72s linear infinite; }
 .eden-collage-run { display: flex; flex: 0 0 auto; }
 @keyframes eden-collage-drift-left { from { transform: translateX(0); } to { transform: translateX(calc(-1 * var(--eden-run-shift, 50%))); } }
-@keyframes eden-collage-drift-right { from { transform: translateX(calc(-1 * var(--eden-run-shift, 50%))); } to { transform: translateX(0); } }
-.eden-collage-card { position: relative; container-type: inline-size; display: block; flex: 0 0 clamp(220px, 30vw, 460px); margin-right: var(--eden-collage-gap); aspect-ratio: 16 / 9; overflow: hidden; border-radius: 16px; background: #d8d4cc; color: #fff; box-shadow: 0 18px 50px rgb(23 23 23 / .09); }
-.eden-collage-card[href] { cursor: pointer; }
-.eden-collage-card[href]:focus-visible { outline: 3px solid var(--eden-blue); outline-offset: 4px; }
-.eden-collage-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(0 0 0 / .04), rgb(0 0 0 / .28)); }
-.eden-collage-reveal { position: absolute; z-index: 4; inset: 0; display: grid; place-items: center; padding: clamp(4px, 5cqw, 18px); text-align: center; transform: scale(.96); opacity: 0; }
-.eden-collage-reveal h3 { color: #fff; font-size: clamp(7px, 5.4cqw, 19px); letter-spacing: -.02em; text-wrap: balance; }
-.eden-collage-cta { display: inline-flex; min-height: clamp(18px, 12cqw, 40px); align-items: center; justify-content: center; padding: 0 clamp(6px, 5.4cqw, 19px); border: 1px solid rgb(255 255 255 / .58); border-radius: 999px; background: rgb(255 255 255 / .92); color: #242424; box-shadow: 0 clamp(1px, 1.1cqw, 4px) clamp(4px, 3.8cqw, 14px) rgb(0 0 0 / .11); font-size: clamp(6px, 4cqw, 14px); font-weight: 600; line-height: 1; letter-spacing: 0; white-space: nowrap; }
-.eden-collage-card:focus-visible .eden-collage-reveal { opacity: 1; transform: scale(1); }
-.eden-collage-card:focus-visible :is(.eden-placeholder-art, .eden-collage-image, .eden-collage-video) { transform: scale(1.025); }
+.eden-showcase.is-paused .eden-collage-track { animation-play-state: paused; }
+.eden-shelf-item { display: flex; flex: 0 0 clamp(240px, 27vw, 420px); flex-direction: column; margin-right: var(--eden-collage-gap); color: var(--eden-ink); text-decoration: none; }
+.eden-collage-card { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 12px; background: #d8d4cc; }
+.eden-shelf-title { margin-top: 10px; font-size: 15px; font-weight: 600; line-height: 1.3; }
+.eden-shelf-kind { margin-top: 2px; color: color-mix(in srgb, var(--eden-ink) 52%, transparent); font-size: 14px; line-height: 1.3; }
+.eden-shelf-item:focus-visible { outline: none; }
+.eden-shelf-item:focus-visible .eden-collage-card { outline: 3px solid var(--eden-blue); outline-offset: 3px; }
+.eden-collage-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .55s cubic-bezier(.16,1,.3,1); }
+.eden-collage-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .55s cubic-bezier(.16,1,.3,1); }
+
+.eden-showcase-pause { display: grid; place-items: center; width: 40px; height: 40px; margin: 22px 0 0 clamp(20px, 6vw, 88px); padding: 0; border: 1.5px solid color-mix(in srgb, var(--eden-ink) 70%, transparent); border-radius: 50%; background: transparent; color: var(--eden-ink); cursor: pointer; }
+.eden-showcase-pause:focus-visible { outline: 3px solid var(--eden-blue); outline-offset: 3px; }
+.eden-showcase-pause .is-pause { width: 10px; height: 12px; border-inline: 3px solid currentColor; }
+.eden-showcase-pause .is-play { width: 0; height: 0; margin-left: 3px; border-block: 7px solid transparent; border-left: 11px solid currentColor; }
 
 @media (hover: hover) and (pointer: fine) {
   .eden-collage-row:hover .eden-collage-track,
   .eden-collage-row:focus-within .eden-collage-track { animation-play-state: paused; }
-  .eden-collage-card:hover .eden-collage-reveal { opacity: 1; transform: scale(1); }
-  .eden-collage-card:hover :is(.eden-placeholder-art, .eden-collage-image, .eden-collage-video) { transform: scale(1.025); }
+  .eden-shelf-item:hover :is(.eden-placeholder-art, .eden-collage-image, .eden-collage-video) { transform: scale(1.03); }
 }
 
-@media (hover: none), (pointer: coarse) {
-  .eden-collage-reveal { display: none; }
-  .eden-collage-track { animation-play-state: running !important; }
+/* Phones, tablets and any touch screen: no drift. The row becomes a native horizontal
+   scroller with snap, the duplicate run (only there for the seamless loop) is dropped, and
+   the pause button only has the videos left to stop. */
+@media (hover: none), (pointer: coarse), (max-width: 1024px) {
+  .eden-collage-row { overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: 16px; padding-inline: 16px; scrollbar-width: none; }
+  .eden-collage-row::-webkit-scrollbar { display: none; }
+  .eden-collage-track { animation: none; will-change: auto; }
+  .eden-collage-run[aria-hidden="true"] { display: none; }
+  .eden-shelf-item { flex-basis: clamp(220px, 42vw, 360px); scroll-snap-align: start; }
+  .eden-showcase-pause { margin-left: 16px; }
 }
-.eden-collage-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .55s cubic-bezier(.16,1,.3,1); }
-.eden-collage-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .55s cubic-bezier(.16,1,.3,1); }
+
+@media (max-width: 600px) {
+  .eden-shelf-item { flex-basis: 72vw; }
+  .eden-collage { --eden-collage-gap: 10px; }
+}
 .eden-placeholder-art { position: absolute; inset: 0; transition: transform .55s cubic-bezier(.16,1,.3,1); }
 .eden-placeholder-art i { position: absolute; display: block; border-radius: 999px; background: rgb(255 255 255 / .42); }
 .eden-placeholder-art i:nth-child(1) { width: 48%; aspect-ratio: 1; top: 16%; left: 12%; }
@@ -137,7 +147,6 @@
 
 @media (max-width: 900px) {
   .eden-nav-inner { grid-template-columns: 1fr auto; }.eden-nav-links { display: none; }.eden-nav-cta { display: none; }
-  .eden-collage-card { flex-basis: clamp(200px, 38vw, 360px); }
   .eden-focus-grid { grid-template-columns: 1fr; }.eden-focus-grid article, .eden-focus-grid article + article { min-height: auto; padding: 30px 0 34px; border: 0; }.eden-focus-grid .eden-text-link { margin-top: 30px; }.eden-focus-app-shelf { margin-bottom: 24px; }
   .eden-about { grid-template-columns: 1fr; }.eden-about-photo { min-height: 600px; }
 }
@@ -155,34 +164,8 @@
   .eden-home .header-language-label-full { display: none; }
   .eden-home .header-language-label-short { display: inline; }
   .eden-hero { min-height: auto; padding: 104px 0 90px; }.eden-hero h1 { margin-top: 20px; font-size: clamp(52px, 16vw, 72px); }.eden-hero-copy { font-size: 17px; }.eden-hero-actions { flex-direction: column; gap: 18px; }
-  .eden-collage-section { padding: 0 0 80px; }
+  .eden-collage-section { padding: 36px 0 80px; }
 
-  /* Phones get a static 4-across grid instead of the marquee. The drift is a
-     desktop affordance: at this width a card is ~86px, so anything moving is
-     more noise than signal, and iOS Safari mis-resolves the track's animation
-     anyway. Collapsing row/track/run with `display: contents` promotes the
-     cards to grid items of `.eden-collage`, and the duplicate run — which only
-     exists to make the marquee loop seamlessly — is dropped. */
-  .eden-collage {
-    --eden-collage-gap: 6px;
-    width: min(100% - 32px, 1080px);
-    margin-inline: auto;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-  .eden-collage-row,
-  .eden-collage-track,
-  .eden-collage-run { display: contents; }
-  .eden-collage-run[aria-hidden="true"] { display: none; }
-  .eden-collage-track { animation: none; }
-  .eden-collage-card {
-    min-width: 0;
-    width: 100%;
-    margin-right: 0;
-    flex-basis: auto;
-    border-radius: 8px;
-  }
-  .eden-collage-card::after { display: none; }
-  .eden-collage-reveal { display: none; }
   .eden-focus, .eden-about { padding-block: 90px; }.eden-focus > h2, .eden-about h2 { font-size: 48px; }.eden-focus-grid { margin-top: 54px; }
   .eden-manifesto { padding: 64px 0; }.eden-manifesto-banner { border-radius: 20px; }.eden-manifesto-line { min-height: 180px; padding: 28px 24px; }.eden-manifesto-line p { font-size: clamp(34px, 10vw, 44px); }
   .eden-about-photo { width: 84px; height: 84px; min-height: 84px; justify-self: start; border-radius: 20px; }.eden-about-photo video { object-position: 53% 60%; }.eden-about { gap: 42px; }.eden-about-body p { font-size: 16px; }
@@ -193,6 +176,7 @@
   .eden-collage-video { display: none; }
   /* the blanket animation:none below stops the drift, so let people scroll the row themselves */
   .eden-collage-row { overflow-x: auto; scrollbar-width: thin; }
+  .eden-collage-run[aria-hidden="true"] { display: none; }
   .eden-home *, .eden-home *::before, .eden-home *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
 }
 
