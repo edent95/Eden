@@ -72,33 +72,18 @@
 
 /* ---------------- 首页 #pukimon ---------------- */
 
-/* 首页大横幅（照 Apple Services 页）：上面居中一段短文案，下面演出撑满整个宽度。
+/* 首页大横幅（照 Apple Services 页）：只有演出，不配文字，撑满宽度。
    宽屏时不让 16:9 的舞台高过一屏：宽度最多 (一屏高 - 菜单) × 16/9，这时两边留白、带圆角。 */
-.eden-pukimon { padding-block: 24px 0; }
-.eden-pukimon-copy { text-align: center; }
-.eden-pukimon h2 { margin-top: 14px; font-size: clamp(40px, 5vw, 64px); line-height: .98; letter-spacing: -.055em; font-weight: 760; }
-.eden-pukimon h2.is-zh { line-height: 1.14; letter-spacing: -.01em; }
-.eden-pukimon-lead { max-width: 620px; margin: 18px auto 0 !important; color: color-mix(in srgb, var(--eden-ink) 68%, transparent); font-size: 17px; line-height: 1.6; text-wrap: balance; }
-.eden-pukimon-more { display: inline-flex; min-height: 44px; margin-top: 24px; align-items: center; padding: 0 22px; border: 1px solid color-mix(in srgb, var(--eden-ink) 70%, transparent); border-radius: 999px; color: var(--eden-ink); font-size: 16px; font-weight: 650; text-decoration: none; transition: background-color 180ms ease; }
-.eden-pukimon-more:hover { background: color-mix(in srgb, var(--eden-ink) 8%, transparent); }
-.eden-pukimon-more:focus-visible { outline: 3px solid var(--eden-blue); outline-offset: 3px; }
-
-.eden-pukimon-arena { width: min(100%, calc((100svh - 96px) * 16 / 9)); margin: clamp(32px, 4vw, 52px) auto 0; }
+.eden-pukimon { padding-top: 24px; }
+.eden-pukimon-arena { width: min(100%, calc((100svh - 96px) * 16 / 9)); margin-inline: auto; }
 .eden-pukimon-stage { border-radius: 18px; }
 .eden-pukimon-stage .pukimon-start span { background: var(--eden-ink); color: var(--eden-paper); }
 .eden-pukimon-stage .pukimon-start:hover span { background: var(--eden-blue); }
 .eden-pukimon-stage .pukimon-start:focus-visible { outline-color: color-mix(in srgb, var(--eden-blue) 58%, transparent); }
 
-.eden-pukimon-meta { max-width: 680px; margin: 12px auto 0 !important; padding-inline: 16px; color: color-mix(in srgb, var(--eden-ink) 52%, transparent); font-size: 12px; line-height: 1.5; text-align: center; }
-
 @media (max-width: 900px) {
   /* 平板、手机：演出贴齐两边，像一整幅横幅 */
   .eden-pukimon-stage { border-radius: 0; }
-}
-
-@media (max-width: 600px) {
-  .eden-pukimon h2 { font-size: 40px; }
-  .eden-pukimon-lead { font-size: 16px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
