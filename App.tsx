@@ -43,6 +43,7 @@ import { RiskTerminalPage } from './pages/RiskTerminalPage';
 import { ProjectHomePage } from './pages/ProjectHomePage';
 import { DelayedAboutProfileVideo, HomeCollage } from './app/home-collage';
 import { IGAMING_CASES as igamingCases } from './components/igaming-cases-content';
+import { GGR_VS_NGR_GUIDE } from './components/igaming-guides-content';
 
 
 const PenneysGamePage = React.lazy(() => import('./components/PenneysGamePage'));
@@ -52,6 +53,7 @@ const IGamingPage = React.lazy(() => import('./components/IGamingPage'));
 const IGamingSummaryPage = React.lazy(() => import('./components/IGamingSummaryPage'));
 const IGamingCasesPage = React.lazy(() => import('./components/IGamingCasesPage'));
 const IGamingResumePage = React.lazy(() => import('./components/IGamingResumePage'));
+const IGamingGuidePage = React.lazy(() => import('./components/IGamingGuidePage'));
 const HomePukimonGame = React.lazy(() => import('./components/HomePukimonGame'));
 
 const fadeIn = {
@@ -198,6 +200,7 @@ const App: React.FC = () => {
   const igamingHref = joinBasePath(baseUrl, 'igaming');
   const igamingFullHref = joinBasePath(baseUrl, 'igaming/full');
   const igamingCasesHref = joinBasePath(baseUrl, 'igaming/cases');
+  const igamingGgrGuideHref = joinBasePath(baseUrl, 'igaming/ggr-vs-ngr');
   const cellularAutomataLabHref = joinBasePath(baseUrl, 'cellular-automata-lab');
   const homeSystemFiles: Array<{
     title: string;
@@ -330,6 +333,7 @@ const App: React.FC = () => {
   const isIGamingFullPage = pathWithoutBase === '/igaming/full';
   const isIGamingCasesPage = pathWithoutBase === '/igaming/cases';
   const isIGamingResumePage = pathWithoutBase === '/igaming/resume';
+  const isIGamingGgrGuidePage = pathWithoutBase === '/igaming/ggr-vs-ngr';
   const igamingCaseSlug = pathWithoutBase.startsWith('/igaming/cases/')
     ? pathWithoutBase.replace('/igaming/cases/', '')
     : '';
@@ -706,6 +710,29 @@ const App: React.FC = () => {
     );
   }
 
+  if (isIGamingGgrGuidePage) {
+    return (
+      <React.Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
+        <IGamingGuidePage
+          language={language}
+          guide={GGR_VS_NGR_GUIDE}
+          igamingHref={igamingHref}
+          fullHref={igamingFullHref}
+          casesHref={igamingCasesHref}
+          controls={
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
+          }
+        />
+      </React.Suspense>
+    );
+  }
+
   if (isIGamingCasesPage || activeIGamingCase) {
     return (
       <React.Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
@@ -750,6 +777,7 @@ const App: React.FC = () => {
             homeHref={homeHref}
             fullHref={igamingFullHref}
             casesHref={igamingCasesHref}
+            guideHref={igamingGgrGuideHref}
             controls={igamingControls}
           />
         )}

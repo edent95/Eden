@@ -26,7 +26,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-10-29';
+export const SITE_CONTENT_LASTMOD = '2026-11-08';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -258,6 +258,20 @@ export const ROUTE_SEO: RouteSeo[] = [
     desc: {
       en: 'The full iGaming starter pack: who runs a casino, RTP and GGR, promotions, daily reporting and CRM, the B2B side from deal to go-live, and troubleshooting.',
       zh: 'iGaming 完整版入门包：谁在经营线上娱乐场、有哪些游戏、RTP 与 GGR、常见促销、日报与 CRM 工作流程、B2B 从签约到上线，以及按症状排查。',
+    },
+  },
+  {
+    path: '/igaming/ggr-vs-ngr',
+    datePublished: '2026-11-08',
+    dateModified: '2026-11-08',
+    priority: '0.7',
+    title: {
+      en: 'GGR vs NGR vs Turnover, Explained | Eden Tan',
+      zh: 'GGR、NGR 与流水的区别 | Eden Tan',
+    },
+    desc: {
+      en: 'What turnover, GGR, NGR and net deposits each measure in iGaming, a worked example, which number to use for which decision, and common misreads.',
+      zh: 'iGaming 里流水、GGR、NGR 与净存款各量什么：一组示例演算、哪个决定该看哪个数字，以及常见误读。',
     },
   },
   {
