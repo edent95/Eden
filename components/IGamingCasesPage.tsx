@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { IGAMING_PAGE, IGAMING_SUMMARY, type IGamingLocalized } from './igaming-content';
 import { IGAMING_CASES, IGAMING_CASES_INDEX, type CaseBlock, type IGamingCase } from './igaming-cases-content';
 import { IGamingEngravedBanner, IGamingHeroPlate, IGamingSeal } from './css-art/index';
+import { renderIGamingBlock } from './igaming-blocks';
 
 type Lang = 'en' | 'zh';
 
@@ -35,83 +36,7 @@ const IGamingCasesPage: React.FC<{
     </nav>
   );
 
-  const block = (item: CaseBlock, key: number) => {
-    switch (item.kind) {
-      case 'h':
-        return <h2 key={key}>{t(item.text)}</h2>;
-      case 'p':
-        return <p key={key} className="igaming-sublead">{t(item.text)}</p>;
-      case 'callout':
-        return (
-          <aside key={key} className="igaming-callout">
-            <strong>{t(item.title)}</strong>
-            <p>{t(item.body)}</p>
-          </aside>
-        );
-      case 'path':
-        return (
-          <ol key={key} className="igaming-path">
-            {item.steps.map((step) => <li key={step.en}>{t(step)}</li>)}
-          </ol>
-        );
-      case 'chain':
-        return (
-          <ol key={key} className="igaming-chain">
-            {item.items.map((entry) => (
-              <li key={entry.title.en}>
-                <strong>{t(entry.title)}</strong>
-                <p>{t(entry.body)}</p>
-              </li>
-            ))}
-          </ol>
-        );
-      case 'cards':
-        return (
-          <ul key={key} className="igaming-grid is-three is-compact">
-            {item.items.map((entry) => (
-              <li key={entry.title.en}>
-                <h4>{t(entry.title)}</h4>
-                <p>{t(entry.body)}</p>
-              </li>
-            ))}
-          </ul>
-        );
-      case 'table':
-        return (
-          <div key={key} className="igaming-table-scroll">
-            <table className="igaming-metrics">
-              <thead>
-                <tr>{item.head.map((cell) => <th key={cell.en} scope="col">{t(cell)}</th>)}</tr>
-              </thead>
-              <tbody>
-                {item.rows.map(([rowHead, ...cells]) => (
-                  <tr key={rowHead.en}>
-                    <th scope="row">{t(rowHead)}</th>
-                    {cells.map((cell) => <td key={cell.en}>{t(cell)}</td>)}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        );
-      case 'list':
-        return (
-          <ul key={key} className="igaming-list">
-            {item.items.map((entry) => <li key={entry.en}>{t(entry)}</li>)}
-          </ul>
-        );
-      case 'stat':
-        return (
-          <div key={key} className="igaming-case-stat">
-            <strong>{item.value}</strong>
-            <p className="igaming-case-stat-label">{t(item.label)}</p>
-            <p className="igaming-case-stat-note">{t(item.note)}</p>
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
+  const block = (item: CaseBlock, key: number) => renderIGamingBlock(item, key, t);
 
   const caseCard = (item: IGamingCase) => (
     <a key={item.slug} className="igaming-case-card" href={`${casesHref}/${item.slug}`}>

@@ -6,6 +6,7 @@ import { MIYA_BRAND, miyaBrandPlain } from './components/miya-brand-content.ts';
 import { IGAMING_PAGE, IGAMING_SUMMARY } from './components/igaming-content.ts';
 import { ABOUT_PAGE, aboutLinkLine } from './components/about-content.ts';
 import { IGAMING_CASES, IGAMING_CASES_INDEX, type CaseBlock, type IGamingCase } from './components/igaming-cases-content.ts';
+import { IGAMING_GUIDES, IGAMING_GUIDE_LABELS, type IGamingGuide } from './components/igaming-guides-content.ts';
 
 type Localized = Record<SeoLanguage, string>;
 
@@ -84,41 +85,60 @@ function miyaStaticCopy(): StaticRouteCopy {
   };
 }
 
+const joinLocalized = (cells: Localized[], en: string, zh: string): Localized => ({
+  en: cells.map((cell) => cell.en).join(en),
+  zh: cells.map((cell) => cell.zh).join(zh),
+});
+const titledLocalized = (title: Localized, body: Localized): Localized => ({
+  en: `${title.en}: ${body.en}`,
+  zh: `${title.zh}：${body.zh}`,
+});
+
+/** Flattens one `/igaming` article block into static paragraphs (same blocks the React pages render). */
+function igamingBlockParagraphs(item: CaseBlock): Localized[] {
+  switch (item.kind) {
+    case 'p':
+    case 'h':
+      return [item.text];
+    case 'callout':
+      return [titledLocalized(item.title, item.body)];
+    case 'path':
+      return [joinLocalized(item.steps, ' → ', ' → ')];
+    case 'chain':
+    case 'cards':
+      return item.items.map((entry) => titledLocalized(entry.title, entry.body));
+    case 'table':
+      return item.rows.map((row) => joinLocalized(row, ' — ', ' — '));
+    case 'list':
+      return item.items;
+    case 'stat':
+      return [{
+        en: `${item.value} — ${item.label.en}. ${item.note.en}`,
+        zh: `${item.value} —— ${item.label.zh}。${item.note.zh}`,
+      }];
+    default:
+      return [];
+  }
+}
+
+/** Static body for one /igaming/<guide> explainer, from the same copy the page renders. */
+function igamingGuideStaticCopy(guide: IGamingGuide): StaticRouteCopy {
+  return {
+    eyebrow: IGAMING_GUIDE_LABELS.kicker,
+    thesis: guide.shortTitle,
+    sections: [
+      { title: guide.title, paragraphs: [guide.standfirst, joinLocalized(guide.tags, ' · ', ' · ')] },
+      { title: IGAMING_GUIDE_LABELS.answerTitle, paragraphs: [guide.answer] },
+      { title: guide.shortTitle, paragraphs: guide.blocks.flatMap(igamingBlockParagraphs) },
+      { title: IGAMING_GUIDE_LABELS.checklistTitle, paragraphs: guide.checklist },
+      { title: IGAMING_GUIDE_LABELS.limitsTitle, paragraphs: [guide.limits] },
+    ],
+  };
+}
+
 /** Static body for one /igaming/cases/:slug field note, from the same copy the page renders. */
 function igamingCaseStaticCopy(study: IGamingCase): StaticRouteCopy {
-  const join = (cells: Localized[], en: string, zh: string): Localized => ({
-    en: cells.map((cell) => cell.en).join(en),
-    zh: cells.map((cell) => cell.zh).join(zh),
-  });
-  const titled = (title: Localized, body: Localized): Localized => ({
-    en: `${title.en}: ${body.en}`,
-    zh: `${title.zh}：${body.zh}`,
-  });
-  const fromBlock = (item: CaseBlock): Localized[] => {
-    switch (item.kind) {
-      case 'p':
-      case 'h':
-        return [item.text];
-      case 'callout':
-        return [titled(item.title, item.body)];
-      case 'path':
-        return [join(item.steps, ' → ', ' → ')];
-      case 'chain':
-      case 'cards':
-        return item.items.map((entry) => titled(entry.title, entry.body));
-      case 'table':
-        return item.rows.map((row) => join(row, ' — ', ' — '));
-      case 'list':
-        return item.items;
-      case 'stat':
-        return [{
-          en: `${item.value} — ${item.label.en}. ${item.note.en}`,
-          zh: `${item.value} —— ${item.label.zh}。${item.note.zh}`,
-        }];
-      default:
-        return [];
-    }
-  };
+  const join = joinLocalized;
   return {
     eyebrow: IGAMING_CASES_INDEX.kicker,
     thesis: study.shortTitle,
@@ -127,7 +147,7 @@ function igamingCaseStaticCopy(study: IGamingCase): StaticRouteCopy {
         title: study.title,
         paragraphs: [study.standfirst, study.anonymisation, join(study.tags, ' · ', ' · ')],
       },
-      { title: { en: 'The case', zh: '案例' }, paragraphs: study.blocks.flatMap(fromBlock) },
+      { title: { en: 'The case', zh: '案例' }, paragraphs: study.blocks.flatMap(igamingBlockParagraphs) },
       { title: { en: 'What it taught me', zh: '学到什么' }, paragraphs: study.lessons },
       { title: { en: 'What this case does not prove', zh: '这个案例不能证明什么' }, paragraphs: [study.limits] },
     ],
@@ -169,7 +189,7 @@ function igamingSummaryStaticCopy(): StaticRouteCopy {
           })),
         ],
       })),
-      { title: page.fullTitle, paragraphs: [page.fullBody, page.casesLine] },
+      { title: page.fullTitle, paragraphs: [page.fullBody, page.casesLine, IGAMING_GUIDE_LABELS.openGuide] },
       { title: page.closingTitle, paragraphs: [page.closingBody] },
     ],
   };
@@ -379,6 +399,7 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
   '/igaming': igamingSummaryStaticCopy(),
   '/igaming/full': igamingStaticCopy(),
   '/igaming/cases': igamingCasesIndexStaticCopy(),
+  ...Object.fromEntries(IGAMING_GUIDES.map((guide) => [guide.path, igamingGuideStaticCopy(guide)])),
   ...Object.fromEntries(IGAMING_CASES.map((study) => [`/igaming/cases/${study.slug}`, igamingCaseStaticCopy(study)])),
 
   '/': {
