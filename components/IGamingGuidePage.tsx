@@ -15,11 +15,13 @@ type Lang = 'en' | 'zh';
 const IGamingGuidePage: React.FC<{
   language: Lang;
   guide: IGamingGuide;
+  /** Every guide with its href; the current one is filtered out for “More guides”. */
+  guideLinks: Array<{ guide: IGamingGuide; href: string }>;
   igamingHref: string;
   fullHref: string;
   casesHref: string;
   controls: React.ReactNode;
-}> = ({ language, guide, igamingHref, fullHref, casesHref, controls }) => {
+}> = ({ language, guide, guideLinks, igamingHref, fullHref, casesHref, controls }) => {
   const t = (value: IGamingLocalized) => value[language];
 
   return (
@@ -76,6 +78,16 @@ const IGamingGuidePage: React.FC<{
             <a href={casesHref} className="igaming-point-more">
               {t(labels.readCases)} <span aria-hidden="true">→</span>
             </a>
+          </div>
+          <h3>{t(labels.moreGuides)}</h3>
+          <div className="igaming-case-links">
+            {guideLinks
+              .filter((entry) => entry.guide.path !== guide.path)
+              .map(({ guide: other, href }) => (
+                <a key={other.path} href={href} className="igaming-point-more">
+                  {t(other.shortTitle)} <span aria-hidden="true">→</span>
+                </a>
+              ))}
           </div>
         </aside>
       </main>

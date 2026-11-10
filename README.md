@@ -79,6 +79,9 @@ npm run preview
 - `/igaming/cases` — iGaming 实战案例索引：四篇匿名案例（首存增长、新市场本地化、50+ operator 促销协调、operator → provider），说明写作原则与后续选题
 - `/igaming/cases/:slug` — 单篇匿名案例：背景、排查过程、做了什么、学到什么、「不能证明什么」，并链回完整版对应小节；案例页是 iGaming 里唯一会链到过往项目（`/etreporthub`）的地方
 - `/igaming/ggr-vs-ngr` — iGaming 知识专题：流水、GGR、NGR、净存款各量什么；一组标明为示例的演算、「哪个决定看哪个数字」对照表、常见误读、看报表前要问的问题清单，以及这篇不涵盖什么；链回完整版报表一节与实战案例，`/igaming` 重点版有入口
+- `/igaming/provider-promotions` — iGaming 知识专题：供应商促销的两层（面向玩家的奖励 vs 给运营商的商业激励）、「激励换曝光」的义务清单、两笔交易抢同一个位置的匹配示例、比较优惠前先算清价值；链回完整版 B2B 一节
+- `/igaming/promotion-launch-checklist` — iGaming 知识专题：「上线」的四个状态、活动存在的五个地方、多语言条款逐条核对表、上线前清单与上线当天像玩家一样领一次；链回完整版促销一节
+- `/igaming/crm-player-lifecycle` — iGaming 知识专题：按玩家状态与时间窗口规划 CRM、事件消息与日历消息、「不需要动作」分支、负责任博彩的四条底线、用对照组衡量效果；链回完整版工作流程一节
 - `/igaming/resume` — 给招聘方 / 面试前发的 iGaming 个人页：定位一句话、已公开的数字（各链到案例）、三个优势、能力与证据对照表、进新市场的头 90 天、工作方式；不放薪资、不放联系方式（让对方回复带来链接的那条消息）；`index: false`、`sitemap: false`，只靠链接进入，不从别的页面链过来
 - `/igaming/full` — iGaming 入门包完整版：行业角色、游戏类型、术语、资金流、风控合规、provider 与 operator 促销、每日报表 / 活动上线 / CRM 工作流程与报表指标、B2B（签约到上线与客户经营）、按症状排查与 playbook；返回键回到 `/igaming` 重点版
 - `/dr-racing` — Dr Racing 摩托车贷款仪表台产品页，内嵌公开 Demo

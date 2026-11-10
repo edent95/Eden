@@ -189,7 +189,7 @@ function igamingSummaryStaticCopy(): StaticRouteCopy {
           })),
         ],
       })),
-      { title: page.fullTitle, paragraphs: [page.fullBody, page.casesLine, IGAMING_GUIDE_LABELS.openGuide] },
+      { title: page.fullTitle, paragraphs: [page.fullBody, page.casesLine, ...IGAMING_GUIDES.map((guide) => ({ en: `${IGAMING_GUIDE_LABELS.guidePrefix.en}${guide.shortTitle.en}`, zh: `${IGAMING_GUIDE_LABELS.guidePrefix.zh}${guide.shortTitle.zh}` }))] },
       { title: page.closingTitle, paragraphs: [page.closingBody] },
     ],
   };

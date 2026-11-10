@@ -275,6 +275,48 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
   },
   {
+    path: '/igaming/provider-promotions',
+    datePublished: '2026-11-10',
+    dateModified: '2026-11-10',
+    priority: '0.7',
+    title: {
+      en: 'How Game Provider Promotions Work | Eden Tan',
+      zh: '游戏供应商促销怎么运作 | Eden Tan',
+    },
+    desc: {
+      en: 'Free rounds, fee-free periods, 1+1 accounts and GGR discounts: what an iGaming provider gives, what the operator owes, and how to spot clashing deals.',
+      zh: '免费局、免费期、1+1 账户与 GGR 折扣：iGaming 供应商给什么、运营商要还什么位置与曝光，以及怎样提前发现互相冲突的交易。',
+    },
+  },
+  {
+    path: '/igaming/promotion-launch-checklist',
+    datePublished: '2026-11-10',
+    dateModified: '2026-11-10',
+    priority: '0.7',
+    title: {
+      en: 'iGaming Promotion Launch Checklist | Eden Tan',
+      zh: 'iGaming 活动上线清单 | Eden Tan',
+    },
+    desc: {
+      en: 'Casino promotion launch checklist: the four meanings of “live”, aligning rules, copy, setup, support and payout, multilingual T&C checks, launch-day tests.',
+      zh: '线上娱乐场活动上线清单：「上线」的四种意思、让规则、文案、后台、客服与派奖一致、多语言条款核对，以及上线当天的测试。',
+    },
+  },
+  {
+    path: '/igaming/crm-player-lifecycle',
+    datePublished: '2026-11-10',
+    dateModified: '2026-11-10',
+    priority: '0.7',
+    title: {
+      en: 'iGaming CRM and the Player Lifecycle | Eden Tan',
+      zh: 'iGaming CRM 与玩家生命周期 | Eden Tan',
+    },
+    desc: {
+      en: 'Map iGaming CRM by player state: time windows, event vs calendar messages, a “no action” branch, responsible-gambling stop rules and holdout tests.',
+      zh: '按玩家状态规划 iGaming CRM：时间窗口、事件消息与日历消息、「不需要动作」分支、负责任博彩的停止规则，以及用对照组衡量效果。',
+    },
+  },
+  {
     path: '/igaming/cases',
     datePublished: '2026-09-23',
     dateModified: '2026-09-23',

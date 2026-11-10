@@ -43,7 +43,7 @@ import { RiskTerminalPage } from './pages/RiskTerminalPage';
 import { ProjectHomePage } from './pages/ProjectHomePage';
 import { DelayedAboutProfileVideo, HomeCollage } from './app/home-collage';
 import { IGAMING_CASES as igamingCases } from './components/igaming-cases-content';
-import { GGR_VS_NGR_GUIDE } from './components/igaming-guides-content';
+import { IGAMING_GUIDES } from './components/igaming-guides-content';
 
 
 const PenneysGamePage = React.lazy(() => import('./components/PenneysGamePage'));
@@ -200,7 +200,10 @@ const App: React.FC = () => {
   const igamingHref = joinBasePath(baseUrl, 'igaming');
   const igamingFullHref = joinBasePath(baseUrl, 'igaming/full');
   const igamingCasesHref = joinBasePath(baseUrl, 'igaming/cases');
-  const igamingGgrGuideHref = joinBasePath(baseUrl, 'igaming/ggr-vs-ngr');
+  const igamingGuideLinks = IGAMING_GUIDES.map((guide) => ({
+    guide,
+    href: joinBasePath(baseUrl, guide.path.slice(1)),
+  }));
   const cellularAutomataLabHref = joinBasePath(baseUrl, 'cellular-automata-lab');
   const homeSystemFiles: Array<{
     title: string;
@@ -333,7 +336,15 @@ const App: React.FC = () => {
   const isIGamingFullPage = pathWithoutBase === '/igaming/full';
   const isIGamingCasesPage = pathWithoutBase === '/igaming/cases';
   const isIGamingResumePage = pathWithoutBase === '/igaming/resume';
-  const isIGamingGgrGuidePage = pathWithoutBase === '/igaming/ggr-vs-ngr';
+  // One literal per guide: the route harness reads these, it does not resolve IGAMING_GUIDES.
+  const isIGamingGuidePage =
+    pathWithoutBase === '/igaming/ggr-vs-ngr' ||
+    pathWithoutBase === '/igaming/provider-promotions' ||
+    pathWithoutBase === '/igaming/promotion-launch-checklist' ||
+    pathWithoutBase === '/igaming/crm-player-lifecycle';
+  const activeIGamingGuide = isIGamingGuidePage
+    ? IGAMING_GUIDES.find((guide) => guide.path === pathWithoutBase)
+    : undefined;
   const igamingCaseSlug = pathWithoutBase.startsWith('/igaming/cases/')
     ? pathWithoutBase.replace('/igaming/cases/', '')
     : '';
@@ -710,12 +721,13 @@ const App: React.FC = () => {
     );
   }
 
-  if (isIGamingGgrGuidePage) {
+  if (activeIGamingGuide) {
     return (
       <React.Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
         <IGamingGuidePage
           language={language}
-          guide={GGR_VS_NGR_GUIDE}
+          guide={activeIGamingGuide}
+          guideLinks={igamingGuideLinks}
           igamingHref={igamingHref}
           fullHref={igamingFullHref}
           casesHref={igamingCasesHref}
@@ -777,7 +789,7 @@ const App: React.FC = () => {
             homeHref={homeHref}
             fullHref={igamingFullHref}
             casesHref={igamingCasesHref}
-            guideHref={igamingGgrGuideHref}
+            guideLinks={igamingGuideLinks}
             controls={igamingControls}
           />
         )}
