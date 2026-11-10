@@ -10,7 +10,7 @@ type Lang = 'en' | 'zh';
 /**
  * One `/igaming/<guide>` explainer. Same engraved print language and block
  * renderer as the field notes; copy lives in `igaming-guides-content.ts`.
- * Order is fixed: answer → body → checklist → limits → onward links.
+ * Order is fixed: answer → body → checklist → limits → sources → onward links.
  */
 const IGamingGuidePage: React.FC<{
   language: Lang;
@@ -65,6 +65,20 @@ const IGamingGuidePage: React.FC<{
             <strong>{t(labels.limitsTitle)}</strong>
             <p>{t(guide.limits)}</p>
           </aside>
+
+          <h2>{t(labels.sourcesTitle)}</h2>
+          <p className="igaming-guide-sources-note">{t(labels.sourcesNote)}</p>
+          <ol className="igaming-guide-sources">
+            {guide.sources.map((source) => (
+              <li key={source.url}>
+                <a href={source.url} target="_blank" rel="noopener">
+                  {source.title}
+                </a>
+                <span className="igaming-guide-source-publisher">{source.publisher}</span>
+                <span className="igaming-guide-source-supports">{t(source.supports)}</span>
+              </li>
+            ))}
+          </ol>
         </section>
 
         <aside className="igaming-full-panel">

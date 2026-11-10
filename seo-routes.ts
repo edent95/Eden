@@ -263,7 +263,7 @@ export const ROUTE_SEO: RouteSeo[] = [
   {
     path: '/igaming/ggr-vs-ngr',
     datePublished: '2026-11-08',
-    dateModified: '2026-11-08',
+    dateModified: '2026-11-10',
     priority: '0.7',
     title: {
       en: 'GGR vs NGR vs Turnover, Explained | Eden Tan',
