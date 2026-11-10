@@ -280,6 +280,15 @@ export const GGR_VS_NGR_GUIDE: IGamingGuide = {
       ),
     },
 
+    {
+      kind: 'widget',
+      widget: 'ggr-waterfall',
+      title: L('Try it: move hold and bonus cost', '动手试：拖动 hold 和奖金成本'),
+      caption: L(
+        'Net deposits stay at 20,000 whatever the games do. Drag hold down to 1% and GGR falls to 4,000; push bonus cost past GGR and NGR goes negative on a day cash still came in.',
+        '不管游戏输赢，净存款都停在 20,000。把 hold 拖到 1%,GGR 只剩 4,000;把奖金成本拖到超过 GGR,NGR 变成负数——而那天现金照样是净流入。',
+      ),
+    },
     { kind: 'h', text: L('Which number for which decision', '哪个决定用哪个数字') },
     {
       kind: 'table',
@@ -432,6 +441,15 @@ export const PROVIDER_PROMOTIONS_GUIDE: IGamingGuide = {
       ),
     },
 
+    {
+      kind: 'widget',
+      widget: 'slot-planner',
+      title: L('Try it: the placement checker', '动手试：位置冲突检查'),
+      caption: L(
+        'The example above, live. Taking deals one by one leaves C without a slot; matching them together finds room once B accepts position 3. Change the ticks to test your own deals.',
+        '上面的例子，可以直接操作。一笔一笔接，C 就没位置;一起排，只要 B 接受第 3 位就都放得下。改勾选，试试你自己的交易。',
+      ),
+    },
     { kind: 'h', text: L('Price the benefit before you compare offers', '比较优惠之前，先算清它值多少') },
     {
       kind: 'list',
@@ -737,6 +755,15 @@ export const MARKETING_REPORT_GUIDE: IGamingGuide = {
       ),
     },
 
+    {
+      kind: 'widget',
+      widget: 'channel-value',
+      title: L('Try it: rank the same three channels two ways', '动手试：同样三个渠道，两种排法'),
+      caption: L(
+        'Switch the ranking. The cheapest channel by CPA is the only one whose depositors are worth less than they cost.',
+        '切换排序。CPA 最便宜的渠道，是唯一一个首存玩家价值低于获客成本的。',
+      ),
+    },
     { kind: 'h', text: L('A metric name is not a definition', '指标名称不等于定义') },
     {
       kind: 'callout',
@@ -877,6 +904,15 @@ export const RTP_EXPLAINED_GUIDE: IGamingGuide = {
       ),
     },
 
+    {
+      kind: 'widget',
+      widget: 'rtp-convergence',
+      title: L('Try it: 12 players, one 96% slot', '动手试：12 个玩家，同一台 96% 的老虎机'),
+      caption: L(
+        'Hover or tab across the chart to read the range at any number of spins, and rerun to see a different set of sessions. The shaded band is the same maths as the table above.',
+        '把鼠标移到图上(或用 Tab 键),看任意局数下的范围;点「重跑」换一批玩家。阴影带和上面那张表是同一套算法。',
+      ),
+    },
     { kind: 'h', text: L('Choosing or changing an RTP configuration', '选择或调整 RTP 配置') },
     {
       kind: 'p',

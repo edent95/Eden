@@ -116,6 +116,8 @@ function igamingBlockParagraphs(item: CaseBlock): Localized[] {
         en: `${item.value} — ${item.label.en}. ${item.note.en}`,
         zh: `${item.value} —— ${item.label.zh}。${item.note.zh}`,
       }];
+    case 'widget':
+      return [titledLocalized(item.title, item.caption)];
     default:
       return [];
   }

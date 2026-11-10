@@ -17,6 +17,8 @@ import type { IGamingLocalized } from './igaming-content';
 
 const L = (en: string, zh: string): IGamingLocalized => ({ en, zh });
 
+import type { IGamingWidgetId } from './igaming-charts';
+
 export type CaseBlock =
   | { kind: 'p'; text: IGamingLocalized }
   | { kind: 'h'; text: IGamingLocalized }
@@ -29,7 +31,9 @@ export type CaseBlock =
   | { kind: 'table'; head: IGamingLocalized[]; rows: IGamingLocalized[][] }
   | { kind: 'list'; items: IGamingLocalized[] }
   /** One headline figure with its caveat. */
-  | { kind: 'stat'; value: string; label: IGamingLocalized; note: IGamingLocalized };
+  | { kind: 'stat'; value: string; label: IGamingLocalized; note: IGamingLocalized }
+  /** Interactive figure from `components/igaming-charts.tsx`; static HTML gets title + caption only. */
+  | { kind: 'widget'; widget: IGamingWidgetId; title: IGamingLocalized; caption: IGamingLocalized };
 
 export type IGamingCase = {
   slug: string;
