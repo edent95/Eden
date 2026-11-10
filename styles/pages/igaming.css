@@ -1938,3 +1938,82 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* Plain-words block on /igaming/<guide>: an everyday scene, then industry term → the scene's version.
+   Sits between the short answer and the body, so a newcomer gets the idea before the jargon. */
+.igaming-plain {
+  margin: 1.4rem 0 0.4rem;
+  padding: 1.2rem 1.3rem 1.1rem;
+  border-radius: 6px;
+  background: var(--ig-card);
+  box-shadow: inset 3px 0 0 var(--ig-foil), inset 0 0 0 1px color-mix(in srgb, var(--ig-line) 22%, transparent);
+}
+
+.igaming-plain .igaming-plain-kicker {
+  margin: 0 0 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ig-foil);
+}
+
+.igaming-plain-scene {
+  margin: 0;
+  font-size: 1.06rem;
+  line-height: 1.7;
+  color: var(--theme-text-primary);
+}
+
+.igaming-plain-terms {
+  display: grid;
+  margin: 1rem 0 0;
+  border-top: 1px solid color-mix(in srgb, var(--ig-line) 22%, transparent);
+}
+
+.igaming-plain-terms > div {
+  display: grid;
+  grid-template-columns: minmax(8rem, 2fr) 5fr;
+  gap: 0.2rem 1rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--ig-line) 14%, transparent);
+}
+
+.igaming-plain-head span {
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--theme-text-secondary);
+}
+
+.igaming-plain-terms dt {
+  font-weight: 600;
+  color: var(--theme-text-primary);
+}
+
+.igaming-plain-terms dd {
+  margin: 0;
+  color: var(--theme-text-secondary);
+  line-height: 1.6;
+}
+
+.igaming-plain-takeaway {
+  margin: 0.9rem 0 0;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--theme-text-primary);
+}
+
+@media (max-width: 640px) {
+  .igaming-plain {
+    padding: 1rem 0.9rem;
+  }
+
+  .igaming-plain-terms > div {
+    grid-template-columns: 1fr;
+  }
+
+  .igaming-plain-head {
+    display: none !important;
+  }
+}

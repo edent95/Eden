@@ -10,7 +10,7 @@ type Lang = 'en' | 'zh';
 /**
  * One `/igaming/<guide>` explainer. Same engraved print language and block
  * renderer as the field notes; copy lives in `igaming-guides-content.ts`.
- * Order is fixed: answer → body → checklist → limits → sources → onward links.
+ * Order is fixed: answer → plain words → body → checklist → limits → sources → onward links.
  */
 const IGamingGuidePage: React.FC<{
   language: Lang;
@@ -48,6 +48,24 @@ const IGamingGuidePage: React.FC<{
           <strong>{t(labels.answerTitle)}</strong>
           <p>{t(guide.answer)}</p>
         </aside>
+
+        <section className="igaming-plain" aria-labelledby="igaming-plain-title">
+          <h2 id="igaming-plain-title" className="igaming-plain-kicker">{t(labels.plainTitle)} · {t(labels.plainKicker)}</h2>
+          <p className="igaming-plain-scene">{t(guide.plain.scene)}</p>
+          <dl className="igaming-plain-terms">
+            <div className="igaming-plain-head" aria-hidden="true">
+              <span>{t(labels.plainTermHead)}</span>
+              <span>{t(labels.plainEverydayHead)}</span>
+            </div>
+            {guide.plain.terms.map((row) => (
+              <div key={row.term.en}>
+                <dt>{t(row.term)}</dt>
+                <dd>{t(row.everyday)}</dd>
+              </div>
+            ))}
+          </dl>
+          <p className="igaming-plain-takeaway">{t(guide.plain.takeaway)}</p>
+        </section>
 
         <div className="igaming-banner">
           <IGamingEngravedBanner variant={guide.banner} label={t(IGAMING_PAGE.bannerLabels[guide.fullSection])} />
