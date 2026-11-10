@@ -13,7 +13,7 @@ import type { IGamingLocalized } from './igaming-content';
  * use gold plus a sign in the label.
  */
 
-export type IGamingWidgetId = 'ggr-waterfall' | 'rtp-convergence' | 'channel-value' | 'slot-planner';
+export type IGamingWidgetId = 'ggr-waterfall' | 'rtp-convergence' | 'channel-value' | 'slot-planner' | 'wagering-cost';
 
 type Translate = (value: IGamingLocalized) => string;
 
@@ -552,6 +552,200 @@ function SlotPlanner({ t }: { t: Translate }) {
 }
 
 /* ------------------------------------------------------------------ */
+/* 5. Wagering: what a bonus really costs, simulated player by player */
+
+const WAGER_MULTIPLIERS = [1, 2, 3, 5, 7, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+const WAGER_CAPS = [0, 10, 5, 3];
+const WAGER_UKGC_CAP = 10;
+
+/**
+ * One bonus, many players. Each starts with a bonus-only balance and bets 1
+ * per spin on the PAYTABLE game (scaled to the chosen RTP) until the largest
+ * requested requirement is met or the balance can no longer cover a bet.
+ * The same players are read off at every multiplier in one pass (common random
+ * numbers), so the curve is smooth and the current point sits on it.
+ * Finishers withdraw their balance, limited by the max-conversion cap.
+ * Returns the operator's expected cost per bonus and share who finish, per multiplier.
+ */
+function simulateWagering(bonus: number, multipliers: number[], rtp: number, cap: number, players: number, seed: number) {
+  const random = mulberry32(seed);
+  const scale = rtp / RTP_DESIGN;
+  const sorted = [...new Set(multipliers)].sort((a, b) => a - b);
+  const needs = sorted.map((m) => m * bonus);
+  const limit = cap > 0 ? cap * bonus : Infinity;
+  const paid = sorted.map(() => 0);
+  const finished = sorted.map(() => 0);
+  for (let player = 0; player < players; player += 1) {
+    let balance = bonus;
+    let staked = 0;
+    let next = 0;
+    while (next < needs.length) {
+      while (next < needs.length && staked >= needs[next]) {
+        paid[next] += Math.min(balance, limit);
+        finished[next] += 1;
+        next += 1;
+      }
+      if (next >= needs.length || balance < 1) break;
+      balance -= 1;
+      staked += 1;
+      let u = random();
+      for (const [probability, payout] of PAYTABLE) {
+        if (u < probability) { balance += payout * scale; break; }
+        u -= probability;
+      }
+    }
+  }
+  return new Map(sorted.map((m, index) => [m, { cost: paid[index] / players, finished: finished[index] / players }]));
+}
+
+const wagerText = {
+  bonus: L('Bonus', '奖金'),
+  multiplier: L('Wagering requirement', '流水倍数'),
+  rtp: L('Game RTP', '游戏 RTP'),
+  cap: L('Max conversion', '最多可提现'),
+  noCap: L('No cap', '不设上限'),
+  capOption: L('× bonus', '倍奖金'),
+  turnover: L('Bets required', '需要下注'),
+  simple: L('Simple formula', '简单公式'),
+  simulated: L('Simulated cost', '模拟成本'),
+  finished: L('Players who finish', '完成流水的玩家'),
+  simpleHint: L('bonus − house edge × bets required', '奖金 − 庄家优势 × 需要下注'),
+  simulatedHint: L('per bonus, 10,000 simulated players', '每份奖金，模拟 10,000 个玩家'),
+  ofBonus: L('of the bonus', '占奖金'),
+  axisX: L('Wagering requirement (× bonus)', '流水倍数(× 奖金)'),
+  axisY: L('Expected cost per bonus', '每份奖金的预期成本'),
+  legendSim: L('Simulated', '模拟'),
+  legendSimple: L('Simple formula', '简单公式'),
+  legendCap: L('GB cap: 10×', '英国上限:10 倍'),
+  note: L(
+    'Assumes a bonus-only balance, a bet of 1 per spin, every game counting 100%, a medium-volatility slot and no expiry. Real offers add game weighting, max-bet rules and deposits; treat the output as a direction, not a price.',
+    '假设：只有奖金余额、每注 1、所有游戏 100% 计入流水、中等波动的老虎机、没有过期时间。真实优惠还有游戏权重、最大下注和存款这些条件；结果看方向，不当报价。',
+  ),
+};
+
+function WageringCost({ t }: { t: Translate }) {
+  const [bonus, setBonus] = useState(20);
+  const [multiplier, setMultiplier] = useState(10);
+  const [rtpPct, setRtpPct] = useState(96);
+  const [cap, setCap] = useState(0);
+  const [hover, setHover] = useState<number | null>(null);
+  const [ref, width] = useWidth();
+  const rtp = rtpPct / 100;
+
+  const results = useMemo(
+    () => simulateWagering(bonus, [...WAGER_MULTIPLIERS, multiplier], rtp, cap, 10000, 7),
+    [bonus, multiplier, rtp, cap],
+  );
+  const point = results.get(multiplier) ?? { cost: 0, finished: 0 };
+  const curve = WAGER_MULTIPLIERS.map((m) => ({ m, cost: results.get(m)?.cost ?? 0 }));
+  const simple = (m: number) => Math.max(0, bonus - (1 - rtp) * m * bonus);
+
+  const height = 240;
+  const pad = { top: 16, right: 14, bottom: 42, left: 44 };
+  const plotW = width - pad.left - pad.right;
+  const plotH = height - pad.top - pad.bottom;
+  const x = (m: number) => pad.left + ((m - 1) / 49) * plotW;
+  const y = (value: number) => pad.top + (1 - value / bonus) * plotH;
+  const ticks = [0, 0.25, 0.5, 0.75, 1].map((share) => share * bonus);
+  const simplePoints = WAGER_MULTIPLIERS.flatMap((m, index) => {
+    const pts = [`${x(m)},${y(simple(m))}`];
+    // add the kink where the simple formula hits zero so the line bends in the right place
+    const zeroAt = 1 / (1 - rtp);
+    const next = WAGER_MULTIPLIERS[index + 1];
+    if (next && m < zeroAt && next > zeroAt) pts.push(`${x(zeroAt)},${y(0)}`);
+    return pts;
+  });
+  const hovered = hover === null ? null : curve[hover];
+  const pct = (value: number) => `${Math.round((value / bonus) * 100)}%`;
+  const money = (value: number) => value.toFixed(2);
+
+  return (
+    <div className="ig-viz-body">
+      <div className="ig-viz-controls">
+        <label>
+          <span>{t(wagerText.bonus)} <strong>{bonus}</strong></span>
+          <input type="range" min={10} max={100} step={10} value={bonus} onChange={(event) => setBonus(Number(event.target.value))} />
+        </label>
+        <label>
+          <span>{t(wagerText.multiplier)} <strong>{multiplier}×</strong></span>
+          <input type="range" min={1} max={50} step={1} value={multiplier} onChange={(event) => setMultiplier(Number(event.target.value))} />
+        </label>
+        <label>
+          <span>{t(wagerText.rtp)} <strong>{rtpPct}%</strong></span>
+          <input type="range" min={92} max={98} step={1} value={rtpPct} onChange={(event) => setRtpPct(Number(event.target.value))} />
+        </label>
+        <label>
+          <span>{t(wagerText.cap)}</span>
+          <select className="ig-viz-select" value={cap} onChange={(event) => setCap(Number(event.target.value))}>
+            {WAGER_CAPS.map((value) => (
+              <option key={value} value={value}>{value === 0 ? t(wagerText.noCap) : `${value} ${t(wagerText.capOption)}`}</option>
+            ))}
+          </select>
+        </label>
+      </div>
+      <dl className="ig-viz-stats">
+        <div><dt>{t(wagerText.turnover)}</dt><dd>{fmt(bonus * multiplier)}</dd></div>
+        <div><dt>{t(wagerText.simple)}</dt><dd>{money(simple(multiplier))}</dd><span>{t(wagerText.simpleHint)}</span></div>
+        <div><dt>{t(wagerText.simulated)}</dt><dd>{money(point.cost)} <small>· {pct(point.cost)} {t(wagerText.ofBonus)}</small></dd><span>{t(wagerText.simulatedHint)}</span></div>
+        <div><dt>{t(wagerText.finished)}</dt><dd>{Math.round(point.finished * 100)}%</dd></div>
+      </dl>
+      <ul className="ig-viz-legend">
+        <li><i className="is-line" style={{ background: 'var(--viz-1)' }} />{t(wagerText.legendSim)}</li>
+        <li><i className="is-line" style={{ background: 'var(--viz-3)' }} />{t(wagerText.legendSimple)}</li>
+        <li><i className="is-line is-dashed-key" />{t(wagerText.legendCap)}</li>
+      </ul>
+      <div ref={ref} className="ig-viz-plot">
+        <svg width={width} height={height} role="img" aria-label={`${t(wagerText.axisY)}: ${curve.map((c) => `${c.m}× ${money(c.cost)}`).join(', ')}`}>
+          {ticks.map((value) => (
+            <g key={value}>
+              <line x1={pad.left} x2={width - pad.right} y1={y(value)} y2={y(value)} className={value === 0 ? 'ig-viz-zero' : 'ig-viz-grid'} />
+              <text x={pad.left - 8} y={y(value)} dy="0.32em" textAnchor="end" className="ig-viz-tick">{Number.isInteger(value) ? value : value.toFixed(1)}</text>
+            </g>
+          ))}
+          {[1, 10, 20, 30, 40, 50].map((m) => (
+            <text key={m} x={x(m)} y={height - 24} textAnchor={m === 1 ? 'start' : m === 50 ? 'end' : 'middle'} className="ig-viz-tick">{m}×</text>
+          ))}
+          <text x={pad.left + plotW / 2} y={height - 6} textAnchor="middle" className="ig-viz-label">{t(wagerText.axisX)}</text>
+          <line x1={x(WAGER_UKGC_CAP)} x2={x(WAGER_UKGC_CAP)} y1={pad.top} y2={pad.top + plotH} className="ig-viz-marker" />
+          <polyline points={simplePoints.join(' ')} className="ig-viz-line" style={{ stroke: 'var(--viz-3)' }} />
+          <polyline points={curve.map((c) => `${x(c.m)},${y(c.cost)}`).join(' ')} className="ig-viz-line" style={{ stroke: 'var(--viz-1)' }} />
+          <circle cx={x(multiplier)} cy={y(point.cost)} r={5} className="ig-viz-dot" style={{ fill: 'var(--viz-1)' }} />
+          {hovered ? <line x1={x(hovered.m)} x2={x(hovered.m)} y1={pad.top} y2={pad.top + plotH} className="ig-viz-crosshair" /> : null}
+          <rect
+            x={pad.left} y={pad.top} width={plotW} height={plotH} fill="transparent" tabIndex={0}
+            aria-label={t(wagerText.axisX)}
+            onPointerMove={(event) => {
+              const box = event.currentTarget.getBoundingClientRect();
+              const m = 1 + ((event.clientX - box.left) / box.width) * 49;
+              let best = 0;
+              WAGER_MULTIPLIERS.forEach((value, index) => { if (Math.abs(value - m) < Math.abs(WAGER_MULTIPLIERS[best] - m)) best = index; });
+              setHover(best);
+            }}
+            onPointerLeave={() => setHover(null)}
+            onFocus={() => setHover(WAGER_MULTIPLIERS.indexOf(10))}
+            onBlur={() => setHover(null)}
+            onKeyDown={(event) => {
+              if (event.key === 'ArrowLeft') setHover((value) => Math.max(0, (value ?? 0) - 1));
+              if (event.key === 'ArrowRight') setHover((value) => Math.min(WAGER_MULTIPLIERS.length - 1, (value ?? 0) + 1));
+            }}
+          />
+        </svg>
+        {hovered ? (
+          <Tooltip tip={{
+            x: Math.min(Math.max(x(hovered.m), 90), width - 90),
+            y: pad.top + 8,
+            value: `${hovered.m}×`,
+            label: `${t(wagerText.legendSim)}: ${money(hovered.cost)} (${pct(hovered.cost)})`,
+            extra: `${t(wagerText.legendSimple)}: ${money(simple(hovered.m))}`,
+          }} />
+        ) : null}
+      </div>
+      <p className="ig-viz-note">{t(wagerText.note)}</p>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 
 export function IGamingWidget({ widget, title, caption, t }: {
   widget: IGamingWidgetId;
@@ -569,6 +763,7 @@ export function IGamingWidget({ widget, title, caption, t }: {
       {widget === 'rtp-convergence' ? <RtpConvergence t={t} /> : null}
       {widget === 'channel-value' ? <ChannelValue t={t} /> : null}
       {widget === 'slot-planner' ? <SlotPlanner t={t} /> : null}
+      {widget === 'wagering-cost' ? <WageringCost t={t} /> : null}
     </figure>
   );
 }

@@ -954,6 +954,131 @@ export const RTP_EXPLAINED_GUIDE: IGamingGuide = {
   sources: [SOURCE_UKGC_LIVE_RTP, SOURCE_UKGC_RTS3, SOURCE_GLI_19],
 };
 
+export const WAGERING_GUIDE: IGamingGuide = {
+  path: '/igaming/wagering-requirements',
+  fullSection: 'promotions',
+  banner: 'chips',
+  title: L(
+    'Wagering requirements explained: how bonus wagering works and what a bonus really costs',
+    '流水要求是什么：奖金流水怎么算，一份奖金到底花多少钱',
+  ),
+  shortTitle: L('Wagering requirements & bonus cost', '流水要求与奖金成本'),
+  tags: [L('Bonuses', '奖金'), L('Promotions', '促销'), L('Pricing', '定价'), L('Calculator', '计算器')],
+  standfirst: L(
+    'A bonus has a face value, a formula value and a real cost, and the three rarely agree. This guide explains the terms that decide the cost, why the usual formula undershoots, and lets you price a bonus yourself.',
+    '一份奖金有面额、有公式算出来的成本，也有真实成本，三者很少一致。这篇讲清楚决定成本的条款、为什么常用公式会算少，并且让你自己算一份奖金。',
+  ),
+  answer: L(
+    'A wagering requirement is the amount a player must bet before bonus money, or winnings made with it, can be withdrawn: a 20 bonus at 10× means 200 of bets. For the operator a bonus costs less than its face value but more than “bonus − house edge × required bets”, because most players run out before finishing and the cost is driven by the few who win big.',
+    '流水要求是玩家在提取奖金(或用奖金赢到的钱)之前必须下注的金额：20 的奖金、10 倍流水，就是要下注 200。对运营者来说，一份奖金的成本低于面额，但高于「奖金 − 庄家优势 × 要求下注额」——因为大多数玩家在完成前就输光了，成本主要来自少数赢了大奖的人。',
+  ),
+  blocks: [
+    { kind: 'h', text: L('How a wagering requirement works', '流水要求怎么运作') },
+    {
+      kind: 'p',
+      text: L(
+        'Take a 20 bonus with a 10× requirement. The player must place 200 of bets before the bonus balance becomes withdrawable cash. At a bet of 1 that is 200 spins. Until then the bonus, and anything won with it, is locked; withdraw early and it is forfeited. Six terms decide how expensive that promise is:',
+        '以 20 的奖金、10 倍流水为例。玩家要先下注 200,奖金余额才变成可提取的现金。每注 1,就是 200 局。在那之前，奖金和用它赢到的钱都是锁住的；提前提款，奖金就作废。决定这份承诺有多贵的，是下面六项条款：',
+      ),
+    },
+    {
+      kind: 'table',
+      head: [L('Term', '条款'), L('What it says', '它规定什么'), L('How it moves the cost', '它怎样影响成本')],
+      rows: [
+        [L('Base', '计算基数'), L('Multiplier applies to the bonus only, or to deposit + bonus', '倍数乘在奖金上，还是乘在存款 + 奖金上'), L('On deposit + bonus, a matched offer needs twice the bets', '乘在存款 + 奖金上，配额优惠要下注的金额翻倍')],
+        [L('Multiplier', '倍数'), L('How many times the base must be bet', '基数要下注几遍'), L('Higher means fewer players finish — but the bonus gets cheaper more slowly than it looks', '越高，完成的人越少——但成本降得比看起来慢')],
+        [L('Game weighting', '游戏权重'), L('Share of each bet that counts, e.g. slots 100%, table games less', '每注算进流水的比例，例如老虎机 100%、桌游更低'), L('Low-edge games count less, so the requirement cannot be cleared cheaply', '低优势的游戏算得少，玩家没法用便宜的方式刷完')],
+        [L('Max bet', '最大下注'), L('Largest stake allowed while wagering', '流水期间允许的最大单注'), L('Stops a few huge bets from clearing the requirement in one swing', '防止几注大额下注一次刷完')],
+        [L('Max conversion', '最多可提现'), L('Cap on what can be withdrawn from the bonus', '这份奖金最多能提走多少'), L('Cuts off the expensive tail — usually the strongest lever', '砍掉最贵的那条尾巴——通常是最有力的一项')],
+        [L('Expiry', '有效期'), L('Days allowed to finish', '完成流水的天数'), L('Unfinished bonuses lapse', '没完成的奖金到期作废')],
+      ],
+    },
+    {
+      kind: 'callout',
+      title: L('Bonus money is not the player’s money', '奖金不是玩家自己的钱'),
+      body: L(
+        'Wagering terms restrict bonus funds, not the deposit. Players should be able to tell bonus balance from their own, see the significant conditions before they opt in, and leave a promotion with their remaining deposit.[2]',
+        '流水条款限制的是奖金，不是存款。玩家应该分得清奖金余额和自己的钱，在参加之前看到重要条件，并且可以带着剩余的存款退出活动。[2]',
+      ),
+    },
+    { kind: 'h', text: L('What a bonus really costs', '一份奖金到底花多少钱') },
+    {
+      kind: 'p',
+      text: L(
+        'The usual shortcut is: cost ≈ bonus − house edge × required bets. On a 96% game, a 20 bonus at 10× gives 20 − 4% × 200 = 12. At 35× the same formula says the bonus costs nothing at all.',
+        '常用的简便算法是：成本 ≈ 奖金 − 庄家优势 × 要求下注额。在 96% 的游戏上，20 的奖金、10 倍流水：20 − 4% × 200 = 12。到 35 倍，同一个公式会说这份奖金一分钱都不花。',
+      ),
+    },
+    {
+      kind: 'p',
+      text: L(
+        'The shortcut assumes every player bets the full 200. They do not: most run out of bonus balance first, and a player who has stopped betting stops paying the house edge. The real cost is bonus − house edge × what players actually bet. In the simulation below, fewer than one player in five finishes and the average player bets less than half of the required 200, so the 10× bonus costs about 17, not 12 — and the “free” 35× bonus still costs about 14.',
+        '这个算法假设每个玩家都下满 200。其实不会：大多数人在那之前就把奖金输光了，而不再下注的玩家，也就不再贡献庄家优势。真实成本是 奖金 − 庄家优势 × 玩家实际下注额。下面的模拟里，完成流水的玩家不到五分之一，平均每人下注不到要求的 200 的一半，所以 10 倍的奖金成本约 17,不是 12;而公式说「免费」的 35 倍奖金，成本仍有约 14。',
+      ),
+    },
+    {
+      kind: 'widget',
+      widget: 'wagering-cost',
+      title: L('Try it: price a bonus', '动手试：给一份奖金定价'),
+      caption: L(
+        'Move the multiplier, RTP and max conversion. Green is the simulated cost per bonus; blue is the simple formula. The gap is the money the formula leaves out.',
+        '拖动流水倍数、RTP,换「最多可提现」。绿线是模拟出来的每份奖金成本，蓝线是简便公式。两条线之间的差，就是公式漏算的钱。',
+      ),
+    },
+    { kind: 'h', text: L('What actually moves the cost', '真正影响成本的是什么') },
+    {
+      kind: 'list',
+      items: [
+        L(
+          'Max conversion is the strongest lever. The cost comes from the few players who land a big win while wagering. With a 5× cap, the 10× bonus drops from about 17 to about 13, and a 35× bonus from about 14 to about 7.5.',
+          '「最多可提现」是最有力的一项。成本来自少数在流水期间中了大奖的玩家。设 5 倍上限，10 倍流水的奖金从约 17 降到约 13;35 倍的从约 14 降到约 7.5。',
+        ),
+        L(
+          'The multiplier matters less than it looks. Going from 35× to 10× raises the cost of a 20 bonus only from about 14 to about 17, because more players finish but most still run out.',
+          '倍数的影响比看起来小。从 35 倍降到 10 倍，一份 20 的奖金成本只从约 14 升到约 17——完成的人变多了，但大多数人还是会先输光。',
+        ),
+        L(
+          'RTP and weighting matter at the margin. On the same 10× bonus, a 94% game gives about 15 and a 97% game about 17.3.',
+          'RTP 和游戏权重影响边际。同样 10 倍流水，94% 的游戏约 15,97% 的约 17.3。',
+        ),
+        L(
+          'Price from claims, not from the formula. Once a bonus has run, the cost per claim in your own data beats any model, including this one.',
+          '用实际领取的数据定价，不用公式。活动跑过一次之后，你自己数据里的「每次领取成本」比任何模型都准，包括这一个。',
+        ),
+      ],
+    },
+    { kind: 'h', text: L('What the 10× cap changes in Great Britain', '英国 10 倍上限改变了什么') },
+    {
+      kind: 'p',
+      text: L(
+        'Since 19 January 2026, Great Britain licensees may not set wagering requirements above 10 times the bonus, and promotions that make players mix products — bet on sport to unlock slot spins, for example — are banned. The high multiplier was never as cheap as the formula suggested, and now it is gone. The levers left are bonus size, the game list, expiry and caps, and each must be stated clearly before the player opts in.[1]',
+        '从 2026 年 1 月 19 日起，英国持牌方设定的流水要求不得超过奖金的 10 倍，要求玩家跨产品参与的促销(例如下注体育才能解锁老虎机免费旋转)也被禁止。高倍数本来就没有公式说的那么便宜，现在也用不了了。剩下能调的是奖金大小、游戏范围、有效期和各种上限，而且每一项都要在玩家参加之前讲清楚。[1]',
+      ),
+    },
+    {
+      kind: 'callout',
+      title: L('Count the cost once, in one place', '成本只算一次，只算在一个地方'),
+      body: L(
+        'Decide whether bonus cost enters NGR when it is credited, wagered or converted to cash, and write the rule next to the report. The same bonus counted at credit and again at conversion is the most common way NGR goes wrong.',
+        '定下奖金成本在什么时候进 NGR:发放时、下注时，还是转成现金时，并把规则写在报表旁边。同一份奖金在发放时算一次、转现时又算一次，是 NGR 出错最常见的原因。',
+      ),
+    },
+  ],
+  checklist: [
+    L('Is the multiplier on the bonus, or on deposit + bonus?', '倍数乘在奖金上，还是存款 + 奖金上？'),
+    L('Which games count towards wagering, and at what weight?', '哪些游戏算流水，各算多少比例？'),
+    L('Are max bet and max conversion shown before the player opts in?', '最大下注和最多可提现，玩家参加之前看得到吗？'),
+    L('Can a player leave the promotion with their deposit at any time?', '玩家能不能随时带着存款退出活动？'),
+    L('What did the last similar bonus cost per claim in our own data?', '上一个类似的奖金，在我们自己的数据里每次领取花了多少？'),
+    L('When does bonus cost enter NGR in our reports?', '我们的报表里，奖金成本什么时候进 NGR？'),
+  ],
+  limits: L(
+    'The calculator simulates a bonus-only balance, a bet of 1 per spin, 100% game weighting, no expiry and one medium-volatility slot (standard deviation about 5× the stake), as in the RTP guide. Real offers combine deposits, weighting and max-bet rules, and player behaviour is not random play. This is not legal advice; the 10× cap and mixed-product ban apply to Great Britain licensees, and other jurisdictions set their own rules. All figures are illustrative.',
+    '计算器模拟的是：只有奖金余额、每注 1、游戏 100% 计入、没有有效期，以及一台中等波动的老虎机(标准差约为下注额 5 倍，与 RTP 专题同一假设)。真实优惠会叠加存款、权重和最大下注规则，玩家行为也不是随机下注。这里不构成法律意见；10 倍上限和跨产品禁令只适用于英国持牌方，其他司法辖区规则各不相同。所有数字都是示例。',
+  ),
+  sources: [SOURCE_UKGC_PROMOTIONS, SOURCE_CMA_PROMOTIONS],
+};
+
 /** Every `/igaming/<guide>`, in reading order. Each also needs its own literal branch in `App.tsx`. */
 export const IGAMING_GUIDES: IGamingGuide[] = [
   GGR_VS_NGR_GUIDE,
@@ -962,4 +1087,5 @@ export const IGAMING_GUIDES: IGamingGuide[] = [
   CRM_PLAYER_LIFECYCLE_GUIDE,
   MARKETING_REPORT_GUIDE,
   RTP_EXPLAINED_GUIDE,
+  WAGERING_GUIDE,
 ];
