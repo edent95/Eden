@@ -26,7 +26,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-11-08';
+export const SITE_CONTENT_LASTMOD = '2026-11-10';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -77,12 +77,12 @@ export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLangua
 
 export const HOME_TITLE: Record<SeoLanguage, string> = {
   en: 'Eden Tan | Build systems from chaos.',
-  zh: 'Eden Tan | 从混乱中建立系统',
+  zh: 'Eden Tan | 从混乱中建立系统：数据、产品与 AI 系统设计',
 };
 
 export const HOME_DESC: Record<SeoLanguage, string> = {
   en: 'Eden Tan turns complex human behavior and messy realities into useful products, data, and AI systems.',
-  zh: 'Eden Tan 把复杂的人性、行为与现实问题，转化成可以被理解、验证和使用的数据、产品与 AI 系统。',
+  zh: 'Eden Tan 把复杂的人性、行为与现实问题，转化成可以被理解、验证和使用的数据、产品与 AI 系统。站内有上线过的产品、iGaming 实战笔记、关于钱与人性的长文，还有能直接上手玩的生命游戏与概率小游戏。',
 };
 
 /**
@@ -549,7 +549,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     og: 'notes-finance',
     priority: '0.7',
     title: { en: 'MBI and the coin that “only goes up” | Eden Tan', zh: '旧骗局，新外衣：MBI 与那枚「会一直涨」的币 | Eden Tan' },
-    desc: { en: 'How Penang\'s MBI dressed a coin-and-recruit money game as an O2O tech company—and the three questions that expose a Ponzi scheme.', zh: '槟城 MBI 把「虚拟币＋拉人头」的 money game 包装成 O2O 科技公司。戳穿任何庞氏骗局的三个老问题，照样一戳就破——不管外衣换成什么加密币新词。' },
+    desc: { en: 'How Penang\'s MBI dressed a coin-and-recruit money game as an O2O tech company—and the three questions that expose a Ponzi scheme.', zh: '槟城 MBI 把「虚拟币＋拉人头」的 money game 包装成 O2O 科技公司。戳穿任何庞氏骗局的三个老问题，照样一戳就破——不管外衣换成什么加密币新词。从线上商城到「只涨不跌」的币，拆开看都是拿新人的钱付旧人，底下没有真实价值。' },
   },
   {
     path: '/notes/carrian-case',
