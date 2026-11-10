@@ -1861,3 +1861,80 @@
     transition: none;
   }
 }
+
+/* wagering-cost calculator */
+.ig-viz-select {
+  padding: 0.35rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid color-mix(in srgb, var(--theme-text-primary) 25%, transparent);
+  background: transparent;
+  color: var(--theme-text-primary);
+  font: inherit;
+  font-size: 0.88rem;
+}
+
+.ig-viz-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.6rem 1rem;
+  margin: 0;
+}
+
+.ig-viz-stats > div {
+  display: grid;
+  gap: 0.15rem;
+  align-content: start;
+}
+
+.ig-viz-stats dt {
+  font-size: 0.8rem;
+  color: var(--theme-text-secondary);
+}
+
+.ig-viz-stats dd {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.ig-viz-stats dd small {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--theme-text-secondary);
+}
+
+.ig-viz-stats span {
+  font-size: 0.75rem;
+  color: var(--theme-text-secondary);
+}
+
+.ig-viz-line {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.ig-viz-dot {
+  stroke: var(--viz-surface);
+  stroke-width: 2;
+}
+
+.ig-viz-marker {
+  stroke: color-mix(in srgb, var(--theme-text-primary) 45%, transparent);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+
+.ig-viz-legend i.is-dashed-key {
+  width: 16px;
+  height: 0;
+  border-top: 1px dashed color-mix(in srgb, var(--theme-text-primary) 55%, transparent);
+  background: none;
+}
+
+@media (max-width: 640px) {
+  .ig-viz-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

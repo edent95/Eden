@@ -345,6 +345,20 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
   },
   {
+    path: '/igaming/wagering-requirements',
+    datePublished: '2026-11-10',
+    dateModified: '2026-11-10',
+    priority: '0.7',
+    title: {
+      en: 'Wagering Requirements Explained + Bonus Cost Calculator',
+      zh: '流水要求是什么：奖金成本计算器 | Eden Tan',
+    },
+    desc: {
+      en: 'How bonus wagering requirements work, why the simple bonus-cost formula undershoots, and a calculator for what a casino bonus really costs the operator.',
+      zh: '奖金流水要求怎么运作、为什么简便的奖金成本公式会算少，以及算一份赌场奖金对运营者真实成本的计算器。',
+    },
+  },
+  {
     path: '/igaming/cases',
     datePublished: '2026-09-23',
     dateModified: '2026-09-23',
