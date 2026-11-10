@@ -131,6 +131,14 @@ function igamingGuideStaticCopy(guide: IGamingGuide): StaticRouteCopy {
     sections: [
       { title: guide.title, paragraphs: [guide.standfirst, joinLocalized(guide.tags, ' · ', ' · ')] },
       { title: IGAMING_GUIDE_LABELS.answerTitle, paragraphs: [guide.answer] },
+      {
+        title: IGAMING_GUIDE_LABELS.plainTitle,
+        paragraphs: [
+          guide.plain.scene,
+          ...guide.plain.terms.map((row) => titledLocalized(row.term, row.everyday)),
+          guide.plain.takeaway,
+        ],
+      },
       { title: guide.shortTitle, paragraphs: guide.blocks.flatMap(igamingBlockParagraphs) },
       { title: IGAMING_GUIDE_LABELS.checklistTitle, paragraphs: guide.checklist },
       { title: IGAMING_GUIDE_LABELS.limitsTitle, paragraphs: [guide.limits] },

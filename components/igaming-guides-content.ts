@@ -31,11 +31,23 @@ export type IGamingGuide = {
   standfirst: IGamingLocalized;
   /** The two-line answer a reader came for, shown before anything else. */
   answer: IGamingLocalized;
+  /**
+   * Plain-words version, shown right after the answer: one everyday scene with
+   * small round numbers, then each industry term mapped to that scene.
+   * Required — the user asked (2026-11-10) for every guide to read like this.
+   */
+  plain: IGamingPlain;
   blocks: CaseBlock[];
   checklist: IGamingLocalized[];
   limits: IGamingLocalized;
   /** Primary sources (regulators, standards bodies, official docs) that back the factual claims. */
   sources: IGamingGuideSource[];
+};
+
+export type IGamingPlain = {
+  scene: IGamingLocalized;
+  terms: Array<{ term: IGamingLocalized; everyday: IGamingLocalized }>;
+  takeaway: IGamingLocalized;
 };
 
 /** One outbound citation. Only primary sources, each checked to resolve before it was added. */
@@ -52,6 +64,10 @@ export type IGamingGuideSource = {
 export const IGAMING_GUIDE_LABELS = {
   kicker: L('iGaming · Guide', 'iGaming · 专题'),
   answerTitle: L('Short answer', '一句话答案'),
+  plainTitle: L('In plain words', '白话版'),
+  plainKicker: L('Think of it like this', '打个比方'),
+  plainTermHead: L('Industry term', '行业说法'),
+  plainEverydayHead: L('In the example', '换成例子里'),
   checklistTitle: L('Before you trust the number, ask', '相信这个数字之前，先问'),
   limitsTitle: L('What this guide does not cover', '这篇不涵盖什么'),
   keepReading: L('Keep reading', '继续读下去'),
@@ -212,6 +228,22 @@ export const GGR_VS_NGR_GUIDE: IGamingGuide = {
     'Turnover is how much was bet. GGR is what the house kept from those bets. NGR is GGR after bonus cost and whatever else the contract deducts. Net deposits is cash in minus cash out.',
     '流水（turnover）是总共下注了多少。GGR 是这些下注里庄家留下多少。NGR 是 GGR 扣掉奖金成本，以及合同规定的其他扣项。净存款是进来的钱减去出去的钱。',
   ),
+  plain: {
+    scene: L(
+      'Picture a ring-toss stall at a night market. One evening, players buy 500 of tokens and cash 300 back in at closing. In between they keep throwing — win tokens, throw them again — until 4,000 of throws have gone through. The stall pays out 3,840 in prizes, so it keeps 160. It also gives away 30 of free throws to pull people in.',
+      '想象夜市的套圈摊。一晚上，客人一共买了 500 块的代币，收摊前换回 300 块现金。中间大家一直套，赢了代币又接着套，加起来一共套了 4,000 块。摊主赔出 3,840 块的奖品，自己留下 160。为了招客，还送出了 30 块的免费圈。',
+    ),
+    terms: [
+      { term: L('Turnover', '流水'), everyday: L('All the throws: 4,000. It says the stall was busy, not that it earned 4,000.', '一共套了多少：4,000。说明很热闹，不说明赚了 4,000。') },
+      { term: L('GGR', 'GGR'), everyday: L('What the stall kept after prizes: 160.', '赔完奖品，摊主留下的：160。') },
+      { term: L('NGR', 'NGR'), everyday: L('Minus the free throws: 160 − 30 = 130.', '再扣掉送出去的免费圈：160 − 30 = 130。') },
+      { term: L('Net deposits', '净存款'), everyday: L('Cash in minus cash out: 500 − 300 = 200. It is more than 160 because 40 is still in players’ pockets as tokens — they can cash it in tomorrow.', '进来的现金减走掉的现金：500 − 300 = 200。比 160 多，是因为还有 40 块代币在客人手上，明天可能换回去。') },
+    ],
+    takeaway: L(
+      'Four numbers, four questions: how busy was it, how much did the games win, how much was left after the giveaways, and how much cash actually came in.',
+      '四个数字，回答四个问题：有多热闹、游戏赢了多少、扣掉赠送还剩多少、真正进来多少现金。',
+    ),
+  },
   blocks: [
     { kind: 'h', text: L('The four definitions', '四个定义') },
     {
@@ -358,6 +390,23 @@ export const PROVIDER_PROMOTIONS_GUIDE: IGamingGuide = {
     'The provider offers money or a fee benefit — free rounds, a prize pool, a fee-free period, a revenue-share discount. In return the operator owes visibility and work: lobby positions, banners, a set number of campaigns, a working demo. The offer is only as good as both sides of that trade being written down and checkable.',
     '供应商出钱或给费用优惠——免费局、奖池、免费期、分成折扣。作为交换，运营商要给曝光和人力：大厅位置、横幅、指定数量的活动、可用的试玩账号。这个优惠值不值，取决于交换的两边是不是都写清楚、都能检查。',
   ),
+  plain: {
+    scene: L(
+      'Think of a supermarket. Snack brands want their chips on the shelf right by the entrance. One brand tells the supermarket: “Put us at the entrance for a month and we’ll cut our price.” A second brand offers the same deal — for the same shelf. Each deal is good on its own. You still can’t say yes to both: there is only one entrance shelf.',
+      '想象一家超市。零食品牌都想把自己的薯片摆在门口那排货架。某个品牌跟超市说：「把我们摆门口一个月，进货价给你打折。」另一个品牌也开出一样的条件，要的也是同一排。每一单单独看都划算，但门口只有一排，不可能两家都答应。',
+    ),
+    terms: [
+      { term: L('Game provider', '游戏供应商'), everyday: L('The snack brand that makes the product.', '做零食的品牌。') },
+      { term: L('Operator', '运营商'), everyday: L('The supermarket shoppers walk into.', '顾客走进去的那家超市。') },
+      { term: L('Aggregator', '聚合商'), everyday: L('The wholesaler that supplies many brands to many shops.', '批发商：一头连着很多品牌，一头连着很多超市。') },
+      { term: L('Lobby position', '大厅位置'), everyday: L('The shelf spot: entrance, eye level, end of aisle.', '货架位置：门口、齐眼高、走道尽头。') },
+      { term: L('Fee waiver for placement', '免费期换位置'), everyday: L('A discount the brand gives in exchange for the good shelf.', '品牌用进货折扣，换一个好货架。') },
+    ],
+    takeaway: L(
+      'A promotion deal is a trade: the brand pays with a discount, the shop pays with shelf space. Write down both sides before you say yes.',
+      '促销合作就是一笔交换：品牌用折扣付钱，超市用货架付钱。答应之前，把两边各付什么都写下来。',
+    ),
+  },
   blocks: [
     { kind: 'h', text: L('Two layers in one campaign', '一个活动里的两层') },
     {
@@ -503,6 +552,23 @@ export const PROMOTION_LAUNCH_CHECKLIST_GUIDE: IGamingGuide = {
     'Split “live” into four states — technically live, tested, approved, benefit started — and give each an owner and a date. Then check that the five places a promotion lives agree with each other. Then claim it yourself before players do.',
     '把「上线」拆成四个状态——技术上线、测试通过、审批通过、优惠生效——每个都要有负责人和日期。然后检查活动存在的五个地方是否说同一件事。最后在玩家之前，自己先领一次。',
   ),
+  plain: {
+    scene: L(
+      'A café adds a new drink at half price for its first week. Ask “is it live?” and you can mean four things: the kitchen can make it, someone has tasted it, the owner has approved the price, and the half-price week has started. The drink also lives in five places at once — the recipe, the menu board, the till, what the staff say, and the discount at the counter. If the board says half price and the till charges full price, the customer notices before you do.',
+      '咖啡店上了一款新饮品，第一周半价。问一句「上了没有？」,其实可能是四件事：厨房会做了、有人试喝过了、老板批了价钱、半价那一周开始算了。这杯饮品还同时存在五个地方：配方、菜单牌、收银机、店员的说法、柜台的折扣。菜单牌写半价、收银机却收全价，最先发现的一定是客人。',
+    ),
+    terms: [
+      { term: L('Technically live', '技术上线'), everyday: L('The kitchen can make it.', '厨房做得出来。') },
+      { term: L('Tested', '测过了'), everyday: L('Someone has tasted it.', '有人试喝过。') },
+      { term: L('Approved', '批准了'), everyday: L('The owner signed off the price.', '老板签了价钱。') },
+      { term: L('Benefit started', '优惠开始'), everyday: L('The half-price week starts counting.', '半价那一周开始算。') },
+      { term: L('Terms, setup and copy agree', '条款、设置、文案一致'), everyday: L('Menu board, till, staff and counter all say the same thing.', '菜单牌、收银机、店员、柜台说的都一样。') },
+    ],
+    takeaway: L(
+      'Before you say “live”, say which of the four you mean — and on launch day, buy one yourself like a customer.',
+      '说「上线」之前，先讲清楚是四件事里的哪一件；上线当天，自己当一次客人买一杯。',
+    ),
+  },
   blocks: [
     { kind: 'h', text: L('“Live” is four different things', '「上线」其实是四件事') },
     {
@@ -626,6 +692,22 @@ export const CRM_PLAYER_LIFECYCLE_GUIDE: IGamingGuide = {
     'Define a small set of player states, each with a time window. Let the state decide the message — or decide that no message is right. Every flow needs an exit: a reason to stop, and signals that override marketing entirely.',
     '定义少数几个玩家状态，每个都带时间窗口。让状态决定发什么——或者决定什么都不发。每条流程都要有出口：停下来的理由，以及能完全压过营销的信号。',
   ),
+  plain: {
+    scene: L(
+      'Think of a gym. Someone signed up last week and never came in — they need help getting started, not a discount. A regular who trains three times a week doesn’t need a message at all. Someone who stopped coming a month ago might get one friendly check-in, not a text every day. And a member who asked to pause gets nothing until they say otherwise.',
+      '想象一间健身房。上周刚报名、一次都没来的人，需要的是有人教他怎么开始，不是打折券。一周来三次的老会员，根本不用发信息给他。一个月没来的人，可以友善地问候一次，不是天天轰炸。主动说要暂停会籍的人，在他自己开口之前，什么都不要发。',
+    ),
+    terms: [
+      { term: L('Player state', '玩家状态'), everyday: L('Where the member is right now: new, regular, drifting away.', '会员现在处在哪个阶段：新来的、常来的、快流失的。') },
+      { term: L('“No action needed”', '「不需要动作」'), everyday: L('Leave the regulars alone.', '常来的会员，就别打扰。') },
+      { term: L('Stop rule', '停止规则'), everyday: L('A pause request beats any campaign, immediately.', '会员说要暂停，比任何活动都优先，马上生效。') },
+      { term: L('Holdout group', '对照组'), everyday: L('Keep a few people off the list to see whether the message changed anything.', '留一小部分人不发，看看发了到底有没有差别。') },
+    ],
+    takeaway: L(
+      'Start from the person, not from the campaign calendar. Sometimes the right message is no message.',
+      '从「这个人现在需要什么」出发，不是从活动日历出发。有时候最好的信息，就是不发。',
+    ),
+  },
   blocks: [
     { kind: 'h', text: L('States, not campaigns', '先有状态，再有活动') },
     {
@@ -729,6 +811,22 @@ export const MARKETING_REPORT_GUIDE: IGamingGuide = {
     'Put cost next to the whole chain — registrations, first deposits, deposit value, revenue, and who is still playing a month later — on the same cohort. Write each metric’s formula next to its name. Then end every section with what the number suggests you check or change.',
     '把成本放在整条链旁边——注册、首存、存款金额、收入、一个月后还有谁在玩——而且用同一批人来算。每个指标名称旁边写上公式。每一节最后，写这个数字提示你去检查什么、改什么。',
   ),
+  plain: {
+    scene: L(
+      'A tuition centre runs two ads. Ad A gets parents to book a free trial class for 20 per booking — cheap — but most children come once and never return. Ad B costs 60 per booking, but those children stay for a year. Judged on cost per booking, Ad A wins. Judged on who is still enrolled three months later, Ad B wins by a mile.',
+      '补习中心打两个广告。广告 A 让家长报名免费试听，每个报名只花 20 块，很便宜，但大多数孩子来一次就不见了。广告 B 每个报名要 60 块，可是这些孩子一读就是一年。只看「每个报名多少钱」,A 赢；看「三个月后还有谁在读」,B 赢很多。',
+    ),
+    terms: [
+      { term: L('CPA / cost per FTD', 'CPA / 每个首存的成本'), everyday: L('Cost per booking.', '每个报名花多少钱。') },
+      { term: L('FTD (first-time depositor)', 'FTD(首存玩家)'), everyday: L('A parent who actually paid for the first month.', '真的付了第一个月学费的家长。') },
+      { term: L('NGR per FTD', '每个首存的 NGR'), everyday: L('What one student is worth after a few months.', '一个学生读几个月下来值多少。') },
+      { term: L('Cohort', '同期群'), everyday: L('Everyone who enquired in March, followed over time.', '把三月来问的人放成一组，一路跟下去看。') },
+    ],
+    takeaway: L(
+      'Cheap to get is not the same as worth getting. Follow the same group of people, not just the calendar month.',
+      '便宜拿到，不等于值得拿。跟着同一批人看，不要只看日历上的一个月。',
+    ),
+  },
   blocks: [
     { kind: 'h', text: L('One chain, many “cost per” numbers', '一条链，很多个「每个多少钱」') },
     {
@@ -859,6 +957,22 @@ export const RTP_EXPLAINED_GUIDE: IGamingGuide = {
     'Theoretical RTP is what a game is designed to pay back over the long run; 96% means 4% theoretical hold. Observed RTP is winnings ÷ turnover for the period you measured, and on small samples it can land far from the design. Judge a game or an RTP change on enough rounds, not on one week’s GGR.',
     '理论 RTP 是游戏设计上长期会返还的比例；96% 表示理论 hold 是 4%。实际 RTP 是你量的那段时间里 派彩 ÷ 流水，样本小的时候可能离设计值很远。评判一个游戏或一次 RTP 调整，要看足够的局数，而不是一周的 GGR。',
   ),
+  plain: {
+    scene: L(
+      'Flip a fair coin 10 times and getting 7 heads is no surprise. Flip it 10,000 times and you will land very close to half. RTP works the same way: a 96% slot pays back about 96 of every 100 bet — averaged over millions of spins. One week of one game is the 10-flip version.',
+      '一个公平的硬币丢 10 次，出 7 次正面一点也不奇怪；丢 1 万次，就会非常接近一半。RTP 也是这样：RTP 96% 的老虎机，每下注 100 大约返还 96——但那是几百万局之后的平均。一个游戏一周的数据，就像只丢了 10 次。',
+    ),
+    terms: [
+      { term: L('Theoretical RTP', '理论 RTP'), everyday: L('The coin is fair: half and half by design.', '硬币本身是公平的：设计上就是一半一半。') },
+      { term: L('Observed RTP', '实际 RTP'), everyday: L('What you actually got in your flips.', '你真的丢出来的结果。') },
+      { term: L('Hold', 'Hold'), everyday: L('The house’s share: 100 − 96 = 4 of every 100, in the long run.', '庄家留下的那份：长期来看每 100 留 4。') },
+      { term: L('Sample size', '样本量'), everyday: L('How many times you flipped.', '你丢了几次。') },
+    ],
+    takeaway: L(
+      'A strange week is usually the coin, not a broken game. Count the spins before you judge.',
+      '某一周数字很怪，多半是运气，不是游戏坏了。下结论之前，先数一数局数。',
+    ),
+  },
   blocks: [
     { kind: 'h', text: L('Two RTPs', '两个 RTP') },
     {
@@ -972,6 +1086,22 @@ export const WAGERING_GUIDE: IGamingGuide = {
     'A wagering requirement is the amount a player must bet before bonus money, or winnings made with it, can be withdrawn: a 20 bonus at 10× means 200 of bets. For the operator a bonus costs less than its face value but more than “bonus − house edge × required bets”, because most players run out before finishing and the cost is driven by the few who win big.',
     '流水要求是玩家在提取奖金(或用奖金赢到的钱)之前必须下注的金额：20 的奖金、10 倍流水，就是要下注 200。对运营者来说，一份奖金的成本低于面额，但高于「奖金 − 庄家优势 × 要求下注额」——因为大多数玩家在完成前就输光了，成本主要来自少数赢了大奖的人。',
   ),
+  plain: {
+    scene: L(
+      'An arcade gives you 20 free tokens, with one rule: you can only swap your prize tickets for cash after you have played 200 tokens’ worth. Most kids run out of tokens long before 200, so the arcade pays nothing. A few hit a big prize along the way, finish the 200, and cash out far more than 20. Those few are where the cost comes from.',
+      '游戏厅送你 20 个免费代币，规定只有一条：要先玩满 200 个代币的量，才能把赢到的彩票换成现金。大多数小孩远远没玩到 200 就把代币用完了，游戏厅一分钱都不用付。但有少数人中途中了大奖，玩满 200 之后换走的远不止 20。成本就是从这少数人身上来的。',
+    ),
+    terms: [
+      { term: L('Bonus', '奖金'), everyday: L('The 20 free tokens.', '送的 20 个代币。') },
+      { term: L('Wagering requirement (10×)', '流水要求(10 倍)'), everyday: L('Play 200 tokens’ worth before cashing out.', '先玩满 200 个代币，才能换现金。') },
+      { term: L('House edge', '庄家优势'), everyday: L('Every play, the machine keeps a little on average.', '每玩一次，平均都被机器吃掉一点。') },
+      { term: L('Max conversion', '最多可提现'), everyday: L('“You can cash out at most 100” — a cap for the lucky few.', '「最多只能换 100」——给那少数幸运儿封顶。') },
+    ],
+    takeaway: L(
+      'Most bonuses cost little; a few cost a lot. Price for the few, not for the average player.',
+      '大多数奖金花不了多少，少数几份很贵。定价时要算那少数人，不是只算平均玩家。',
+    ),
+  },
   blocks: [
     { kind: 'h', text: L('How a wagering requirement works', '流水要求怎么运作') },
     {
