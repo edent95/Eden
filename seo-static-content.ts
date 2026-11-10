@@ -132,6 +132,13 @@ function igamingGuideStaticCopy(guide: IGamingGuide): StaticRouteCopy {
       { title: guide.shortTitle, paragraphs: guide.blocks.flatMap(igamingBlockParagraphs) },
       { title: IGAMING_GUIDE_LABELS.checklistTitle, paragraphs: guide.checklist },
       { title: IGAMING_GUIDE_LABELS.limitsTitle, paragraphs: [guide.limits] },
+      {
+        title: IGAMING_GUIDE_LABELS.sourcesTitle,
+        paragraphs: guide.sources.map((source) => ({
+          en: `${source.publisher} — ${source.title}: ${source.supports.en} ${source.url}`,
+          zh: `${source.publisher} — ${source.title}:${source.supports.zh} ${source.url}`,
+        })),
+      },
     ],
   };
 }

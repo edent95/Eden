@@ -1,5 +1,6 @@
 import { siteEssayNotes, wikiEntries } from './generated/content.ts';
 import { ROUTE_STATIC_COPY } from './seo-static-content.ts';
+import { IGAMING_GUIDES } from './components/igaming-guides-content.ts';
 import { WIKI_INDEX, wikiTopics } from './components/wiki-content.ts';
 import {
   canonicalRoutePath,
@@ -377,12 +378,19 @@ export function buildStaticJsonLd(route: RouteSeo, language: SeoLanguage, siteBa
       inLanguage: language === 'zh' ? 'zh-Hans' : 'en',
     }, person);
   } else {
+    const guide = IGAMING_GUIDES.find((entry) => entry.path === route.path);
     graph.push({
       '@type': route.path === '/film-gallery' ? 'ImageGallery' : 'WebPage',
       '@id': canonical, url: canonical, name: content.heading, description: content.summary,
       image, datePublished: dates.published, dateModified: dates.modified,
       inLanguage: language === 'zh' ? 'zh-Hans' : 'en',
       author: { '@id': person['@id'] },
+      ...(guide ? {
+        citation: guide.sources.map((source) => ({
+          '@type': 'CreativeWork', name: source.title, url: source.url,
+          publisher: { '@type': 'Organization', name: source.publisher },
+        })),
+      } : {}),
     }, person);
   }
   return { '@context': 'https://schema.org', '@graph': graph };
