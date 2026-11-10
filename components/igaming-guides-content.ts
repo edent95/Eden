@@ -43,6 +43,8 @@ export type IGamingGuideSource = {
   publisher: string;
   title: string;
   url: string;
+  /** Publication or last-updated year shown on the page; 'n.d.' when the page carries none. */
+  year: string;
   /** What this source backs up on the page, in one line. */
   supports: IGamingLocalized;
 };
@@ -62,10 +64,12 @@ export const IGAMING_GUIDE_LABELS = {
   backToIgaming: L('Back to iGaming', '返回 iGaming'),
   guidePrefix: L('Guide: ', '专题：'),
   moreGuides: L('More guides', '更多专题'),
-  sourcesTitle: L('Sources', '参考来源'),
+  sourcesTitle: L('References', '参考文献'),
+  /** Date every reference was last checked to resolve; shown as the access date. */
+  sourcesAccessed: L('10 Nov. 2026', '2026-11-10'),
   sourcesNote: L(
-    'Primary sources for the rules and definitions above. Field notes come from my own work; rules differ by jurisdiction, and these are UK and industry-standard references.',
-    '上文规则与定义的一手来源。实战部分来自我自己的工作；各地规则不同，这里列的是英国监管机构与行业标准的原文。',
+    'Bracketed numbers in the text point to the primary sources below. Field notes come from my own work; rules differ by jurisdiction, and these are UK and industry-standard references.',
+    '正文中的方括号编号对应下列一手来源。实战部分来自我自己的工作；各地规则不同，这里列的是英国监管机构与行业标准的原文。',
   ),
 };
 
@@ -73,6 +77,7 @@ const SOURCE_UKGC_GGY: IGamingGuideSource = {
   publisher: 'UK Gambling Commission',
   title: 'Industry statistics: April 2024 to March 2025',
   url: 'https://www.gamblingcommission.gov.uk/statistics-and-research/publication/industry-statistics-annual-report-financial-year-april-2024-to-march-2025',
+  year: '2025',
   supports: L(
     'A regulator reporting market size in gross gambling yield (GGY), the amount operators keep after paying winnings.',
     '监管机构用 GGY(运营者付完奖金后留下的金额)来报告市场规模。',
@@ -83,6 +88,7 @@ const SOURCE_UKGC_RTS3: IGamingGuideSource = {
   publisher: 'UK Gambling Commission',
   title: 'Remote gambling and software technical standards — RTS 3: Rules, game descriptions and the likelihood of winning',
   url: 'https://www.gamblingcommission.gov.uk/standards/remote-gambling-and-software-technical-standards/rts-3-rules-game-descriptions-and-the-likelihood-of-winning',
+  year: '2024',
   supports: L(
     'Game information must show players how the game works and its house edge or return to player (RTP).',
     '游戏信息必须向玩家说明玩法，以及庄家优势或 RTP。',
@@ -93,6 +99,7 @@ const SOURCE_UKGC_LIVE_RTP: IGamingGuideSource = {
   publisher: 'UK Gambling Commission',
   title: 'Testing strategy for compliance with RTS — Live RTP monitoring',
   url: 'https://www.gamblingcommission.gov.uk/manual/testing-strategy-for-compliance-with-remote-gambling-and-software-technical/5-live-rtp-monitoring',
+  year: '2023',
   supports: L(
     'Licensees compare actual RTP with the advertised figure, for under- and overpayment, at a frequency set by volume of play.',
     '持牌方要拿实际 RTP 对比标示 RTP,少付多付都要查，频率按游戏量定。',
@@ -103,6 +110,7 @@ const SOURCE_GLI_19: IGamingGuideSource = {
   publisher: 'Gaming Laboratories International (GLI)',
   title: 'GLI-19: Standards for Interactive Gaming Systems, v3.0',
   url: 'https://gaminglabs.com/wp-content/uploads/2024/06/GLI-19-Interactive-Gaming-Systems-v3.0.pdf',
+  year: '2020',
   supports: L(
     'The test-lab standard games are certified against, including payout percentages and RTP display (section 4.7).',
     '测试实验室认证游戏用的标准，包括返还率与 RTP 显示(第 4.7 节)。',
@@ -113,6 +121,7 @@ const SOURCE_UKGC_PROMOTIONS: IGamingGuideSource = {
   publisher: 'UK Gambling Commission',
   title: 'Gambling promotions to be safer and simpler',
   url: 'https://www.gamblingcommission.gov.uk/news/article/gambling-promotions-to-be-safer-and-simpler',
+  year: '2025',
   supports: L(
     'Wagering requirements capped at 10 times the bonus and mixed-product promotions banned, in force from 19 January 2026.',
     '奖金流水要求上限为奖金的 10 倍、禁止跨产品捆绑促销，2026 年 1 月 19 日生效。',
@@ -123,6 +132,7 @@ const SOURCE_CMA_PROMOTIONS: IGamingGuideSource = {
   publisher: 'Competition and Markets Authority (GOV.UK)',
   title: "Online gambling promotions: do's and don'ts for online gambling firms",
   url: 'https://www.gov.uk/government/publications/online-gambling-promotions-dos-and-donts/online-gambling-promotions-dos-and-donts-for-online-gambling-firms',
+  year: '2018',
   supports: L(
     'Terms told clearly and up front, bonus funds distinguishable from own money, and customers free to exit a promotion with their deposit.',
     '条款要清楚、及时讲明，奖金和玩家自己的钱要分得清，玩家随时能带着本金退出促销。',
@@ -133,6 +143,7 @@ const SOURCE_UKGC_CUSTOMER_INTERACTION: IGamingGuideSource = {
   publisher: 'UK Gambling Commission',
   title: 'Customer interaction guidance for remote gambling licensees',
   url: 'https://www.gamblingcommission.gov.uk/guidance/customer-interaction-guidance-for-remote-gambling-licensees-formal-guidance/introduction-customer-interaction-guidance-for-remote-gambling-licensees-sr',
+  year: '2023',
   supports: L(
     'Operators must identify signs of harm, act on them and evaluate what they did (in effect from 31 October 2023).',
     '运营者要识别伤害迹象、采取行动、评估效果(2023 年 10 月 31 日起生效)。',
@@ -143,6 +154,7 @@ const SOURCE_ICO_EMAIL_MARKETING: IGamingGuideSource = {
   publisher: "Information Commissioner's Office (ICO)",
   title: 'Guide to PECR — Electronic mail marketing',
   url: 'https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/guide-to-pecr/electronic-and-telephone-marketing/electronic-mail-marketing/',
+  year: 'n.d.',
   supports: L(
     'Marketing emails and texts to individuals need specific consent; the "soft opt-in" exception is narrow.',
     '向个人发营销邮件或短信需要明确同意;「soft opt-in」例外范围很窄。',
@@ -153,6 +165,7 @@ const SOURCE_GAMSTOP: IGamingGuideSource = {
   publisher: 'GAMSTOP',
   title: 'GAMSTOP — free online self-exclusion scheme',
   url: 'https://www.gamstop.co.uk/',
+  year: 'n.d.',
   supports: L(
     'A national self-exclusion scheme: one sign-up blocks a player across participating operators.',
     '全国性的自我排除计划：玩家登记一次，所有参与的运营者都会把他挡在外面。',
@@ -163,6 +176,7 @@ const SOURCE_UKGC_SOFTWARE_LICENCE: IGamingGuideSource = {
   publisher: 'UK Gambling Commission',
   title: 'What is gambling software?',
   url: 'https://www.gamblingcommission.gov.uk/licensees-and-businesses/guide/what-is-gambling-software',
+  year: '2024',
   supports: L(
     'Game providers that make, supply, install or adapt gambling software need their own licence — the B2B side is regulated too.',
     '制作、供应、安装或改动博彩软件的游戏供应商要有自己的牌照——B2B 这一侧同样受监管。',
@@ -173,6 +187,7 @@ const SOURCE_GA4_COHORTS: IGamingGuideSource = {
   publisher: 'Google Analytics Help',
   title: '[GA4] Cohort exploration',
   url: 'https://support.google.com/analytics/answer/9670133?hl=en',
+  year: 'n.d.',
   supports: L(
     'How a cohort is defined (users grouped by when they first did something) and tracked over later periods.',
     '同期群怎么定义(按第一次做某件事的时间分组),以及之后各期怎么追踪。',
@@ -204,7 +219,7 @@ export const GGR_VS_NGR_GUIDE: IGamingGuide = {
       head: [L('Metric', '指标'), L('Formula', '算法'), L('The question it answers', '它回答的问题')],
       rows: [
         [L('Turnover (handle)', '流水（turnover / handle）'), L('Sum of all stakes', '所有下注额相加'), L('How much playing happened?', '玩得有多活跃？')],
-        [L('GGR', 'GGR（博彩毛收入）'), L('Stakes − winnings paid', '下注 − 派彩'), L('How much did the games win?', '游戏本身赢了多少？')],
+        [L('GGR', 'GGR（博彩毛收入）'), L('Stakes − winnings paid[1]', '下注 − 派彩[1]'), L('How much did the games win?', '游戏本身赢了多少？')],
         [L('NGR', 'NGR（博彩净收入）'), L('GGR − bonus cost − contract deductions', 'GGR − 奖金成本 − 合同扣项'), L('How much win is left after we paid to get it?', '扣掉为赢这笔钱付出的成本，还剩多少？')],
         [L('Net deposits', '净存款'), L('Deposits − withdrawals', '存款 − 提款'), L('How much cash actually came in?', '实际进来多少现金？')],
       ],
@@ -260,8 +275,8 @@ export const GGR_VS_NGR_GUIDE: IGamingGuide = {
       kind: 'callout',
       title: L('Hold % is the bridge', 'Hold % 是连接两者的桥'),
       body: L(
-        'Hold = GGR ÷ turnover. A slot with 96% RTP has a theoretical hold of about 4% over a very large number of spins. On a single day one big win can push hold — and GGR — below zero. Read hold over weeks and per game, not per day.',
-        'Hold = GGR ÷ 流水。RTP 96% 的老虎机，理论 hold 大约 4%，但那是在极大量的局数上。单独一天，一个大奖就能把 hold 和 GGR 打成负数。看 hold 要按周、按游戏看，不要按天下结论。',
+        'Hold = GGR ÷ turnover. A slot with 96% RTP has a theoretical hold of about 4% over a very large number of spins. On a single day one big win can push hold — and GGR — below zero. Read hold over weeks and per game, not per day.[2]',
+        'Hold = GGR ÷ 流水。RTP 96% 的老虎机，理论 hold 大约 4%，但那是在极大量的局数上。单独一天，一个大奖就能把 hold 和 GGR 打成负数。看 hold 要按周、按游戏看，不要按天下结论。[2]',
       ),
     },
 
@@ -339,8 +354,8 @@ export const PROVIDER_PROMOTIONS_GUIDE: IGamingGuide = {
     {
       kind: 'p',
       text: L(
-        'A provider (the game studio) wants its titles played. An operator (the casino brand) wants offers that bring players back without wrecking its margin. An aggregator sits between many of each. When a provider “runs a promotion”, it can mean a player-facing mechanic, a commercial incentive for the operator, or both bundled in one announcement.',
-        '供应商（游戏工作室）希望自己的游戏有人玩。运营商（面向玩家的娱乐场品牌）想要能把玩家拉回来、又不吃掉利润的优惠。聚合商夹在很多家供应商和很多家运营商中间。供应商说「我们在做促销」，可能是一个面向玩家的机制，可能是给运营商的商业激励，也可能两者捆在同一则公告里。',
+        'A provider (the game studio) wants its titles played. An operator (the casino brand) wants offers that bring players back without wrecking its margin. An aggregator sits between many of each. When a provider “runs a promotion”, it can mean a player-facing mechanic, a commercial incentive for the operator, or both bundled in one announcement.[1]',
+        '供应商（游戏工作室）希望自己的游戏有人玩。运营商（面向玩家的娱乐场品牌）想要能把玩家拉回来、又不吃掉利润的优惠。聚合商夹在很多家供应商和很多家运营商中间。供应商说「我们在做促销」，可能是一个面向玩家的机制，可能是给运营商的商业激励，也可能两者捆在同一则公告里。[1]',
       ),
     },
     {
@@ -421,7 +436,7 @@ export const PROVIDER_PROMOTIONS_GUIDE: IGamingGuide = {
     {
       kind: 'list',
       items: [
-        L('A “50% GGR discount” is half of one fee line, not 50% more profit. Other costs and player behaviour do not change.', '「GGR 五折」是某一项费用减半，不是利润多 50%。其他成本和玩家行为都没变。'),
+        L('A “50% GGR discount” is half of one fee line, not 50% more profit. Other costs and player behaviour do not change.[2]', '「GGR 五折」是某一项费用减半，不是利润多 50%。其他成本和玩家行为都没变。[2]'),
         L('A fee-free month is worth the fee you would have paid on that month’s activity — small if the games are new and barely played.', '一个月免费期值多少，等于那个月的活动本来要交的费用——游戏刚上、几乎没人玩的话，就很小。'),
         L('The same 1% means very different money on turnover and on GGR. Ask for the base before the rate.', '同样是 1%，按流水算和按 GGR 算是完全不同的金额。先问基数，再看费率。'),
         L('The cost of the obligations is real: a top slot given to one provider is a slot not given to another, or to your own promotion.', '义务也有成本：给了一家供应商的头部位置，就不能给另一家，也不能给你自己的活动。'),
@@ -449,7 +464,7 @@ export const PROVIDER_PROMOTIONS_GUIDE: IGamingGuide = {
     'Offer names such as “1+1”, “free period” or “GGR discount” are labels that differ by provider and contract; always read the actual terms. Player-facing promotions must also meet the rules of each market and the operator’s responsible-gambling policy, which this guide does not cover. All examples are illustrative.',
     '「1+1」「免费期」「GGR 折扣」这类名称，每家供应商、每份合同的意思都可能不同，一定要看实际条款。面向玩家的促销还必须符合各市场的法规和运营商的负责任博彩政策，这篇不涵盖。所有例子都是示例。',
   ),
-  sources: [SOURCE_UKGC_SOFTWARE_LICENCE, SOURCE_GLI_19, SOURCE_UKGC_GGY],
+  sources: [SOURCE_UKGC_SOFTWARE_LICENCE, SOURCE_UKGC_GGY],
 };
 
 export const PROMOTION_LAUNCH_CHECKLIST_GUIDE: IGamingGuide = {
@@ -496,7 +511,7 @@ export const PROMOTION_LAUNCH_CHECKLIST_GUIDE: IGamingGuide = {
       kind: 'cards',
       items: [
         { title: L('The rule', '规则'), body: L('Eligibility, qualifying action, reward, cap, wagering, expiry, exclusions.', '资格、达标动作、奖励、上限、流水要求、有效期、排除范围。') },
-        { title: L('The copy', '文案'), body: L('Banner, landing page and T&Cs — in every language you publish.', '横幅、落地页和条款——每一种发布的语言。') },
+        { title: L('The copy', '文案'), body: L('Banner, landing page and T&Cs — in every language you publish.[1]', '横幅、落地页和条款——每一种发布的语言。[1]') },
         { title: L('The setup', '后台设置'), body: L('Bonus engine, game list, currency, dates and time zone in the back office.', '后台里的奖金引擎、游戏清单、币种、日期和时区。') },
         { title: L('The support script', '客服话术'), body: L('What agents say when a reward has not arrived, and when to escalate.', '奖励没到账时客服怎么说、什么时候往上报。') },
         { title: L('The payout', '派奖'), body: L('Who credits the reward, when, and how prizes outside the wallet are delivered.', '谁发奖励、什么时候发、钱包以外的奖品怎么送到。') },
@@ -526,7 +541,7 @@ export const PROMOTION_LAUNCH_CHECKLIST_GUIDE: IGamingGuide = {
         [L('Period', '时段'), L('Start, end, time zone, and when the claim window closes', '开始、结束、时区，以及领取窗口什么时候关')],
         [L('Calculation base', '计算基数'), L('Percentage of what: deposit, net loss, turnover', '是什么的百分比：存款、净输、流水')],
         [L('Cap and minimum', '上限与门槛'), L('Maximum reward, minimum deposit or bet', '最高奖励、最低存款或下注')],
-        [L('Wagering', '流水要求'), L('Multiplier, on what amount, which games count and at what weight', '几倍、按什么金额算、哪些游戏算、各算多少比例')],
+        [L('Wagering', '流水要求'), L('Multiplier, on what amount, which games count and at what weight[2]', '几倍、按什么金额算、哪些游戏算、各算多少比例[2]')],
         [L('Exclusions', '排除'), L('Games, bet types or other offers that cannot be combined', '不能叠加的游戏、下注类型或其他优惠')],
         [L('Consequence', '违规后果'), L('What happens to winnings if a rule is broken', '违反规则时赢的钱怎么处理')],
       ],
@@ -572,7 +587,7 @@ export const PROMOTION_LAUNCH_CHECKLIST_GUIDE: IGamingGuide = {
     'This checklist covers operational readiness. It does not replace legal or compliance review, and the rules for advertising bonuses differ by market. Responsible-gambling controls — limits, exclusions, who must not be targeted — always take priority over a launch date.',
     '这份清单管的是运营上的准备。它不能代替法务或合规审核，各市场对奖金广告的规定也不同。负责任博彩的控制——限额、自我排除、哪些人不能被推送——永远优先于上线日期。',
   ),
-  sources: [SOURCE_UKGC_PROMOTIONS, SOURCE_CMA_PROMOTIONS, SOURCE_ICO_EMAIL_MARKETING],
+  sources: [SOURCE_CMA_PROMOTIONS, SOURCE_UKGC_PROMOTIONS],
 };
 
 export const CRM_PLAYER_LIFECYCLE_GUIDE: IGamingGuide = {
@@ -637,10 +652,10 @@ export const CRM_PLAYER_LIFECYCLE_GUIDE: IGamingGuide = {
     {
       kind: 'list',
       items: [
-        L('Never trigger an offer from a loss. “You lost, here is more to play with” pushes the people most at risk.', '永远不要因为玩家输了就触发优惠。「你输了，再给你一点筹码」推的正是最有风险的那群人。'),
+        L('Never trigger an offer from a loss. “You lost, here is more to play with” pushes the people most at risk.[1]', '永远不要因为玩家输了就触发优惠。「你输了，再给你一点筹码」推的正是最有风险的那群人。[1]'),
         L('Never imply a way to win. Tips, “hot games” or demo results do not predict real-money outcomes.', '永远不要暗示有赢的方法。技巧、「热门游戏」或试玩结果都不能预测真钱的结果。'),
-        L('Respect consent per channel. Opting out of SMS is not permission to switch to messaging apps.', '按渠道尊重授权。退订短信，不等于允许你改用通讯软件联系。'),
-        L('Let protection signals win automatically. A self-exclusion or deposit limit must remove the player from every marketing flow at once, not at the next list refresh.', '让保护信号自动优先。自我排除或存款限额一出现，就要立刻把玩家移出所有营销流程，而不是等下一次名单更新。'),
+        L('Respect consent per channel. Opting out of SMS is not permission to switch to messaging apps.[2]', '按渠道尊重授权。退订短信，不等于允许你改用通讯软件联系。[2]'),
+        L('Let protection signals win automatically. A self-exclusion or deposit limit must remove the player from every marketing flow at once, not at the next list refresh.[3]', '让保护信号自动优先。自我排除或存款限额一出现，就要立刻把玩家移出所有营销流程，而不是等下一次名单更新。[3]'),
       ],
     },
 
@@ -675,7 +690,7 @@ export const CRM_PLAYER_LIFECYCLE_GUIDE: IGamingGuide = {
     'State windows here are examples; derive yours from your own player data. Marketing consent, contact rules and safer-gambling obligations are set by each jurisdiction and licence — follow those over anything in this guide. This guide does not cover VIP programme economics.',
     '这里的状态窗口只是示例；请用自己的玩家数据来定。营销授权、联系规则和更安全博彩的义务由各司法辖区和牌照规定——一律以它们为准。这篇不涵盖 VIP 计划的经济账。',
   ),
-  sources: [SOURCE_UKGC_CUSTOMER_INTERACTION, SOURCE_ICO_EMAIL_MARKETING, SOURCE_GAMSTOP, SOURCE_UKGC_PROMOTIONS],
+  sources: [SOURCE_UKGC_CUSTOMER_INTERACTION, SOURCE_ICO_EMAIL_MARKETING, SOURCE_GAMSTOP],
 };
 
 export const MARKETING_REPORT_GUIDE: IGamingGuide = {
@@ -737,7 +752,7 @@ export const MARKETING_REPORT_GUIDE: IGamingGuide = {
         L('Write the formula under every header, in words. “FTD = first successful deposit in the period, by deposit date.”', '每个表头下面用文字写公式。「首存 = 期间内第一次成功存款，按存款日期算」。'),
         L('Count people and count transactions in different columns. “Deposits” can mean either.', '人数和笔数分开两栏。「存款」两种意思都可能。'),
         L('State the sign convention. Is GGR shown from the house side or the player side? Are withdrawals negative?', '写清楚正负号。GGR 是站在庄家这边还是玩家这边？提款是不是负数？'),
-        L('Do not call deposits “revenue”. Cash in is not money won.', '不要把存款叫「收入」。进来的现金，不等于赢到的钱。'),
+        L('Do not call deposits “revenue”. Cash in is not money won.[1]', '不要把存款叫「收入」。进来的现金，不等于赢到的钱。[1]'),
       ],
     },
 
@@ -760,8 +775,8 @@ export const MARKETING_REPORT_GUIDE: IGamingGuide = {
     {
       kind: 'p',
       text: L(
-        'The calendar view looks better because it borrows depositors from February’s campaign. If March spend changed, only the cohort view tells you whether March’s traffic converted. Use calendar views for cash and operations; use cohorts to judge a campaign or a channel.',
-        '自然月的数字比较好看，因为它借用了二月活动带来的首存。如果三月的花费有变化，只有同批人的看法能告诉你三月的流量到底转化得怎样。现金和运营用自然月看；评判一个活动或渠道，用同批人看。',
+        'The calendar view looks better because it borrows depositors from February’s campaign. If March spend changed, only the cohort view tells you whether March’s traffic converted. Use calendar views for cash and operations; use cohorts to judge a campaign or a channel.[2]',
+        '自然月的数字比较好看，因为它借用了二月活动带来的首存。如果三月的花费有变化，只有同批人的看法能告诉你三月的流量到底转化得怎样。现金和运营用自然月看；评判一个活动或渠道，用同批人看。[2]',
       ),
     },
 
@@ -796,7 +811,7 @@ export const MARKETING_REPORT_GUIDE: IGamingGuide = {
     'Windows (14 days, 30 days) and formulas here are examples; use the definitions your finance team and partners have agreed. Affiliate CPA and revenue-share terms are defined by each contract. All numbers on this page are illustrative.',
     '这里的窗口（14 天、30 天）和公式都是示例；以你的财务团队与合作方约定的定义为准。代理的 CPA 与分成条款以各自合同为准。本页所有数字都是示例。',
   ),
-  sources: [SOURCE_GA4_COHORTS, SOURCE_UKGC_GGY],
+  sources: [SOURCE_UKGC_GGY, SOURCE_GA4_COHORTS],
 };
 
 export const RTP_EXPLAINED_GUIDE: IGamingGuide = {
@@ -825,7 +840,7 @@ export const RTP_EXPLAINED_GUIDE: IGamingGuide = {
       rows: [
         [L('Where it comes from', '从哪来'), L('The game’s maths and certified configuration', '游戏数学与认证过的配置'), L('Winnings paid ÷ turnover in your data', '你数据里的 派彩 ÷ 流水')],
         [L('Changes when', '什么时候会变'), L('A different configuration is deployed', '换了另一套配置'), L('Every round', '每一局')],
-        [L('Good for', '适合用来'), L('Comparing games, pricing, compliance', '比较游戏、定价、合规'), L('Monitoring, spotting real faults over large samples', '监控，以及在大样本上发现真正的异常')],
+        [L('Good for', '适合用来'), L('Comparing games, pricing, compliance', '比较游戏、定价、合规'), L('Monitoring, spotting real faults over large samples[1]', '监控，以及在大样本上发现真正的异常[1]')],
         [L('Misused as', '常被误用成'), L('A promise to a player', '对玩家的承诺'), L('A verdict after a few days', '几天后的定论')],
       ],
     },
@@ -866,8 +881,8 @@ export const RTP_EXPLAINED_GUIDE: IGamingGuide = {
     {
       kind: 'p',
       text: L(
-        'Many games are certified in several RTP versions. A lower setting raises theoretical hold per bet, but players may play less, and some markets set minimum RTPs or require the setting to be disclosed. Any change must be an approved configuration, and the terms shown to players must match it.',
-        '很多游戏有几套认证过的 RTP 版本。设得低一点，每注的理论 hold 会上升，但玩家可能玩得少；有些市场规定最低 RTP，或要求公开显示。任何调整都必须是获批的配置，而且给玩家看的说明要和它一致。',
+        'Many games are certified in several RTP versions. A lower setting raises theoretical hold per bet, but players may play less, and some markets set minimum RTPs or require the setting to be disclosed. Any change must be an approved configuration, and the terms shown to players must match it.[2][3]',
+        '很多游戏有几套认证过的 RTP 版本。设得低一点，每注的理论 hold 会上升，但玩家可能玩得少；有些市场规定最低 RTP，或要求公开显示。任何调整都必须是获批的配置，而且给玩家看的说明要和它一致。[2][3]',
       ),
     },
     {
@@ -900,7 +915,7 @@ export const RTP_EXPLAINED_GUIDE: IGamingGuide = {
     'The range table assumes a standard deviation of 5× stake per spin and a normal approximation; real games differ, and high-volatility or jackpot games need far more rounds. Minimum RTP and disclosure rules vary by jurisdiction. RTP describes a game, not a way to predict or improve any player’s result.',
     '范围表假设单局标准差是下注额的 5 倍，并用正态近似；真实游戏各不相同，高波动或 jackpot 游戏需要多得多的局数。最低 RTP 与公开要求因司法辖区而异。RTP 描述的是游戏，不是预测或改善任何玩家结果的方法。',
   ),
-  sources: [SOURCE_UKGC_RTS3, SOURCE_UKGC_LIVE_RTP, SOURCE_GLI_19],
+  sources: [SOURCE_UKGC_LIVE_RTP, SOURCE_UKGC_RTS3, SOURCE_GLI_19],
 };
 
 /** Every `/igaming/<guide>`, in reading order. Each also needs its own literal branch in `App.tsx`. */
