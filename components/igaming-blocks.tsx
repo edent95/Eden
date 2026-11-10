@@ -8,7 +8,30 @@ import type { CaseBlock } from './igaming-cases-content';
  * The static SEO body in `seo-static-content.ts` flattens the same blocks,
  * so a new block kind must be handled in both places.
  */
-export function renderIGamingBlock(item: CaseBlock, key: number, t: (value: IGamingLocalized) => string): React.ReactNode {
+const CITATION = /((?:\[\d+\])+)/;
+
+/**
+ * Turns numbered citation markers such as `[2]` or `[2][3]` at the end of a
+ * sentence into superscript links to the guide's reference list
+ * (`#reference-2`). Text without markers is returned unchanged.
+ */
+export function renderCitedText(text: string): React.ReactNode {
+  if (!CITATION.test(text)) return text;
+  return text.split(CITATION).map((part, index) => {
+    if (!CITATION.test(part)) return part;
+    const numbers = part.match(/\d+/g) ?? [];
+    return (
+      <sup key={index} className="igaming-cite">
+        {numbers.map((number) => (
+          <a key={number} href={`#reference-${number}`} aria-label={`Reference ${number}`}>[{number}]</a>
+        ))}
+      </sup>
+    );
+  });
+}
+
+export function renderIGamingBlock(item: CaseBlock, key: number, translate: (value: IGamingLocalized) => string): React.ReactNode {
+  const t = (value: IGamingLocalized) => renderCitedText(translate(value));
   switch (item.kind) {
     case 'h':
       return <h2 key={key}>{t(item.text)}</h2>;

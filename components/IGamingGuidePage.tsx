@@ -66,15 +66,25 @@ const IGamingGuidePage: React.FC<{
             <p>{t(guide.limits)}</p>
           </aside>
 
-          <h2>{t(labels.sourcesTitle)}</h2>
+          <h2 id="references">{t(labels.sourcesTitle)}</h2>
           <p className="igaming-guide-sources-note">{t(labels.sourcesNote)}</p>
           <ol className="igaming-guide-sources">
-            {guide.sources.map((source) => (
-              <li key={source.url}>
-                <a href={source.url} target="_blank" rel="noopener">
-                  {source.title}
-                </a>
-                <span className="igaming-guide-source-publisher">{source.publisher}</span>
+            {guide.sources.map((source, index) => (
+              <li key={source.url} id={`reference-${index + 1}`}>
+                <span className="igaming-guide-source-number">[{index + 1}]</span>
+                <span className="igaming-guide-source-entry">
+                  {language === 'zh' ? (
+                    <>
+                      {source.publisher}. <cite>{source.title}</cite>[EB/OL]. {source.year === 'n.d.' ? '' : `${source.year}`}[{t(labels.sourcesAccessed)}].{' '}
+                    </>
+                  ) : (
+                    <>
+                      {source.publisher}, “<cite>{source.title}</cite>,” {source.year}. [Online]. Available:{' '}
+                    </>
+                  )}
+                  <a href={source.url} target="_blank" rel="noopener">{source.url}</a>
+                  {language === 'zh' ? '' : ` [Accessed: ${t(labels.sourcesAccessed)}].`}
+                </span>
                 <span className="igaming-guide-source-supports">{t(source.supports)}</span>
               </li>
             ))}
