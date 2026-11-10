@@ -1,6 +1,7 @@
 import React from 'react';
 import type { IGamingLocalized } from './igaming-content';
 import type { CaseBlock } from './igaming-cases-content';
+import { IGamingWidget } from './igaming-charts';
 
 /**
  * Renders one structured content block for the `/igaming` article pages
@@ -104,6 +105,8 @@ export function renderIGamingBlock(item: CaseBlock, key: number, translate: (val
           <p className="igaming-case-stat-note">{t(item.note)}</p>
         </div>
       );
+    case 'widget':
+      return <React.Fragment key={key}><IGamingWidget widget={item.widget} title={item.title} caption={item.caption} t={translate} /></React.Fragment>;
     default:
       return null;
   }
