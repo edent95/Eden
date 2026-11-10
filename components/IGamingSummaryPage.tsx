@@ -11,7 +11,7 @@ import { IGamingSeal } from './css-art/index';
 import { IGamingBannerStage, IGamingHeroStage } from './css-art/igaming-hero-stage';
 import { KaleidoFrame } from './css-art/kaleido-frame';
 import { kaleidoSpecFor } from '../app/kaleido-routes';
-import { IGAMING_GUIDE_LABELS } from './igaming-guides-content';
+import { IGAMING_GUIDE_LABELS, type IGamingGuide } from './igaming-guides-content';
 
 type Lang = 'en' | 'zh';
 
@@ -27,9 +27,9 @@ const IGamingSummaryPage: React.FC<{
   homeHref: string;
   fullHref: string;
   casesHref: string;
-  guideHref: string;
+  guideLinks: Array<{ guide: IGamingGuide; href: string }>;
   controls: React.ReactNode;
-}> = ({ language, homeHref, fullHref, casesHref, guideHref, controls }) => {
+}> = ({ language, homeHref, fullHref, casesHref, guideLinks, controls }) => {
   const t = (value: IGamingLocalized) => value[language];
   const page = IGAMING_SUMMARY;
   const [unlocked, setUnlocked] = React.useState(false);
@@ -108,9 +108,11 @@ const IGamingSummaryPage: React.FC<{
             <a href={casesHref} className="igaming-point-more">
               {t(page.openCases)} <span aria-hidden="true">→</span>
             </a>
-            <a href={guideHref} className="igaming-point-more">
-              {t(IGAMING_GUIDE_LABELS.openGuide)} <span aria-hidden="true">→</span>
-            </a>
+            {guideLinks.map(({ guide, href }) => (
+              <a key={guide.path} href={href} className="igaming-point-more">
+                {t(IGAMING_GUIDE_LABELS.guidePrefix)}{t(guide.shortTitle)} <span aria-hidden="true">→</span>
+              </a>
+            ))}
           </div>
           <p className="igaming-cases-line">{t(page.casesLine)}</p>
         </aside>
