@@ -4,6 +4,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      indexnow_all:
+        description: 'Submit every sitemap URL to IndexNow (not only recently changed ones)'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -61,3 +66,19 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      # Tell Bing / IndexNow which URLs changed. Best-effort: a failure here never fails the deploy.
+      - name: Checkout IndexNow script
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts/seo
+          sparse-checkout-cone-mode: false
+
+      - name: Setup Node for IndexNow
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Submit changed URLs to IndexNow
+        continue-on-error: true
+        run: node scripts/seo/indexnow.mjs ${{ inputs.indexnow_all && '--all' || '' }}

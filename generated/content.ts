@@ -2199,7 +2199,7 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
       }
     ],
     "datePublished": "2026-07-29",
-    "dateModified": "2026-08-14"
+    "dateModified": "2026-11-10"
   },
   {
     "slug": "carrian-case",
