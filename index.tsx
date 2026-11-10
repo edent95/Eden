@@ -76,7 +76,16 @@ new MutationObserver(syncThemeColor).observe(document.documentElement, {
  */
 const SW_UPDATE_INTERVAL_MS = 60 * 60 * 1000;
 
-if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator && !import.meta.env.PROD) {
+  // Dev servers and worktree previews must never be controlled by a worker: a
+  // worker left behind on a localhost port keeps intercepting requests after
+  // that server is gone (2026-11-10, a stopped preview showed only sw.js errors).
+  void navigator.serviceWorker.getRegistrations()
+    .then((registrations) => Promise.all(registrations.map((registration) => registration.unregister())))
+    .catch(() => undefined);
+}
+
+if ('serviceWorker' in navigator && import.meta.env.PROD) {
   window.addEventListener('load', () => {
     void navigator.serviceWorker
       .register(`${import.meta.env.BASE_URL}sw.js`, { updateViaCache: 'none' })
