@@ -58,7 +58,10 @@ self.addEventListener('fetch', (event) => {
       fetch(event.request).catch(() =>
         caches
           .match(event.request, { cacheName: CACHE_NAME })
-          .then((cached) => cached || caches.match('./', { cacheName: CACHE_NAME })),
+          .then((cached) => cached || caches.match('./', { cacheName: CACHE_NAME }))
+          // respondWith() must get a Response: a cache miss resolves to undefined,
+          // which the browser reports as "Failed to convert value to 'Response'".
+          .then((cached) => cached || Response.error()),
       ),
     );
     return;
@@ -89,6 +92,6 @@ self.addEventListener('fetch', (event) => {
         }
         return response;
       })
-      .catch(() => caches.match(event.request, { cacheName: CACHE_NAME })),
+      .catch(() => caches.match(event.request, { cacheName: CACHE_NAME }).then((cached) => cached || Response.error())),
   );
 });
