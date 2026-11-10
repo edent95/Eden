@@ -548,10 +548,235 @@ export const CRM_PLAYER_LIFECYCLE_GUIDE: IGamingGuide = {
   ),
 };
 
+export const MARKETING_REPORT_GUIDE: IGamingGuide = {
+  path: '/igaming/marketing-report-beyond-cpa',
+  fullSection: 'reporting',
+  banner: 'ledger',
+  title: L(
+    'What an iGaming marketing report should explain beyond CPA',
+    'iGaming 营销报表除了 CPA，还该讲清楚什么',
+  ),
+  shortTitle: L('Marketing reports beyond CPA', '营销报表不只看 CPA'),
+  tags: [L('Reporting', '报表'), L('Acquisition', '获客'), L('Metrics', '指标'), L('Marketing', '营销')],
+  standfirst: L(
+    'CPA tells you what a depositor cost. It does not tell you whether that depositor was worth it, whether the count is right, or what to do next. A useful marketing report connects cost to what happened after the first deposit — and says how each number is calculated.',
+    'CPA 告诉你一个存款玩家花了多少钱，但不告诉你这个玩家值不值、这个数有没有算对、下一步该做什么。有用的营销报表，要把成本和首存之后发生的事连起来——并且讲清楚每个数字是怎么算的。',
+  ),
+  answer: L(
+    'Put cost next to the whole chain — registrations, first deposits, deposit value, revenue, and who is still playing a month later — on the same cohort. Write each metric’s formula next to its name. Then end every section with what the number suggests you check or change.',
+    '把成本放在整条链旁边——注册、首存、存款金额、收入、一个月后还有谁在玩——而且用同一批人来算。每个指标名称旁边写上公式。每一节最后，写这个数字提示你去检查什么、改什么。',
+  ),
+  blocks: [
+    { kind: 'h', text: L('One chain, many “cost per” numbers', '一条链，很多个「每个多少钱」') },
+    {
+      kind: 'path',
+      steps: [L('Spend', '花费'), L('Clicks', '点击'), L('Registrations', '注册'), L('First deposits', '首存'), L('Deposit value', '存款金额'), L('GGR / NGR', 'GGR / NGR'), L('Still active at day 30', '第 30 天仍活跃')],
+    },
+    {
+      kind: 'table',
+      head: [L('Metric', '指标'), L('Formula', '算法'), L('It answers', '它回答'), L('It does not answer', '它不回答')],
+      rows: [
+        [L('Cost per registration', '每个注册成本'), L('Spend ÷ registrations', '花费 ÷ 注册数'), L('How cheap is the top of the funnel?', '漏斗顶端便不便宜？'), L('Whether anyone deposits', '有没有人会存款')],
+        [L('CPA / cost per FTD', 'CPA / 每个首存成本'), L('Spend ÷ first-time depositors', '花费 ÷ 首存人数'), L('What one new depositor cost', '一个新存款玩家花了多少'), L('What that depositor is worth', '这个玩家值多少')],
+        [L('Average first deposit', '平均首存金额'), L('FTD amount ÷ FTDs', '首存总额 ÷ 首存人数'), L('How big the first commitment is', '第一笔投入有多大'), L('Whether they come back', '他们会不会回来')],
+        [L('NGR per FTD (30 days)', '每个首存玩家 30 天 NGR'), L('NGR from the cohort ÷ its FTDs', '这批人的 NGR ÷ 首存人数'), L('What the cohort earned so far', '这批人目前带来了多少'), L('Lifetime value', '终身价值')],
+        [L('Payback', '回本'), L('Cumulative cohort NGR ÷ spend', '这批人累计 NGR ÷ 花费'), L('Has the spend come back yet?', '花的钱回来了没有？'), L('Whether it will keep coming', '之后会不会继续回来')],
+        [L('Day-30 active rate', '第 30 天活跃率'), L('Active at day 30 ÷ FTDs', '第 30 天仍活跃 ÷ 首存人数'), L('Did they stay?', '他们留下来了吗？'), L('Why they left', '为什么离开')],
+      ],
+    },
+    {
+      kind: 'p',
+      text: L(
+        'A channel with a high CPA can be the best channel. A channel with a low CPA can be the most expensive one, if its depositors make one small deposit and disappear — or claim a bonus and leave.',
+        'CPA 高的渠道，可能是最好的渠道。CPA 低的渠道，也可能是最贵的——如果它带来的玩家只存一小笔就消失，或者领了奖金就走。',
+      ),
+    },
+
+    { kind: 'h', text: L('A metric name is not a definition', '指标名称不等于定义') },
+    {
+      kind: 'callout',
+      title: L('From the field', '来自实战'),
+      body: L(
+        'Reviewing an old marketing budget workbook, I found a column labelled “ROI (money spent to earn 1 unit)”. Its formula divided one cost line by average deposit per registration. Whatever it measured, it was not return on investment — and anyone reading only the header would have compared it with real ROI figures from other reports.',
+        '翻一份旧的营销预算表时，我看到一栏叫「ROI（赚 1 块要花多少）」。它的公式是拿某一项成本，除以每个注册的平均存款。不管它量的是什么，都不是投资回报率——而只看表头的人，会把它拿去和其他报表里真正的 ROI 比较。',
+      ),
+    },
+    {
+      kind: 'list',
+      items: [
+        L('Write the formula under every header, in words. “FTD = first successful deposit in the period, by deposit date.”', '每个表头下面用文字写公式。「首存 = 期间内第一次成功存款，按存款日期算」。'),
+        L('Count people and count transactions in different columns. “Deposits” can mean either.', '人数和笔数分开两栏。「存款」两种意思都可能。'),
+        L('State the sign convention. Is GGR shown from the house side or the player side? Are withdrawals negative?', '写清楚正负号。GGR 是站在庄家这边还是玩家这边？提款是不是负数？'),
+        L('Do not call deposits “revenue”. Cash in is not money won.', '不要把存款叫「收入」。进来的现金，不等于赢到的钱。'),
+      ],
+    },
+
+    { kind: 'h', text: L('Calendar month vs cohort (illustrative)', '自然月 vs 同批人（示例）') },
+    {
+      kind: 'p',
+      text: L(
+        'The figures below are invented. Registrations in March and first deposits in March are not the same people: some March depositors registered in February.',
+        '下面的数字是编的。三月的注册和三月的首存不是同一批人：有些三月首存的人，是二月注册的。',
+      ),
+    },
+    {
+      kind: 'table',
+      head: [L('View', '看法'), L('Registrations', '注册'), L('FTDs', '首存'), L('Conversion', '转化率')],
+      rows: [
+        [L('Calendar: everything that happened in March', '自然月：三月发生的所有事'), L('2,000', '2,000'), L('700', '700'), L('35%', '35%')],
+        [L('Cohort: March registrations, FTD within 14 days', '同批人：三月注册、14 天内首存'), L('2,000', '2,000'), L('520', '520'), L('26%', '26%')],
+      ],
+    },
+    {
+      kind: 'p',
+      text: L(
+        'The calendar view looks better because it borrows depositors from February’s campaign. If March spend changed, only the cohort view tells you whether March’s traffic converted. Use calendar views for cash and operations; use cohorts to judge a campaign or a channel.',
+        '自然月的数字比较好看，因为它借用了二月活动带来的首存。如果三月的花费有变化，只有同批人的看法能告诉你三月的流量到底转化得怎样。现金和运营用自然月看；评判一个活动或渠道，用同批人看。',
+      ),
+    },
+
+    { kind: 'h', text: L('What each section of the report should end with', '报表每一节最后应该写什么') },
+    {
+      kind: 'cards',
+      items: [
+        { title: L('What changed', '变了什么'), body: L('Against which period, on which cohort, in which currency and time zone.', '和哪一段比？用哪一批人？什么币种、什么时区？') },
+        { title: L('Where in the chain', '链上哪一环'), body: L('Registration, verification, deposit attempt, deposit success, or later activity.', '注册、验证、存款尝试、存款成功，还是之后的活跃。') },
+        { title: L('What to check next', '下一步查什么'), body: L('A tracking change, a payment issue, a traffic mix shift, a bonus being farmed.', '追踪设置变了？支付出问题？流量结构变了？奖金被薅？') },
+      ],
+    },
+    {
+      kind: 'callout',
+      title: L('Duplicate and bonus-only accounts', '重复账户与只为奖金来的账户'),
+      body: L(
+        'A cheap channel full of duplicate accounts or players who only claim the welcome offer will look excellent on CPA and terrible on NGR per FTD. Keep a column for accounts flagged by risk review, and read channel results with it.',
+        '一个充满重复账户、或只来领欢迎优惠的玩家的便宜渠道，CPA 看起来很漂亮，每个首存玩家的 NGR 却很难看。留一栏放被风控标记的账户，看渠道结果时一起看。',
+      ),
+    },
+  ],
+  checklist: [
+    L('Is each metric’s formula written next to its name?', '每个指标的公式，都写在名称旁边了吗？'),
+    L('Are people and transactions counted separately?', '人数和笔数是不是分开算？'),
+    L('Is conversion measured on a cohort with a fixed window?', '转化率是不是用同一批人、固定窗口来算？'),
+    L('Does the report go past the first deposit — NGR and activity after 30 days?', '报表有没有越过首存——看到 30 天后的 NGR 和活跃？'),
+    L('Are GGR and withdrawal signs stated?', 'GGR 和提款的正负号写清楚了吗？'),
+    L('Are risk-flagged accounts visible per channel?', '每个渠道被风控标记的账户看得到吗？'),
+    L('Does every section end with a next action?', '每一节最后有没有写下一步？'),
+  ],
+  limits: L(
+    'Windows (14 days, 30 days) and formulas here are examples; use the definitions your finance team and partners have agreed. Affiliate CPA and revenue-share terms are defined by each contract. All numbers on this page are illustrative.',
+    '这里的窗口（14 天、30 天）和公式都是示例；以你的财务团队与合作方约定的定义为准。代理的 CPA 与分成条款以各自合同为准。本页所有数字都是示例。',
+  ),
+};
+
+export const RTP_EXPLAINED_GUIDE: IGamingGuide = {
+  path: '/igaming/rtp-explained',
+  fullSection: 'starter',
+  banner: 'table',
+  title: L(
+    'RTP explained for operators: theoretical return, observed return, and why a week of data proves little',
+    '给运营者的 RTP 解释：理论返还、实际返还，以及为什么一周的数据证明不了什么',
+  ),
+  shortTitle: L('RTP explained', 'RTP 是什么'),
+  tags: [L('RTP', 'RTP'), L('Games', '游戏'), L('Variance', '波动'), L('Beginner', '入门')],
+  standfirst: L(
+    'RTP is the most quoted number about a slot and one of the most misread. It is a property of the game’s maths over an enormous number of rounds — not a forecast for a player, a day, or a promotion.',
+    'RTP 是老虎机最常被引用的数字，也是最常被误读的数字之一。它是游戏数学在极大量局数上的性质——不是对某个玩家、某一天或某个活动的预测。',
+  ),
+  answer: L(
+    'Theoretical RTP is what a game is designed to pay back over the long run; 96% means 4% theoretical hold. Observed RTP is winnings ÷ turnover for the period you measured, and on small samples it can land far from the design. Judge a game or an RTP change on enough rounds, not on one week’s GGR.',
+    '理论 RTP 是游戏设计上长期会返还的比例；96% 表示理论 hold 是 4%。实际 RTP 是你量的那段时间里 派彩 ÷ 流水，样本小的时候可能离设计值很远。评判一个游戏或一次 RTP 调整，要看足够的局数，而不是一周的 GGR。',
+  ),
+  blocks: [
+    { kind: 'h', text: L('Two RTPs', '两个 RTP') },
+    {
+      kind: 'table',
+      head: [L('', ''), L('Theoretical RTP', '理论 RTP'), L('Observed RTP', '实际 RTP')],
+      rows: [
+        [L('Where it comes from', '从哪来'), L('The game’s maths and certified configuration', '游戏数学与认证过的配置'), L('Winnings paid ÷ turnover in your data', '你数据里的 派彩 ÷ 流水')],
+        [L('Changes when', '什么时候会变'), L('A different configuration is deployed', '换了另一套配置'), L('Every round', '每一局')],
+        [L('Good for', '适合用来'), L('Comparing games, pricing, compliance', '比较游戏、定价、合规'), L('Monitoring, spotting real faults over large samples', '监控，以及在大样本上发现真正的异常')],
+        [L('Misused as', '常被误用成'), L('A promise to a player', '对玩家的承诺'), L('A verdict after a few days', '几天后的定论')],
+      ],
+    },
+    {
+      kind: 'p',
+      text: L(
+        'Hold is the other side: hold = GGR ÷ turnover = 1 − observed RTP. A game with 96% theoretical RTP has about 4% theoretical hold. Jackpot contributions are often counted inside the RTP figure, which matters when you compare a jackpot game with a non-jackpot one.',
+        'Hold 是另一面：hold = GGR ÷ 流水 = 1 − 实际 RTP。理论 RTP 96% 的游戏，理论 hold 大约 4%。Jackpot 的抽成通常算在 RTP 里，拿 jackpot 游戏和非 jackpot 游戏比较时要注意。',
+      ),
+    },
+
+    { kind: 'h', text: L('How far observed RTP can drift (illustrative)', '实际 RTP 会偏多远（示例）') },
+    {
+      kind: 'p',
+      text: L(
+        'Assume a 96% game where the payout of a single spin has a standard deviation of 5× the stake — a medium-volatility slot. The range below is roughly where observed RTP lands 95% of the time. Higher volatility widens every row.',
+        '假设一个 96% 的游戏，单局派彩的标准差是下注额的 5 倍——一个中等波动的老虎机。下面的范围大约是实际 RTP 95% 的时候会落在的区间。波动越高，每一行都越宽。',
+      ),
+    },
+    {
+      kind: 'table',
+      head: [L('Spins measured', '统计的局数'), L('Typical range of observed RTP', '实际 RTP 的常见范围'), L('What you can conclude', '能得出什么结论')],
+      rows: [
+        [L('1,000', '1,000'), L('about 64% – 128%', '约 64% – 128%'), L('Nothing about the game', '对游戏本身得不出任何结论')],
+        [L('100,000', '100,000'), L('about 92.8% – 99.2%', '约 92.8% – 99.2%'), L('Rough sense; still noisy', '有个大概；仍然很吵')],
+        [L('10,000,000', '10,000,000'), L('about 95.7% – 96.3%', '约 95.7% – 96.3%'), L('Close to the design', '接近设计值')],
+      ],
+    },
+    {
+      kind: 'p',
+      text: L(
+        'The width shrinks with the square root of the number of spins: a hundred times more data gives a range ten times narrower. A single big win can dominate a small sample, which is why one game’s GGR can swing negative on a quiet day without anything being broken.',
+        '范围随局数的平方根收窄：数据多一百倍，范围窄十倍。小样本里，一个大奖就能主导结果——所以某个游戏的 GGR 在冷清的一天变成负数，不代表有什么东西坏了。',
+      ),
+    },
+
+    { kind: 'h', text: L('Choosing or changing an RTP configuration', '选择或调整 RTP 配置') },
+    {
+      kind: 'p',
+      text: L(
+        'Many games are certified in several RTP versions. A lower setting raises theoretical hold per bet, but players may play less, and some markets set minimum RTPs or require the setting to be disclosed. Any change must be an approved configuration, and the terms shown to players must match it.',
+        '很多游戏有几套认证过的 RTP 版本。设得低一点，每注的理论 hold 会上升，但玩家可能玩得少；有些市场规定最低 RTP，或要求公开显示。任何调整都必须是获批的配置，而且给玩家看的说明要和它一致。',
+      ),
+    },
+    {
+      kind: 'callout',
+      title: L('From the field', '来自实战'),
+      body: L(
+        'When a provider offered RTP adjustment support as a selling point to operators, my first question was how anyone would know it had worked. A higher-hold configuration and a good week look the same in a short GGR report. We looked at sample size, game mix and player mix first, and discussed a small conditional rebate to share the risk while the data built up.',
+        '有家供应商把「协助调整 RTP」当成卖点推给运营商时，我的第一个问题是：怎么知道它有效？在短期的 GGR 报表里，hold 更高的配置和一个运气好的星期看起来一模一样。我们先看样本量、游戏组合和玩家组合，再讨论用一个小额的有条件返利，在数据累积期间分担风险。',
+      ),
+    },
+    {
+      kind: 'list',
+      items: [
+        L('Compare before and after on turnover-weighted hold, not on GGR alone — GGR also moves with volume.', '前后比较看按流水加权的 hold，不要只看 GGR——GGR 也会随流水量变。'),
+        L('Keep the game mix fixed, or compare per game.', '保持游戏组合不变，或者按游戏分开比。'),
+        L('Watch activity too. A higher hold that cuts play time can lower GGR.', '也要看活跃度。hold 升高但游戏时长下降，GGR 可能反而变低。'),
+        L('Decide the evaluation window before the change, not after seeing the numbers.', '在调整之前就定好评估窗口，不要看到数字后才定。'),
+      ],
+    },
+  ],
+  checklist: [
+    L('Is this theoretical RTP or observed RTP?', '这是理论 RTP 还是实际 RTP？'),
+    L('How many rounds is the observed figure based on?', '实际数字是基于多少局？'),
+    L('Is jackpot contribution inside or outside the RTP?', 'Jackpot 抽成算在 RTP 里面还是外面？'),
+    L('Is the configuration certified and approved for this market?', '这套配置在这个市场有认证、获批吗？'),
+    L('Do player-facing game rules show the RTP actually deployed?', '给玩家看的游戏规则，显示的是实际部署的 RTP 吗？'),
+    L('Was the evaluation window fixed before the change?', '评估窗口是不是在调整前就定好了？'),
+  ],
+  limits: L(
+    'The range table assumes a standard deviation of 5× stake per spin and a normal approximation; real games differ, and high-volatility or jackpot games need far more rounds. Minimum RTP and disclosure rules vary by jurisdiction. RTP describes a game, not a way to predict or improve any player’s result.',
+    '范围表假设单局标准差是下注额的 5 倍，并用正态近似；真实游戏各不相同，高波动或 jackpot 游戏需要多得多的局数。最低 RTP 与公开要求因司法辖区而异。RTP 描述的是游戏，不是预测或改善任何玩家结果的方法。',
+  ),
+};
+
 /** Every `/igaming/<guide>`, in reading order. Each also needs its own literal branch in `App.tsx`. */
 export const IGAMING_GUIDES: IGamingGuide[] = [
   GGR_VS_NGR_GUIDE,
   PROVIDER_PROMOTIONS_GUIDE,
   PROMOTION_LAUNCH_CHECKLIST_GUIDE,
   CRM_PLAYER_LIFECYCLE_GUIDE,
+  MARKETING_REPORT_GUIDE,
+  RTP_EXPLAINED_GUIDE,
 ];

@@ -317,6 +317,34 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
   },
   {
+    path: '/igaming/marketing-report-beyond-cpa',
+    datePublished: '2026-11-10',
+    dateModified: '2026-11-10',
+    priority: '0.7',
+    title: {
+      en: 'iGaming Marketing Reports Beyond CPA | Eden Tan',
+      zh: 'iGaming 营销报表不只看 CPA | Eden Tan',
+    },
+    desc: {
+      en: 'What an iGaming marketing report should explain beyond CPA: the full cost chain, cohort vs calendar conversion, metric definitions and next actions.',
+      zh: 'iGaming 营销报表除了 CPA 还该讲清楚什么：完整的成本链、同批人与自然月转化、指标定义，以及每一节的下一步。',
+    },
+  },
+  {
+    path: '/igaming/rtp-explained',
+    datePublished: '2026-11-10',
+    dateModified: '2026-11-10',
+    priority: '0.7',
+    title: {
+      en: 'RTP Explained for Operators | Eden Tan',
+      zh: '给运营者的 RTP 解释 | Eden Tan',
+    },
+    desc: {
+      en: 'Theoretical vs observed RTP, how far observed RTP drifts on small samples, RTP vs hold, and how to judge an RTP configuration change without fooling yourself.',
+      zh: '理论 RTP 与实际 RTP、小样本时实际 RTP 会偏多远、RTP 与 hold 的关系，以及怎样评估 RTP 配置调整而不自欺。',
+    },
+  },
+  {
     path: '/igaming/cases',
     datePublished: '2026-09-23',
     dateModified: '2026-09-23',

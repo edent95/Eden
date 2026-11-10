@@ -341,7 +341,9 @@ const App: React.FC = () => {
     pathWithoutBase === '/igaming/ggr-vs-ngr' ||
     pathWithoutBase === '/igaming/provider-promotions' ||
     pathWithoutBase === '/igaming/promotion-launch-checklist' ||
-    pathWithoutBase === '/igaming/crm-player-lifecycle';
+    pathWithoutBase === '/igaming/crm-player-lifecycle' ||
+    pathWithoutBase === '/igaming/marketing-report-beyond-cpa' ||
+    pathWithoutBase === '/igaming/rtp-explained';
   const activeIGamingGuide = isIGamingGuidePage
     ? IGAMING_GUIDES.find((guide) => guide.path === pathWithoutBase)
     : undefined;

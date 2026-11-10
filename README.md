@@ -82,6 +82,8 @@ npm run preview
 - `/igaming/provider-promotions` — iGaming 知识专题：供应商促销的两层（面向玩家的奖励 vs 给运营商的商业激励）、「激励换曝光」的义务清单、两笔交易抢同一个位置的匹配示例、比较优惠前先算清价值；链回完整版 B2B 一节
 - `/igaming/promotion-launch-checklist` — iGaming 知识专题：「上线」的四个状态、活动存在的五个地方、多语言条款逐条核对表、上线前清单与上线当天像玩家一样领一次；链回完整版促销一节
 - `/igaming/crm-player-lifecycle` — iGaming 知识专题：按玩家状态与时间窗口规划 CRM、事件消息与日历消息、「不需要动作」分支、负责任博彩的四条底线、用对照组衡量效果；链回完整版工作流程一节
+- `/igaming/marketing-report-beyond-cpa` — iGaming 知识专题：从花费到第 30 天活跃的成本链、各「每个多少钱」指标的算法与盲点、指标名称不等于定义(ROI 表头的实例)、自然月与同批人转化对比、每节以下一步收尾；链回完整版报表一节
+- `/igaming/rtp-explained` — iGaming 知识专题：理论 RTP 与实际 RTP、RTP 与 hold、样本量决定实际 RTP 会偏多远(示例表)、选择或调整 RTP 配置时怎么评估；链回完整版入门一节
 - `/igaming/resume` — 给招聘方 / 面试前发的 iGaming 个人页：定位一句话、已公开的数字（各链到案例）、三个优势、能力与证据对照表、进新市场的头 90 天、工作方式；不放薪资、不放联系方式（让对方回复带来链接的那条消息）；`index: false`、`sitemap: false`，只靠链接进入，不从别的页面链过来
 - `/igaming/full` — iGaming 入门包完整版：行业角色、游戏类型、术语、资金流、风控合规、provider 与 operator 促销、每日报表 / 活动上线 / CRM 工作流程与报表指标、B2B（签约到上线与客户经营）、按症状排查与 playbook；返回键回到 `/igaming` 重点版
 - `/dr-racing` — Dr Racing 摩托车贷款仪表台产品页，内嵌公开 Demo

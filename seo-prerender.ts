@@ -40,8 +40,8 @@ const CLUSTERS: Array<{ prefix?: string; paths: string[] }> = [
   { prefix: '/notes/', paths: ['/notes', '/wiki', '/notes/turn-chaos-into-systems'] },
   // /igaming (key points) and /igaming/full link to each other and back to the homepage only:
   // the owner wants no past projects linked from them.
-  { prefix: '/igaming/cases/', paths: ['/igaming/cases', '/igaming', '/igaming/full', '/igaming/ggr-vs-ngr', '/igaming/provider-promotions', '/igaming/promotion-launch-checklist', '/igaming/crm-player-lifecycle'] },
-  { paths: ['/igaming', '/igaming/full', '/igaming/cases', '/igaming/ggr-vs-ngr', '/igaming/provider-promotions', '/igaming/promotion-launch-checklist', '/igaming/crm-player-lifecycle', '/'] },
+  { prefix: '/igaming/cases/', paths: ['/igaming/cases', '/igaming', '/igaming/full', '/igaming/ggr-vs-ngr', '/igaming/provider-promotions', '/igaming/promotion-launch-checklist', '/igaming/crm-player-lifecycle', '/igaming/marketing-report-beyond-cpa', '/igaming/rtp-explained'] },
+  { paths: ['/igaming', '/igaming/full', '/igaming/cases', '/igaming/ggr-vs-ngr', '/igaming/provider-promotions', '/igaming/promotion-launch-checklist', '/igaming/crm-player-lifecycle', '/igaming/marketing-report-beyond-cpa', '/igaming/rtp-explained', '/'] },
   {
     paths: ['/penneys-game', '/conways-game-of-life', '/cellular-automata-lab', '/wiki/rag-flow'],
   },
