@@ -129,10 +129,9 @@ function igamingGuideStaticCopy(guide: IGamingGuide): StaticRouteCopy {
     eyebrow: IGAMING_GUIDE_LABELS.kicker,
     thesis: guide.shortTitle,
     sections: [
-      { title: guide.title, paragraphs: [guide.standfirst, joinLocalized(guide.tags, ' · ', ' · ')] },
-      { title: IGAMING_GUIDE_LABELS.answerTitle, paragraphs: [guide.answer] },
+      { title: guide.title, paragraphs: [guide.standfirst, joinLocalized(guide.tags, ' · ', ' · '), guide.answer] },
       {
-        title: IGAMING_GUIDE_LABELS.plainTitle,
+        title: IGAMING_GUIDE_LABELS.plainKicker,
         paragraphs: [
           guide.plain.scene,
           ...guide.plain.terms.map((row) => titledLocalized(row.term, row.everyday)),
