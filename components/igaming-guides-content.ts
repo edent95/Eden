@@ -63,8 +63,6 @@ export type IGamingGuideSource = {
 
 export const IGAMING_GUIDE_LABELS = {
   kicker: L('iGaming · Guide', 'iGaming · 专题'),
-  answerTitle: L('Short answer', '一句话答案'),
-  plainTitle: L('In plain words', '白话版'),
   plainKicker: L('Think of it like this', '打个比方'),
   plainTermHead: L('Industry term', '行业说法'),
   plainEverydayHead: L('In the example', '换成例子里'),

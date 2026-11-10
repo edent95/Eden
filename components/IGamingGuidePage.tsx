@@ -45,12 +45,11 @@ const IGamingGuidePage: React.FC<{
         </header>
 
         <aside className="igaming-callout igaming-case-rule">
-          <strong>{t(labels.answerTitle)}</strong>
           <p>{t(guide.answer)}</p>
         </aside>
 
         <section className="igaming-plain" aria-labelledby="igaming-plain-title">
-          <h2 id="igaming-plain-title" className="igaming-plain-kicker">{t(labels.plainTitle)} · {t(labels.plainKicker)}</h2>
+          <h2 id="igaming-plain-title" className="igaming-plain-kicker">{t(labels.plainKicker)}</h2>
           <p className="igaming-plain-scene">{t(guide.plain.scene)}</p>
           <dl className="igaming-plain-terms">
             <div className="igaming-plain-head" aria-hidden="true">
