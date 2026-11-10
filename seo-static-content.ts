@@ -134,10 +134,10 @@ function igamingGuideStaticCopy(guide: IGamingGuide): StaticRouteCopy {
       { title: IGAMING_GUIDE_LABELS.limitsTitle, paragraphs: [guide.limits] },
       {
         title: IGAMING_GUIDE_LABELS.sourcesTitle,
-        paragraphs: guide.sources.map((source) => ({
-          en: `${source.publisher} — ${source.title}: ${source.supports.en} ${source.url}`,
-          zh: `${source.publisher} — ${source.title}:${source.supports.zh} ${source.url}`,
-        })),
+        paragraphs: [IGAMING_GUIDE_LABELS.sourcesNote, ...guide.sources.map((source, index) => ({
+          en: `[${index + 1}] ${source.publisher}, “${source.title},” ${source.year}. [Online]. Available: ${source.url} [Accessed: ${IGAMING_GUIDE_LABELS.sourcesAccessed.en}]. ${source.supports.en}`,
+          zh: `[${index + 1}] ${source.publisher}. ${source.title}[EB/OL]. ${source.year === 'n.d.' ? '' : source.year}[${IGAMING_GUIDE_LABELS.sourcesAccessed.zh}]. ${source.url}. ${source.supports.zh}`,
+        }))],
       },
     ],
   };
