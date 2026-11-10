@@ -24,6 +24,19 @@ jobs:
   build:
     runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
     steps:
+      # Self-hosted runners reuse one workspace across jobs. A sparse checkout left in it
+      # (core.sparseCheckout stays true in .git/config) makes every later checkout contain
+      # only the sparse paths — 2026-11-10 verify failed with "lock file is not found".
+      - name: Reset leftover sparse checkout
+        if: runner.environment == 'self-hosted'
+        shell: bash
+        run: |
+          if [ -d .git ]; then
+            git config --local --unset-all core.sparseCheckout || true
+            git config --local --unset-all core.sparseCheckoutCone || true
+            rm -f .git/info/sparse-checkout
+          fi
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -68,11 +81,9 @@ jobs:
         uses: actions/deploy-pages@v4
 
       # Tell Bing / IndexNow which URLs changed. Best-effort: a failure here never fails the deploy.
+      # Full checkout on purpose: a sparse one here poisons the shared self-hosted workspace.
       - name: Checkout IndexNow script
         uses: actions/checkout@v4
-        with:
-          sparse-checkout: scripts/seo
-          sparse-checkout-cone-mode: false
 
       - name: Setup Node for IndexNow
         uses: actions/setup-node@v4
