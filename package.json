@@ -31,7 +31,8 @@
     "harness:check": "npm run verify && npm run test:unit && npm run typecheck && npm run functions:check && npm run harness:build && npm run test:smoke",
     "check": "npm run harness:check",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "og:igaming": "node --experimental-strip-types scripts/og/render-igaming.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.23.24",
