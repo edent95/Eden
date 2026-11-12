@@ -51,7 +51,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-11-10';
+export const SITE_CONTENT_LASTMOD = '2026-11-12';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -110,13 +110,13 @@ export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLangua
 };
 
 export const HOME_TITLE: Record<SeoLanguage, string> = {
-  en: 'Eden Tan | Build systems from chaos.',
-  zh: 'Eden Tan | 从混乱中建立系统：数据、产品与 AI 系统设计',
+  en: 'Eden Tan | Systems Architect · Build systems from chaos',
+  zh: 'Eden Tan | 系统架构师 · 从混乱中建立系统：数据、产品与 AI',
 };
 
 export const HOME_DESC: Record<SeoLanguage, string> = {
-  en: 'Eden Tan turns complex human behavior and messy realities into useful products, data, and AI systems.',
-  zh: 'Eden Tan 把复杂的人性、行为与现实问题，转化成可以被理解、验证和使用的数据、产品与 AI 系统。站内有上线过的产品、iGaming 实战笔记、关于钱与人性的长文，还有能直接上手玩的生命游戏与概率小游戏。',
+  en: 'Eden Tan is a systems architect and digital strategist who turns messy human behavior into products, data tools and AI systems: ETReportHub, Jiju, Life OS.',
+  zh: 'Eden Tan 是系统架构师与数字策略师，把复杂的人性、行为与现实问题，转化成可以被理解、验证和使用的数据、产品与 AI 系统。站内有上线过的产品、iGaming 实战笔记、关于钱与人性的长文，还有能直接上手玩的生命游戏与概率小游戏。',
 };
 
 /**
