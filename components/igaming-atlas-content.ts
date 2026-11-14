@@ -461,6 +461,7 @@ export const ATLAS_PAGE = {
     steps: { kicker: L('05 / Questions', '05 / 七问'), title: L('Seven questions before any decision.', '做决定前，先问这七个问题。'), lede: L('Ask them in order.', '按顺序问。') },
     services: { kicker: L('06 / Services', '06 / 服务'), title: L('Where the methods become work.', '方法变成服务。'), lede: L('Fixed scope. Fixed deliverables.', '固定范围，固定交付。') },
   },
+  demoCaption: L('Service 01, promotion terms audit, in use: one promotion in three languages, checked field by field. Illustrative values.', '服务 01「促销条款体检」用起来的样子：同一个 promotion 的三种语言，逐项对照。数值为示例。'),
   allServices: L('All', '全部'),
   views: { topic: L('By topic', '按种类看'), flow: L('By workflow', '按流程看'), label: L('How to sort the map', '地图怎么排') },
   asks: L('Answers', '回答'),

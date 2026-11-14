@@ -1496,6 +1496,22 @@ button.atlas-tag:hover {
   --gi-paper: var(--ig-paper);
 }
 
+/* Services: the stageshow demo of the terms audit, above the four service cards */
+.atlas-demo {
+  margin: 0 0 clamp(32px, 4vw, 56px);
+  border-radius: var(--atlas-radius);
+  overflow: hidden;
+  background: var(--ig-card);
+  box-shadow: var(--ig-frame);
+}
+
+.atlas-demo figcaption {
+  padding: 14px 20px 18px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--theme-text-secondary);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .igaming-atlas *,
   .igaming-atlas *::before,

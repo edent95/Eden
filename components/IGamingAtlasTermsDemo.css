@@ -1,0 +1,209 @@
+/* /igaming/atlas services demo (stageshow): a terms-check window. Scoped under .atd. */
+
+.atd .ss-stage {
+  --ss-accent: #2f7d5b;
+  overflow: hidden;
+}
+
+.atd .atd-win {
+  position: absolute;
+  left: 40px;
+  top: 34px;
+  width: 800px;
+  height: 440px;
+}
+
+.atd .ss-stage[data-layout='compact'] .atd-win {
+  left: 16px;
+  top: 24px;
+  width: 326px;
+  height: 500px;
+}
+
+.atd .atd-body {
+  height: 100%;
+  background: var(--ss-surface);
+  font-size: 13px;
+}
+
+.atd .atd-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--ss-line);
+}
+
+.atd .ss-stage[data-layout='compact'] .atd-toolbar {
+  padding: 12px 14px;
+  justify-content: flex-start;
+}
+
+.atd .atd-sub {
+  color: var(--ss-text);
+}
+
+.atd .atd-count {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: var(--ss-radius-pill);
+  background: var(--ss-well);
+  color: var(--ss-text);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.atd .atd-count[data-on] {
+  background: var(--ss-danger-soft);
+  color: var(--ss-danger-text);
+}
+
+.atd .atd-grid {
+  --atd-cols: 120px 150px 150px 170px 1fr;
+  padding: 6px 8px 0;
+}
+
+.atd .atd-grid[data-compact] {
+  --atd-cols: 84px minmax(0, 1fr) minmax(0, 1fr) 28px;
+  padding: 4px 4px 0;
+}
+
+.atd .atd-row {
+  display: grid;
+  grid-template-columns: var(--atd-cols);
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 8px;
+  color: var(--ss-text-strong);
+  transition: background-color 0.25s ease;
+}
+
+.atd .atd-row > span {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.atd .atd-row--head {
+  min-height: 34px;
+  color: var(--ss-text-faint);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.atd .atd-row[data-state='scan'] {
+  background: var(--ss-well);
+}
+
+.atd .atd-row[data-state='mismatch'],
+.atd .atd-row[data-state='sent'] {
+  background: color-mix(in srgb, var(--ss-danger-soft) 55%, transparent);
+}
+
+.atd .atd-field {
+  color: var(--ss-text);
+  font-weight: 600;
+}
+
+.atd .atd-status {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.atd .atd-cell {
+  justify-self: start;
+  margin-left: -6px;
+  padding: 3px 6px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.atd .atd-cell[data-flag] {
+  background: var(--ss-danger-soft);
+  color: var(--ss-danger-text);
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ss-danger) 45%, transparent);
+}
+
+.atd .atd-cell[data-hover] {
+  box-shadow: inset 0 0 0 1.5px var(--ss-danger);
+}
+
+.atd .atd-row--filler {
+  min-height: 40px;
+}
+
+/* The note under the flagged cell */
+.atd .atd-pop {
+  position: absolute;
+  width: 300px;
+  padding: 14px;
+  display: grid;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+  z-index: 3;
+}
+
+.atd .ss-stage[data-layout='compact'] .atd-pop {
+  width: 260px;
+}
+
+.atd .atd-pop-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  color: var(--ss-text-strong);
+  font-weight: 600;
+}
+
+.atd .atd-pop-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ss-danger);
+  transform: translateY(-1px);
+}
+
+.atd .atd-pop-ask {
+  padding-left: 16px;
+  color: var(--ss-text);
+}
+
+.atd .atd-pop-foot {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 2px;
+}
+
+/* compact: a status mark instead of a badge */
+.atd .atd-mark {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.atd .atd-mark i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ss-danger);
+}
+
+.atd .atd-mark[data-state='sent'] {
+  padding: 0 4px;
+  border-radius: var(--ss-radius-pill);
+  background: var(--ss-warning-soft);
+  color: var(--ss-warning-text);
+}

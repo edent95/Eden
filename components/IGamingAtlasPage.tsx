@@ -16,6 +16,7 @@ import {
 import IGamingAtlasCharts from './IGamingAtlasCharts';
 import AtlasOptical, { type AtlasOpticalKind } from './AtlasOptical';
 import AtlasIcon from './AtlasIcons';
+import IGamingAtlasTermsDemo from './IGamingAtlasTermsDemo';
 
 type Lang = 'en' | 'zh';
 
@@ -319,6 +320,10 @@ const IGamingAtlasPage: React.FC<{
               <p>{t(page.sections.services.lede)}</p>
             </div>
           </div>
+          <figure className="atlas-demo">
+            <IGamingAtlasTermsDemo language={language} />
+            <figcaption>{t(page.demoCaption)}</figcaption>
+          </figure>
           <div className="atlas-services">
             {ATLAS_SERVICES.map((s, i) => (
               <article key={s.name.en} className="atlas-service">
