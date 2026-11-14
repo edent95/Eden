@@ -21,7 +21,6 @@ type Lang = 'en' | 'zh';
  * Copy lives in `igaming-atlas-content.ts` and is prerendered.
  */
 
-const ROMAN = ['i', 'ii', 'iii', 'iv', 'v', 'vi', 'vii'];
 const clusterOf = (id: string) => ATLAS_CLUSTERS.find((c) => c.ids.includes(id)) ?? ATLAS_CLUSTERS[3];
 const tone = (id: string) => `var(--atlas-${clusterOf(id).key})`;
 const cardById = (id: string) => ATLAS_CARDS.find((c) => c.id === id);
@@ -301,6 +300,10 @@ const IGamingAtlasPage: React.FC<{
               {t(page.claimLead)} <span className="atlas-foil-text">{t(page.claimFoil)}</span>
             </h1>
             <p className="atlas-standfirst">{t(page.standfirst)}</p>
+            <div className="atlas-ctas">
+              <a href="#map" className="atlas-cta">{t(page.ctaPrimary)}<ArrowRight size={16} aria-hidden="true" /></a>
+              <a href="#services" className="atlas-cta is-quiet">{t(page.ctaSecondary)}</a>
+            </div>
             <dl className="atlas-ledger">
               {page.ledger.map((item) => (
                 <div key={item.value + item.label.en}>
@@ -315,8 +318,8 @@ const IGamingAtlasPage: React.FC<{
 
         <section className="atlas-section" id="map" aria-labelledby="atlas-map-title">
           <div className="atlas-head">
-            <span className="atlas-no">{page.sections.map.no}</span>
             <div>
+              <p className="atlas-kicker">{t(page.sections.map.kicker)}</p>
               <h2 id="atlas-map-title">{t(page.sections.map.title)}</h2>
               <p>{t(page.sections.map.lede)}</p>
             </div>
@@ -358,8 +361,8 @@ const IGamingAtlasPage: React.FC<{
 
         <section className="atlas-section" id="timeline" aria-labelledby="atlas-time-title">
           <div className="atlas-head">
-            <span className="atlas-no">{page.sections.time.no}</span>
             <div>
+              <p className="atlas-kicker">{t(page.sections.time.kicker)}</p>
               <h2 id="atlas-time-title">{t(page.sections.time.title)}</h2>
               <p>{t(page.sections.time.lede)}</p>
             </div>
@@ -380,8 +383,8 @@ const IGamingAtlasPage: React.FC<{
 
         <section className="atlas-section" id="questions" aria-labelledby="atlas-steps-title">
           <div className="atlas-head">
-            <span className="atlas-no">{page.sections.steps.no}</span>
             <div>
+              <p className="atlas-kicker">{t(page.sections.steps.kicker)}</p>
               <h2 id="atlas-steps-title">{t(page.sections.steps.title)}</h2>
               <p>{t(page.sections.steps.lede)}</p>
             </div>
@@ -390,7 +393,7 @@ const IGamingAtlasPage: React.FC<{
             {ATLAS_STEPS.map((step, i) => (
               <details key={step.q.en} open={i === 0}>
                 <summary>
-                  <span className="atlas-roman">{ROMAN[i]}.</span>
+                  <span className="atlas-roman">{String(i + 1).padStart(2, '0')}</span>
                   <span>{t(step.q)}</span>
                   <span className="atlas-pm" aria-hidden="true" />
                 </summary>
@@ -402,8 +405,8 @@ const IGamingAtlasPage: React.FC<{
 
         <section className="atlas-section" id="services" aria-labelledby="atlas-svc-title">
           <div className="atlas-head">
-            <span className="atlas-no">{page.sections.services.no}</span>
             <div>
+              <p className="atlas-kicker">{t(page.sections.services.kicker)}</p>
               <h2 id="atlas-svc-title">{t(page.sections.services.title)}</h2>
               <p>{t(page.sections.services.lede)}</p>
             </div>
@@ -412,7 +415,7 @@ const IGamingAtlasPage: React.FC<{
             {ATLAS_SERVICES.map((s, i) => (
               <article key={s.name.en} className="atlas-service">
                 <div className="atlas-service-top">
-                  <span className="atlas-roman">{ROMAN[i]}.</span>
+                  <span className="atlas-roman">{String(i + 1).padStart(2, '0')}</span>
                   <span>{t(s.time)}</span>
                 </div>
                 <h3>{t(s.name)}</h3>

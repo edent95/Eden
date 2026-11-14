@@ -273,13 +273,15 @@ export const ATLAS_SERVICES: Array<{ name: AtlasLocalized; pain: AtlasLocalized;
 
 export const ATLAS_PAGE = {
   back: L('iGaming', 'iGaming'),
-  kicker: L('Eden Tan · iGaming field atlas', 'Eden Tan · iGaming 知识地图'),
+  kicker: L('iGaming / Knowledge atlas', 'iGaming / 知识地图'),
   claimLead: L('Before a promise becomes a problem,', '在承诺变成问题之前，'),
-  claimFoil: L('find the conditions, the exceptions and the hand-offs.', '把条件、例外和交接点找出来。'),
+  claimFoil: L('find the gaps.', '先找到断点。'),
   standfirst: L(
-    'Eleven working methods distilled from years of operator-side and provider-side work, where I usually ran the function myself or advised the teams around it. Old offers, rates and market data stay in the archive; what travels is the habit of finding the gaps between copy, providers, data, support and the player experience before anyone commits.',
-    '从多年运营商与供应商两端的工作里提炼出的十一个方法，那些年我通常独自负责整个部门，或给周边团队做顾问。旧优惠、费率和市场数据留在档案里；能带走的，是在任何人承诺之前，把文案、供应商、数据、客服与玩家体验之间的断点找出来的习惯。',
+    'Eleven working methods from operator and provider work. The offers are history. The method still works.',
+    '十一个工作方法，来自运营商与供应商两端。旧优惠已成历史，方法还能用。',
   ),
+  ctaPrimary: L('Open the map', '打开地图'),
+  ctaSecondary: L('See services', '看服务'),
   ledger: [
     { value: '11', label: L('method cards', '张方法卡') },
     { value: '7', label: L('decision questions', '个决策问题') },
@@ -288,10 +290,10 @@ export const ATLAS_PAGE = {
   ],
   core: L('Shared facts', '拼出共同事实'),
   sections: {
-    map: { no: 'I.', title: L('Eleven cards around one core', '十一张方法卡，绕着同一个核心'), lede: L('The centre is the one skill that ties them together. Four colours, four kinds of problem. Tap a seal to open the card; pick a service to see which cards it draws on.', '中心是把它们串起来的那一项能力；四种颜色，四类问题。点一枚圆章打开卡片，点一项服务看它用到哪几张。') },
-    time: { no: 'II.', title: L('The work, as the files show it', '文件里看得见的经历'), lede: L('Stages by document date, not a full CV. Tags open the matching card.', '按资料日期排出的阶段，不是完整履历。点标签打开对应的方法卡。') },
-    steps: { no: 'III.', title: L('Seven questions before any decision', '做决定前的七个问题'), lede: L('The part I teach first, and the backbone of every engagement.', '我最先教给别人的部分，也是每次顾问工作的骨架。') },
-    services: { no: 'IV.', title: L('Where the methods become work', '这些方法变成什么服务'), lede: L('Fixed scope, fixed deliverables. The tags are the cards each service relies on.', '固定范围、固定交付物。标签是每项服务依靠的方法卡。') },
+    map: { kicker: L('01 / Map', '01 / 地图'), title: L('One core. Eleven methods.', '一个核心，十一个方法。'), lede: L('Tap a seal to open a card. Pick a service to see what it uses.', '点圆章打开卡片，点服务看它用到哪几张。') },
+    time: { kicker: L('02 / Timeline', '02 / 时间线'), title: L('Six years in the files.', '文件里的六年。'), lede: L('Stages by document date, not a full CV.', '按资料日期排列，不是完整履历。') },
+    steps: { kicker: L('03 / Questions', '03 / 七问'), title: L('Seven questions before any decision.', '做决定前，先问这七个问题。'), lede: L('Ask them in order.', '按顺序问。') },
+    services: { kicker: L('04 / Services', '04 / 服务'), title: L('Where the methods become work.', '方法变成服务。'), lede: L('Fixed scope. Fixed deliverables.', '固定范围，固定交付。') },
   },
   allServices: L('All', '全部'),
   legendNote: L('Gold dashes join cards used by the same service · numbers match the cards below', '金色虚线连起同一项服务用到的卡 · 编号对应下方卡片'),
