@@ -77,6 +77,7 @@ npm run preview
 - `/etreporthub-sales` — ETReportHub 售卖页与价格说明
 - `/igaming` — iGaming 入门包重点版：六节各三个重点（入门包、促销、工作流程、报表、B2B、排查），每节可跳到完整版对应位置（不放联系方式、不链接过往项目）；原本由首页 Mini Coin Slot 玩满 10 局后出现入口（带 `?from=coin-slot` 时显示解锁提示；Coin Slot 下了首页后这个入口暂时没有了）
 - `/igaming/cases` — iGaming 实战案例索引：四篇匿名案例（首存增长、新市场本地化、50+ operator 促销协调、operator → provider），说明写作原则与后续选题
+- `/igaming/atlas` — iGaming 知识地图：私人知识库的公开脱敏版。十一张方法卡围着「拼出共同事实」画成凹版地图(点圆章开卡、点服务高亮用到的卡)，加时间线、决策七问、四项顾问服务与「不接的事」；不出现任何公司 / 品牌 / 供应商名称
 - `/igaming/cases/:slug` — 单篇匿名案例：背景、排查过程、做了什么、学到什么、「不能证明什么」，并链回完整版对应小节；案例页是 iGaming 里唯一会链到过往项目（`/etreporthub`）的地方
 - `/igaming/ggr-vs-ngr` — iGaming 知识专题：流水、GGR、NGR、净存款各量什么；一组标明为示例的演算、「哪个决定看哪个数字」对照表、常见误读、看报表前要问的问题清单，以及这篇不涵盖什么；链回完整版报表一节与实战案例，`/igaming` 重点版有入口
 - `/igaming/provider-promotions` — iGaming 知识专题：供应商促销的两层（面向玩家的奖励 vs 给运营商的商业激励）、「激励换曝光」的义务清单、两笔交易抢同一个位置的匹配示例、比较优惠前先算清价值；链回完整版 B2B 一节

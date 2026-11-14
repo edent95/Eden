@@ -52,6 +52,7 @@ const MiyaBrandPage = React.lazy(() => import('./components/MiyaBrandPage'));
 const IGamingPage = React.lazy(() => import('./components/IGamingPage'));
 const IGamingSummaryPage = React.lazy(() => import('./components/IGamingSummaryPage'));
 const IGamingCasesPage = React.lazy(() => import('./components/IGamingCasesPage'));
+const IGamingAtlasPage = React.lazy(() => import('./components/IGamingAtlasPage'));
 const IGamingResumePage = React.lazy(() => import('./components/IGamingResumePage'));
 const IGamingGuidePage = React.lazy(() => import('./components/IGamingGuidePage'));
 const HomePukimonGame = React.lazy(() => import('./components/HomePukimonGame'));
@@ -200,6 +201,7 @@ const App: React.FC = () => {
   const igamingHref = joinBasePath(baseUrl, 'igaming');
   const igamingFullHref = joinBasePath(baseUrl, 'igaming/full');
   const igamingCasesHref = joinBasePath(baseUrl, 'igaming/cases');
+  const igamingAtlasHref = joinBasePath(baseUrl, 'igaming/atlas');
   const igamingGuideLinks = IGAMING_GUIDES.map((guide) => ({
     guide,
     href: joinBasePath(baseUrl, guide.path.slice(1)),
@@ -336,6 +338,7 @@ const App: React.FC = () => {
   const isIGamingFullPage = pathWithoutBase === '/igaming/full';
   const isIGamingCasesPage = pathWithoutBase === '/igaming/cases';
   const isIGamingResumePage = pathWithoutBase === '/igaming/resume';
+  const isIGamingAtlasPage = pathWithoutBase === '/igaming/atlas';
   // One literal per guide: the route harness reads these, it does not resolve IGAMING_GUIDES.
   const isIGamingGuidePage =
     pathWithoutBase === '/igaming/ggr-vs-ngr' ||
@@ -701,6 +704,27 @@ const App: React.FC = () => {
     );
   }
 
+  if (isIGamingAtlasPage) {
+    return (
+      <React.Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
+        <IGamingAtlasPage
+          language={language}
+          backHref={igamingHref}
+          casesHref={igamingCasesHref}
+          controls={
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
+          }
+        />
+      </React.Suspense>
+    );
+  }
+
   if (isIGamingResumePage) {
     return (
       <React.Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
@@ -792,6 +816,7 @@ const App: React.FC = () => {
             homeHref={homeHref}
             fullHref={igamingFullHref}
             casesHref={igamingCasesHref}
+            atlasHref={igamingAtlasHref}
             guideLinks={igamingGuideLinks}
             controls={igamingControls}
           />

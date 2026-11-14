@@ -7,6 +7,7 @@ import { IGAMING_PAGE, IGAMING_SUMMARY } from './components/igaming-content.ts';
 import { ABOUT_PAGE, aboutLinkLine } from './components/about-content.ts';
 import { IGAMING_CASES, IGAMING_CASES_INDEX, type CaseBlock, type IGamingCase } from './components/igaming-cases-content.ts';
 import { IGAMING_GUIDES, IGAMING_GUIDE_LABELS, type IGamingGuide } from './components/igaming-guides-content.ts';
+import { ATLAS_CARDS, ATLAS_ERAS, ATLAS_PAGE, ATLAS_SERVICES, ATLAS_STEPS, atlasCardPlain } from './components/igaming-atlas-content.ts';
 
 type Localized = Record<SeoLanguage, string>;
 
@@ -171,6 +172,38 @@ function igamingCaseStaticCopy(study: IGamingCase): StaticRouteCopy {
 }
 
 /** Static body for the /igaming/cases index. */
+/** `/igaming/atlas`: hero, every method card in full, the timeline, the seven questions, the services. */
+function igamingAtlasStaticCopy(): StaticRouteCopy {
+  const page = ATLAS_PAGE;
+  const both = (fn: (lang: 'en' | 'zh') => string): Localized => ({ en: fn('en'), zh: fn('zh') });
+  return {
+    eyebrow: page.kicker,
+    thesis: both((lang) => `${page.claimLead[lang]} ${page.claimFoil[lang]}`),
+    sections: [
+      { title: page.kicker, paragraphs: [page.standfirst] },
+      ...ATLAS_CARDS.map((card) => ({
+        title: both((lang) => `${card.id} · ${card.title[lang]}`),
+        paragraphs: atlasCardPlain(card, 'en').map((en, i) => ({ en, zh: atlasCardPlain(card, 'zh')[i] })),
+      })),
+      {
+        title: page.sections.time.title,
+        paragraphs: ATLAS_ERAS.map((era) => both((lang) => `${era.year} · ${era.title[lang]}: ${era.body[lang]}`)),
+      },
+      {
+        title: page.sections.steps.title,
+        paragraphs: ATLAS_STEPS.map((step) => both((lang) => `${step.q[lang]} ${step.a[lang]}`)),
+      },
+      {
+        title: page.sections.services.title,
+        paragraphs: [
+          ...ATLAS_SERVICES.map((s) => both((lang) => `${s.name[lang]} (${s.time[lang]}): ${s.pain[lang]} ${s.out.map((o) => o[lang]).join('; ')}.`)),
+          page.boundaries,
+        ],
+      },
+    ],
+  };
+}
+
 function igamingCasesIndexStaticCopy(): StaticRouteCopy {
   const page = IGAMING_CASES_INDEX;
   return {
@@ -415,6 +448,7 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
   '/igaming': igamingSummaryStaticCopy(),
   '/igaming/full': igamingStaticCopy(),
   '/igaming/cases': igamingCasesIndexStaticCopy(),
+  '/igaming/atlas': igamingAtlasStaticCopy(),
   ...Object.fromEntries(IGAMING_GUIDES.map((guide) => [guide.path, igamingGuideStaticCopy(guide)])),
   ...Object.fromEntries(IGAMING_CASES.map((study) => [`/igaming/cases/${study.slug}`, igamingCaseStaticCopy(study)])),
 
