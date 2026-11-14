@@ -295,6 +295,70 @@ export const ATLAS_SERVICES: Array<{ name: AtlasLocalized; pain: AtlasLocalized;
   { name: L('Brand operations health check', '品牌运营体检'), pain: L('A new brand or a relaunch, and no agreement on what to fix first.', '新品牌或改版，不知道先改什么。'), out: [L('Funnel diagnosis and segments', 'funnel 诊断与 segment'), L('Deposit, withdrawal and support experience', '存提款与 CS 体验'), L('Ranked recommendations with team KPIs', '排序后的建议与各团队 KPI')], time: L('2–4 weeks', '2–4 周'), ids: ['03', '04', '05', '10'] },
 ];
 
+/** Basics: who is who, where Eden sits, and the words the rest of the page uses. For readers new to iGaming. */
+export const ATLAS_BASICS = {
+  chain: [
+    { key: 'provider', name: L('Provider', 'Provider'), plain: L('The game studio', '游戏商'), does: L('Makes the games, and hands out promotion offers to push them.', '做游戏，也会给 promotion offer 推自己的游戏。') },
+    { key: 'merchant', name: L('Merchant / operator', 'Merchant / operator'), plain: L('The gaming site', '平台'), does: L('Runs the site, takes deposits, and gives players promotions.', '经营网站、收存款，对玩家发 promotion。') },
+    { key: 'player', name: L('Player', '玩家'), plain: L('The customer', '客人'), does: L('Deposits, plays, claims rewards, and asks support when stuck.', '存款、玩游戏、领奖励，卡住了就找 CS。') },
+  ],
+  links: [L('games and offers', '游戏与 offer'), L('promotions and service', 'promotion 与服务')],
+  me: {
+    title: L('Where I sit', '我在哪里'),
+    body: L(
+      'In the middle. I turn provider offers into the few a merchant can actually run, make sure what players are promised is written clearly and priced, and check the results afterwards.',
+      '在中间。把 provider 的 offer 筛成 merchant 真做得到的那几个，确保对玩家的承诺写得清楚、算得过来，事后再核对结果。',
+    ),
+  },
+  glossaryTitle: L('Words used on this page', '这页会用到的词'),
+  glossary: [
+    { term: 'Promotion', plain: L('An offer to players: bonus, rebate, free spins, lucky draw.', '给玩家的优惠：奖金、返还、免费转、抽奖。') },
+    { term: 'Turnover', plain: L('Total amount bet. Bet 100 ten times and turnover is 1,000.', '总投注额。下注 100 十次，turnover 就是 1,000。') },
+    { term: 'Wagering requirement', plain: L('How much must be bet before a bonus can be withdrawn.', '奖金要先投注多少才能提现。') },
+    { term: 'GGR', plain: L('Gross gaming revenue: bets minus winnings paid. The site\'s gross take.', '玩家投注减去派彩，平台的毛收入。') },
+    { term: 'Rebate', plain: L('A percentage given back to players. What it is a percentage of decides the cost.', '按比例返还给玩家。按哪个数字算，决定成本。') },
+    { term: 'FTD', plain: L('First-time deposit: a player depositing for the first time.', '第一次存款的玩家。') },
+    { term: 'Funnel', plain: L('The steps from seeing an ad to depositing. People drop out at every step.', '从看到广告到存款的几步，每一步都有人流失。') },
+    { term: 'Channel', plain: L('Where players come from: ads, SMS, messaging apps, email.', '玩家从哪里来：广告、短信、通讯 app、邮件。') },
+    { term: 'Segment', plain: L('A group of players sorted by behaviour or market.', '按行为或市场分出的一群玩家。') },
+    { term: 'Back office', plain: L('The admin system where promotions are set up.', '设定 promotion 的后台系统。') },
+    { term: 'CS', plain: L('Customer support.', '客服。') },
+    { term: 'Placement', plain: L('A spot on the site, like the homepage banner, that offers compete for.', '网站上的位置，例如首页 banner，各个 offer 会抢。') },
+  ],
+};
+
+/** The map, sorted by topic: four groups, each with the question it answers in plain words. Default view. */
+export const ATLAS_TOPICS: Array<{ key: string; name: AtlasLocalized; asks: AtlasLocalized; plain: AtlasLocalized; ids: string[] }> = [
+  {
+    key: 'promise',
+    name: L('Rules & cost', '规则与成本'),
+    asks: L('What exactly are we promising players, and can we afford it?', '我们到底答应了玩家什么？付得起吗？'),
+    plain: L('Every promotion is a small contract and a budget line. If the languages say different things, or nobody priced the prize, it comes back later as complaints or losses.', '每个 promotion 都是一份小合约，也是一笔预算。语言版本写得不一样、奖品没人算过成本，之后就会变成投诉或亏损。'),
+    ids: ['01', '09'],
+  },
+  {
+    key: 'partner',
+    name: L('Partners & delivery', '合作与交付'),
+    asks: L('Which provider offers do we take, and can the team actually ship them?', 'provider 给的 offer 接哪几个？团队真的做得出来吗？'),
+    plain: L('Providers offer a lot. Saying yes is easy; delivering needs placement, setup, support, and an owner for every step.', 'provider 给的很多，答应很容易；做到需要 placement、后台设置、CS，每一步都要有负责人。'),
+    ids: ['02', '11', '07'],
+  },
+  {
+    key: 'player',
+    name: L('Players & service', '玩家与服务'),
+    asks: L('Who should we contact, and what does a stuck player need to hear?', '该联系谁？卡住的玩家需要听到什么？'),
+    plain: L('Not every player should get a message. When a reward is late, the page, the system and support must tell the same story.', '不是每个玩家都该收到讯息。奖励迟到时，页面、系统和 CS 要说同一个版本。'),
+    ids: ['03', '05'],
+  },
+  {
+    key: 'evidence',
+    name: L('Data & evidence', '数据与证据'),
+    asks: L('Does this number really show what people say it shows?', '这个数字真的证明了大家说的事吗？'),
+    plain: L('Report names and formulas often disagree. Before believing "the campaign worked", check what was counted, at which level, and whether it ever went live.', 'report 上的名字和公式常常对不上。相信「campaign 有效」之前，先看算的是什么、在哪一层、有没有真的上线。'),
+    ids: ['04', '06', '08', '10'],
+  },
+];
+
 /** Charts section: three worked examples. Illustrative teaching numbers only, never historical data. */
 export const ATLAS_NUMBERS = {
   note: L('Illustrative numbers for teaching. Not historical data.', '教学用的示例数字，不是历史 data。'),
@@ -356,7 +420,7 @@ export const ATLAS_PAGE = {
     'Eleven working methods from operator and provider work. The offers are history. The method still works.',
     '十一个工作方法，来自 operator 与 provider 两端。旧 promotion 已成历史，方法还能用。',
   ),
-  ctaPrimary: L('Open the map', '打开地图'),
+  ctaPrimary: L('Start with the basics', '从入门开始'),
   ctaSecondary: L('See services', '看服务'),
   ledger: [
     { value: '11', label: L('method cards', '张方法卡') },
@@ -366,13 +430,16 @@ export const ATLAS_PAGE = {
   ],
   core: L('Shared facts', '拼出共同事实'),
   sections: {
-    map: { kicker: L('01 / Map', '01 / 地图'), title: L('Eleven methods, in the order you need them.', '十一个方法，按用得到的顺序排。'), lede: L('Follow one campaign from promise to proof. Tap a card to open it.', '跟着一个 campaign 从承诺走到证据。点卡片看全文。') },
-    numbers: { kicker: L('02 / Numbers', '02 / 算一下'), title: L('Three numbers that change the decision.', '三个会改变决定的数字。'), lede: L('Run the maths before the meeting.', '开会之前先算一遍。') },
-    time: { kicker: L('03 / Timeline', '03 / 时间线'), title: L('Six years in the files.', '文件里的六年。'), lede: L('Stages by document date, not a full CV.', '按资料日期排列，不是完整履历。') },
-    steps: { kicker: L('04 / Questions', '04 / 七问'), title: L('Seven questions before any decision.', '做决定前，先问这七个问题。'), lede: L('Ask them in order.', '按顺序问。') },
-    services: { kicker: L('05 / Services', '05 / 服务'), title: L('Where the methods become work.', '方法变成服务。'), lede: L('Fixed scope. Fixed deliverables.', '固定范围，固定交付。') },
+    basics: { kicker: L('01 / Basics', '01 / 入门'), title: L('New to iGaming? Start here.', '没做过 iGaming？先看这里。'), lede: L('Three players, one middle seat, twelve words.', '三个角色、一个中间位置、十二个词。') },
+    map: { kicker: L('02 / Map', '02 / 地图'), title: L('Eleven methods, sorted two ways.', '十一个方法，两种看法。'), lede: L('New here? Read by topic. Run campaigns? Read by workflow. Tap a card to open it.', '新手按种类看，做过 campaign 的按流程看。点卡片看全文。') },
+    numbers: { kicker: L('03 / Numbers', '03 / 算一下'), title: L('Three numbers that change the decision.', '三个会改变决定的数字。'), lede: L('Run the maths before the meeting.', '开会之前先算一遍。') },
+    time: { kicker: L('04 / Timeline', '04 / 时间线'), title: L('Six years in the files.', '文件里的六年。'), lede: L('Stages by document date, not a full CV.', '按资料日期排列，不是完整履历。') },
+    steps: { kicker: L('05 / Questions', '05 / 七问'), title: L('Seven questions before any decision.', '做决定前，先问这七个问题。'), lede: L('Ask them in order.', '按顺序问。') },
+    services: { kicker: L('06 / Services', '06 / 服务'), title: L('Where the methods become work.', '方法变成服务。'), lede: L('Fixed scope. Fixed deliverables.', '固定范围，固定交付。') },
   },
   allServices: L('All', '全部'),
+  views: { topic: L('By topic', '按种类看'), flow: L('By workflow', '按流程看'), label: L('How to sort the map', '地图怎么排') },
+  asks: L('Answers', '回答'),
   legendNote: L('Gold dashes join cards used by the same service · numbers match the cards below', '金色虚线连起同一项服务用到的卡 · 编号对应下方卡片'),
   cardLabels: { practice: L('How it shows up', '在工作里的样子'), checks: L('Check before you commit', '承诺前要核对'), limit: L('What this does not prove', '这张卡不能证明什么'), services: L('Used in', '用在哪些服务'), eras: L('From', '出自哪个阶段'), close: L('Close', '关闭') },
   boundaries: L(

@@ -7,7 +7,7 @@ import { IGAMING_PAGE, IGAMING_SUMMARY } from './components/igaming-content.ts';
 import { ABOUT_PAGE, aboutLinkLine } from './components/about-content.ts';
 import { IGAMING_CASES, IGAMING_CASES_INDEX, type CaseBlock, type IGamingCase } from './components/igaming-cases-content.ts';
 import { IGAMING_GUIDES, IGAMING_GUIDE_LABELS, type IGamingGuide } from './components/igaming-guides-content.ts';
-import { ATLAS_CARDS, ATLAS_ERAS, ATLAS_NUMBERS, ATLAS_PAGE, ATLAS_SERVICES, ATLAS_STEPS, atlasCardPlain } from './components/igaming-atlas-content.ts';
+import { ATLAS_BASICS, ATLAS_CARDS, ATLAS_ERAS, ATLAS_NUMBERS, ATLAS_PAGE, ATLAS_SERVICES, ATLAS_STEPS, ATLAS_TOPICS, atlasCardPlain } from './components/igaming-atlas-content.ts';
 
 type Localized = Record<SeoLanguage, string>;
 
@@ -172,7 +172,7 @@ function igamingCaseStaticCopy(study: IGamingCase): StaticRouteCopy {
 }
 
 /** Static body for the /igaming/cases index. */
-/** `/igaming/atlas`: hero, every method card in full, the worked numbers, the timeline, the seven questions, the services. */
+/** `/igaming/atlas`: hero, the basics and glossary, the topic groups, every method card in full, the worked numbers, the timeline, the seven questions, the services. */
 function igamingAtlasStaticCopy(): StaticRouteCopy {
   const page = ATLAS_PAGE;
   const both = (fn: (lang: 'en' | 'zh') => string): Localized => ({ en: fn('en'), zh: fn('zh') });
@@ -181,6 +181,18 @@ function igamingAtlasStaticCopy(): StaticRouteCopy {
     thesis: both((lang) => `${page.claimLead[lang]} ${page.claimFoil[lang]}`),
     sections: [
       { title: page.kicker, paragraphs: [page.standfirst] },
+      {
+        title: page.sections.basics.title,
+        paragraphs: [
+          ...ATLAS_BASICS.chain.map((r) => both((lang) => `${r.name[lang]} (${r.plain[lang]}): ${r.does[lang]}`)),
+          ATLAS_BASICS.me.body,
+          ...ATLAS_BASICS.glossary.map((g) => both((lang) => `${g.term}: ${g.plain[lang]}`)),
+        ],
+      },
+      {
+        title: page.sections.map.title,
+        paragraphs: ATLAS_TOPICS.map((tp) => both((lang) => `${tp.name[lang]} (${tp.ids.join(', ')}): ${tp.asks[lang]} ${tp.plain[lang]}`)),
+      },
       ...ATLAS_CARDS.map((card) => ({
         title: both((lang) => `${card.id} · ${card.title[lang]}`),
         paragraphs: atlasCardPlain(card, 'en').map((en, i) => ({ en, zh: atlasCardPlain(card, 'zh')[i] })),
