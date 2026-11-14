@@ -37,24 +37,22 @@
   color: var(--theme-text-secondary);
 }
 
-/* Hero: golden split 1.618 : 1, a construction line at 61.8% */
+/* Hero: one column of copy (61.8% measure), the optical prism banner below it */
 .atlas-hero {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1.618fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: clamp(1.5rem, 4vw, 3rem);
   align-items: center;
   padding: clamp(48px, 9vw, 128px) 0;
 }
 
-.atlas-hero::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 61.8%;
-  width: 1px;
-  background: var(--ig-line-3);
+.atlas-hero-art {
+  margin-top: calc(-1 * clamp(24px, 5vw, 72px));
+}
+
+.atlas-basics-art {
+  margin-bottom: clamp(32px, 4vw, 56px);
 }
 
 .atlas-hero h1 {
@@ -138,78 +136,6 @@
   margin: 0.3rem 0 0;
   font-size: 0.8rem;
   color: var(--theme-text-secondary);
-}
-
-.atlas-emblem {
-  width: min(100%, 380px);
-  justify-self: center;
-  overflow: visible;
-}
-
-/* Rosette line weights — three opacities of one ink, gold only in the core */
-.atlas-rosette circle,
-.atlas-rosette path {
-  fill: none;
-}
-
-.atlas-l2 {
-  stroke: var(--ig-line-2);
-  stroke-width: 0.8;
-}
-
-.atlas-l2.is-fine {
-  stroke-width: 0.6;
-}
-
-.atlas-l3 {
-  fill: none;
-  stroke: var(--ig-line-3);
-  stroke-width: 0.8;
-}
-
-.atlas-l3.is-dotted {
-  stroke-dasharray: 1 5;
-}
-
-.atlas-gold {
-  stroke: var(--ig-foil);
-  stroke-width: 0.9;
-  opacity: 0.85;
-}
-
-.atlas-rosette .atlas-hub-disc {
-  fill: var(--ig-paper);
-  stroke: var(--ig-line-2);
-}
-
-.atlas-foil {
-  stroke: var(--ig-foil);
-  stroke-width: 1.1;
-}
-
-.atlas-rosette .atlas-foil-dot {
-  fill: var(--ig-foil);
-}
-
-.atlas-spin {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: atlas-turn 180s linear infinite;
-}
-
-.atlas-spin.is-rev {
-  animation-duration: 240s;
-  animation-direction: reverse;
-}
-
-.atlas-spin.is-fast {
-  animation-duration: 120s;
-}
-
-@keyframes atlas-turn {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 /* Section heads: numeral column 1, copy column 1.618 */
@@ -647,16 +573,6 @@ button.atlas-tag:hover {
 @media (max-width: 820px) {
   .atlas-hero {
     grid-template-columns: 1fr;
-  }
-
-  .atlas-hero::after {
-    display: none;
-  }
-
-  .atlas-emblem {
-    order: -1;
-    width: 9.5rem;
-    justify-self: start;
   }
 
   .atlas-eras li {
@@ -1532,360 +1448,68 @@ button.atlas-tag:hover {
   }
 }
 
-/* Engraved vignettes (golden-engraving). Container = the plate; every detail in cqi so
-   the drawing scales with the card. Ink comes from the /igaming print tokens, so light
-   (green ink on rice paper) and dark (bronze on black) follow the theme. */
-.atlas-eng {
-  --fx: 50%;
-  --fy: 50%;
-  --hi: color-mix(in srgb, var(--ig-line) 16%, transparent);
-  position: relative;
-  container-type: inline-size;
-  aspect-ratio: 1.618 / 1;
-  margin: calc(-1 * clamp(8px, 1vw, 12px)) calc(-1 * clamp(8px, 1vw, 12px)) 20px;
-  border-radius: 20px;
-  overflow: hidden;
+
+/* Method-card icons (AtlasIcons.tsx): golden 24 grid, one ink + one gold accent. The paper
+   colour cuts details into the ink, so it follows the surface the icon sits on. */
+.atlas-icon {
+  --gi-paper: var(--ig-card);
+  --gi-accent: var(--ig-foil);
+  flex: none;
+  color: var(--theme-text-primary);
+  overflow: visible;
 }
 
-.atlas-eng span {
-  position: absolute;
-  display: block;
-  box-sizing: border-box;
+.atlas-icon .gi-s { fill: currentColor; }
+.atlas-icon .gi-p { fill: var(--gi-paper); }
+.atlas-icon .gi-pl { stroke: currentColor; stroke-width: var(--gi-sw); }
+.atlas-icon .gi-l,
+.atlas-icon .gi-n,
+.atlas-icon .gi-al {
+  fill: none;
+  stroke-width: var(--gi-sw);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.atlas-icon .gi-l { stroke: currentColor; }
+.atlas-icon .gi-n { stroke: var(--gi-paper); }
+.atlas-icon .gi-n.thin { stroke-width: 1; }
+.atlas-icon .gi-a { fill: var(--gi-accent); }
+.atlas-icon .gi-al { stroke: var(--gi-accent); }
+
+/* Dark: the ink is light, so a light gold on it washes out — use a deeper gold (gold sits on a dark block in light, on a light block in dark). */
+:root[data-theme="dark"] .atlas-icon {
+  --gi-accent: color-mix(in srgb, var(--ig-foil) 55%, #6b4210);
 }
 
-.ae-plate {
-  inset: 0;
-  border-radius: inherit;
-  background:
-    radial-gradient(75% 60% at 50% 45%, transparent 55%, color-mix(in srgb, var(--ig-line) 12%, transparent) 100%),
-    repeating-linear-gradient(0deg, color-mix(in srgb, var(--ig-line) 6%, transparent) 0 0.25cqi, transparent 0.25cqi 1.1cqi),
-    var(--ig-paper);
-  box-shadow: inset 0 0 0 1px var(--ig-line-3);
+.atlas-tile-mark,
+.atlas-drawer-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.ae-glow {
-  inset: 0;
-  background: radial-gradient(circle at var(--fx) var(--fy), var(--hi) 0, transparent 34%);
-}
-
-.ae-rosette {
-  left: calc(var(--fx) - 40cqi);
-  top: calc(var(--fy) - 40cqi);
-  width: 80cqi;
-  height: 80cqi;
-  border-radius: 50%;
-  background:
-    repeating-radial-gradient(circle at 50% 44%, transparent 0 1.3cqi, var(--ig-line-3) 1.3cqi 1.6cqi),
-    repeating-radial-gradient(circle at 44% 53%, transparent 0 1.3cqi, var(--ig-line-3) 1.3cqi 1.6cqi),
-    repeating-radial-gradient(circle at 56% 53%, transparent 0 1.3cqi, var(--ig-line-3) 1.3cqi 1.6cqi);
-  mask: radial-gradient(closest-side, transparent 34%, black 42%, black 61.8%, transparent 100%);
-  animation: ae-spin 120s linear infinite;
-}
-
-.ae-ring {
-  left: calc(var(--fx) - 23.6cqi);
-  top: calc(var(--fy) - 23.6cqi);
-  width: 47.2cqi;
-  height: 47.2cqi;
-  border-radius: 50%;
-  box-shadow: inset 0 0 0 0.3cqi var(--ig-line-2);
-  animation: ae-spin-back 150s linear infinite;
-}
-
-.ae-ring::after {
-  content: '';
-  position: absolute;
-  inset: -1.8cqi;
-  border-radius: 50%;
-  background: repeating-conic-gradient(var(--ig-line-2) 0 0.6deg, transparent 0.6deg 6deg);
-  mask: radial-gradient(closest-side, transparent calc(100% - 1.6cqi), black calc(100% - 1.6cqi));
-}
-
-.ae-golden {
-  --t: 0.12cqi;
-  inset: 4cqi;
-  background:
-    linear-gradient(90deg, transparent calc(38.2% - var(--t)), var(--ig-line-3) 0 calc(38.2% + var(--t)), transparent 0),
-    linear-gradient(90deg, transparent calc(61.8% - var(--t)), var(--ig-line-3) 0 calc(61.8% + var(--t)), transparent 0),
-    linear-gradient(0deg, transparent calc(38.2% - var(--t)), var(--ig-line-3) 0 calc(38.2% + var(--t)), transparent 0),
-    linear-gradient(0deg, transparent calc(61.8% - var(--t)), var(--ig-line-3) 0 calc(61.8% + var(--t)), transparent 0);
-  opacity: 0.6;
-}
-
-.ae-window {
-  inset: 3cqi;
-  border-radius: 12px;
-  box-shadow: inset 0 0 0 0.3cqi var(--ig-line-2), inset 0 0 0 1.2cqi var(--ig-paper), inset 0 0 0 1.5cqi var(--ig-line-3);
-  background: none;
-}
-
-/* Shared fills: hatch = mid tone, cross = dark tone. */
-.ae-reel .is-dia,
-.ae-ped::after,
-.ae-door {
-  background: repeating-linear-gradient(45deg, var(--ig-line) 0 0.45cqi, transparent 0.45cqi 1.4cqi), var(--ig-paper);
-}
-
-/* Provider: a cabinet with three reels, each window 1 : φ. */
-.ae-cab {
-  left: calc(50% - 27cqi);
-  top: calc(50% - 17cqi);
-  width: 54cqi;
-  height: 34cqi;
-  border-radius: 2cqi;
-  background: var(--ig-paper);
-  box-shadow: inset 0 0 0 0.6cqi var(--ig-line), inset 0 0 0 1.4cqi var(--ig-paper), inset 0 0 0 1.7cqi var(--ig-line-2);
-}
-
-.ae-cab::before {
-  content: '';
-  position: absolute;
-  left: 1.7cqi;
-  right: 1.7cqi;
-  top: 1.7cqi;
-  height: 5cqi;
-  background: repeating-linear-gradient(-45deg, var(--ig-line) 0 0.45cqi, transparent 0.45cqi 1.4cqi);
-  box-shadow: inset 0 -0.4cqi 0 var(--ig-line);
-}
-
-.ae-reel {
-  top: calc(50% - 7cqi);
-  width: 12.4cqi;
-  height: 20cqi;
-  border-radius: 1cqi;
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--ig-line) 22%, transparent) 0, transparent 32%, transparent 68%, color-mix(in srgb, var(--ig-line) 22%, transparent) 100%),
-    var(--ig-paper);
-  box-shadow: inset 0 0 0 0.5cqi var(--ig-line);
-}
-
-.ae-reel.is-l { left: calc(50% - 21.2cqi); }
-.ae-reel.is-m { left: calc(50% - 6.2cqi); }
-.ae-reel.is-r { left: calc(50% + 8.8cqi); }
-
-.ae-sym {
-  left: 50%;
-  top: 50%;
-  width: 7cqi;
-  height: 7cqi;
-  transform: translate(-50%, -50%);
-}
-
-.ae-sym.is-dia { clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
-
-.ae-sym.is-star {
-  background: var(--ig-foil);
-  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-}
-
-.ae-sym.is-ring {
-  border-radius: 50%;
-  background:
-    repeating-linear-gradient(45deg, var(--ig-line) 0 0.4cqi, transparent 0.4cqi 1.1cqi),
-    repeating-linear-gradient(-45deg, var(--ig-line) 0 0.4cqi, transparent 0.4cqi 1.1cqi),
-    var(--ig-paper);
-  box-shadow: inset 0 0 0 0.5cqi var(--ig-line), inset 0 0 0 1.4cqi var(--ig-paper);
-}
-
-.ae-payline {
-  left: calc(50% - 24cqi);
-  top: calc(50% + 2.85cqi);
-  width: 48cqi;
-  height: 0.3cqi;
-  background: var(--ig-foil);
-  opacity: 0.85;
-}
-
-.ae-lever {
-  left: calc(50% + 27.4cqi);
-  top: calc(50% - 13cqi);
-  width: 1.2cqi;
-  height: 15cqi;
-  border-radius: 1cqi;
-  background: var(--ig-line);
-}
-
-.ae-knob {
-  left: calc(50% + 25.8cqi);
-  top: calc(50% - 17.4cqi);
-  width: 4.4cqi;
-  height: 4.4cqi;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, var(--ig-paper) 0 12%, var(--ig-foil) 30%);
-  box-shadow: 0 0 0 0.35cqi var(--ig-line);
-}
-
-/* Merchant: a portico; the three steps shrink by φ. */
-.ae-ped {
-  left: calc(50% - 27cqi);
-  top: calc(50% - 20cqi);
-  width: 54cqi;
-  height: 10cqi;
-  background: var(--ig-line);
-  clip-path: polygon(50% 0, 100% 100%, 0 100%);
-}
-
-.ae-ped::after {
-  content: '';
-  position: absolute;
-  inset: 1.6cqi 3.4cqi 0.7cqi;
-  clip-path: polygon(50% 0, 100% 100%, 0 100%);
-}
-
-.ae-arch {
-  left: calc(50% - 25cqi);
-  top: calc(50% - 10cqi);
-  width: 50cqi;
-  height: 3.6cqi;
-  background: repeating-linear-gradient(90deg, var(--ig-line-2) 0 0.35cqi, transparent 0.35cqi 2.4cqi), var(--ig-paper);
-  box-shadow: inset 0 0 0 0.5cqi var(--ig-line);
-}
-
-.ae-col {
-  top: calc(50% - 6.4cqi);
-  width: 5cqi;
-  height: 20cqi;
-  background: repeating-linear-gradient(90deg, var(--ig-line) 0 0.35cqi, transparent 0.35cqi 1.2cqi), var(--ig-paper);
-  box-shadow: inset 0 0 0 0.4cqi var(--ig-line);
-}
-
-.ae-col.is-1 { left: calc(50% - 22cqi); }
-.ae-col.is-2 { left: calc(50% - 11.5cqi); }
-.ae-col.is-3 { left: calc(50% + 6.5cqi); }
-.ae-col.is-4 { left: calc(50% + 17cqi); }
-
-.ae-door {
-  left: calc(50% - 4cqi);
-  top: calc(50% + 0.6cqi);
-  width: 8cqi;
-  height: 13cqi;
-  border-radius: 4cqi 4cqi 0 0;
-  background:
-    repeating-linear-gradient(45deg, var(--ig-line) 0 0.45cqi, transparent 0.45cqi 1.2cqi),
-    repeating-linear-gradient(-45deg, var(--ig-line) 0 0.45cqi, transparent 0.45cqi 1.2cqi),
-    var(--ig-paper);
-  box-shadow: inset 0 0 0 0.4cqi var(--ig-line);
-}
-
-.ae-door::after {
-  content: '';
-  position: absolute;
-  left: calc(50% - 1.1cqi);
-  top: -3.2cqi;
-  width: 2.2cqi;
-  height: 2.2cqi;
-  border-radius: 50%;
-  background: var(--ig-foil);
-}
-
-.ae-step {
-  background: var(--ig-paper);
-  box-shadow: inset 0 0 0 0.35cqi var(--ig-line);
-}
-
-.ae-step.is-1 { left: calc(50% - 26cqi); top: calc(50% + 13.6cqi); width: 52cqi; height: 2.6cqi; }
-.ae-step.is-2 { left: calc(50% - 28cqi); top: calc(50% + 16.2cqi); width: 56cqi; height: 1.6cqi; }
-.ae-step.is-3 { left: calc(50% - 30cqi); top: calc(50% + 17.8cqi); width: 60cqi; height: 1cqi; }
-
-/* Player: a chip, twelve inserts round the edge, a φ pentagram in foil at the centre. */
-.ae-chip,
-.ae-chip-edge {
-  left: calc(50% - 19cqi);
-  top: calc(50% - 19cqi);
-  width: 38cqi;
-  height: 38cqi;
-  border-radius: 50%;
-}
-
-.ae-chip {
-  background: var(--ig-paper);
-  box-shadow: inset 0 0 0 0.5cqi var(--ig-line), 0 0 0 1.2cqi var(--ig-paper), 0 0 0 1.5cqi var(--ig-line-3);
-}
-
-.ae-chip-edge {
-  background: repeating-conic-gradient(from -7.5deg, var(--ig-line) 0 15deg, transparent 15deg 30deg);
-  mask: radial-gradient(closest-side, transparent 76%, black 77%, black 95%, transparent 96%);
-}
-
-.ae-chip-in {
-  left: calc(50% - 12.5cqi);
-  top: calc(50% - 12.5cqi);
-  width: 25cqi;
-  height: 25cqi;
-  border-radius: 50%;
-  background: repeating-radial-gradient(circle, transparent 0 0.9cqi, var(--ig-line-3) 0.9cqi 1.15cqi), var(--ig-paper);
-  box-shadow: inset 0 0 0 0.45cqi var(--ig-line), inset 0 0 0 1.3cqi var(--ig-paper), inset 0 0 0 1.6cqi var(--ig-line-2);
-}
-
-.ae-penta {
-  left: calc(50% - 7cqi);
-  top: calc(50% - 7.3cqi);
-  width: 14cqi;
-  height: 14cqi;
-  background: var(--ig-foil);
-  clip-path: polygon(50% 0, 79.4% 90.5%, 2.4% 34.5%, 97.6% 34.5%, 20.6% 90.5%);
-  animation: ae-glint 6s ease-in-out infinite;
-}
-
-/* Middle (Eden): vesica piscis in a round medallion; the lens is the shared ground. */
-.atlas-eng.is-middle {
-  width: 72px;
-  aspect-ratio: 1;
+.atlas-drawer-mark .atlas-kicker {
   margin: 0;
-  border-radius: 50%;
 }
 
-.atlas-eng.is-middle .ae-rosette,
-.atlas-eng.is-middle .ae-golden,
-.atlas-eng.is-middle .ae-window {
-  display: none;
+.atlas-drawer .atlas-icon {
+  --gi-paper: var(--ig-paper);
 }
 
-.atlas-eng.is-middle .ae-plate {
-  box-shadow: inset 0 0 0 1.5cqi var(--ig-foil), inset 0 0 0 5cqi var(--ig-paper), inset 0 0 0 6cqi var(--ig-line-3);
+/* Services: the stageshow demo of the terms audit, above the four service cards */
+.atlas-demo {
+  margin: 0 0 clamp(32px, 4vw, 56px);
+  border-radius: var(--atlas-radius);
+  overflow: hidden;
+  background: var(--ig-card);
+  box-shadow: var(--ig-frame);
 }
 
-.atlas-eng.is-middle .ae-ring {
-  left: 9cqi;
-  top: 9cqi;
-  width: 82cqi;
-  height: 82cqi;
-}
-
-.ae-circle {
-  top: 25cqi;
-  width: 50cqi;
-  height: 50cqi;
-  border-radius: 50%;
-  box-shadow: inset 0 0 0 1.6cqi var(--ig-line);
-}
-
-.ae-circle.is-a { left: 12.5cqi; }
-.ae-circle.is-b { left: 37.5cqi; }
-
-.ae-lens {
-  inset: 0;
-  clip-path: circle(25cqi at 37.5cqi 50%);
-}
-
-.ae-lens span {
-  inset: 0;
-  background: var(--ig-foil);
-  clip-path: circle(25cqi at 62.5cqi 50%);
-  opacity: 0.9;
-}
-
-@media (max-width: 900px) {
-  .atlas-eng:not(.is-middle) {
-    aspect-ratio: 2 / 1;
-  }
-}
-
-@keyframes ae-spin { to { transform: rotate(360deg); } }
-@keyframes ae-spin-back { to { transform: rotate(-360deg); } }
-@keyframes ae-glint {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.72; }
+.atlas-demo figcaption {
+  padding: 14px 20px 18px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--theme-text-secondary);
 }
 
 @media (prefers-reduced-motion: reduce) {

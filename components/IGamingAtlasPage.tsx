@@ -14,8 +14,9 @@ import {
   type AtlasLocalized,
 } from './igaming-atlas-content';
 import IGamingAtlasCharts from './IGamingAtlasCharts';
-import AtlasEngraving from './AtlasEngraving';
-import AtlasScene, { type AtlasSceneKind } from './AtlasScene';
+import AtlasOptical, { type AtlasOpticalKind } from './AtlasOptical';
+import AtlasIcon from './AtlasIcons';
+import IGamingAtlasTermsDemo from './IGamingAtlasTermsDemo';
 
 type Lang = 'en' | 'zh';
 
@@ -23,69 +24,15 @@ type Lang = 'en' | 'zh';
  * `/igaming/atlas` — Eden's iGaming knowledge base. The map is a workflow: one
  * campaign moves through five stages (promise → partner → deliver → player →
  * evidence) and each stage carries the method cards you reach for at that moment.
- * One engraved hero (the rosette); one ink (bronze foil) for every accent.
+ * Illustrations are optical night scenes (AtlasOptical): a prism hero, the basics chain and one
+ * scene per topic; one ink (bronze foil) for every UI accent.
  * Copy lives in `igaming-atlas-content.ts` and is prerendered.
  */
 
 const cardById = (id: string) => ATLAS_CARDS.find((c) => c.id === id);
 const stageOf = (id: string) => ATLAS_STAGES.find((s) => s.ids.includes(id)) ?? ATLAS_STAGES[ATLAS_STAGES.length - 1];
-const TOPIC_SCENE: Record<string, AtlasSceneKind> = { promise: 'balance', partner: 'hourglass', player: 'beacon', evidence: 'loupe' };
+const TOPIC_SCENE: Record<string, AtlasOpticalKind> = { promise: 'rules', partner: 'deals', player: 'service', evidence: 'evidence' };
 const pad = (n: number) => String(n).padStart(2, '0');
-
-/** Hypotrochoid: the guilloché line of banknote engraving. Points only, never shown as text. */
-function hypo(R: number, r: number, d: number, scale: number, steps = 720): string {
-  const gcd = (a: number, b: number): number => (b ? gcd(b, a % b) : a);
-  const turns = r / gcd(R, r);
-  const pts: string[] = [];
-  for (let i = 0; i <= steps; i += 1) {
-    const t = (i / steps) * 2 * Math.PI * turns;
-    const x = ((R - r) * Math.cos(t) + d * Math.cos(((R - r) / r) * t)) * scale;
-    const y = ((R - r) * Math.sin(t) - d * Math.sin(((R - r) / r) * t)) * scale;
-    pts.push(`${x.toFixed(1)},${y.toFixed(1)}`);
-  }
-  return `M${pts.join('L')}Z`;
-}
-
-function ticks(r: number, n: number, len: number): string {
-  let s = '';
-  for (let i = 0; i < n; i += 1) {
-    const a = (i / n) * 2 * Math.PI;
-    const l = i % 5 === 0 ? len * 1.8 : len;
-    s += `M${(r * Math.cos(a)).toFixed(1)},${(r * Math.sin(a)).toFixed(1)}L${((r + l) * Math.cos(a)).toFixed(1)},${((r + l) * Math.sin(a)).toFixed(1)}`;
-  }
-  return s;
-}
-
-const Rosette: React.FC = () => {
-  const paths = React.useMemo(
-    () => ({
-      outer: hypo(144, 8, 22, 1.04),
-      mid1: hypo(120, 7, 46, 0.98),
-      mid2: hypo(120, 7, 30, 0.98),
-      gold: hypo(96, 9, 42, 1),
-      core: hypo(50, 5, 14, 0.95),
-      tick: ticks(168, 144, 6),
-    }),
-    [],
-  );
-  return (
-    <g className="atlas-rosette">
-      <circle r="196" className="atlas-l3" />
-      <circle r="190" className="atlas-l3" />
-      <g className="atlas-spin is-rev"><path d={paths.tick} className="atlas-l2" /></g>
-      <g className="atlas-spin"><path d={paths.outer} className="atlas-l2 is-fine" /></g>
-      <g className="atlas-spin is-fast">
-        <path d={paths.mid1} className="atlas-l3" />
-        <path d={paths.mid2} className="atlas-l2 is-fine" />
-      </g>
-      <g className="atlas-spin is-rev"><path d={paths.gold} className="atlas-gold" /></g>
-      <circle r="58" className="atlas-hub-disc" />
-      <circle r="52" className="atlas-l3" />
-      <g className="atlas-spin"><path d={paths.core} className="atlas-foil" /></g>
-      <circle r="5" className="atlas-foil-dot" />
-    </g>
-  );
-};
 
 const CardDrawer: React.FC<{ card: AtlasCard | null; language: Lang; onClose: () => void }> = ({ card, language, onClose }) => {
   const closeRef = React.useRef<HTMLButtonElement>(null);
@@ -109,7 +56,7 @@ const CardDrawer: React.FC<{ card: AtlasCard | null; language: Lang; onClose: ()
         {card ? (
           <>
             <header className="atlas-drawer-head">
-              <span className="atlas-kicker">{card.id} / {t(stageOf(card.id).name)}</span>
+              <span className="atlas-drawer-mark"><AtlasIcon id={card.id} size={40} /><span className="atlas-kicker">{card.id} / {t(stageOf(card.id).name)}</span></span>
               <button ref={closeRef} type="button" onClick={onClose} aria-label={t(labels.close)}><X size={18} aria-hidden="true" /></button>
             </header>
             <div className="atlas-drawer-body">
@@ -161,7 +108,7 @@ const IGamingAtlasPage: React.FC<{
               className={`atlas-tile${dim ? ' is-dim' : ''}${activeIds && !dim ? ' is-on' : ''}`}
               onClick={() => setOpenId(id)}
             >
-              <span className="atlas-tile-no">{id}</span>
+              <span className="atlas-tile-mark"><AtlasIcon id={id} size={30} /><span className="atlas-tile-no">{id}</span></span>
               <span className="atlas-tile-title">{t(card.title)}</span>
               <span className="atlas-tile-line">{t(ATLAS_LINES[id])}</span>
               <ArrowRight className="atlas-tile-go" size={16} aria-hidden="true" />
@@ -212,8 +159,8 @@ const IGamingAtlasPage: React.FC<{
               ))}
             </dl>
           </div>
-          <svg className="atlas-emblem" viewBox="-200 -200 400 400" aria-hidden="true"><Rosette /></svg>
         </header>
+        <AtlasOptical kind="hero" className="atlas-hero-art" />
 
         <section className="atlas-section" id="basics" aria-labelledby="atlas-basics-title">
           <div className="atlas-head">
@@ -223,10 +170,10 @@ const IGamingAtlasPage: React.FC<{
               <p>{t(page.sections.basics.lede)}</p>
             </div>
           </div>
+          <AtlasOptical kind="chain" accent="player" className="atlas-basics-art" />
           <ol className="atlas-chain">
             {ATLAS_BASICS.chain.map((role, i) => (
               <li key={role.key} className="atlas-role">
-                <AtlasEngraving kind={role.key as 'provider' | 'merchant' | 'player'} />
                 <span className="atlas-kicker">{t(role.name)}</span>
                 <h3>{t(role.plain)}</h3>
                 <p>{t(role.does)}</p>
@@ -237,7 +184,7 @@ const IGamingAtlasPage: React.FC<{
             ))}
           </ol>
           <div className="atlas-me">
-            <AtlasEngraving kind="middle" />
+            <span className="atlas-stage-seal" aria-hidden="true">E</span>
             <div>
               <h3>{t(ATLAS_BASICS.me.title)}</h3>
               <p>{t(ATLAS_BASICS.me.body)}</p>
@@ -279,7 +226,7 @@ const IGamingAtlasPage: React.FC<{
             <ol className="atlas-topics">
               {ATLAS_TOPICS.map((topic, ti) => (
                 <li key={topic.key} className="atlas-topic">
-                  {TOPIC_SCENE[topic.key] ? <AtlasScene kind={TOPIC_SCENE[topic.key]} /> : null}
+                  {TOPIC_SCENE[topic.key] ? <AtlasOptical kind={TOPIC_SCENE[topic.key]} accent={topic.key} /> : null}
                   <div className="atlas-topic-head">
                     <span className="atlas-stage-seal" aria-hidden="true">{String.fromCharCode(65 + ti)}</span>
                     <div>
@@ -373,6 +320,10 @@ const IGamingAtlasPage: React.FC<{
               <p>{t(page.sections.services.lede)}</p>
             </div>
           </div>
+          <figure className="atlas-demo">
+            <IGamingAtlasTermsDemo language={language} />
+            <figcaption>{t(page.demoCaption)}</figcaption>
+          </figure>
           <div className="atlas-services">
             {ATLAS_SERVICES.map((s, i) => (
               <article key={s.name.en} className="atlas-service">

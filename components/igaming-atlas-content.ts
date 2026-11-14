@@ -401,7 +401,7 @@ export const ATLAS_NUMBERS = {
     card: '11',
     fig: L('Fig 1', 'Fig 1'),
     title: L('Six offers in, two out.', '六个 offer 进来，两个出去。'),
-    lede: L('Each token is an offer. Four stations check it in order; the first one it fails pushes it into that station\'s tray. Only what passes all four reaches the merchant.', '每个 token 是一个 offer。四个站按顺序检查，第一个没过的站就把它推进那一站的托盘。四关都过的，才交给 merchant。'),
+    lede: L('Each card is an offer. The lamp asks four questions in order; a card that fails one is set aside, its dots showing which. Two stay lit.', '每张牌是一个 offer。灯一张一张照过去，按顺序问四个问题；没过的就放下，点数表示卡在第几关。最后亮着的只有两张。'),
     gates: [
       L('Fit: right players, market, currency', '合适：玩家、市场、货币对得上'),
       L('Feasible: placement, setup, staff exist', '做得到：placement、接入、人手真的有'),
@@ -461,6 +461,7 @@ export const ATLAS_PAGE = {
     steps: { kicker: L('05 / Questions', '05 / 七问'), title: L('Seven questions before any decision.', '做决定前，先问这七个问题。'), lede: L('Ask them in order.', '按顺序问。') },
     services: { kicker: L('06 / Services', '06 / 服务'), title: L('Where the methods become work.', '方法变成服务。'), lede: L('Fixed scope. Fixed deliverables.', '固定范围，固定交付。') },
   },
+  demoCaption: L('Service 01, promotion terms audit, in use: one promotion in three languages, checked field by field. Illustrative values.', '服务 01「促销条款体检」用起来的样子：同一个 promotion 的三种语言，逐项对照。数值为示例。'),
   allServices: L('All', '全部'),
   views: { topic: L('By topic', '按种类看'), flow: L('By workflow', '按流程看'), label: L('How to sort the map', '地图怎么排') },
   asks: L('Answers', '回答'),

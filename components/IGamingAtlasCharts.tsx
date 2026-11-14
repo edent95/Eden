@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { ATLAS_NUMBERS, type AtlasLocalized } from './igaming-atlas-content';
-import IGamingAtlasSorter from './IGamingAtlasSorter';
+import IGamingAtlasPick from './IGamingAtlasPick';
 
 type Lang = 'en' | 'zh';
 
@@ -206,7 +206,7 @@ const IGamingAtlasCharts: React.FC<{ language: Lang; onOpen: (id: string) => voi
   const t = (v: AtlasLocalized) => v[language];
   return (
     <div className="atlas-figs">
-      <IGamingAtlasSorter language={language} onOpen={onOpen} />
+      <IGamingAtlasPick language={language} onOpen={onOpen} />
       <WheelChart t={t} onOpen={onOpen} />
       <RebateChart t={t} onOpen={onOpen} />
       <ChannelChart t={t} onOpen={onOpen} />
