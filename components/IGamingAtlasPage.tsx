@@ -11,6 +11,7 @@ import {
   type AtlasCard,
   type AtlasLocalized,
 } from './igaming-atlas-content';
+import IGamingAtlasCharts from './IGamingAtlasCharts';
 
 type Lang = 'en' | 'zh';
 
@@ -236,6 +237,17 @@ const IGamingAtlasPage: React.FC<{
               </li>
             ))}
           </ol>
+        </section>
+
+        <section className="atlas-section" id="numbers" aria-labelledby="atlas-num-title">
+          <div className="atlas-head">
+            <div>
+              <p className="atlas-kicker">{t(page.sections.numbers.kicker)}</p>
+              <h2 id="atlas-num-title">{t(page.sections.numbers.title)}</h2>
+              <p>{t(page.sections.numbers.lede)}</p>
+            </div>
+          </div>
+          <IGamingAtlasCharts language={language} onOpen={setOpenId} />
         </section>
 
         <section className="atlas-section" id="timeline" aria-labelledby="atlas-time-title">

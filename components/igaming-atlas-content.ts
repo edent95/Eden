@@ -295,6 +295,58 @@ export const ATLAS_SERVICES: Array<{ name: AtlasLocalized; pain: AtlasLocalized;
   { name: L('Brand operations health check', '品牌运营体检'), pain: L('A new brand or a relaunch, and no agreement on what to fix first.', '新品牌或改版，不知道先改什么。'), out: [L('Funnel diagnosis and segments', 'funnel 诊断与 segment'), L('Deposit, withdrawal and support experience', '存提款与 CS 体验'), L('Ranked recommendations with team KPIs', '排序后的建议与各团队 KPI')], time: L('2–4 weeks', '2–4 周'), ids: ['03', '04', '05', '10'] },
 ];
 
+/** Charts section: three worked examples. Illustrative teaching numbers only, never historical data. */
+export const ATLAS_NUMBERS = {
+  note: L('Illustrative numbers for teaching. Not historical data.', '教学用的示例数字，不是历史 data。'),
+  open: L('Open card', '看卡片'),
+  table: L('Show as a table', '用表格看'),
+  wheel: {
+    card: '09',
+    title: L('The rarest prize is the budget.', '最少出现的奖，才是预算。'),
+    lede: L('A five-slot wheel. The phone lands on 0.5% of spins and eats 82% of the cost.', '一个五格转盘。手机只占 0.5% 的次数，却吃掉 82% 的成本。'),
+    slots: [
+      { label: L('Try again', '谢谢参与'), p: 0.4, value: 0 },
+      { label: L('1 credit', '1 credit'), p: 0.3, value: 1 },
+      { label: L('5 credits', '5 credits'), p: 0.2, value: 5 },
+      { label: L('20 credits', '20 credits'), p: 0.095, value: 20 },
+      { label: L('Phone (3,000)', '手机 (3,000)'), p: 0.005, value: 3000 },
+    ],
+    spins: L('Share of spins', '次数占比'),
+    cost: L('Share of cost', '成本占比'),
+    prize: L('Prize', '奖项'),
+    perSpin: L('Expected cost per spin', '每次期望成本'),
+    entries: L('Spins per day', '每天参与次数'),
+    perDay: L('Expected cost per day', '每天期望成本'),
+    phones: L('Phones given per day', '每天送出手机'),
+    unit: L('credits', 'credits'),
+  },
+  rebate: {
+    card: '01',
+    title: L('Same 10%, 25× the cost.', '同样 10%，成本差 25 倍。'),
+    lede: L('One month, one player group. "10% back" depends on what the 10% is of.', '同一个月、同一群玩家。「返还 10%」要看是哪个数字的 10%。'),
+    base: L('Base', '计算基数'),
+    paid: L('10% paid out', '10% 要付'),
+    spread: L('between the highest and lowest payout, from one word: "10%".', '最高和最低的支出差距，只因为一个词：「10%」。'),
+    rows: [
+      { label: L('Turnover', 'turnover'), base: 50000 },
+      { label: L('Net deposits', '净存款'), base: 5000 },
+      { label: L('GGR', 'GGR'), base: 2000 },
+    ],
+  },
+  channels: {
+    card: '06',
+    title: L('More clicks, fewer first deposits.', 'click 多，FTD 反而少。'),
+    lede: L('Same month, same budget. A gets 3× the clicks; B brings 2× the first deposits.', '同一个月、同样预算。A 的 click 是 B 的 3 倍，B 的 FTD 却是 A 的 2 倍。'),
+    series: [L('Channel A', 'Channel A'), L('Channel B', 'Channel B')],
+    level: L('Level', '层级'),
+    levels: [
+      { label: L('Clicks', 'click'), a: 1200, b: 400 },
+      { label: L('Registrations', '注册'), a: 240, b: 160 },
+      { label: L('First deposits', 'FTD'), a: 24, b: 48 },
+    ],
+  },
+};
+
 export const ATLAS_PAGE = {
   back: L('iGaming', 'iGaming'),
   kicker: L('iGaming / Knowledge atlas', 'iGaming / 知识地图'),
@@ -315,9 +367,10 @@ export const ATLAS_PAGE = {
   core: L('Shared facts', '拼出共同事实'),
   sections: {
     map: { kicker: L('01 / Map', '01 / 地图'), title: L('Eleven methods, in the order you need them.', '十一个方法，按用得到的顺序排。'), lede: L('Follow one campaign from promise to proof. Tap a card to open it.', '跟着一个 campaign 从承诺走到证据。点卡片看全文。') },
-    time: { kicker: L('02 / Timeline', '02 / 时间线'), title: L('Six years in the files.', '文件里的六年。'), lede: L('Stages by document date, not a full CV.', '按资料日期排列，不是完整履历。') },
-    steps: { kicker: L('03 / Questions', '03 / 七问'), title: L('Seven questions before any decision.', '做决定前，先问这七个问题。'), lede: L('Ask them in order.', '按顺序问。') },
-    services: { kicker: L('04 / Services', '04 / 服务'), title: L('Where the methods become work.', '方法变成服务。'), lede: L('Fixed scope. Fixed deliverables.', '固定范围，固定交付。') },
+    numbers: { kicker: L('02 / Numbers', '02 / 算一下'), title: L('Three numbers that change the decision.', '三个会改变决定的数字。'), lede: L('Run the maths before the meeting.', '开会之前先算一遍。') },
+    time: { kicker: L('03 / Timeline', '03 / 时间线'), title: L('Six years in the files.', '文件里的六年。'), lede: L('Stages by document date, not a full CV.', '按资料日期排列，不是完整履历。') },
+    steps: { kicker: L('04 / Questions', '04 / 七问'), title: L('Seven questions before any decision.', '做决定前，先问这七个问题。'), lede: L('Ask them in order.', '按顺序问。') },
+    services: { kicker: L('05 / Services', '05 / 服务'), title: L('Where the methods become work.', '方法变成服务。'), lede: L('Fixed scope. Fixed deliverables.', '固定范围，固定交付。') },
   },
   allServices: L('All', '全部'),
   legendNote: L('Gold dashes join cards used by the same service · numbers match the cards below', '金色虚线连起同一项服务用到的卡 · 编号对应下方卡片'),
