@@ -891,6 +891,1003 @@ button.atlas-tag:hover {
   }
 }
 
+/* 02 / Numbers — three worked examples as charts. Plain HTML bars.
+   Magnitude = one bronze ramp (s1 light → s5 dark); identity = bronze c1 + blue c2,
+   validated (dataviz validate_palette) on the paper and dark surfaces. Text stays in
+   text tokens; marks carry the colour. */
+.igaming-atlas {
+  --atlas-s1: #eadbb6;
+  --atlas-s2: #d8b979;
+  --atlas-s3: #c0913f;
+  --atlas-s4: #9a6418;
+  --atlas-s5: #6b4210;
+  --atlas-c1: #9a6418;
+  --atlas-c2: #2f5f9e;
+}
+
+:root[data-theme="dark"] .igaming-atlas {
+  --atlas-s1: #3b3020;
+  --atlas-s2: #5e4a24;
+  --atlas-s3: #8a6a2c;
+  --atlas-s4: #b8892f;
+  --atlas-s5: #f2cf7a;
+  --atlas-c1: #b8892f;
+  --atlas-c2: #5482cc;
+}
+
+.atlas-figs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+}
+
+.atlas-fig {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 24px;
+  margin: 0;
+  padding: clamp(20px, 3vw, 32px);
+  border-radius: var(--atlas-radius);
+  background: var(--ig-card);
+  box-shadow: var(--ig-frame);
+}
+
+.atlas-fig.is-wide {
+  grid-column: 1 / -1;
+}
+
+.atlas-fig figcaption h3 {
+  margin: 0 0 8px;
+  font-weight: 800;
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+}
+
+.atlas-fig figcaption p {
+  margin: 0;
+  max-width: 56ch;
+  color: var(--theme-text-secondary);
+  line-height: 1.55;
+}
+
+.atlas-fig.is-wide .atlas-fig-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.618fr) minmax(0, 1fr);
+  gap: 20px clamp(24px, 4vw, 48px);
+  align-items: start;
+}
+
+.atlas-fig-body {
+  align-self: start;
+}
+
+.atlas-fig-stat {
+  display: grid;
+  gap: 6px;
+  margin: 32px 0 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--ig-line-3);
+}
+
+.atlas-fig-stat strong {
+  font-family: var(--font-mono);
+  font-size: clamp(2.6rem, 5vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--ig-foil);
+}
+
+.atlas-fig-stat span {
+  max-width: 34ch;
+  color: var(--theme-text-secondary);
+}
+
+/* Wheel: two 100% stacked bars */
+.atlas-stacks {
+  display: grid;
+  gap: 14px;
+}
+
+.atlas-stack-row {
+  display: grid;
+  gap: 6px;
+}
+
+.atlas-stack-label,
+.atlas-legend-val,
+.atlas-bar-val,
+.atlas-bar-label small,
+.atlas-facet-key,
+.atlas-calc output,
+.atlas-calc-out dd {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.atlas-stack-label {
+  font-size: 0.78rem;
+  color: var(--theme-text-secondary);
+}
+
+.atlas-stack {
+  display: flex;
+  gap: 2px;
+  height: 36px;
+}
+
+.atlas-seg {
+  min-width: 3px;
+  flex-basis: 0;
+  border-radius: 2px;
+  transition: filter 0.15s ease;
+}
+
+.atlas-seg:first-child { border-radius: 4px 2px 2px 4px; }
+.atlas-seg:last-child { border-radius: 2px 4px 4px 2px; }
+.atlas-seg:hover { filter: brightness(1.12); }
+
+.is-s1 { background: var(--atlas-s1); box-shadow: inset 0 0 0 1px var(--ig-line-3); }
+.is-s2 { background: var(--atlas-s2); }
+.is-s3 { background: var(--atlas-s3); }
+.is-s4 { background: var(--atlas-s4); }
+.is-s5 { background: var(--atlas-s5); }
+.is-c1 { background: var(--atlas-c1); }
+.is-c2 { background: var(--atlas-c2); }
+
+.atlas-stack-call {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 0;
+  font-weight: 700;
+}
+
+.atlas-stack-call span {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.atlas-legend {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.92rem;
+}
+
+.atlas-legend li {
+  display: grid;
+  grid-template-columns: 12px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.atlas-legend.is-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+
+.atlas-legend.is-inline li {
+  grid-template-columns: 12px auto;
+}
+
+.atlas-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.atlas-legend-val {
+  font-size: 0.8rem;
+  color: var(--theme-text-secondary);
+}
+
+/* Wheel: what-if calculator */
+.atlas-calc {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.618fr);
+  gap: 16px clamp(24px, 4vw, 48px);
+  align-items: end;
+  padding-top: 20px;
+  border-top: 1px solid var(--ig-line-3);
+}
+
+.atlas-calc-input {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  font-size: 0.92rem;
+  color: var(--theme-text-secondary);
+}
+
+.atlas-calc-input output {
+  color: var(--theme-text-primary);
+  font-weight: 800;
+}
+
+.atlas-calc-input input {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-height: 44px;
+  margin: 0;
+  accent-color: var(--atlas-c1);
+}
+
+.atlas-calc-out {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+}
+
+.atlas-calc-out dt {
+  font-size: 0.8rem;
+  color: var(--theme-text-secondary);
+}
+
+.atlas-calc-out dd {
+  margin: 4px 0 0;
+  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+  font-weight: 800;
+  line-height: 1.05;
+}
+
+.atlas-calc-out small {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--theme-text-secondary);
+}
+
+/* Rebate + channels: horizontal bars */
+.atlas-bars {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.atlas-bars li,
+.atlas-facet-row {
+  display: grid;
+  grid-template-columns: minmax(7.5em, auto) minmax(0, 1fr) 4.5em;
+  gap: 12px;
+  align-items: center;
+}
+
+.atlas-bar-label {
+  display: grid;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.atlas-bar-label small {
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--theme-text-secondary);
+}
+
+.atlas-bar-track {
+  display: block;
+  height: 22px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--ig-line) 6%, transparent);
+}
+
+.atlas-bar {
+  display: block;
+  height: 100%;
+  min-width: 3px;
+  border-radius: 2px 4px 4px 2px;
+  transition: filter 0.15s ease;
+}
+
+.atlas-bar:hover { filter: brightness(1.12); }
+
+.atlas-bar-val {
+  text-align: right;
+  font-weight: 800;
+}
+
+.atlas-facets {
+  display: grid;
+  gap: 18px;
+  margin-top: 16px;
+}
+
+.atlas-facet h4 {
+  margin: 0 0 8px;
+  font-size: 0.92rem;
+}
+
+.atlas-facet {
+  display: grid;
+  gap: 6px;
+}
+
+.atlas-facet-row {
+  grid-template-columns: 1.5em minmax(0, 1fr) 4.5em;
+}
+
+.atlas-facet-key {
+  font-size: 0.8rem;
+  color: var(--theme-text-secondary);
+}
+
+/* Tooltip + table view */
+.atlas-tip {
+  position: absolute;
+  z-index: 3;
+  transform: translate(-50%, calc(-100% - 12px));
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--theme-text-primary);
+  color: var(--ig-paper);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.atlas-fig-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px 16px;
+}
+
+.atlas-fig-table summary,
+.atlas-fig-open {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--theme-text-secondary);
+  cursor: pointer;
+}
+
+.atlas-fig-open {
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+.atlas-fig-table summary:hover,
+.atlas-fig-open:hover {
+  color: var(--theme-text-primary);
+}
+
+.atlas-fig-table table {
+  border-collapse: collapse;
+  font-size: 0.86rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.atlas-fig-table th,
+.atlas-fig-table td {
+  padding: 6px 16px 6px 0;
+  border-bottom: 1px solid var(--ig-line-3);
+  text-align: left;
+}
+
+.atlas-fig-table th {
+  font-weight: 700;
+  color: var(--theme-text-secondary);
+}
+
+.atlas-fig-note {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--theme-text-secondary);
+}
+
+@media (max-width: 900px) {
+  .atlas-figs,
+  .atlas-fig.is-wide .atlas-fig-body,
+  .atlas-calc {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .atlas-calc-out {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .atlas-calc-out div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .atlas-bars li {
+    grid-template-columns: minmax(6.5em, auto) minmax(0, 1fr) 4em;
+  }
+}
+
+/* 01 / Basics — the three roles in a row, Eden's seat underneath, then a glossary. */
+.atlas-chain {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(72px, 8vw, 112px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.atlas-role {
+  position: relative;
+  padding: clamp(20px, 2.4vw, 28px);
+  border-radius: var(--atlas-radius);
+  background: var(--ig-card);
+  box-shadow: var(--ig-frame);
+}
+
+.atlas-role .atlas-kicker {
+  margin-bottom: 8px;
+}
+
+.atlas-role h3,
+.atlas-me h3,
+.atlas-topic-head h3 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
+  font-weight: 800;
+  line-height: 1.08;
+}
+
+.atlas-role p,
+.atlas-me p {
+  margin: 0;
+  color: var(--theme-text-secondary);
+  line-height: 1.55;
+}
+
+/* The arrow between two roles sits in the gap, with what flows along it. */
+.atlas-chain-link {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  display: grid;
+  justify-items: center;
+  width: clamp(72px, 8vw, 112px);
+  padding: 0 6px;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--ig-foil);
+  word-break: keep-all;
+}
+
+.atlas-me {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+  max-width: 72ch;
+  margin: clamp(24px, 3vw, 36px) auto 0;
+  padding: 20px 24px;
+  border-radius: var(--atlas-radius);
+  box-shadow: inset 0 0 0 1px var(--ig-foil);
+}
+
+.atlas-gloss-title {
+  margin: clamp(40px, 5vw, 64px) 0 16px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--theme-text-secondary);
+}
+
+.atlas-gloss {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 clamp(24px, 3vw, 40px);
+  margin: 0;
+}
+
+.atlas-gloss div {
+  padding: 14px 0;
+  border-top: 1px solid var(--ig-line-3);
+}
+
+.atlas-gloss dt {
+  font-weight: 800;
+}
+
+.atlas-gloss dd {
+  margin: 4px 0 0;
+  color: var(--theme-text-secondary);
+  line-height: 1.5;
+}
+
+/* 02 / Map — view toggle and the by-topic view. */
+.atlas-views {
+  display: inline-flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  padding: 4px;
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--ig-line-2);
+}
+
+.atlas-views button {
+  min-height: 44px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: var(--theme-text-secondary);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.atlas-views button[aria-pressed='true'] {
+  background: var(--theme-text-primary);
+  color: var(--ig-paper);
+}
+
+.atlas-topics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(40px, 5vw, 64px) clamp(24px, 3vw, 48px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.atlas-topic {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--ig-line-2);
+}
+
+.atlas-topic-head {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.atlas-topic-asks {
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.atlas-topic-asks span {
+  margin-right: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--ig-foil);
+}
+
+.atlas-topic-plain {
+  margin: 0;
+  max-width: 60ch;
+  color: var(--theme-text-secondary);
+  line-height: 1.6;
+}
+
+.atlas-topic .atlas-tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 900px) {
+  .atlas-chain {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 48px;
+  }
+
+  .atlas-chain-link {
+    top: 100%;
+    left: 50%;
+    width: auto;
+    height: 48px;
+    align-content: center;
+    transform: translateX(-50%);
+  }
+
+  .atlas-chain-link svg {
+    transform: rotate(90deg);
+  }
+
+  .atlas-gloss {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .atlas-topics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .atlas-gloss,
+  .atlas-topic .atlas-tiles {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Engraved vignettes (golden-engraving). Container = the plate; every detail in cqi so
+   the drawing scales with the card. Ink comes from the /igaming print tokens, so light
+   (green ink on rice paper) and dark (bronze on black) follow the theme. */
+.atlas-eng {
+  --fx: 50%;
+  --fy: 50%;
+  --hi: color-mix(in srgb, var(--ig-line) 16%, transparent);
+  position: relative;
+  container-type: inline-size;
+  aspect-ratio: 1.618 / 1;
+  margin: calc(-1 * clamp(8px, 1vw, 12px)) calc(-1 * clamp(8px, 1vw, 12px)) 20px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.atlas-eng span {
+  position: absolute;
+  display: block;
+  box-sizing: border-box;
+}
+
+.ae-plate {
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(75% 60% at 50% 45%, transparent 55%, color-mix(in srgb, var(--ig-line) 12%, transparent) 100%),
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--ig-line) 6%, transparent) 0 0.25cqi, transparent 0.25cqi 1.1cqi),
+    var(--ig-paper);
+  box-shadow: inset 0 0 0 1px var(--ig-line-3);
+}
+
+.ae-glow {
+  inset: 0;
+  background: radial-gradient(circle at var(--fx) var(--fy), var(--hi) 0, transparent 34%);
+}
+
+.ae-rosette {
+  left: calc(var(--fx) - 40cqi);
+  top: calc(var(--fy) - 40cqi);
+  width: 80cqi;
+  height: 80cqi;
+  border-radius: 50%;
+  background:
+    repeating-radial-gradient(circle at 50% 44%, transparent 0 1.3cqi, var(--ig-line-3) 1.3cqi 1.6cqi),
+    repeating-radial-gradient(circle at 44% 53%, transparent 0 1.3cqi, var(--ig-line-3) 1.3cqi 1.6cqi),
+    repeating-radial-gradient(circle at 56% 53%, transparent 0 1.3cqi, var(--ig-line-3) 1.3cqi 1.6cqi);
+  mask: radial-gradient(closest-side, transparent 34%, black 42%, black 61.8%, transparent 100%);
+  animation: ae-spin 120s linear infinite;
+}
+
+.ae-ring {
+  left: calc(var(--fx) - 23.6cqi);
+  top: calc(var(--fy) - 23.6cqi);
+  width: 47.2cqi;
+  height: 47.2cqi;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 0.3cqi var(--ig-line-2);
+  animation: ae-spin-back 150s linear infinite;
+}
+
+.ae-ring::after {
+  content: '';
+  position: absolute;
+  inset: -1.8cqi;
+  border-radius: 50%;
+  background: repeating-conic-gradient(var(--ig-line-2) 0 0.6deg, transparent 0.6deg 6deg);
+  mask: radial-gradient(closest-side, transparent calc(100% - 1.6cqi), black calc(100% - 1.6cqi));
+}
+
+.ae-golden {
+  --t: 0.12cqi;
+  inset: 4cqi;
+  background:
+    linear-gradient(90deg, transparent calc(38.2% - var(--t)), var(--ig-line-3) 0 calc(38.2% + var(--t)), transparent 0),
+    linear-gradient(90deg, transparent calc(61.8% - var(--t)), var(--ig-line-3) 0 calc(61.8% + var(--t)), transparent 0),
+    linear-gradient(0deg, transparent calc(38.2% - var(--t)), var(--ig-line-3) 0 calc(38.2% + var(--t)), transparent 0),
+    linear-gradient(0deg, transparent calc(61.8% - var(--t)), var(--ig-line-3) 0 calc(61.8% + var(--t)), transparent 0);
+  opacity: 0.6;
+}
+
+.ae-window {
+  inset: 3cqi;
+  border-radius: 12px;
+  box-shadow: inset 0 0 0 0.3cqi var(--ig-line-2), inset 0 0 0 1.2cqi var(--ig-paper), inset 0 0 0 1.5cqi var(--ig-line-3);
+  background: none;
+}
+
+/* Shared fills: hatch = mid tone, cross = dark tone. */
+.ae-reel .is-dia,
+.ae-ped::after,
+.ae-door {
+  background: repeating-linear-gradient(45deg, var(--ig-line) 0 0.45cqi, transparent 0.45cqi 1.4cqi), var(--ig-paper);
+}
+
+/* Provider: a cabinet with three reels, each window 1 : φ. */
+.ae-cab {
+  left: calc(50% - 27cqi);
+  top: calc(50% - 17cqi);
+  width: 54cqi;
+  height: 34cqi;
+  border-radius: 2cqi;
+  background: var(--ig-paper);
+  box-shadow: inset 0 0 0 0.6cqi var(--ig-line), inset 0 0 0 1.4cqi var(--ig-paper), inset 0 0 0 1.7cqi var(--ig-line-2);
+}
+
+.ae-cab::before {
+  content: '';
+  position: absolute;
+  left: 1.7cqi;
+  right: 1.7cqi;
+  top: 1.7cqi;
+  height: 5cqi;
+  background: repeating-linear-gradient(-45deg, var(--ig-line) 0 0.45cqi, transparent 0.45cqi 1.4cqi);
+  box-shadow: inset 0 -0.4cqi 0 var(--ig-line);
+}
+
+.ae-reel {
+  top: calc(50% - 7cqi);
+  width: 12.4cqi;
+  height: 20cqi;
+  border-radius: 1cqi;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--ig-line) 22%, transparent) 0, transparent 32%, transparent 68%, color-mix(in srgb, var(--ig-line) 22%, transparent) 100%),
+    var(--ig-paper);
+  box-shadow: inset 0 0 0 0.5cqi var(--ig-line);
+}
+
+.ae-reel.is-l { left: calc(50% - 21.2cqi); }
+.ae-reel.is-m { left: calc(50% - 6.2cqi); }
+.ae-reel.is-r { left: calc(50% + 8.8cqi); }
+
+.ae-sym {
+  left: 50%;
+  top: 50%;
+  width: 7cqi;
+  height: 7cqi;
+  transform: translate(-50%, -50%);
+}
+
+.ae-sym.is-dia { clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+
+.ae-sym.is-star {
+  background: var(--ig-foil);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.ae-sym.is-ring {
+  border-radius: 50%;
+  background:
+    repeating-linear-gradient(45deg, var(--ig-line) 0 0.4cqi, transparent 0.4cqi 1.1cqi),
+    repeating-linear-gradient(-45deg, var(--ig-line) 0 0.4cqi, transparent 0.4cqi 1.1cqi),
+    var(--ig-paper);
+  box-shadow: inset 0 0 0 0.5cqi var(--ig-line), inset 0 0 0 1.4cqi var(--ig-paper);
+}
+
+.ae-payline {
+  left: calc(50% - 24cqi);
+  top: calc(50% + 2.85cqi);
+  width: 48cqi;
+  height: 0.3cqi;
+  background: var(--ig-foil);
+  opacity: 0.85;
+}
+
+.ae-lever {
+  left: calc(50% + 27.4cqi);
+  top: calc(50% - 13cqi);
+  width: 1.2cqi;
+  height: 15cqi;
+  border-radius: 1cqi;
+  background: var(--ig-line);
+}
+
+.ae-knob {
+  left: calc(50% + 25.8cqi);
+  top: calc(50% - 17.4cqi);
+  width: 4.4cqi;
+  height: 4.4cqi;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--ig-paper) 0 12%, var(--ig-foil) 30%);
+  box-shadow: 0 0 0 0.35cqi var(--ig-line);
+}
+
+/* Merchant: a portico; the three steps shrink by φ. */
+.ae-ped {
+  left: calc(50% - 27cqi);
+  top: calc(50% - 20cqi);
+  width: 54cqi;
+  height: 10cqi;
+  background: var(--ig-line);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.ae-ped::after {
+  content: '';
+  position: absolute;
+  inset: 1.6cqi 3.4cqi 0.7cqi;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.ae-arch {
+  left: calc(50% - 25cqi);
+  top: calc(50% - 10cqi);
+  width: 50cqi;
+  height: 3.6cqi;
+  background: repeating-linear-gradient(90deg, var(--ig-line-2) 0 0.35cqi, transparent 0.35cqi 2.4cqi), var(--ig-paper);
+  box-shadow: inset 0 0 0 0.5cqi var(--ig-line);
+}
+
+.ae-col {
+  top: calc(50% - 6.4cqi);
+  width: 5cqi;
+  height: 20cqi;
+  background: repeating-linear-gradient(90deg, var(--ig-line) 0 0.35cqi, transparent 0.35cqi 1.2cqi), var(--ig-paper);
+  box-shadow: inset 0 0 0 0.4cqi var(--ig-line);
+}
+
+.ae-col.is-1 { left: calc(50% - 22cqi); }
+.ae-col.is-2 { left: calc(50% - 11.5cqi); }
+.ae-col.is-3 { left: calc(50% + 6.5cqi); }
+.ae-col.is-4 { left: calc(50% + 17cqi); }
+
+.ae-door {
+  left: calc(50% - 4cqi);
+  top: calc(50% + 0.6cqi);
+  width: 8cqi;
+  height: 13cqi;
+  border-radius: 4cqi 4cqi 0 0;
+  background:
+    repeating-linear-gradient(45deg, var(--ig-line) 0 0.45cqi, transparent 0.45cqi 1.2cqi),
+    repeating-linear-gradient(-45deg, var(--ig-line) 0 0.45cqi, transparent 0.45cqi 1.2cqi),
+    var(--ig-paper);
+  box-shadow: inset 0 0 0 0.4cqi var(--ig-line);
+}
+
+.ae-door::after {
+  content: '';
+  position: absolute;
+  left: calc(50% - 1.1cqi);
+  top: -3.2cqi;
+  width: 2.2cqi;
+  height: 2.2cqi;
+  border-radius: 50%;
+  background: var(--ig-foil);
+}
+
+.ae-step {
+  background: var(--ig-paper);
+  box-shadow: inset 0 0 0 0.35cqi var(--ig-line);
+}
+
+.ae-step.is-1 { left: calc(50% - 26cqi); top: calc(50% + 13.6cqi); width: 52cqi; height: 2.6cqi; }
+.ae-step.is-2 { left: calc(50% - 28cqi); top: calc(50% + 16.2cqi); width: 56cqi; height: 1.6cqi; }
+.ae-step.is-3 { left: calc(50% - 30cqi); top: calc(50% + 17.8cqi); width: 60cqi; height: 1cqi; }
+
+/* Player: a chip, twelve inserts round the edge, a φ pentagram in foil at the centre. */
+.ae-chip,
+.ae-chip-edge {
+  left: calc(50% - 19cqi);
+  top: calc(50% - 19cqi);
+  width: 38cqi;
+  height: 38cqi;
+  border-radius: 50%;
+}
+
+.ae-chip {
+  background: var(--ig-paper);
+  box-shadow: inset 0 0 0 0.5cqi var(--ig-line), 0 0 0 1.2cqi var(--ig-paper), 0 0 0 1.5cqi var(--ig-line-3);
+}
+
+.ae-chip-edge {
+  background: repeating-conic-gradient(from -7.5deg, var(--ig-line) 0 15deg, transparent 15deg 30deg);
+  mask: radial-gradient(closest-side, transparent 76%, black 77%, black 95%, transparent 96%);
+}
+
+.ae-chip-in {
+  left: calc(50% - 12.5cqi);
+  top: calc(50% - 12.5cqi);
+  width: 25cqi;
+  height: 25cqi;
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle, transparent 0 0.9cqi, var(--ig-line-3) 0.9cqi 1.15cqi), var(--ig-paper);
+  box-shadow: inset 0 0 0 0.45cqi var(--ig-line), inset 0 0 0 1.3cqi var(--ig-paper), inset 0 0 0 1.6cqi var(--ig-line-2);
+}
+
+.ae-penta {
+  left: calc(50% - 7cqi);
+  top: calc(50% - 7.3cqi);
+  width: 14cqi;
+  height: 14cqi;
+  background: var(--ig-foil);
+  clip-path: polygon(50% 0, 79.4% 90.5%, 2.4% 34.5%, 97.6% 34.5%, 20.6% 90.5%);
+  animation: ae-glint 6s ease-in-out infinite;
+}
+
+/* Middle (Eden): vesica piscis in a round medallion; the lens is the shared ground. */
+.atlas-eng.is-middle {
+  width: 72px;
+  aspect-ratio: 1;
+  margin: 0;
+  border-radius: 50%;
+}
+
+.atlas-eng.is-middle .ae-rosette,
+.atlas-eng.is-middle .ae-golden,
+.atlas-eng.is-middle .ae-window {
+  display: none;
+}
+
+.atlas-eng.is-middle .ae-plate {
+  box-shadow: inset 0 0 0 1.5cqi var(--ig-foil), inset 0 0 0 5cqi var(--ig-paper), inset 0 0 0 6cqi var(--ig-line-3);
+}
+
+.atlas-eng.is-middle .ae-ring {
+  left: 9cqi;
+  top: 9cqi;
+  width: 82cqi;
+  height: 82cqi;
+}
+
+.ae-circle {
+  top: 25cqi;
+  width: 50cqi;
+  height: 50cqi;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.6cqi var(--ig-line);
+}
+
+.ae-circle.is-a { left: 12.5cqi; }
+.ae-circle.is-b { left: 37.5cqi; }
+
+.ae-lens {
+  inset: 0;
+  clip-path: circle(25cqi at 37.5cqi 50%);
+}
+
+.ae-lens span {
+  inset: 0;
+  background: var(--ig-foil);
+  clip-path: circle(25cqi at 62.5cqi 50%);
+  opacity: 0.9;
+}
+
+@media (max-width: 900px) {
+  .atlas-eng:not(.is-middle) {
+    aspect-ratio: 2 / 1;
+  }
+}
+
+@keyframes ae-spin { to { transform: rotate(360deg); } }
+@keyframes ae-spin-back { to { transform: rotate(-360deg); } }
+@keyframes ae-glint {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.72; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .igaming-atlas *,
   .igaming-atlas *::before,
