@@ -39,7 +39,7 @@ export const ATLAS_CARDS: AtlasCard[] = [
     ),
     picture: L(
       'Think of two coupons: one says "ten purchases in your birthday month", the other "ten purchases in the past year". That is not a translation style; it decides who qualifies. Drafts in three languages can each read smoothly and still disagree on eligibility, game category or percentage.',
-      '想象两张 promotion 券：一张写「生日当月买十次」，另一张写「过去一年买十次」。这不是翻译风格不同，而是决定了谁有资格。三种语言的稿子可以各自都很通顺，却在资格、游戏类别或比例上互相矛盾。',
+      '想象两张优惠券：一张写「生日当月买十次」，另一张写「过去一年买十次」。这不是翻译风格不同，而是决定了谁有资格。三种语言的稿子可以各自都很通顺，却在资格、游戏类别或比例上互相矛盾。',
     ),
     checks: [
       L('Line the languages up field by field: identity and region → start and end → eligibility and exclusions → minimum, cap and calculation base → products and wallets → wagering → claim, verification and payout → expiry and disputes.', '把各语言逐项排在同一行比：campaign 与地区 → 起止时间 → 资格与排除 → 最低金额、上限与计算基数 → 产品与 wallet → wagering requirement → 申请、核验与发放 → 过期与争议。'),
