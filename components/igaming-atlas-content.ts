@@ -245,6 +245,30 @@ export const ATLAS_CARDS: AtlasCard[] = [
   },
 ];
 
+/** The map: one campaign from promise to proof. Each stage lists the cards you reach for at that moment. */
+export const ATLAS_STAGES: Array<{ key: string; name: AtlasLocalized; when: AtlasLocalized; ids: string[] }> = [
+  { key: 'promise', name: L('Promise', '承诺'), when: L('Before you promise players anything', '对玩家承诺之前'), ids: ['01', '09'] },
+  { key: 'partner', name: L('Partner', '谈 provider'), when: L('Before you say yes to a provider', '答应 provider 之前'), ids: ['02', '11'] },
+  { key: 'deliver', name: L('Deliver', '交付'), when: L('Before go-live', '上线之前'), ids: ['07'] },
+  { key: 'player', name: L('Player', '玩家'), when: L('After launch, with real players', '上线后，面对真实玩家'), ids: ['03', '05'] },
+  { key: 'evidence', name: L('Evidence', '证据'), when: L('When you read the results', '看结果的时候'), ids: ['04', '06', '08', '10'] },
+];
+
+/** One-line takeaway per card, shown on the map tile; the full card opens in the drawer. */
+export const ATLAS_LINES: Record<string, AtlasLocalized> = {
+  '01': L('Line every language up field by field before anything goes live.', '上线前，把每种语言逐项对齐。'),
+  '02': L('Exists is not usable: check integration, rights, placement, approver.', '功能存在不等于能用：接入、权限、placement、批准人逐项问。'),
+  '03': L('Name the player state first. "Do not contact" is a valid answer.', '先定义 user 状态，「不联系」也是答案。'),
+  '04': L('Trace numerator, denominator, currency and window before the number.', '看数字前，先追分子、分母、币种和时间窗。'),
+  '05': L('Every state answers: where, what next, how long, who helps.', '每个状态都要答：到哪一步、下一步、多久、找谁。'),
+  '06': L('Name the level of a number before you compare channels.', '比较 channel 前，先说清数字在哪一层。'),
+  '07': L('One unconfirmed field means not launched.', '有一项没确认，就是没上线。'),
+  '08': L('Idea, prototype, approval, live, result: five kinds of proof.', '想法、prototype、获批、上线、结果，是五种证据。'),
+  '09': L('Odds add up to 100%, the top prize has a cap, the budget survives the worst case.', '概率加起来 100%，头奖有上限，最坏情况也撑得住预算。'),
+  '10': L('Current state, segments, experience, ranked fixes, KPIs.', '现状、segment、体验、排序建议、KPI。'),
+  '11': L('Fewer options, faster decisions: pick the two that fit this merchant.', '选项少，决定快：只挑最适合这个 merchant 的两个。'),
+};
+
 export const ATLAS_ERAS: Array<{ year: string; title: AtlasLocalized; body: AtlasLocalized; ids: string[]; now?: boolean }> = [
   { year: '2020', title: L('Campaign rules in many languages', 'campaign 与多语言规则'), body: L('Campaign collections, multilingual terms and support handling: rich detail, and visible version drift.', 'campaign 汇编、多语言条款与 CS 处理：细节很多，也看得到版本漂移。'), ids: ['01'] },
   { year: '2021', title: L('Agency side', '代理商阶段'), body: L('Serving operator brands as an agency: rebrands, three-language terms and support scripts, reward probability tables, a full brand health check.', '以代理商身份服务 operator 品牌：品牌改版、三语条款与 CS script、奖励概率表、完整的品牌体检报告。'), ids: ['09', '10', '05', '03'] },
@@ -290,7 +314,7 @@ export const ATLAS_PAGE = {
   ],
   core: L('Shared facts', '拼出共同事实'),
   sections: {
-    map: { kicker: L('01 / Map', '01 / 地图'), title: L('One core. Eleven methods.', '一个核心，十一个方法。'), lede: L('Tap a seal to open a card. Pick a service to see what it uses.', '点圆章打开卡片，点服务看它用到哪几张。') },
+    map: { kicker: L('01 / Map', '01 / 地图'), title: L('Eleven methods, in the order you need them.', '十一个方法，按用得到的顺序排。'), lede: L('Follow one campaign from promise to proof. Tap a card to open it.', '跟着一个 campaign 从承诺走到证据。点卡片看全文。') },
     time: { kicker: L('02 / Timeline', '02 / 时间线'), title: L('Six years in the files.', '文件里的六年。'), lede: L('Stages by document date, not a full CV.', '按资料日期排列，不是完整履历。') },
     steps: { kicker: L('03 / Questions', '03 / 七问'), title: L('Seven questions before any decision.', '做决定前，先问这七个问题。'), lede: L('Ask them in order.', '按顺序问。') },
     services: { kicker: L('04 / Services', '04 / 服务'), title: L('Where the methods become work.', '方法变成服务。'), lede: L('Fixed scope. Fixed deliverables.', '固定范围，固定交付。') },
