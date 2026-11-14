@@ -14,6 +14,7 @@ import {
   type AtlasLocalized,
 } from './igaming-atlas-content';
 import IGamingAtlasCharts from './IGamingAtlasCharts';
+import AtlasEngraving from './AtlasEngraving';
 
 type Lang = 'en' | 'zh';
 
@@ -223,6 +224,7 @@ const IGamingAtlasPage: React.FC<{
           <ol className="atlas-chain">
             {ATLAS_BASICS.chain.map((role, i) => (
               <li key={role.key} className="atlas-role">
+                <AtlasEngraving kind={role.key as 'provider' | 'merchant' | 'player'} />
                 <span className="atlas-kicker">{t(role.name)}</span>
                 <h3>{t(role.plain)}</h3>
                 <p>{t(role.does)}</p>
@@ -233,7 +235,7 @@ const IGamingAtlasPage: React.FC<{
             ))}
           </ol>
           <div className="atlas-me">
-            <span className="atlas-stage-seal" aria-hidden="true">E</span>
+            <AtlasEngraving kind="middle" />
             <div>
               <h3>{t(ATLAS_BASICS.me.title)}</h3>
               <p>{t(ATLAS_BASICS.me.body)}</p>
