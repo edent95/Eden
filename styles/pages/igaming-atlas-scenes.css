@@ -131,6 +131,15 @@
 .atlas-optical .cb-tick { fill: none; stroke: var(--pb-acc); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 .atlas-optical .cb-icon-ring { fill: none; stroke: var(--c); stroke-width: 3; filter: drop-shadow(0 0 10px var(--c)); }
 .atlas-optical .cb-spin { animation: ao-turn 36s linear infinite; }
+/* casino objects: suits, chips, ball, roulette pockets */
+.atlas-optical .cb-pocket { fill: color-mix(in srgb, var(--pb-gold) 30%, transparent); }
+.atlas-optical .cb-suit { fill: var(--pb-gold); }
+.atlas-optical .cb-suit.is-accent { fill: var(--pb-acc); filter: drop-shadow(0 0 8px var(--pb-acc)); }
+.atlas-optical .cb-chip-edge { fill: none; stroke: var(--pb-gold); stroke-width: 1.6; }
+.atlas-optical .cb-chip-edge.is-accent { stroke: var(--pb-acc); }
+.atlas-optical .cb-chip-stripe { fill: none; stroke: var(--pb-gold); stroke-dasharray: 6 9; opacity: 0.55; }
+.atlas-optical .cb-chip-stripe.is-top { stroke-width: 3; stroke-dasharray: 4 10; opacity: 0.8; }
+.atlas-optical .cb-ball { fill: white; filter: drop-shadow(0 0 8px var(--pb-acc)); }
 
 /* ───── hero: prism ───── */
 .atlas-optical .hb-col { --c: var(--pb-gold); animation: ao-breathe 4.4s ease-in-out infinite; }

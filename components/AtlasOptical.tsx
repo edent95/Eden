@@ -138,27 +138,102 @@ function phone(x: number, y: number, w: number, h: number, steps = 0, current = 
   return out.join('');
 }
 
-/** Prize wheel: rim, ten spokes, a thin lit slice for the rare top prize, pointer on top. */
-function wheel(id: string, cx: number, cy: number, r: number, spin = true) {
-  const spokes = Array.from({ length: 10 }, (_, i) => {
-    const a = (i / 10) * Math.PI * 2;
-    return el('line', { x1: cx, y1: cy, x2: f1(cx + Math.cos(a) * r), y2: f1(cy + Math.sin(a) * r), class: 'cb-line' });
+/** Roulette wheel: 24 alternating pockets, the top pocket lit (the rare top prize), a turret,
+ *  and the ball resting in the lit pocket. */
+function wheel(id: string, cx: number, cy: number, r: number, spin = false) {
+  const N = 24;
+  const rin = r * 0.7;
+  const wedge = (i: number, r0: number, r1: number) => {
+    const a0 = -Math.PI / 2 + ((i - 0.5) / N) * Math.PI * 2;
+    const a1 = -Math.PI / 2 + ((i + 0.5) / N) * Math.PI * 2;
+    const p = (a: number, rr: number) => `${f1(cx + Math.cos(a) * rr)} ${f1(cy + Math.sin(a) * rr)}`;
+    return `M ${p(a0, r0)} L ${p(a0, r1)} A ${r1} ${r1} 0 0 1 ${p(a1, r1)} L ${p(a1, r0)} A ${r0} ${r0} 0 0 0 ${p(a0, r0)} Z`;
+  };
+  const pockets = Array.from({ length: N }, (_, i) =>
+    i === 0 ? el('path', { d: wedge(i, rin, r * 0.94), class: 'cb-slice' }) : i % 2 ? el('path', { d: wedge(i, rin, r * 0.94), class: 'cb-pocket' }) : '',
+  );
+  const frets = Array.from({ length: N }, (_, i) => {
+    const a = -Math.PI / 2 + ((i + 0.5) / N) * Math.PI * 2;
+    return el('line', { x1: f1(cx + Math.cos(a) * rin), y1: f1(cy + Math.sin(a) * rin), x2: f1(cx + Math.cos(a) * r * 0.94), y2: f1(cy + Math.sin(a) * r * 0.94), class: 'cb-line' });
   });
-  const a0 = -Math.PI / 2 - 0.05;
-  const a1 = -Math.PI / 2 + 0.05;
-  const slice = `M ${cx} ${cy} L ${f1(cx + Math.cos(a0) * r)} ${f1(cy + Math.sin(a0) * r)} A ${r} ${r} 0 0 1 ${f1(cx + Math.cos(a1) * r)} ${f1(cy + Math.sin(a1) * r)} Z`;
+  const turret = [0, 1, 2, 3].map((k) => {
+    const a = (k / 4) * Math.PI * 2 + Math.PI / 4;
+    return el('line', { x1: cx, y1: cy, x2: f1(cx + Math.cos(a) * r * 0.32), y2: f1(cy + Math.sin(a) * r * 0.32), class: 'cb-edge' });
+  });
   const body = el('g', { class: spin ? 'cb-spin' : undefined, style: `transform-origin: ${cx}px ${cy}px` }, [
-    el('circle', { cx, cy, r, fill: `url(#${id}-hatch)`, class: 'cb-body is-faint' }),
-    ...spokes,
-    el('path', { d: slice, class: 'cb-slice' }),
-    el('circle', { cx, cy, r: f1(r * 0.62), class: 'cb-line' }),
+    ...pockets,
+    ...frets,
+    el('circle', { cx, cy, r: f1(rin), class: 'cb-line' }),
+    el('circle', { cx, cy, r: f1(r * 0.5), fill: `url(#${id}-hatch)`, class: 'cb-body is-faint' }),
+    ...turret,
   ]);
   return [
+    el('circle', { cx, cy, r, class: 'cb-card' }),
     body,
     el('circle', { cx, cy, r, class: 'cb-edge' }),
-    el('circle', { cx, cy, r: f1(r * 0.12), class: 'cb-edge' }),
-    el('path', { d: `M ${cx - r * 0.09} ${f1(cy - r - r * 0.16)} L ${cx + r * 0.09} ${f1(cy - r - r * 0.16)} L ${cx} ${f1(cy - r + r * 0.06)} Z`, class: 'cb-pointer' }),
+    el('circle', { cx, cy, r: f1(r * 0.94), class: 'cb-line' }),
+    el('circle', { cx, cy, r: f1(r * 0.1), class: 'cb-dot' }),
+    el('circle', { cx, cy: f1(cy - r * 0.82), r: f1(Math.max(2.5, r * 0.055)), class: 'cb-ball' }),
+    el('path', { d: `M ${f1(cx - r * 0.09)} ${f1(cy - r - r * 0.16)} L ${f1(cx + r * 0.09)} ${f1(cy - r - r * 0.16)} L ${cx} ${f1(cy - r + r * 0.06)} Z`, class: 'cb-pointer' }),
   ].join('');
+}
+
+/** A stack of casino chips (bottom to top), striped edges; the top chip shows its inlay. */
+function chips(cx: number, base: number, rx: number, n: number, accent = false) {
+  const ry = rx * 0.3;
+  const step = rx * 0.22;
+  const out: string[] = [];
+  for (let i = 0; i < n; i += 1) {
+    const cy = base - i * step;
+    out.push(el('path', { d: `M ${f1(cx - rx)} ${f1(cy)} V ${f1(cy + step)} A ${f1(rx)} ${f1(ry)} 0 0 0 ${f1(cx + rx)} ${f1(cy + step)} V ${f1(cy)}`, class: 'cb-card' }));
+    out.push(el('ellipse', { cx, cy: f1(cy + step), rx: f1(rx), ry: f1(ry), class: accent ? 'cb-chip-edge is-accent' : 'cb-chip-edge' }));
+    out.push(el('ellipse', { cx, cy: f1(cy + step), rx: f1(rx), ry: f1(ry), class: 'cb-chip-stripe', style: `stroke-width: ${f1(step * 0.9)}` }));
+  }
+  const top = base - (n - 1) * step;
+  out.push(el('ellipse', { cx, cy: f1(top), rx: f1(rx), ry: f1(ry), class: 'cb-card' }));
+  out.push(el('ellipse', { cx, cy: f1(top), rx: f1(rx), ry: f1(ry), class: accent ? 'cb-edge is-accent' : 'cb-edge' }));
+  out.push(el('ellipse', { cx, cy: f1(top), rx: f1(rx * 0.62), ry: f1(ry * 0.62), class: 'cb-line' }));
+  out.push(el('ellipse', { cx, cy: f1(top), rx: f1(rx), ry: f1(ry), class: 'cb-chip-stripe is-top' }));
+  return out.join('');
+}
+
+/** Suit symbol centred at (cx, cy), size s. */
+function suit(kind: number, cx: number, cy: number, s: number, cls = 'cb-suit') {
+  if (kind === 2) return el('path', { d: `M ${cx} ${f1(cy - s)} L ${f1(cx + 0.72 * s)} ${cy} L ${cx} ${f1(cy + s)} L ${f1(cx - 0.72 * s)} ${cy} Z`, class: cls });
+  if (kind === 1) return el('path', { d: `M ${cx} ${f1(cy + 0.9 * s)} C ${f1(cx - 1.25 * s)} ${f1(cy + 0.05 * s)} ${f1(cx - 0.9 * s)} ${f1(cy - 1.05 * s)} ${cx} ${f1(cy - 0.35 * s)} C ${f1(cx + 0.9 * s)} ${f1(cy - 1.05 * s)} ${f1(cx + 1.25 * s)} ${f1(cy + 0.05 * s)} ${cx} ${f1(cy + 0.9 * s)} Z`, class: cls });
+  const stem = el('path', { d: `M ${cx} ${f1(cy + 0.15 * s)} L ${f1(cx + 0.38 * s)} ${f1(cy + s)} L ${f1(cx - 0.38 * s)} ${f1(cy + s)} Z`, class: cls });
+  if (kind === 0) return el('path', { d: `M ${cx} ${f1(cy - s)} C ${f1(cx + 1.25 * s)} ${f1(cy - 0.15 * s)} ${f1(cx + 0.9 * s)} ${f1(cy + 0.85 * s)} ${cx} ${f1(cy + 0.3 * s)} C ${f1(cx - 0.9 * s)} ${f1(cy + 0.85 * s)} ${f1(cx - 1.25 * s)} ${f1(cy - 0.15 * s)} ${cx} ${f1(cy - s)} Z`, class: cls }) + stem;
+  return [
+    el('circle', { cx, cy: f1(cy - 0.42 * s), r: f1(0.4 * s), class: cls }),
+    el('circle', { cx: f1(cx - 0.45 * s), cy: f1(cy + 0.15 * s), r: f1(0.4 * s), class: cls }),
+    el('circle', { cx: f1(cx + 0.45 * s), cy: f1(cy + 0.15 * s), r: f1(0.4 * s), class: cls }),
+    stem,
+  ].join('');
+}
+
+/** A playing card: rounded face, a big suit in the middle, small suits in two corners. */
+function playingCard(x: number, y: number, w: number, h: number, kind: number, accent = false, dim = false, rot = 0) {
+  const cls = accent ? 'cb-suit is-accent' : 'cb-suit';
+  return el('g', { class: dim ? 'is-dim' : undefined, transform: rot ? `rotate(${rot} ${f1(x + w / 2)} ${f1(y + h / 2)})` : undefined }, [
+    card('rect', { x, y, width: w, height: h, rx: f1(w * 0.1) }, accent),
+    el('rect', { x: f1(x + w * 0.08), y: f1(y + w * 0.08), width: f1(w * 0.84), height: f1(h - w * 0.16), rx: f1(w * 0.06), class: 'cb-line' }),
+    suit(kind, f1(x + w / 2), f1(y + h / 2), f1(w * 0.22), cls),
+    suit(kind, f1(x + w * 0.2), f1(y + w * 0.24), f1(w * 0.08), cls),
+    suit(kind, f1(x + w * 0.8), f1(y + h - w * 0.24), f1(w * 0.08), cls),
+  ]);
+}
+
+/** A die seen face-on, pips for `n`. */
+function die(x: number, y: number, s: number, n: number, rot = 0) {
+  const P: Record<number, [number, number][]> = {
+    1: [[0.5, 0.5]], 2: [[0.28, 0.28], [0.72, 0.72]], 3: [[0.26, 0.26], [0.5, 0.5], [0.74, 0.74]],
+    4: [[0.28, 0.28], [0.72, 0.28], [0.28, 0.72], [0.72, 0.72]], 5: [[0.26, 0.26], [0.74, 0.26], [0.5, 0.5], [0.26, 0.74], [0.74, 0.74]],
+    6: [[0.28, 0.24], [0.72, 0.24], [0.28, 0.5], [0.72, 0.5], [0.28, 0.76], [0.72, 0.76]],
+  };
+  return el('g', { transform: rot ? `rotate(${rot} ${f1(x + s / 2)} ${f1(y + s / 2)})` : undefined }, [
+    card('rect', { x, y, width: s, height: s, rx: f1(s * 0.2) }),
+    ...P[n].map(([u, v]) => el('circle', { cx: f1(x + u * s), cy: f1(y + v * s), r: f1(s * 0.08), class: 'cb-dot' })),
+  ]);
 }
 
 /** Bar chart: bars on a baseline; `hi` is the index drawn in the accent. */
@@ -195,9 +270,9 @@ function heroIcon(id: string, i: number, cx: number, cy: number) {
   const back = el('circle', { cx, cy, r: 50, class: 'cb-card' });
   let body = '';
   if (i === 0) body = wheel(id, cx, cy, 28, false);
-  if (i === 1) body = coupon(cx - 30, cy - 26, 52, 30) + coupon(cx - 18, cy - 4, 52, 30, true);
+  if (i === 1) body = playingCard(cx - 30, cy - 26, 32, 46, 0, false, false, -10) + playingCard(cx - 4, cy - 22, 32, 46, 1, true, false, 8);
   if (i === 2) body = phone(cx - 17, cy - 30, 34, 60, 3, 1);
-  if (i === 3) body = bars(cx - 24, cy + 22, 10, 6, [18, 34, 26], 1);
+  if (i === 3) body = chips(cx - 16, cy + 18, 11, 3) + chips(cx + 14, cy + 18, 11, 6, true);
   return back + body + ring;
 }
 
@@ -235,6 +310,10 @@ function hero(id: string) {
     ]))),
     // the promotion that gets split: a coupon on the left
     coupon(150, 236, 210, 116, true),
+    chips(200, 520, 46, 5),
+    chips(300, 540, 46, 3, true),
+    die(360, 470, 62, 5, -12),
+    die(440, 500, 54, 3, 16),
     el('line', { x1: 360, y1: ENTRY[1] + 4, x2: ENTRY[0], y2: ENTRY[1], class: 'cb-ray-glow' }),
     el('line', { x1: 360, y1: ENTRY[1] + 4, x2: ENTRY[0], y2: ENTRY[1], class: 'cb-ray' }),
     el('line', { x1: ENTRY[0], y1: ENTRY[1], x2: EXIT[0], y2: EXIT[1], class: 'hb-ray-mid' }),
@@ -273,7 +352,7 @@ function chain(id: string) {
     card('rect', { x: cab.x, y: cab.y, width: cab.w, height: cab.h, rx: 16 }),
     solid(id, 'rect', { x: cab.x + 14, y: cab.y + 14, width: cab.w - 28, height: 46, rx: 8 }),
     ...[0, 1, 2].map((i) => card('rect', { x: cab.x + 20 + i * 38, y: cab.y + 92, width: 30, height: 60, rx: 5 }, i === 1)),
-    el('line', { x1: cab.x + 14, y1: cab.y + 122, x2: cab.x + cab.w - 14, y2: cab.y + 122, class: 'cb-line' }),
+    ...[0, 1, 2].map((i) => suit([1, 0, 2][i], cab.x + 35 + i * 38, cab.y + 122, 9, i === 1 ? 'cb-suit is-accent' : 'cb-suit')),
     el('rect', { x: cab.x + 30, y: cab.y + 200, width: cab.w - 60, height: 14, rx: 7, class: 'cb-line' }),
     el('line', { x1: cab.x + cab.w + 10, y1: cab.y + 60, x2: cab.x + cab.w + 10, y2: cab.y + 150, class: 'cb-edge' }),
     el('circle', { cx: cab.x + cab.w + 10, cy: cab.y + 52, r: 10, class: 'cb-dot is-accent' }),
@@ -331,15 +410,13 @@ function rules(id: string) {
     el('line', { x1: front.x + 30, y1: ROW_Y, x2: SHEETS[0].x + SHEET_W + 40, y2: ROW_Y, class: 'cb-thread' }),
     el('circle', { cx: front.x + SHEET_W - 22, cy: gapY, r: 9, class: 'cb-accent-fill' }),
     el('circle', { cx: front.x + SHEET_W - 22, cy: gapY, r: 9, class: 'cb-pulse' }),
-    // the wheel: a rare top slice, its light pours down onto the coin stack
+    // the roulette wheel: the ball in the rare top pocket, its light pours down onto the chips it costs
     el('line', { x1: WHEEL.cx, y1: WHEEL.cy, x2: WHEEL.cx - 90, y2: 480, class: 'cb-edge' }),
     el('line', { x1: WHEEL.cx, y1: WHEEL.cy, x2: WHEEL.cx + 90, y2: 480, class: 'cb-edge' }),
     beam(id, `${WHEEL.cx - 10},${WHEEL.cy - WHEEL.r + 4} ${WHEEL.cx + 10},${WHEEL.cy - WHEEL.r + 4} ${WHEEL.cx + 150},${600} ${WHEEL.cx + 30},${600}`, 'd', 'var(--pb-acc)', true),
     wheel(id, WHEEL.cx, WHEEL.cy, WHEEL.r, false),
-    ...Array.from({ length: 6 }, (_, i) => el('g', {}, [
-      el('ellipse', { cx: WHEEL.cx + 90, cy: 610 - i * 18, rx: 64, ry: 15, class: 'cb-coin' }),
-      el('ellipse', { cx: WHEEL.cx + 90, cy: 610 - i * 18, rx: 42, ry: 9, class: 'cb-line' }),
-    ])),
+    chips(WHEEL.cx + 90, 600, 64, 7, true),
+    chips(WHEEL.cx + 220, 610, 54, 4),
   ]);
 }
 
@@ -358,8 +435,8 @@ function deals(id: string) {
   DEAL_Y.forEach((_, i) => targets.push(DEAL_PASS.includes(i) ? OPENINGS[p++] : BLOCK_AT[b++]));
   const bar = (y0: number, y1: number) => solid(id, 'rect', { x: FILTER_X - 12, y: y0, width: 24, height: y1 - y0, rx: 4 });
   return plate(id, [FILTER_X, 340], [
-    ...DEAL_Y.map((y, i) => ray(310, y + 2, FILTER_X - 14, targets[i], !DEAL_PASS.includes(i))),
-    ...DEAL_Y.map((y, i) => coupon(110, y - 26, 190, 56, DEAL_PASS.includes(i), !DEAL_PASS.includes(i))),
+    ...DEAL_Y.map((y, i) => ray(300, y + 2, FILTER_X - 14, targets[i], !DEAL_PASS.includes(i))),
+    ...DEAL_Y.map((y, i) => playingCard(150 + (i % 2) * 70, y - 52, 76, 104, i % 4, DEAL_PASS.includes(i), !DEAL_PASS.includes(i), i % 2 ? 7 : -7)),
     bar(110, OPENINGS[0] - 18),
     bar(OPENINGS[0] + 18, OPENINGS[1] - 18),
     bar(OPENINGS[1] + 18, 580),
@@ -407,7 +484,7 @@ function service(id: string) {
     phone(PH.x, PH.y, PH.w, PH.h, 4, PH_STEP),
     card('rect', { x: PH.x + 50, y: PH.y + 90, width: 120, height: 80, rx: 12 }),
     el('path', { d: `M ${PH.x + 50} ${PH.y + 112} H ${PH.x + 170}`, class: 'cb-line' }),
-    card('rect', { x: PH.x + 130, y: PH.y + 120, width: 40, height: 28, rx: 6 }, true),
+    chips(PH.x + 150, PH.y + 136, 22, 3, true),
     el('circle', { cx: f1(target[0]), cy: f1(target[1]), r: 20, class: 'cb-accent-soft is-bright' }),
     el('circle', { cx: f1(target[0]), cy: f1(target[1]), r: 10, class: 'cb-pulse' }),
   ]);
@@ -434,7 +511,8 @@ function evidence(id: string) {
     card('rect', { x: REPORT.x, y: REPORT.y, width: REPORT.w, height: REPORT.h, rx: 12 }),
     el('line', { x1: REPORT.x + 24, y1: REPORT.y + 44, x2: REPORT.x + 200, y2: REPORT.y + 44, class: 'cb-line' }),
     el('line', { x1: REPORT.x + 24, y1: REPORT.y + 70, x2: REPORT.x + 140, y2: REPORT.y + 70, class: 'cb-line' }),
-    bars(REPORT.x + 40, REPORT.y + REPORT.h - 40, 40, 16, [90, 150, 110, 210, 170], 3),
+    ...[9, 15, 11, 22, 17].map((n, i) => chips(REPORT.x + 62 + i * 52, REPORT.y + REPORT.h - 52, 22, n, i === 3)),
+    el('line', { x1: REPORT.x + 26, y1: REPORT.y + REPORT.h - 38, x2: REPORT.x + REPORT.w - 26, y2: REPORT.y + REPORT.h - 38, class: 'cb-edge' }),
     ...[200, 260, 320].map((y) => ray(REPORT.x + REPORT.w, y, EV_LENS.x - 30, y)),
     beam(id, `${EV_LENS.x + 10},${EV_LENS.top + 40} ${FRAC[0]},${FRAC[1] - 4} ${FRAC[0]},${FRAC[1] + 4} ${EV_LENS.x + 10},${EV_LENS.bottom - 40}`, 'r', undefined, true),
     el('path', { d: lens, fill: `url(#${id}-hatch)`, class: 'cb-body' }),
