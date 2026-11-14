@@ -27,9 +27,10 @@ const IGamingSummaryPage: React.FC<{
   homeHref: string;
   fullHref: string;
   casesHref: string;
+  atlasHref: string;
   guideLinks: Array<{ guide: IGamingGuide; href: string }>;
   controls: React.ReactNode;
-}> = ({ language, homeHref, fullHref, casesHref, guideLinks, controls }) => {
+}> = ({ language, homeHref, fullHref, casesHref, atlasHref, guideLinks, controls }) => {
   const t = (value: IGamingLocalized) => value[language];
   const page = IGAMING_SUMMARY;
   const [unlocked, setUnlocked] = React.useState(false);
@@ -107,6 +108,9 @@ const IGamingSummaryPage: React.FC<{
             </a>
             <a href={casesHref} className="igaming-point-more">
               {t(page.openCases)} <span aria-hidden="true">→</span>
+            </a>
+            <a href={atlasHref} className="igaming-point-more">
+              {t(page.openAtlas)} <span aria-hidden="true">→</span>
             </a>
             {guideLinks.map(({ guide, href }) => (
               <a key={guide.path} href={href} className="igaming-point-more">

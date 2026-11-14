@@ -726,6 +726,7 @@ export const IGAMING_SUMMARY = {
   ),
   openFull: L('Open the full starter pack', '打开完整版'),
   openCases: L('Read the field notes', '看实战案例'),
+  openAtlas: L('Open the knowledge atlas: 11 methods on one map', '打开知识地图：十一个方法画在一张图上'),
   casesLine: L(
     'Or read the anonymised case studies: what these ideas looked like in the actual work.',
     '或者看匿名实战案例：这些道理在真实工作里长什么样。',

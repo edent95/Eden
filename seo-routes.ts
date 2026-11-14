@@ -51,7 +51,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-11-12';
+export const SITE_CONTENT_LASTMOD = '2026-11-14';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -413,6 +413,21 @@ export const ROUTE_SEO: RouteSeo[] = [
     desc: {
       en: 'Anonymised iGaming case studies from operator-side and provider-side work: the problem, the investigation, what got built, and what each case does not prove.',
       zh: '来自 operator 与 provider 两边工作的匿名 iGaming 案例：问题是什么、怎么排查、做了什么，以及每个案例不能证明什么。',
+    },
+    og: 'igaming-cases',
+  },
+  {
+    path: '/igaming/atlas',
+    datePublished: '2026-11-14',
+    dateModified: '2026-11-14',
+    priority: '0.6',
+    title: {
+      en: 'iGaming Knowledge Atlas: 11 Working Methods | Eden Tan',
+      zh: 'iGaming 知识地图：十一个工作方法 | Eden Tan',
+    },
+    desc: {
+      en: 'Eleven iGaming working methods on one map: promotion rules, provider offers, player journeys, reporting and evidence, plus seven decision questions.',
+      zh: '把运营商与供应商两端的 iGaming 工作方法画在一张图上：促销规则、供应商方案、用户旅程、报表口径与证据，附七个决策问题。',
     },
     og: 'igaming-cases',
   },

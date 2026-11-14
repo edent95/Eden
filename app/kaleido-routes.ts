@@ -16,6 +16,8 @@ export const KALEIDO_ROUTES: Record<string, KaleidoSpec | null> = {
   '/etreporthub-sales': C({ primary: { kind: 'maurer', n: 6, deg: 71 }, family: { kind: 'hypo', R: 5, r: 2, d: 3 }, copies: 8 }),
   '/igaming': C({ primary: { kind: 'hypo', R: 10, r: 3, d: 6 }, family: { kind: 'epi', R: 7, r: 2, d: 3 }, copies: 6 }),
   '/igaming/full': C({ primary: { kind: 'epi', R: 11, r: 4, d: 7 }, family: { kind: 'hypo', R: 8, r: 3, d: 2 }, copies: 6 }),
+  // The atlas hero is itself a rosette; one emblem per screen.
+  '/igaming/atlas': null,
   '/igaming/cases': C({ primary: { kind: 'maurer', n: 5, deg: 97 }, family: { kind: 'hypo', R: 6, r: 1, d: 2.5 }, copies: 7 }),
   '/dr-racing': C({ primary: { kind: 'hypo', R: 9, r: 4, d: 6 }, family: { kind: 'epi', R: 4, r: 1, d: 1.5 }, copies: 8 }),
   '/poker': C({ primary: { kind: 'epi', R: 7, r: 4, d: 6 }, family: { kind: 'hypo', R: 11, r: 3, d: 5 }, copies: 5 }),
