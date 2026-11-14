@@ -35,11 +35,11 @@ export const ATLAS_CARDS: AtlasCard[] = [
     title: L('One offer, every language, the same rule', '一个 promotion，每种语言都是同一条规则'),
     gist: L(
       'A promotion is not a poster. The copy players read, the back-office setup, the support script, the reward calculation and the payout must all say the same thing, in every language.',
-      '一项优惠不是一张海报。玩家看到的文案、后台配置、客服说明、奖励计算与发放，在每一种语言里都必须是同一件事。',
+      '一项 promotion 不是一张海报。玩家看到的文案、back office 配置、CS 说明、奖励计算与发放，在每一种语言里都必须是同一件事。',
     ),
     picture: L(
       'Think of two coupons: one says "ten purchases in your birthday month", the other "ten purchases in the past year". That is not a translation style; it decides who qualifies. Drafts in three languages can each read smoothly and still disagree on eligibility, game category or percentage.',
-      '想象两张优惠券：一张写「生日当月买十次」，另一张写「过去一年买十次」。这不是翻译风格不同，而是决定了谁有资格。三种语言的稿子可以各自都很通顺，却在资格、游戏类别或比例上互相矛盾。',
+      '想象两张 promotion 券：一张写「生日当月买十次」，另一张写「过去一年买十次」。这不是翻译风格不同，而是决定了谁有资格。三种语言的稿子可以各自都很通顺，却在资格、游戏类别或比例上互相矛盾。',
     ),
     checks: [
       L('Line the languages up field by field: identity and region → start and end → eligibility and exclusions → minimum, cap and calculation base → products and wallets → wagering → claim, verification and payout → expiry and disputes.', '把各语言逐项排在同一行比：campaign 与地区 → 起止时间 → 资格与排除 → 最低金额、上限与计算基数 → 产品与 wallet → wagering requirement → 申请、核验与发放 → 过期与争议。'),
@@ -54,7 +54,7 @@ export const ATLAS_CARDS: AtlasCard[] = [
     title: L('"The provider supports it" is only step one', '「provider 支持」只是第一步'),
     gist: L(
       'A feature existing is not the same as it being usable. Ask separately: does the current integration support it, is this merchant entitled, which placement or time slot does it need, can the commercial terms all hold at once, who approves, and who delivers after launch.',
-      '功能存在不等于能用。要分开问：现有接入能不能用、这个商户有没有权限、需要哪个位置或时段、商业条件能不能同时成立、谁批准、上线后谁负责兑现。',
+      '功能存在不等于能用。要分开问：现有接入能不能用、这个 merchant 有没有权限、需要哪个位置或时段、商业条件能不能同时成立、谁批准、上线后谁负责兑现。',
     ),
     picture: L(
       'Picture a shopping mall window: two brands both want the single main entrance spot. Each deal is attractive on its own; you still cannot promise both.',
@@ -73,11 +73,11 @@ export const ATLAS_CARDS: AtlasCard[] = [
     title: L('Define the player state before you message anyone', '先定义 user 状态，再决定要不要联系'),
     gist: L(
       'Registered, first deposit, active, gone quiet, asking for help: these are different events. "Do not contact" is a valid branch, not a failure.',
-      '注册、首存、活跃、长期未回访、提出服务问题，是不同的事件。「不联系」也是一个正确的分支，不是失败。',
+      '注册、FTD、活跃、长期未回访、提出服务问题，是不同的事件。「不联系」也是一个正确的分支，不是失败。',
     ),
     picture: L(
       'Journey maps that put the observation window, email events, support follow-up and rewards on one page turn what each team privately knows into states everyone can discuss.',
-      '把观察窗口、邮件事件、客服跟进和奖励画在同一张图上，就把各团队各自掌握的信息变成了大家能一起讨论的状态。',
+      '把观察窗口、邮件事件、CS 跟进和奖励画在同一张图上，就把各团队各自掌握的信息变成了大家能一起讨论的状态。',
     ),
     checks: [
       L('Trigger event and data source.', '触发事件与 data 来源。'),
@@ -93,11 +93,11 @@ export const ATLAS_CARDS: AtlasCard[] = [
     title: L('A report label does not guarantee the formula', 'report 上的名字不保证公式正确'),
     gist: L(
       'Before reading a number, trace its numerator, denominator, currency, time window, sign and raw data range. A column called ROI may not be a profit return at all.',
-      '看一个数之前，先追它的分子、分母、币种、时间窗、正负号和原始数据范围。一栏叫 ROI 的数字，可能根本不是利润回报。',
+      '看一个数之前，先追它的分子、分母、币种、时间窗、正负号和原始 data 范围。一栏叫 ROI 的数字，可能根本不是利润回报。',
     ),
     picture: L(
       'Registrations, first deposits, activity, deposits, stakes, rewards and channel cost often sit on one sheet. Ratios get familiar names; month-on-month comparisons quietly include an unfinished month or a second currency.',
-      '注册、首存、活跃、存款、投注、奖励和渠道成本经常放在同一张表上。比率被安上熟悉的名字；跨月比较悄悄包含了没结束的月份或另一种货币。',
+      '注册、FTD、活跃、存款、投注、奖励和 channel 成本经常放在同一张表上。比率被安上熟悉的名字；跨月比较悄悄包含了没结束的月份或另一种货币。',
     ),
     checks: [
       L('Metric card: the question it answers, formula, unit and currency, period, de-duplication rule, data owner, and the usual misreading.', 'metric card：回答什么问题、计算式、单位和币种、统计周期、去重规则、data 负责人、常见误读。'),
@@ -112,11 +112,11 @@ export const ATLAS_CARDS: AtlasCard[] = [
     title: L('Wallets, rewards and support: "where is it now?"', 'wallet、奖励与 CS：「现在到哪一步了」'),
     gist: L(
       'For the player a campaign is not finished when the back office is configured. They need to know which wallet holds the money, when the reward lands, why they cannot withdraw yet, and who fixes an error.',
-      '对玩家来说，后台设好了活动也没有结束。他需要知道钱在哪个钱包、奖励什么时候到、为什么还不能提款、出错了找谁。',
+      '对玩家来说，back office 设好了 campaign 也没有结束。他需要知道钱在哪个 wallet、奖励什么时候到、为什么还不能提款、出错了找谁。',
     ),
     picture: L(
       'Page plans split registration, deposit, transfer, withdrawal, bet history and reward status into screens; the support Q&A lists the same moments as complaints. Read together, a marketing promise turns into a chain of player actions and explanations.',
-      '页面规划把注册、存款、转点、提款、投注记录、奖励状态拆成一个个页面；客服问答把同样的时刻列成一条条投诉。两者对照，营销承诺就变成了一连串用户操作和服务解释。',
+      '页面规划把注册、存款、转点、提款、投注记录、奖励状态拆成一个个页面；CS 问答把同样的时刻列成一条条投诉。两者对照，营销承诺就变成了一连串 user 操作和服务解释。',
     ),
     checks: [
       L('Every important state answers: where am I, what happens next, how long, who can help.', '每个重要状态都回答：我在哪一步、下一步是什么、要等多久、谁能处理。'),
@@ -131,11 +131,11 @@ export const ATLAS_CARDS: AtlasCard[] = [
     title: L('Channels and content have levels of evidence', 'channel 与内容的证据层级'),
     gist: L(
       'Reach, click, registration, first deposit and long-term activity are different levels. Content is the same: "we tested this" must answer how, when, and where the result is.',
-      '触达、点击、注册、首存、长期活跃是不同层级。内容也一样：写了「我们测试过」，就要说得出怎么测、何时测、结果在哪。',
+      '触达、点击、注册、FTD、长期活跃是不同层级。内容也一样：写了「我们测试过」，就要说得出怎么测、何时测、结果在哪。',
     ),
     picture: L(
       'Weekly reports mixed paid ads, SMS, messaging apps, email and calls. One page logged bounced email; another separated clicks from registrations. Clean the data before you compare channels.',
-      '周报里混着广告、短信、即时通讯、邮件和电话。一页记着退信问题，另一页把点击和注册分开记。先处理数据质量，再比较渠道。',
+      '周报里混着广告、短信、即时通讯、邮件和电话。一页记着退信问题，另一页把点击和注册分开记。先处理 data 质量，再比较 channel。',
     ),
     checks: [
       L('Name the level a number belongs to before comparing two channels.', '比较两个 channel 之前，先说清数字属于哪一层。'),
@@ -150,11 +150,11 @@ export const ATLAS_CARDS: AtlasCard[] = [
     title: L('Cross-team delivery: every hand-off must be checkable', '跨团队交付：每个交接点都要能验证'),
     gist: L(
       'From idea to something a player can claim, content, calculation, design, back office, support, payments and the public page hand over in order. Each hand-off needs a verifiable input and a done state.',
-      '从想法到玩家能领取，内容、计算、设计、后台、客服、支付和对外页面要按顺序交接。每个交接点都要有可验证的输入和完成状态。',
+      '从想法到玩家能领取，内容、计算、设计、back office、CS、支付和对外页面要按顺序交接。每个交接点都要有可验证的输入和完成状态。',
     ),
     picture: L(
       'A monthly routine ran research → calculation → copy → design → upload → back-office setup, with support, payments, third parties or logistics depending on the reward. Exhibition checklists put materials, site, video, owner and deadline on one page.',
-      '月度流程是研究 → 计算 → 写稿 → 设计 → 上传 → 后台设置，再按奖励类型交给客服、支付、第三方或物流。展会清单把物料、网站、视频、负责人和截止日放在一页。',
+      '月度流程是研究 → 计算 → 写稿 → 设计 → 上传 → back office 设置，再按奖励类型交给 CS、支付、第三方或物流。展会清单把物料、网站、视频、负责人和截止日放在一页。',
     ),
     checks: [
       L('Approved rule version and artwork version.', '已批准的规则版本与图文版本。'),
@@ -170,11 +170,11 @@ export const ATLAS_CARDS: AtlasCard[] = [
     title: L('A prototype is not a result', 'prototype 不等于成果'),
     gist: L(
       'Plan, working prototype, approved rule, live record and checked result are five different kinds of evidence. A prototype is valuable because it exposes conflicts before money is spent; it is still not an outcome.',
-      '计划、可操作原型、获批规则、上线记录、核对过的结果，是五种不同的证据。原型的价值在于花钱之前就暴露冲突，但它本身不是成果。',
+      '计划、可操作 prototype、获批规则、上线记录、核对过的结果，是五种不同的证据。prototype 的价值在于花钱之前就暴露冲突，但它本身不是成果。',
     ),
     picture: L(
       'A prototype can show cost and reward maths, sharing and a mini-game while its starting balance and thresholds disagree and its back-office binding is still a TODO. A landing brief asked for a participant counter that always went up. Both are lessons in stopping unsupported numbers before launch.',
-      '一个原型可以展示成本与奖励计算、分享机制和小游戏，同时起始余额和门槛互相矛盾、后台绑定还是 TODO。一份落地页需求要求展示只会往上涨的参与人数。两者都是「上线前挡住无来源数字」的教材。',
+      '一个 prototype 可以展示成本与奖励计算、分享机制和小游戏，同时起始余额和门槛互相矛盾、back office 绑定还是 TODO。一份 landing page 需求要求展示只会往上涨的参与人数。两者都是「上线前挡住无来源数字」的教材。',
     ),
     checks: [
       L('Evidence ladder: idea → prototype → approved rule → live record → checked result.', '证据梯度：想法 → prototype → 获批规则 → 上线记录 → 核对过的结果。'),
@@ -209,11 +209,11 @@ export const ATLAS_CARDS: AtlasCard[] = [
     title: L('The structure of a brand health check', '品牌运营体检的结构'),
     gist: L(
       'Diagnosing a brand runs in one order: current data → segments → operations experience → ranked recommendations → timeline and team KPIs. Every page answers one decision.',
-      '诊断一个品牌按固定顺序：现状数据 → 分段 → 运营体验 → 排序后的建议 → 时间线与各团队 KPI。每一页回答一个决定。',
+      '诊断一个品牌按固定顺序：现状 data → 分段 → 运营体验 → 排序后的建议 → 时间线与各团队 KPI。每一页回答一个决定。',
     ),
     picture: L(
       'A fifty-page review looked at two markets separately: registration versus first deposit, unique depositors, deposits and withdrawals, game-type preference and contribution, spending power, segment call lists, promotion results, and processing times, then proposed channels, site changes, promotions and KPIs per team.',
-      '一份五十多页的报告把两个市场分开看：注册与首存、独立存款人数、存提款、游戏类型偏好与贡献、消费力、分群名单、促销结果、处理时长，再提出渠道、网站、促销建议和各团队 KPI。',
+      '一份五十多页的报告把两个市场分开看：注册与 FTD、独立存款人数、存提款、游戏类型偏好与贡献、消费力、segment 名单、促销结果、处理时长，再提出 channel、网站、促销建议和各团队 KPI。',
     ),
     checks: [
       L('Current state: where does the funnel drop most?', '现状：funnel 哪一段掉得最多？'),
@@ -229,11 +229,11 @@ export const ATLAS_CARDS: AtlasCard[] = [
     title: L('Six offers in, two offers out', '六选二：别把所有 promotion 都给 merchant'),
     gist: L(
       'When a provider hands over six promotion offers, pass two to the merchant. Too many options and the merchant stalls, or says yes to everything and executes none of it well.',
-      '供应商给了六个推广方案，只挑两个给商户。选项太多，商户会拖着不决定，或者全部想要、最后哪个都做不好。',
+      'provider 给了六个 promotion offer，只挑两个给 merchant。选项太多，merchant 会拖着不决定，或者全部想要、最后哪个都做不好。',
     ),
     picture: L(
       'A menu with sixty dishes freezes the table; a waiter who recommends two signatures gets an order. The person curating does half the merchant\'s thinking for them.',
-      '六十道菜的菜单让人点不下去；服务员推荐两道招牌，客人很快就决定了。做筛选的人替商户先做掉一半的判断。',
+      '六十道菜的菜单让人点不下去；服务员推荐两道招牌，客人很快就决定了。做筛选的人替 merchant 先做掉一半的判断。',
     ),
     checks: [
       L('Fit: the merchant\'s players, market and currency.', '合适：merchant 的玩家、市场和货币。'),
@@ -278,7 +278,7 @@ export const ATLAS_PAGE = {
   claimFoil: L('find the gaps.', '先找到断点。'),
   standfirst: L(
     'Eleven working methods from operator and provider work. The offers are history. The method still works.',
-    '十一个工作方法，来自运营商与供应商两端。旧优惠已成历史，方法还能用。',
+    '十一个工作方法，来自 operator 与 provider 两端。旧 promotion 已成历史，方法还能用。',
   ),
   ctaPrimary: L('Open the map', '打开地图'),
   ctaSecondary: L('See services', '看服务'),
@@ -300,7 +300,7 @@ export const ATLAS_PAGE = {
   cardLabels: { practice: L('How it shows up', '在工作里的样子'), checks: L('Check before you commit', '承诺前要核对'), limit: L('What this does not prove', '这张卡不能证明什么'), services: L('Used in', '用在哪些服务'), eras: L('From', '出自哪个阶段'), close: L('Close', '关闭') },
   boundaries: L(
     'What I do not take on: tactics aimed at players who are losing, fabricated social proof, legal or licensing opinions, or raw player data. Former employers, brands and providers are never named.',
-    '我不接的事：针对输钱玩家的打法、编造的社会证明、法律或牌照意见、玩家原始数据。不点名任何前雇主、品牌或供应商。',
+    '我不接的事：针对输钱玩家的打法、编造的社会证明、法律或牌照意见、玩家原始 data。不点名任何前雇主、品牌或 provider。',
   ),
   next: L('Read the anonymised case studies', '读匿名案例'),
   starter: L('Back to the starter pack', '回到入门包'),
