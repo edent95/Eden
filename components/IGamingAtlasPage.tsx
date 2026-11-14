@@ -15,6 +15,7 @@ import {
 } from './igaming-atlas-content';
 import IGamingAtlasCharts from './IGamingAtlasCharts';
 import AtlasEngraving from './AtlasEngraving';
+import AtlasScene, { type AtlasSceneKind } from './AtlasScene';
 
 type Lang = 'en' | 'zh';
 
@@ -28,6 +29,7 @@ type Lang = 'en' | 'zh';
 
 const cardById = (id: string) => ATLAS_CARDS.find((c) => c.id === id);
 const stageOf = (id: string) => ATLAS_STAGES.find((s) => s.ids.includes(id)) ?? ATLAS_STAGES[ATLAS_STAGES.length - 1];
+const TOPIC_SCENE: Record<string, AtlasSceneKind> = { promise: 'balance', partner: 'hourglass', player: 'beacon', evidence: 'loupe' };
 const pad = (n: number) => String(n).padStart(2, '0');
 
 /** Hypotrochoid: the guilloché line of banknote engraving. Points only, never shown as text. */
@@ -277,6 +279,7 @@ const IGamingAtlasPage: React.FC<{
             <ol className="atlas-topics">
               {ATLAS_TOPICS.map((topic, ti) => (
                 <li key={topic.key} className="atlas-topic">
+                  {TOPIC_SCENE[topic.key] ? <AtlasScene kind={TOPIC_SCENE[topic.key]} /> : null}
                   <div className="atlas-topic-head">
                     <span className="atlas-stage-seal" aria-hidden="true">{String.fromCharCode(65 + ti)}</span>
                     <div>
