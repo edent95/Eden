@@ -1,58 +1,35 @@
-/* /igaming/atlas Fig 1: the offer sorter (anatomy skill) drawn in the page's engraved ink.
-   The anatomy kit's tone variables are mapped onto the /igaming print tokens, and the side
-   faces are filled with hatch patterns (densest on the darkest face) instead of flat greys,
-   so the isometric machine reads as an engraving. Geometry: scripts/iso/build-atlas-sorter.mjs. */
+/* /igaming/atlas Fig 1: "six in, two out" as an optical night scene (card table + lamp).
+   Scene markup comes from AtlasOptical (`pick`); this file styles the live states and the
+   figure frame around it. Brand: one ink plus the gold accent, colour only for the two picks. */
 
-.atlas-sorter {
-  --anatomy-paper: var(--ig-card);
-  --anatomy-face: color-mix(in srgb, var(--ig-foil) 22%, var(--ig-card));
-  --anatomy-top: color-mix(in srgb, var(--ig-line) 5%, var(--ig-card));
-  --anatomy-lit-top: color-mix(in srgb, var(--ig-foil) 40%, var(--ig-card));
-  --anatomy-lit-shade: color-mix(in srgb, var(--ig-foil) 24%, var(--ig-card));
-  --anatomy-hi: var(--ig-line);
-  --anatomy-mid: color-mix(in srgb, var(--ig-line) 72%, transparent);
-  --anatomy-lo: color-mix(in srgb, var(--ig-line) 40%, transparent);
-  --anatomy-faint: color-mix(in srgb, var(--ig-line) 18%, transparent);
-  --anatomy-lit: var(--ig-foil);
-  --anatomy-halo: var(--ig-line);
-  --anatomy-halo-opacity: 0.18;
-  --anatomy-dot: var(--ig-line);
-  --anatomy-weight: 0.7px;
+.atlas-pick-stage {
+  display: grid;
+  gap: 10px;
 }
 
-.atlas-sorter-plate {
-  position: relative;
-  padding: clamp(28px, 4vw, 44px) clamp(8px, 2vw, 24px) 12px;
-  border-radius: 20px;
-  background:
-    radial-gradient(70% 70% at 50% 45%, transparent 55%, color-mix(in srgb, var(--ig-line) 8%, transparent) 100%),
-    repeating-linear-gradient(0deg, color-mix(in srgb, var(--ig-line) 5%, transparent) 0 1px, transparent 1px 6px),
-    var(--ig-card);
-  box-shadow: inset 0 0 0 1px var(--ig-line-2), inset 0 0 0 6px var(--ig-card), inset 0 0 0 7px var(--ig-line-3);
+.atlas-optical.is-pick {
+  aspect-ratio: 16 / 7;
 }
 
-.atlas-sorter-corners {
-  position: absolute;
-  top: 16px;
-  left: 22px;
-  right: 22px;
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  color: var(--theme-text-secondary);
-}
+/* lamp beams: only the card being checked is lit */
+.atlas-optical .pk-beam { opacity: 0; transition: opacity 0.35s ease; }
+.atlas-optical .pk-beam[data-on='1'] { opacity: 1; }
 
-.atlas-sorter-stage svg {
-  display: block;
-  width: 100%;
-  height: auto;
-  overflow: visible;
-}
+.atlas-optical .pk-shadow { fill: rgba(0, 0, 0, 0.35); }
+.atlas-optical .pk-card { transition: opacity 0.5s ease; }
+.atlas-optical .pk-card[data-state='wait'] { opacity: 0.72; }
+.atlas-optical .pk-card[data-state='out'] { opacity: 0.3; }
+.atlas-optical .pk-card[data-state='check'] .cb-edge,
+.atlas-optical .pk-card[data-state='in'] .cb-edge { stroke: var(--pb-acc); filter: drop-shadow(0 0 10px var(--pb-acc)); }
+.atlas-optical .pk-card[data-state='in'] .cb-suit { fill: var(--pb-acc); filter: drop-shadow(0 0 8px var(--pb-acc)); }
+.atlas-optical .pk-dot { fill: none; stroke: color-mix(in srgb, var(--pb-gold) 35%, transparent); stroke-width: 1.5; }
+.atlas-optical .pk-dot[data-on='1'] { fill: var(--pb-gold); stroke: var(--pb-gold); }
+.atlas-optical .pk-card[data-state='wait'] .pk-dot,
+.atlas-optical .pk-card[data-state='in'] .pk-dot { opacity: 0; }
 
-.atlas-sorter-read {
+.atlas-pick-read {
   min-height: 1.5em;
-  margin: 4px 8px 0;
+  margin: 0;
   font-family: var(--font-mono);
   font-size: 0.82rem;
   font-weight: 700;
@@ -60,7 +37,7 @@
   color: var(--theme-text-primary);
 }
 
-.atlas-sorter-gates {
+.atlas-pick-gates {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px 20px;
@@ -72,19 +49,25 @@
   color: var(--theme-text-secondary);
 }
 
-.atlas-sorter-gates li {
+.atlas-pick-gates li {
   display: grid;
   gap: 6px;
   padding-top: 10px;
   border-top: 1px solid var(--ig-line-3);
+  transition: color 0.25s ease, border-color 0.25s ease;
 }
 
-.atlas-sorter-dots {
+.atlas-pick-gates li[data-on='1'] {
+  color: var(--theme-text-primary);
+  border-top-color: var(--ig-foil);
+}
+
+.atlas-pick-dots {
   display: flex;
   gap: 4px;
 }
 
-.atlas-sorter-dots i {
+.atlas-pick-dots i {
   width: 6px;
   height: 6px;
   border-radius: 50%;
@@ -98,47 +81,16 @@
   color: var(--theme-text-secondary);
 }
 
-/* anatomy kit rules (subset of kit/iso.css), scoped to the figure */
-.atlas-sorter .iso-svg path,
-.atlas-sorter .iso-svg circle { vector-effect: non-scaling-stroke; }
-.atlas-sorter .iso-fill { fill: var(--anatomy-paper); stroke: none; }
-.atlas-sorter .iso-shade,
-.atlas-sorter .iso-top { stroke: none; }
-.atlas-sorter .iso-shade[data-shade="0"] { fill: url(#as-h0); }
-.atlas-sorter .iso-shade[data-shade="1"] { fill: url(#as-h1); }
-.atlas-sorter .iso-shade[data-shade="2"] { fill: url(#as-h2); }
-.atlas-sorter .iso-shade[data-shade="3"] { fill: url(#as-h3); }
-.atlas-sorter .iso-top { fill: var(--anatomy-top); }
-.atlas-sorter .iso-solid[data-seamless] > .iso-shade,
-.atlas-sorter .iso-solid[data-seamless] > .iso-top { stroke-width: 0.4; stroke-linejoin: round; stroke: var(--anatomy-top); }
-.atlas-sorter .as-hatch-ground { fill: var(--anatomy-paper); }
-.atlas-sorter .as-hatch-line { stroke-width: 0.45; stroke: var(--anatomy-lo); }
-.atlas-sorter .as-hatch-line[data-tone="hi"] { stroke: var(--anatomy-mid); }
-.atlas-sorter .as-hatch-line[data-tone="mid"] { stroke: var(--anatomy-lo); }
-.atlas-sorter .as-hatch-line[data-tone="lo"] { stroke: var(--anatomy-faint); }
-.atlas-sorter .iso-halo { fill: var(--anatomy-halo); stroke: none; filter: blur(9px); opacity: var(--anatomy-halo-opacity); transform: translateY(3px); }
-.atlas-sorter .iso-line { fill: none; stroke: var(--anatomy-lo); stroke-width: var(--anatomy-weight); stroke-linecap: round; stroke-linejoin: round; }
-.atlas-sorter .iso-line[data-tone="hi"] { stroke: var(--anatomy-hi); }
-.atlas-sorter .iso-line[data-tone="mid"] { stroke: var(--anatomy-mid); }
-.atlas-sorter .iso-line[data-tone="faint"] { stroke: var(--anatomy-faint); }
-.atlas-sorter .iso-line[data-tone="lit"] { stroke: var(--anatomy-lit); }
-.atlas-sorter .iso-dots circle { fill: var(--anatomy-dot); stroke: none; opacity: 0.32; }
-.atlas-sorter .iso-dots[data-tone="hi"] circle { opacity: 0.85; }
-.atlas-sorter .iso-dots[data-tone="mid"] circle { opacity: 0.45; }
-.atlas-sorter .iso-dots[data-tone="lo"] circle { opacity: 0.22; }
-
-/* Live states: the one token being checked is the lit part; accepted tokens keep the foil. */
-.atlas-sorter [data-token][data-state="active"] .iso-top,
-.atlas-sorter [data-token][data-state="in"] .iso-top { fill: var(--anatomy-lit-top); }
-.atlas-sorter [data-token][data-state="active"] .iso-edge { stroke: var(--anatomy-lit); stroke-width: 1.1px; }
-.atlas-sorter [data-token][data-state="in"] .iso-edge { stroke: var(--anatomy-lit); }
-.atlas-sorter [data-token][data-state="out"] { opacity: 0.6; }
-.atlas-sorter [data-probe][data-state="check"] .as-probe-tip .iso-top { fill: var(--anatomy-lit-top); }
-.atlas-sorter [data-probe][data-state="fail"] .as-probe-tip .iso-top { fill: var(--ig-line); }
-.atlas-sorter [data-probe][data-state="fail"] .as-probe-tip .iso-edge { stroke: var(--anatomy-lit); }
-
 @media (max-width: 760px) {
-  .atlas-sorter-gates {
+  .atlas-pick-gates {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atlas-optical .pk-beam,
+  .atlas-optical .pk-card,
+  .atlas-pick-gates li {
+    transition: none;
   }
 }

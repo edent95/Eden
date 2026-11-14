@@ -1449,6 +1449,53 @@ button.atlas-tag:hover {
 }
 
 
+/* Method-card icons (AtlasIcons.tsx): golden 24 grid, one ink + one gold accent. The paper
+   colour cuts details into the ink, so it follows the surface the icon sits on. */
+.atlas-icon {
+  --gi-paper: var(--ig-card);
+  --gi-accent: var(--ig-foil);
+  flex: none;
+  color: var(--theme-text-primary);
+  overflow: visible;
+}
+
+.atlas-icon .gi-s { fill: currentColor; }
+.atlas-icon .gi-p { fill: var(--gi-paper); }
+.atlas-icon .gi-pl { stroke: currentColor; stroke-width: var(--gi-sw); }
+.atlas-icon .gi-l,
+.atlas-icon .gi-n,
+.atlas-icon .gi-al {
+  fill: none;
+  stroke-width: var(--gi-sw);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.atlas-icon .gi-l { stroke: currentColor; }
+.atlas-icon .gi-n { stroke: var(--gi-paper); }
+.atlas-icon .gi-n.thin { stroke-width: 1; }
+.atlas-icon .gi-a { fill: var(--gi-accent); }
+.atlas-icon .gi-al { stroke: var(--gi-accent); }
+
+/* Dark: the ink is light, so a light gold on it washes out — use a deeper gold (gold sits on a dark block in light, on a light block in dark). */
+:root[data-theme="dark"] .atlas-icon {
+  --gi-accent: color-mix(in srgb, var(--ig-foil) 55%, #6b4210);
+}
+
+.atlas-tile-mark,
+.atlas-drawer-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.atlas-drawer-mark .atlas-kicker {
+  margin: 0;
+}
+
+.atlas-drawer .atlas-icon {
+  --gi-paper: var(--ig-paper);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .igaming-atlas *,
   .igaming-atlas *::before,

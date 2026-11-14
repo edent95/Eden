@@ -20,10 +20,13 @@ import React from 'react';
  *             four hand-off check rings.
  * - service   C, cards 03 + 05: a phone with a wallet and a reward progress track; a support
  *             headset and the back-office server shine on the same step (one story).
+ * - pick      Fig 1, card 11: six offer cards on a table; a lamp checks them one at a time; a card
+ *             that fails is set aside with dots for the question that stopped it; two light up.
+ *             Static markup with data hooks; IGamingAtlasPick.tsx moves the light.
  * - evidence  D, cards 04 + 08: a report's tallest bar is focused by a lens into a fraction
  *             (numerator over denominator), then climbs a five-step evidence ladder.
  */
-export type AtlasOpticalKind = 'hero' | 'chain' | 'rules' | 'deals' | 'service' | 'evidence';
+export type AtlasOpticalKind = 'hero' | 'chain' | 'rules' | 'deals' | 'service' | 'evidence' | 'pick';
 
 const VB_W = 1600;
 const VB_H = 700;
@@ -530,9 +533,45 @@ function evidence(id: string) {
   ]);
 }
 
-const RENDER: Record<AtlasOpticalKind, (id: string) => string> = { hero, chain, rules, deals, service, evidence };
+// ───────── Fig 1 · pick: six offer cards on a table, a lamp checks each, two are picked ─────────
+export const PICK = {
+  lamp: [800, 92] as [number, number],
+  cards: Array.from({ length: 6 }, (_, i) => [260 + i * 216, 522] as [number, number]),
+  w: 120,
+  h: 168,
+};
+
+function pick(id: string) {
+  const [lx, ly] = PICK.lamp;
+  const flat = 0.55;
+  const cards = PICK.cards.map(([cx, cy], i) => {
+    const face = playingCard(-PICK.w / 2, -PICK.h / 2, PICK.w, PICK.h, i % 4);
+    const dots = Array.from({ length: 4 }, (_, k) => el('circle', { cx: cx - 27 + k * 18, cy: cy - 72, r: 6, class: 'pk-dot', 'data-k': k }));
+    return el('g', { 'data-card': i, class: 'pk-card' }, [
+      el('ellipse', { cx, cy: cy + 8, rx: 78, ry: 22, class: 'pk-shadow' }),
+      el('g', { transform: `translate(${cx} ${cy}) scale(1 ${flat})` }, face),
+      ...dots,
+    ]);
+  });
+  const beams = PICK.cards.map(([cx, cy], i) =>
+    el('g', { 'data-beam': i, class: 'pk-beam' }, beam(id, `${lx - 16},${ly + 30} ${lx + 16},${ly + 30} ${cx + 74},${cy + 20} ${cx - 74},${cy + 20}`, 'd', 'var(--pb-gold)', true)),
+  );
+  return plate(id, [lx, 300], [
+    el('ellipse', { cx: 800, cy: 560, rx: 720, ry: 112, class: 'cb-card' }),
+    el('ellipse', { cx: 800, cy: 560, rx: 720, ry: 112, class: 'cb-edge' }),
+    el('ellipse', { cx: 800, cy: 560, rx: 670, ry: 94, class: 'cb-line' }),
+    ...beams,
+    ...cards,
+    el('line', { x1: lx, y1: 0, x2: lx, y2: ly - 34, class: 'cb-line' }),
+    el('path', { d: `M ${lx - 54} ${ly + 14} Q ${lx} ${ly - 70} ${lx + 54} ${ly + 14} Z`, fill: `url(#${id}-hatch)`, class: 'cb-body' }),
+    el('path', { d: `M ${lx - 54} ${ly + 14} Q ${lx} ${ly - 70} ${lx + 54} ${ly + 14} Z`, class: 'cb-edge' }),
+    el('circle', { cx: lx, cy: ly + 16, r: 11, class: 'cb-accent-fill' }),
+  ]);
+}
+
+const RENDER: Record<AtlasOpticalKind, (id: string) => string> = { hero, chain, rules, deals, service, evidence, pick };
 const CACHE = new Map<AtlasOpticalKind, string>();
-const markup = (kind: AtlasOpticalKind) => {
+export const opticalMarkup = (kind: AtlasOpticalKind) => {
   if (!CACHE.has(kind)) CACHE.set(kind, RENDER[kind](`ao-${kind}`));
   return CACHE.get(kind) as string;
 };
@@ -542,7 +581,7 @@ const AtlasOptical: React.FC<{ kind: AtlasOpticalKind; accent?: string; classNam
     className={`atlas-optical is-${kind}${className ? ` ${className}` : ''}`}
     data-accent={accent}
     aria-hidden="true"
-    dangerouslySetInnerHTML={{ __html: markup(kind) }}
+    dangerouslySetInnerHTML={{ __html: opticalMarkup(kind) }}
   />
 );
 

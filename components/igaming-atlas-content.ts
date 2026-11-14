@@ -401,7 +401,7 @@ export const ATLAS_NUMBERS = {
     card: '11',
     fig: L('Fig 1', 'Fig 1'),
     title: L('Six offers in, two out.', '六个 offer 进来，两个出去。'),
-    lede: L('Each token is an offer. Four stations check it in order; the first one it fails pushes it into that station\'s tray. Only what passes all four reaches the merchant.', '每个 token 是一个 offer。四个站按顺序检查，第一个没过的站就把它推进那一站的托盘。四关都过的，才交给 merchant。'),
+    lede: L('Each card is an offer. The lamp asks four questions in order; a card that fails one is set aside, its dots showing which. Two stay lit.', '每张牌是一个 offer。灯一张一张照过去，按顺序问四个问题；没过的就放下，点数表示卡在第几关。最后亮着的只有两张。'),
     gates: [
       L('Fit: right players, market, currency', '合适：玩家、市场、货币对得上'),
       L('Feasible: placement, setup, staff exist', '做得到：placement、接入、人手真的有'),

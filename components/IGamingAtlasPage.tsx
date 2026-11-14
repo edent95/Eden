@@ -15,6 +15,7 @@ import {
 } from './igaming-atlas-content';
 import IGamingAtlasCharts from './IGamingAtlasCharts';
 import AtlasOptical, { type AtlasOpticalKind } from './AtlasOptical';
+import AtlasIcon from './AtlasIcons';
 
 type Lang = 'en' | 'zh';
 
@@ -54,7 +55,7 @@ const CardDrawer: React.FC<{ card: AtlasCard | null; language: Lang; onClose: ()
         {card ? (
           <>
             <header className="atlas-drawer-head">
-              <span className="atlas-kicker">{card.id} / {t(stageOf(card.id).name)}</span>
+              <span className="atlas-drawer-mark"><AtlasIcon id={card.id} size={40} /><span className="atlas-kicker">{card.id} / {t(stageOf(card.id).name)}</span></span>
               <button ref={closeRef} type="button" onClick={onClose} aria-label={t(labels.close)}><X size={18} aria-hidden="true" /></button>
             </header>
             <div className="atlas-drawer-body">
@@ -106,7 +107,7 @@ const IGamingAtlasPage: React.FC<{
               className={`atlas-tile${dim ? ' is-dim' : ''}${activeIds && !dim ? ' is-on' : ''}`}
               onClick={() => setOpenId(id)}
             >
-              <span className="atlas-tile-no">{id}</span>
+              <span className="atlas-tile-mark"><AtlasIcon id={id} size={30} /><span className="atlas-tile-no">{id}</span></span>
               <span className="atlas-tile-title">{t(card.title)}</span>
               <span className="atlas-tile-line">{t(ATLAS_LINES[id])}</span>
               <ArrowRight className="atlas-tile-go" size={16} aria-hidden="true" />
