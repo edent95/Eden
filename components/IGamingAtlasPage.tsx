@@ -29,7 +29,7 @@ type Lang = 'en' | 'zh';
 
 const cardById = (id: string) => ATLAS_CARDS.find((c) => c.id === id);
 const stageOf = (id: string) => ATLAS_STAGES.find((s) => s.ids.includes(id)) ?? ATLAS_STAGES[ATLAS_STAGES.length - 1];
-const TOPIC_SCENE: Record<string, AtlasOpticalKind> = { promise: 'mirrors', partner: 'gates', player: 'lamps', evidence: 'lens' };
+const TOPIC_SCENE: Record<string, AtlasOpticalKind> = { promise: 'rules', partner: 'deals', player: 'service', evidence: 'evidence' };
 const pad = (n: number) => String(n).padStart(2, '0');
 
 const CardDrawer: React.FC<{ card: AtlasCard | null; language: Lang; onClose: () => void }> = ({ card, language, onClose }) => {

@@ -113,6 +113,25 @@
 .atlas-optical .cb-gate:last-child .cb-gate-edge { stroke: var(--pb-acc); filter: drop-shadow(0 0 10px var(--pb-acc)); }
 .atlas-optical .cb-bounce { stroke: var(--c); stroke-width: 9; stroke-linecap: round; opacity: 0.55; filter: drop-shadow(0 0 8px var(--c)); }
 
+/* ───── content objects (coupons, phones, sheets, wheel, report) ───── */
+.atlas-optical .cb-card { fill: var(--pb-deep); opacity: 0.94; }
+.atlas-optical .cb-edge.is-accent { stroke: var(--pb-acc); filter: drop-shadow(0 0 10px var(--pb-acc)); }
+.atlas-optical .cb-body.is-faint { opacity: 0.35; }
+.atlas-optical .cb-dot { fill: var(--pb-gold); }
+.atlas-optical .cb-dot.is-accent { fill: var(--pb-acc); filter: drop-shadow(0 0 10px var(--pb-acc)); }
+.atlas-optical .cb-dot.is-open { fill: none; stroke: var(--pb-gold); stroke-width: 1.6; }
+.atlas-optical .cb-perf { stroke-dasharray: 3 5; opacity: 0.55; }
+.atlas-optical .is-dim { opacity: 0.42; }
+.atlas-optical .cb-slot { fill: var(--pb-acc); opacity: 0.22; }
+.atlas-optical .cb-gap { fill: var(--pb-acc); opacity: 0.2; }
+.atlas-optical .cb-thread { stroke: var(--pb-gold); stroke-width: 2; stroke-dasharray: 6 8; opacity: 0.7; }
+.atlas-optical .cb-slice { fill: var(--pb-acc); filter: drop-shadow(0 0 12px var(--pb-acc)); }
+.atlas-optical .cb-pointer { fill: var(--pb-gold); }
+.atlas-optical .cb-coin { fill: color-mix(in srgb, var(--pb-acc) 28%, var(--pb-deep)); stroke: var(--pb-acc); stroke-width: 2; }
+.atlas-optical .cb-tick { fill: none; stroke: var(--pb-acc); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.atlas-optical .cb-icon-ring { fill: none; stroke: var(--c); stroke-width: 3; filter: drop-shadow(0 0 10px var(--c)); }
+.atlas-optical .cb-spin { animation: ao-turn 36s linear infinite; }
+
 /* ───── hero: prism ───── */
 .atlas-optical .hb-col { --c: var(--pb-gold); animation: ao-breathe 4.4s ease-in-out infinite; }
 .atlas-optical .hb-col[data-col='0'] { --c: var(--pb-a); }
@@ -149,12 +168,9 @@
 @keyframes ao-pulse { 0% { transform: scale(1); opacity: 0.9; } 100% { transform: scale(3.2); opacity: 0; } }
 @keyframes ao-gate { 0%, 100% { opacity: 0.7; } 20% { opacity: 1; } }
 
-/* phones: taller frame, slice crops the sides; subjects sit in the middle 60% */
+/* phones: keep the whole frame (the objects carry the meaning, so nothing is cropped) */
 @media (max-width: 560px) {
-  .atlas-optical,
-  .atlas-optical.is-hero,
-  .atlas-optical.is-chain {
-    aspect-ratio: 3 / 2;
+  .atlas-optical {
     border-radius: 14px;
   }
 }
