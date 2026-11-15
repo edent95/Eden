@@ -42,7 +42,7 @@ The selection and bilingual index copy live in `components/wiki-content.ts`. The
 - [Penney's game: why the second player wins](essays/penneys-game-probability-intuition.md) — `/notes/penneys-game-probability-intuition`
 - [Still, pulsing, moving: the three species of Life](essays/conway-game-of-life-patterns-explained.md) — `/notes/conway-game-of-life-patterns-explained`
 - [Rule 30: one line of logic that never settles](essays/elementary-cellular-automata-rule-30-complexity.md) — `/notes/elementary-cellular-automata-rule-30-complexity`
-- [Free knowledge, shared power, survival without forced work](essays/no-great-men-needed.md) — `/notes/no-great-men-needed`
+- [A world that needs no great man](essays/no-great-men-needed.md) — `/notes/no-great-men-needed`
 
 ## Editing workflow
 
