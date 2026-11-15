@@ -51,7 +51,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-11-14';
+export const SITE_CONTENT_LASTMOD = '2026-11-15';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -782,6 +782,13 @@ export const ROUTE_SEO: RouteSeo[] = [
     priority: '0.7',
     title: { en: 'Win before you fight | Eden Tan', zh: '先胜后战 | Eden Tan' },
     desc: { en: 'Strategy is deciding which battlefield deserves your effort before entering it.', zh: 'Strategy 是在行动之前先决定，哪个 battlefield 值得你用力。' },
+  },
+  {
+    path: '/notes/no-great-men-needed',
+    og: 'notes',
+    priority: '0.7',
+    title: { en: 'A world that needs no great man | Eden Tan', zh: '让知识不被文化垄断，让权力不被少数人垄断 | Eden Tan' },
+    desc: { en: 'LifeOS, MyMalaysian and Automation Everything as one question: can we build a system that needs no great person, and keeps correcting itself with data?', zh: 'LifeOS、MyMalaysian 与 Automation Everything 其实是同一个问题：能不能建立一个不依赖伟大人物、靠数据不断自我修正的系统？' },
   },
   {
     path: '/life',
