@@ -787,8 +787,8 @@ export const ROUTE_SEO: RouteSeo[] = [
     path: '/notes/no-great-men-needed',
     og: 'notes',
     priority: '0.7',
-    title: { en: 'A world that needs no great man | Eden Tan', zh: '让知识不被文化垄断，让权力不被少数人垄断 | Eden Tan' },
-    desc: { en: 'LifeOS, MyMalaysian and Automation Everything as one question: can we build a system that needs no great person, and keeps correcting itself with data?', zh: 'LifeOS、MyMalaysian 与 Automation Everything 其实是同一个问题：能不能建立一个不依赖伟大人物、靠数据不断自我修正的系统？' },
+    title: { en: 'A world that needs no great man | Eden Tan', zh: '不需要伟人的世界 | Eden Tan' },
+    desc: { en: 'If the shuttle weaves by itself, why do we still live by selling our time? Aristotle, Zhuangzi, Popper, Rawls, Kant and Arendt on a world without great men.', zh: '梭子已经会自己织布，人为什么还要靠出卖时间活下去？从亚里士多德、庄子、波普尔、罗尔斯到康德与阿伦特，追问没有伟人的世界。' },
   },
   {
     path: '/life',
