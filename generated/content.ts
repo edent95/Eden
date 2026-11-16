@@ -3330,7 +3330,7 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
       },
       {
         "id": "4",
-        "url": "https://eden-tan.com/conways-game-of-life",
+        "url": "https://eden-tan.com/conways-game-of-life/",
         "label": {
           "en": "Eden Tan — Conway's Game of Life: a playable B3/S23 board, then the walk from 8 neighbourhoods to 256 rules and the I Ching bridge.",
           "zh": "Eden Tan — Conway's Game of Life：可以玩的 B3/S23 棋盘，再从 8 种邻域走到 256 条规则与《易经》的桥梁。"
@@ -3338,7 +3338,7 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
       },
       {
         "id": "5",
-        "url": "https://eden-tan.com/cellular-automata-lab",
+        "url": "https://eden-tan.com/cellular-automata-lab/",
         "label": {
           "en": "Eden Tan — Cellular Automata Lab: type any rule number and watch it run.",
           "zh": "Eden Tan — 元胞自动机实验室：输入任何 rule number，看它跑起来。"
@@ -3701,7 +3701,7 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
       },
       {
         "id": "2",
-        "url": "https://eden-tan.com/penneys-game",
+        "url": "https://eden-tan.com/penneys-game/",
         "label": {
           "en": "Eden Tan — Penney's Game: play the levels, then use the lab to compute any match-up exactly with Conway's leading numbers.",
           "zh": "Eden Tan — Penney's Game：先闯关，再用实验室以 Conway 的 leading numbers 精确算出任何一局的胜率。"
@@ -3894,7 +3894,7 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
       },
       {
         "id": "2",
-        "url": "https://eden-tan.com/conways-game-of-life",
+        "url": "https://eden-tan.com/conways-game-of-life/",
         "label": {
           "en": "Eden Tan — Conway's Game of Life: a playable B3/S23 board to try every pattern in this note.",
           "zh": "Eden Tan — Conway's Game of Life：可以玩的 B3/S23 棋盘，本文每个图案都能自己摆上去试。"
@@ -4072,7 +4072,7 @@ export const siteEssayNotes: SiteEssayNoteData[] = [
       },
       {
         "id": "3",
-        "url": "https://eden-tan.com/cellular-automata-lab",
+        "url": "https://eden-tan.com/cellular-automata-lab/",
         "label": {
           "en": "Eden Tan — Cellular Automata Lab: type 30 and watch it grow, then try 86, its mirror image.",
           "zh": "Eden Tan — 元胞自动机实验室：输入 30 看它长出来，再试 86，它的镜像。"

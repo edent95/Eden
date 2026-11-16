@@ -66,7 +66,7 @@ The JSON block below is the structured bilingual source consumed by the site com
     },
     {
       "id": "4",
-      "url": "https://eden-tan.com/conways-game-of-life",
+      "url": "https://eden-tan.com/conways-game-of-life/",
       "label": {
         "en": "Eden Tan — Conway's Game of Life: a playable B3/S23 board, then the walk from 8 neighbourhoods to 256 rules and the I Ching bridge.",
         "zh": "Eden Tan — Conway's Game of Life：可以玩的 B3/S23 棋盘，再从 8 种邻域走到 256 条规则与《易经》的桥梁。"
@@ -74,7 +74,7 @@ The JSON block below is the structured bilingual source consumed by the site com
     },
     {
       "id": "5",
-      "url": "https://eden-tan.com/cellular-automata-lab",
+      "url": "https://eden-tan.com/cellular-automata-lab/",
       "label": {
         "en": "Eden Tan — Cellular Automata Lab: type any rule number and watch it run.",
         "zh": "Eden Tan — 元胞自动机实验室：输入任何 rule number，看它跑起来。"

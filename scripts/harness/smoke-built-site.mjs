@@ -8,6 +8,7 @@ import {
 import {
   routeDates,
   routeLastmod,
+  routeMetaDescription,
   routeOgImage,
   routeOgType,
   routeOutputPath,
@@ -101,7 +102,7 @@ if (problems.length === 0) {
       if (!routeHtml.includes(`<title>${escapeHtml(route.title[language])}</title>`)) {
         problems.push(`${artifact} has the wrong static title`);
       }
-      if (!routeHtml.includes(`<meta name="description" content="${escapeHtml(route.desc[language])}" />`)) {
+      if (!routeHtml.includes(`<meta name="description" content="${escapeHtml(routeMetaDescription(route, language))}" />`)) {
         problems.push(`${artifact} has the wrong static description`);
       }
       if (!routeHtml.includes(`<meta name="robots" content="${expectedRobots}" />`)) {

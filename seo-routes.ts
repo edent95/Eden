@@ -322,7 +322,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
     desc: {
       en: 'Free rounds, fee-free periods, 1+1 accounts and GGR discounts: what an iGaming provider gives, what the operator owes, and how to spot clashing deals.',
-      zh: '免费局、免费期、1+1 账户与 GGR 折扣：iGaming 供应商给什么、运营商要还什么位置与曝光，以及怎样提前发现互相冲突的交易。',
+      zh: '供应商促销里装着两笔交易：玩家看得到的奖励，和两家公司之间的商业交换。免费局、免费期、1+1 账户与 GGR 折扣，供应商给什么、运营商要还什么。',
     },
     og: 'igaming-provider-promotions',
   },
@@ -352,7 +352,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
     desc: {
       en: 'Map iGaming CRM by player state: time windows, event vs calendar messages, a “no action” branch, responsible-gambling stop rules and holdout tests.',
-      zh: '按玩家状态规划 iGaming CRM：时间窗口、事件消息与日历消息、「不需要动作」分支、负责任博彩的停止规则，以及用对照组衡量效果。',
+      zh: '好的 CRM 不是发更多消息。按玩家状态规划 iGaming CRM：时间窗口、事件消息与日历消息、「不需要动作」分支、负责任博彩的停止规则，以及用对照组衡量效果。',
     },
     og: 'igaming-crm-player-lifecycle',
   },
@@ -367,7 +367,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
     desc: {
       en: 'What an iGaming marketing report should explain beyond CPA: the full cost chain, cohort vs calendar conversion, metric definitions and next actions.',
-      zh: 'iGaming 营销报表除了 CPA 还该讲清楚什么：完整的成本链、同批人与自然月转化、指标定义，以及每一节的下一步。',
+      zh: 'CPA 只告诉你一个存款玩家花了多少钱。iGaming 营销报表还该讲清楚：这个玩家值不值、完整的成本链、同批人与自然月转化、指标定义，以及下一步。',
     },
     og: 'igaming-marketing-report-beyond-cpa',
   },
@@ -382,7 +382,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
     desc: {
       en: 'Theoretical vs observed RTP, how far observed RTP drifts on small samples, RTP vs hold, and how to judge an RTP configuration change without fooling yourself.',
-      zh: '理论 RTP 与实际 RTP、小样本时实际 RTP 会偏多远、RTP 与 hold 的关系，以及怎样评估 RTP 配置调整而不自欺。',
+      zh: 'RTP 是老虎机最常被引用、也最常被误读的数字。理论 RTP 与实际 RTP、小样本时会偏多远、RTP 与 hold 的关系，以及怎样评估配置调整而不自欺。',
     },
     og: 'igaming-rtp-explained',
   },
@@ -549,7 +549,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
     desc: {
       en: 'Explore systems, judgment, human behavior and strategy through four essays, with practical build notes one level deeper.',
-      zh: 'Eden 的主题知识地图：从系统、判断、人性与策略进入完整 Notes 文章，另有开发工具、交互与知识整理的构建经验。',
+      zh: 'Eden 的主题知识地图：从系统、判断、人性与策略四个主题进入完整的 Notes 文章，再往下一层，是开发工具、交互设计与知识整理的构建经验。',
     },
   },
   {
@@ -588,7 +588,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
     desc: {
       en: 'A UX note on click button feedback in realtime game interfaces: pressed, pending, accepted, blocked, and failed states.',
-      zh: '实时游戏界面的按钮反馈笔记：按下、等待、接受、阻挡与失败状态。',
+      zh: '实时游戏界面的按钮反馈笔记：按下、等待、接受、阻挡与失败五种状态。在多人实时牌局里，一个按下去没反应的按钮，就算代码没坏，用户也会觉得坏了。',
     },
   },
   {
@@ -654,7 +654,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
     desc: {
       en: 'Published essays and build notes by Eden Tan on products, AI, human behavior, and turning messy realities into useful systems.',
-      zh: 'Eden Tan 发布的文章与构建笔记，关于产品、AI、人的行为，以及怎样把混乱慢慢变成可用的系统。',
+      zh: 'Eden Tan 发布的文章与构建笔记，关于产品、AI、人的行为，以及怎样把混乱慢慢变成可用的系统；也有金融骗局、战争与难民问题的证据地图。',
     },
   },
   {
@@ -725,21 +725,21 @@ export const ROUTE_SEO: RouteSeo[] = [
     og: 'notes',
     priority: '0.7',
     title: { en: 'Turn chaos into systems | Eden Tan', zh: '把混乱变成系统 | Eden Tan' },
-    desc: { en: 'Why the value of a system is not automation itself, but making repeated confusion unnecessary.', zh: 'System 的价值不是 automation 本身，而是让同一种混乱不需要发生第二次。' },
+    desc: { en: 'Why the value of a system is not automation itself, but making repeated confusion unnecessary: separate input, judgment and action, and fight each fire once.', zh: 'System 的价值不是 automation 本身，而是让同一种混乱不需要发生第二次：先分开输入、判断与行动，再找出每天重复、只靠某个人记得的地方。' },
   },
   {
     path: '/notes/judgment-is-not-more-information',
     og: 'notes',
     priority: '0.7',
     title: { en: 'Judgment is not knowing more | Eden Tan', zh: '判断不是知道更多 | Eden Tan' },
-    desc: { en: 'More data does not automatically create better decisions. Judgment begins by deciding what matters.', zh: '更多 data 不会自动带来更好的决定。判断从决定什么才重要开始。' },
+    desc: { en: 'More data does not automatically create better decisions. Judgment begins by deciding what matters, then asking four questions of every number.', zh: '更多 data 不会自动带来更好的决定。判断从决定什么才重要开始：看到一个数字，先问跟谁比、为什么变、影响谁，再写下现在最小、最安全的下一步。' },
   },
   {
     path: '/notes/human-nature-is-a-design-condition',
     og: 'notes',
     priority: '0.7',
     title: { en: 'Human nature is a design condition | Eden Tan', zh: '人性不是借口，是设计条件 | Eden Tan' },
-    desc: { en: 'Good products and systems are designed for real human behavior, not ideal users.', zh: '好的产品与系统应该设计在真实人性上，而不是只适合理想中的用户。' },
+    desc: { en: 'Good products and systems are designed for real human behavior, not ideal users. People forget, protect themselves and take the easier path; design for that.', zh: '好的产品与系统应该设计在真实人性上，而不是只适合理想中的用户。人会忘记、会保护自己、会走比较容易的路，这些不是 bug，而是 operating condition。' },
   },
   {
     path: '/notes/elementary-cellular-automata-256-rules',
@@ -753,7 +753,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     og: 'notes',
     priority: '0.7',
     title: { en: 'Systems thinking for solo founders | Eden Tan', zh: '一个人创业的系统思考 | Eden Tan' },
-    desc: { en: 'How a solo founder manages complexity: see the connections, find the feedback loops, push the leverage points that move, and keep one source of truth.', zh: '一个人创业怎么对付复杂度：看见连接、找出反馈回路、推真正推得动的杠杆点，事实只放一个地方。' },
+    desc: { en: 'How a solo founder manages complexity: see the connections, find the feedback loops, push the leverage points that move, and keep one source of truth.', zh: '一个人创业怎么对付复杂度：看见连接、找出反馈回路、推真正推得动的杠杆点，事实只放一个地方。一个人拼不过复杂度，只能改掉一直在制造工作的结构。' },
   },
   {
     path: '/notes/penneys-game-probability-intuition',
@@ -781,7 +781,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     og: 'notes',
     priority: '0.7',
     title: { en: 'Win before you fight | Eden Tan', zh: '先胜后战 | Eden Tan' },
-    desc: { en: 'Strategy is deciding which battlefield deserves your effort before entering it.', zh: 'Strategy 是在行动之前先决定，哪个 battlefield 值得你用力。' },
+    desc: { en: 'Strategy is deciding which battlefield deserves your effort before entering it: define what winning means, who sets the rules, and how you would retreat.', zh: 'Strategy 是在行动之前先决定，哪个 battlefield 值得你用力：先定义什么叫赢、规则是谁定的、正面打不过有没有别的入口，最坏时怎么退。' },
   },
   {
     path: '/notes/no-great-men-needed',

@@ -50,7 +50,7 @@ The JSON block below is the structured bilingual source consumed by the site com
     },
     {
       "id": "2",
-      "url": "https://eden-tan.com/conways-game-of-life",
+      "url": "https://eden-tan.com/conways-game-of-life/",
       "label": {
         "en": "Eden Tan — Conway's Game of Life: a playable B3/S23 board to try every pattern in this note.",
         "zh": "Eden Tan — Conway's Game of Life：可以玩的 B3/S23 棋盘，本文每个图案都能自己摆上去试。"

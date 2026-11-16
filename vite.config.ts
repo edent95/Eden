@@ -22,6 +22,7 @@ import {
   routeLastmod,
   routeOgImage,
   routeOgType,
+  routeMetaDescription,
   routeOutputPath,
 } from './seo-prerender';
 import { createPwaManifestInjectionScript } from './pwa-manifests';
@@ -191,7 +192,7 @@ function renderRouteHtml(
   siteBaseNoSlash: string | null,
 ): string {
   const title = route.title[language];
-  const description = route.desc[language];
+  const description = routeMetaDescription(route, language);
   const robots = route.index === false
     ? 'noindex, follow'
     : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
