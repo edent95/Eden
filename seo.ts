@@ -15,7 +15,7 @@ import {
   PAGE_COPY,
   routeSeoForPath,
 } from './seo-routes';
-import { routeDates, routeOgType } from './seo-prerender';
+import { routeDates, routeMetaDescription, routeOgType } from './seo-prerender';
 
 export type SeoLanguage = 'en' | 'zh';
 
@@ -173,6 +173,11 @@ export function getPageSeo(
   }
 
   const copy = PAGE_COPY[key];
+  const route = routeSeoForPath(key);
+  if (copy && route) {
+    // Same text as the static HTML meta, so hydration never swaps in a shorter description.
+    return { title: copy.title[lang], description: trimDesc(routeMetaDescription(route, lang)) };
+  }
   if (copy) {
     return { title: copy.title[lang], description: trimDesc(copy.desc[lang]) };
   }

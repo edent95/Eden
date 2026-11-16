@@ -14,17 +14,29 @@ export type Language = 'en' | 'zh';
 export type Theme = 'light' | 'dark';
 export type ThemePreference = Theme | 'auto';
 
-/** Build an in-app href, keeping the `/zh/` prefix when the visitor is on a Chinese route. */
+/**
+ * Build an in-app href, keeping the `/zh/` prefix when the visitor is on a Chinese route.
+ *
+ * Registered routes get a trailing slash (`notes/carrian-case` → `/notes/carrian-case/`):
+ * the build writes `<route>/index.html`, so GitHub Pages 301s the slash-less form, and
+ * crawlers that follow rendered links report "page redirects". The slash form is also
+ * what the canonical tag and sitemap use. Assets and unregistered paths are left as-is.
+ */
 export const joinBasePath = (base: string, path: string) => {
   const safeBase = base.endsWith('/') ? base : `${base}/`;
-  const safePath = path.replace(/^\/+/, '');
-  const logicalRoute = `/${safePath}`.replace(/\/+$/, '') || '/';
+  const suffixAt = path.search(/[?#]/);
+  const pathPart = suffixAt === -1 ? path : path.slice(0, suffixAt);
+  const suffix = suffixAt === -1 ? '' : path.slice(suffixAt);
+  const trimmedPath = pathPart.replace(/^\/+/, '');
+  const logicalRoute = `/${trimmedPath}`.replace(/\/+$/, '') || '/';
+  const isRoute = Boolean(routeSeoForPath(logicalRoute));
+  const safePath = isRoute && logicalRoute !== '/' ? `${logicalRoute.slice(1)}/` : trimmedPath;
   const onChineseRoute = typeof window !== 'undefined'
     && /(?:^|\/)zh(?:\/|$)/.test(window.location.pathname);
-  if (onChineseRoute && routeSeoForPath(logicalRoute)) {
-    return logicalRoute === '/' ? `${safeBase}zh/` : `${safeBase}zh/${safePath}`;
+  if (onChineseRoute && isRoute) {
+    return logicalRoute === '/' ? `${safeBase}zh/${suffix}` : `${safeBase}zh/${safePath}${suffix}`;
   }
-  return `${safeBase}${safePath}`;
+  return `${safeBase}${safePath}${suffix}`;
 };
 
 export const LanguageToggle: React.FC<{

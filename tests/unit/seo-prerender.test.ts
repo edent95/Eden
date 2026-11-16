@@ -7,7 +7,9 @@ import {
   buildStaticJsonLd,
   cleanInlineTokens,
   getStaticRouteContent,
+  META_DESCRIPTION_LIMITS,
   routeDates,
+  routeMetaDescription,
   routeLastmod,
   routeOgImage,
   routeOgType,
@@ -123,5 +125,39 @@ test('static note copy strips Notes-format tokens (key sentences, citations, not
     const content = getStaticRouteContent(route(`/notes/${note.slug}`), 'zh');
     const body = JSON.stringify(content);
     assert.ok(!body.includes('=='), `${note.slug} static body leaks a == mark`);
+  }
+});
+
+test('meta descriptions lead with the hand-written desc and stay inside the length limits', () => {
+  for (const entry of ROUTE_SEO.filter((item) => item.index !== false)) {
+    for (const language of ['en', 'zh'] as const) {
+      const description = routeMetaDescription(entry, language);
+      const base = entry.desc[language].trim();
+      assert.ok(description.startsWith(base.replace(/[.。]$/, '')), `${entry.path} ${language} keeps its desc first`);
+      if (description !== base) {
+        assert.ok(description.length <= META_DESCRIPTION_LIMITS[language].max, `${entry.path} ${language} too long: ${description.length}`);
+      }
+      assert.doesNotMatch(description, /==|\[\[/, `${entry.path} ${language} leaks inline tokens`);
+    }
+  }
+});
+
+test('short descriptions are topped up from the page body with whole sentences', () => {
+  const korea = route('/notes/korea-2026-crash');
+  const zh = routeMetaDescription(korea, 'zh');
+  assert.ok(korea.desc.zh.length < META_DESCRIPTION_LIMITS.zh.min, 'fixture is still short by hand');
+  assert.ok(zh.length >= META_DESCRIPTION_LIMITS.zh.min, `zh topped up: ${zh}`);
+  assert.match(zh, /[。！？]$/);
+  // Long enough already: unchanged.
+  const home = route('/');
+  assert.equal(routeMetaDescription(home, 'en'), home.desc.en);
+});
+
+test('key pages carry hand-written descriptions long enough on their own', () => {
+  for (const path of ['/wiki', '/notes', '/notes/turn-chaos-into-systems', '/notes/judgment-is-not-more-information',
+    '/notes/human-nature-is-a-design-condition', '/notes/win-before-you-fight']) {
+    const entry = route(path);
+    assert.ok(entry.desc.en.length >= META_DESCRIPTION_LIMITS.en.min, `${path} en ${entry.desc.en.length}`);
+    assert.ok(entry.desc.zh.length >= META_DESCRIPTION_LIMITS.zh.min, `${path} zh ${entry.desc.zh.length}`);
   }
 });

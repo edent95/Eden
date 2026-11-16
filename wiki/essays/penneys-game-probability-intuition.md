@@ -51,7 +51,7 @@ The JSON block below is the structured bilingual source consumed by the site com
     },
     {
       "id": "2",
-      "url": "https://eden-tan.com/penneys-game",
+      "url": "https://eden-tan.com/penneys-game/",
       "label": {
         "en": "Eden Tan — Penney's Game: play the levels, then use the lab to compute any match-up exactly with Conway's leading numbers.",
         "zh": "Eden Tan — Penney's Game：先闯关，再用实验室以 Conway 的 leading numbers 精确算出任何一局的胜率。"

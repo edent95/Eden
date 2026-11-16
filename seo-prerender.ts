@@ -412,3 +412,105 @@ export function languageAlternateUrl(route: RouteSeo, language: SeoLanguage, sit
 export function logicalCanonicalPath(route: RouteSeo): string {
   return canonicalRoutePath(route.path);
 }
+
+/**
+ * Meta description length policy. English is counted in characters (Ahrefs/Google ~110–160).
+ * Chinese is counted in characters too, but each CJK glyph takes about twice the pixel width,
+ * so 70–90 characters already fill a result snippet; 110+ would be cut off.
+ */
+export const META_DESCRIPTION_LIMITS: Record<SeoLanguage, { min: number; max: number }> = {
+  en: { min: 110, max: 160 },
+  zh: { min: 70, max: 90 },
+};
+
+function splitSentences(text: string, language: SeoLanguage): string[] {
+  const clean = cleanInlineTokens(text);
+  const parts = language === 'zh'
+    ? clean.split(/(?<=[。！？])/)
+    : clean.split(/(?<=[.!?])\s+(?=["“‘(]?[A-Z0-9])/);
+  return parts.map((part) => part.trim()).filter(Boolean);
+}
+
+function comparable(text: string): string {
+  return text.toLowerCase().replace(/[\s\p{P}]/gu, '');
+}
+
+/** Word set (English) or character-bigram set (Chinese) used to drop near-duplicate sentences. */
+function shingles(text: string, language: SeoLanguage): Set<string> {
+  const key = comparable(text);
+  if (language === 'en') return new Set(text.toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length > 2));
+  const grams = new Set<string>();
+  for (let index = 0; index < key.length - 1; index += 1) grams.add(key.slice(index, index + 2));
+  return grams;
+}
+
+function overlap(a: Set<string>, b: Set<string>): number {
+  if (!a.size || !b.size) return 0;
+  let shared = 0;
+  for (const item of a) if (b.has(item)) shared += 1;
+  return shared / Math.min(a.size, b.size);
+}
+
+const PAIRS: Array<[string, string]> = [['「', '」'], ['“', '”'], ['（', '）'], ['(', ')'], ['《', '》']];
+
+/** A sentence that can stand alone in a snippet: a full sentence, not a hook or a back-reference, quotes balanced. */
+function standalone(sentence: string, language: SeoLanguage): boolean {
+  const terminal = language === 'zh' ? /[。！？]$/ : /[.!?]$/;
+  if (!terminal.test(sentence)) return false;
+  // Short hooks ("Imagine a supermarket.") and sentences leaning on the previous one read as fragments.
+  if (sentence.length < (language === 'zh' ? 14 : 30)) return false;
+  const leansBack = language === 'zh'
+    ? /^(是|但|而|所以|这|那|它|他们|然后|上一篇)/
+    : /^(It|This|That|These|Those|They|He|She|But|And|So|Then)\b/;
+  if (leansBack.test(sentence)) return false;
+  return PAIRS.every(([open, close]) => sentence.split(open).length === sentence.split(close).length);
+}
+
+/**
+ * The description written to `<meta name="description">`, `og:description` and
+ * `twitter:description`, both in the static HTML (vite.config.ts) and after the
+ * client mounts (seo.ts).
+ *
+ * The hand-written `desc` in `seo-routes.ts` always leads. When it is shorter than the
+ * language's minimum, whole sentences from the page's own static body (summary, thesis,
+ * then the first paragraph of each section — the copy the page actually renders) are
+ * appended until the minimum is reached, never past the maximum and never cut mid-sentence.
+ * Routes without real body copy (generic fallback) keep their `desc` unchanged.
+ */
+export function routeMetaDescription(route: RouteSeo, language: SeoLanguage): string {
+  const base = route.desc[language].trim();
+  const { min, max } = META_DESCRIPTION_LIMITS[language];
+  if (base.length >= min) return base;
+
+  const hasBody = route.path === '/conways-game-of-life'
+    || route.path === '/wiki'
+    || route.path === '/notes'
+    || route.path.startsWith('/wiki/')
+    || route.path.startsWith('/notes/')
+    || Boolean(ROUTE_STATIC_COPY[route.path]);
+  if (!hasBody) return base;
+
+  const content = getStaticRouteContent(route, language);
+  const pool = [
+    content.summary,
+    content.thesis ?? '',
+    ...content.sections.map((section) => section.paragraphs[0] ?? ''),
+  ].filter((paragraph) => paragraph && !paragraph.startsWith('•') && !paragraph.includes(' · '));
+
+  const terminal = language === 'zh' ? /[。！？…」”]$/ : /[.!?…"”]$/;
+  let result = terminal.test(base) ? base : `${base}${language === 'zh' ? '。' : '.'}`;
+  const used = [shingles(base, language)];
+  for (const paragraph of pool) {
+    for (const sentence of splitSentences(paragraph, language)) {
+      if (result.length >= min) return result;
+      if (!standalone(sentence, language)) continue;
+      const grams = shingles(sentence, language);
+      // Skip restatements of what the description already says (summary often paraphrases desc).
+      if (used.some((existing) => overlap(existing, grams) >= 0.5)) continue;
+      used.push(grams);
+      const next = language === 'zh' ? `${result}${sentence}` : `${result} ${sentence}`;
+      if (next.length <= max) result = next;
+    }
+  }
+  return result.length > base.length ? result : base;
+}

@@ -59,7 +59,7 @@ The JSON block below is the structured bilingual source consumed by the site com
     },
     {
       "id": "3",
-      "url": "https://eden-tan.com/cellular-automata-lab",
+      "url": "https://eden-tan.com/cellular-automata-lab/",
       "label": {
         "en": "Eden Tan — Cellular Automata Lab: type 30 and watch it grow, then try 86, its mirror image.",
         "zh": "Eden Tan — 元胞自动机实验室：输入 30 看它长出来，再试 86，它的镜像。"
