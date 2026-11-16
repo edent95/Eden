@@ -97,6 +97,9 @@ const MiyaPrivacyPage: React.FC<{
             <Mail size={16} aria-hidden="true" />
             {t(page.supportCta)}
           </a>
+          <a className="miya-privacy-support-link" href={page.siteUrl}>
+            {t(page.siteCta)}
+          </a>
         </header>
 
         <div className="miya-privacy-claim">

@@ -33,6 +33,9 @@ export const MIYA_PRIVACY = {
     { label: L('Applies to', '适用于'), value: L('MiYa 1.0 and later, iPhone and Apple Watch', 'MiYa 1.0 及以后版本，iPhone 与 Apple Watch') },
   ],
   supportCta: L('Need help? Email support', '需要帮助？发邮件给我们'),
+  // MiYa 自己的网站(edent95/miya-site,不装统计,五种语言);这一页仍是 App Store 审核读的那份政策
+  siteUrl: 'https://miya.eden-tan.com/',
+  siteCta: L('MiYa website · 5 languages', 'MiYa 官网 · 五种语言'),
   claim: L(
     'This app collects no data, because it has no way to send data anywhere. It doesn\'t connect to the internet, has no servers and no accounts, and contains no third-party analytics or advertising components.',
     '这个 App 不收集任何数据，因为它根本没有能力把数据送出去——它不联网，没有服务器，没有账号系统，也没有任何第三方分析或广告组件。',
