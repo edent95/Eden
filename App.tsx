@@ -692,7 +692,6 @@ const App: React.FC = () => {
         filmGalleryHref={filmGalleryHref}
         conwayHref={conwayHref}
         penneyHref={penneyHref}
-        miyaHref={miyaHref}
         lifeOsHref={lifeOsHref}
         language={language}
         setLanguage={setLanguage}
