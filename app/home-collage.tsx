@@ -65,6 +65,16 @@ const homeCollageItems: Array<{
     linkLabel: { en: 'Open the Dr Racing product page', zh: '打开 Dr Racing 产品页面' },
   },
   {
+    title: 'MiYa',
+    kind: { en: 'App', zh: 'App' },
+    tone: 'miya',
+    image: 'home-banners/miya-banner-poster.jpg',
+    video: 'home-banners/miya-banner.mp4',
+    imageAlt: { en: 'An Apple Watch reads a heartbeat, health numbers stream past as light, and the MiYa app turns them into plain words on iPhone', zh: 'Apple Watch 读出心跳，健康数字化成光流掠过，MiYa 在 iPhone 上把它们写成看得懂的话' },
+    href: 'https://miya.eden-tan.com/',
+    linkLabel: { en: 'Open MiYa: your health, in words you understand', zh: '打开 MiYa：用看得懂的话讲你的健康' },
+  },
+  {
     title: 'What is Wealth',
     kind: { en: 'Essay', zh: '文章' },
     tone: 'wealth',

@@ -20,7 +20,6 @@ export const ProjectHomePage: React.FC<{
   filmGalleryHref: string;
   conwayHref: string;
   penneyHref: string;
-  miyaHref: string;
   lifeOsHref: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
@@ -36,7 +35,6 @@ export const ProjectHomePage: React.FC<{
   filmGalleryHref,
   conwayHref,
   penneyHref,
-  miyaHref,
   lifeOsHref,
   language,
   setLanguage,
@@ -105,7 +103,7 @@ export const ProjectHomePage: React.FC<{
     {
       id: 'miya',
       name: 'MiYa',
-      href: miyaHref,
+      href: 'https://miya.eden-tan.com/',
       caption: { en: 'On-device health', zh: '本机健康报告' },
       Icon: ProjectsMiyaCssIcon,
     },
