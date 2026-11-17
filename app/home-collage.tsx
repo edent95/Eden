@@ -35,6 +35,16 @@ const homeCollageItems: Array<{
     linkLabel: { en: 'Open the Pukimon page', zh: '打开 Pukimon 页面' },
   },
   {
+    title: 'Scripture',
+    kind: { en: 'Reading', zh: '经书' },
+    tone: 'scripture',
+    image: 'home-banners/scripture-banner-poster.jpg',
+    video: 'home-banners/scripture-banner.mp4',
+    imageAlt: { en: 'A man faces an ornate mirror, his reflection shatters into faces young and old, golden light spirals, and a golden lotus settles on still water', zh: '一个人对着雕花古镜，镜像碎成少年与老人的面孔，金色光流盘旋，最后一朵金莲落在静水上' },
+    href: 'https://scripture.eden-tan.com/',
+    linkLabel: { en: 'Open Scripture: nine Sanskrit classics in plain translation', zh: '打开梵文书架：九部经典白话直译' },
+  },
+  {
     title: 'ETReportHub',
     kind: { en: 'Product', zh: '产品' },
     tone: 'ocean',
