@@ -1,7 +1,7 @@
 /*
   Pukimon family — layout only. 游戏本体（公开版，原创角色）在 Shadow DOM 里（public/pukimon/bond-arena.js），自己带样式；
-  这里只给它舞台。三处：共用的 16:9 演示舞台（components/PukimonDemoStage.tsx，首页 #pukimon 和 /pukimon 的 stage 都用）、
-  首页 #pukimon 区块（版式同原来的 Coin Slot）、「开始」盖的全屏层。
+  这里只给它舞台。三处：共用的 16:9 演示舞台（components/PukimonDemoStage.tsx，/pukimon 的 stage 用）、
+  「开始」盖的全屏层。首页的大演出区块 2026-11-17 拿掉了，首页只剩拼贴里的 Pukimon 卡。
   /pukimon 页面本身的版式是 styles/pages/product-page.css（ProductStorePage）。
   注意别和 CSS 图标 .projects-pukimon-*（styles/css-art/projects-icons.css）、首页横幅 .tone-pukimon 撞名。
   Menu system comes from styles/shared.css.
@@ -69,22 +69,6 @@
 /* /pukimon：舞台放在 ProductStorePage 的浏览器框里（stage kind: 'custom'），按钮跟页面的「立即开玩」同色 */
 .ep-stage-frame .pukimon-start span { background: var(--ep-primary); color: var(--ep-primary-text); }
 .ep-stage-frame .pukimon-start:hover span { background: var(--ep-primary-hover); }
-
-/* ---------------- 首页 #pukimon ---------------- */
-
-/* 首页大横幅（照 Apple Services 页）：只有演出，不配文字，撑满宽度。
-   宽屏时不让 16:9 的舞台高过一屏：宽度最多 (一屏高 - 菜单) × 16/9，这时两边留白、带圆角。 */
-.eden-pukimon { padding-top: 24px; }
-.eden-pukimon-arena { width: min(100%, calc((100svh - 96px) * 16 / 9)); margin-inline: auto; }
-.eden-pukimon-stage { border-radius: 18px; }
-.eden-pukimon-stage .pukimon-start span { background: var(--eden-ink); color: var(--eden-paper); }
-.eden-pukimon-stage .pukimon-start:hover span { background: var(--eden-blue); }
-.eden-pukimon-stage .pukimon-start:focus-visible { outline-color: color-mix(in srgb, var(--eden-blue) 58%, transparent); }
-
-@media (max-width: 900px) {
-  /* 平板、手机：演出贴齐两边，像一整幅横幅 */
-  .eden-pukimon-stage { border-radius: 0; }
-}
 
 @media (prefers-reduced-motion: reduce) {
   .pukimon-mount,

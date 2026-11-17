@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * 「赤红 vs 青绿」三回合演出的舞台（首页 #pukimon 和 /pukimon 顶部）：用 iframe 嵌另一个网域上的演出网站
+ * 「赤红 vs 青绿」三回合演出的舞台（/pukimon 顶部；首页那块 2026-11-17 拿掉了）：用 iframe 嵌另一个网域上的演出网站
  * （Pukimon 项目 npm run showdown:deploy → Cloudflare Pages 项目 pukimon-showdown）。
  * 游戏在另一个网域跑，Chrome 会放进单独的进程，演出卡也不会拖慢这一页的滚动和按钮；Eden 也不用背那几 MB 的包。
  * 「开声音」在 iframe 里面：浏览器的用户手势不会从这一页传进跨网域的 iframe。
