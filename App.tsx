@@ -55,7 +55,6 @@ const IGamingCasesPage = React.lazy(() => import('./components/IGamingCasesPage'
 const IGamingAtlasPage = React.lazy(() => import('./components/IGamingAtlasPage'));
 const IGamingResumePage = React.lazy(() => import('./components/IGamingResumePage'));
 const IGamingGuidePage = React.lazy(() => import('./components/IGamingGuidePage'));
-const HomePukimonGame = React.lazy(() => import('./components/HomePukimonGame'));
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -913,10 +912,6 @@ const App: React.FC = () => {
             <a className="eden-button" href={projectHomeHref}>{isZh ? '看看下，可能我们可以一起赚更多的钱' : 'Explore my work'}</a>
           </motion.div>
         </motion.section>
-
-        <React.Suspense fallback={<section className="min-h-64" aria-busy="true" />}>
-          <HomePukimonGame isZh={isZh} baseUrl={baseUrl} pukimonHref={joinBasePath(baseUrl, 'pukimon')} />
-        </React.Suspense>
 
         <section className="eden-collage-section" id="work">
           <HomeCollage language={language} baseUrl={baseUrl} />
