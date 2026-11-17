@@ -5,7 +5,7 @@ import { openPukimonPlayLayer } from './pukimonPlayLayer';
 /**
  * Pukimon 公开版的 16:9 舞台：电脑对电脑的实时演示（静音、低画质、滚出视野就暂停），
  * 点「开始」盖一层全屏从组队开始玩（components/pukimonPlayLayer.ts）。
- * 首页 #pukimon（HomePukimonGame）和 /pukimon 的舞台都用它。
+ * /pukimon 的舞台用它(首页 #pukimon 已于 2026-11-17 拿掉)。
  * 游戏包到了视野附近才下载（约 1.7 MB）；系统设了「减少动态效果」时不放演示，只留「开始」。
  */
 
