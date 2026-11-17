@@ -338,8 +338,7 @@ const HomeShelfRow: React.FC<{ items: HomeCollageItem[]; language: Language; bas
 };
 
 /**
- * Homepage shelf, laid out like a services page: it sits under the big Pukimon arena
- * (components/HomePukimonGame.tsx), one row of every item, then a pause button that stops
+ * Homepage shelf, laid out like a services page: it sits right under the hero, one row of every item, then a pause button that stops
  * the drift and every video in it (moving content that runs longer than five seconds needs
  * a way to stop it).
  */
