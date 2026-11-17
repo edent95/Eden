@@ -30,7 +30,7 @@ const homeCollageItems: Array<{
     tone: 'pukimon',
     image: 'home-banners/pukimon-banner-poster.jpg',
     video: 'home-banners/pukimon-banner.mp4',
-    imageAlt: { en: 'A 3D fan animation: a trainer in a red cap dodges and fights through a wrecked room, sparks flying', zh: '3D 同人动画：戴红帽的训练家在一片狼藉的房间里闪躲、对打，火花四溅' },
+    imageAlt: { en: 'The Pukimon battle replay: pixel creatures trade moves on a sandy arena, one summoning a ring of shadow clones', zh: 'Pukimon 对战演出：像素小怪在沙地擂台上互放招式，一只召出一圈影子分身' },
     href: 'pukimon',
     linkLabel: { en: 'Open the Pukimon page', zh: '打开 Pukimon 页面' },
   },
