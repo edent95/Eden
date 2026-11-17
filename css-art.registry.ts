@@ -59,6 +59,7 @@ import {
   ProjectsJijuCssIcon,
   ProjectsLifeOsCssIcon,
   ProjectsMiyaCssIcon,
+  ProjectsScriptureCssIcon,
   ProjectsPokerCssIcon,
   ProjectsPukimonCssIcon,
   WikiBackgroundMusicCssIcon,
@@ -250,6 +251,27 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
     copy: {
       en: 'The framed red heart icon for MiYa, the on-device iOS health report; the heart beats once per cycle.',
       zh: 'MiYa（本机 iOS 健康报告）使用的固定底红色心形 app icon，心形按节拍跳动。',
+    },
+  },
+  {
+    id: 'projects-scripture',
+    title: 'Scripture',
+    projectTitle: 'Scripture',
+    category: 'project-icon',
+    sourceRoute: '/projects',
+    ratio: '1:1',
+    background: 'framed',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/projects-icons.css',
+    Component: ProjectsScriptureCssIcon,
+    label: {
+      en: 'Scripture three-line CSS app icon',
+      zh: '梵文书架三行经文 CSS app 图标',
+    },
+    copy: {
+      en: 'The same mark as scripture.eden-tan.com: a dark tile with three lines of text; the Mint middle line fills in as if being read.',
+      zh: '与 scripture.eden-tan.com 同一个标志：深色方块上三行经文，中间那行 Mint 像正在读一样从左往右填满。',
     },
   },
   {

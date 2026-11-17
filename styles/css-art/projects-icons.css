@@ -1698,3 +1698,50 @@
     animation: none !important;
   }
 }
+
+/* Scripture: same mark as scripture.eden-tan.com's favicon — a dark tile with three lines
+   of text, the middle one Mint; that line is "being read" and fills in left to right. */
+.projects-scripture-css-icon {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #1c1917;
+  box-shadow:
+    0 18px 50px rgb(28 25 23 / 0.16),
+    inset 0 0 0 1px rgb(255 255 255 / 0.08);
+}
+
+.projects-scripture-line {
+  position: absolute;
+  left: 25%;
+  height: 10%;
+  border-radius: 999px;
+  background: #fafaf9;
+}
+
+.projects-scripture-line.line-1 { top: 26.6%; width: 50%; }
+.projects-scripture-line.line-2 {
+  top: 45%;
+  width: 29.7%;
+  background: #7bdcb5;
+  transform-origin: left center;
+  animation: projects-scripture-read 4.8s ease-in-out infinite;
+}
+.projects-scripture-line.line-3 { top: 63.4%; width: 37.5%; }
+
+:root[data-theme="dark"] .projects-scripture-css-icon {
+  box-sizing: border-box;
+  border: 1px solid #3a3633;
+  box-shadow: 0 18px 50px rgb(0 0 0 / 0.3);
+}
+
+@keyframes projects-scripture-read {
+  0%, 12% { transform: scaleX(0.18); }
+  58%, 100% { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .projects-scripture-line.line-2 {
+    animation: none !important;
+  }
+}

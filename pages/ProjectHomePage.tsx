@@ -1,5 +1,5 @@
 import React from 'react';
-import { FilmGalleryCssIcon, PenneyCoinCssIcon, ProjectsCrmCssIcon, ProjectsDrRacingCssIcon, ProjectsEtReportCssIcon, ProjectsJijuCssIcon, ProjectsLifeOsCssIcon, ProjectsMiyaCssIcon, ProjectsPokerCssIcon } from '../components/css-art/index';
+import { FilmGalleryCssIcon, PenneyCoinCssIcon, ProjectsCrmCssIcon, ProjectsDrRacingCssIcon, ProjectsEtReportCssIcon, ProjectsJijuCssIcon, ProjectsLifeOsCssIcon, ProjectsMiyaCssIcon, ProjectsPokerCssIcon, ProjectsScriptureCssIcon } from '../components/css-art/index';
 import { HeaderControls, type Language, type Theme, type ThemePreference } from '../app/shared';
 import { ArrowLeft } from 'lucide-react';
 
@@ -108,6 +108,13 @@ export const ProjectHomePage: React.FC<{
       href: miyaHref,
       caption: { en: 'On-device health', zh: '本机健康报告' },
       Icon: ProjectsMiyaCssIcon,
+    },
+    {
+      id: 'scripture',
+      name: 'Scripture',
+      href: 'https://scripture.eden-tan.com/',
+      caption: { en: 'Sanskrit classics, plain', zh: '梵文经典白话' },
+      Icon: ProjectsScriptureCssIcon,
     },
   ];
 

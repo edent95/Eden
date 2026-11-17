@@ -389,6 +389,14 @@ export const ProjectsJijuCssIcon: React.FC<{ label: string }> = ({ label }) => (
   </div>
 );
 
+export const ProjectsScriptureCssIcon: CssArtComponent = ({ label }) => (
+  <div className="projects-card-icon projects-scripture-css-icon" role="img" aria-label={label}>
+    <span className="projects-scripture-line line-1" />
+    <span className="projects-scripture-line line-2" />
+    <span className="projects-scripture-line line-3" />
+  </div>
+);
+
 export const ProjectsMiyaCssIcon: CssArtComponent = ({ label }) => (
   <div className="projects-card-icon projects-miya-css-icon" role="img" aria-label={label}>
     <span className="projects-miya-ring" />
