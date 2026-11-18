@@ -1,0 +1,259 @@
+/* /dr-racing product page figures (components/DrRacingCharts.tsx).
+   Motion lives on concrete objects only: the deal token, bars, the line, bank chips and gate ticks.
+   Uses the product page's --ep-* tokens, so light / dark follow the page. */
+
+.drc-figure {
+  margin: 30px 0 0;
+  padding: 22px 20px 18px;
+  border: 1px solid var(--ep-line);
+  border-radius: var(--ep-radius-sm);
+  background: var(--ep-soft);
+}
+
+.drc-figure figcaption {
+  margin-top: 14px;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--ep-muted);
+}
+
+.drc-figure-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 12px;
+  margin: 0 0 16px;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--ep-ink);
+}
+
+.drc-figure-title span { font-size: 0.86rem; font-weight: 600; color: var(--ep-muted); }
+
+/* ---------- 1. deal flow ---------- */
+
+.drc-flow { padding: 6px 0 2px; }
+
+.drc-flow-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  min-height: 132px;
+  overflow: hidden;
+}
+
+.drc-flow-rail,
+.drc-flow-rail-fill {
+  position: absolute;
+  top: 13px;
+  left: 10%;
+  width: 80%;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--ep-line);
+}
+
+.drc-flow-rail-fill {
+  background: var(--ep-primary-outline);
+  transform-origin: left center;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.drc-flow-token-lane {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 28px;
+  pointer-events: none;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 2;
+}
+
+.drc-flow-token {
+  position: absolute;
+  top: 3px;
+  left: calc(10% - 11px);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 3px solid var(--ep-paper);
+  background: var(--ep-primary-outline);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.18);
+}
+
+.drc-flow-stop {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.drc-flow-dot {
+  position: relative;
+  z-index: 1;
+  width: 12px;
+  height: 12px;
+  margin-top: 8px;
+  border-radius: 50%;
+  border: 2px solid var(--ep-line);
+  background: var(--ep-paper);
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.drc-flow-stop.is-reached .drc-flow-dot { border-color: var(--ep-primary-outline); background: var(--ep-primary-outline); }
+
+.drc-flow-label { font-size: 0.86rem; font-weight: 700; color: var(--ep-muted); transition: color 0.3s ease; }
+.drc-flow-stop.is-reached .drc-flow-label { color: var(--ep-ink); }
+
+.drc-flow-banks { display: flex; flex-direction: column; gap: 4px; }
+
+.drc-bank {
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--ep-line);
+  font-size: 0.74rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.drc-bank.is-in { opacity: 1; transform: none; }
+.drc-bank-no { color: var(--ep-muted); background: var(--ep-paper); }
+.drc-bank-yes { color: var(--ep-primary-text); border-color: var(--ep-primary-outline); background: var(--ep-primary); }
+
+/* ---------- 2. monthly bars ---------- */
+
+.drc-bars {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  align-items: end;
+  gap: clamp(6px, 2vw, 14px);
+  height: 200px;
+}
+
+.drc-bar {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  justify-items: center;
+  height: 100%;
+  gap: 6px;
+}
+
+.drc-bar-value {
+  font-size: 0.86rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ep-ink);
+}
+
+.drc-bar-col {
+  align-self: end;
+  width: min(100%, 44px);
+  min-height: 2px;
+  border-radius: 6px 6px 2px 2px;
+  background: var(--ep-line);
+}
+
+.drc-bar.is-peak .drc-bar-col { background: var(--ep-primary-outline); }
+.drc-bar-label { font-size: 0.8rem; color: var(--ep-muted); }
+
+/* ---------- 3. growth small multiples ---------- */
+
+.drc-minis { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+
+.drc-mini { padding: 14px 14px 6px; border-radius: 14px; background: var(--ep-paper); border: 1px solid var(--ep-line); }
+.drc-mini-title { margin: 0; font-size: 0.86rem; font-weight: 700; color: var(--ep-muted); }
+.drc-mini-value { margin: 2px 0 4px; font-size: 0.86rem; color: var(--ep-muted); }
+
+.drc-mini-value strong {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 760;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+  color: var(--drc-tone);
+}
+
+.drc-mini svg { display: block; width: 100%; height: auto; overflow: visible; }
+.drc-mini-primary { --drc-tone: var(--ep-primary-outline); }
+.drc-mini-second { --drc-tone: var(--ep-ink); }
+
+.drc-axis { stroke: var(--ep-line); stroke-width: 1; }
+.drc-line { fill: none; stroke: var(--drc-tone); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.drc-area { fill: var(--drc-tone); fill-opacity: 0.08; }
+.drc-point { fill: var(--ep-paper); stroke: var(--drc-tone); stroke-width: 2; transition: opacity 0.3s ease; }
+.drc-tick { font-size: 10px; fill: var(--ep-soft-ink); }
+
+/* ---------- 4. gate ---------- */
+
+.drc-gate {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+}
+
+.drc-gate-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--ep-line);
+  background: var(--ep-paper);
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--ep-muted);
+  transition: color 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.drc-gate-check {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid var(--ep-line);
+  font-size: 0.7rem;
+  color: transparent;
+  transform: scale(0.8);
+  transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.drc-gate-step.is-running { border-color: var(--ep-primary-outline); color: var(--ep-ink); }
+.drc-gate-step.is-passed { color: var(--ep-ink); }
+
+.drc-gate-step.is-passed .drc-gate-check {
+  border-color: var(--ep-primary-outline);
+  background: var(--ep-primary-outline);
+  color: var(--ep-paper);
+  transform: none;
+}
+
+.drc-gate-done.is-passed { border-color: var(--ep-primary-outline); background: var(--ep-primary); color: var(--ep-primary-text); }
+
+@media (max-width: 520px) {
+  .drc-flow-label { font-size: 0.78rem; }
+  .drc-bank { padding: 2px 6px; font-size: 0.7rem; }
+  .drc-bars { height: 170px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drc-flow-rail-fill,
+  .drc-flow-token-lane,
+  .drc-flow-dot,
+  .drc-flow-label,
+  .drc-bank,
+  .drc-point,
+  .drc-gate-step,
+  .drc-gate-check { transition: none; }
+}
