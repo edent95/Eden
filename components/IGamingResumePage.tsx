@@ -10,9 +10,9 @@ import { kaleidoSpecFor } from '../app/kaleido-routes';
 type Lang = 'en' | 'zh';
 
 /**
- * `/igaming/resume` — the recruiter-facing page: positioning, the published
- * figures with links to their cases, three strengths, a capability map, a
- * 90-day new-market plan and how Eden works. Reuses the key-points page's
+ * `/igaming/resume` — the job-search page: role, availability and contact,
+ * the published figures with links to their cases, work history, three
+ * strengths, a capability map, a 90-day plan and how Eden works. Reuses the key-points page's
  * engraved print language (`.igaming-summary`); its own layout lives under
  * `.igaming-resume` in `styles/pages/igaming.css`. Copy: `igaming-resume-content.ts`.
  */
@@ -31,6 +31,17 @@ const IGamingResumePage: React.FC<{
     if (href.startsWith('case:')) return `${casesHref}/${href.slice('case:'.length)}`;
     return `${fullHref}#${href.slice('full:'.length)}`;
   };
+  const contactLinks = (
+    <div className="igaming-case-links">
+      <a href={`mailto:${page.email}`} className="igaming-full-cta">
+        {t(page.emailLabel)}
+        <ArrowRight size={16} aria-hidden="true" />
+      </a>
+      <a href={page.linkedin} target="_blank" rel="noreferrer" className="igaming-point-more">
+        {t(page.linkedinLabel)} <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  );
 
   return (
     <div className={`igaming-page igaming-summary igaming-resume${language === 'zh' ? ' is-zh' : ''}`}>
@@ -49,7 +60,9 @@ const IGamingResumePage: React.FC<{
           <p className="igaming-kicker">{t(page.kicker)}</p>
           <h1>{t(page.claim)}</h1>
           <p className="igaming-standfirst">{t(page.standfirst)}</p>
-          <p className="igaming-resume-difference">{t(page.difference)}</p>
+          <p className="igaming-resume-difference">{t(page.roles)}</p>
+          <p className="igaming-resume-note">{t(page.availability)}</p>
+          {contactLinks}
         </header>
 
         <section className="igaming-resume-proof" aria-labelledby="igaming-resume-proof">
@@ -65,6 +78,28 @@ const IGamingResumePage: React.FC<{
               </li>
             ))}
           </ul>
+        </section>
+
+        <section className="igaming-resume-block" aria-labelledby="igaming-resume-history">
+          <h2 id="igaming-resume-history">{t(page.historyTitle)}</h2>
+          <div className="igaming-table-scroll">
+            <table className="igaming-metrics igaming-resume-map">
+              <thead>
+                <tr>
+                  {page.historyHead.map((cell) => <th key={cell.en} scope="col">{t(cell)}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                {page.history.map((row) => (
+                  <tr key={row.when.en}>
+                    <th scope="row">{t(row.when)}</th>
+                    <td><strong>{t(row.role)}</strong></td>
+                    <td>{t(row.where)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </section>
 
         <h2 className="igaming-resume-label igaming-resume-heading">{t(page.strengthsTitle)}</h2>
@@ -146,6 +181,7 @@ const IGamingResumePage: React.FC<{
           <div className="igaming-seal"><IGamingSeal label={t(page.sealLabel)} /></div>
           <h2 id="igaming-resume-closing">{t(page.closingTitle)}</h2>
           <p>{t(page.closingBody)}</p>
+          {contactLinks}
           <div className="igaming-case-links">
             <a href={igamingHref} className="igaming-full-cta">
               {t(page.openStarter)}

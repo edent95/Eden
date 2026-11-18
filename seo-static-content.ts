@@ -4,6 +4,7 @@ import { wikiEntries } from './generated/content.ts';
 import { MIYA_PRIVACY, miyaPlainText, type MiyaBlock } from './components/miya-privacy-content.ts';
 import { MIYA_BRAND, miyaBrandPlain } from './components/miya-brand-content.ts';
 import { IGAMING_PAGE, IGAMING_SUMMARY } from './components/igaming-content.ts';
+import { IGAMING_RESUME } from './components/igaming-resume-content.ts';
 import { ABOUT_PAGE, aboutLinkLine } from './components/about-content.ts';
 import { IGAMING_CASES, IGAMING_CASES_INDEX, type CaseBlock, type IGamingCase } from './components/igaming-cases-content.ts';
 import { IGAMING_GUIDES, IGAMING_GUIDE_LABELS, type IGamingGuide } from './components/igaming-guides-content.ts';
@@ -238,6 +239,29 @@ function igamingCasesIndexStaticCopy(): StaticRouteCopy {
   };
 }
 
+/** Static body for /igaming/resume (the job-search page), from the same copy the React page renders. */
+function igamingResumeStaticCopy(): StaticRouteCopy {
+  const page = IGAMING_RESUME;
+  return {
+    eyebrow: page.kicker,
+    thesis: page.claim,
+    sections: [
+      { title: page.kicker, paragraphs: [page.standfirst, page.roles, page.availability] },
+      {
+        title: page.historyTitle,
+        paragraphs: page.history.map((row) => ({
+          en: `${row.when.en} · ${row.role.en}. ${row.where.en}`,
+          zh: `${row.when.zh} · ${row.role.zh}。${row.where.zh}`,
+        })),
+      },
+      { title: page.proofTitle, paragraphs: page.proof.map((item) => ({ en: `${item.value} ${item.label.en}. ${item.note.en}`, zh: `${item.value} ${item.label.zh}。${item.note.zh}` })) },
+      ...page.strengths.map((item) => ({ title: item.title, paragraphs: [item.line, ...item.points.map((point) => point.body)] })),
+      { title: page.workTitle, paragraphs: page.work.map((item) => item.body) },
+      { title: page.closingTitle, paragraphs: [page.closingBody, { en: `Email: ${page.email} · LinkedIn: ${page.linkedin}`, zh: `Email:${page.email} · LinkedIn:${page.linkedin}` }, page.confidentiality] },
+    ],
+  };
+}
+
 /** Static body for /igaming (key points), generated from the same copy the React page renders. */
 function igamingSummaryStaticCopy(): StaticRouteCopy {
   const page = IGAMING_SUMMARY;
@@ -467,6 +491,7 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
   '/igaming/full': igamingStaticCopy(),
   '/igaming/cases': igamingCasesIndexStaticCopy(),
   '/igaming/atlas': igamingAtlasStaticCopy(),
+  '/igaming/resume': igamingResumeStaticCopy(),
   ...Object.fromEntries(IGAMING_GUIDES.map((guide) => [guide.path, igamingGuideStaticCopy(guide)])),
   ...Object.fromEntries(IGAMING_CASES.map((study) => [`/igaming/cases/${study.slug}`, igamingCaseStaticCopy(study)])),
 

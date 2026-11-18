@@ -434,17 +434,15 @@ export const ROUTE_SEO: RouteSeo[] = [
   {
     path: '/igaming/resume',
     datePublished: '2026-10-28',
-    dateModified: '2026-10-28',
-    priority: '0.5',
-    index: false,
-    sitemap: false,
+    dateModified: '2026-11-18',
+    priority: '0.8',
     title: {
-      en: 'iGaming Growth & Market Expansion | Eden Tan',
-      zh: 'iGaming 增长与新市场开拓 | Eden Tan',
+      en: 'Eden Tan | iGaming Promotion & Account Manager',
+      zh: 'Eden Tan | iGaming 促销与 Account Manager(provider 端)',
     },
     desc: {
-      en: '7+ years across B2C and B2B iGaming: acquisition, retention, partnerships, reporting and AI-assisted tooling, with a 90-day plan for entering a new market.',
-      zh: '7 年以上 B2C 与 B2B iGaming 经验：获客、留存、合作、报表与 AI 辅助工具，附进入新市场的 90 天计划。',
+      en: 'Provider-side iGaming promotions for 50+ operators: campaigns, partner onboarding, T&Cs and reporting. Available now, Penang, remote or hybrid.',
+      zh: 'provider 端 iGaming 促销：50+ 个 operator 的活动、开户、条款与报表。可以马上上班，槟城，远程或混合。',
     },
     og: 'igaming-resume',
   },

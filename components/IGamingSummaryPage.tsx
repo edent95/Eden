@@ -28,9 +28,10 @@ const IGamingSummaryPage: React.FC<{
   fullHref: string;
   casesHref: string;
   atlasHref: string;
+  resumeHref: string;
   guideLinks: Array<{ guide: IGamingGuide; href: string }>;
   controls: React.ReactNode;
-}> = ({ language, homeHref, fullHref, casesHref, atlasHref, guideLinks, controls }) => {
+}> = ({ language, homeHref, fullHref, casesHref, atlasHref, resumeHref, guideLinks, controls }) => {
   const t = (value: IGamingLocalized) => value[language];
   const page = IGAMING_SUMMARY;
   const [unlocked, setUnlocked] = React.useState(false);
@@ -54,6 +55,12 @@ const IGamingSummaryPage: React.FC<{
           <IGamingHeroStage />
           <KaleidoFrame spec={kaleidoSpecFor('/igaming')} />
           {unlocked ? <p className="igaming-unlocked">{t(IGAMING_PAGE.unlocked)}</p> : null}
+          <a href={resumeHref} className="igaming-hire">
+            {language === 'zh'
+              ? '我在找 provider 端的促销 / Account Management 工作，可以马上上班。看我的履历'
+              : 'I am looking for a provider-side promotions or account management role, available now. See my profile'}
+            <ArrowRight size={14} aria-hidden="true" />
+          </a>
           <p className="igaming-kicker">{t(page.kicker)}</p>
           <h1>{t(page.claim)}</h1>
           <p className="igaming-standfirst">{t(page.standfirst)}</p>

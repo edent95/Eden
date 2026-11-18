@@ -7,7 +7,10 @@
  * operator, market or partner names, no absolute volumes, budgets or commercial
  * terms. Every figure here is one already published in a case, and links to it.
  * Compensation is deliberately not on the page — that belongs in the conversation.
- * The route is `index: false` / `sitemap: false`: reachable by link only.
+ * Job titles, dates, location, languages and contact come from Eden's own LinkedIn
+ * profile (read 2026-11-18); employers stay unnamed and are described by type.
+ * Since 2026-11-18 this is the job-search page (provider-side roles first) and
+ * `/igaming` links to it from its first screen.
  */
 
 import type { IGamingLocalized } from './igaming-content';
@@ -20,11 +23,45 @@ export type ResumeHref = `case:${string}` | `full:${string}` | 'etreporthub';
 export const IGAMING_RESUME = {
   back: L('iGaming starter pack', 'iGaming 入门包'),
   kicker: L('For hiring teams', '给招聘方'),
-  claim: L('Beyond marketing. From acquisition to market expansion.', '不只做营销：从获客一路做到开拓新市场'),
+  claim: L('Promotions and partner operations, from the provider side.', '做 provider 端的促销与合作方运营'),
   standfirst: L(
-    '7+ years across B2C and B2B iGaming, combining acquisition, retention, commercial operations and hands-on technical work to help a business grow — especially one entering a new market.',
-    '7 年以上 iGaming 经验，B2C 与 B2B 两边都做过：获客、留存、商务运营，加上能自己动手的技术能力，帮一门生意成长，尤其是正在进入新市场的那一种。',
+    'Account Manager & Promotion Manager at a B2B gaming platform, after operator-side lifecycle marketing. I plan and run promotions across 50+ operators, set up partner accounts, write the T&Cs, and report what each campaign returned.',
+    'B2B 游戏平台的 Account Manager & Promotion Manager,之前在 operator 端做生命周期营销。我策划并执行覆盖 50+ 个 operator 的促销，开合作方账号，写条款，再把每个活动的回报报出来。',
   ),
+  roles: L(
+    'Open to provider-side roles in promotions, account management and partner marketing, and to operator-side CRM and retention.',
+    '在找 provider 端的促销、Account Management、合作方营销职位;operator 端的 CRM 与留存也可以。',
+  ),
+  availability: L('Available now · Penang, Malaysia · remote or hybrid', '可以马上上班 · 马来西亚槟城 · 远程或混合办公'),
+  email: 'd.tytern@gmail.com',
+  linkedin: 'https://www.linkedin.com/in/edentan95/',
+  emailLabel: L('Email me', '写信给我'),
+  linkedinLabel: L('LinkedIn', 'LinkedIn'),
+
+  historyTitle: L('Where I have worked', '工作经历'),
+  historyHead: [L('When', '时间'), L('Role', '职位'), L('Where', '在哪里')],
+  history: [
+    {
+      when: L('Nov 2024 – Jan 2026', '2024.11 – 2026.01'),
+      role: L('Account Manager & Promotion Manager', 'Account Manager & Promotion Manager'),
+      where: L('B2B gaming platform, provider side. Promotions for 50+ operators, partner onboarding, T&Cs, go-live coordination, trade shows.', 'B2B 游戏平台,provider 端。50+ 个 operator 的促销、合作方开户、条款、上线协调、展会。'),
+    },
+    {
+      when: L('Mar 2023 – Nov 2024', '2023.03 – 2024.11'),
+      role: L('Senior Marketing Specialist', 'Senior Marketing Specialist'),
+      where: L('Same group, operator side. Monthly brand reports, segmentation, acquisition, retention and reactivation across three consumer brands.', '同一集团,operator 端。三个品牌的月报、分群、获客、留存与召回。'),
+    },
+    {
+      when: L('Nov 2021 – Jan 2023', '2021.11 – 2023.01'),
+      role: L('Digital Marketing Manager', 'Digital Marketing Manager'),
+      where: L('Digital agency, Kuala Lumpur. Brand guidelines, promotional collateral, ad budget, sales reporting.', '数字代理商，吉隆坡。品牌规范、推广物料、广告预算、销售报表。'),
+    },
+    {
+      when: L('Jan 2017 – May 2021', '2017.01 – 2021.05'),
+      role: L('Brand, social media and digital marketing roles', '品牌、社群与数字营销'),
+      where: L('Three companies in Penang. End-to-end campaigns, Facebook ads, content strategy, client pitches.', '槟城三家公司。端到端活动、Facebook 广告、内容策略、客户提案。'),
+    },
+  ],
   difference: L(
     'The starter pack shows what I know. This page shows what I would build for you.',
     '入门包展示我懂什么；这一页讲我能替你建起什么。',
@@ -146,7 +183,7 @@ export const IGAMING_RESUME = {
     },
   ],
 
-  planTitle: L('If you are entering a new market: my first 90 days', '如果你正要进新市场：我的头 90 天'),
+  planTitle: L('My first 90 days in a promotions role', '进一个促销岗位，我的头 90 天'),
   planLine: L(
     'A starting shape, not a script. It changes after the first conversations with your team.',
     '这是起点的形状，不是剧本；和你的团队聊过之后会调整。',
@@ -154,37 +191,37 @@ export const IGAMING_RESUME = {
   plan: [
     {
       phase: L('Days 1–30', '第 1–30 天'),
-      title: L('Map the ground', '摸清地形'),
+      title: L('Learn the catalogue and the partners', '摸清产品和合作方'),
       items: [
-        L('Payment coverage, success rate and local deposit habits', '支付覆盖、成功率与当地存款习惯'),
-        L('Local channels, partners and affiliates worth talking to', '值得接触的当地渠道、合作方与 affiliate'),
-        L('A baseline funnel and one daily report everyone reads', '一条基准漏斗，加一份所有人都看的日报'),
+        L('Every live promotion, its terms and its owner, in one tracker', '所有在跑的促销、条款和负责人，放进一张追踪表'),
+        L('Which operators bring volume, which need help, and why', '哪些 operator 带量，哪些需要帮忙，为什么'),
+        L('A baseline report: participation, turnover and cost per campaign', '一份基准报表：每个活动的参与、流水和成本'),
       ],
     },
     {
       phase: L('Days 31–60', '第 31–60 天'),
-      title: L('Build the acquisition network', '搭起获客网络'),
+      title: L('Run one full campaign cycle', '完整跑一轮活动'),
       items: [
-        L('First partners live, on CPA / revenue-share terms that fit the market', '首批合作方上线，CPA / revenue share 条款贴合当地'),
-        L('Promotions designed around local payment and product habits', '按当地支付与产品习惯设计促销'),
-        L('An owner for failed payments, complaints and eligibility questions', '支付失败、投诉、资格问题都有明确负责人'),
+        L('Plan → T&Cs → setup → placement check → go-live → report', '策划 → 条款 → 设置 → 检查版位 → 上线 → 报表'),
+        L('Placement and test accounts checked like a player before launch', '上线前像玩家一样检查版位和测试账号'),
+        L('Merchant feedback logged, not lost in chat', 'Merchant 的反馈记下来，不散在聊天里'),
       ],
     },
     {
       phase: L('Days 61–90', '第 61–90 天'),
-      title: L('Scale what works', '把有效的放大'),
+      title: L('Turn it into a system', '做成系统'),
       items: [
-        L('Budget moved to channels by FTD quality, not volume', '按首存质量而不是量来分配预算'),
-        L('Launches turned into templates the team can repeat', '把上线流程做成团队能重复用的模板'),
-        L('A weekly review with commercial, product and operations', '与商务、产品、运营每周一起复盘'),
+        L('Launches turned into templates and checklists the team can repeat', '把上线流程做成团队能重复用的模板和清单'),
+        L('A monthly ROI review per campaign type', '每月按活动类型复盘 ROI'),
+        L('A shorter path from idea to live', '从想法到上线的路更短'),
       ],
     },
   ],
 
   workTitle: L('How I work', '我的工作方式'),
   work: [
-    { title: L('Fully remote', '全远程'), body: L('Used to async work across time zones, with written handovers and clear owners.', '习惯跨时区异步协作，书面交接，责任到人。') },
-    { title: L('B2B contract friendly', '可以 B2B 合同合作'), body: L('Comfortable with a retainer plus agreed performance goals.', '可以接受固定月费加双方约定的绩效目标。') },
+    { title: L('Remote or hybrid', '远程或混合办公'), body: L('Based in Penang, Malaysia. Used to async work across time zones, with written handovers and clear owners.', '人在马来西亚槟城。习惯跨时区异步协作，书面交接，责任到人。') },
+    { title: L('Five languages', '五种语言'), body: L('English, Mandarin, Malay, Cantonese and Hokkien.', '英文、华语、马来文、粤语、福建话。') },
     { title: L('Across functions', '跨职能'), body: L('Marketing, operations, commercial and tech in one conversation, not four handoffs.', '市场、运营、商务、技术在一次对话里谈清楚，而不是交接四次。') },
   ],
 
@@ -195,8 +232,8 @@ export const IGAMING_RESUME = {
 
   closingTitle: L('Next step: a 30-minute call', '下一步：聊 30 分钟'),
   closingBody: L(
-    'If this matches what your team needs, reply to the message that brought you here and we can find a time.',
-    '如果这和你的团队需要的对得上，直接回复把你带到这里的那条消息，我们约个时间。',
+    'If this matches what your team needs, email me or message me on LinkedIn and we can find a time.',
+    '如果这和你的团队需要的对得上，写信给我或在 LinkedIn 找我，我们约个时间。',
   ),
   openStarter: L('Read the starter pack', '读入门包'),
   openCases: L('Read the field notes', '读实战案例'),

@@ -79,6 +79,35 @@
   text-align: left;
 }
 
+/* /igaming first screen: the job-search line, links to /igaming/resume */
+.igaming-hire {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  max-width: 34rem;
+  margin-bottom: 1.6rem;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  background: var(--ig-card);
+  box-shadow: inset 3px 0 0 var(--ig-foil), inset 0 0 0 1px var(--ig-line-3);
+  color: var(--theme-text-primary);
+  font-size: 0.9rem;
+  font-weight: 560;
+  line-height: 1.5;
+  text-align: left;
+  text-decoration: none;
+}
+
+.igaming-hire:hover,
+.igaming-hire:focus-visible {
+  box-shadow: inset 3px 0 0 var(--ig-foil), inset 0 0 0 1px var(--ig-foil);
+}
+
+.igaming-hire svg {
+  flex: none;
+}
+
 .igaming-kicker {
   font-size: 0.72rem;
   font-weight: 640;
