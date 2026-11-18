@@ -36,12 +36,12 @@ npm run log:append < entry.md   # one new file in logs/entries/ per change entry
 Operator workflow (protected path — `publish` never pushes `main` directly, never `git add --all`s, and does not merge by default):
 
 ```bash
-# edit in place (no branch first) -> git add <only your files> -> publish
+# wt.mjs new <type>/<desc> (one worktree per task, see AGENTS.md §6) -> edit there -> wt.mjs preview <worktree> -> git add <only your files> -> publish
 npm run publish -- "fix: commit title" # commits ONLY staged files; on main creates <type>/<YYYYMMDD>-<desc> from origin/main; ready -> check -> commit -> push -> PR, then stops (auto-merge after CI)
 npm run publish -- "title" --dry-run   # no writes
 npm run publish -- "title" --yes       # required in non-interactive/agent shells; inspect `git status --short` first, never add by habit
 npm run publish -- "title" --merge     # only when the user explicitly asks: wait for verify -> squash merge -> Pages deploy -> live check
-npm run task:new -- "task name"        # optional: branch off the default branch up front
+npm run task:new -- "task name"        # legacy: branch in place; superseded by wt.mjs new
 ```
 
 Firebase (deploy is always an explicit, separate step):

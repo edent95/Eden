@@ -7,7 +7,9 @@
 ## 最短路径
 
 ```bash
-# 1. 直接在当前目录修改（不必先开分支），并用 npm run log:append < entry.md 在 logs/entries/ 新建一条结构化记录
+# 1. 一件事一个 worktree：从最新 origin/main 开分支与工作目录，在那里改，并用 npm run log:append < entry.md 在 logs/entries/ 新建一条结构化记录
+node /Users/MacBookPro/Developer/Project/personal-dashboard/scripts/wt.mjs new fix/首页文案
+node /Users/MacBookPro/Developer/Project/personal-dashboard/scripts/wt.mjs preview <worktree 目录>   # 把打印的 localhost 链接给用户看
 
 # 2. 只暂存你这次改的文件（绝不 git add -A / . / --all）
 git add <你的文件> …
@@ -35,7 +37,7 @@ Markdown / code changes
 
 ### `npm run task:new -- "任务名"`（可选）
 
-- 不是必需步骤：默认做法是直接在当前目录改，`publish` 在提交时才开分支。
+- 已被 `wt.mjs new` 取代（2026-10-16 起一件事一个 worktree，见 AGENTS.md §6）；它只在当前目录切分支，主工作目录里别的会话的改动会跟着走。
 - 只能从默认分支开新任务。
 - 建立 `<类型>/YYYYMMDD-任务名` 分支（类型取自标题前缀，如 `fix:`，缺省 `chore`）。
 - 如果 `main` 上已有未提交改动，会把改动安全地带到新分支，不会 stash、reset 或删除文件。
