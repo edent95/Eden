@@ -535,7 +535,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
     desc: {
       en: 'A browser Hold’em table for a private crew: nine seats, blinds and buy-ins, six mini games, party games, and a chip tracker for real-card nights.',
-      zh: '为熟人局做的浏览器德州牌桌：九个座位、盲注与买入、六个小游戏、派对游戏，还能给真牌局记筹码。只有娱乐筹码。',
+      zh: '为熟人局做的浏览器德州牌桌：最多九座、盲注与买入、边池与行动倒数，旁边还有六个小游戏和派对游戏，也能给真牌局记筹码。访客不用注册就能入座，只有娱乐筹码。',
     },
   },
   {
@@ -964,7 +964,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
     desc: {
       en: 'A UI/UX prototype case note from Eden Tan’s project archive, covering structure, interface direction, and website experience planning.',
-      zh: 'Eden Tan 项目归档中的 UI/UX 原型案例，记录网站结构、界面方向与体验规划。',
+      zh: 'Atlantis 网站改版的 UI/UX 原型归档：重构网站结构与转化路径，在同一品牌语言下对齐桌面与移动端布局，是工程交付前的全站 UX 基线，附 Adobe XD 原型链接。',
     },
   },
   {
