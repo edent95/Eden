@@ -51,7 +51,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-11-15';
+export const SITE_CONTENT_LASTMOD = '2026-11-18';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -511,7 +511,7 @@ export const ROUTE_SEO: RouteSeo[] = [
   {
     path: '/dr-racing',
     datePublished: '2026-08-20',
-    dateModified: '2026-10-28',
+    dateModified: '2026-11-18',
     og: 'dr-racing',
     priority: '0.8',
     title: {

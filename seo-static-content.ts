@@ -730,8 +730,8 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
         title: L('How a deal moves', '一单生意怎么走'),
         paragraphs: [
           L(
-            'Lead, application, bank rounds, delivery, settlement. Leads arrive from TikTok, Facebook, Instagram, Google, the public website, and walk-ins, each through the salesperson’s own tracked link. A loan or cash application collects the IC, payslips, bank account, the bike, and the installment plan. Each bank round records the outcome, and a rejection comes back as a reject code translated into a plain next step. An approved deal opens a delivery checklist where Operations orders the bike and each role records its own step with files attached; the bike is delivered only when every step is done. Settlement checks payments against deposit plus cash, syncs invoices and receipts to the accounting ledger, and pays commission by tier plan.',
-            'Lead、申请、银行轮次、交车、结算。Lead 来自 TikTok、Facebook、Instagram、Google、公开官网和到店客人，各自经由 sales 自己的追踪链接；贷款或现金申请收集 IC、薪资单、银行户口、车型与分期方案；每一轮银行结果都记录下来，被拒时 reject code 会被翻译成一句清楚的下一步；批准后打开交车 checklist，Operations 订车，每个角色附上文件记录自己那一步，全部完成才能交车；结算时按订金加现金核对收款，发票和收据同步到会计账本，佣金按分级方案计算。',
+            'Lead, application, bank rounds, delivery, settlement. Leads arrive from TikTok, Facebook, Instagram, Google, the public website, and walk-ins, each through the salesperson’s own tracked link. A loan or cash application collects the IC, payslips, bank account, the bike, and the installment plan. Admin can submit to several banks at once; each bank round records the outcome, and a rejection comes back as a reject code translated into a plain next step. An approved deal opens a delivery checklist where Operations orders the bike and each role records its own step with files attached; the bike is delivered only when every step is done. Settlement checks payments against deposit plus cash, syncs invoices and receipts to the accounting ledger, and pays commission by tier plan.',
+            'Lead、申请、银行轮次、交车、结算。Lead 来自 TikTok、Facebook、Instagram、Google、公开官网和到店客人，各自经由 sales 自己的追踪链接；贷款或现金申请收集 IC、薪资单、银行户口、车型与分期方案；需要时可以同时送几家银行，每一轮银行结果都记录下来，被拒时 reject code 会被翻译成一句清楚的下一步；批准后打开交车 checklist，Operations 订车，每个角色附上文件记录自己那一步，全部完成才能交车；结算时按订金加现金核对收款，发票和收据同步到会计账本，佣金按分级方案计算。',
           ),
           L(
             'Before this system, that pipeline lived in WhatsApp chats, paper files, and each salesperson’s memory. Reject codes become knowledge, so a young salesperson handles a rejection the way the most experienced one would.',
@@ -749,11 +749,51 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
         ],
       },
       {
+        title: L('Numbers the owner can check', '老板看得到、也核得了的数字'),
+        paragraphs: [
+          L(
+            'Super Admin gets an analytics page: what each deal made, which models sell and which earn. A Banks tab shows each bank’s approval rate, how many days it takes to answer, and its most common reject reasons. Every number opens the list of deals it was counted from.',
+            'Super Admin 有一页数据分析：每单赚多少、哪个车型好卖、哪个车型赚钱。银行那一栏列出每家银行的批准率、平均几天回复、最常见的拒绝原因。每个数字都能点开，看到它是从哪几单算出来的。',
+          ),
+          L(
+            'The shop’s public website, dr-racing.com, lives in the same codebase: the server hands search engines complete pages, twenty-odd Malay articles answer what buyers search for, and every WhatsApp button goes through a tracked link.',
+            '车行官网 dr-racing.com 也在同一套代码里：服务器直接把完整网页交给搜索引擎，二十多篇马来文文章回答买车的人会搜的问题，每个 WhatsApp 按钮都走追踪链接。',
+          ),
+        ],
+      },
+      {
+        title: L('The money has to add up', '钱一定要对得上'),
+        paragraphs: [
+          L(
+            'Every fee and cost on the delivery checklist goes straight into that deal’s profit and loss. Dates follow the Malaysian day rather than UTC. Each invoice and receipt is saved with its own key before it goes to the accounting ledger and is resent until the ledger confirms it, so a retry never records a payment twice. Every record carries a version number, so when two people edit the same deal the second one is told instead of silently overwriting the first.',
+            '交车 checklist 里的每一笔费用和成本直接进这一单的盈亏；日期按马来西亚的一天来算，不按 UTC。每张发票和收据送去会计账本之前先存好单号和内容，没确认收到就一直重发，重试不会多记一笔。每条记录都带版本号，两个人同时改同一单，后存的人会被告知，不会悄悄盖掉对方的改动。',
+          ),
+        ],
+      },
+      {
+        title: L('Security is not a hidden button', '安全不是把按钮藏起来'),
+        paragraphs: [
+          L(
+            'Which staff member can see which customer is decided by nearly 3,000 lines of database rules on the server, re-tested role by role on every change. In November 2026 three rounds of attack-style testing in an isolated sandbox (access control, injection, request flooding, SSRF, XSS, business-flow abuse) found nothing reproducible. The database, files and staff accounts are snapshotted daily and each snapshot is checked to be complete.',
+            '哪个员工能看哪些客户，由服务器上将近 3000 行的数据库规则决定，每次改动都按角色整套重测。2026 年 11 月在隔离的测试环境里做了三轮模拟攻击（越权、注入、狂刷请求、SSRF、XSS、钻业务流程的空子），没有一个能重现的漏洞。数据库、文件和员工账号每天快照，每一份都核验完整。',
+          ),
+        ],
+      },
+      {
+        title: L('How it is built', '怎么做出来的'),
+        paragraphs: [
+          L(
+            'More than 300 merged PRs since work began on 30 June 2026, 110 unit test files and 23 end-to-end specs. Every change passes the same gate on the laptop, before push, and in CI; only a green gate merges, and the security rules deploy themselves after the merge and are read back from production to confirm they match.',
+            '2026 年 6 月 30 日开工以来合并了 300 多个 PR，有 110 个单元测试文件和 23 套端到端测试。每个改动在本机、推送前、CI 上都过同一道关卡，全部通过才能合并；合并后安全规则自动上线，再从正式环境读回来核对。',
+          ),
+        ],
+      },
+      {
         title: L('Deployment and demo', '部署与 demo'),
         paragraphs: [
           L(
-            'Production runs on Firebase App Hosting with Firestore security rules tested in CI, staff sign-in with an authenticator code, and nightly verified backups; the interface is available in Chinese, English, and Malay. The public demo embedded on this page (October 2026 build) runs on fixed anonymized data with no login and resets on reload; phone push, file uploads, and the ledger sync are off in the demo.',
-            '生产环境跑在 Firebase App Hosting，Firestore 安全规则在 CI 里测试，员工用验证器动态码登录，数据每晚备份并核验；界面提供中文、英文与马来文。页面内嵌的公开 demo（2026 年 10 月版本）使用固定的匿名数据，无需登录，刷新即重置；手机推送、文件上传和账本同步在 demo 里是关的。',
+            'Production runs on Firebase App Hosting with Firestore security rules tested in CI, staff sign-in with an authenticator code, and nightly verified backups; the interface is available in Chinese, English, and Malay. The public demo embedded on this page (October 2026 build) runs on fixed anonymized data with no login and resets on reload; phone push, file uploads, and the ledger sync are off in the demo, and November additions such as several banks at once and the analytics page are not in it yet.',
+            '生产环境跑在 Firebase App Hosting，Firestore 安全规则在 CI 里测试，员工用验证器动态码登录，数据每晚备份并核验；界面提供中文、英文与马来文。页面内嵌的公开 demo（2026 年 10 月版本）使用固定的匿名数据，无需登录，刷新即重置；手机推送、文件上传和账本同步在 demo 里是关的；同时送几家银行、数据分析这些 11 月才加的功能，demo 里还没有。',
           ),
         ],
       },
