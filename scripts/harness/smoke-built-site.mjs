@@ -13,6 +13,7 @@ import {
   routeOgImage,
   routeOgType,
   routeOutputPath,
+  textWidth,
 } from '../../seo-prerender.ts';
 import { exists, fail, pass, root } from './lib.mjs';
 
@@ -107,11 +108,11 @@ if (problems.length === 0) {
         problems.push(`${artifact} has the wrong static description`);
       }
       if (route.index !== false && route.sitemap !== false) {
-        // Ahrefs / Bing count characters in both languages: under 110 is "too short", over 160 "too long".
-        const length = routeMetaDescription(route, language).length;
+        // Display width (a 汉字 counts 2), same yardstick as the personal-dashboard site-health crawl.
+        const width = textWidth(routeMetaDescription(route, language));
         const { min, max } = META_DESCRIPTION_LIMITS[language];
-        if (length < min || length > max) {
-          problems.push(`${artifact} meta description is ${length} characters (want ${min}–${max})`);
+        if (width < min || width > max) {
+          problems.push(`${artifact} meta description is ${width} wide (want ${min}–${max}; a 汉字 counts 2)`);
         }
       }
       if (!routeHtml.includes(`<meta name="robots" content="${expectedRobots}" />`)) {
