@@ -13,6 +13,7 @@ import {
   routeLastmod,
   routeOgImage,
   routeOgType,
+  textWidth,
 } from '../../seo-prerender.ts';
 
 const SITE = 'https://eden-tan.com';
@@ -135,7 +136,7 @@ test('meta descriptions lead with the hand-written desc and stay inside the leng
       const base = entry.desc[language].trim();
       assert.ok(description.startsWith(base.replace(/[.。]$/, '')), `${entry.path} ${language} keeps its desc first`);
       if (description !== base) {
-        assert.ok(description.length <= META_DESCRIPTION_LIMITS[language].max, `${entry.path} ${language} too long: ${description.length}`);
+        assert.ok(textWidth(description) <= META_DESCRIPTION_LIMITS[language].max, `${entry.path} ${language} too wide: ${textWidth(description)}`);
       }
       assert.doesNotMatch(description, /==|\[\[/, `${entry.path} ${language} leaks inline tokens`);
     }
@@ -145,19 +146,31 @@ test('meta descriptions lead with the hand-written desc and stay inside the leng
 test('short descriptions are topped up from the page body with whole sentences', () => {
   const korea = route('/notes/korea-2026-crash');
   const zh = routeMetaDescription(korea, 'zh');
-  assert.ok(korea.desc.zh.length < META_DESCRIPTION_LIMITS.zh.min, 'fixture is still short by hand');
-  assert.ok(zh.length >= META_DESCRIPTION_LIMITS.zh.min, `zh topped up: ${zh}`);
+  assert.ok(textWidth(korea.desc.zh) < META_DESCRIPTION_LIMITS.zh.min, 'fixture is still short by hand');
+  assert.ok(textWidth(zh) >= META_DESCRIPTION_LIMITS.zh.min, `zh topped up: ${zh}`);
+  assert.ok(textWidth(zh) <= META_DESCRIPTION_LIMITS.zh.max, `zh top-up stays inside the width: ${zh}`);
   assert.match(zh, /[。！？]$/);
   // Long enough already: unchanged.
   const home = route('/');
   assert.equal(routeMetaDescription(home, 'en'), home.desc.en);
 });
 
-test('every indexable page lands in 110–160 characters in both languages (Ahrefs yardstick)', () => {
+test('textWidth counts 汉字 and fullwidth marks as 2, everything else as 1 (personal-dashboard seo_rules.py)', () => {
+  assert.equal(textWidth('Eden Tan'), 8);
+  assert.equal(textWidth('系统'), 4);
+  assert.equal(textWidth('，。「」：！'), 12);
+  assert.equal(textWidth('ＡＢ１'), 6); // fullwidth Latin / digits
+  assert.equal(textWidth('“’…·—é'), 6); // ambiguous / neutral punctuation stays 1
+  assert.equal(textWidth('한글かな'), 8);
+  assert.equal(textWidth('🎲'), 2); // one code point, not two UTF-16 units
+  assert.equal(textWidth('iGaming 品牌'), 12);
+});
+
+test('every indexable page lands in 110–160 of display width in both languages (search snippet yardstick)', () => {
   for (const entry of ROUTE_SEO.filter((item) => item.index !== false && item.sitemap !== false)) {
     for (const language of ['en', 'zh'] as const) {
-      const { length } = routeMetaDescription(entry, language);
-      assert.ok(length >= 110 && length <= 160, `${entry.path} ${language} is ${length} characters`);
+      const width = textWidth(routeMetaDescription(entry, language));
+      assert.ok(width >= 110 && width <= 160, `${entry.path} ${language} is ${width} wide`);
     }
   }
 });
@@ -177,7 +190,7 @@ test('key pages carry hand-written descriptions long enough on their own', () =>
   for (const path of ['/wiki', '/notes', '/notes/turn-chaos-into-systems', '/notes/judgment-is-not-more-information',
     '/notes/human-nature-is-a-design-condition', '/notes/win-before-you-fight']) {
     const entry = route(path);
-    assert.ok(entry.desc.en.length >= META_DESCRIPTION_LIMITS.en.min, `${path} en ${entry.desc.en.length}`);
-    assert.ok(entry.desc.zh.length >= META_DESCRIPTION_LIMITS.zh.min, `${path} zh ${entry.desc.zh.length}`);
+    assert.ok(textWidth(entry.desc.en) >= META_DESCRIPTION_LIMITS.en.min, `${path} en ${textWidth(entry.desc.en)}`);
+    assert.ok(textWidth(entry.desc.zh) >= META_DESCRIPTION_LIMITS.zh.min, `${path} zh ${textWidth(entry.desc.zh)}`);
   }
 });

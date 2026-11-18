@@ -1,5 +1,6 @@
 import { siteEssayNotes, wikiEntries } from './generated/content.ts';
 import { ROUTE_STATIC_COPY } from './seo-static-content.ts';
+import { textWidth } from './seo-text-width.ts';
 import { IGAMING_GUIDES } from './components/igaming-guides-content.ts';
 import { WIKI_INDEX, wikiTopics } from './components/wiki-content.ts';
 import {
@@ -414,12 +415,15 @@ export function logicalCanonicalPath(route: RouteSeo): string {
 }
 
 /**
- * Meta description length policy: 110–160 characters in both languages.
- * Chinese glyphs are wider, so Google may cut a long Chinese snippet earlier, but Ahrefs
- * (and Bing Webmaster) count characters and flag anything under 110 as too short; the
- * user chose the audit tools' yardstick on 2026-11-18. The hand-written desc leads, so the
- * part a narrow snippet shows is still the most important sentence.
+ * Meta description length policy: 110–160 of display width in both languages, measured with
+ * textWidth() (seo-text-width.ts): a 汉字 / fullwidth mark counts 2, everything else 1 — the same
+ * yardstick as the personal-dashboard site-health crawl (scripts/py/seo_rules.py), because Google
+ * truncates snippets by pixels and a Chinese glyph is about two Latin letters wide.
+ * English is unchanged (110–160 letters); Chinese lands at roughly 55–80 字.
+ * The user chose width over raw character count on 2026-11-18 (the morning's "110 字" rule is void).
  */
+export { textWidth };
+
 export const META_DESCRIPTION_LIMITS: Record<SeoLanguage, { min: number; max: number }> = {
   en: { min: 110, max: 160 },
   zh: { min: 110, max: 160 },
@@ -488,7 +492,7 @@ function standalone(sentence: string, language: SeoLanguage): boolean {
  * client mounts (seo.ts).
  *
  * The hand-written `desc` in `seo-routes.ts` always leads. When it is shorter than the
- * language's minimum, whole sentences from the page's own static body (summary, thesis,
+ * language's minimum width, whole sentences from the page's own static body (summary, thesis,
  * then the first paragraph of each section — the copy the page actually renders) are
  * appended until the minimum is reached, never past the maximum and never cut mid-sentence.
  * Routes without real body copy (generic fallback) keep their `desc` unchanged.
@@ -496,7 +500,7 @@ function standalone(sentence: string, language: SeoLanguage): boolean {
 export function routeMetaDescription(route: RouteSeo, language: SeoLanguage): string {
   const base = route.desc[language].trim();
   const { min, max } = META_DESCRIPTION_LIMITS[language];
-  if (base.length >= min) return base;
+  if (textWidth(base) >= min) return base;
 
   const hasBody = route.path === '/conways-game-of-life'
     || route.path === '/wiki'
@@ -518,7 +522,7 @@ export function routeMetaDescription(route: RouteSeo, language: SeoLanguage): st
   const used = [shingles(base, language)];
   for (const paragraph of pool) {
     for (const sentence of splitSentences(paragraph, language)) {
-      if (result.length >= min) return result;
+      if (textWidth(result) >= min) return result;
       if (!standalone(sentence, language)) continue;
       const grams = shingles(sentence, language);
       // Skip restatements of what the description already says (summary often paraphrases desc).
@@ -526,7 +530,7 @@ export function routeMetaDescription(route: RouteSeo, language: SeoLanguage): st
       if (repeatsClause(sentence, result, language)) continue;
       used.push(grams);
       const next = language === 'zh' ? `${result}${sentence}` : `${result} ${sentence}`;
-      if (next.length <= max) result = next;
+      if (textWidth(next) <= max) result = next;
     }
   }
   return result.length > base.length ? result : base;

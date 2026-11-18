@@ -1,5 +1,6 @@
 import { OG_IMAGES, ROUTE_SEO, SITE_CONTENT_LASTMOD } from '../../seo-routes.ts';
 import { ROUTE_STATIC_COPY } from '../../seo-static-content.ts';
+import { textWidth } from '../../seo-text-width.ts';
 import { exists, fail, pass, read } from './lib.mjs';
 
 const app = read('App.tsx');
@@ -39,14 +40,15 @@ for (const route of ROUTE_SEO) {
   if (route.index === false && route.sitemap !== false) {
     problems.push(`${route.path} is noindex but is still eligible for the sitemap`);
   }
-  if (route.title.en.length > 60) {
-    problems.push(`${route.path} English title exceeds 60 characters (${route.title.en.length})`);
+  // Widths, not characters: 汉字 count 2 (seo-text-width.ts, same yardstick as personal-dashboard seo_rules.py).
+  if (textWidth(route.title.en) > 60) {
+    problems.push(`${route.path} English title is wider than 60 (${textWidth(route.title.en)})`);
   }
-  if (route.desc.en.length > 160) {
-    problems.push(`${route.path} English description exceeds 160 characters (${route.desc.en.length})`);
+  if (textWidth(route.desc.en) > 160) {
+    problems.push(`${route.path} English description is wider than 160 (${textWidth(route.desc.en)})`);
   }
-  if (route.desc.zh.length > 160) {
-    problems.push(`${route.path} Chinese description exceeds 160 characters (${route.desc.zh.length})`);
+  if (textWidth(route.desc.zh) > 160) {
+    problems.push(`${route.path} Chinese description is wider than 160 (${textWidth(route.desc.zh)}; a 汉字 counts 2)`);
   }
   if (!hasImplementedRoute(route.path)) {
     problems.push(`${route.path} is registered but no matching App.tsx route/data entry was found`);
