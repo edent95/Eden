@@ -899,15 +899,15 @@ const App: React.FC = () => {
 
       <main>
         <motion.section className="eden-hero eden-home-island" initial="initial" animate="animate" variants={staggerContainer}>
-          <motion.p variants={fadeIn} className="eden-eyebrow">{isZh ? '啊不然请我吃饭也可以' : 'EDEN · HUMAN SYSTEMS & PRODUCT'}</motion.p>
+          <motion.p variants={fadeIn} className="eden-eyebrow">{isZh ? 'EDEN · 人、系统、PRODUCT' : 'EDEN · HUMAN SYSTEMS & PRODUCT'}</motion.p>
           <motion.h1 variants={fadeIn}>
             {isZh ? <span>一个有趣的蛋散</span> : <><span>Build systems</span><br /><span>from chaos.</span></>}
           </motion.h1>
           <motion.p variants={fadeIn} className="eden-hero-copy">
-            {isZh ? '我冇錢，可唔可以請我做嘢？' : 'I turn complex human behavior and messy realities into useful products, data, and AI systems.'}
+            {isZh ? '人很乱，现实更乱。我把它们做成能用的 product、data 和 AI 系统。' : 'I turn complex human behavior and messy realities into useful products, data, and AI systems.'}
           </motion.p>
           <motion.div variants={fadeIn} className="eden-hero-actions">
-            <a className="eden-button" href={projectHomeHref}>{isZh ? '看看下，可能我们可以一起赚更多的钱' : 'Explore my work'}</a>
+            <a className="eden-button" href={projectHomeHref}>{isZh ? '看看我做了什么' : 'Explore my work'}</a>
           </motion.div>
         </motion.section>
 
@@ -924,15 +924,15 @@ const App: React.FC = () => {
           </div>
           <div className="eden-about-copy">
             <p className="eden-section-label">01 · About Eden</p>
-            <h2>{isZh ? <>蛋散一条</> : <>Hey, I’m Eden.</>}</h2>
+            <h2>{isZh ? <>嗨，我是 Eden。</> : <>Hey, I’m Eden.</>}</h2>
             <div className="eden-about-body eden-about-body-compact">
               {isZh ? (
                 <>
-                  <p>别人收 Pokémon card，我收皮。</p>
-                  <p>AI、营销、心理学、哲学、Ang Kong system，我都略懂一二。你问我懂来做什么？懂了就不再被别人做9自己咯。</p>
-                  <p>我觉得很多事情不是复杂，是没人讲清楚。我就是那个讲清楚的人：写软件、搞 AI、写文章，还做了 Jiju。做了那么多，还是冇錢。</p>
-                  <p>技术不是终点，是我吃饭的家伙。问题是饭还没吃到。</p>
-                  <p>你的公司乱到自己都看不懂？拿来给我，我帮你画出来，顺便帮你看清楚你自己。</p>
+                  <p>别人收集知识，我收集 pattern。</p>
+                  <p>AI、product growth、营销、心理学、哲学、符号系统，我都在看。我要找的是它们底下共用的那套结构。</p>
+                  <p>很多事情不是复杂，是没人翻译清楚。我做的就是翻译：用软件、AI agent、文章，还有 Jiju 这样的 product，把零散的想法变成清楚的系统。</p>
+                  <p>技术不是终点。它是一种语言，用来把现实讲得更准。</p>
+                  <p>我做 framework，帮人看清楚自己、自己的生意，还有这个世界。</p>
                   <p className="eden-about-now"><strong>看得清系统，就改得了系统。看得清人，就搞人。</strong></p>
                   <p><a className="eden-about-more" href={aboutHref}>完整故事 ›</a></p>
                 </>
@@ -952,7 +952,7 @@ const App: React.FC = () => {
         </section>
       </main>
 
-      <footer className="eden-footer"><div className="eden-home-island"><div><strong>EDEN</strong><p>Building systems for people, products, and uncertain futures.</p></div><div className="eden-footer-links"><a href={aboutHref}>About</a><a href="mailto:d.tytern@gmail.com">Email</a><a href="https://www.linkedin.com/in/edentan95/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/edent95" target="_blank" rel="noreferrer">GitHub</a><a href={notesHref}>Notes</a></div></div></footer>
+      <footer className="eden-footer"><div className="eden-home-island"><div><strong>EDEN</strong><p>{isZh ? '给人、产品和看不清的未来做系统。' : 'Building systems for people, products, and uncertain futures.'}</p></div><div className="eden-footer-links"><a href={aboutHref}>About</a><a href="mailto:d.tytern@gmail.com">Email</a><a href="https://www.linkedin.com/in/edentan95/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/edent95" target="_blank" rel="noreferrer">GitHub</a><a href={notesHref}>Notes</a></div></div></footer>
 
     </div>
   );
