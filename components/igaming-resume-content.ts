@@ -57,9 +57,14 @@ export const IGAMING_RESUME = {
       where: L('Digital agency, Kuala Lumpur. Brand guidelines, promotional collateral, ad budget, sales reporting.', '数字代理商，吉隆坡。品牌规范、推广物料、广告预算、销售报表。'),
     },
     {
-      when: L('Jan 2017 – May 2021', '2017.01 – 2021.05'),
-      role: L('Brand, social media and digital marketing roles', '品牌、社群与数字营销'),
-      where: L('Three companies in Penang. End-to-end campaigns, Facebook ads, content strategy, client pitches.', '槟城三家公司。端到端活动、Facebook 广告、内容策略、客户提案。'),
+      when: L('Jun 2018 – Nov 2020', '2018.06 – 2020.11'),
+      role: L('Social Media Marketing Specialist', 'Social Media Marketing Specialist'),
+      where: L('iGaming tech company, Penang. End-to-end campaign marketing, content strategy, Facebook ads, performance reports, client pitches.', '槟城的 iGaming 科技公司。端到端活动营销、内容策略、Facebook 广告、成效报告、客户提案。'),
+    },
+    {
+      when: L('2017 – 2018, 2021', '2017 – 2018、2021'),
+      role: L('Sales & marketing, then brand manager', '销售与营销，之后做品牌经理'),
+      where: L('Two companies in Penang. Digital marketing strategy, content, product portfolios and KPIs.', '槟城两家公司。数字营销策略、内容、产品线与 KPI。'),
     },
   ],
   difference: L(
