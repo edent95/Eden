@@ -45,6 +45,9 @@ for (const route of ROUTE_SEO) {
   if (route.desc.en.length > 160) {
     problems.push(`${route.path} English description exceeds 160 characters (${route.desc.en.length})`);
   }
+  if (route.desc.zh.length > 160) {
+    problems.push(`${route.path} Chinese description exceeds 160 characters (${route.desc.zh.length})`);
+  }
   if (!hasImplementedRoute(route.path)) {
     problems.push(`${route.path} is registered but no matching App.tsx route/data entry was found`);
   }

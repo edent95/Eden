@@ -322,7 +322,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
     desc: {
       en: 'Free rounds, fee-free periods, 1+1 accounts and GGR discounts: what an iGaming provider gives, what the operator owes, and how to spot clashing deals.',
-      zh: '供应商促销里装着两笔交易：玩家看得到的奖励，和两家公司之间的商业交换。免费局、免费期、1+1 账户与 GGR 折扣，供应商给什么、运营商要还什么。',
+      zh: '供应商促销里装着两笔交易：玩家看得到的奖励，和两家公司之间的商业交换。免费局、免费期、1+1 账户与 GGR 折扣，供应商给什么、运营商要还什么。这篇帮运营商和供应商在谈方案前把两笔账分开看，避免上线后才发现彼此理解不同。',
     },
     og: 'igaming-provider-promotions',
   },
@@ -352,7 +352,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
     desc: {
       en: 'Map iGaming CRM by player state: time windows, event vs calendar messages, a “no action” branch, responsible-gambling stop rules and holdout tests.',
-      zh: '好的 CRM 不是发更多消息。按玩家状态规划 iGaming CRM：时间窗口、事件消息与日历消息、「不需要动作」分支、负责任博彩的停止规则，以及用对照组衡量效果。',
+      zh: '好的 CRM 不是发更多消息。按玩家状态规划 iGaming CRM：时间窗口、事件消息与日历消息、「不需要动作」分支、负责任博彩的停止规则，以及用对照组衡量效果。适合正在排 CRM 日程的人，用来决定每个玩家现在该不该收到消息。',
     },
     og: 'igaming-crm-player-lifecycle',
   },
@@ -474,7 +474,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
     desc: {
       en: 'Taking an iGaming brand into a new market: payments, local community, acquisition, promotions, operations and data, and why payments is checked first.',
-      zh: '把一个 iGaming 品牌带进新市场：支付、本地社群、获客、促销、运营与数据，以及为什么先查支付。',
+      zh: '把一个 iGaming 品牌带进新市场：支付、本地社群、获客、促销、运营与数据，以及为什么先查支付。案例的结论是：网站有没有当地语言不是关键，玩家能不能顺利存款、出了问题有没有人接得住才是。准备进新市场的团队可以拿它当排查顺序。',
     },
     og: 'igaming-case-new-market-localisation',
   },
@@ -535,7 +535,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
     desc: {
       en: 'A browser Hold’em table for a private crew: nine seats, blinds and buy-ins, six mini games, party games, and a chip tracker for real-card nights.',
-      zh: '为熟人局做的浏览器德州牌桌：最多九座、盲注与买入、边池与行动倒数，旁边还有六个小游戏和派对游戏，也能给真牌局记筹码。访客不用注册就能入座，只有娱乐筹码。',
+      zh: '为熟人局做的浏览器德州牌桌：最多九座、盲注与买入、边池与行动倒数，旁边还有六个小游戏和派对游戏，也能给真牌局记筹码。访客不用注册就能入座，只有娱乐筹码。朋友约局时开一张桌、发个链接，大家用手机或电脑就能一起玩，人不够还能加练习机器人。',
     },
   },
   {
@@ -549,7 +549,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
     desc: {
       en: 'Explore systems, judgment, human behavior and strategy through four essays, with practical build notes one level deeper.',
-      zh: 'Eden 的主题知识地图：从系统、判断、人性与策略四个主题进入完整的 Notes 文章，再往下一层，是开发工具、交互设计与知识整理的构建经验。',
+      zh: 'Eden 的主题知识地图：从系统、判断、人性与策略四个主题进入完整的 Notes 文章，再往下一层，是开发工具、交互设计与知识整理的构建经验。适合想把读到的思路带回工作的人：先选一个你正在想的问题，再顺着主题找到对应的长文与笔记。',
     },
   },
   {
@@ -588,7 +588,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
     desc: {
       en: 'A UX note on click button feedback in realtime game interfaces: pressed, pending, accepted, blocked, and failed states.',
-      zh: '实时游戏界面的按钮反馈笔记：按下、等待、接受、阻挡与失败五种状态。在多人实时牌局里，一个按下去没反应的按钮，就算代码没坏，用户也会觉得坏了。',
+      zh: '实时游戏界面的按钮反馈笔记：按下、等待、接受、阻挡与失败五种状态。在多人实时牌局里，一个按下去没反应的按钮，就算代码没坏，用户也会觉得坏了。笔记逐一说明每种状态该给玩家什么信号，做实时界面时可以拿来逐项检查自己的每个按钮。',
     },
   },
   {
@@ -654,7 +654,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
     desc: {
       en: 'Published essays and build notes by Eden Tan on products, AI, human behavior, and turning messy realities into useful systems.',
-      zh: 'Eden Tan 发布的文章与构建笔记，关于产品、AI、人的行为，以及怎样把混乱慢慢变成可用的系统；也有金融骗局、战争与难民问题的证据地图。',
+      zh: 'Eden Tan 发布的文章与构建笔记，关于产品、AI、人的行为，以及怎样把混乱慢慢变成可用的系统；也有金融骗局、战争与难民问题的证据地图。每篇都把一个说法拆开，对照公开资料或真实工作，读完能带走一套可以自己检验的判断方法。',
     },
   },
   {
@@ -725,21 +725,21 @@ export const ROUTE_SEO: RouteSeo[] = [
     og: 'notes',
     priority: '0.7',
     title: { en: 'Turn chaos into systems | Eden Tan', zh: '把混乱变成系统 | Eden Tan' },
-    desc: { en: 'Why the value of a system is not automation itself, but making repeated confusion unnecessary: separate input, judgment and action, and fight each fire once.', zh: 'System 的价值不是 automation 本身，而是让同一种混乱不需要发生第二次：先分开输入、判断与行动，再找出每天重复、只靠某个人记得的地方。' },
+    desc: { en: 'Why the value of a system is not automation itself, but making repeated confusion unnecessary: separate input, judgment and action, and fight each fire once.', zh: 'System 的价值不是 automation 本身，而是让同一种混乱不需要发生第二次：先分开输入、判断与行动，再找出每天重复、只靠某个人记得的地方。这篇给每天被同样问题追着跑的人：怎么挑出第一个值得整理的流程，把它变成别人也接得住的系统。' },
   },
   {
     path: '/notes/judgment-is-not-more-information',
     og: 'notes',
     priority: '0.7',
     title: { en: 'Judgment is not knowing more | Eden Tan', zh: '判断不是知道更多 | Eden Tan' },
-    desc: { en: 'More data does not automatically create better decisions. Judgment begins by deciding what matters, then asking four questions of every number.', zh: '更多 data 不会自动带来更好的决定。判断从决定什么才重要开始：看到一个数字，先问跟谁比、为什么变、影响谁，再写下现在最小、最安全的下一步。' },
+    desc: { en: 'More data does not automatically create better decisions. Judgment begins by deciding what matters, then asking four questions of every number.', zh: '更多 data 不会自动带来更好的决定。判断从决定什么才重要开始：看到一个数字，先问跟谁比、为什么变、影响谁，再写下现在最小、最安全的下一步。这篇给每天被报表和消息淹没的人，一套看到新数字时能马上照着问、问完就知道下一步的顺序。' },
   },
   {
     path: '/notes/human-nature-is-a-design-condition',
     og: 'notes',
     priority: '0.7',
     title: { en: 'Human nature is a design condition | Eden Tan', zh: '人性不是借口，是设计条件 | Eden Tan' },
-    desc: { en: 'Good products and systems are designed for real human behavior, not ideal users. People forget, protect themselves and take the easier path; design for that.', zh: '好的产品与系统应该设计在真实人性上，而不是只适合理想中的用户。人会忘记、会保护自己、会走比较容易的路，这些不是 bug，而是 operating condition。' },
+    desc: { en: 'Good products and systems are designed for real human behavior, not ideal users. People forget, protect themselves and take the easier path; design for that.', zh: '好的产品与系统应该设计在真实人性上，而不是只适合理想中的用户。人会忘记、会保护自己、会走比较容易的路，这些不是 bug，而是 operating condition。这篇讲怎样把这些现实写进流程与界面，让普通人照平常的样子也能用对。' },
   },
   {
     path: '/notes/elementary-cellular-automata-256-rules',
@@ -781,7 +781,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     og: 'notes',
     priority: '0.7',
     title: { en: 'Win before you fight | Eden Tan', zh: '先胜后战 | Eden Tan' },
-    desc: { en: 'Strategy is deciding which battlefield deserves your effort before entering it: define what winning means, who sets the rules, and how you would retreat.', zh: 'Strategy 是在行动之前先决定，哪个 battlefield 值得你用力：先定义什么叫赢、规则是谁定的、正面打不过有没有别的入口，最坏时怎么退。' },
+    desc: { en: 'Strategy is deciding which battlefield deserves your effort before entering it: define what winning means, who sets the rules, and how you would retreat.', zh: 'Strategy 是在行动之前先决定，哪个 battlefield 值得你用力：先定义什么叫赢、规则是谁定的、正面打不过有没有别的入口，最坏时怎么退。这篇给准备投入时间或钱的人一份动手前要问清楚的清单，避免很快地走进一个烂局。' },
   },
   {
     path: '/notes/no-great-men-needed',
@@ -863,7 +863,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
     desc: {
       en: 'Eden Tan turns messy human behavior into systems people can run: the story from iGaming operator and provider work to products, essays and beliefs.',
-      zh: 'Eden Tan 把乱糟糟的人和事整理成跑得起来的系统：从 iGaming operator 到 provider，再到自己做产品、写文章，以及他相信的几条规则。',
+      zh: 'Eden Tan 把乱糟糟的人和事整理成跑得起来的系统：从 iGaming operator 到 provider，再到自己做产品、写文章，以及他相信的几条规则。想知道能不能找他一起理顺报表、流程或产品，这页说明他做过什么、怎么想问题，以及最擅长处理哪一类混乱。',
     },
   },
   {
@@ -950,7 +950,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
     desc: {
       en: 'A campaign operations tool from Eden Tan’s project archive, designed to help agents plan compliant provider combinations and use 1+1 Bonus Key capacity clearly.',
-      zh: 'Eden Tan 项目归档中的活动运营工具，用于帮助代理清楚规划合规供应商组合，并用满 1+1 Bonus Key 名额。',
+      zh: 'Eden Tan 项目归档中的活动运营工具，用于帮助代理清楚规划合规供应商组合，并用满 1+1 Bonus Key 名额。代理不用再手动对照置顶规则、banner 义务与活动文案条款，工具先把组合排好，减少上线前后的来回确认和半夜的追问消息。',
     },
   },
   {
@@ -964,7 +964,7 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
     desc: {
       en: 'A UI/UX prototype case note from Eden Tan’s project archive, covering structure, interface direction, and website experience planning.',
-      zh: 'Atlantis 网站改版的 UI/UX 原型归档：重构网站结构与转化路径，在同一品牌语言下对齐桌面与移动端布局，是工程交付前的全站 UX 基线，附 Adobe XD 原型链接。',
+      zh: 'Atlantis 网站改版的 UI/UX 原型归档：重构网站结构与转化路径，在同一品牌语言下对齐桌面与移动端布局，是工程交付前的全站 UX 基线，附 Adobe XD 原型链接。适合准备改版的团队参考：先把页面结构、转化路径和两端布局定下来，开发阶段就少返工。',
     },
   },
   {
