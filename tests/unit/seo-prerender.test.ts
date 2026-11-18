@@ -153,6 +153,26 @@ test('short descriptions are topped up from the page body with whole sentences',
   assert.equal(routeMetaDescription(home, 'en'), home.desc.en);
 });
 
+test('every indexable page lands in 110–160 characters in both languages (Ahrefs yardstick)', () => {
+  for (const entry of ROUTE_SEO.filter((item) => item.index !== false && item.sitemap !== false)) {
+    for (const language of ['en', 'zh'] as const) {
+      const { length } = routeMetaDescription(entry, language);
+      assert.ok(length >= 110 && length <= 160, `${entry.path} ${language} is ${length} characters`);
+    }
+  }
+});
+
+test('top-up never repeats a clause the description already says', () => {
+  for (const entry of ROUTE_SEO.filter((item) => item.index !== false)) {
+    const description = routeMetaDescription(entry, 'zh');
+    const added = description.slice(entry.desc.zh.trim().length);
+    for (const clause of added.split(/[，、；：—。！？]/).map((part) => part.replace(/[\s\p{P}]/gu, ''))) {
+      if (clause.length < 6) continue;
+      assert.ok(!entry.desc.zh.replace(/[\s\p{P}]/gu, '').includes(clause), `${entry.path} repeats 「${clause}」`);
+    }
+  }
+});
+
 test('key pages carry hand-written descriptions long enough on their own', () => {
   for (const path of ['/wiki', '/notes', '/notes/turn-chaos-into-systems', '/notes/judgment-is-not-more-information',
     '/notes/human-nature-is-a-design-condition', '/notes/win-before-you-fight']) {

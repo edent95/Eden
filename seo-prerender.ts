@@ -414,13 +414,15 @@ export function logicalCanonicalPath(route: RouteSeo): string {
 }
 
 /**
- * Meta description length policy. English is counted in characters (Ahrefs/Google ~110–160).
- * Chinese is counted in characters too, but each CJK glyph takes about twice the pixel width,
- * so 70–90 characters already fill a result snippet; 110+ would be cut off.
+ * Meta description length policy: 110–160 characters in both languages.
+ * Chinese glyphs are wider, so Google may cut a long Chinese snippet earlier, but Ahrefs
+ * (and Bing Webmaster) count characters and flag anything under 110 as too short; the
+ * user chose the audit tools' yardstick on 2026-11-18. The hand-written desc leads, so the
+ * part a narrow snippet shows is still the most important sentence.
  */
 export const META_DESCRIPTION_LIMITS: Record<SeoLanguage, { min: number; max: number }> = {
   en: { min: 110, max: 160 },
-  zh: { min: 70, max: 90 },
+  zh: { min: 110, max: 160 },
 };
 
 function splitSentences(text: string, language: SeoLanguage): string[] {
@@ -451,6 +453,20 @@ function overlap(a: Set<string>, b: Set<string>): number {
   return shared / Math.min(a.size, b.size);
 }
 
+/**
+ * True when any clause of `sentence` already appears word for word in `text`
+ * ("好的 CRM 不是发更多消息，而是…" after a desc that opens with "好的 CRM 不是发更多消息。").
+ * The shingle overlap misses these because the rest of the sentence is new.
+ */
+function repeatsClause(sentence: string, text: string, language: SeoLanguage): boolean {
+  const haystack = comparable(text);
+  const shortest = language === 'zh' ? 6 : 20;
+  return sentence
+    .split(language === 'zh' ? /[，、；：—]/ : /[,;:—]/)
+    .map(comparable)
+    .some((clause) => clause.length >= shortest && haystack.includes(clause));
+}
+
 const PAIRS: Array<[string, string]> = [['「', '」'], ['“', '”'], ['（', '）'], ['(', ')'], ['《', '》']];
 
 /** A sentence that can stand alone in a snippet: a full sentence, not a hook or a back-reference, quotes balanced. */
@@ -460,7 +476,7 @@ function standalone(sentence: string, language: SeoLanguage): boolean {
   // Short hooks ("Imagine a supermarket.") and sentences leaning on the previous one read as fragments.
   if (sentence.length < (language === 'zh' ? 14 : 30)) return false;
   const leansBack = language === 'zh'
-    ? /^(是|但|而|所以|这|那|它|他们|然后|上一篇)/
+    ? /^(是|但|而|可是|不过|所以|因此|于是|这|那|它|他们|然后|上一篇)/
     : /^(It|This|That|These|Those|They|He|She|But|And|So|Then)\b/;
   if (leansBack.test(sentence)) return false;
   return PAIRS.every(([open, close]) => sentence.split(open).length === sentence.split(close).length);
@@ -507,6 +523,7 @@ export function routeMetaDescription(route: RouteSeo, language: SeoLanguage): st
       const grams = shingles(sentence, language);
       // Skip restatements of what the description already says (summary often paraphrases desc).
       if (used.some((existing) => overlap(existing, grams) >= 0.5)) continue;
+      if (repeatsClause(sentence, result, language)) continue;
       used.push(grams);
       const next = language === 'zh' ? `${result}${sentence}` : `${result} ${sentence}`;
       if (next.length <= max) result = next;

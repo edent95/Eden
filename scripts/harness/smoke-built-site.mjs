@@ -6,6 +6,7 @@ import {
   STATIC_PAGES,
 } from '../../seo-routes.ts';
 import {
+  META_DESCRIPTION_LIMITS,
   routeDates,
   routeLastmod,
   routeMetaDescription,
@@ -104,6 +105,14 @@ if (problems.length === 0) {
       }
       if (!routeHtml.includes(`<meta name="description" content="${escapeHtml(routeMetaDescription(route, language))}" />`)) {
         problems.push(`${artifact} has the wrong static description`);
+      }
+      if (route.index !== false && route.sitemap !== false) {
+        // Ahrefs / Bing count characters in both languages: under 110 is "too short", over 160 "too long".
+        const length = routeMetaDescription(route, language).length;
+        const { min, max } = META_DESCRIPTION_LIMITS[language];
+        if (length < min || length > max) {
+          problems.push(`${artifact} meta description is ${length} characters (want ${min}–${max})`);
+        }
       }
       if (!routeHtml.includes(`<meta name="robots" content="${expectedRobots}" />`)) {
         problems.push(`${artifact} has the wrong static robots directive`);
