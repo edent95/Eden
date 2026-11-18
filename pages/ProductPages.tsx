@@ -362,14 +362,13 @@ const etReportHubTutorial: EpTutorial = {
 export const ETReportHubFullPage: React.FC<{
   homeHref: string;
   projectsHref: string;
-  salesHref: string;
   baseUrl: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
   themePreference: ThemePreference;
   theme: Theme;
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
-}> = ({ projectsHref, salesHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
+}> = ({ projectsHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
   const demoUrl = 'https://edent95.github.io/daily-report-dashboard/demo/';
 
@@ -385,7 +384,6 @@ export const ETReportHubFullPage: React.FC<{
       tagline={{ en: 'Turn daily Excel into clear operating decisions.', zh: '把每日 Excel 变成清楚的运营判断。' }}
       meta={{ en: 'Private deployment · Local SQLite · Excel in, decisions out', zh: '私有部署 · 本地 SQLite · Excel 进，判断出' }}
       primary={{ href: demoUrl, external: true, label: { en: 'View demo', zh: '查看 Demo' } }}
-      secondary={{ href: salesHref, label: { en: 'Launch offer', zh: '上线方案' } }}
       quickLinks={[
         { href: '#overview', label: { en: 'Overview', zh: '产品简介' } },
         { href: '#tutorial', label: { en: 'Tutorial', zh: '视频教程' } },

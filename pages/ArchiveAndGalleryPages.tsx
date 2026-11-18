@@ -54,8 +54,8 @@ const aiProjectSystems: AiProjectSystem[] = [
     status: { en: 'Active build', zh: '构建中' },
     role: { en: 'Daily Report OS', zh: '日报数据系统' },
     summary: {
-      en: 'A daily-report data system for iGaming operators and aggregators. It turns Excel, members, channels, trends, brand comparison, and CRM export into one reviewable dashboard.',
-      zh: '给 iGaming operator / aggregator 的日报数据系统。把 Excel、会员、渠道、趋势、品牌对比和 CRM export 放进同一个可复盘的 dashboard。',
+      en: 'A daily-report data system for operations teams. It turns Excel, members, channels, trends, brand comparison, and CRM export into one reviewable dashboard.',
+      zh: '给运营团队的日报数据系统。把 Excel、会员、渠道、趋势、品牌对比和 CRM export 放进同一个可复盘的 dashboard。',
     },
     system: {
       en: 'Transaction + Customer Excel, SQLite / IndexedDB, Performance / Members / Channels / Trends, CRM export, Wide Excel, System Guide.',

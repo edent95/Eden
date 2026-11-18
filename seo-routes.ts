@@ -116,7 +116,7 @@ export const HOME_TITLE: Record<SeoLanguage, string> = {
 
 export const HOME_DESC: Record<SeoLanguage, string> = {
   en: 'Eden Tan is a systems architect and digital strategist who turns messy human behavior into products, data tools and AI systems: ETReportHub, Jiju, Life OS.',
-  zh: 'Eden Tan 是系统架构师与数字策略师，把复杂的人性、行为与现实问题，转化成可以被理解、验证和使用的数据、产品与 AI 系统。站内有上线的产品、iGaming 实战笔记与长文。',
+  zh: 'Eden Tan 是系统架构师与数字策略师，把复杂的人性、行为与现实问题，转化成可以被理解、验证和使用的数据、产品与 AI 系统。站内有上线的产品与长文。',
 };
 
 /**
@@ -248,11 +248,13 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
     desc: {
       en: 'ETReportHub turns Transaction and Customer Excel files into KPI, member, channel, trend, brand comparison, and CRM-ready workflows.',
-      zh: 'ETReportHub 是 iGaming 日报数据系统，把 Transaction 与 Customer Excel 转成 KPI、会员、渠道、趋势、品牌对比和可接 CRM 的工作流。',
+      zh: 'ETReportHub 是给运营团队的日报数据系统，把 Transaction 与 Customer Excel 转成 KPI、会员、渠道、趋势、品牌对比和可接 CRM 的工作流。',
     },
   },
   {
     path: '/etreporthub-sales',
+    index: false,
+    sitemap: false,
     datePublished: '2026-06-05',
     dateModified: '2026-09-14',
     og: 'etreporthub',
@@ -941,6 +943,8 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/archive/11-bonus-key-combo-builder',
+    index: false,
+    sitemap: false,
     datePublished: '2026-06-03',
     dateModified: '2026-09-14',
     priority: '0.7',
@@ -955,6 +959,8 @@ export const ROUTE_SEO: RouteSeo[] = [
   },
   {
     path: '/archive/atlantis-ui-ux-prototype',
+    index: false,
+    sitemap: false,
     datePublished: '2026-06-03',
     dateModified: '2026-09-14',
     priority: '0.7',
