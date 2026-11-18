@@ -481,8 +481,8 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
         title: L('What this site is', '这个网站是什么'),
         paragraphs: [
           L(
-            'Eden Tan builds products, data tools, and AI systems out of messy human situations: a pet-friendly discovery app, a private poker table, an iGaming daily-report engine, a motorcycle-loan dashboard, and a personal Life OS. Each one is documented here as a working system, with the reasoning kept next to the build.',
-            'Eden Tan 从混乱的人性与现实场景里做出产品、数据工具与 AI 系统：宠物友好地点发现 app、熟人局牌桌、iGaming 日报数据引擎、摩托车贷款仪表台，以及一套个人 Life OS。每一个都以真实运行中的系统来记录，思考过程与构建证据放在一起。',
+            'Eden Tan builds products, data tools, and AI systems out of messy human situations: a pet-friendly discovery app, a private poker table, a daily-report engine for operations teams, a motorcycle-loan dashboard, and a personal Life OS. Each one is documented here as a working system, with the reasoning kept next to the build.',
+            'Eden Tan 从混乱的人性与现实场景里做出产品、数据工具与 AI 系统：宠物友好地点发现 app、熟人局牌桌、运营团队的日报数据引擎、摩托车贷款仪表台，以及一套个人 Life OS。每一个都以真实运行中的系统来记录，思考过程与构建证据放在一起。',
           ),
           L(
             'The site has three layers that link to each other. Projects hold the builds. Notes hold the essays on systems, judgment, strategy, and money. The Wiki connects those essays by theme and keeps practical build notes as a second layer.',

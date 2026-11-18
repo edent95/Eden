@@ -61,12 +61,12 @@ export const ABOUT_PAGE = {
           '节奏感，是我每天经营一个足球社群专页、连续大约三年练出来的。比赛日定节拍，模板让它活下去，广告只是放大本来就有效的东西。',
         ),
         L(
-          'Then iGaming. I came up on the operator side: players, first deposits, CRM, retention. Every morning started with a report and one question: what changed, and why?',
-          '然后进了 iGaming。我从 operator 端做起：玩家、首存、CRM、留存。每天早上从一份报表和一个问题开始：什么变了？为什么？',
+          'Then operations. Customers, CRM, retention. Every morning started with a report and one question: what changed, and why?',
+          '然后做运营。客户、CRM、留存。每天早上从一份报表和一个问题开始：什么变了？为什么？',
         ),
         L(
-          'Later I moved to the provider side and coordinated promotions across 50+ operators. Seeing the same industry from both ends taught me the most useful thing I know.',
-          '后来我转到 provider 端，协调 50+ 个 operator 的促销。从两头看同一个行业，教会了我最有用的一件事。',
+          'Later I moved to the B2B side and coordinated promotions across 50+ partner brands. Seeing the same industry from both ends taught me the most useful thing I know.',
+          '后来我转到 B2B 那一端，协调 50+ 个合作品牌的促销。从两头看同一个行业，教会了我最有用的一件事。',
         ),
         L(
           'Somewhere along the way I stopped waiting for the right tool and started building it.',
@@ -110,7 +110,7 @@ export const ABOUT_PAGE = {
           text: L('Strategy teaches you where effort is not worth spending.', '策略教你的，是哪里不值得用力。'),
         },
         {
-          path: '/igaming',
+          path: '/etreporthub',
           name: L('Trace it to a number.', '追到一个数字。'),
           text: L('Every decision should trace back to a number someone can check.', '每个决定，都应该追得到一个别人能核对的数字。'),
         },
@@ -130,7 +130,7 @@ export const ABOUT_PAGE = {
         {
           path: '/etreporthub',
           name: L('ETReportHub', 'ETReportHub'),
-          text: L('Excel in, decisions out: a daily-report engine for iGaming teams.', 'Excel 进，决策出：给 iGaming 团队的日报引擎。'),
+          text: L('Excel in, decisions out: a daily-report engine for operations teams.', 'Excel 进，决策出：给运营团队的日报引擎。'),
         },
         {
           path: '/jiju-pet',
@@ -179,7 +179,6 @@ export const ABOUT_PAGE = {
       ],
       links: [
         { path: '/notes', name: L('All notes', '全部文章'), text: L('Essays and evidence maps.', '长文与证据地图。') },
-        { path: '/igaming/cases', name: L('iGaming field notes', 'iGaming 实战案例'), text: L('Anonymised cases from both sides of the industry.', '行业两端的匿名案例。') },
         { path: '/wiki', name: L('Knowledge base', '知识库'), text: L('A map of systems, judgment, people, and strategy, with practical build notes.', '系统、判断、人性与策略的主题地图，以及可查阅的构建经验。') },
       ],
     },

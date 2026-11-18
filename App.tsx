@@ -183,7 +183,6 @@ const App: React.FC = () => {
   const fullPageHref = joinBasePath(baseUrl, 'jiju-pet');
   const projectsHref = homeHref;
   const etReportHubHref = joinBasePath(baseUrl, 'etreporthub');
-  const etReportHubSalesHref = joinBasePath(baseUrl, 'etreporthub-sales');
   const drRacingHref = joinBasePath(baseUrl, 'dr-racing');
   const pokerHref = joinBasePath(baseUrl, 'poker');
   const filmGalleryHref = joinBasePath(baseUrl, 'film-gallery');
@@ -418,7 +417,6 @@ const App: React.FC = () => {
       <ETReportHubFullPage
         homeHref={homeHref}
         projectsHref={projectsHref}
-        salesHref={etReportHubSalesHref}
         baseUrl={baseUrl}
         language={language}
         setLanguage={setLanguage}
