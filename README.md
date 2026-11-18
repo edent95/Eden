@@ -51,7 +51,7 @@ npm run build
 npm run preview
 ```
 
-日常开发：直接在当前目录改（不必先开分支），完成后只 `git add` 自己改的文件，再运行 `publish`。`publish` 只提交已暂存的文件，在 `main` 上运行时从 `origin/main` 开出 `<类型>/<YYYYMMDD>-<描述>` 分支并带上改动，自动执行 `ready`（生成 Wiki 与日志索引，再跑完整 harness），之后 push、建立 PR 就停下；必需的 `verify` 通过后由自动合并接手。它不会直接 push `main`，也不会替你 `git add` 全部。
+日常开发：一件事一个 worktree —— 用个人面板的 `wt.mjs new <类型>/<短描述>` 从最新 `origin/main` 开出 `<类型>/<YYYYMMDD>-<描述>` 分支与 `.worktrees/` 下的工作目录，在那里改、用 `wt.mjs preview` 起预览，完成后只 `git add` 自己改的文件，再运行 `publish`（规则见 AGENTS.md §6）。`publish` 只提交已暂存的文件（在 `main` 上运行时会先从 `origin/main` 开出任务分支并带上改动），自动执行 `ready`（生成 Wiki 与日志索引，再跑完整 harness），之后 push、建立 PR 就停下；必需的 `verify` 通过后由自动合并接手。它不会直接 push `main`，也不会替你 `git add` 全部。
 
 需要预览范围但不产生任何写入时运行 `npm run publish -- "提交标题" --dry-run`；自动化或 Agent 终端没有交互确认，必须在检查变更范围后显式加 `--yes`。只有明确要本命令自己等 verify、合并并跟到部署时才加 `--merge`。完整说明见 [`docs/operator-workflow.md`](docs/operator-workflow.md)。
 
