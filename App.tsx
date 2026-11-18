@@ -730,6 +730,7 @@ const App: React.FC = () => {
           fullHref={igamingFullHref}
           casesHref={igamingCasesHref}
           etReportHubHref={etReportHubHref}
+          cvHref={joinBasePath(baseUrl, 'igaming/Eden-Tan-Resume.pdf')}
           controls={
             <HeaderControls
               language={language}

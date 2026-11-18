@@ -3,10 +3,14 @@
  * interview. The starter pack (`/igaming`, `/igaming/full`) shows what Eden knows;
  * this page answers "what can you build for my company?".
  *
- * Same anonymisation rules as `igaming-cases-content.ts`: no employer, brand,
- * operator, market or partner names, no absolute volumes, budgets or commercial
- * terms. Every figure here is one already published in a case, and links to it.
- * Compensation is deliberately not on the page — that belongs in the conversation.
+ * Disclosure rules (owner, 2026-11-18 — this page is now the public CV):
+ * - Employers, titles and dates ARE shown (the same as LinkedIn).
+ * - Markets are named only as a region ("Southeast Asia and Australia"), never by country.
+ * - No brand, operator or partner names, no absolute volumes, budgets or commercial terms.
+ * - No phone number; email and LinkedIn only. Compensation stays off the page.
+ * - Figures come from a published case (and link to it) or from the CV (`href` omitted).
+ * - The downloadable PDF (`public/igaming/Eden-Tan-Resume.pdf`) is the public CV made by the
+ *   resume-tailor skill with `hidePhone`; regenerate it there, do not hand-edit.
  * The route is `index: false` / `sitemap: false`: reachable by link only.
  */
 
@@ -16,6 +20,8 @@ const L = (en: string, zh: string): IGamingLocalized => ({ en, zh });
 
 /** Where a proof row points. `case:<slug>` → `/igaming/cases/<slug>`, `full:<id>` → `/igaming/full#<id>`. */
 export type ResumeHref = `case:${string}` | `full:${string}` | 'etreporthub';
+
+export type ResumeProof = { value: string; label: IGamingLocalized; note: IGamingLocalized; href?: ResumeHref };
 
 export const IGAMING_RESUME = {
   back: L('iGaming starter pack', 'iGaming 入门包'),
@@ -32,6 +38,11 @@ export const IGAMING_RESUME = {
 
   proofTitle: L('In numbers', '用数字说'),
   proof: [
+    {
+      value: '+30%',
+      label: L('retention in three months', '三个月内留存'),
+      note: L('Using an after-bonus mechanic.', '用 after-bonus 的方式做到。'),
+    },
     {
       value: '7+',
       label: L('years in iGaming', '年 iGaming 经验'),
@@ -56,7 +67,49 @@ export const IGAMING_RESUME = {
       note: L('I know what the operator needs and what the provider sells.', '知道 operator 要什么，也知道 provider 卖什么。'),
       href: 'full:b2b' as ResumeHref,
     },
-  ],
+  ] as ResumeProof[],
+
+  cvLabel: L('Download CV (PDF)', '下载履历(PDF)'),
+  experienceTitle: L('Experience', '工作经历'),
+  experienceLine: L(
+    'Seven years in iGaming across Southeast Asia and Australia — casino, sportsbook, live casino, lottery and horse racing.',
+    '7 年 iGaming,做过东南亚与澳洲市场:赌场、体育博彩、真人荷官、彩票与赛马。',
+  ),
+  experience: [
+    {
+      company: 'Jobxocial Malaysia',
+      meta: L('Remote · provider side', '远程 · provider 端'),
+      dates: 'Mar 2023 – Jan 2026',
+      roles: [
+        { title: 'Account Manager & Promotion Manager', dates: 'Nov 2024 – Jan 2026', line: L('Game-provider integrations across markets and currencies; seasonal promotions such as 1+1 Bonus Key and free-spin campaigns.', '跨市场、跨币种的游戏供应商对接;1+1 Bonus Key、免费旋转等季节性促销。') },
+        { title: 'Senior Marketing Specialist', dates: 'Mar 2023 – Nov 2024', line: L('Monthly brand reporting and strategy; customer-behaviour analysis and segment-targeted promotions.', '每月品牌报表与策略;玩家行为分析与分群促销。') },
+      ],
+    },
+    {
+      company: 'Atlantis Agency (M) Sdn Bhd',
+      meta: L('Kuala Lumpur · operator brands', '吉隆坡 · operator 品牌'),
+      dates: 'Nov 2021 – Jan 2023',
+      roles: [
+        { title: 'Digital Marketing Manager', line: L('Led a four-person marketing team, accountable for brand profit; brand strategy, acquisition, promotions and CRM.', '带 4 人营销团队,对品牌利润负责;品牌策略、获客、促销与 CRM。') },
+      ],
+    },
+    {
+      company: 'Rufous Creative',
+      meta: L('Penang · iGaming brands', '槟城 · iGaming 品牌'),
+      dates: 'Jan 2021 – May 2021',
+      roles: [
+        { title: 'Brand Manager', line: L('Digital marketing strategy and end-to-end campaigns against set KPIs.', '数字营销策略与按 KPI 执行的完整活动。') },
+      ],
+    },
+    {
+      company: 'Black Sire Technology',
+      meta: L('Penang · iGaming brands', '槟城 · iGaming 品牌'),
+      dates: 'Jun 2018 – Nov 2020',
+      roles: [
+        { title: 'Social Media Marketing Specialist', line: L('End-to-end campaigns, targeted Facebook advertising and content strategy.', '完整活动执行、Facebook 精准投放与内容策略。') },
+      ],
+    },
+  ] as { company: string; meta: IGamingLocalized; dates: string; roles: { title: string; dates?: string; line: IGamingLocalized }[] }[],
 
   strengthsTitle: L('Why hire me', '为什么找我'),
   strengths: [
@@ -189,16 +242,17 @@ export const IGAMING_RESUME = {
   ],
 
   confidentiality: L(
-    'Employer, brand and market names and absolute volumes are left out on purpose. I am happy to walk through the detail in an interview, within confidentiality limits.',
-    '雇主、品牌、市场名称和绝对数字都特意略去。面试时可以在保密范围内细聊。',
+    'Brand, operator and country names and absolute volumes are left out on purpose. I am happy to walk through the detail in an interview, within confidentiality limits.',
+    '品牌、operator、国家名称和绝对数字都特意略去。面试时可以在保密范围内细聊。',
   ),
 
   closingTitle: L('Next step: a 30-minute call', '下一步：聊 30 分钟'),
   closingBody: L(
-    'If this matches what your team needs, reply to the message that brought you here and we can find a time.',
-    '如果这和你的团队需要的对得上，直接回复把你带到这里的那条消息，我们约个时间。',
+    'If this matches what your team needs, reply to the message that brought you here, or write to me directly — we can find a time.',
+    '如果这和你的团队需要的对得上，回复把你带到这里的那条消息，或直接写信给我，我们约个时间。',
   ),
   openStarter: L('Read the starter pack', '读入门包'),
   openCases: L('Read the field notes', '读实战案例'),
+  emailLabel: L('Email', '邮箱'),
   sealLabel: L('Eden Tan · iGaming', 'Eden Tan · iGaming'),
 };

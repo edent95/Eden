@@ -436,7 +436,7 @@ export const ROUTE_SEO: RouteSeo[] = [
   {
     path: '/igaming/resume',
     datePublished: '2026-10-28',
-    dateModified: '2026-10-28',
+    dateModified: '2026-11-18',
     priority: '0.5',
     index: false,
     sitemap: false,
@@ -445,8 +445,8 @@ export const ROUTE_SEO: RouteSeo[] = [
       zh: 'iGaming 增长与新市场开拓 | Eden Tan',
     },
     desc: {
-      en: '7+ years across B2C and B2B iGaming: acquisition, retention, partnerships, reporting and AI-assisted tooling, with a 90-day plan for entering a new market.',
-      zh: '7 年以上 B2C 与 B2B iGaming 经验：获客、留存、合作、报表与 AI 辅助工具，附进入新市场的 90 天计划。',
+      en: 'Eden Tan’s iGaming CV: 7+ years across B2C and B2B — acquisition, retention, reporting and AI tooling, plus a 90-day plan for entering a new market.',
+      zh: '7 年以上 B2C 与 B2B iGaming 经验：获客、留存、合作、报表与 AI 辅助工具；工作经历、可下载的履历，以及进入新市场的 90 天计划。',
     },
     og: 'igaming-resume',
   },
