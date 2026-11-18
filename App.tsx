@@ -934,7 +934,7 @@ const App: React.FC = () => {
                   <p>很多事情不是复杂，是没人翻译清楚。我做的就是翻译：用软件、AI agent、文章，还有 Jiju 这样的 product，把零散的想法变成清楚的系统。</p>
                   <p>技术不是终点。它是一种语言，用来把现实讲得更准。</p>
                   <p>我做 framework，帮人看清楚自己、自己的生意，还有这个世界。</p>
-                  <p className="eden-about-now"><strong>看得清系统，才改得了系统。</strong></p>
+                  <p className="eden-about-now"><strong>看得清系统，就改得了系统。看得清人，就搞人。</strong></p>
                   <p><a className="eden-about-more" href={aboutHref}>完整故事 ›</a></p>
                 </>
               ) : (
