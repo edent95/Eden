@@ -50,50 +50,57 @@
 
 .eden-collage-section { width: 100%; overflow: hidden; padding: 48px 0 120px; }
 
-/* Shelf (app/home-collage.tsx) under the big Pukimon arena: one row of every item with a
-   title and kind under each card, then a pause button. Desktop drifts it as a marquee; touch
-   devices and anything up to tablet width get a native swipe row instead (media block below). */
-
-/* The shelf. Each row holds two identical runs, so translating the track by exactly one run
-   (gaps included) loops with no visible seam; the gap lives on each item's margin, not a
-   flex gap, so it does not sit between the runs. The distance is `--eden-run-shift`, measured
-   in px by HomeShelfRow — not `-50%`, which iOS Safari resolves against the wrong box. */
+/* Shelf (app/home-collage.tsx): one row of every item with a title and kind under each card,
+   then a pause button (and previous / next on fine pointers). Nothing drifts on its own — on
+   every screen the row is a native horizontal scroller with snap. Hovering a card (fine
+   pointer) or clicking / tapping it lays its details over the media. */
+.eden-showcase { --eden-shelf-inset: clamp(20px, 6vw, 88px); }
 .eden-collage { --eden-collage-gap: 14px; width: 100%; margin-top: 14px; }
-.eden-collage-row { overflow: hidden; }
-.eden-collage-track { display: flex; width: max-content; will-change: transform; animation: eden-collage-drift-left 72s linear infinite; }
-.eden-collage-run { display: flex; flex: 0 0 auto; }
-@keyframes eden-collage-drift-left { from { transform: translateX(0); } to { transform: translateX(calc(-1 * var(--eden-run-shift, 50%))); } }
-.eden-showcase.is-paused .eden-collage-track { animation-play-state: paused; }
-.eden-shelf-item { display: flex; flex: 0 0 clamp(240px, 27vw, 420px); flex-direction: column; margin-right: var(--eden-collage-gap); color: var(--eden-ink); text-decoration: none; }
+.eden-collage-row { overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: var(--eden-shelf-inset); padding-inline: var(--eden-shelf-inset); scrollbar-width: none; }
+.eden-collage-row::-webkit-scrollbar { display: none; }
+.eden-collage-track { display: flex; width: max-content; }
+.eden-shelf-item { display: flex; flex: 0 0 clamp(240px, 27vw, 420px); flex-direction: column; margin-right: var(--eden-collage-gap); color: var(--eden-ink); scroll-snap-align: start; }
 .eden-collage-card { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 12px; background: #d8d4cc; }
 .eden-shelf-title { margin-top: 10px; font-size: 15px; font-weight: 600; line-height: 1.3; }
 .eden-shelf-kind { margin-top: 2px; color: color-mix(in srgb, var(--eden-ink) 52%, transparent); font-size: 14px; line-height: 1.3; }
-.eden-shelf-item:focus-visible { outline: none; }
-.eden-shelf-item:focus-visible .eden-collage-card { outline: 3px solid var(--eden-blue); outline-offset: 3px; }
 .eden-collage-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .55s cubic-bezier(.16,1,.3,1); }
 .eden-collage-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .55s cubic-bezier(.16,1,.3,1); }
 
-.eden-showcase-pause { display: grid; place-items: center; width: 40px; height: 40px; margin: 22px 0 0 clamp(20px, 6vw, 88px); padding: 0; border: 1.5px solid color-mix(in srgb, var(--eden-ink) 70%, transparent); border-radius: 50%; background: transparent; color: var(--eden-ink); cursor: pointer; }
-.eden-showcase-pause:focus-visible { outline: 3px solid var(--eden-blue); outline-offset: 3px; }
+/* The whole card is the details toggle; the overlay sits above it once shown. */
+.eden-shelf-toggle { position: absolute; inset: 0; z-index: 1; width: 100%; padding: 0; border: 0; border-radius: inherit; background: transparent; cursor: pointer; }
+.eden-shelf-toggle:focus-visible { outline: 3px solid var(--eden-blue); outline-offset: -3px; }
+.eden-shelf-detail { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; padding: clamp(14px, 1.6vw, 22px); background: linear-gradient(to top, rgb(8 8 10 / .9) 0%, rgb(8 8 10 / .72) 55%, rgb(8 8 10 / .35) 100%); color: #fff; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .28s ease, visibility 0s linear .28s; }
+.eden-shelf-item.is-open .eden-shelf-detail { opacity: 1; visibility: visible; pointer-events: auto; transition: opacity .28s ease, visibility 0s; }
+.eden-shelf-detail-kind { color: rgb(255 255 255 / .66); font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+.eden-shelf-detail-title { font-size: clamp(17px, 1.4vw, 20px); font-weight: 700; line-height: 1.2; }
+.eden-shelf-detail-copy { display: -webkit-box; margin: 0; overflow: hidden; color: rgb(255 255 255 / .86); font-size: 14px; line-height: 1.45; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+/* The link stretches over the whole overlay, so once the details show, a click anywhere opens it. */
+.eden-shelf-detail-link { align-self: flex-start; margin-top: 4px; color: #fff !important; font-size: 14px; font-weight: 700; text-decoration: none; }
+.eden-shelf-detail-link::after { content: ""; position: absolute; inset: 0; }
+.eden-shelf-detail-link span { display: inline-block; transition: transform 220ms ease; }
+.eden-shelf-detail:hover .eden-shelf-detail-link span { transform: translateX(4px); }
+.eden-shelf-detail-link:focus-visible { outline: none; }
+.eden-shelf-detail-link:focus-visible::after { border-radius: 12px; outline: 3px solid var(--eden-blue); outline-offset: -3px; }
+
+.eden-showcase-controls { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 22px var(--eden-shelf-inset) 0; }
+.eden-showcase-pause { display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 1.5px solid color-mix(in srgb, var(--eden-ink) 70%, transparent); border-radius: 50%; background: transparent; color: var(--eden-ink); cursor: pointer; }
+.eden-showcase-pause:focus-visible, .eden-showcase-arrow:focus-visible { outline: 3px solid var(--eden-blue); outline-offset: 3px; }
 .eden-showcase-pause .is-pause { width: 10px; height: 12px; border-inline: 3px solid currentColor; }
 .eden-showcase-pause .is-play { width: 0; height: 0; margin-left: 3px; border-block: 7px solid transparent; border-left: 11px solid currentColor; }
+.eden-showcase-arrows { display: none; gap: 10px; }
+.eden-showcase-arrow { display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 1.5px solid color-mix(in srgb, var(--eden-ink) 70%, transparent); border-radius: 50%; background: transparent; color: var(--eden-ink); font-size: 17px; line-height: 1; cursor: pointer; }
+.eden-showcase-arrow:disabled { opacity: .3; cursor: default; }
 
 @media (hover: hover) and (pointer: fine) {
-  .eden-collage-row:hover .eden-collage-track,
-  .eden-collage-row:focus-within .eden-collage-track { animation-play-state: paused; }
+  .eden-showcase-arrows { display: flex; }
+  .eden-shelf-item:hover .eden-shelf-detail,
+  .eden-collage-card:focus-within .eden-shelf-detail { opacity: 1; visibility: visible; pointer-events: auto; transition: opacity .28s ease, visibility 0s; }
   .eden-shelf-item:hover :is(.eden-placeholder-art, .eden-collage-image, .eden-collage-video) { transform: scale(1.03); }
 }
 
-/* Phones, tablets and any touch screen: no drift. The row becomes a native horizontal
-   scroller with snap, the duplicate run (only there for the seamless loop) is dropped, and
-   the pause button only has the videos left to stop. */
 @media (hover: none), (pointer: coarse), (max-width: 1024px) {
-  .eden-collage-row { overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: 16px; padding-inline: 16px; scrollbar-width: none; }
-  .eden-collage-row::-webkit-scrollbar { display: none; }
-  .eden-collage-track { animation: none; will-change: auto; }
-  .eden-collage-run[aria-hidden="true"] { display: none; }
-  .eden-shelf-item { flex-basis: clamp(220px, 42vw, 360px); scroll-snap-align: start; }
-  .eden-showcase-pause { margin-left: 16px; }
+  .eden-showcase { --eden-shelf-inset: 16px; }
+  .eden-shelf-item { flex-basis: clamp(220px, 42vw, 360px); }
 }
 
 @media (max-width: 600px) {
@@ -174,9 +181,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .eden-collage-video { display: none; }
-  /* the blanket animation:none below stops the drift, so let people scroll the row themselves */
-  .eden-collage-row { overflow-x: auto; scrollbar-width: thin; }
-  .eden-collage-run[aria-hidden="true"] { display: none; }
+  .eden-collage-row { scrollbar-width: thin; }
   .eden-home *, .eden-home *::before, .eden-home *::after { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
 }
 
