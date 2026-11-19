@@ -9,7 +9,7 @@ import { NotesStoryboard, extractKeySentence, type NotesStoryFrameData } from '.
 import { useNotesDepth } from '../components/NotesDepth';
 import { NotesGrimoireCover, notesStoryFormula } from '../components/css-art/index';
 import { NotesMathEmblem } from '../components/css-art/notes-math-emblems';
-import type { NotesCoverVariant } from '../components/css-art/notes-cover-scenes';
+import { NotesCoverIcon, type NotesCoverVariant } from '../components/css-art/notes-cover-scenes';
 
 /** A cover ring built from the formulas of the motifs this note actually uses. */
 const coverFormula = (frames: readonly NotesStoryFrameData[]) =>
@@ -1138,12 +1138,19 @@ type SiteEssayNote = {
   referencesNote?: Record<Language, string>;
 };
 
+// The list icon is the note's own cover hero (the same line art its page opens with).
+const wikiCover = (slug: string): NotesCoverVariant => {
+  const entry = wikiEntries.find((item) => item.slug === slug);
+  return (entry && 'cover' in entry ? entry.cover : 'book') as NotesCoverVariant;
+};
+
 const publishedNotes = [
   ...siteEssayNotes.map((note) => ({
     title: note.title,
     summary: note.summary,
     category: note.category,
     href: `notes/${note.slug}`,
+    cover: (note.cover ?? 'book') as NotesCoverVariant,
   })),
   {
     title: { en: 'Button feedback is part of the system', zh: '按钮反馈，本来就是系统的一部分' },
@@ -1153,6 +1160,7 @@ const publishedNotes = [
     },
     category: { en: 'Interaction', zh: '交互' },
     href: 'wiki/button-feedback',
+    cover: wikiCover('button-feedback'),
   },
   {
     title: { en: 'Background music changes the room', zh: 'Background music 会改变一个房间' },
@@ -1162,6 +1170,7 @@ const publishedNotes = [
     },
     category: { en: 'Experience', zh: '体验' },
     href: 'wiki/background-music',
+    cover: wikiCover('background-music'),
   },
   {
     title: { en: 'Firebase as durable table memory', zh: '用 Firebase 留住牌桌的记忆' },
@@ -1171,6 +1180,7 @@ const publishedNotes = [
     },
     category: { en: 'Build note', zh: '构建笔记' },
     href: 'wiki/firebase-lifetime-storage',
+    cover: wikiCover('firebase-lifetime-storage'),
   },
   {
     title: { en: 'The Vite skills that survived the build', zh: '真正留到最后的 Vite skills' },
@@ -1180,6 +1190,7 @@ const publishedNotes = [
     },
     category: { en: 'Engineering', zh: '工程' },
     href: 'wiki/vite',
+    cover: wikiCover('vite'),
   },
 ];
 
@@ -1232,6 +1243,7 @@ export const NotesPage: React.FC<{
             <div className="notes-list">
               {publishedNotes.map((note) => (
                 <a key={note.href} className="notes-entry" href={joinBasePath(baseUrl, note.href)}>
+                  <span className="notes-entry-icon"><NotesCoverIcon variant={note.cover} /></span>
                   <span className="notes-entry-category">{note.category[language]}</span>
                   <div>
                     <h3>{note.title[language]}</h3>

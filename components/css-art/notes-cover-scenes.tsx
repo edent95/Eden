@@ -66,6 +66,12 @@ export const NotesCoverHero: React.FC<{ variant: NotesCoverVariant }> = ({ varia
   );
 };
 
+/** The same hero, still and small: the note's icon in the /notes list (.ng-icon, notes-covers.css). */
+export const NotesCoverIcon: React.FC<{ variant: NotesCoverVariant }> = ({ variant }) => {
+  const Hero = heroes[variant];
+  return <span className="ng-icon" aria-hidden><Hero /></span>;
+};
+
 export const NotesCoverNearProps: React.FC<{ set: Exclude<NotesCoverNear, 'desk'> }> = ({ set }) =>
   set === 'coins' ? (
     <span className="cv-near cv-near-coins">
