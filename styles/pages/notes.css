@@ -114,54 +114,58 @@
   font-size: 13px;
 }
 
-.notes-entry {
+.notes-entry-category { display: block; }
+
+/* Xiaohongshu-style masonry feed: N columns (2 on phones), no card chrome.
+   The note's cover line art is the "photo"; text sits free under it. */
+.notes-feed {
   display: grid;
-  grid-template-columns: 72px 110px minmax(0, 1fr) 30px;
-  gap: 30px;
+  grid-template-columns: repeat(var(--feed-cols, 2), minmax(0, 1fr));
+  gap: clamp(14px, 3vw, 36px);
   align-items: start;
-  padding: 38px 0 42px;
-  border-bottom: 1px solid color-mix(in srgb, var(--eden-ink) 13%, transparent);
+  padding-top: clamp(24px, 4vw, 40px);
 }
 
-/* the note's own cover hero, free on the page: no tile, no border (NotesCoverIcon) */
-.notes-entry-icon {
+.notes-feed-column { display: grid; gap: clamp(30px, 4vw, 52px); }
+
+.notes-feed-item { display: block; min-width: 0; }
+
+.notes-feed-art {
+  position: relative;
   display: block;
-  width: 72px;
-  height: 72px;
-  margin-top: -4px;
-  transition: transform .24s cubic-bezier(.16, 1, .3, 1);
+  width: 100%;
+  border-radius: clamp(14px, 2vw, 22px);
+  background: color-mix(in srgb, var(--notes-accent-soft) 16%, var(--eden-paper));
+  transition: transform .3s cubic-bezier(.16, 1, .3, 1);
 }
 
-.notes-entry-icon .ng-icon { --ng-paper: var(--eden-paper); }
-.notes-entry:hover .notes-entry-icon { transform: translateY(-2px) rotate(-3deg); }
-.notes-entry .notes-entry-category { padding-top: 22px; }
+.notes-feed-art .ng-icon { --ng-paper: color-mix(in srgb, var(--notes-accent-soft) 16%, var(--eden-paper)); }
+.notes-feed-art .ng-icon { position: absolute; inset: 12%; width: auto; height: auto; }
+.notes-feed-art .cvx { overflow: visible; }
+.notes-feed-item:hover .notes-feed-art { transform: translateY(-3px); }
 
-.notes-entry h3 {
-  max-width: 680px;
-  font-size: clamp(27px, 3.2vw, 40px);
-  font-weight: 700;
-  letter-spacing: -.045em;
-  line-height: 1.08;
+.notes-feed-item .notes-entry-category { margin-top: 14px; font-size: 11px; }
+
+.notes-feed-item h3 {
+  margin-top: 6px;
+  font-size: clamp(16px, 2.1vw, 24px);
+  font-weight: 720;
+  letter-spacing: -.03em;
+  line-height: 1.22;
 }
 
-.notes-entry p {
-  max-width: 650px;
-  margin-top: 14px;
-  color: color-mix(in srgb, var(--eden-ink) 62%, transparent);
-  font-size: 16px;
-  line-height: 1.65;
+.notes-feed-item p {
+  display: -webkit-box;
+  margin-top: 8px;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  color: color-mix(in srgb, var(--eden-ink) 60%, transparent);
+  font-size: 14px;
+  line-height: 1.55;
 }
 
-.notes-entry-arrow {
-  color: color-mix(in srgb, var(--eden-ink) 42%, transparent);
-  font-size: 20px;
-  transition: transform .24s cubic-bezier(.16, 1, .3, 1), color .24s ease;
-}
-
-.notes-entry:hover .notes-entry-arrow {
-  color: var(--eden-orange);
-  transform: translate(3px, -3px);
-}
+.notes-feed-item:hover h3 { color: var(--notes-accent); }
 
 @media (max-width: 700px) {
   .notes-main { padding: 22px 16px 80px; }
@@ -175,17 +179,15 @@
   :is(.notes-page, .notes-article-page) .header-language-option { min-width: 38px; height: 34px; padding: 0 9px; white-space: nowrap; }
   :is(.notes-page, .notes-article-page) .header-language-label-full { display: none; }
   :is(.notes-page, .notes-article-page) .header-language-label-short { display: inline; }
-  .notes-hero { padding: 90px 0 82px; }
+  .notes-hero { padding: 48px 0 36px; }
   .notes-hero h1 { font-size: clamp(52px, 15vw, 68px); }
-  .notes-entry { grid-template-columns: 52px minmax(0, 1fr) 24px; gap: 14px 14px; padding: 30px 0 34px; }
-  .notes-entry-icon { width: 52px; height: 52px; margin-top: 0; }
-  .notes-entry .notes-entry-category { grid-column: 2 / -1; align-self: center; padding-top: 0; }
-  .notes-entry > div { grid-column: 1 / 3; }
-  .notes-entry-arrow { grid-column: 3; grid-row: 2; }
+  .notes-feed-item h3 { font-size: 15px; letter-spacing: -.02em; }
+  .notes-feed-item p { font-size: 12.5px; -webkit-line-clamp: 2; }
+  .notes-feed-item .notes-entry-category { margin-top: 10px; font-size: 10px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .notes-entry-arrow, .notes-entry-icon { transition: none; }
+  .notes-feed-art { transition: none; }
 }
 
 /* Notes is not inside .eden-home, so the --eden-* pair is defined here from the

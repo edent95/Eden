@@ -1194,6 +1194,27 @@ const publishedNotes = [
   },
 ];
 
+// Xiaohongshu-style feed: items go left to right into N columns (2 on phones), and the
+// art blocks cycle through ratios so the columns stagger like a masonry wall.
+const NOTES_FEED_RATIOS = ['4 / 5', '1 / 1', '3 / 4', '5 / 4', '4 / 5', '3 / 4'];
+const NOTES_FEED_QUERIES: Array<[string, number]> = [['(min-width: 1000px)', 3]];
+
+const useNotesFeedColumns = () => {
+  const read = () => {
+    if (typeof window === 'undefined' || !window.matchMedia) return 2;
+    const hit = NOTES_FEED_QUERIES.find(([query]) => window.matchMedia(query).matches);
+    return hit ? hit[1] : 2;
+  };
+  const [columns, setColumns] = React.useState(read);
+  React.useEffect(() => {
+    const lists = NOTES_FEED_QUERIES.map(([query]) => window.matchMedia(query));
+    const update = () => setColumns(read());
+    lists.forEach((list) => list.addEventListener('change', update));
+    return () => lists.forEach((list) => list.removeEventListener('change', update));
+  }, []);
+  return columns;
+};
+
 export const NotesPage: React.FC<{
   homeHref: string;
   baseUrl: string;
@@ -1204,6 +1225,7 @@ export const NotesPage: React.FC<{
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
 }> = ({ homeHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
+  const feedColumns = useNotesFeedColumns();
 
   return (
     <div className="page-shell notes-page min-h-screen">
@@ -1240,17 +1262,23 @@ export const NotesPage: React.FC<{
               <h2 id="notes-index-title">{isZh ? '已发布' : 'Published'}</h2>
               <span>{publishedNotes.length.toString().padStart(2, '0')}</span>
             </div>
-            <div className="notes-list">
-              {publishedNotes.map((note) => (
-                <a key={note.href} className="notes-entry" href={joinBasePath(baseUrl, note.href)}>
-                  <span className="notes-entry-icon"><NotesCoverIcon variant={note.cover} /></span>
-                  <span className="notes-entry-category">{note.category[language]}</span>
-                  <div>
-                    <h3>{note.title[language]}</h3>
-                    <p>{note.summary[language]}</p>
-                  </div>
-                  <span className="notes-entry-arrow" aria-hidden>↗</span>
-                </a>
+            <div className="notes-feed" style={{ '--feed-cols': feedColumns } as React.CSSProperties}>
+              {Array.from({ length: feedColumns }, (_, column) => (
+                <div key={column} className="notes-feed-column">
+                  {publishedNotes
+                    .map((note, index) => ({ note, index }))
+                    .filter(({ index }) => index % feedColumns === column)
+                    .map(({ note, index }) => (
+                      <a key={note.href} className="notes-feed-item" href={joinBasePath(baseUrl, note.href)}>
+                        <span className="notes-feed-art" style={{ aspectRatio: NOTES_FEED_RATIOS[index % NOTES_FEED_RATIOS.length] }}>
+                          <NotesCoverIcon variant={note.cover} />
+                        </span>
+                        <span className="notes-entry-category">{note.category[language]}</span>
+                        <h3>{note.title[language]}</h3>
+                        <p>{note.summary[language]}</p>
+                      </a>
+                    ))}
+                </div>
               ))}
             </div>
           </section>
