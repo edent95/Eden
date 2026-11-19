@@ -1196,7 +1196,9 @@ const publishedNotes = [
 
 // Xiaohongshu-style feed: items go left to right into N columns (2 on phones), and the
 // art blocks cycle through ratios so the columns stagger like a masonry wall.
-const NOTES_FEED_RATIOS = ['4 / 5', '1 / 1', '3 / 4', '5 / 4', '4 / 5', '3 / 4'];
+const NOTES_FEED_RATIOS = ['3 / 4', '4 / 5', '2 / 3', '4 / 5', '3 / 4', '5 / 6'];
+// Six engraving inks for the covers (notes.css [data-tone]); neighbours never share one.
+const NOTES_FEED_TONES = 6;
 const NOTES_FEED_QUERIES: Array<[string, number]> = [['(min-width: 1000px)', 3]];
 
 const useNotesFeedColumns = () => {
@@ -1270,11 +1272,15 @@ export const NotesPage: React.FC<{
                     .filter(({ index }) => index % feedColumns === column)
                     .map(({ note, index }) => (
                       <a key={note.href} className="notes-feed-item" href={joinBasePath(baseUrl, note.href)}>
-                        <span className="notes-feed-art" style={{ aspectRatio: NOTES_FEED_RATIOS[index % NOTES_FEED_RATIOS.length] }}>
+                        <div
+                          className="notes-feed-art"
+                          data-tone={index % NOTES_FEED_TONES}
+                          style={{ aspectRatio: NOTES_FEED_RATIOS[index % NOTES_FEED_RATIOS.length] }}
+                        >
                           <NotesCoverIcon variant={note.cover} />
-                        </span>
-                        <span className="notes-entry-category">{note.category[language]}</span>
-                        <h3>{note.title[language]}</h3>
+                          <span className="notes-feed-cover-kicker">{note.category[language]}</span>
+                          <h3 className="notes-feed-cover-title">{note.title[language]}</h3>
+                        </div>
                         <p>{note.summary[language]}</p>
                       </a>
                     ))}
