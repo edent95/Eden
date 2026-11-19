@@ -1197,7 +1197,8 @@ const publishedNotes = [
 // Xiaohongshu-style feed: items go left to right into N columns (2 on phones), and the
 // art blocks cycle through ratios so the columns stagger like a masonry wall.
 const NOTES_FEED_RATIOS = ['3 / 4', '4 / 5', '2 / 3', '4 / 5', '3 / 4', '5 / 6'];
-// Six engraving inks for the covers (notes.css [data-tone]); neighbours never share one.
+// Six engraving inks for the covers (notes.css [data-tone]); layout (4) and background
+// pattern (5) cycle on other periods, so no two neighbours look alike.
 const NOTES_FEED_TONES = 6;
 const NOTES_FEED_QUERIES: Array<[string, number]> = [['(min-width: 1000px)', 3]];
 
@@ -1275,9 +1276,13 @@ export const NotesPage: React.FC<{
                         <div
                           className="notes-feed-art"
                           data-tone={index % NOTES_FEED_TONES}
+                          data-layout={index % 4}
+                          data-pattern={index % 5}
                           style={{ aspectRatio: NOTES_FEED_RATIOS[index % NOTES_FEED_RATIOS.length] }}
                         >
                           <NotesCoverIcon variant={note.cover} />
+                          <span className="notes-feed-cover-no" aria-hidden>No.{String(index + 1).padStart(2, '0')}</span>
+                          <span className="notes-feed-cover-seal" aria-hidden>✦</span>
                           <span className="notes-feed-cover-kicker">{note.category[language]}</span>
                           <h3 className="notes-feed-cover-title">{note.title[language]}</h3>
                         </div>

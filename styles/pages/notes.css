@@ -135,9 +135,11 @@
   --cover-ink: #eef4e8;
   --cover-foil: #e2b85c;
   position: relative;
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   overflow: hidden;
+  isolation: isolate;
   container-type: inline-size;
   border-radius: clamp(12px, 1.8vw, 20px);
   background: var(--cover-bg);
@@ -192,6 +194,104 @@
   line-height: 1.08;
   text-wrap: balance;
 }
+
+/* ---- cover decoration: engraved background patterns (data-pattern) ---- */
+.notes-feed-art::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  --line: color-mix(in srgb, var(--cover-ink) 11%, transparent);
+}
+/* 0 guilloché rings around the art */
+.notes-feed-art[data-pattern="0"]::before {
+  background: repeating-radial-gradient(circle at 78% 74%, transparent 0 2.6cqi, var(--line) 2.6cqi 2.9cqi);
+  -webkit-mask: radial-gradient(circle at 78% 74%, black 30%, transparent 75%);
+  mask: radial-gradient(circle at 78% 74%, black 30%, transparent 75%);
+}
+/* 1 sunburst from the lower corner */
+.notes-feed-art[data-pattern="1"]::before {
+  background: repeating-conic-gradient(from 0deg at 100% 100%, var(--line) 0 1.2deg, transparent 1.2deg 6deg);
+}
+/* 2 diagonal hatching, fading toward the title */
+.notes-feed-art[data-pattern="2"]::before {
+  background: repeating-linear-gradient(135deg, var(--line) 0 1px, transparent 1px 2.4cqi);
+  -webkit-mask: linear-gradient(to bottom, transparent 25%, black);
+  mask: linear-gradient(to bottom, transparent 25%, black);
+}
+/* 3 halftone dots */
+.notes-feed-art[data-pattern="3"]::before {
+  background: radial-gradient(circle, color-mix(in srgb, var(--cover-ink) 22%, transparent) 0 0.55cqi, transparent 0.7cqi) 0 0 / 3.4cqi 3.4cqi;
+  -webkit-mask: radial-gradient(ellipse at 85% 90%, black, transparent 70%);
+  mask: radial-gradient(ellipse at 85% 90%, black, transparent 70%);
+}
+/* 4 graph paper */
+.notes-feed-art[data-pattern="4"]::before {
+  background:
+    linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 7cqi 7cqi,
+    linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 7cqi 7cqi;
+}
+
+/* banknote double frame (inside every cover, a hairline pair in foil) */
+.notes-feed-art::after {
+  content: "";
+  position: absolute;
+  inset: 3.6cqi;
+  z-index: 2;
+  pointer-events: none;
+  border: 1px solid color-mix(in srgb, var(--cover-foil) 55%, transparent);
+  border-radius: clamp(6px, 1.2vw, 12px);
+  box-shadow: inset 0 0 0 2px var(--cover-bg), inset 0 0 0 3px color-mix(in srgb, var(--cover-foil) 30%, transparent);
+}
+
+.notes-feed-cover-no {
+  position: absolute;
+  top: 8cqi;
+  right: 8cqi;
+  z-index: 1;
+  color: color-mix(in srgb, var(--cover-ink) 55%, transparent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: max(8px, 4.4cqi);
+  letter-spacing: .08em;
+}
+
+/* foil stamp: a small round seal with a star */
+.notes-feed-cover-seal {
+  position: absolute;
+  z-index: 1;
+  display: none;
+  place-items: center;
+  width: 15cqi;
+  height: 15cqi;
+  border-radius: 50%;
+  background: var(--cover-foil);
+  color: var(--cover-bg);
+  font-size: 6.5cqi;
+  box-shadow: 0 0 0 1.2cqi var(--cover-bg), 0 0 0 calc(1.2cqi + 1px) color-mix(in srgb, var(--cover-foil) 70%, transparent);
+  rotate: -12deg;
+}
+
+/* ---- four layouts (data-layout) ---- */
+/* 0: title on top, art bottom-right (base) */
+/* 1: art up top, title sits at the bottom over a foil rule */
+.notes-feed-art[data-layout="1"] .ng-icon { top: -8%; bottom: auto; right: -10%; width: 84%; height: 60%; }
+.notes-feed-art[data-layout="1"] .notes-feed-cover-kicker { margin-top: auto; }
+.notes-feed-art[data-layout="1"] .notes-feed-cover-title { padding-bottom: 9cqi; }
+.notes-feed-art[data-layout="1"] .notes-feed-cover-kicker::before {
+  content: ""; display: block; width: 14cqi; height: 2px; margin-bottom: 3cqi; background: var(--cover-foil);
+}
+.notes-feed-art[data-layout="1"] .notes-feed-cover-no { right: auto; left: 8cqi; }
+/* 2: centred poster, art large and faint behind, seal at the foot */
+.notes-feed-art[data-layout="2"] { justify-content: center; text-align: center; }
+.notes-feed-art[data-layout="2"] .ng-icon { inset: 6% -6%; width: auto; height: auto; opacity: .38; }
+.notes-feed-art[data-layout="2"] .notes-feed-cover-kicker { padding-top: 0; }
+.notes-feed-art[data-layout="2"] .notes-feed-cover-title { padding-inline: 10cqi; padding-bottom: 6cqi; }
+.notes-feed-art[data-layout="2"] .notes-feed-cover-seal { display: grid; position: relative; margin: 0 auto; }
+/* 3: title top, art mirrored to the bottom-left, seal in the corner */
+.notes-feed-art[data-layout="3"] .ng-icon { right: auto; left: -14%; scale: -1 1; }
+.notes-feed-art[data-layout="3"] .notes-feed-cover-seal { display: grid; right: 9cqi; bottom: 9cqi; }
+.notes-feed-art[data-layout="3"] .notes-feed-cover-title { font-style: italic; font-family: Georgia, 'Times New Roman', 'Songti SC', serif; font-weight: 700; letter-spacing: -.02em; }
 
 .notes-feed-item:hover .notes-feed-art { transform: translateY(-3px); }
 
