@@ -116,26 +116,24 @@
 
 .notes-entry {
   display: grid;
-  grid-template-columns: 64px 110px minmax(0, 1fr) 30px;
+  grid-template-columns: 72px 110px minmax(0, 1fr) 30px;
   gap: 30px;
   align-items: start;
   padding: 38px 0 42px;
   border-bottom: 1px solid color-mix(in srgb, var(--eden-ink) 13%, transparent);
 }
 
-/* the note's own cover hero, shrunk to an icon tile (NotesCoverIcon) */
+/* the note's own cover hero, free on the page: no tile, no border (NotesCoverIcon) */
 .notes-entry-icon {
   display: block;
-  width: 64px;
-  height: 64px;
-  padding: 7px;
-  border-radius: 18px;
-  background: color-mix(in srgb, var(--notes-accent-soft) 20%, var(--eden-paper));
+  width: 72px;
+  height: 72px;
+  margin-top: -4px;
   transition: transform .24s cubic-bezier(.16, 1, .3, 1);
 }
 
-.notes-entry-icon .ng-icon { --ng-paper: color-mix(in srgb, var(--notes-accent-soft) 20%, var(--eden-paper)); }
-.notes-entry:hover .notes-entry-icon { transform: translateY(-2px); }
+.notes-entry-icon .ng-icon { --ng-paper: var(--eden-paper); }
+.notes-entry:hover .notes-entry-icon { transform: translateY(-2px) rotate(-3deg); }
 .notes-entry .notes-entry-category { padding-top: 22px; }
 
 .notes-entry h3 {
@@ -179,8 +177,8 @@
   :is(.notes-page, .notes-article-page) .header-language-label-short { display: inline; }
   .notes-hero { padding: 90px 0 82px; }
   .notes-hero h1 { font-size: clamp(52px, 15vw, 68px); }
-  .notes-entry { grid-template-columns: 48px minmax(0, 1fr) 24px; gap: 14px 14px; padding: 30px 0 34px; }
-  .notes-entry-icon { width: 48px; height: 48px; padding: 5px; border-radius: 14px; }
+  .notes-entry { grid-template-columns: 52px minmax(0, 1fr) 24px; gap: 14px 14px; padding: 30px 0 34px; }
+  .notes-entry-icon { width: 52px; height: 52px; margin-top: 0; }
   .notes-entry .notes-entry-category { grid-column: 2 / -1; align-self: center; padding-top: 0; }
   .notes-entry > div { grid-column: 1 / 3; }
   .notes-entry-arrow { grid-column: 3; grid-row: 2; }
