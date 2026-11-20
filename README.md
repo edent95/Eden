@@ -74,7 +74,7 @@ npm run preview
 - `/project-css` — Projects / Home / Interests CSS art 直达检查页（隐藏直达页；不进 sitemap）
 - `/icon-prompts` — ETReportHub / Jiju / Friday Poker Club 四宫格 icon prompt 复制页（隐藏直达页；不进 sitemap）
 - `/etreporthub` — ETReportHub 日报数据系统产品页
-- `/etreporthub-sales` — ETReportHub 售卖页与价格说明
+- `/etreporthub-sales` — ETReportHub 售卖页与价格说明（iGaming 销售内容，`index: false`，主站不链过来）
 - `/igaming` — iGaming 入门包重点版：六节各三个重点（入门包、促销、工作流程、报表、B2B、排查），每节可跳到完整版对应位置（不放联系方式、不链接过往项目）；原本由首页 Mini Coin Slot 玩满 10 局后出现入口（带 `?from=coin-slot` 时显示解锁提示；Coin Slot 下了首页后这个入口暂时没有了）
 - `/igaming/cases` — iGaming 实战案例索引：四篇匿名案例（首存增长、新市场本地化、50+ operator 促销协调、operator → provider），说明写作原则与后续选题
 - `/igaming/atlas` — iGaming 知识地图：私人知识库的公开脱敏版。十一张方法卡围着「拼出共同事实」画成凹版地图(点圆章开卡、点服务高亮用到的卡)，加时间线、决策七问、四项顾问服务与「不接的事」；不出现任何公司 / 品牌 / 供应商名称
@@ -86,7 +86,7 @@ npm run preview
 - `/igaming/marketing-report-beyond-cpa` — iGaming 知识专题：从花费到第 30 天活跃的成本链、各「每个多少钱」指标的算法与盲点、指标名称不等于定义(ROI 表头的实例)、自然月与同批人转化对比、每节以下一步收尾；链回完整版报表一节
 - `/igaming/rtp-explained` — iGaming 知识专题：理论 RTP 与实际 RTP、RTP 与 hold、样本量决定实际 RTP 会偏多远(示例表)、选择或调整 RTP 配置时怎么评估；链回完整版入门一节
 - `/igaming/wagering-requirements` — iGaming 知识专题：流水要求六项条款、为什么「奖金 − 庄家优势 × 要求下注额」会算少、奖金成本模拟计算器、英国 10 倍上限；链回完整版促销一节
-- `/igaming/resume` — iGaming 求职页（provider 端优先）：职位一句话、在找什么职位、可以马上上班 / 槟城 / 远程或混合、Email 与 LinkedIn、已公开的数字（各链到案例）、工作经历（雇主不点名，取自本人 LinkedIn）、三个优势、能力与证据对照表、促销岗位的头 90 天、工作方式；不放薪资；可被收录，`/igaming` 第一屏有入口
+- `/igaming/resume` — 给招聘方 / 面试前发的 iGaming 个人页兼公开履历：定位一句话、在找什么职位(provider 端促销 / Account Management / 合作方营销,operator 端 CRM 与留存)、可以马上上班 / 槟城 / 远程或混合、第一屏的下载履历 + 写信 + LinkedIn、数字（各链到案例；+30% 留存来自履历、不链）、工作经历（雇主、职称、年份照 LinkedIn；市场只写「东南亚与澳洲」不点名国家）、下载 PDF 履历（`public/igaming/Eden-Tan-Resume.pdf`，不含电话，由 resume-tailor 技能生成）、三个优势、能力与证据对照表、进新市场的头 90 天、工作方式、邮箱与 LinkedIn；不放薪资和电话；`index: false`、`sitemap: false`，只从 `/igaming` 第一屏的求职入口链过来(主站仍不链进 `/igaming`)
 - `/igaming/full` — iGaming 入门包完整版：行业角色、游戏类型、术语、资金流、风控合规、provider 与 operator 促销、每日报表 / 活动上线 / CRM 工作流程与报表指标、B2B（签约到上线与客户经营）、按症状排查与 playbook；返回键回到 `/igaming` 重点版
 - `/dr-racing` — Dr Racing 摩托车贷款仪表台产品页，内嵌公开 Demo
 - `/poker` — Friday Poker Club 产品详情：私人房间、邀请、买入、实时牌桌与 Build Notes

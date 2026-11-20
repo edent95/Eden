@@ -5,7 +5,7 @@ import { MIYA_PRIVACY, miyaPlainText, type MiyaBlock } from './components/miya-p
 import { MIYA_BRAND, miyaBrandPlain } from './components/miya-brand-content.ts';
 import { IGAMING_PAGE, IGAMING_SUMMARY } from './components/igaming-content.ts';
 import { IGAMING_RESUME } from './components/igaming-resume-content.ts';
-import { ABOUT_PAGE, aboutLinkLine } from './components/about-content.ts';
+import { ABOUT_EMAIL, ABOUT_LINKEDIN, ABOUT_PAGE, aboutLinkLine } from './components/about-content.ts';
 import { IGAMING_CASES, IGAMING_CASES_INDEX, type CaseBlock, type IGamingCase } from './components/igaming-cases-content.ts';
 import { IGAMING_GUIDES, IGAMING_GUIDE_LABELS, type IGamingGuide } from './components/igaming-guides-content.ts';
 import { ATLAS_BASICS, ATLAS_CARDS, ATLAS_ERAS, ATLAS_NUMBERS, ATLAS_PAGE, ATLAS_SERVICES, ATLAS_STEPS, ATLAS_TOPICS, atlasCardPlain } from './components/igaming-atlas-content.ts';
@@ -239,25 +239,29 @@ function igamingCasesIndexStaticCopy(): StaticRouteCopy {
   };
 }
 
-/** Static body for /igaming/resume (the job-search page), from the same copy the React page renders. */
+/** Static body for /igaming/resume (CV + job-search page; noindex), from the same copy the React page renders. */
 function igamingResumeStaticCopy(): StaticRouteCopy {
   const page = IGAMING_RESUME;
   return {
     eyebrow: page.kicker,
     thesis: page.claim,
     sections: [
-      { title: page.kicker, paragraphs: [page.standfirst, page.roles, page.availability] },
-      {
-        title: page.historyTitle,
-        paragraphs: page.history.map((row) => ({
-          en: `${row.when.en} · ${row.role.en}. ${row.where.en}`,
-          zh: `${row.when.zh} · ${row.role.zh}。${row.where.zh}`,
-        })),
-      },
+      { title: page.kicker, paragraphs: [page.standfirst, page.difference, page.roles, page.availability] },
       { title: page.proofTitle, paragraphs: page.proof.map((item) => ({ en: `${item.value} ${item.label.en}. ${item.note.en}`, zh: `${item.value} ${item.label.zh}。${item.note.zh}` })) },
+      {
+        title: page.experienceTitle,
+        paragraphs: [
+          page.experienceLine,
+          ...page.experience.flatMap((job) => job.roles.map((role) => ({
+            en: `${job.company} (${job.meta.en}) · ${role.title} · ${role.dates ?? job.dates}. ${role.line.en}`,
+            zh: `${job.company}(${job.meta.zh})· ${role.title} · ${role.dates ?? job.dates}。${role.line.zh}`,
+          }))),
+        ],
+      },
       ...page.strengths.map((item) => ({ title: item.title, paragraphs: [item.line, ...item.points.map((point) => point.body)] })),
+      { title: page.planTitle, paragraphs: [page.planLine, ...page.plan.map((step) => ({ en: `${step.phase.en} · ${step.title.en}: ${step.items.map((i) => i.en).join('; ')}`, zh: `${step.phase.zh} · ${step.title.zh}:${step.items.map((i) => i.zh).join(';')}` }))] },
       { title: page.workTitle, paragraphs: page.work.map((item) => item.body) },
-      { title: page.closingTitle, paragraphs: [page.closingBody, { en: `Email: ${page.email} · LinkedIn: ${page.linkedin}`, zh: `Email:${page.email} · LinkedIn:${page.linkedin}` }, page.confidentiality] },
+      { title: page.closingTitle, paragraphs: [page.closingBody, { en: `Email: ${ABOUT_EMAIL} · LinkedIn: ${ABOUT_LINKEDIN}`, zh: `邮箱:${ABOUT_EMAIL} · LinkedIn:${ABOUT_LINKEDIN}` }, page.confidentiality] },
     ],
   };
 }
@@ -506,8 +510,8 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
         title: L('What this site is', '这个网站是什么'),
         paragraphs: [
           L(
-            'Eden Tan builds products, data tools, and AI systems out of messy human situations: a pet-friendly discovery app, a private poker table, an iGaming daily-report engine, a motorcycle-loan dashboard, and a personal Life OS. Each one is documented here as a working system, with the reasoning kept next to the build.',
-            'Eden Tan 从混乱的人性与现实场景里做出产品、数据工具与 AI 系统：宠物友好地点发现 app、熟人局牌桌、iGaming 日报数据引擎、摩托车贷款仪表台，以及一套个人 Life OS。每一个都以真实运行中的系统来记录，思考过程与构建证据放在一起。',
+            'Eden Tan builds products, data tools, and AI systems out of messy human situations: a pet-friendly discovery app, a private poker table, a daily-report engine for operations teams, a motorcycle-loan dashboard, and a personal Life OS. Each one is documented here as a working system, with the reasoning kept next to the build.',
+            'Eden Tan 从混乱的人性与现实场景里做出产品、数据工具与 AI 系统：宠物友好地点发现 app、熟人局牌桌、运营团队的日报数据引擎、摩托车贷款仪表台，以及一套个人 Life OS。每一个都以真实运行中的系统来记录，思考过程与构建证据放在一起。',
           ),
           L(
             'The site has three layers that link to each other. Projects hold the builds. Notes hold the essays on systems, judgment, strategy, and money. The Wiki connects those essays by theme and keeps practical build notes as a second layer.',
@@ -519,8 +523,8 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
         title: L('Where to start', '从哪里开始'),
         paragraphs: [
           L(
-            'Read the essay on turning chaos into systems first, then open any app on the Projects shelf. The homepage also plays Pukimon\u2019s scripted three-round battle: Nidorino vs Gengar, Mew vs Mewtwo, Charizard vs Blastoise, with an original theme.',
-            '先读「把混乱变成系统」这篇文章，再从 Projects 货架打开任何一个 app。首页还放着 Pukimon 照剧本打的三回合演出：尼多力诺 vs 耿鬼、梦幻 vs 超梦、喷火龙 vs 水箭龟，配原创开场曲。',
+            'Read the essay on turning chaos into systems first, then open any app on the Projects shelf.',
+            '先读「把混乱变成系统」这篇文章，再从 Projects 货架打开任何一个 app。',
           ),
         ],
       },

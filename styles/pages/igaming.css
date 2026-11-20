@@ -1205,11 +1205,12 @@
 .igaming-resume-proof ul {
   margin-top: 1.2rem;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: clamp(0.8rem, 2vw, 1.2rem);
 }
 
-.igaming-resume-proof a {
+.igaming-resume-proof a,
+.igaming-resume-proof li > div {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -2045,4 +2046,84 @@
   .igaming-plain-head {
     display: none !important;
   }
+}
+
+/* CV download (hero + closing) and contact line — added 2026-11-18 */
+.igaming-resume-cv {
+  margin-top: 1.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem 1.4rem;
+}
+
+/* Email / LinkedIn next to the CV button (job-search hero, PR #177) */
+.igaming-resume-cv .igaming-point-more {
+  margin-top: 0;
+  padding-top: 0;
+  align-self: center;
+}
+
+.igaming-resume-contact {
+  margin-top: 0.6rem;
+  color: var(--theme-text-secondary);
+}
+
+.igaming-resume-contact a {
+  color: var(--ig-line);
+  font-weight: 650;
+}
+
+/* Experience — one card per employer, same print language as the 90-day plan */
+.igaming-resume-experience {
+  max-width: 46rem;
+  margin: 1.6rem auto 0;
+  display: grid;
+  gap: clamp(0.8rem, 2vw, 1.1rem);
+}
+
+.igaming-resume-experience > li {
+  padding: 1.3rem 1.4rem 1.4rem;
+  border-radius: 12px;
+  background: var(--ig-card);
+  box-shadow: inset 3px 0 0 var(--ig-foil), var(--ig-frame);
+}
+
+.igaming-resume-job-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.2rem 1rem;
+}
+
+.igaming-resume-job-head h3 {
+  font-size: 1.12rem;
+  font-weight: 720;
+}
+
+.igaming-resume-job-head span {
+  color: var(--theme-text-secondary);
+  font-size: 0.86rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.igaming-resume-experience ul {
+  margin-top: 0.7rem;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.igaming-resume-experience ul strong { font-weight: 680; }
+
+.igaming-resume-experience ul span {
+  color: var(--theme-text-secondary);
+  font-size: 0.86rem;
+}
+
+.igaming-resume-experience ul p {
+  margin-top: 0.2rem;
+  color: var(--theme-text-secondary);
+  line-height: 1.6;
 }

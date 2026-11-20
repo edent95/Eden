@@ -1,6 +1,7 @@
 import React from 'react';
 import ProductStorePage, { type EpTutorial, useCountUp } from '../components/ProductStorePage';
 import PukimonShowdownFrame from '../components/PukimonShowdownFrame';
+import { DrRacingDealFlow, DrRacingGate, DrRacingGrowth, DrRacingMonthlyChanges } from '../components/DrRacingCharts';
 import { ProjectsDrRacingCssIcon, ProjectsEtReportCssIcon, ProjectsJijuCssIcon, ProjectsLifeOsCssIcon, ProjectsPokerCssIcon, ProjectsPukimonCssIcon } from '../components/css-art/index';
 import { HeaderControls, type Language, type Theme, type ThemePreference } from '../app/shared';
 import { productSiblingCards } from '../app/product-siblings';
@@ -361,14 +362,13 @@ const etReportHubTutorial: EpTutorial = {
 export const ETReportHubFullPage: React.FC<{
   homeHref: string;
   projectsHref: string;
-  salesHref: string;
   baseUrl: string;
   language: Language;
   setLanguage: React.Dispatch<React.SetStateAction<Language>>;
   themePreference: ThemePreference;
   theme: Theme;
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
-}> = ({ projectsHref, salesHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
+}> = ({ projectsHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
   const demoUrl = 'https://edent95.github.io/daily-report-dashboard/demo/';
 
@@ -384,7 +384,6 @@ export const ETReportHubFullPage: React.FC<{
       tagline={{ en: 'Turn daily Excel into clear operating decisions.', zh: '把每日 Excel 变成清楚的运营判断。' }}
       meta={{ en: 'Private deployment · Local SQLite · Excel in, decisions out', zh: '私有部署 · 本地 SQLite · Excel 进，判断出' }}
       primary={{ href: demoUrl, external: true, label: { en: 'View demo', zh: '查看 Demo' } }}
-      secondary={{ href: salesHref, label: { en: 'Launch offer', zh: '上线方案' } }}
       quickLinks={[
         { href: '#overview', label: { en: 'Overview', zh: '产品简介' } },
         { href: '#tutorial', label: { en: 'Tutorial', zh: '视频教程' } },
@@ -483,6 +482,7 @@ export const DrRacingFullPage: React.FC<{
           { title: { en: 'Deliver', zh: '交车' }, text: { en: 'An approved deal opens a delivery checklist. Operations orders the bike, each role records its own step with the files attached, and the bike is marked delivered only when every step is done.', zh: '批准的单子打开交车 checklist。Operations 订车，每个角色记录自己那一步并附上文件，所有步骤完成才能标记交车。' } },
           { title: { en: 'Settle', zh: '结算' }, text: { en: 'Payments are checked against deposit plus cash, invoices and receipts sync to the accounting ledger, and commission follows each salesperson’s tier plan.', zh: '收款按订金加现金核对，发票和收据同步到会计账本，佣金按每个 sales 的分级方案计算。' } },
         ] },
+        { kind: 'node', node: <DrRacingDealFlow isZh={isZh} /> },
         { kind: 'h', text: { en: 'What it changes day to day', zh: '它每天改变了什么' } },
         { kind: 'p', text: { en: 'The Task Inbox opens the morning. Instead of scrolling chats, every role sees what waits on them: applications to review, documents to chase, banks to follow up, delivery steps to record. Whoever owns the next step also gets a push on their phone.', zh: '早上从 Task Inbox 开始。不用翻聊天记录，每个角色都直接看到等着自己的事：要审的申请、要追的文件、要跟的银行、要记录的交车步骤。轮到谁，谁的手机就会收到推送。' } },
         { kind: 'p', text: { en: 'Reject codes become knowledge. Every bank rejection is coded and translated into a plain next step, so a young salesperson handles a rejection the way the most experienced one would.', zh: 'Reject code 变成车行的知识。每个银行拒绝都有编码，并翻译成一句普通人能懂的下一步，新 sales 也能像老手一样处理被拒。' } },
@@ -498,13 +498,16 @@ export const DrRacingFullPage: React.FC<{
         { kind: 'h', text: { en: 'Security is not a hidden button', zh: '安全不是把按钮藏起来' } },
         { kind: 'p', text: { en: 'Which staff member can see which customer is decided by database rules on the server, not by what the screen happens to show. Even with a modified app, a salesperson’s phone cannot read another salesperson’s customers. Those rules run to nearly 3,000 lines, and every change re-runs the full test of what each role may and may not do before it can merge.', zh: '哪个员工能看哪些客户，是服务器上的数据库规则说了算，不是看画面上有没有那个按钮。就算有人改了 App，Sales 的手机也读不到别的 Sales 的客户。这套规则将近 3000 行，每次改动都要把「每个角色能做什么、不能做什么」整套重测一遍，过了才能合并。' } },
         { kind: 'p', text: { en: 'In November 2026 the system went through three rounds of attack-style testing in an isolated sandbox: reaching data it should not, injection, flooding requests, SSRF, XSS, and bending the business flow. None of them produced a finding that could be reproduced. The database, uploaded files and staff accounts are each snapshotted every day, and every snapshot is checked to be complete.', zh: '2026 年 11 月，在隔离的测试环境里做了三轮模拟攻击：越权偷看数据、注入、狂刷请求、SSRF、XSS、钻业务流程的空子，结果没有一个能重现的漏洞。数据库、上传的文件和员工账号每天各做一次快照，每一份都检查过是完整的。' } },
+        { kind: 'node', node: <DrRacingGrowth isZh={isZh} /> },
         { kind: 'h', text: { en: 'How it is built', zh: '怎么做出来的' } },
         { kind: 'stats', items: [
           { value: 300, unit: { en: '+ PRs', zh: '多个 PR' }, text: { en: 'merged since work began on 30 June 2026', zh: '2026 年 6 月 30 日开工以来合并的改动' } },
           { value: 110, unit: { en: 'files', zh: '个' }, text: { en: 'unit test files that check the business rules', zh: '单元测试文件，检查业务规则' } },
           { value: 23, unit: { en: 'specs', zh: '套' }, text: { en: 'end-to-end tests that click through the real flow', zh: '端到端测试，像真人一样把流程点一遍' } },
         ] },
+        { kind: 'node', node: <DrRacingMonthlyChanges isZh={isZh} /> },
         { kind: 'p', text: { en: 'Every change passes the same gate on the laptop, before push, and in CI: type check, unit tests, build, booting the real server, end-to-end tests and the whole security-rule test. Only a green gate merges. After the merge, the new security rules deploy themselves and are read back from production to confirm they match.', zh: '每个改动都要过同一道关卡，在本机、推送前、CI 上都一样：类型检查、单元测试、打包、把真正的服务器跑起来、端到端测试、整套安全规则测试。全部通过才能合并；合并之后，新的安全规则自动上线，再从正式环境读回来，核对是不是一致。' } },
+        { kind: 'node', node: <DrRacingGate isZh={isZh} /> },
         { kind: 'callout', tone: 'warning', label: { en: 'About this demo', zh: '关于这个 Demo' }, text: { en: 'The public demo above runs the real dashboard (updated October 2026) with fixed anonymized sample data, entirely in your browser—no login, nothing saved to a server, and it resets on every reload. Parts that need the production backend, such as phone push, file uploads and the ledger sync, are off in the demo, and November additions such as several banks at once and the analytics page are not in it yet. The production system runs on Firebase with real authentication and role-based security rules.', zh: '上面的公开 Demo 用固定匿名示例数据跑真实仪表台（2026 年 10 月版本），完全在你的浏览器里——不用登录、不会写入服务器、刷新即重置。手机推送、文件上传、账本同步这些要正式后端的功能，在 Demo 里是关的；同时送几家银行、数据分析这些 11 月才加的功能，Demo 里还没有。正式系统跑在 Firebase 上，有真实登录与角色安全规则。' } },
       ]}
       faq={[

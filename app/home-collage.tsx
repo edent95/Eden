@@ -13,10 +13,16 @@ const homeCollageItems: Array<{
   linkLabel?: HomeCopy;
   /** The grey line under the title on the shelf (Apple-style caption). */
   kind: HomeCopy;
+  /** One or two plain sentences shown over the card on hover / tap: what it is, who it is for. */
+  summary: HomeCopy;
 }> = [
   {
     title: 'Life OS',
     kind: { en: 'Product', zh: '产品' },
+    summary: {
+      en: 'Lock eight natal charts first, then record what really happens and measure the match. Working hypothesis: about 73% fits the chart, 27% is yours to change.',
+      zh: '先锁定八套本命命盘，再记录现实里发生的事，量出吻合率。目前的工作假设：约 73% 与命盘吻合，27% 是你能改的。',
+    },
     tone: 'starmap',
     image: 'home-banners/life-os-banner-poster.jpg',
     video: 'home-banners/life-os-banner.mp4',
@@ -27,6 +33,10 @@ const homeCollageItems: Array<{
   {
     title: 'Pukimon',
     kind: { en: 'Game', zh: '游戏' },
+    summary: {
+      en: 'The Pokémon-style real-time battle game I dreamed of as a kid. The full version is for friends; the page plays a scripted three-round battle.',
+      zh: '小时候梦想中的宝可梦实时对战游戏。完整版只给朋友玩，页面里放一段三回合的对战演出。',
+    },
     tone: 'pukimon',
     image: 'home-banners/pukimon-banner-poster.jpg',
     video: 'home-banners/pukimon-banner.mp4',
@@ -37,6 +47,10 @@ const homeCollageItems: Array<{
   {
     title: 'Scripture',
     kind: { en: 'Reading', zh: '经书' },
+    summary: {
+      en: 'Buddhist and Sanskrit classics translated into plain, readable language, chapter by chapter, with an engraved illustration for each book.',
+      zh: '佛经与梵文经典的白话直译，逐章对照，每部书配一张版画插图。',
+    },
     tone: 'scripture',
     image: 'home-banners/scripture-banner-poster.jpg',
     video: 'home-banners/scripture-banner.mp4',
@@ -47,6 +61,10 @@ const homeCollageItems: Array<{
   {
     title: 'ETReportHub',
     kind: { en: 'Product', zh: '产品' },
+    summary: {
+      en: 'A daily reporting system for operations teams: drop in Transaction and Customer Excel files, get KPIs, members, channels, trends and brand comparisons.',
+      zh: '给运营团队的日报系统：放进 Transaction 与 Customer Excel，直接得到 KPI、会员、渠道、趋势和品牌对比。',
+    },
     tone: 'ocean',
     image: 'home-banners/etreporthub-banner-poster.jpg',
     video: 'home-banners/etreporthub-banner.mp4',
@@ -57,6 +75,10 @@ const homeCollageItems: Array<{
   {
     title: 'Dr Racing',
     kind: { en: 'Product', zh: '产品' },
+    summary: {
+      en: 'Runs a motorcycle dealership from lead to delivered bike: loan and cash applications, bank rounds, the delivery checklist, stock and commissions.',
+      zh: '摩托车行从 lead 到交车的运营系统：贷款与现金申请、银行轮次、交车 checklist、库存和佣金，放在一个仪表台里。',
+    },
     tone: 'racing',
     image: 'home-banners/dr-racing-banner-poster.jpg',
     video: 'home-banners/dr-racing-banner.mp4',
@@ -67,6 +89,10 @@ const homeCollageItems: Array<{
   {
     title: 'MiYa',
     kind: { en: 'App', zh: 'App' },
+    summary: {
+      en: 'An iPhone app that reads your Apple Watch health data and explains it in plain words you actually understand.',
+      zh: '读取 Apple Watch 健康数据的 iPhone App，用你看得懂的话讲清楚身体在发生什么。',
+    },
     tone: 'miya',
     image: 'home-banners/miya-banner-poster.jpg',
     video: 'home-banners/miya-banner.mp4',
@@ -77,6 +103,10 @@ const homeCollageItems: Array<{
   {
     title: 'What is Wealth',
     kind: { en: 'Essay', zh: '文章' },
+    summary: {
+      en: 'A first-principles essay: money is a ledger, debt sells the future, and wealth may really mean control over productive capacity.',
+      zh: '一篇第一性原理长文：钱只是记账，债务卖的是未来，财富也许等于你能控制多少生产能力。',
+    },
     tone: 'wealth',
     image: 'home-banners/what-is-wealth-banner-poster.jpg',
     video: 'home-banners/what-is-wealth-banner.mp4',
@@ -87,6 +117,10 @@ const homeCollageItems: Array<{
   {
     title: 'Jiju',
     kind: { en: 'Product', zh: '产品' },
+    summary: {
+      en: 'Find places that are genuinely pet-friendly, check their real policies, and keep your pet\'s profile and visit memories in one place.',
+      zh: '找到真正宠物友好的地点，确认真实政策，把宠物档案和到访记忆放在一起。',
+    },
     tone: 'coral',
     image: 'home-banners/jiju-adventure-seo.jpg',
     video: 'home-banners/jiju-home-banner.mp4',
@@ -97,6 +131,10 @@ const homeCollageItems: Array<{
   {
     title: 'Friday Poker Club',
     kind: { en: 'Game', zh: '游戏' },
+    summary: {
+      en: 'A browser Hold\'em table for a private crew: nine seats, blinds and buy-ins, six mini games, and a chip tracker for real-card nights.',
+      zh: '给熟人局的浏览器德州牌桌：九个座位、盲注与买入、六个小游戏，真牌局也能用它记筹码。',
+    },
     tone: 'poker',
     image: 'home-banners/friday-poker-club.jpg',
     imageAlt: { en: 'Friday Poker Club private poker table in a dark vintage club', zh: 'Friday Poker Club 深色复古私人牌桌场景' },
@@ -106,6 +144,10 @@ const homeCollageItems: Array<{
   {
     title: "Conway's Game of Life",
     kind: { en: 'Interactive', zh: '互动实验' },
+    summary: {
+      en: 'Play a Game of Life board, then follow binary cells through 8 neighbourhoods, 64 hexagrams, 256 rules and Leibniz\'s I Ching bridge.',
+      zh: '先玩一盘生命游戏，再沿着二元细胞走进八种邻域、六十四卦、256 条规则和莱布尼茨的《易经》桥梁。',
+    },
     tone: 'conway',
     image: 'home-banners/conway-bagua-pyramid-banner-poster.jpg',
     video: 'home-banners/conway-bagua-pyramid-banner.mp4',
@@ -119,6 +161,10 @@ const homeCollageItems: Array<{
   {
     title: 'Diving / Ocean',
     kind: { en: 'Film', zh: '影片' },
+    summary: {
+      en: 'A short underwater film shot diving at Pulau Kapas, Malaysia: reef, bubbles and open blue water.',
+      zh: '在马来西亚 Pulau Kapas 潜水拍的海底短片：珊瑚礁、气泡和一片蓝。',
+    },
     tone: 'sea',
     image: 'home-banners/diving-ocean-banner-poster.jpg',
     video: 'home-banners/diving-ocean-banner.mp4',
@@ -129,6 +175,10 @@ const homeCollageItems: Array<{
   {
     title: 'Film Gallery',
     kind: { en: 'Photography', zh: '摄影' },
+    summary: {
+      en: 'Fifteen film photographs of streets, water, buildings, temples and people, shot on three cameras with Kodak Gold 200 and 400.',
+      zh: '十五张胶片照片：街道、水岸、建筑、庙宇与人物，三台相机、Kodak Gold 200 与 400 拍摄。',
+    },
     tone: 'film',
     image: 'home-banners/film-gallery-banner-poster.jpg',
     video: 'home-banners/film-gallery-banner.mp4',
@@ -139,13 +189,11 @@ const homeCollageItems: Array<{
 ];
 
 /**
- * The collage cards ride a compositor-driven marquee, and IntersectionObserver does not
- * reliably recompute while a transform animation runs on the compositor — a card can
- * slide fully into view without a single callback, which left its video paused forever.
- * getBoundingClientRect does see the animated transform, so every collage video registers
- * a sampler here and one shared rAF loop checks them at ~400ms intervals. rAF is the right
- * clock for this: it stops on its own when the page is hidden (unlike setInterval, which
- * merely gets throttled) and it is in step with the animation it is sampling.
+ * Each collage video plays only while it is on screen. Every video registers a sampler here
+ * and one shared rAF loop checks getBoundingClientRect at ~400ms intervals — it catches page
+ * scroll, the shelf's own horizontal scroll and snap alike without wiring a scroll listener
+ * per card. rAF is the right clock for this: it stops on its own when the page is hidden
+ * (unlike setInterval, which merely gets throttled).
  */
 const collageVideoSamplers = new Set<() => void>();
 
@@ -241,24 +289,25 @@ const HomeCollageVideo: React.FC<{ src: string; poster?: string }> = ({ src, pos
 
 type HomeCollageItem = (typeof homeCollageItems)[number];
 
-const HomeShelfItem: React.FC<{ item: HomeCollageItem; language: Language; baseUrl: string; duplicate?: boolean }> = ({ item, language, baseUrl, duplicate = false }) => {
-  const media = item.video ? (
-    <>
-      {item.image ? (
-        <img
-          className="eden-collage-image"
-          src={resolveAssetPath(baseUrl, item.image)}
-          alt={item.imageAlt?.[language] ?? item.title}
-          loading="lazy"
-          decoding="async"
-        />
-      ) : null}
-      <HomeCollageVideo
-        src={resolveAssetPath(baseUrl, item.video)}
-        poster={item.image ? resolveAssetPath(baseUrl, item.image) : undefined}
-      />
-    </>
-  ) : item.image ? (
+const shelfDetailId = (title: string) => `eden-shelf-detail-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+
+/**
+ * One shelf card. The card itself is a toggle, not a link: hovering it (fine pointers) or
+ * clicking / tapping it lays the project details over the media, and the details hold the
+ * link out. The link stretches over the whole overlay, so on desktop "hover, then click
+ * anywhere on the card" still opens the project in one click; on touch the first tap shows
+ * the details and the second opens it.
+ */
+const HomeShelfItem: React.FC<{
+  item: HomeCollageItem;
+  language: Language;
+  baseUrl: string;
+  open: boolean;
+  onToggle: () => void;
+}> = ({ item, language, baseUrl, open, onToggle }) => {
+  const isZh = language === 'zh';
+  const detailId = shelfDetailId(item.title);
+  const image = item.image ? (
     <img
       className="eden-collage-image"
       src={resolveAssetPath(baseUrl, item.image)}
@@ -266,110 +315,154 @@ const HomeShelfItem: React.FC<{ item: HomeCollageItem; language: Language; baseU
       loading="lazy"
       decoding="async"
     />
-  ) : (
-    <div className="eden-placeholder-art" aria-hidden="true"><i /><i /><i /></div>
-  );
-
-  const content = (
+  ) : null;
+  const media = item.video ? (
     <>
-      <span className={`eden-collage-card tone-${item.tone}`}>{media}</span>
-      <span className="eden-shelf-title">{item.title}</span>
-      <span className="eden-shelf-kind">{item.kind[language]}</span>
+      {image}
+      <HomeCollageVideo
+        src={resolveAssetPath(baseUrl, item.video)}
+        poster={item.image ? resolveAssetPath(baseUrl, item.image) : undefined}
+      />
     </>
-  );
-
-  return item.href ? (
-    <a
-      className="eden-shelf-item"
-      href={resolveAssetPath(baseUrl, item.href)}
-      aria-label={item.linkLabel?.[language] ?? item.title}
-      tabIndex={duplicate ? -1 : undefined}
-    >
-      {content}
-    </a>
-  ) : (
-    <div className="eden-shelf-item">{content}</div>
-  );
-};
-
-/**
- * The homepage shelf: one row of cards with a title and a kind under each.
- *
- * Desktop (fine pointer, wider than a tablet) drifts it as a marquee. The items are rendered
- * twice so translating the track by exactly one run loops with no visible seam, and that
- * distance is measured in px into `--eden-run-shift`: iOS Safari resolves a percentage
- * translate on a `width: max-content` flex track against the wrong box (~25px, measured on
- * an iPhone), which reads as a motionless or jittering row.
- *
- * Phones and tablets do not drift at all — the row is a native horizontal scroller with snap,
- * the duplicate run is hidden in CSS — so the iOS marquee problem cannot reach them.
- *
- * The duplicate run stays clickable — do NOT mark it `inert`, that removes it from hit
- * testing and half the visible cards stop responding — it is only hidden from the
- * accessibility tree and the tab order, so the real run is the one keyboard users reach.
- */
-const HomeShelfRow: React.FC<{ items: HomeCollageItem[]; language: Language; baseUrl: string }> = ({ items, language, baseUrl }) => {
-  const trackRef = React.useRef<HTMLDivElement>(null);
-
-  React.useLayoutEffect(() => {
-    const track = trackRef.current;
-    const run = track?.firstElementChild;
-    if (!track || !run) return;
-
-    // A run's border box already includes each item's right margin, so its width is one
-    // whole run with gaps.
-    const measure = () => {
-      track.style.setProperty('--eden-run-shift', `${run.getBoundingClientRect().width}px`);
-    };
-
-    measure();
-    if (typeof ResizeObserver === 'undefined') {
-      window.addEventListener('resize', measure);
-      return () => window.removeEventListener('resize', measure);
-    }
-    const observer = new ResizeObserver(measure);
-    observer.observe(run);
-    return () => observer.disconnect();
-  }, [items.length]);
+  ) : image ?? <div className="eden-placeholder-art" aria-hidden="true"><i /><i /><i /></div>;
 
   return (
-    <div className="eden-collage-row">
-      <div className="eden-collage-track" ref={trackRef}>
-        {[0, 1].map((run) => (
-          <div className="eden-collage-run" key={run} aria-hidden={run === 1 || undefined}>
-            {items.map((item) => (
-              <HomeShelfItem key={item.title} item={item} language={language} baseUrl={baseUrl} duplicate={run === 1} />
-            ))}
-          </div>
-        ))}
+    <div className={`eden-shelf-item${open ? ' is-open' : ''}`}>
+      <div className={`eden-collage-card tone-${item.tone}`}>
+        {media}
+        <button
+          type="button"
+          className="eden-shelf-toggle"
+          aria-expanded={open}
+          aria-controls={detailId}
+          aria-label={isZh ? `${item.title}：查看简介` : `${item.title}: show details`}
+          onClick={onToggle}
+        />
+        <div className="eden-shelf-detail" id={detailId}>
+          <span className="eden-shelf-detail-kind">{item.kind[language]}</span>
+          <strong className="eden-shelf-detail-title">{item.title}</strong>
+          <p className="eden-shelf-detail-copy">{item.summary[language]}</p>
+          {item.href ? (
+            <a
+              className="eden-shelf-detail-link"
+              href={resolveAssetPath(baseUrl, item.href)}
+              aria-label={item.linkLabel?.[language] ?? item.title}
+            >
+              {isZh ? '打开' : 'Open'} <span aria-hidden="true">→</span>
+            </a>
+          ) : null}
+        </div>
       </div>
+      <span className="eden-shelf-title">{item.title}</span>
+      <span className="eden-shelf-kind">{item.kind[language]}</span>
     </div>
   );
 };
 
 /**
- * Homepage shelf, laid out like a services page: it sits right under the hero, one row of every item, then a pause button that stops
- * the drift and every video in it (moving content that runs longer than five seconds needs
- * a way to stop it).
+ * Homepage shelf, laid out like a services page: it sits right under the hero, one row of
+ * every item. Nothing slides on its own — on every screen size the row is a native
+ * horizontal scroller with snap (swipe / trackpad / shift-wheel), and fine pointers also get
+ * previous / next buttons. The pause button stops every video in it (moving content that
+ * runs longer than five seconds needs a way to stop it).
  */
 export const HomeCollage: React.FC<{ language: Language; baseUrl: string }> = ({ language, baseUrl }) => {
   const [paused, setPaused] = React.useState(false);
+  const [openTitle, setOpenTitle] = React.useState<string | null>(null);
+  const [edges, setEdges] = React.useState({ start: true, end: false });
+  const rowRef = React.useRef<HTMLDivElement>(null);
+  const showcaseRef = React.useRef<HTMLDivElement>(null);
   const isZh = language === 'zh';
 
+  React.useEffect(() => {
+    const row = rowRef.current;
+    if (!row) return;
+    const update = () => {
+      const max = row.scrollWidth - row.clientWidth;
+      setEdges({ start: row.scrollLeft <= 2, end: row.scrollLeft >= max - 2 });
+    };
+    update();
+    row.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    return () => {
+      row.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
+  }, []);
+
+  // An open card closes on Escape or on a tap / click anywhere outside the shelf.
+  React.useEffect(() => {
+    if (!openTitle) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpenTitle(null);
+    };
+    const onPointer = (event: PointerEvent) => {
+      if (!showcaseRef.current?.contains(event.target as Node)) setOpenTitle(null);
+    };
+    document.addEventListener('keydown', onKey);
+    document.addEventListener('pointerdown', onPointer);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.removeEventListener('pointerdown', onPointer);
+    };
+  }, [openTitle]);
+
+  const scrollByPage = (direction: 1 | -1) => {
+    const row = rowRef.current;
+    if (!row) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    row.scrollBy({ left: direction * row.clientWidth * 0.8, behavior: reduce ? 'auto' : 'smooth' });
+  };
+
   return (
-    <div className={`eden-showcase${paused ? ' is-paused' : ''}`}>
+    <div className={`eden-showcase${paused ? ' is-paused' : ''}`} ref={showcaseRef}>
       <div className="eden-collage" aria-label={isZh ? 'Eden 的作品与生活观察' : "Eden's work and field notes"}>
-        <HomeShelfRow items={homeCollageItems} language={language} baseUrl={baseUrl} />
+        <div className="eden-collage-row" ref={rowRef}>
+          <div className="eden-collage-track">
+            {homeCollageItems.map((item) => (
+              <HomeShelfItem
+                key={item.title}
+                item={item}
+                language={language}
+                baseUrl={baseUrl}
+                open={openTitle === item.title}
+                onToggle={() => setOpenTitle((current) => (current === item.title ? null : item.title))}
+              />
+            ))}
+          </div>
+        </div>
       </div>
-      <button
-        type="button"
-        className="eden-showcase-pause"
-        aria-pressed={paused}
-        aria-label={paused ? (isZh ? '继续播放' : 'Play') : (isZh ? '暂停播放' : 'Pause')}
-        onClick={() => setPaused((value) => !value)}
-      >
-        <span className={paused ? 'is-play' : 'is-pause'} aria-hidden="true" />
-      </button>
+      <div className="eden-showcase-controls">
+        <button
+          type="button"
+          className="eden-showcase-pause"
+          aria-pressed={paused}
+          aria-label={paused ? (isZh ? '继续播放' : 'Play') : (isZh ? '暂停播放' : 'Pause')}
+          onClick={() => setPaused((value) => !value)}
+        >
+          <span className={paused ? 'is-play' : 'is-pause'} aria-hidden="true" />
+        </button>
+        <span className="eden-showcase-arrows">
+          <button
+            type="button"
+            className="eden-showcase-arrow"
+            aria-label={isZh ? '上一组' : 'Previous'}
+            disabled={edges.start}
+            onClick={() => scrollByPage(-1)}
+          >
+            <span aria-hidden="true">←</span>
+          </button>
+          <button
+            type="button"
+            className="eden-showcase-arrow"
+            aria-label={isZh ? '下一组' : 'Next'}
+            disabled={edges.end}
+            onClick={() => scrollByPage(1)}
+          >
+            <span aria-hidden="true">→</span>
+          </button>
+        </span>
+      </div>
     </div>
   );
 };

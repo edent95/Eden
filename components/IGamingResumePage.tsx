@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { IGAMING_RESUME, type ResumeHref } from './igaming-resume-content';
+import { ABOUT_EMAIL, ABOUT_LINKEDIN } from './about-content';
 import type { IGamingLocalized } from './igaming-content';
 import { IGamingSeal } from './css-art/index';
 import { IGamingBannerStage, IGamingHeroStage } from './css-art/igaming-hero-stage';
@@ -10,9 +11,10 @@ import { kaleidoSpecFor } from '../app/kaleido-routes';
 type Lang = 'en' | 'zh';
 
 /**
- * `/igaming/resume` — the job-search page: role, availability and contact,
- * the published figures with links to their cases, work history, three
- * strengths, a capability map, a 90-day plan and how Eden works. Reuses the key-points page's
+ * `/igaming/resume` — the recruiter-facing page: positioning, the published
+ * figures with links to their cases, the CV (experience + PDF download, added
+ * 2026-11-18), three strengths, a capability map, a 90-day new-market plan and how
+ * Eden works. Disclosure rules are in `igaming-resume-content.ts`. Reuses the key-points page's
  * engraved print language (`.igaming-summary`); its own layout lives under
  * `.igaming-resume` in `styles/pages/igaming.css`. Copy: `igaming-resume-content.ts`.
  */
@@ -22,8 +24,9 @@ const IGamingResumePage: React.FC<{
   fullHref: string;
   casesHref: string;
   etReportHubHref: string;
+  cvHref: string;
   controls: React.ReactNode;
-}> = ({ language, igamingHref, fullHref, casesHref, etReportHubHref, controls }) => {
+}> = ({ language, igamingHref, fullHref, casesHref, etReportHubHref, cvHref, controls }) => {
   const t = (value: IGamingLocalized) => value[language];
   const page = IGAMING_RESUME;
   const hrefFor = (href: ResumeHref) => {
@@ -31,17 +34,6 @@ const IGamingResumePage: React.FC<{
     if (href.startsWith('case:')) return `${casesHref}/${href.slice('case:'.length)}`;
     return `${fullHref}#${href.slice('full:'.length)}`;
   };
-  const contactLinks = (
-    <div className="igaming-case-links">
-      <a href={`mailto:${page.email}`} className="igaming-full-cta">
-        {t(page.emailLabel)}
-        <ArrowRight size={16} aria-hidden="true" />
-      </a>
-      <a href={page.linkedin} target="_blank" rel="noreferrer" className="igaming-point-more">
-        {t(page.linkedinLabel)} <span aria-hidden="true">→</span>
-      </a>
-    </div>
-  );
 
   return (
     <div className={`igaming-page igaming-summary igaming-resume${language === 'zh' ? ' is-zh' : ''}`}>
@@ -60,46 +52,62 @@ const IGamingResumePage: React.FC<{
           <p className="igaming-kicker">{t(page.kicker)}</p>
           <h1>{t(page.claim)}</h1>
           <p className="igaming-standfirst">{t(page.standfirst)}</p>
+          <p className="igaming-resume-difference">{t(page.difference)}</p>
           <p className="igaming-resume-difference">{t(page.roles)}</p>
           <p className="igaming-resume-note">{t(page.availability)}</p>
-          {contactLinks}
+          <p className="igaming-resume-cv">
+            <a href={cvHref} className="igaming-full-cta" download rel="nofollow">
+              {t(page.cvLabel)}
+              <ArrowRight size={16} aria-hidden="true" />
+            </a>
+            <a href={`mailto:${ABOUT_EMAIL}`} className="igaming-point-more">
+              {t(page.emailCta)} <span aria-hidden="true">→</span>
+            </a>
+            <a href={ABOUT_LINKEDIN} className="igaming-point-more" rel="noopener noreferrer" target="_blank">
+              {t(page.linkedinLabel)} <span aria-hidden="true">→</span>
+            </a>
+          </p>
         </header>
 
         <section className="igaming-resume-proof" aria-labelledby="igaming-resume-proof">
           <h2 id="igaming-resume-proof" className="igaming-resume-label">{t(page.proofTitle)}</h2>
           <ul>
-            {page.proof.map((item) => (
-              <li key={item.value}>
-                <a href={hrefFor(item.href)}>
+            {page.proof.map((item) => {
+              const body = (
+                <>
                   <strong>{item.value}</strong>
                   <span>{t(item.label)}</span>
                   <small>{t(item.note)}</small>
-                </a>
-              </li>
-            ))}
+                </>
+              );
+              // 有对应案例的链过去;只在履历里的数字(如 +30% 留存)没有案例页,不做链接
+              return <li key={item.value}>{item.href ? <a href={hrefFor(item.href)}>{body}</a> : <div>{body}</div>}</li>;
+            })}
           </ul>
         </section>
 
-        <section className="igaming-resume-block" aria-labelledby="igaming-resume-history">
-          <h2 id="igaming-resume-history">{t(page.historyTitle)}</h2>
-          <div className="igaming-table-scroll">
-            <table className="igaming-metrics igaming-resume-map">
-              <thead>
-                <tr>
-                  {page.historyHead.map((cell) => <th key={cell.en} scope="col">{t(cell)}</th>)}
-                </tr>
-              </thead>
-              <tbody>
-                {page.history.map((row) => (
-                  <tr key={row.when.en}>
-                    <th scope="row">{t(row.when)}</th>
-                    <td><strong>{t(row.role)}</strong></td>
-                    <td>{t(row.where)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+        <section className="igaming-resume-block" aria-labelledby="igaming-resume-experience">
+          <h2 id="igaming-resume-experience">{t(page.experienceTitle)}</h2>
+          <p className="igaming-resume-lead">{t(page.experienceLine)}</p>
+          <ol className="igaming-resume-experience">
+            {page.experience.map((job) => (
+              <li key={job.company}>
+                <div className="igaming-resume-job-head">
+                  <h3>{job.company}</h3>
+                  <span>{job.dates}</span>
+                </div>
+                <p className="igaming-resume-phase">{t(job.meta)}</p>
+                <ul>
+                  {job.roles.map((role) => (
+                    <li key={role.title}>
+                      <strong>{role.title}</strong>{role.dates ? <span> · {role.dates}</span> : null}
+                      <p>{t(role.line)}</p>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ol>
         </section>
 
         <h2 className="igaming-resume-label igaming-resume-heading">{t(page.strengthsTitle)}</h2>
@@ -181,7 +189,9 @@ const IGamingResumePage: React.FC<{
           <div className="igaming-seal"><IGamingSeal label={t(page.sealLabel)} /></div>
           <h2 id="igaming-resume-closing">{t(page.closingTitle)}</h2>
           <p>{t(page.closingBody)}</p>
-          {contactLinks}
+          <p className="igaming-resume-contact">
+            {t(page.emailLabel)}: <a href={`mailto:${ABOUT_EMAIL}`}>{ABOUT_EMAIL}</a> · <a href={ABOUT_LINKEDIN} rel="noopener noreferrer" target="_blank">LinkedIn</a>
+          </p>
           <div className="igaming-case-links">
             <a href={igamingHref} className="igaming-full-cta">
               {t(page.openStarter)}
@@ -189,6 +199,9 @@ const IGamingResumePage: React.FC<{
             </a>
             <a href={casesHref} className="igaming-point-more">
               {t(page.openCases)} <span aria-hidden="true">→</span>
+            </a>
+            <a href={cvHref} className="igaming-point-more" download rel="nofollow">
+              {t(page.cvLabel)} <span aria-hidden="true">↓</span>
             </a>
           </div>
         </section>

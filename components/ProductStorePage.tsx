@@ -15,7 +15,9 @@ export type EpBlock =
   /** A row of big numbers that count up from 0 when scrolled into view (see useCountUp). */
   | { kind: 'stats'; items: { value: number; unit?: EpText; text: EpText }[] }
   /** A 16:9 third-party video player (e.g. Bilibili) placed in the prose flow. */
-  | { kind: 'video'; src: string; title: EpText; caption?: EpText };
+  | { kind: 'video'; src: string; title: EpText; caption?: EpText }
+  /** A page-specific figure (chart, animated diagram) placed in the prose flow. */
+  | { kind: 'node'; node: React.ReactNode };
 
 export type EpLesson = {
   id: string;
@@ -318,6 +320,7 @@ const ProductStorePage: React.FC<ProductStorePageProps> = ({
               if (block.kind === 'p') return <p key={index}>{t(block.text)}</p>;
               if (block.kind === 'h') return <h2 key={index}>{t(block.text)}</h2>;
               if (block.kind === 'stats') return <EpStats key={index} items={block.items} t={t} />;
+              if (block.kind === 'node') return <React.Fragment key={index}>{block.node}</React.Fragment>;
               if (block.kind === 'video') {
                 return (
                   <figure key={index} className="ep-video">

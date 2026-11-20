@@ -285,8 +285,8 @@ const brandGuideRhythm = [
   {
     title: { en: 'Grids', zh: '网格' },
     copy: {
-      en: 'Editorial grids use 2 / 1 columns. The Home media collage uses two drifting rows.',
-      zh: '内容网格用 2 / 1 栏；首页媒体拼贴用两行反向漂移。',
+      en: 'Editorial grids use 2 / 1 columns. The Home media shelf is one hand-scrolled row; nothing slides on its own.',
+      zh: '内容网格用 2 / 1 栏；首页媒体横幅是一行手动横滑，不自动滑动。',
     },
   },
   {
@@ -382,7 +382,7 @@ const brandGuideLayoutNumbers = [
   },
   {
     value: { en: '4 + 5', zh: '4 + 5' },
-    label: { en: 'Home collage: two rows drifting in opposite directions.', zh: '首页拼贴：两行，反向漂移。' },
+    label: { en: 'Home shelf: one row, scrolled by hand; hover or tap a card for its details.', zh: '首页横幅：一行手动横滑；悬停或点按卡片看简介。' },
   },
   {
     value: { en: '220–460px', zh: '220–460px' },
@@ -430,8 +430,8 @@ const brandGuideUseCases = [
   {
     title: { en: 'Home', zh: 'Home' },
     copy: {
-      en: 'Lead with the point of view. Then a drifting collage of nine material-backed 16:9 doors into products, systems, and lived work.',
-      zh: '先说清观点，再用 9 个有真实素材、缓慢漂移的 16:9 入口，带人进入产品、系统与真实经历。',
+      en: 'Lead with the point of view. Then a hand-scrolled shelf of material-backed 16:9 doors into products, systems, and lived work.',
+      zh: '先说清观点，再用一行有真实素材、手动横滑的 16:9 入口，带人进入产品、系统与真实经历。',
     },
   },
   {
@@ -728,8 +728,8 @@ const brandGuideMotionRules = [
   {
     title: { en: 'Ambient motion is slow and mechanical', zh: '环境动效只能慢、像机械' },
     copy: {
-      en: 'Allowed: the Home collage drift and engraved ornaments turning once every 30s or slower. Never glow, scan lines, or card fades.',
-      zh: '允许：首页拼贴漂移、凹版纹饰 30 秒以上转一圈。不用 glow、扫描线或 card fade。',
+      en: 'Allowed: muted video inside Home shelf cards and engraved ornaments turning once every 30s or slower. Never glow, scan lines, or card fades.',
+      zh: '允许：首页横幅卡片里的静音视频、凹版纹饰 30 秒以上转一圈。不用 glow、扫描线或 card fade。',
     },
   },
   {

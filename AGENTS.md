@@ -329,6 +329,36 @@ When page-level CSS grows beyond a small local patch, split it by route instead 
 - Keep imports in `index.css` grouped in this order: Tailwind, `tokens.css`, `base.css`, `shared.css`, `theme-overrides.css`, `motion.css`, CSS art files, then page files.
 - When extracting page CSS, preserve behavior first. Do not redesign while moving styles unless the user explicitly asks for visual changes.
 
+### Product Page Motion Rules (every product page)
+
+Owner's rule (2026-11-18): "设计 product page 都要加动态（base on content）". Every product page built on
+`ProductStorePage` (`/dr-racing`, `/etreporthub`, its sales page, `/poker`, `/life-os`, `/pukimon`, `/jiju`, and any new
+one) carries animated figures, and the motion is chosen from what the content says, not added as decoration.
+
+- **Pick the figure from the content.** Read each section and ask what the reader should grasp at a glance:
+  - a process or pipeline -> a token moving stop to stop (DrRacing deal flow: lead -> banks -> delivery -> settle);
+  - numbers over time -> bars or a line that grow when scrolled into view (monthly changes, rules / tests growth);
+  - a few headline numbers -> the `stats` block (count-up);
+  - a checklist, gate, or ordered rules -> steps that tick on one by one (DrRacing merge gate);
+  - a comparison or split -> bars side by side, or small multiples when the scales differ.
+  A section that is pure argument may stay text; a page with no figure at all is not done.
+- **Real numbers only.** Every value in a chart is counted from a real source (git history, the repo, the product's own
+  data) and the figcaption says where it came from. A diagram that is not data is labelled 示意 / Illustration; invented
+  sample numbers are labelled 示例 / Sample. Never chart private data: customer details, prices the owner keeps private,
+  a client's real business figures.
+- **Motion on objects, once or while visible.** Bars, lines and counters grow once on entering the viewport (`useCountUp`);
+  looping diagrams step only while on screen and stop when scrolled away (see `useLoopStep` in `components/DrRacingCharts.tsx`).
+  Animate `transform` / `opacity` / stroke offset; no background glow or gradient motion (same rule as above).
+- **Accessible and calm.** `prefers-reduced-motion` shows the final state with no movement. Every figure has an
+  `aria-label` that states the data (or the steps) and a visible figcaption in both languages.
+- **Works everywhere.** Light and dark mode via the page's `--ep-*` tokens; at 375 px wide no figure may widen the page
+  (measure `scrollWidth` on each figure, not just the document — a translated element can overflow its own box).
+- **Where the code goes.** Figures are React components in `components/<Product>Charts.tsx`, styles in
+  `styles/pages/<product>-charts.css` with a page namespace (`.drc-*` for DrRacing), placed in the body with the
+  `{ kind: 'node', node: <Figure /> }` block. Data figures are page CSS, not CSS art, so they do not go in `css-art.registry.ts`.
+- **Existing pages.** A product page without motion gets its figures the next time that page is edited; the change
+  log entry says which figures were added and where each number came from.
+
 ### Route / SEO Registry Rules
 
 When adding, hiding, renaming, or changing a route:

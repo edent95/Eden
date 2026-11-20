@@ -9,7 +9,7 @@ import { NotesStoryboard, extractKeySentence, type NotesStoryFrameData } from '.
 import { useNotesDepth } from '../components/NotesDepth';
 import { NotesGrimoireCover, notesStoryFormula } from '../components/css-art/index';
 import { NotesMathEmblem } from '../components/css-art/notes-math-emblems';
-import type { NotesCoverVariant } from '../components/css-art/notes-cover-scenes';
+import { NotesCoverIcon, type NotesCoverVariant } from '../components/css-art/notes-cover-scenes';
 
 /** A cover ring built from the formulas of the motifs this note actually uses. */
 const coverFormula = (frames: readonly NotesStoryFrameData[]) =>
@@ -1138,12 +1138,19 @@ type SiteEssayNote = {
   referencesNote?: Record<Language, string>;
 };
 
+// The list icon is the note's own cover hero (the same line art its page opens with).
+const wikiCover = (slug: string): NotesCoverVariant => {
+  const entry = wikiEntries.find((item) => item.slug === slug);
+  return (entry && 'cover' in entry ? entry.cover : 'book') as NotesCoverVariant;
+};
+
 const publishedNotes = [
   ...siteEssayNotes.map((note) => ({
     title: note.title,
     summary: note.summary,
     category: note.category,
     href: `notes/${note.slug}`,
+    cover: (note.cover ?? 'book') as NotesCoverVariant,
   })),
   {
     title: { en: 'Button feedback is part of the system', zh: '按钮反馈，本来就是系统的一部分' },
@@ -1153,6 +1160,7 @@ const publishedNotes = [
     },
     category: { en: 'Interaction', zh: '交互' },
     href: 'wiki/button-feedback',
+    cover: wikiCover('button-feedback'),
   },
   {
     title: { en: 'Background music changes the room', zh: 'Background music 会改变一个房间' },
@@ -1162,6 +1170,7 @@ const publishedNotes = [
     },
     category: { en: 'Experience', zh: '体验' },
     href: 'wiki/background-music',
+    cover: wikiCover('background-music'),
   },
   {
     title: { en: 'Firebase as durable table memory', zh: '用 Firebase 留住牌桌的记忆' },
@@ -1171,6 +1180,7 @@ const publishedNotes = [
     },
     category: { en: 'Build note', zh: '构建笔记' },
     href: 'wiki/firebase-lifetime-storage',
+    cover: wikiCover('firebase-lifetime-storage'),
   },
   {
     title: { en: 'The Vite skills that survived the build', zh: '真正留到最后的 Vite skills' },
@@ -1180,8 +1190,33 @@ const publishedNotes = [
     },
     category: { en: 'Engineering', zh: '工程' },
     href: 'wiki/vite',
+    cover: wikiCover('vite'),
   },
 ];
+
+// Xiaohongshu-style feed: items go left to right into N columns (2 on phones), and the
+// art blocks cycle through ratios so the columns stagger like a masonry wall.
+const NOTES_FEED_RATIOS = ['3 / 4', '4 / 5', '2 / 3', '4 / 5', '3 / 4', '5 / 6'];
+// Six engraving inks for the covers (notes.css [data-tone]); layout (4) and background
+// pattern (5) cycle on other periods, so no two neighbours look alike.
+const NOTES_FEED_TONES = 6;
+const NOTES_FEED_QUERIES: Array<[string, number]> = [['(min-width: 1000px)', 3]];
+
+const useNotesFeedColumns = () => {
+  const read = () => {
+    if (typeof window === 'undefined' || !window.matchMedia) return 2;
+    const hit = NOTES_FEED_QUERIES.find(([query]) => window.matchMedia(query).matches);
+    return hit ? hit[1] : 2;
+  };
+  const [columns, setColumns] = React.useState(read);
+  React.useEffect(() => {
+    const lists = NOTES_FEED_QUERIES.map(([query]) => window.matchMedia(query));
+    const update = () => setColumns(read());
+    lists.forEach((list) => list.addEventListener('change', update));
+    return () => lists.forEach((list) => list.removeEventListener('change', update));
+  }, []);
+  return columns;
+};
 
 export const NotesPage: React.FC<{
   homeHref: string;
@@ -1193,6 +1228,7 @@ export const NotesPage: React.FC<{
   setThemePreference: React.Dispatch<React.SetStateAction<ThemePreference>>;
 }> = ({ homeHref, baseUrl, language, setLanguage, themePreference, theme, setThemePreference }) => {
   const isZh = language === 'zh';
+  const feedColumns = useNotesFeedColumns();
 
   return (
     <div className="page-shell notes-page min-h-screen">
@@ -1229,16 +1265,31 @@ export const NotesPage: React.FC<{
               <h2 id="notes-index-title">{isZh ? '已发布' : 'Published'}</h2>
               <span>{publishedNotes.length.toString().padStart(2, '0')}</span>
             </div>
-            <div className="notes-list">
-              {publishedNotes.map((note) => (
-                <a key={note.href} className="notes-entry" href={joinBasePath(baseUrl, note.href)}>
-                  <span className="notes-entry-category">{note.category[language]}</span>
-                  <div>
-                    <h3>{note.title[language]}</h3>
-                    <p>{note.summary[language]}</p>
-                  </div>
-                  <span className="notes-entry-arrow" aria-hidden>↗</span>
-                </a>
+            <div className="notes-feed" style={{ '--feed-cols': feedColumns } as React.CSSProperties}>
+              {Array.from({ length: feedColumns }, (_, column) => (
+                <div key={column} className="notes-feed-column">
+                  {publishedNotes
+                    .map((note, index) => ({ note, index }))
+                    .filter(({ index }) => index % feedColumns === column)
+                    .map(({ note, index }) => (
+                      <a key={note.href} className="notes-feed-item" href={joinBasePath(baseUrl, note.href)}>
+                        <div
+                          className="notes-feed-art"
+                          data-tone={index % NOTES_FEED_TONES}
+                          data-layout={index % 4}
+                          data-pattern={index % 5}
+                          style={{ aspectRatio: NOTES_FEED_RATIOS[index % NOTES_FEED_RATIOS.length] }}
+                        >
+                          <NotesCoverIcon variant={note.cover} />
+                          <span className="notes-feed-cover-no" aria-hidden>No.{String(index + 1).padStart(2, '0')}</span>
+                          <span className="notes-feed-cover-seal" aria-hidden>✦</span>
+                          <span className="notes-feed-cover-kicker">{note.category[language]}</span>
+                          <h3 className="notes-feed-cover-title">{note.title[language]}</h3>
+                        </div>
+                        <p>{note.summary[language]}</p>
+                      </a>
+                    ))}
+                </div>
               ))}
             </div>
           </section>
