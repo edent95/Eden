@@ -11,7 +11,10 @@
  * - Figures come from a published case (and link to it) or from the CV (`href` omitted).
  * - The downloadable PDF (`public/igaming/Eden-Tan-Resume.pdf`) is the public CV made by the
  *   resume-tailor skill with `hidePhone`; regenerate it there, do not hand-edit.
- * The route is `index: false` / `sitemap: false`: reachable by link only.
+ * The route is `index: false` / `sitemap: false`: not in search or the sitemap. Since PR #177
+ * (2026-11-18) it is also the job-search page: `roles` / `availability` and the hero contact
+ * links say what Eden is looking for, and `/igaming` links here from its first screen
+ * (the main site still never links into `/igaming`).
  */
 
 import type { IGamingLocalized } from './igaming-content';
@@ -35,6 +38,13 @@ export const IGAMING_RESUME = {
     'The starter pack shows what I know. This page shows what I would build for you.',
     '入门包展示我懂什么；这一页讲我能替你建起什么。',
   ),
+  roles: L(
+    'Open to provider-side roles in promotions, account management and partner marketing, and to operator-side CRM and retention.',
+    '在找 provider 端的促销、Account Management、合作方营销职位;operator 端的 CRM 与留存也可以。',
+  ),
+  availability: L('Available now · Penang, Malaysia · remote or hybrid', '可以马上上班 · 马来西亚槟城 · 远程或混合办公'),
+  emailCta: L('Email me', '写信给我'),
+  linkedinLabel: L('LinkedIn', 'LinkedIn'),
 
   proofTitle: L('In numbers', '用数字说'),
   proof: [
