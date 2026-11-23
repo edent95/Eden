@@ -2,7 +2,8 @@ import React from 'react';
 import ProductStorePage, { type EpTutorial, useCountUp } from '../components/ProductStorePage';
 import PukimonShowdownFrame from '../components/PukimonShowdownFrame';
 import { DrRacingDealFlow, DrRacingGate, DrRacingGrowth, DrRacingMonthlyChanges } from '../components/DrRacingCharts';
-import { JijuCheckFunnels, JijuNightShift, JijuPlaceFlow, JijuRegionBars, JijuShipGate } from '../components/JijuCharts';
+import { JijuCheckFunnels, JijuNightShift, JijuRegionBars, JijuShipGate } from '../components/JijuCharts';
+import { JijuBeliefs, JijuFlowChart, JijuGlossary, JijuJourney } from '../components/JijuStory';
 import { JijuPlaybook } from '../components/JijuPlaybook';
 import { ProjectsDrRacingCssIcon, ProjectsEtReportCssIcon, ProjectsJijuCssIcon, ProjectsLifeOsCssIcon, ProjectsPokerCssIcon, ProjectsPukimonCssIcon } from '../components/css-art/index';
 import { HeaderControls, type Language, type Theme, type ThemePreference } from '../app/shared';
@@ -1211,50 +1212,39 @@ export const JijuPetFullPage: React.FC<{
 
         // ---- How Jiju runs itself (numbers read from the Jiju / personal-dashboard repos on 2026-11-23; see components/JijuCharts.tsx) ----
         { kind: 'node', node: <h2 id="automation">{isZh ? '快一年后：Jiju 现在怎么自己跑' : 'Almost a year in: how Jiju runs itself now'}</h2> },
-        { kind: 'p', text: { en: 'I started Jiju in January 2026 by pair-coding with an AI, one prompt at a time. Eleven months later most of the daily work is done by agents, mostly at night: they find places, read sources, check each other, write the code and ship it. My job changed from doing the work to deciding what counts as true, and confirming the few things a machine should not decide alone.', zh: '2026 年 1 月，我跟 AI 一句一句对话把 Jiju 写起来。11 个月后，日常的活大部分交给了 agent，而且多半在夜里做：找地点、读来源、互相检查、写代码、上线。我的工作从「自己做」变成「定义什么算真的」，再确认少数几件不该让机器自己决定的事。' } },
+        { kind: 'p', text: { en: 'In January 2026 I started building Jiju by chatting with an AI. Today AI helpers do most of the daily work, mostly at night. My job is to decide what counts as true.', zh: '2026 年 1 月，我跟 AI 一句一句聊着把 Jiju 写出来。现在大部分日常的活由 AI 助手做，多半在夜里。我的工作是决定什么算真的。' } },
         { kind: 'stats', items: [
-          { value: 847, unit: { en: 'places', zh: '家' }, text: { en: 'published on jiju.pet (2,303 in the database)', zh: '在 jiju.pet 上架（资料库里共 2,303 家）' } },
-          { value: 12, unit: { en: 'regions', zh: '个州 / 地区' }, text: { en: 'across Malaysia and Singapore', zh: '遍布马来西亚和新加坡' } },
-          { value: 1197, unit: { en: 'commits', zh: '次提交' }, text: { en: 'on main since 1 Jan 2026', zh: '2026 年 1 月 1 日以来在 main 上' } },
-          { value: 435, unit: { en: 'PRs', zh: '个 PR' }, text: { en: 'merged, almost all opened by agents', zh: '已合并，几乎都是 agent 开的' } },
+          { value: 847, unit: { en: 'places', zh: '家' }, text: { en: 'live on jiju.pet', zh: '在 jiju.pet 上线' } },
+          { value: 12, unit: { en: 'regions', zh: '个州 / 地区' }, text: { en: 'in Malaysia and Singapore', zh: '马来西亚和新加坡' } },
+          { value: 435, unit: { en: 'changes', zh: '次改动' }, text: { en: 'to the website, almost all written by AI', zh: '网站改动，几乎都是 AI 写的' } },
         ] },
-        { kind: 'node', node: <JijuRegionBars isZh={isZh} /> },
+        { kind: 'node', node: <JijuBeliefs isZh={isZh} /> },
 
-        { kind: 'h', text: { en: '1 · Five Grok bots go looking', zh: '1 · 五个 Grok bot 出去找' } },
-        { kind: 'p', text: { en: 'Since 21 November, five Grok bots each have one job: deals, events, links, media and stories, across Penang, Kuala Lumpur, Selangor, Johor and Singapore. They do not touch the database directly. They take a task from a shared research queue, open the shop’s own Instagram, Facebook or website, look the place up in Jiju, then submit it through the Jiju API: preview first, then apply. Each report records which URLs were opened, so the next bot does not read the same page twice.', zh: '11 月 21 日起，五个 Grok bot 各管一件事：优惠、活动、链接、媒体、故事，只做 Penang、Kuala Lumpur、Selangor、Johor、Singapore。它们不直接碰资料库：从共用的研究队列领任务，打开店家自己的 IG、FB 或官网，先在 Jiju 里查这家在不在，再经 Jiju 的 API 提交 —— 先预览，没问题才正式交。每次回报都记下打开过哪些网址，下一个 bot 就不会把同一页再看一遍。' } },
-        { kind: 'p', text: { en: 'The server enforces a daily quota per bot (deals 100, links 90, media 80, story 70, events 60 tasks) and at most 20 new places per bot per day. Food-news pages are a second source: new shops mentioned there are matched against Google Places, capped at 30 lookups a day to stay in the free tier, and land as drafts.', zh: '每个 bot 每天的份额由服务端强制：优惠 100、链接 90、媒体 80、故事 70、活动 60 个任务，每个 bot 每天最多交 20 家新店。另一个来源是美食新闻：里面提到的新店拿去对 Google Places，每天最多查 30 次、守在免费额度里，进来的都是草稿。' } },
-        { kind: 'node', node: <JijuPlaceFlow isZh={isZh} /> },
+        { kind: 'h', text: { en: 'What you see, and what happens behind it', zh: '你看到的，和幕后发生的' } },
+        { kind: 'node', node: <JijuJourney isZh={isZh} /> },
 
-        { kind: 'h', text: { en: '2 · A local model reads, Claude checks', zh: '2 · 本机模型读，Claude 查' } },
-        { kind: 'p', text: { en: 'The heavy reading runs on my own laptop with Ollama, not a paid API: gemma4 (26B) writes highlights, lunch prices, promo summaries and place descriptions; qwen3.8 translates; a small qwen2.5 (7B) only sorts owner replies into one of 12 FAQ numbers, and the reply sent is always the playbook’s own text. These jobs only run at night, on mains power, and hand over to a smaller model if I am using the machine.', zh: '重的阅读在我自己的电脑上用 Ollama 跑，不走付费 API：gemma4（26B）写卖点、午市价格、优惠摘要和地点介绍；qwen3.8 负责翻译；小的 qwen2.5（7B）只把店主的回复归到 12 个常见问题的编号之一，真正发出去的永远是话术本里的原文。这些活只在夜里、插着电时跑；我在用电脑，就让给小模型。' } },
-        { kind: 'p', text: { en: 'The rule that matters is the order. Code extracts facts first. The model may only propose. Code then checks that every quote appears word for word in an https source, and rejects price adjectives and superlatives. Claude reviews what is left against the written definition of each tag. Anything that does not pass simply does not appear. An earlier 8B model was dropped because Claude rejected every highlight it wrote.', zh: '真正重要的是顺序：先由代码抽出事实；模型只能「提议」；代码再检查每一句引文都能在 https 来源里一字不差找到，并拒绝价格形容词和「最好」「第一」这类最高级；剩下的交 Claude 按每个标签写好的定义（算什么、不算什么）复核。没过的就不出现。之前用过一个 8B 小模型，它写的卖点被 Claude 全部打回，于是换掉了。' } },
+        { kind: 'h', text: { en: 'How one shop gets onto Jiju', zh: '一家店怎么上到 Jiju' } },
+        { kind: 'node', node: <JijuFlowChart isZh={isZh} /> },
         { kind: 'node', node: <JijuCheckFunnels isZh={isZh} /> },
-        { kind: 'callout', label: { en: 'checkedAt', zh: 'checkedAt' }, text: { en: 'On Jiju, “last checked” means the day a person opened the link. Machine previews never fill it in. When I confirm a source, the date of that confirmation is what gets written.', zh: '在 Jiju，「最后核对」指的是人打开那个链接的日子。机器预览永远不填它；我确认一条来源时，写进去的就是确认那天的日期。' } },
 
-        { kind: 'h', text: { en: '3 · The night shift', zh: '3 · 夜班' } },
-        { kind: 'p', text: { en: 'Two machines share the night. The M4 laptop runs the model work; the M1 at home takes the database snapshot, the “around the web” digest (photos and a summary for up to 30 places) and a watch over shops’ official pages for new promos ★ and holidays ⚠. Claude also does 40 places of web research a night, using only web search and fetch, and leaves the results on a confirm page.', zh: '两台机器分着夜班。M4 笔电跑模型的活；家里的 M1 负责资料库快照、「网上怎么说」摘要（每晚最多 30 家的照片和摘要），以及巡查店家官方页面的新优惠 ★ 和放假 ⚠。Claude 每晚还上网查 40 家，只能用网页搜索和读网页，结果放在一个等确认的页面。' } },
+        { kind: 'h', text: { en: 'While I sleep', zh: '我睡觉的时候' } },
         { kind: 'node', node: <JijuNightShift isZh={isZh} /> },
 
-        { kind: 'h', text: { en: '4 · Agents write the code, other agents check it', zh: '4 · agent 写代码，别的 agent 来查' } },
-        { kind: 'p', text: { en: 'Claude Code writes most of the code, each change in its own git worktree, so several sessions can work on Jiju at once without stepping on each other. Codex works the same way in its own worktrees and gives a second opinion from a different model family. agy (Google Antigravity) runs read-only audits of the whole repository; its findings become tasks, and Claude verifies each one before anything is fixed. A weekly Claude review of merged changes files its findings as GitHub issues.', zh: 'Claude Code 写大部分代码，每个改动一个独立的 git worktree，几个会话可以同时改 Jiju 而不互相踩。Codex 也在自己的 worktree 里干活，并以另一家模型的角度给第二意见。agy（Google Antigravity）做只读的全仓体检，查到的问题变成任务，Claude 先逐条核实再修。每周还有一次 Claude 回看已合并的改动，发现的问题开成 GitHub issue。' } },
-        { kind: 'p', text: { en: 'Every change goes out the same way: pull request, checks on a self-hosted runner on the M1 at home (no Actions minutes), and my dashboard merges it once every check is green. Merging is deploying.', zh: '每个改动走同一条路：开 PR，检查跑在家里 M1 的自托管 runner 上（不花 Actions 分钟），全部变绿后由我的面板自动合并。合并就是上线。' } },
+        { kind: 'h', text: { en: 'The website is changed by AI too', zh: '网站本身也是 AI 在改' } },
         { kind: 'node', node: <JijuShipGate isZh={isZh} /> },
 
         { kind: 'h', text: { en: 'What still waits for me', zh: '还要等我的事' } },
         { kind: 'steps', items: [
-          { title: { en: 'Writes', zh: '写进资料库' }, text: { en: 'New place drafts, “around the web” sources, promo-agent imports and lunch prices all wait in a queue until I confirm them.', zh: '新地点草稿、「网上怎么说」来源、优惠 agent 找到的优惠、午市价格，都排在队列里等我确认。' } },
-          { title: { en: 'Contact', zh: '对外联络' }, text: { en: 'Owner invites go out on WhatsApp at most 5 a day, weekdays 10:00–18:00, and must open with a highlight that already passed review.', zh: '店主邀请经 WhatsApp 发，每天最多 5 条，平日 10:00–18:00，开场必须是已经通过复核的卖点。' } },
-          { title: { en: 'Money', zh: '花钱' }, text: { en: 'Anything that costs money or opens a new outside connection stops and asks first.', zh: '任何会花钱、或要接一条新的对外连接的事，先停下来问。' } },
-          { title: { en: 'Automatic', zh: '不用等我' }, text: { en: 'Only two things skip me: promos from a shop’s own official page publish overnight, and a confirmed closure moves the place back to draft.', zh: '只有两件事不等我：店家官方页面上的优惠夜里自动上架；确认结业的地点自动退回草稿。' } },
+          { title: { en: 'Going public', zh: '公开' }, text: { en: 'New shops, prices and highlights wait for my “confirm”.', zh: '新店、价格、亮点，等我按「确认」。' } },
+          { title: { en: 'Talking to people', zh: '对外联络' }, text: { en: 'At most 5 shop owners a day, on weekdays, in office hours.', zh: '每天最多联络 5 位店主，只在平日上班时间。' } },
+          { title: { en: 'Spending money', zh: '花钱' }, text: { en: 'Anything that costs money stops and asks me first.', zh: '任何要花钱的事，先停下来问我。' } },
         ] },
-        { kind: 'callout', tone: 'warning', label: { en: 'Cost', zh: '成本' }, text: { en: 'Claude runs on my subscription; the scheduled jobs strip the API key from their environment so they cannot bill by accident. Everything else uses free tiers with hard daily caps: Google Places 30 lookups, YouTube 90 searches. If a source is only available on a paid tier, the field stays empty for a person to fill.', zh: 'Claude 用的是订阅；定时任务会把 API key 从环境里拿掉，不会不小心计费。其余都走免费档并写死每日上限：Google Places 每天 30 次、YouTube 每天 90 次搜索。只有付费档才拿得到的资料，就留空等人补。' } },
+        { kind: 'node', node: <JijuRegionBars isZh={isZh} /> },
+        { kind: 'node', node: <JijuGlossary isZh={isZh} /> },
 
-        { kind: 'h', text: { en: 'The full manual: enough detail to build your own', zh: '完整手册：细到可以照着搭一套' } },
-        { kind: 'p', text: { en: 'Everything above, step by step: the exact commands, request bodies, thresholds, word lists, prompt excerpts and config, and what broke on which date. Code blocks are shared between languages. Keys are always written as <KEY>; ids, URLs and shop names in examples are placeholders from the repos’ own docs. Every step names the file it was read from.', zh: '上面所有内容，一步一步写：确切的命令、请求格式、阈值、词表、提示词摘录、配置，以及哪天出过什么事。代码块中英共用。钥匙一律写成 <KEY>；例子里的 id、网址、店名都是仓库文档自己的示意值。每一步都写了是从哪个文件读来的。' } },
+        { kind: 'h', text: { en: 'For builders: the full technical manual', zh: '给想自己搭的人：完整技术手册' } },
+        { kind: 'p', text: { en: 'Commands, settings, thresholds and every lesson with its date. Folded up — open only what you need.', zh: '命令、设定、阈值，以及每个踩过的坑和日期。默认收起，需要哪章打开哪章。' } },
         { kind: 'node', node: <JijuPlaybook isZh={isZh} /> },
-        { kind: 'h', text: { en: 'What has not changed', zh: '没变的东西' } },
-        { kind: 'p', text: { en: 'Stability before expansion. Finishing a journey before adding breadth. Writing down why every change was made, so the next session, human or agent, does not start from zero. Those were the rules when I was fixing first-login races by hand in March, and they are the same rules the agents follow now; they just live in scripts and gates instead of my memory.', zh: '先稳定，再扩张；先把一条路走通，再谈功能广度；每个改动都写下为什么，让下一个会话（不管是人还是 agent）不用从零开始。这是我 3 月还在手修首次登录竞态时的规矩，现在 agent 照样遵守；只是它们从我的记忆搬进了脚本和闸门。' } },
-        { kind: 'p', text: { en: 'A complex AI-built product cannot be maintained by memory. And content should answer real questions inside the limits of its sources, without pretending every place was personally visited. Automation made that harder to fake, not easier: a highlight without a quote is never written, and the machines do not get to decide what “checked” means.', zh: '复杂的 AI 产品不能靠记忆维护；内容要在来源的边界里回答真实问题，不假装每个地方都亲自去过。自动化没有让「装」变容易，反而更难：没有原话的卖点永远不会被写出来，「核对过」是什么意思，也轮不到机器决定。' } },
       ]}
       faq={[
         { q: { en: 'Which places does Jiju cover?', zh: 'Jiju 覆盖哪些地方？' }, a: { en: 'It started in Penang and Penang is still the deepest, with 362 published places. As of November 2026 there are 847 published places across 12 regions of Malaysia and Singapore, with Selangor, Kuala Lumpur, Johor and Singapore growing fastest.', zh: '从 Penang 开始，到现在 Penang 也最深，上架 362 家。截至 2026 年 11 月，马来西亚和新加坡 12 个州 / 地区共上架 847 家，Selangor、Kuala Lumpur、Johor、Singapore 长得最快。' } },

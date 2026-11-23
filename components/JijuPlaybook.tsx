@@ -50,7 +50,7 @@ export const JijuPlaybook: React.FC<Props> = ({ isZh }) => {
           key={chapter.id}
           id={chapter.id}
           className="jjp-chapter"
-          open={allOpen ?? chapterIndex === 0}
+          open={allOpen ?? false}
           onToggle={(event) => {
             if (allOpen !== null && (event.currentTarget as HTMLDetailsElement).open !== allOpen) setAllOpen(null);
           }}
