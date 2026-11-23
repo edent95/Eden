@@ -54,6 +54,7 @@ const IGamingSummaryPage = React.lazy(() => import('./components/IGamingSummaryP
 const IGamingCasesPage = React.lazy(() => import('./components/IGamingCasesPage'));
 const IGamingAtlasPage = React.lazy(() => import('./components/IGamingAtlasPage'));
 const IGamingResumePage = React.lazy(() => import('./components/IGamingResumePage'));
+const ArzumyAdvisorPage = React.lazy(() => import('./pages/ArzumyAdvisorPage'));
 const IGamingGuidePage = React.lazy(() => import('./components/IGamingGuidePage'));
 
 const fadeIn = {
@@ -336,6 +337,7 @@ const App: React.FC = () => {
   const isIGamingFullPage = pathWithoutBase === '/igaming/full';
   const isIGamingCasesPage = pathWithoutBase === '/igaming/cases';
   const isIGamingResumePage = pathWithoutBase === '/igaming/resume';
+  const isArzumyAdvisorPage = pathWithoutBase === '/for/arzumy';
   const isIGamingAtlasPage = pathWithoutBase === '/igaming/atlas';
   // One literal per guide: the route harness reads these, it does not resolve IGAMING_GUIDES.
   const isIGamingGuidePage =
@@ -707,6 +709,26 @@ const App: React.FC = () => {
           language={language}
           backHref={igamingHref}
           casesHref={igamingCasesHref}
+          controls={
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
+          }
+        />
+      </React.Suspense>
+    );
+  }
+
+  if (isArzumyAdvisorPage) {
+    return (
+      <React.Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
+        <ArzumyAdvisorPage
+          language={language}
+          jijuHref={fullPageHref}
           controls={
             <HeaderControls
               language={language}
