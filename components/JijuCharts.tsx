@@ -148,7 +148,7 @@ export const JijuPlaceFlow: React.FC<Props> = ({ isZh }) => {
 
 const FUNNELS: { title: EpText; rows: { label: EpText; value: number }[] }[] = [
   {
-    title: { en: 'Tags, first night (21 Nov)', zh: '标签，第一晚（11 月 21 日）' },
+    title: { en: 'Tags, first night (21–22 Nov)', zh: '标签，第一晚（11 月 21–22 日）' },
     rows: [
       { label: { en: 'Rules found a quote', zh: '规则找到原话' }, value: 60 },
       { label: { en: 'Claude agreed', zh: 'Claude 同意' }, value: 22 },
@@ -296,8 +296,8 @@ export const JijuShipGate: React.FC<Props> = ({ isZh }) => {
       </ol>
       <figcaption>
         {pick(isZh, {
-          en: '434 of 446 Jiju pull requests merged as of 23 Nov 2026; 371 of them were merged by the dashboard robot since 21 Sep. agy runs read-only whole-repo audits on the side; what it finds becomes a task that Claude verifies before anyone fixes it.',
-          zh: '截至 2026 年 11 月 23 日，Jiju 446 个 PR 合并了 434 个；9 月 21 日以来其中 371 个由面板机器人合并。agy 在旁边做只读的全仓体检，查到的问题变成任务，先由 Claude 核实再修。',
+          en: '435 Jiju pull requests merged as of 23 Nov 2026; 371 of them by this automation since 18 Sep (262 through GitHub’s native auto-merge). agy runs read-only whole-repo audits on the side; what it finds becomes a task that Claude verifies before anyone fixes it.',
+          zh: '截至 2026 年 11 月 23 日，Jiju 已合并 435 个 PR；9 月 18 日以来其中 371 个由这套自动化合并（262 个经 GitHub 原生 auto-merge）。agy 在旁边做只读的全仓体检，查到的问题变成任务，先由 Claude 核实再修。',
         })}
       </figcaption>
     </figure>

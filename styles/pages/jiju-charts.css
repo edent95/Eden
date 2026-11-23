@@ -255,3 +255,90 @@
   .jjc-gate-step,
   .jjc-gate-check { transition: none; }
 }
+
+/* ---------- playbook (components/JijuPlaybook.tsx) ---------- */
+
+.jjp { margin-top: 28px; min-width: 0; }
+.jjp-toc { padding: 18px 20px; border: 1px solid var(--ep-line); border-radius: var(--ep-radius-sm); background: var(--ep-soft); }
+.jjp-toc-title { margin: 0 0 8px; font-weight: 700; color: var(--ep-ink); }
+.jjp-toc ol { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; }
+.jjp-toc a { color: var(--ep-ink); text-underline-offset: 3px; }
+
+.jjp-toggle {
+  margin-top: 12px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--ep-line);
+  background: var(--ep-paper);
+  color: var(--ep-ink);
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.jjp-toggle:hover { border-color: var(--ep-primary-outline); }
+.jjp-toggle:focus-visible,
+.jjp-chapter > summary:focus-visible { outline: 2px solid var(--ep-primary-outline); outline-offset: 2px; }
+
+.jjp-chapter { margin-top: 14px; border-top: 1px solid var(--ep-line); scroll-margin-top: 80px; }
+
+.jjp-chapter > summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 0 10px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.jjp-chapter > summary::-webkit-details-marker { display: none; }
+.jjp-chapter > summary::before { content: '+'; flex: none; width: 1.1em; font-weight: 700; color: var(--ep-primary-outline); }
+.jjp-chapter[open] > summary::before { content: '−'; }
+.jjp-chapter-title { flex: 1; font-size: 1.2rem; font-weight: 760; color: var(--ep-ink); }
+.jjp-chapter-count { flex: none; font-size: 0.82rem; color: var(--ep-muted); }
+.jjp-chapter-intro { color: var(--ep-muted); }
+
+.jjp-steps { margin: 0; padding: 0; list-style: none; display: grid; gap: 26px; }
+.jjp-step { min-width: 0; }
+.jjp-step h3 { display: flex; gap: 10px; align-items: baseline; margin: 10px 0 8px; font-size: 1.05rem; font-weight: 700; color: var(--ep-ink); }
+.jjp-step-no { flex: none; font-variant-numeric: tabular-nums; font-size: 0.86rem; color: var(--ep-primary-outline); }
+.jjp-step p,
+.jjp-list li { overflow-wrap: anywhere; }
+
+.jjp code { padding: 0.05em 0.35em; border-radius: 6px; background: var(--ep-soft); font-size: 0.86em; overflow-wrap: anywhere; }
+.jjp-list { padding-left: 1.2em; display: grid; gap: 6px; }
+
+.jjp-code {
+  margin: 14px 0;
+  padding: 14px 16px;
+  max-width: 100%;
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid var(--ep-line);
+  background: var(--ep-soft);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.jjp-code code { padding: 0; background: none; font-size: inherit; white-space: pre; overflow-wrap: normal; }
+
+.jjp-lesson { margin: 14px 0; padding: 12px 16px; border-left: 3px solid var(--ep-warn); border-radius: 0 12px 12px 0; background: var(--ep-soft); }
+.jjp-lesson span { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ep-warn); }
+.jjp-lesson p { margin: 4px 0 0; }
+.jjp-source { font-size: 0.8rem; color: var(--ep-soft-ink); }
+.jjp-source code { background: none; padding: 0; }
+
+.jjp-table-wrap { max-width: 100%; overflow-x: auto; margin: 6px 0 10px; }
+.jjp-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+.jjp-table th,
+.jjp-table td { padding: 8px 10px 8px 0; border-bottom: 1px solid var(--ep-line); text-align: left; vertical-align: top; }
+.jjp-table th { color: var(--ep-muted); font-weight: 700; }
+.jjp-table td:first-child { white-space: nowrap; font-variant-numeric: tabular-nums; color: var(--ep-muted); }
+
+@media (max-width: 520px) {
+  .jjp-toc { padding: 14px; }
+  .jjp-code { font-size: 0.72rem; padding: 12px; }
+  .jjp-table { font-size: 0.8rem; }
+}

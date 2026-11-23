@@ -3,6 +3,7 @@ import ProductStorePage, { type EpTutorial, useCountUp } from '../components/Pro
 import PukimonShowdownFrame from '../components/PukimonShowdownFrame';
 import { DrRacingDealFlow, DrRacingGate, DrRacingGrowth, DrRacingMonthlyChanges } from '../components/DrRacingCharts';
 import { JijuCheckFunnels, JijuNightShift, JijuPlaceFlow, JijuRegionBars, JijuShipGate } from '../components/JijuCharts';
+import { JijuPlaybook } from '../components/JijuPlaybook';
 import { ProjectsDrRacingCssIcon, ProjectsEtReportCssIcon, ProjectsJijuCssIcon, ProjectsLifeOsCssIcon, ProjectsPokerCssIcon, ProjectsPukimonCssIcon } from '../components/css-art/index';
 import { HeaderControls, type Language, type Theme, type ThemePreference } from '../app/shared';
 import { productSiblingCards } from '../app/product-siblings';
@@ -1181,6 +1182,7 @@ export const JijuPetFullPage: React.FC<{
       quickLinks={[
         { href: '#overview', label: { en: 'Overview', zh: '产品简介' } },
         { href: '#automation', label: { en: 'How it runs', zh: '怎么自动跑' } },
+        { href: '#playbook', label: { en: 'Full manual', zh: '完整手册' } },
         { href: '#faq', label: { en: 'FAQ', zh: '常见问题' } },
         { href: '#information', label: { en: 'Information', zh: '产品资料' } },
       ]}
@@ -1213,8 +1215,8 @@ export const JijuPetFullPage: React.FC<{
         { kind: 'stats', items: [
           { value: 847, unit: { en: 'places', zh: '家' }, text: { en: 'published on jiju.pet (2,303 in the database)', zh: '在 jiju.pet 上架（资料库里共 2,303 家）' } },
           { value: 12, unit: { en: 'regions', zh: '个州 / 地区' }, text: { en: 'across Malaysia and Singapore', zh: '遍布马来西亚和新加坡' } },
-          { value: 1194, unit: { en: 'commits', zh: '次提交' }, text: { en: 'on main since 1 Jan 2026', zh: '2026 年 1 月 1 日以来在 main 上' } },
-          { value: 434, unit: { en: 'PRs', zh: '个 PR' }, text: { en: 'merged, almost all opened by agents', zh: '已合并，几乎都是 agent 开的' } },
+          { value: 1197, unit: { en: 'commits', zh: '次提交' }, text: { en: 'on main since 1 Jan 2026', zh: '2026 年 1 月 1 日以来在 main 上' } },
+          { value: 435, unit: { en: 'PRs', zh: '个 PR' }, text: { en: 'merged, almost all opened by agents', zh: '已合并，几乎都是 agent 开的' } },
         ] },
         { kind: 'node', node: <JijuRegionBars isZh={isZh} /> },
 
@@ -1247,6 +1249,9 @@ export const JijuPetFullPage: React.FC<{
         ] },
         { kind: 'callout', tone: 'warning', label: { en: 'Cost', zh: '成本' }, text: { en: 'Claude runs on my subscription; the scheduled jobs strip the API key from their environment so they cannot bill by accident. Everything else uses free tiers with hard daily caps: Google Places 30 lookups, YouTube 90 searches. If a source is only available on a paid tier, the field stays empty for a person to fill.', zh: 'Claude 用的是订阅；定时任务会把 API key 从环境里拿掉，不会不小心计费。其余都走免费档并写死每日上限：Google Places 每天 30 次、YouTube 每天 90 次搜索。只有付费档才拿得到的资料，就留空等人补。' } },
 
+        { kind: 'h', text: { en: 'The full manual: enough detail to build your own', zh: '完整手册：细到可以照着搭一套' } },
+        { kind: 'p', text: { en: 'Everything above, step by step: the exact commands, request bodies, thresholds, word lists, prompt excerpts and config, and what broke on which date. Code blocks are shared between languages. Keys are always written as <KEY>; ids, URLs and shop names in examples are placeholders from the repos’ own docs. Every step names the file it was read from.', zh: '上面所有内容，一步一步写：确切的命令、请求格式、阈值、词表、提示词摘录、配置，以及哪天出过什么事。代码块中英共用。钥匙一律写成 <KEY>；例子里的 id、网址、店名都是仓库文档自己的示意值。每一步都写了是从哪个文件读来的。' } },
+        { kind: 'node', node: <JijuPlaybook isZh={isZh} /> },
         { kind: 'h', text: { en: 'What has not changed', zh: '没变的东西' } },
         { kind: 'p', text: { en: 'Stability before expansion. Finishing a journey before adding breadth. Writing down why every change was made, so the next session, human or agent, does not start from zero. Those were the rules when I was fixing first-login races by hand in March, and they are the same rules the agents follow now; they just live in scripts and gates instead of my memory.', zh: '先稳定，再扩张；先把一条路走通，再谈功能广度；每个改动都写下为什么，让下一个会话（不管是人还是 agent）不用从零开始。这是我 3 月还在手修首次登录竞态时的规矩，现在 agent 照样遵守；只是它们从我的记忆搬进了脚本和闸门。' } },
         { kind: 'p', text: { en: 'A complex AI-built product cannot be maintained by memory. And content should answer real questions inside the limits of its sources, without pretending every place was personally visited. Automation made that harder to fake, not easier: a highlight without a quote is never written, and the machines do not get to decide what “checked” means.', zh: '复杂的 AI 产品不能靠记忆维护；内容要在来源的边界里回答真实问题，不假装每个地方都亲自去过。自动化没有让「装」变容易，反而更难：没有原话的卖点永远不会被写出来，「核对过」是什么意思，也轮不到机器决定。' } },
