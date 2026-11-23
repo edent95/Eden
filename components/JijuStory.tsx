@@ -11,7 +11,8 @@
 // and stop when scrolled away; prefers-reduced-motion shows the final state.
 
 import React from 'react';
-import { BookOpenCheck, Bot, CircleDashed, Coins, Footprints, Laptop, MessageCircle, Moon, PenLine, Quote, Search, ShieldCheck, Store, UserCheck, Users } from 'lucide-react';
+import { BookOpenCheck, Bot, Footprints, Laptop, MessageCircle, Moon, PenLine, Quote, Search, ShieldCheck, Store, Users } from 'lucide-react';
+import { JijuBeliefBlankArt, JijuBeliefCheckArt, JijuBeliefDecideArt, JijuBeliefSaveArt, JijuBeliefSourceArt } from './css-art/jiju-story-art';
 import { useCountUp, type EpText } from './ProductStorePage';
 
 type Props = { isZh: boolean };
@@ -46,29 +47,29 @@ const useLoopStep = (ref: React.RefObject<HTMLElement | null>, count: number, ms
 
 /* ---------- 1. Beliefs ---------- */
 
-const BELIEFS: { icon: React.ReactNode; title: EpText; text: EpText }[] = [
+const BELIEFS: { Art: React.FC<{ label: string }>; title: EpText; text: EpText }[] = [
   {
-    icon: <UserCheck size={22} />,
+    Art: JijuBeliefDecideArt,
     title: { en: 'Machines search, a person decides', zh: '机器去找，人来拍板' },
     text: { en: 'AI looks for shops and drafts the details at night. Anything the public will see waits for my “confirm” in the morning.', zh: 'AI 夜里找店、读网页、写草稿。凡是要公开给大家看的，都等我早上按「确认」。' },
   },
   {
-    icon: <Quote size={22} />,
+    Art: JijuBeliefSourceArt,
     title: { en: 'No source, no claim', zh: '没有出处，就不说' },
     text: { en: 'Every highlight must be a sentence you can find on the shop’s own page. If it cannot be found, it is not written.', zh: '每一句卖点，都要能在店家自己的网页上找到原话。找不到，就不写。' },
   },
   {
-    icon: <CircleDashed size={22} />,
+    Art: JijuBeliefBlankArt,
     title: { en: 'Blank beats made-up', zh: '宁可留白，也不编' },
     text: { en: 'Opening hours or a price we cannot verify stays empty, rather than filled with someone’s guess.', zh: '查不到的营业时间、价格就空着，不拿别人的猜测来填。' },
   },
   {
-    icon: <ShieldCheck size={22} />,
+    Art: JijuBeliefCheckArt,
     title: { en: 'One AI writes, another checks', zh: '一个 AI 写，另一个 AI 挑错' },
     text: { en: 'The checker has no internet and only asks: does the quote really say this? Most suggestions are thrown away.', zh: '负责检查的 AI 不能上网，只问一件事：原话真的这么说吗？大部分建议都被丢掉。' },
   },
   {
-    icon: <Coins size={22} />,
+    Art: JijuBeliefSaveArt,
     title: { en: 'No money wasted', zh: '不花冤枉钱' },
     text: { en: 'What can run on my own computer does. Every outside service has a daily limit, so nothing can quietly run up a bill.', zh: '能在自己电脑上跑的就在自己电脑跑。每个外部服务都有每日上限，不会悄悄烧钱。' },
   },
@@ -84,7 +85,7 @@ export const JijuBeliefs: React.FC<Props> = ({ isZh }) => {
       <div ref={ref} className="jjs-beliefs">
         {BELIEFS.map((belief, index) => (
           <article key={belief.title.en} className={`jjs-belief${index < shown ? ' is-in' : ''}`}>
-            <span className="jjs-belief-icon" aria-hidden="true">{belief.icon}</span>
+            <span className="jjs-belief-art"><belief.Art label="" /></span>
             <h3>{pick(isZh, belief.title)}</h3>
             <p>{pick(isZh, belief.text)}</p>
           </article>

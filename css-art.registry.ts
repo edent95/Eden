@@ -1,5 +1,6 @@
 import type { CssArtComponent } from './components/css-art/index';
 import { IGamingHeroStageArt } from './components/css-art/igaming-hero-stage';
+import { JijuBeliefBlankArt, JijuBeliefCheckArt, JijuBeliefDecideArt, JijuBeliefSaveArt, JijuBeliefSourceArt, JijuNightDayArt, JijuStorefrontArt } from './components/css-art/jiju-story-art';
 import {
   ElementFireCssIcon,
   ElementWindCssIcon,
@@ -85,7 +86,8 @@ export type CssArtCategory =
   | 'elemental-icon'
   | 'wiki-icon'
   | 'engraved-banner'
-  | 'notes-storyboard';
+  | 'notes-storyboard'
+  | 'product-story';
 export type CssArtBackground = 'framed' | 'transparent' | 'scene';
 export type CssArtRatio = '1:1' | 'banner' | 'transparent-totem';
 
@@ -106,6 +108,153 @@ export type CssArtRegistryItem = {
 };
 
 export const cssArtRegistry: readonly CssArtRegistryItem[] = [
+  {
+    id: 'jiju-story-night-day',
+    title: 'Jiju · Night and day',
+    projectTitle: 'Jiju',
+    category: 'product-story',
+    sourceRoute: '/jiju-pet',
+    ratio: 'banner',
+    background: 'scene',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/jiju-story.css',
+    Component: JijuNightDayArt,
+    label: {
+      en: 'At night AI helpers carry shop cards into a laptop and a checker inspects them; a morning stamp; by day a person and a cat walk to a shop.',
+      zh: '夜里 AI 助手把店家卡片搬进电脑、检查员逐张查看；中间是早上的确认章；白天一个人带着猫走向店家。',
+    },
+    copy: {
+      en: 'Banner for the /jiju-pet automation section: night work on the left, the morning confirm stamp on the seam, the outing on the right.',
+      zh: '/jiju-pet 自动化一节的横幅：左边夜里干活，接缝处是早上的确认章，右边是出门。',
+    },
+  },
+  {
+    id: 'jiju-story-belief-decide',
+    title: 'Jiju · A person decides',
+    projectTitle: 'Jiju',
+    category: 'product-story',
+    sourceRoute: '/jiju-pet',
+    ratio: '1:1',
+    background: 'framed',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/jiju-story.css',
+    Component: JijuBeliefDecideArt,
+    label: {
+      en: 'A robot hands over a card and a stamp presses a check mark.',
+      zh: '机器人递上卡片，印章盖下一个勾。',
+    },
+    copy: {
+      en: 'Spot art for the rule “machines search, a person decides”.',
+      zh: '「机器去找，人来拍板」的小插画。',
+    },
+  },
+  {
+    id: 'jiju-story-belief-source',
+    title: 'Jiju · No source, no claim',
+    projectTitle: 'Jiju',
+    category: 'product-story',
+    sourceRoute: '/jiju-pet',
+    ratio: '1:1',
+    background: 'framed',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/jiju-story.css',
+    Component: JijuBeliefSourceArt,
+    label: {
+      en: 'A quote bubble linked by a dotted line to the highlighted line on a web page.',
+      zh: '引号气泡用虚线连到网页上被标亮的那一行。',
+    },
+    copy: {
+      en: 'Spot art for the rule “no source, no claim”.',
+      zh: '「没有出处，就不说」的小插画。',
+    },
+  },
+  {
+    id: 'jiju-story-belief-blank',
+    title: 'Jiju · Blank beats made-up',
+    projectTitle: 'Jiju',
+    category: 'product-story',
+    sourceRoute: '/jiju-pet',
+    ratio: '1:1',
+    background: 'framed',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/jiju-story.css',
+    Component: JijuBeliefBlankArt,
+    label: {
+      en: 'A form with an empty dashed field and a crossed-out pencil.',
+      zh: '一张表格，留着虚线空格，旁边的铅笔被打了叉。',
+    },
+    copy: {
+      en: 'Spot art for the rule “blank beats made-up”.',
+      zh: '「宁可留白，也不编」的小插画。',
+    },
+  },
+  {
+    id: 'jiju-story-belief-check',
+    title: 'Jiju · One writes, one checks',
+    projectTitle: 'Jiju',
+    category: 'product-story',
+    sourceRoute: '/jiju-pet',
+    ratio: '1:1',
+    background: 'framed',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/jiju-story.css',
+    Component: JijuBeliefCheckArt,
+    label: {
+      en: 'One robot writes on a page while another sweeps a magnifier across it.',
+      zh: '一个机器人在纸上写，另一个拿放大镜来回检查。',
+    },
+    copy: {
+      en: 'Spot art for the rule “one AI writes, another checks”.',
+      zh: '「一个 AI 写，另一个 AI 挑错」的小插画。',
+    },
+  },
+  {
+    id: 'jiju-story-belief-save',
+    title: 'Jiju · No money wasted',
+    projectTitle: 'Jiju',
+    category: 'product-story',
+    sourceRoute: '/jiju-pet',
+    ratio: '1:1',
+    background: 'framed',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/jiju-story.css',
+    Component: JijuBeliefSaveArt,
+    label: {
+      en: 'A coin drops into a piggy bank under a small moon.',
+      zh: '小月亮下，一枚硬币掉进小猪存钱罐。',
+    },
+    copy: {
+      en: 'Spot art for the rule “no money wasted”.',
+      zh: '「不花冤枉钱」的小插画。',
+    },
+  },
+  {
+    id: 'jiju-story-storefront',
+    title: 'Jiju · Storefront',
+    projectTitle: 'Jiju',
+    category: 'product-story',
+    sourceRoute: '/jiju-pet',
+    ratio: 'banner',
+    background: 'scene',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/jiju-story.css',
+    Component: JijuStorefrontArt,
+    label: {
+      en: 'A small cafe with a striped awning, a steaming cup in the window and a black cat outside.',
+      zh: '条纹雨棚的小咖啡店，橱窗里一杯冒热气的咖啡，门口一只小黑猫。',
+    },
+    copy: {
+      en: 'The “photo” inside the phone mock-up of a Jiju shop card.',
+      zh: 'Jiju 店家卡片手机示意图里的「照片」。',
+    },
+  },
   {
     id: 'projects-jiju',
     title: 'Jiju',

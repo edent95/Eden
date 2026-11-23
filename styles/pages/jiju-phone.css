@@ -1,0 +1,161 @@
+/* /jiju-pet faux phone card (components/JijuPhoneCard.tsx). Page layout only; the storefront art
+   lives in styles/css-art/jiju-story.css. Uses the product page's --ep-* tokens. */
+
+.jjph-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
+  align-items: center;
+  gap: 24px;
+}
+
+.jjph-phone {
+  position: relative;
+  width: 100%;
+  max-width: 260px;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 34px;
+  background: #111113;
+  box-shadow: 0 24px 60px rgb(0 0 0 / 0.18), inset 0 0 0 1.5px #3a3a3f;
+}
+
+.jjph-notch {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  z-index: 2;
+  width: 70px;
+  height: 18px;
+  margin-left: -35px;
+  border-radius: 999px;
+  background: #111113;
+}
+
+.jjph-screen {
+  overflow: hidden;
+  border-radius: 26px;
+  background: var(--ep-paper);
+}
+
+.jjph-screen .jjart-storefront { border-radius: 0; }
+.jjph-body { padding: 12px 14px 16px; display: grid; gap: 8px; }
+.jjph-name { margin: 0; font-size: 1.05rem; font-weight: 760; color: var(--ep-ink); }
+
+.jjph-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3px;
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--ep-muted);
+}
+
+.jjph-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.jjph-chip { padding: 3px 8px; border-radius: 999px; border: 1px solid var(--ep-line); font-size: 0.68rem; font-weight: 600; color: var(--ep-muted); }
+.jjph-chip-on { border-color: var(--ep-primary-outline); background: var(--ep-primary); color: var(--ep-primary-text); }
+
+.jjph-highlight {
+  padding: 9px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--ep-line);
+  background: var(--ep-soft);
+}
+
+.jjph-highlight-title { margin: 0; font-size: 0.8rem; font-weight: 700; color: var(--ep-ink); }
+
+.jjph-source {
+  display: grid;
+  gap: 3px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.4s ease, margin 0.4s ease;
+}
+
+.jjph-highlight.is-open .jjph-source { max-height: 120px; opacity: 1; margin-top: 7px; }
+.jjph-highlight.is-open { border-color: var(--ep-primary-outline); }
+
+.jjph-quote {
+  margin: 0;
+  padding-left: 8px;
+  border-left: 3px solid var(--ep-primary-outline);
+  font-size: 0.74rem;
+  font-style: italic;
+  color: var(--ep-ink);
+}
+
+.jjph-from,
+.jjph-checked { display: flex; align-items: center; gap: 4px; margin: 0; font-size: 0.66rem; color: var(--ep-muted); }
+.jjph-checked { color: var(--ep-primary-outline); font-weight: 700; }
+
+.jjph-blank {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  border: 1.5px dashed var(--ep-line);
+  font-size: 0.72rem;
+  color: var(--ep-muted);
+}
+
+.jjph-blank em { font-style: normal; }
+
+.jjph-notes { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+
+.jjph-notes li {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  font-size: 0.94rem;
+  line-height: 1.5;
+  color: var(--ep-ink);
+}
+
+.jjph-notes span {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--ep-primary);
+  color: var(--ep-primary-text);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .jjph-layout { grid-template-columns: minmax(0, 1fr); }
+  .jjph-phone { max-width: 240px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jjph-source { transition: none; }
+}
+
+/* hero illustration and belief art placement (art itself: styles/css-art/jiju-story.css) */
+.jjs-hero-art { margin: 26px 0 0; }
+.jjs-hero-art figcaption { margin-top: 10px; text-align: center; font-size: 0.88rem; color: var(--ep-muted); }
+.jjs-belief-art { display: block; width: 144px; max-width: 100%; }
+.jjs-belief-art .jjart-spot { max-width: 144px; }
+.jjph-meta { gap: 4px 10px; }
+.jjph-meta span { display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; }
+
+/* The Jiju page takes Jiju's own brand amber (golden palette, Jiju utils/goldenPalette.ts) as its
+   accent, so the charts, chips and numbers sit in the same palette as the illustrations.
+   deep #805000 on white = 6.3:1; text #2b1801 on amber = 8.5:1. */
+.eden-product-page.jiju-product-page {
+  --ep-primary: #f59e0b;
+  --ep-primary-hover: #e08f05;
+  --ep-primary-text: #2b1801;
+  --ep-primary-outline: #805000;
+}
+
+:root[data-theme="dark"] .eden-product-page.jiju-product-page {
+  --ep-primary: #f59e0b;
+  --ep-primary-hover: #f9b23d;
+  --ep-primary-text: #2b1801;
+  --ep-primary-outline: #f59e0b;
+}
