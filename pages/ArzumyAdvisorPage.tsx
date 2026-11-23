@@ -12,7 +12,8 @@ import { ABOUT_EMAIL, ABOUT_LINKEDIN } from '../components/about-content';
  * Not indexed, not in the sitemap. Every number is one already published on /jiju-pet and read
  * from the Jiju / personal-dashboard repos on 2026-11-23; the Jiju figures are the shared
  * components from components/JijuStory.tsx and JijuCharts.tsx. Disclosure follows /igaming/resume
- * (igaming-resume-content.ts): markets by region only, no brand names, no phone, no pay. Styles: styles/pages/arzumy.css,
+ * (igaming-resume-content.ts): markets by region only, no brand names, no phone, no pay. The
+ * owner asked (2026-11-23) that this page never mention online gaming / iGaming at all. Styles: styles/pages/arzumy.css,
  * colours from the product page tokens (.eden-product-page).
  */
 
@@ -89,8 +90,8 @@ const PLAN: { when: T; title: T; text: T }[] = [
 
 const ABOUT: T[] = [
   {
-    en: 'Eden Tan, based in Penang. Seven years in consumer growth and CRM for online platforms across Southeast Asia and Australia, most of it in online gaming. Led a team of four; +30% retention in three months.',
-    zh: 'Eden Tan,住在槟城。七年做线上平台的用户增长和 CRM,市场在东南亚与澳洲,大部分在线上博彩行业。带过四人团队;三个月把留存提升 30%。',
+    en: 'Eden Tan, based in Penang. Seven years in consumer growth and CRM for online platforms across Southeast Asia and Australia. Led a team of four; +30% retention in three months.',
+    zh: 'Eden Tan,住在槟城。七年做线上平台的用户增长和 CRM,市场在东南亚与澳洲。带过四人团队;三个月把留存提升 30%。',
   },
   {
     en: 'Since January 2026 I have mostly been building with AI: Jiju, and the dashboard that runs my agents — more than 700 changes shipped through it, each one checked by automated tests before it goes live.',
