@@ -46,7 +46,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+          # M1 自托管 runner 上 ~/.npm 是所有仓库共用的本机目录(约 10 GB),cache: npm 会每轮从 GitHub
+          # 下载 / 解压 / 回传约 4 GB 缓存,Setup Node 一步 5–15 分钟(2026-11-23 实测);只在 GitHub 托管机器上开
+          cache: ${{ runner.environment == 'github-hosted' && 'npm' || '' }}
 
       - name: Install dependencies
         run: npm ci
