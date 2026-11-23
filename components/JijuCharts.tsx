@@ -150,8 +150,8 @@ const FUNNELS: { title: EpText; rows: { label: EpText; value: number }[] }[] = [
   {
     title: { en: 'Tags, first night (21–22 Nov)', zh: '标签，第一晚（11 月 21–22 日）' },
     rows: [
-      { label: { en: 'Rules found a quote', zh: '规则找到原话' }, value: 60 },
-      { label: { en: 'Claude agreed', zh: 'Claude 同意' }, value: 22 },
+      { label: { en: 'Suggested (a quote was found)', zh: '提出建议（找到原话）' }, value: 60 },
+      { label: { en: 'Passed the checker', zh: '通过检查' }, value: 22 },
     ],
   },
   {
@@ -197,8 +197,8 @@ export const JijuCheckFunnels: React.FC<Props> = ({ isZh }) => {
       </div>
       <figcaption>
         {pick(isZh, {
-          en: 'Counted from the run records. The tag job is still preview-only until 25 Nov; lunch submissions stay switched off until the pass rate is worth it.',
-          zh: '按运行记录实数。标签任务到 11 月 25 日之前只预览不写；午市套餐的自动提交还关着，等通过率值得再开。',
+          en: 'Real counts from the first runs. Fewer, but right: what does not pass is simply not shown.',
+          zh: '第一批运行的真实数字。宁可少，不能错：没通过的就不显示。',
         })}
       </figcaption>
     </figure>
@@ -208,15 +208,15 @@ export const JijuCheckFunnels: React.FC<Props> = ({ isZh }) => {
 /* ---------- 4. The night shift (looping checklist) ---------- */
 
 const NIGHT: { at: string; job: EpText; where: EpText }[] = [
-  { at: '00:40', job: { en: 'Find sourced highlights for each place', zh: '给每家找有出处的卖点' }, where: { en: 'M4 · gemma4 → Claude', zh: 'M4 · gemma4 → Claude' } },
-  { at: '01:30', job: { en: 'Research 40 places on the web', zh: '上网查 40 家' }, where: { en: 'M4 · Claude', zh: 'M4 · Claude' } },
-  { at: '02:00', job: { en: 'Lunch-set prices · translate new copy', zh: '午市套餐价格 · 翻译新文字' }, where: { en: 'M4 · gemma4 / qwen3.8', zh: 'M4 · gemma4 / qwen3.8' } },
-  { at: '02:40', job: { en: 'Tags: specialty coffee, organic, eco', zh: '标签：精品咖啡、有机、环保' }, where: { en: 'M4 · rules → Claude', zh: 'M4 · 规则 → Claude' } },
-  { at: '03:00', job: { en: 'Promo agent, up to 15 shops', zh: '优惠 agent，最多 15 家' }, where: { en: 'M4 · gemma4', zh: 'M4 · gemma4' } },
-  { at: '03:40', job: { en: 'Snapshot of the whole database', zh: '整个资料库拍快照' }, where: { en: 'M1', zh: 'M1' } },
-  { at: '04:30', job: { en: 'Around the web: 30 places · promo / holiday watch', zh: '网上怎么说：30 家 · 优惠 / 放假巡查' }, where: { en: 'M1', zh: 'M1' } },
-  { at: '05:10', job: { en: 'Write place descriptions', zh: '写地点介绍' }, where: { en: 'M4 · gemma4', zh: 'M4 · gemma4' } },
-  { at: '06:10', job: { en: 'Food news: check new shops (≤ 30 / day)', zh: '美食新闻：核对新店（每天 ≤ 30）' }, where: { en: 'Places API, free tier', zh: 'Places API 免费档' } },
+  { at: '00:40', job: { en: 'Find a highlight with a source for each shop', zh: '给每家店找「有出处的亮点」' }, where: { en: 'AI on my laptop writes · Claude checks', zh: '电脑里的 AI 写 · Claude 检查' } },
+  { at: '01:30', job: { en: 'Look up hours and phone numbers for 40 shops', zh: '上网查 40 家的营业时间、电话' }, where: { en: 'Claude, web search only', zh: 'Claude，只能搜网页' } },
+  { at: '02:00', job: { en: 'Find set-lunch prices · translate Chinese ↔ English', zh: '找午市套餐价格 · 中英互译' }, where: { en: 'AI on my laptop', zh: '电脑里的 AI' } },
+  { at: '02:40', job: { en: 'Decide “specialty coffee / organic / eco”', zh: '判断「精品咖啡 / 有机 / 环保」' }, where: { en: 'only with the shop’s own words · Claude checks', zh: '要有店家原话 · Claude 检查' } },
+  { at: '03:00', job: { en: 'Check 15 shops for new deals', zh: '查 15 家有没有新优惠' }, where: { en: 'AI on my laptop', zh: '电脑里的 AI' } },
+  { at: '03:40', job: { en: 'Back up the whole database', zh: '整个资料库做备份' }, where: { en: 'second computer at home', zh: '家里另一台电脑' } },
+  { at: '04:30', job: { en: 'Re-read shop pages: new deal ★ or holiday ⚠?', zh: '重看店家网页：有新优惠 ★？要放假 ⚠？' }, where: { en: 'second computer at home', zh: '家里另一台电脑' } },
+  { at: '05:10', job: { en: 'Draft short descriptions of places', zh: '写地点介绍草稿' }, where: { en: 'AI on my laptop', zh: '电脑里的 AI' } },
+  { at: '06:10', job: { en: 'Read food news, check new shops on Google', zh: '读美食新闻，到 Google 核对新店' }, where: { en: 'free quota, max 30 a day', zh: '免费额度，每天最多 30 次' } },
 ];
 
 export const JijuNightShift: React.FC<Props> = ({ isZh }) => {
@@ -227,7 +227,7 @@ export const JijuNightShift: React.FC<Props> = ({ isZh }) => {
   return (
     <figure className="jjc-figure">
       <p className="jjc-figure-title">
-        {pick(isZh, { en: 'While Eden sleeps', zh: 'Eden 睡觉的时候' })}
+        {pick(isZh, { en: 'One night’s schedule', zh: '一晚的时间表' })}
         <span>{pick(isZh, { en: 'Malaysia time', zh: '马来西亚时间' })}</span>
       </p>
       <ol
@@ -252,8 +252,8 @@ export const JijuNightShift: React.FC<Props> = ({ isZh }) => {
       </ol>
       <figcaption>
         {pick(isZh, {
-          en: 'Scheduled jobs as configured on 23 Nov 2026. Heavy local-model work only runs at night on mains power, and steps aside to a smaller model if the laptop is in use.',
-          zh: '2026 年 11 月 23 日实际配置的定时任务。重的本机模型活只在夜里、插着电时跑；电脑有人在用就让给小模型。',
+          en: 'The real schedule on 23 Nov 2026. The laptop AI only works at night while plugged in and nobody is using the computer.',
+          zh: '2026 年 11 月 23 日的真实时间表。电脑里的 AI 只在夜里、插着电、没人用电脑时干活。',
         })}
       </figcaption>
     </figure>
@@ -263,11 +263,10 @@ export const JijuNightShift: React.FC<Props> = ({ isZh }) => {
 /* ---------- 5. How a code change ships (looping gate) ---------- */
 
 const SHIP: EpText[] = [
-  { en: 'Own worktree', zh: '独立 worktree' },
-  { en: 'Claude Code / Codex write', zh: 'Claude Code / Codex 写' },
-  { en: 'Second-model review', zh: '另一家模型审' },
-  { en: 'CI on the home M1', zh: '家里 M1 跑 CI' },
-  { en: 'Auto-merge', zh: '自动合并' },
+  { en: 'An AI writes the change', zh: 'AI 写改动' },
+  { en: 'A second AI looks for mistakes', zh: '另一个 AI 挑错' },
+  { en: '1,614 automatic tests', zh: '1,614 项自动测试' },
+  { en: 'Previewed on a private link', zh: '先在私人链接预览' },
 ];
 
 export const JijuShipGate: React.FC<Props> = ({ isZh }) => {
@@ -280,8 +279,8 @@ export const JijuShipGate: React.FC<Props> = ({ isZh }) => {
         ref={ref}
         className="jjc-gate"
         aria-label={pick(isZh, {
-          en: 'Every code change: its own worktree, written by Claude Code or Codex, reviewed by a second model, checked by CI on the home M1, auto-merged, and merging deploys it.',
-          zh: '每个代码改动：独立 worktree，由 Claude Code 或 Codex 写，另一家模型审，家里 M1 跑 CI，自动合并，合并即上线。',
+          en: 'Every change to the website: an AI writes it, a second AI looks for mistakes, 1,614 automatic tests run, it is previewed on a private link, and when everything passes it goes live by itself.',
+          zh: '网站的每个改动：AI 写，另一个 AI 挑错，跑 1,614 项自动测试，先在私人链接预览，全部通过就自己上线。',
         })}
       >
         {SHIP.map((step, index) => (
@@ -291,13 +290,13 @@ export const JijuShipGate: React.FC<Props> = ({ isZh }) => {
           </li>
         ))}
         <li className={`jjc-gate-step jjc-gate-done${passed === SHIP.length ? ' is-passed' : ''}`} aria-hidden="true">
-          {pick(isZh, { en: 'Merge = deploy', zh: '合并即上线' })}
+          {pick(isZh, { en: 'All green → live by itself', zh: '全部通过 → 自己上线' })}
         </li>
       </ol>
       <figcaption>
         {pick(isZh, {
-          en: '435 Jiju pull requests merged as of 23 Nov 2026; 371 of them by this automation since 18 Sep (262 through GitHub’s native auto-merge). agy runs read-only whole-repo audits on the side; what it finds becomes a task that Claude verifies before anyone fixes it.',
-          zh: '截至 2026 年 11 月 23 日，Jiju 已合并 435 个 PR；9 月 18 日以来其中 371 个由这套自动化合并（262 个经 GitHub 原生 auto-merge）。agy 在旁边做只读的全仓体检，查到的问题变成任务，先由 Claude 核实再修。',
+          en: 'By 23 Nov 2026, 435 changes to Jiju had gone live this way — about 85 % of them without anyone pressing a merge button.',
+          zh: '截至 2026 年 11 月 23 日，Jiju 已经这样上线了 435 次改动，其中约 85% 没有人按过「合并」按钮。',
         })}
       </figcaption>
     </figure>

@@ -342,3 +342,209 @@
   .jjp-code { font-size: 0.72rem; padding: 12px; }
   .jjp-table { font-size: 0.8rem; }
 }
+
+/* ---------- plain-language story figures (components/JijuStory.tsx) ---------- */
+
+.jjs-beliefs { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+
+.jjs-belief {
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid var(--ep-line);
+  background: var(--ep-paper);
+  opacity: 0.25;
+  transform: translateY(8px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+
+.jjs-belief.is-in { opacity: 1; transform: none; }
+.jjs-belief h3 { margin: 10px 0 6px; font-size: 1rem; font-weight: 760; color: var(--ep-ink); }
+.jjs-belief p { margin: 0; font-size: 0.88rem; line-height: 1.55; color: var(--ep-muted); }
+
+.jjs-belief-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--ep-primary);
+  color: var(--ep-primary-text);
+}
+
+.jjs-legend { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.jjs-dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-left: 4px; }
+.jjs-dot-you { background: var(--ep-primary-outline); }
+.jjs-dot-behind { background: var(--ep-line); }
+
+.jjs-journey { position: relative; display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+
+.jjs-journey-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 6px 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--ep-line);
+  background: var(--ep-paper);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.jjs-journey-step.is-active { border-color: var(--ep-primary-outline); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ep-primary) 35%, transparent); }
+
+.jjs-journey-no {
+  grid-row: span 2;
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--ep-primary-outline);
+  color: var(--ep-paper);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.jjs-journey-you { display: flex; align-items: center; gap: 8px; color: var(--ep-ink); min-width: 0; }
+.jjs-journey-you strong { font-size: 0.95rem; overflow-wrap: anywhere; }
+.jjs-journey-icon { flex: none; display: inline-grid; color: var(--ep-primary-outline); }
+
+.jjs-journey-behind {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: var(--ep-soft);
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--ep-muted);
+  min-width: 0;
+}
+
+.jjs-journey-behind svg { flex: none; margin-top: 3px; }
+
+@media (min-width: 760px) {
+  .jjs-journey-step { grid-template-columns: 28px minmax(0, 0.9fr) minmax(0, 1.1fr); align-items: center; }
+  .jjs-journey-no { grid-row: auto; }
+}
+
+.jjs-example {
+  margin: -6px 0 14px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--ep-paper);
+  border: 1px dashed var(--ep-line);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ep-ink);
+}
+
+.jjs-flow { display: grid; gap: 0; }
+
+.jjs-flow-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 30px;
+}
+
+.jjs-flow-row:last-child { padding-bottom: 0; }
+
+.jjs-node {
+  position: relative;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1.5px solid var(--ep-line);
+  background: var(--ep-paper);
+  font-size: 0.86rem;
+  line-height: 1.4;
+  color: var(--ep-muted);
+  text-align: center;
+  overflow-wrap: anywhere;
+  transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.jjs-node-start,
+.jjs-node-end { border-radius: 999px; }
+.jjs-node-ask { border-style: dashed; padding-left: 34px; text-align: left; }
+
+.jjs-node-q {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  border-radius: 6px;
+  background: var(--ep-soft);
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--ep-ink);
+}
+
+.jjs-node.is-visited { border-color: var(--ep-primary-outline); color: var(--ep-ink); }
+.jjs-node.is-current { background: var(--ep-primary); color: var(--ep-primary-text); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ep-primary) 35%, transparent); }
+.jjs-node-end.is-visited { background: var(--ep-primary); color: var(--ep-primary-text); }
+
+.jjs-side { display: flex; align-items: center; gap: 6px; min-width: 0; font-size: 0.8rem; color: var(--ep-soft-ink); transition: color 0.3s ease; }
+.jjs-side-label { flex: none; font-weight: 700; }
+
+.jjs-side-box {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--ep-line);
+  background: var(--ep-soft);
+  overflow-wrap: anywhere;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.jjs-side.is-visited { color: var(--ep-warn); }
+.jjs-side.is-visited .jjs-side-box { border-color: var(--ep-warn); background: var(--ep-paper); color: var(--ep-ink); }
+
+.jjs-flow-arrow {
+  position: absolute;
+  left: calc((100% - 8px) * 0.3077 - 1px);
+  bottom: 4px;
+  height: 22px;
+  width: 0;
+  border-left: 2px solid var(--ep-line);
+  transition: border-color 0.3s ease;
+}
+
+.jjs-flow-arrow::after {
+  content: '';
+  position: absolute;
+  left: -6px;
+  bottom: -2px;
+  border: 5px solid transparent;
+  border-top: 7px solid var(--ep-line);
+  transition: border-color 0.3s ease;
+}
+
+.jjs-flow-arrow.is-visited { border-left-color: var(--ep-primary-outline); }
+.jjs-flow-arrow.is-visited::after { border-top-color: var(--ep-primary-outline); }
+
+.jjs-flow-arrow:not(:empty) { padding-left: 8px; font-size: 0.74rem; font-weight: 700; line-height: 22px; color: var(--ep-muted); white-space: nowrap; }
+
+.jjs-terms { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin: 0; }
+.jjs-term { padding: 12px 14px; border-radius: 12px; border: 1px solid var(--ep-line); background: var(--ep-paper); }
+.jjs-term dt { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--ep-ink); }
+.jjs-term dt span { display: inline-grid; color: var(--ep-primary-outline); }
+.jjs-term dd { margin: 4px 0 0; font-size: 0.86rem; line-height: 1.5; color: var(--ep-muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  .jjs-belief,
+  .jjs-journey-step,
+  .jjs-node,
+  .jjs-side,
+  .jjs-side-box,
+  .jjs-flow-arrow,
+  .jjs-flow-arrow::after { transition: none; }
+}
