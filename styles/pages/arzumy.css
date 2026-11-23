@@ -7,6 +7,21 @@
 
 .arz-nav { max-width: 1100px; margin: 0 auto; padding: 18px var(--ep-gutter); }
 
+.arz-nav-right { display: flex; align-items: center; gap: 8px; }
+.arz-bm {
+  min-height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--ep-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ep-ink);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.arz-bm.is-on { border-color: var(--ep-primary-outline); background: var(--ep-primary); color: var(--ep-primary-text); }
+
 .arz-main {
   max-width: 760px;
   margin: 0 auto;

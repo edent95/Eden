@@ -24,79 +24,90 @@ import { ABOUT_EMAIL, ABOUT_LINKEDIN } from '../components/about-content';
  * (igaming-resume-content.ts): markets by region only, no brand names, no phone, no pay. The
  * owner asked (2026-11-23) that this page never mention online gaming / iGaming at all. Styles: styles/pages/arzumy.css,
  * colours from the product page tokens (.eden-product-page).
+ * Bahasa Melayu (2026-11-24, owner asked): every string written here has `ms`; the shared Jiju charts
+ * only have en / zh, so in BM mode they render in English and the page says so once.
  */
 
 type Lang = 'en' | 'zh';
-type T = { en: string; zh: string };
+/** Page-local third language: Bahasa Melayu (BM button or `?lang=ms`). The site toggle only knows en / zh. */
+type PageLang = Lang | 'ms';
+type T = { en: string; zh: string; ms: string };
 
 const STATS: { value: number; unit: T; text: T }[] = [
-  { value: 847, unit: { en: 'places', zh: '家店' }, text: { en: 'live on jiju.pet, in 12 states and regions', zh: '在 jiju.pet 上线,横跨 12 个州 / 地区' } },
-  { value: 435, unit: { en: 'changes', zh: '次改动' }, text: { en: 'to the website, almost all written by AI', zh: '网站改动,几乎都由 AI 写' } },
-  { value: 1, unit: { en: 'person', zh: '个人' }, text: { en: 'started it in January 2026 by chatting with an AI', zh: '2026 年 1 月开始,跟 AI 一句句聊出来' } },
+  { value: 847, unit: { en: 'places', zh: '家店', ms: 'tempat' }, text: { en: 'live on jiju.pet, in 12 states and regions', zh: '在 jiju.pet 上线,横跨 12 个州 / 地区', ms: 'tersiar di jiju.pet, dalam 12 negeri dan wilayah' } },
+  { value: 435, unit: { en: 'changes', zh: '次改动', ms: 'perubahan' }, text: { en: 'to the website, almost all written by AI', zh: '网站改动,几乎都由 AI 写', ms: 'pada laman web, hampir semuanya ditulis oleh AI' } },
+  { value: 1, unit: { en: 'person', zh: '个人', ms: 'orang' }, text: { en: 'started it in January 2026 by chatting with an AI', zh: '2026 年 1 月开始,跟 AI 一句句聊出来', ms: 'memulakannya pada Januari 2026 dengan berbual bersama AI' } },
 ];
 
 const FITS: { Art: typeof JijuBeliefSourceArt; from: T; to: T; text: T }[] = [
   {
     Art: JijuBeliefSourceArt,
-    from: { en: 'No source, no claim', zh: '没有出处,就不说' },
-    to: { en: 'AI the public can trust', zh: '让公众信得过的 AI' },
+    from: { en: 'No source, no claim', zh: '没有出处,就不说', ms: 'Tiada sumber, tiada dakwaan' },
+    to: { en: 'AI the public can trust', zh: '让公众信得过的 AI', ms: 'AI yang dipercayai rakyat' },
     text: {
       en: 'Every sentence Jiju publishes can be traced to the shop’s own words. The same rule fits anything an agency says in public with AI’s help.',
       zh: 'Jiju 公开的每一句都能追到店家原话。机构借 AI 对外说的每一句,也可以照这条规矩。',
+      ms: 'Setiap ayat yang Jiju terbitkan boleh dijejak kepada kata-kata kedai itu sendiri. Peraturan yang sama sesuai untuk apa sahaja yang agensi umumkan dengan bantuan AI.',
     },
   },
   {
     Art: JijuBeliefDecideArt,
-    from: { en: 'Machines search, a person decides', zh: '机器去找,人来拍板' },
-    to: { en: 'Officers stay accountable', zh: '责任留在人身上' },
+    from: { en: 'Machines search, a person decides', zh: '机器去找,人来拍板', ms: 'Mesin mencari, manusia memutuskan' },
+    to: { en: 'Officers stay accountable', zh: '责任留在人身上', ms: 'Pegawai kekal bertanggungjawab' },
     text: {
       en: 'AI drafts at night; nothing goes public until a person confirms. Speed from the machines, judgement and accountability from people.',
       zh: 'AI 夜里写草稿,人确认之前什么都不公开。速度交给机器,判断和问责留给人。',
+      ms: 'AI menulis draf pada waktu malam; tiada apa diterbitkan sebelum manusia mengesahkannya. Kepantasan daripada mesin, pertimbangan dan akauntabiliti daripada manusia.',
     },
   },
   {
     Art: JijuBeliefSaveArt,
-    from: { en: 'No money wasted', zh: '不花冤枉钱' },
-    to: { en: 'Public money, local data', zh: '公帑与本地数据' },
+    from: { en: 'No money wasted', zh: '不花冤枉钱', ms: 'Tiada wang dibazirkan' },
+    to: { en: 'Public money, local data', zh: '公帑与本地数据', ms: 'Wang awam, data tempatan' },
     text: {
       en: 'A 26B open model runs on my own laptop; every paid service has a daily cap. Sensitive work can stay on hardware you control.',
       zh: '26B 的开源模型跑在我自己的电脑上,每个付费服务都有每日上限。敏感的工作可以留在自己掌控的机器里。',
+      ms: 'Model terbuka 26B berjalan pada komputer riba saya sendiri; setiap perkhidmatan berbayar ada had harian. Kerja yang sensitif boleh kekal pada perkakasan di bawah kawalan anda.',
     },
   },
   {
     Art: JijuBeliefCheckArt,
-    from: { en: 'Agents get keys, not trust', zh: '给 agent 钥匙,不给信任' },
-    to: { en: 'Safe AI agents at scale', zh: '可以放大的安全 agent' },
+    from: { en: 'Agents get keys, not trust', zh: '给 agent 钥匙,不给信任', ms: 'Ejen diberi kunci, bukan kepercayaan' },
+    to: { en: 'Safe AI agents at scale', zh: '可以放大的安全 agent', ms: 'Ejen AI yang selamat untuk diperluas' },
     text: {
       en: 'Five research bots work through one door: read-only keys by default, daily quotas, a log of every page they read, and spot checks on each other.',
       zh: '五个研究 bot 走同一道门:默认只读钥匙、每日份额、读过哪些网页都有记录,还互相抽查。',
+      ms: 'Lima bot penyelidik bekerja melalui satu pintu: kunci baca sahaja secara lalai, kuota harian, log setiap halaman yang dibaca, dan semakan rawak sesama mereka.',
     },
   },
 ];
 
 const PLAN: { when: T; title: T; text: T }[] = [
   {
-    when: { en: 'Days 1–30', zh: '第 1–30 天' },
-    title: { en: 'Your own AI desk', zh: '你自己的 AI 工作台' },
+    when: { en: 'Days 1–30', zh: '第 1–30 天', ms: 'Hari 1–30' },
+    title: { en: 'Your own AI desk', zh: '你自己的 AI 工作台', ms: 'Meja AI anda sendiri' },
     text: {
       en: 'An assistant set up around your week: briefs before meetings, a daily read of what is said about the National AI Action Plan, first drafts of notes and replies. Sensitive material on a local model.',
       zh: '按你的一周搭一个助手:会前简报、每天读一遍外界对国家 AI 行动计划的讨论、笔记和回复的初稿。敏感资料走本机模型。',
+      ms: 'Pembantu yang disusun mengikut minggu anda: taklimat sebelum mesyuarat, bacaan harian tentang perbincangan mengenai Pelan Tindakan AI Nasional, draf pertama nota dan balasan. Bahan sensitif menggunakan model tempatan.',
     },
   },
   {
-    when: { en: 'Days 31–60', zh: '第 31–60 天' },
-    title: { en: 'One public pilot, shipped', zh: '一个对外试点,做出来' },
+    when: { en: 'Days 31–60', zh: '第 31–60 天', ms: 'Hari 31–60' },
+    title: { en: 'One public pilot, shipped', zh: '一个对外试点,做出来', ms: 'Satu projek rintis awam, siap dilancarkan' },
     text: {
       en: 'Pick one small thing the public sees — say, AI-literacy material for community events like MDKD — and run it the Jiju way: sourced, human-confirmed, capped in cost.',
       zh: '挑一件公众看得到的小事 —— 比如 MDKD 这类社区活动用的 AI 普及材料 —— 照 Jiju 的方法跑:有出处、人确认、成本有上限。',
+      ms: 'Pilih satu perkara kecil yang dilihat orang ramai — contohnya bahan literasi AI untuk acara komuniti seperti MDKD — dan jalankannya cara Jiju: bersumber, disahkan manusia, kos berhad.',
     },
   },
   {
-    when: { en: 'Days 61–90', zh: '第 61–90 天' },
-    title: { en: 'A playbook others can copy', zh: '一本别人能照做的手册' },
+    when: { en: 'Days 61–90', zh: '第 61–90 天', ms: 'Hari 61–90' },
+    title: { en: 'A playbook others can copy', zh: '一本别人能照做的手册', ms: 'Buku panduan yang boleh diikuti orang lain' },
     text: {
       en: 'Write down what worked — guardrails, costs, how to check AI output — so your team and other agencies can repeat it without me in the room.',
       zh: '把行得通的写下来 —— 护栏、成本、怎么检查 AI 的输出 —— 让你的团队和其他机构不用我在场也能照做。',
+      ms: 'Catat apa yang berkesan — kawalan, kos, cara menyemak hasil AI — supaya pasukan anda dan agensi lain boleh mengulanginya tanpa saya.',
     },
   },
 ];
@@ -105,18 +116,21 @@ const ABOUT: T[] = [
   {
     en: 'Eden Tan, based in Penang. Seven years in consumer growth and CRM for online platforms across Southeast Asia and Australia. Led a team of four; +30% retention in three months.',
     zh: 'Eden Tan,住在槟城。七年做线上平台的用户增长和 CRM,市场在东南亚与澳洲。带过四人团队;三个月把留存提升 30%。',
+    ms: 'Eden Tan, berpangkalan di Pulau Pinang. Tujuh tahun dalam pertumbuhan pengguna dan CRM untuk platform dalam talian di Asia Tenggara dan Australia. Pernah mengetuai pasukan empat orang; pengekalan pengguna +30% dalam tiga bulan.',
   },
   {
     en: 'Since January 2026 I have mostly been building with AI: Jiju, and the dashboard that runs my agents — more than 700 changes shipped through it, each one checked by automated tests before it goes live.',
     zh: '2026 年 1 月起,我主要在用 AI 做东西:Jiju,还有调度我那些 agent 的面板 —— 经它上线的改动超过 700 次,每一次上线前都要先过自动测试。',
+    ms: 'Sejak Januari 2026 saya kebanyakannya membina dengan AI: Jiju, dan papan pemuka yang menguruskan ejen-ejen saya — lebih 700 perubahan dilancarkan melaluinya, setiap satu disemak oleh ujian automatik sebelum disiarkan.',
   },
   {
     en: 'English, Bahasa Melayu, Mandarin and Cantonese. Happy to work on site in Kuala Lumpur.',
     zh: '会英文、马来文、普通话和粤语。可以到吉隆坡上班。',
+    ms: 'Bahasa Inggeris, Bahasa Melayu, Mandarin dan Kantonis. Bersedia bekerja di pejabat di Kuala Lumpur.',
   },
 ];
 
-const Stat: React.FC<{ item: (typeof STATS)[number]; lang: Lang }> = ({ item, lang }) => {
+const Stat: React.FC<{ item: (typeof STATS)[number]; lang: PageLang }> = ({ item, lang }) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const progress = useCountUp(ref, 1600);
   return (
@@ -161,57 +175,75 @@ const useReveal = (ref: React.RefObject<HTMLElement | null>, count: number) => {
 };
 
 const ArzumyAdvisorPage: React.FC<{ language: Lang; jijuHref: string; controls: React.ReactNode }> = ({ language, jijuHref, controls }) => {
-  const lang = language;
+  const [ms, setMs] = React.useState(() => typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('lang') === 'ms');
+  const toggleMs = () => {
+    const next = !ms;
+    setMs(next);
+    const url = new URL(window.location.href);
+    if (next) url.searchParams.set('lang', 'ms'); else url.searchParams.delete('lang');
+    window.history.replaceState(null, '', url.toString());
+  };
+  const lang: PageLang = ms ? 'ms' : language;
   const isZh = lang === 'zh';
   const t = (value: T) => value[lang];
+  /** Inline strings in three languages. */
+  const tr = (en: string, zh: string, bm: string) => (lang === 'ms' ? bm : lang === 'zh' ? zh : en);
   const fitsRef = React.useRef<HTMLOListElement>(null);
   const planRef = React.useRef<HTMLOListElement>(null);
   const fitsShown = useReveal(fitsRef, FITS.length);
   const planShown = useReveal(planRef, PLAN.length);
 
   return (
-    <div className={`eden-product-page arz-page${isZh ? ' is-zh' : ''}`}>
+    <div className={`eden-product-page arz-page${isZh ? ' is-zh' : ''}`} lang={lang === 'ms' ? 'ms' : lang === 'zh' ? 'zh' : 'en'}>
       <nav className="project-home-nav arz-nav" aria-label="Primary navigation">
         <a href={jijuHref} className="project-home-back">
           <ArrowLeft size={16} aria-hidden="true" />
-          {isZh ? 'Jiju 完整介绍' : 'The full Jiju story'}
+          {tr('The full Jiju story', 'Jiju 完整介绍', 'Kisah penuh Jiju')}
         </a>
-        {controls}
+        <div className="arz-nav-right">
+          <button type="button" className={`arz-bm${ms ? ' is-on' : ''}`} aria-pressed={ms} onClick={toggleMs} title="Bahasa Melayu">
+            BM
+          </button>
+          {controls}
+        </div>
       </nav>
 
       <main className="arz-main">
         <header className="arz-hero">
-          <p className="arz-kicker">{isZh ? '写给 Arzumy Md Yusof · AI Malaysia 首席执行官' : 'For Arzumy Md Yusof · CEO, AI Malaysia'}</p>
-          <h1>{isZh ? '你说过:把简历丢掉。所以这里是我做出来的东西。' : 'You once wrote: throw your resume away. So here is what I built instead.'}</h1>
+          <p className="arz-kicker">{tr('For Arzumy Md Yusof · CEO, AI Malaysia', '写给 Arzumy Md Yusof · AI Malaysia 首席执行官', 'Untuk Arzumy Md Yusof · Ketua Pegawai Eksekutif, AI Malaysia')}</p>
+          <h1>{tr('You once wrote: throw your resume away. So here is what I built instead.', '你说过:把简历丢掉。所以这里是我做出来的东西。', 'Anda pernah menulis: buang resume anda. Jadi, inilah yang saya bina sebagai gantinya.')}</h1>
           <p className="arz-standfirst">
-            {isZh
-              ? 'Jiju 是一个马来西亚的去处指南,从搭建到日常运营几乎全由 AI 完成,背后只有我一个人。我想在 AI Malaysia 做你的个人 AI 顾问,帮你把同样的做法用起来。'
-              : 'Jiju is a Malaysian places guide, built and run almost entirely by AI, with one person behind it. I would like to help you do the same at AI Malaysia, as your personal AI advisor.'}
+            {tr(
+              'Jiju is a Malaysian places guide, built and run almost entirely by AI, with one person behind it. I would like to help you do the same at AI Malaysia, as your personal AI advisor.',
+              'Jiju 是一个马来西亚的去处指南,从搭建到日常运营几乎全由 AI 完成,背后只有我一个人。我想在 AI Malaysia 做你的个人 AI 顾问,帮你把同样的做法用起来。',
+              'Jiju ialah panduan tempat menarik di Malaysia yang dibina dan dijalankan hampir sepenuhnya oleh AI, dengan seorang sahaja di belakangnya. Saya ingin membantu anda melakukan perkara yang sama di AI Malaysia, sebagai penasihat AI peribadi anda.',
+            )}
           </p>
           <figure className="jjs-hero-art arz-hero-art">
-            <JijuNightDayArt label={isZh ? '插画:夜里 AI 助手把店家卡片搬进电脑,另一个机器人拿放大镜检查;中间是早上的确认章;白天一个人带着小黑猫走向店家,手机上的卡片有核对过的勾。' : 'Illustration: at night AI helpers carry shop cards into a laptop while another robot checks them with a magnifier; a morning confirm stamp in the middle; by day a person and a black cat walk to a shop, and the card on the phone has a checked tick.'} />
-            <figcaption>{isZh ? '夜里机器干活,早上我确认,白天大家出门。' : 'Machines work at night, I confirm in the morning, people go out by day.'}</figcaption>
+            <JijuNightDayArt label={tr('Illustration: at night AI helpers carry shop cards into a laptop while another robot checks them with a magnifier; a morning confirm stamp in the middle; by day a person and a black cat walk to a shop, and the card on the phone has a checked tick.', '插画:夜里 AI 助手把店家卡片搬进电脑,另一个机器人拿放大镜检查;中间是早上的确认章;白天一个人带着小黑猫走向店家,手机上的卡片有核对过的勾。', 'Ilustrasi: pada waktu malam pembantu AI membawa kad kedai ke dalam komputer riba sementara robot lain menyemaknya dengan kanta pembesar; cop pengesahan pagi di tengah; pada siang hari seseorang dan seekor kucing hitam berjalan ke kedai, dan kad di telefon bertanda sudah disemak.')} />
+            <figcaption>{tr('Machines work at night, I confirm in the morning, people go out by day.', '夜里机器干活,早上我确认,白天大家出门。', 'Mesin bekerja pada waktu malam, saya mengesahkan pada waktu pagi, orang ramai keluar pada waktu siang.')}</figcaption>
           </figure>
-          <p className="arz-congrats">{isZh ? '恭喜你今天(2026 年 11 月 23 日)正式上任。' : 'Congratulations on starting at AI Malaysia today, 23 November 2026.'}</p>
+          <p className="arz-congrats">{tr('Congratulations on starting at AI Malaysia on 23 November 2026.', '恭喜你 2026 年 11 月 23 日正式上任。', 'Tahniah atas pelantikan anda di AI Malaysia pada 23 November 2026.')}</p>
         </header>
 
-        <section className="arz-stats" aria-label={isZh ? 'Jiju 的三个数字' : 'Jiju in three numbers'}>
+        <section className="arz-stats" aria-label={tr('Jiju in three numbers', 'Jiju 的三个数字', 'Jiju dalam tiga angka')}>
           {STATS.map((item) => <Stat key={item.unit.en} item={item} lang={lang} />)}
-          <p className="arz-source">{isZh ? '数字取自 Jiju 与个人面板的代码库,2026-11-23;和 jiju-pet 页面公开的一致。' : 'Figures read from the Jiju and dashboard repositories on 2026-11-23; the same ones published on the Jiju page.'}</p>
+          <p className="arz-source">{tr('Figures read from the Jiju and dashboard repositories on 2026-11-23; the same ones published on the Jiju page.', '数字取自 Jiju 与个人面板的代码库,2026-11-23;和 jiju-pet 页面公开的一致。', 'Angka dibaca daripada repositori Jiju dan papan pemuka pada 2026-11-23; sama seperti yang diterbitkan di halaman Jiju.')}</p>
+          {lang === 'ms' && <p className="arz-source">Carta Jiju di halaman ini dipaparkan dalam Bahasa Inggeris.</p>}
           <div className="arz-stats-chart"><JijuRegionBars isZh={isZh} /></div>
         </section>
 
         <section className="arz-section">
-          <h2>{isZh ? '一家店怎么上到 Jiju' : 'How one shop gets onto Jiju'}</h2>
-          <p className="arz-lead">{isZh ? 'AI 找、AI 写、另一个 AI 挑错,最后我确认。图会自己跑三个真实例子。' : 'AI finds it, AI drafts it, another AI checks it, and I confirm. The chart plays three real examples.'}</p>
+          <h2>{tr('How one shop gets onto Jiju', '一家店怎么上到 Jiju', 'Bagaimana sebuah kedai masuk ke Jiju')}</h2>
+          <p className="arz-lead">{tr('AI finds it, AI drafts it, another AI checks it, and I confirm. The chart plays three real examples.', 'AI 找、AI 写、另一个 AI 挑错,最后我确认。图会自己跑三个真实例子。', 'AI mencarinya, AI menulis drafnya, AI lain menyemaknya, dan saya mengesahkan. Carta ini memainkan tiga contoh sebenar.')}</p>
           <JijuFlowChart isZh={isZh} />
           <JijuCheckFunnels isZh={isZh} />
           <JijuPhoneCard isZh={isZh} />
         </section>
 
         <section className="arz-section">
-          <h2>{isZh ? '我睡觉的时候' : 'While I sleep'}</h2>
-          <p className="arz-lead">{isZh ? '重活排在夜里、插着电、没人用电脑时才跑,用的是自己电脑上的模型。' : 'Heavy work runs at night, on mains power, when nobody is using the laptop, on a model running on that laptop.'}</p>
+          <h2>{tr('While I sleep', '我睡觉的时候', 'Semasa saya tidur')}</h2>
+          <p className="arz-lead">{tr('Heavy work runs at night, on mains power, when nobody is using the laptop, on a model running on that laptop.', '重活排在夜里、插着电、没人用电脑时才跑,用的是自己电脑上的模型。', 'Kerja berat berjalan pada waktu malam, ketika komputer riba dicas dan tidak digunakan, menggunakan model yang berjalan pada komputer riba itu sendiri.')}</p>
           <JijuNightShift isZh={isZh} />
         </section>
 
@@ -220,12 +252,12 @@ const ArzumyAdvisorPage: React.FC<{ language: Lang; jijuHref: string; controls: 
         </section>
 
         <section className="arz-section">
-          <h2>{isZh ? '网站本身也是 AI 在改' : 'The website is changed by AI too'}</h2>
+          <h2>{tr('The website is changed by AI too', '网站本身也是 AI 在改', 'Laman web itu sendiri juga diubah oleh AI')}</h2>
           <JijuShipGate isZh={isZh} />
         </section>
 
         <section className="arz-section">
-          <h2>{isZh ? '同样的规矩,放到 AI Malaysia' : 'The same rules, at AI Malaysia'}</h2>
+          <h2>{tr('The same rules, at AI Malaysia', '同样的规矩,放到 AI Malaysia', 'Peraturan yang sama, di AI Malaysia')}</h2>
           <ol ref={fitsRef} className="arz-fits">
             {FITS.map((fit, index) => (
               <li key={fit.from.en} className={`arz-fit${index < fitsShown ? ' is-in' : ''}`}>
@@ -242,8 +274,8 @@ const ArzumyAdvisorPage: React.FC<{ language: Lang; jijuHref: string; controls: 
         </section>
 
         <section className="arz-section">
-          <h2>{isZh ? '做你的个人 AI 顾问:头 90 天' : 'As your personal AI advisor: the first 90 days'}</h2>
-          <p className="arz-lead">{isZh ? '这是起点,不是定案 —— 先听你说最想解决什么。' : 'A starting point, not a fixed plan — I would rather hear first what you most want solved.'}</p>
+          <h2>{tr('As your personal AI advisor: the first 90 days', '做你的个人 AI 顾问:头 90 天', 'Sebagai penasihat AI peribadi anda: 90 hari pertama')}</h2>
+          <p className="arz-lead">{tr('A starting point, not a fixed plan — I would rather hear first what you most want solved.', '这是起点,不是定案 —— 先听你说最想解决什么。', 'Ini titik permulaan, bukan pelan muktamad — saya lebih suka mendengar dahulu apa yang paling anda mahu selesaikan.')}</p>
           <ol ref={planRef} className="arz-plan">
             {PLAN.map((step, index) => (
               <li key={step.when.en} className={`arz-step${index < planShown ? ' is-in' : ''}`}>
@@ -257,14 +289,14 @@ const ArzumyAdvisorPage: React.FC<{ language: Lang; jijuHref: string; controls: 
         </section>
 
         <section className="arz-section arz-about">
-          <h2>{isZh ? '关于我' : 'About me'}</h2>
+          <h2>{tr('About me', '关于我', 'Tentang saya')}</h2>
           {ABOUT.map((line) => <p key={line.en}>{t(line)}</p>)}
         </section>
 
         <section className="arz-cta">
           <span className="arz-cta-art" aria-hidden="true"><JijuStorefrontArt label="" /></span>
-          <h2>{isZh ? '在吉隆坡喝杯咖啡,或者通个 20 分钟电话?' : 'Coffee in KL, or a 20-minute call?'}</h2>
-          <p>{isZh ? '我可以当面打开 Jiju 和面板给你看它们怎么跑。' : 'I can open Jiju and the dashboard and show you how they run.'}</p>
+          <h2>{tr('Coffee in KL, or a 20-minute call?', '在吉隆坡喝杯咖啡,或者通个 20 分钟电话?', 'Minum kopi di KL, atau panggilan 20 minit?')}</h2>
+          <p>{tr('I can open Jiju and the dashboard and show you how they run.', '我可以当面打开 Jiju 和面板给你看它们怎么跑。', 'Saya boleh buka Jiju dan papan pemuka, dan tunjukkan bagaimana ia berjalan.')}</p>
           <div className="arz-cta-links">
             <a className="arz-cta-primary" href={`mailto:${ABOUT_EMAIL}?subject=${encodeURIComponent('Coffee / call — AI advisor')}`}>
               <Mail size={16} aria-hidden="true" />
