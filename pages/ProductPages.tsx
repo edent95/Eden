@@ -4,6 +4,8 @@ import PukimonShowdownFrame from '../components/PukimonShowdownFrame';
 import { DrRacingDealFlow, DrRacingGate, DrRacingGrowth, DrRacingMonthlyChanges } from '../components/DrRacingCharts';
 import { JijuCheckFunnels, JijuNightShift, JijuRegionBars, JijuShipGate } from '../components/JijuCharts';
 import { JijuBeliefs, JijuFlowChart, JijuGlossary, JijuJourney } from '../components/JijuStory';
+import { JijuPhoneCard } from '../components/JijuPhoneCard';
+import { JijuNightDayArt } from '../components/css-art/jiju-story-art';
 import { JijuPlaybook } from '../components/JijuPlaybook';
 import { ProjectsDrRacingCssIcon, ProjectsEtReportCssIcon, ProjectsJijuCssIcon, ProjectsLifeOsCssIcon, ProjectsPokerCssIcon, ProjectsPukimonCssIcon } from '../components/css-art/index';
 import { HeaderControls, type Language, type Theme, type ThemePreference } from '../app/shared';
@@ -1213,6 +1215,12 @@ export const JijuPetFullPage: React.FC<{
         // ---- How Jiju runs itself (numbers read from the Jiju / personal-dashboard repos on 2026-11-23; see components/JijuCharts.tsx) ----
         { kind: 'node', node: <h2 id="automation">{isZh ? '快一年后：Jiju 现在怎么自己跑' : 'Almost a year in: how Jiju runs itself now'}</h2> },
         { kind: 'p', text: { en: 'In January 2026 I started building Jiju by chatting with an AI. Today AI helpers do most of the daily work, mostly at night. My job is to decide what counts as true.', zh: '2026 年 1 月，我跟 AI 一句一句聊着把 Jiju 写出来。现在大部分日常的活由 AI 助手做，多半在夜里。我的工作是决定什么算真的。' } },
+        { kind: 'node', node: (
+          <figure className="jjs-hero-art">
+            <JijuNightDayArt label={isZh ? '插画：夜里 AI 助手把店家卡片搬进电脑，另一个机器人拿放大镜检查；中间是早上的确认章；白天一个人带着小黑猫走向店家，手机上的卡片有核对过的勾。' : 'Illustration: at night AI helpers carry shop cards into a laptop while another robot checks them with a magnifier; a morning confirm stamp in the middle; by day a person and a black cat walk to a shop, and the card on the phone has a checked tick.'} />
+            <figcaption>{isZh ? '夜里机器干活，早上我确认，白天你出门。' : 'Machines work at night, I confirm in the morning, you go out by day.'}</figcaption>
+          </figure>
+        ) },
         { kind: 'stats', items: [
           { value: 847, unit: { en: 'places', zh: '家' }, text: { en: 'live on jiju.pet', zh: '在 jiju.pet 上线' } },
           { value: 12, unit: { en: 'regions', zh: '个州 / 地区' }, text: { en: 'in Malaysia and Singapore', zh: '马来西亚和新加坡' } },
@@ -1226,6 +1234,7 @@ export const JijuPetFullPage: React.FC<{
         { kind: 'h', text: { en: 'How one shop gets onto Jiju', zh: '一家店怎么上到 Jiju' } },
         { kind: 'node', node: <JijuFlowChart isZh={isZh} /> },
         { kind: 'node', node: <JijuCheckFunnels isZh={isZh} /> },
+        { kind: 'node', node: <JijuPhoneCard isZh={isZh} /> },
 
         { kind: 'h', text: { en: 'While I sleep', zh: '我睡觉的时候' } },
         { kind: 'node', node: <JijuNightShift isZh={isZh} /> },

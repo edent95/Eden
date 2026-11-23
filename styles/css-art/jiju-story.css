@@ -1,0 +1,187 @@
+/* /jiju-pet automation section illustrations (components/css-art/jiju-story-art.tsx).
+   Flat spot art in the product page palette: one accent (mint in light, orange in dark, matching
+   the page's --ep-primary), ink, paper and a night blue. Loops only animate transform / opacity and
+   stop under prefers-reduced-motion. */
+
+.jjart {
+  --jjart-ink: #1c1917;
+  --jjart-paper: #ffffff;
+  --jjart-soft: #f2f3f5;
+  --jjart-line: #d4d6dc;
+  --jjart-accent: #7bdcb5;
+  --jjart-accent-deep: #3f9b76;
+  --jjart-on-accent: #0f2b21;
+  --jjart-night-top: #1d2742;
+  --jjart-night-bottom: #2f3d63;
+  --jjart-day-top: #e6f6ef;
+  --jjart-day-bottom: #fbfaf6;
+  --jjart-moon: #fff3c4;
+  --jjart-sun: #f6c454;
+  --jjart-wood: #4a3f39;
+  --jjart-ground: #e9e3d7;
+  --jjart-wall: #fff8ee;
+  --jjart-awning: #f28c38;
+  --jjart-robot: #e8ecf3;
+  --jjart-robot-body: #c9d2e1;
+  --jjart-pig: #f5b8c4;
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+:root[data-theme="dark"] .jjart {
+  --jjart-ink: #f5f5f7;
+  --jjart-paper: #1c1c1e;
+  --jjart-soft: #111113;
+  --jjart-line: #3a3a3f;
+  --jjart-accent: #f28c38;
+  --jjart-accent-deep: #ffab66;
+  --jjart-on-accent: #220d12;
+  --jjart-night-top: #0b1020;
+  --jjart-night-bottom: #18213a;
+  --jjart-day-top: #2a2118;
+  --jjart-day-bottom: #17130f;
+  --jjart-wood: #2a2522;
+  --jjart-ground: #2b2620;
+  --jjart-wall: #2c2722;
+  --jjart-awning: #7bdcb5;
+  --jjart-robot: #d8dde8;
+  --jjart-robot-body: #9aa6bd;
+  --jjart-pig: #d98a9a;
+}
+
+/* shared parts */
+.jjart-stroke { stroke: var(--jjart-ink); stroke-width: 1.6; stroke-linecap: round; fill: none; }
+.jjart-stroke-thick { stroke-width: 3; }
+.jjart-accent { fill: var(--jjart-accent); }
+.jjart-ink-fill { fill: var(--jjart-ink); }
+.jjart-check { fill: none; stroke: var(--jjart-on-accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.jjart-check-big { stroke-width: 3.2; }
+.jjart-robot-head { fill: var(--jjart-robot); stroke: var(--jjart-ink); stroke-width: 1.2; }
+.jjart-robot-body { fill: var(--jjart-robot-body); stroke: var(--jjart-ink); stroke-width: 1.2; }
+.jjart-robot-leg { fill: var(--jjart-ink); }
+.jjart-eye { fill: #1c1917; }
+.jjart-eye-dark { fill: #1c1917; }
+.jjart-card-bg { fill: var(--jjart-paper); stroke: var(--jjart-ink); stroke-width: 1.2; }
+.jjart-card-line { fill: var(--jjart-line); }
+.jjart-glass { fill: color-mix(in srgb, var(--jjart-accent) 25%, transparent); stroke: var(--jjart-ink); stroke-width: 2.2; }
+
+/* night & day banner */
+.jjart-nightday { border-radius: 22px; }
+.jjart-stop-night-top { stop-color: var(--jjart-night-top); }
+.jjart-stop-night-bottom { stop-color: var(--jjart-night-bottom); }
+.jjart-stop-day-top { stop-color: var(--jjart-day-top); }
+.jjart-stop-day-bottom { stop-color: var(--jjart-day-bottom); }
+.jjart-stop-day-fill { fill: var(--jjart-day-top); }
+.jjart-moon { fill: var(--jjart-moon); }
+.jjart-moon-cut { fill: var(--jjart-night-top); }
+.jjart-spot-moon-cut { fill: var(--jjart-soft); }
+.jjart-star { fill: var(--jjart-moon); }
+.jjart-desk { fill: var(--jjart-wood); }
+.jjart-laptop-lid { fill: #2b2b30; }
+.jjart-screen { fill: #12141c; }
+.jjart-screen-line { fill: color-mix(in srgb, var(--jjart-accent) 70%, #ffffff); opacity: 0.85; }
+.jjart-laptop-base { fill: #8f949e; }
+.jjart-stamp-ring { fill: var(--jjart-paper); stroke: var(--jjart-accent-deep); stroke-width: 3; stroke-dasharray: 5 4; }
+.jjart-sun-core { fill: var(--jjart-sun); }
+.jjart-sun-ray { fill: var(--jjart-sun); opacity: 0.8; }
+.jjart-ground { fill: var(--jjart-ground); }
+.jjart-shop-wall { fill: var(--jjart-wall); stroke: var(--jjart-ink); stroke-width: 1.4; }
+.jjart-awning-base { fill: var(--jjart-awning); stroke: var(--jjart-ink); stroke-width: 1.4; }
+.jjart-awning-a { fill: var(--jjart-awning); stroke: var(--jjart-ink); stroke-width: 1.2; }
+.jjart-awning-b { fill: var(--jjart-paper); stroke: var(--jjart-ink); stroke-width: 1.2; }
+.jjart-window { fill: color-mix(in srgb, var(--jjart-accent) 30%, var(--jjart-paper)); stroke: var(--jjart-ink); stroke-width: 1.4; }
+.jjart-window-shine { fill: none; stroke: var(--jjart-paper); stroke-width: 2; stroke-linecap: round; opacity: 0.7; }
+.jjart-door { fill: var(--jjart-accent-deep); stroke: var(--jjart-ink); stroke-width: 1.4; }
+.jjart-sign { fill: var(--jjart-ink); }
+.jjart-person-head { fill: #c98e6b; stroke: var(--jjart-ink); stroke-width: 1.2; }
+.jjart-person-body { fill: var(--jjart-accent-deep); stroke: var(--jjart-ink); stroke-width: 1.2; }
+.jjart-phone { fill: var(--jjart-ink); }
+.jjart-phone-screen { fill: var(--jjart-accent); }
+.jjart-cat-body { fill: #1c1917; }
+:root[data-theme="dark"] .jjart-cat-body { fill: #0a0a0a; stroke: #5b5b63; stroke-width: 1; }
+.jjart-cat-tail { fill: none; stroke: #1c1917; stroke-width: 4; stroke-linecap: round; }
+.jjart-cat-eye { fill: #f6c454; }
+
+/* belief spots */
+.jjart-spot { max-width: 112px; }
+.jjart-spot-bg { fill: var(--jjart-soft); }
+.jjart-bubble { fill: var(--jjart-paper); stroke: var(--jjart-ink); stroke-width: 1.4; }
+.jjart-quote { fill: var(--jjart-accent); stroke: var(--jjart-ink); stroke-width: 1.2; stroke-linejoin: round; }
+.jjart-dots { fill: none; stroke: var(--jjart-ink); stroke-width: 1.4; stroke-dasharray: 2 3; stroke-linecap: round; }
+.jjart-page { fill: var(--jjart-paper); stroke: var(--jjart-ink); stroke-width: 1.4; }
+.jjart-shadow { fill: var(--jjart-line); opacity: 0.5; }
+.jjart-blank-box { fill: none; stroke: var(--jjart-accent-deep); stroke-width: 1.6; stroke-dasharray: 3 3; }
+.jjart-caret { fill: var(--jjart-accent-deep); }
+.jjart-pencil-body { fill: var(--jjart-sun); stroke: var(--jjart-ink); stroke-width: 1.2; }
+.jjart-cross { fill: none; stroke: #e0564b; stroke-width: 3; stroke-linecap: round; }
+.jjart-pig { fill: var(--jjart-pig); stroke: var(--jjart-ink); stroke-width: 1.3; }
+.jjart-pig-snout { fill: color-mix(in srgb, var(--jjart-pig) 70%, #c0506a); stroke: var(--jjart-ink); stroke-width: 1.2; }
+.jjart-slot { fill: var(--jjart-ink); }
+.jjart-coin-face { fill: var(--jjart-sun); stroke: var(--jjart-ink); stroke-width: 1.2; }
+.jjart-coin-mark { fill: var(--jjart-ink); opacity: 0.5; }
+
+/* storefront */
+.jjart-storefront { border-radius: 14px; }
+.jjart-cup { fill: var(--jjart-paper); stroke: var(--jjart-ink); stroke-width: 1.2; }
+.jjart-steam-line { fill: none; stroke: var(--jjart-ink); stroke-width: 1.4; stroke-linecap: round; opacity: 0.5; }
+
+/* ---------- motion ---------- */
+/* fill-box only on the animated parts: set globally it would also move the origin of the
+   static transform="rotate(…)" attributes (the sun rays collapsed onto themselves). */
+.jjart-screen-tick,
+.jjart-magnifier,
+.jjart-stamp,
+.jjart-sun-rays,
+.jjart-cat-tail,
+.jjart-popcard,
+.jjart-press-mark,
+.jjart-pen { transform-box: fill-box; }
+
+.jjart-star { animation: jjart-twinkle 3.2s ease-in-out infinite; }
+.jjart-star-1 { animation-delay: -1.1s; }
+.jjart-star-2 { animation-delay: -2.2s; }
+.jjart-bob { animation: jjart-bob 1.8s ease-in-out infinite; }
+.jjart-bob-2 { animation-delay: -0.9s; }
+.jjart-fly { animation: jjart-fly 3.6s ease-in-out infinite; }
+.jjart-screen-tick { transform-origin: center; animation: jjart-pop 3.6s ease-in-out infinite; }
+.jjart-magnifier { animation: jjart-sway 2.6s ease-in-out infinite; transform-origin: 80% 80%; }
+.jjart-stamp { transform-origin: center; animation: jjart-stamp 3.6s ease-in-out infinite; }
+.jjart-sun-rays { transform-origin: center; animation: jjart-spin 24s linear infinite; }
+.jjart-walk { animation: jjart-bob 1.4s ease-in-out infinite; }
+.jjart-cat-tail { transform-origin: 0% 100%; animation: jjart-sway 1.6s ease-in-out infinite; }
+.jjart-popcard { transform-origin: center bottom; animation: jjart-pop 3.6s ease-in-out infinite; animation-delay: -1.2s; }
+.jjart-press { animation: jjart-press 2.4s ease-in-out infinite; }
+.jjart-press-mark { transform-origin: center; animation: jjart-pop 2.4s ease-in-out infinite; }
+.jjart-highlight { animation: jjart-glow 2.4s ease-in-out infinite; }
+.jjart-caret { animation: jjart-blink 1.1s steps(1) infinite; }
+.jjart-pen { animation: jjart-sway 1.2s ease-in-out infinite; transform-origin: 50% 100%; }
+.jjart-scan { animation: jjart-scan 2.8s ease-in-out infinite; }
+.jjart-coin { animation: jjart-coin 2.4s ease-in infinite; }
+.jjart-steam { animation: jjart-steam 2.6s ease-in-out infinite; }
+
+@keyframes jjart-twinkle { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+@keyframes jjart-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes jjart-fly {
+  0% { transform: translate(-60px, 20px); opacity: 0; }
+  20% { opacity: 1; }
+  70% { transform: translate(60px, -6px); opacity: 1; }
+  85%, 100% { transform: translate(72px, -2px); opacity: 0; }
+}
+@keyframes jjart-pop { 0%, 60%, 100% { transform: scale(1); } 70% { transform: scale(1.25); } 80% { transform: scale(0.95); } }
+@keyframes jjart-sway { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+@keyframes jjart-stamp { 0%, 55%, 100% { transform: translateY(0) scale(1); } 62% { transform: translateY(-6px) scale(1.12); } 70% { transform: translateY(0) scale(0.96); } }
+@keyframes jjart-spin { to { transform: rotate(360deg); } }
+@keyframes jjart-press { 0%, 100% { transform: translateY(0); } 45%, 55% { transform: translateY(12px); } }
+@keyframes jjart-glow { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+@keyframes jjart-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+@keyframes jjart-scan { 0%, 100% { transform: translateX(-10px); } 50% { transform: translateX(4px); } }
+@keyframes jjart-coin { 0% { transform: translateY(-6px); opacity: 0; } 20% { opacity: 1; } 70% { transform: translateY(12px); opacity: 1; } 80%, 100% { transform: translateY(14px); opacity: 0; } }
+@keyframes jjart-steam { 0%, 100% { transform: translateY(0); opacity: 0.4; } 50% { transform: translateY(-3px); opacity: 0.9; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .jjart *,
+  .jjart { animation: none !important; }
+  .jjart-fly { opacity: 0; }
+}
