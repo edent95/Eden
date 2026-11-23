@@ -583,8 +583,8 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
             'Jiju 从 2026 年 1 月跟 AI 一起写代码开始。到 2026 年 11 月，日常的活大多由 agent 在夜里做：五个 Grok bot 按每日份额经 Jiju API 找地点、优惠和活动；本机 Ollama 上的 gemma4 读来源、提议卖点；代码逐字核对每句引文都在 https 来源里；Claude 按标签定义复核；新地点和价格等人确认。马来西亚与新加坡 12 个州 / 地区共上架 847 家。',
           ),
           L(
-            'Code is written by Claude Code and Codex, each change in its own git worktree, audited read-only by agy, checked on a self-hosted CI runner, and merged automatically once every check passes. 434 pull requests have merged so far. Claude runs on a subscription and every other source stays on a free tier with hard daily caps.',
-            '代码由 Claude Code 与 Codex 写，每个改动一个独立 git worktree，agy 做只读体检，检查跑在自托管 CI runner 上，全部通过就自动合并，目前已合并 434 个 PR。Claude 用订阅，其余来源都守在免费档并写死每日上限。',
+            'Code is written by Claude Code and Codex, each change in its own git worktree, audited read-only by agy, checked on a self-hosted CI runner, and merged automatically once every check passes. 435 pull requests had merged by 23 November 2026. Claude runs on a subscription and every other source stays on a free tier with hard daily caps.',
+            '代码由 Claude Code 与 Codex 写，每个改动一个独立 git worktree，agy 做只读体检，检查跑在自托管 CI runner 上，全部通过就自动合并，截至 2026-11-23 已合并 435 个 PR。Claude 用订阅，其余来源都守在免费档并写死每日上限。',
           ),
         ],
       },
