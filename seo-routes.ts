@@ -434,6 +434,24 @@ export const ROUTE_SEO: RouteSeo[] = [
     og: 'igaming-cases',
   },
   {
+    // One-reader page (2026-11-23): application to be AI Malaysia's CEO's personal AI advisor. Unlisted.
+    path: '/for/arzumy',
+    datePublished: '2026-11-23',
+    dateModified: '2026-11-23',
+    priority: '0.1',
+    index: false,
+    sitemap: false,
+    title: {
+      en: 'For Arzumy: what I built instead of a resume | Eden Tan',
+      zh: '写给 Arzumy:用做出来的东西代替简历 | Eden Tan',
+    },
+    desc: {
+      en: 'Jiju, a Malaysian places guide built and run almost entirely by AI, and how the same rules could work at AI Malaysia.',
+      zh: 'Jiju:一个几乎全由 AI 搭建和运营的马来西亚去处指南,以及同样的规矩怎么用在 AI Malaysia。',
+    },
+    og: 'site',
+  },
+  {
     path: '/igaming/resume',
     datePublished: '2026-10-28',
     dateModified: '2026-11-18',
