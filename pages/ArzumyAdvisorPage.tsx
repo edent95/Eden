@@ -1,7 +1,16 @@
 import React from 'react';
-import { ArrowLeft, ArrowRight, Coffee, Linkedin, Mail } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Linkedin, Mail } from 'lucide-react';
 import { JijuBeliefs, JijuFlowChart } from '../components/JijuStory';
-import { JijuShipGate } from '../components/JijuCharts';
+import { JijuCheckFunnels, JijuNightShift, JijuRegionBars, JijuShipGate } from '../components/JijuCharts';
+import { JijuPhoneCard } from '../components/JijuPhoneCard';
+import {
+  JijuBeliefCheckArt,
+  JijuBeliefDecideArt,
+  JijuBeliefSaveArt,
+  JijuBeliefSourceArt,
+  JijuNightDayArt,
+  JijuStorefrontArt,
+} from '../components/css-art/jiju-story-art';
 import { useCountUp } from '../components/ProductStorePage';
 import { ABOUT_EMAIL, ABOUT_LINKEDIN } from '../components/about-content';
 
@@ -26,8 +35,9 @@ const STATS: { value: number; unit: T; text: T }[] = [
   { value: 1, unit: { en: 'person', zh: '个人' }, text: { en: 'started it in January 2026 by chatting with an AI', zh: '2026 年 1 月开始,跟 AI 一句句聊出来' } },
 ];
 
-const FITS: { from: T; to: T; text: T }[] = [
+const FITS: { Art: typeof JijuBeliefSourceArt; from: T; to: T; text: T }[] = [
   {
+    Art: JijuBeliefSourceArt,
     from: { en: 'No source, no claim', zh: '没有出处,就不说' },
     to: { en: 'AI the public can trust', zh: '让公众信得过的 AI' },
     text: {
@@ -36,6 +46,7 @@ const FITS: { from: T; to: T; text: T }[] = [
     },
   },
   {
+    Art: JijuBeliefDecideArt,
     from: { en: 'Machines search, a person decides', zh: '机器去找,人来拍板' },
     to: { en: 'Officers stay accountable', zh: '责任留在人身上' },
     text: {
@@ -44,6 +55,7 @@ const FITS: { from: T; to: T; text: T }[] = [
     },
   },
   {
+    Art: JijuBeliefSaveArt,
     from: { en: 'No money wasted', zh: '不花冤枉钱' },
     to: { en: 'Public money, local data', zh: '公帑与本地数据' },
     text: {
@@ -52,6 +64,7 @@ const FITS: { from: T; to: T; text: T }[] = [
     },
   },
   {
+    Art: JijuBeliefCheckArt,
     from: { en: 'Agents get keys, not trust', zh: '给 agent 钥匙,不给信任' },
     to: { en: 'Safe AI agents at scale', zh: '可以放大的安全 agent' },
     text: {
@@ -175,18 +188,31 @@ const ArzumyAdvisorPage: React.FC<{ language: Lang; jijuHref: string; controls: 
               ? 'Jiju 是一个马来西亚的去处指南,从搭建到日常运营几乎全由 AI 完成,背后只有我一个人。我想在 AI Malaysia 做你的个人 AI 顾问,帮你把同样的做法用起来。'
               : 'Jiju is a Malaysian places guide, built and run almost entirely by AI, with one person behind it. I would like to help you do the same at AI Malaysia, as your personal AI advisor.'}
           </p>
+          <figure className="jjs-hero-art arz-hero-art">
+            <JijuNightDayArt label={isZh ? '插画:夜里 AI 助手把店家卡片搬进电脑,另一个机器人拿放大镜检查;中间是早上的确认章;白天一个人带着小黑猫走向店家,手机上的卡片有核对过的勾。' : 'Illustration: at night AI helpers carry shop cards into a laptop while another robot checks them with a magnifier; a morning confirm stamp in the middle; by day a person and a black cat walk to a shop, and the card on the phone has a checked tick.'} />
+            <figcaption>{isZh ? '夜里机器干活,早上我确认,白天大家出门。' : 'Machines work at night, I confirm in the morning, people go out by day.'}</figcaption>
+          </figure>
           <p className="arz-congrats">{isZh ? '恭喜你今天(2026 年 11 月 23 日)正式上任。' : 'Congratulations on starting at AI Malaysia today, 23 November 2026.'}</p>
         </header>
 
         <section className="arz-stats" aria-label={isZh ? 'Jiju 的三个数字' : 'Jiju in three numbers'}>
           {STATS.map((item) => <Stat key={item.unit.en} item={item} lang={lang} />)}
           <p className="arz-source">{isZh ? '数字取自 Jiju 与个人面板的代码库,2026-11-23;和 jiju-pet 页面公开的一致。' : 'Figures read from the Jiju and dashboard repositories on 2026-11-23; the same ones published on the Jiju page.'}</p>
+          <div className="arz-stats-chart"><JijuRegionBars isZh={isZh} /></div>
         </section>
 
         <section className="arz-section">
           <h2>{isZh ? '一家店怎么上到 Jiju' : 'How one shop gets onto Jiju'}</h2>
           <p className="arz-lead">{isZh ? 'AI 找、AI 写、另一个 AI 挑错,最后我确认。图会自己跑三个真实例子。' : 'AI finds it, AI drafts it, another AI checks it, and I confirm. The chart plays three real examples.'}</p>
           <JijuFlowChart isZh={isZh} />
+          <JijuCheckFunnels isZh={isZh} />
+          <JijuPhoneCard isZh={isZh} />
+        </section>
+
+        <section className="arz-section">
+          <h2>{isZh ? '我睡觉的时候' : 'While I sleep'}</h2>
+          <p className="arz-lead">{isZh ? '重活排在夜里、插着电、没人用电脑时才跑,用的是自己电脑上的模型。' : 'Heavy work runs at night, on mains power, when nobody is using the laptop, on a model running on that laptop.'}</p>
+          <JijuNightShift isZh={isZh} />
         </section>
 
         <section className="arz-section">
@@ -203,6 +229,7 @@ const ArzumyAdvisorPage: React.FC<{ language: Lang; jijuHref: string; controls: 
           <ol ref={fitsRef} className="arz-fits">
             {FITS.map((fit, index) => (
               <li key={fit.from.en} className={`arz-fit${index < fitsShown ? ' is-in' : ''}`}>
+                <span className="jjs-belief-art arz-fit-art"><fit.Art label="" /></span>
                 <p className="arz-fit-pair">
                   <span className="arz-fit-from">{t(fit.from)}</span>
                   <ArrowRight size={14} aria-hidden="true" />
@@ -235,7 +262,7 @@ const ArzumyAdvisorPage: React.FC<{ language: Lang; jijuHref: string; controls: 
         </section>
 
         <section className="arz-cta">
-          <Coffee size={28} aria-hidden="true" />
+          <span className="arz-cta-art" aria-hidden="true"><JijuStorefrontArt label="" /></span>
           <h2>{isZh ? '在吉隆坡喝杯咖啡,或者通个 20 分钟电话?' : 'Coffee in KL, or a 20-minute call?'}</h2>
           <p>{isZh ? '我可以当面打开 Jiju 和面板给你看它们怎么跑。' : 'I can open Jiju and the dashboard and show you how they run.'}</p>
           <div className="arz-cta-links">

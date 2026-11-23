@@ -31,6 +31,13 @@
   color: var(--ep-ink);
 }
 .arz-standfirst { margin: 20px 0 0; font-size: 1.15rem; line-height: 1.6; color: var(--ep-ink); }
+.arz-hero-art { margin: 28px 0 6px; }
+.arz-stats-chart { grid-column: 1 / -1; margin-top: 12px; }
+.arz-section > figure + figure,
+.arz-section > figure + div,
+.arz-section > div + figure { margin-top: 18px; }
+.arz-fit-art { width: 112px; margin-bottom: 10px; }
+.arz-fit-art .jjart-spot { max-width: 112px; }
 .arz-congrats { margin: 14px 0 0; font-size: 0.95rem; color: var(--ep-muted); }
 
 .arz-stats {
@@ -142,7 +149,8 @@
   background: var(--ep-soft);
   color: var(--ep-ink);
 }
-.arz-cta > svg { display: block; margin: 0 auto 10px; color: var(--ep-primary-outline); }
+.arz-cta-art { display: block; width: 144px; margin: 0 auto 14px; }
+.arz-cta-art .jjart-spot { max-width: 144px; }
 .arz-cta > p { margin: 0 0 20px; color: var(--ep-muted); }
 .arz-cta-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
 .arz-cta-links a {
