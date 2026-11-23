@@ -1,0 +1,257 @@
+/* /jiju-pet "How Jiju runs itself" figures (components/JijuCharts.tsx).
+   Uses the product page's --ep-* tokens, so light / dark follow the page.
+   Motion: bars grow once on scroll-in; the flow token, night checklist and ship gate loop while visible. */
+
+.jjc-figure {
+  margin: 30px 0 0;
+  padding: 22px 20px 18px;
+  border: 1px solid var(--ep-line);
+  border-radius: var(--ep-radius-sm);
+  background: var(--ep-soft);
+  min-width: 0;
+}
+
+.jjc-figure figcaption {
+  margin-top: 14px;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--ep-muted);
+}
+
+.jjc-figure-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 12px;
+  margin: 0 0 16px;
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--ep-ink);
+}
+
+.jjc-figure-title span { font-size: 0.86rem; font-weight: 600; color: var(--ep-muted); }
+
+/* ---------- 1. region bars ---------- */
+
+.jjc-hbars { display: grid; gap: 10px; }
+
+.jjc-hbar {
+  display: grid;
+  grid-template-columns: minmax(84px, 8.5rem) minmax(0, 1fr) 3ch;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.86rem;
+}
+
+.jjc-hbar-label { color: var(--ep-ink); font-weight: 600; overflow-wrap: anywhere; }
+.jjc-hbar-track { height: 12px; border-radius: 999px; background: var(--ep-paper); border: 1px solid var(--ep-line); overflow: hidden; }
+.jjc-hbar-fill { display: block; height: 100%; border-radius: 999px; background: var(--ep-soft-ink); }
+.jjc-hbar.is-lead .jjc-hbar-fill { background: var(--ep-primary-outline); }
+.jjc-hbar-value { font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; color: var(--ep-ink); }
+
+/* ---------- 2. place flow ---------- */
+
+.jjc-flow { padding: 6px 0 2px; }
+
+.jjc-flow-track {
+  position: relative;
+  display: grid;
+  min-height: 112px;
+  overflow: hidden;
+}
+
+.jjc-flow-rail,
+.jjc-flow-rail-fill {
+  position: absolute;
+  top: 13px;
+  left: calc(100% / 12);
+  width: calc(100% * 10 / 12);
+  height: 2px;
+  border-radius: 2px;
+  background: var(--ep-line);
+}
+
+.jjc-flow-rail-fill {
+  background: var(--ep-primary-outline);
+  transform-origin: left center;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.jjc-flow-token-lane {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 28px;
+  pointer-events: none;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 2;
+}
+
+.jjc-flow-token {
+  position: absolute;
+  top: 3px;
+  left: calc(100% / 12 - 11px);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 3px solid var(--ep-paper);
+  background: var(--ep-primary-outline);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.18);
+}
+
+.jjc-flow-stop {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  text-align: center;
+}
+
+.jjc-flow-dot {
+  position: relative;
+  z-index: 1;
+  width: 12px;
+  height: 12px;
+  margin: 8px 0 4px;
+  border-radius: 50%;
+  border: 2px solid var(--ep-line);
+  background: var(--ep-paper);
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.jjc-flow-stop.is-reached .jjc-flow-dot { border-color: var(--ep-primary-outline); background: var(--ep-primary-outline); }
+.jjc-flow-label { font-size: 0.86rem; font-weight: 700; color: var(--ep-muted); transition: color 0.3s ease; }
+.jjc-flow-stop.is-reached .jjc-flow-label { color: var(--ep-ink); }
+.jjc-flow-who { font-size: 0.74rem; line-height: 1.3; color: var(--ep-soft-ink); overflow-wrap: anywhere; transition: color 0.3s ease; }
+.jjc-flow-stop.is-here .jjc-flow-who { color: var(--ep-primary-outline); font-weight: 700; }
+
+/* ---------- 3. funnels ---------- */
+
+.jjc-funnels { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+
+.jjc-funnel { display: grid; gap: 8px; padding: 14px; border-radius: 14px; background: var(--ep-paper); border: 1px solid var(--ep-line); }
+.jjc-funnel-title { margin: 0 0 2px; font-size: 0.86rem; font-weight: 700; color: var(--ep-muted); }
+
+.jjc-funnel-row { display: grid; gap: 4px; }
+
+.jjc-funnel-track { display: block; height: 10px; border-radius: 999px; background: var(--ep-soft); border: 1px solid var(--ep-line); overflow: hidden; }
+.jjc-funnel-bar { display: block; height: 100%; border-radius: 999px; background: var(--ep-soft-ink); }
+.jjc-funnel-row.is-kept .jjc-funnel-bar { background: var(--ep-primary-outline); }
+.jjc-funnel-text { font-size: 0.84rem; color: var(--ep-muted); }
+.jjc-funnel-text strong { font-variant-numeric: tabular-nums; color: var(--ep-ink); }
+.jjc-funnel-row.is-kept .jjc-funnel-text { color: var(--ep-ink); font-weight: 600; }
+
+/* ---------- 4. night shift ---------- */
+
+.jjc-night { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+
+.jjc-night-row {
+  display: grid;
+  grid-template-columns: 3.2rem 20px minmax(0, 1fr);
+  align-items: center;
+  gap: 2px 10px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--ep-line);
+  background: var(--ep-paper);
+  font-size: 0.86rem;
+  color: var(--ep-muted);
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.jjc-night-at { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ep-ink); }
+
+.jjc-night-check {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid var(--ep-line);
+  font-size: 0.7rem;
+  color: transparent;
+  transform: scale(0.8);
+  transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.jjc-night-job { overflow-wrap: anywhere; }
+.jjc-night-where { grid-column: 3; font-size: 0.76rem; color: var(--ep-soft-ink); }
+
+.jjc-night-row.is-running { border-color: var(--ep-primary-outline); color: var(--ep-ink); }
+.jjc-night-row.is-done { color: var(--ep-ink); }
+
+.jjc-night-row.is-done .jjc-night-check {
+  border-color: var(--ep-primary-outline);
+  background: var(--ep-primary-outline);
+  color: var(--ep-paper);
+  transform: none;
+}
+
+.jjc-night-morning.is-done { border-color: var(--ep-primary-outline); background: var(--ep-primary); color: var(--ep-primary-text); }
+.jjc-night-morning.is-done .jjc-night-at,
+.jjc-night-morning.is-done .jjc-night-where { color: var(--ep-primary-text); }
+
+/* ---------- 5. ship gate ---------- */
+
+.jjc-gate { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+
+.jjc-gate-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--ep-line);
+  background: var(--ep-paper);
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--ep-muted);
+  transition: color 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.jjc-gate-check {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid var(--ep-line);
+  font-size: 0.7rem;
+  color: transparent;
+  transform: scale(0.8);
+  transition: transform 0.25s ease, background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.jjc-gate-step.is-running { border-color: var(--ep-primary-outline); color: var(--ep-ink); }
+.jjc-gate-step.is-passed { color: var(--ep-ink); }
+
+.jjc-gate-step.is-passed .jjc-gate-check {
+  border-color: var(--ep-primary-outline);
+  background: var(--ep-primary-outline);
+  color: var(--ep-paper);
+  transform: none;
+}
+
+.jjc-gate-done.is-passed { border-color: var(--ep-primary-outline); background: var(--ep-primary); color: var(--ep-primary-text); }
+
+@media (max-width: 520px) {
+  .jjc-figure { padding: 18px 14px 14px; }
+  .jjc-flow-label { font-size: 0.74rem; }
+  .jjc-flow-who { font-size: 0.66rem; }
+  .jjc-hbar { grid-template-columns: minmax(72px, 6.5rem) minmax(0, 1fr) 3ch; gap: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jjc-flow-rail-fill,
+  .jjc-flow-token-lane,
+  .jjc-flow-dot,
+  .jjc-flow-label,
+  .jjc-flow-who,
+  .jjc-night-row,
+  .jjc-night-check,
+  .jjc-gate-step,
+  .jjc-gate-check { transition: none; }
+}

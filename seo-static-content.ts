@@ -576,10 +576,23 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
         ],
       },
       {
+        title: L('How AI runs Jiju now', 'Jiju 现在怎么由 AI 自动跑'),
+        paragraphs: [
+          L(
+            'Jiju began in January 2026 as pair-coding with an AI. By November 2026 most daily work runs on agents at night: five Grok bots find places, deals and events through the Jiju API with daily quotas; a local gemma4 model on Ollama reads sources and proposes highlights; code checks every quote word for word against an https source; Claude reviews the rest against each tag definition; and new places or prices wait for a human to confirm. 847 places are published across 12 regions of Malaysia and Singapore.',
+            'Jiju 从 2026 年 1 月跟 AI 一起写代码开始。到 2026 年 11 月，日常的活大多由 agent 在夜里做：五个 Grok bot 按每日份额经 Jiju API 找地点、优惠和活动；本机 Ollama 上的 gemma4 读来源、提议卖点；代码逐字核对每句引文都在 https 来源里；Claude 按标签定义复核；新地点和价格等人确认。马来西亚与新加坡 12 个州 / 地区共上架 847 家。',
+          ),
+          L(
+            'Code is written by Claude Code and Codex, each change in its own git worktree, audited read-only by agy, checked on a self-hosted CI runner, and merged automatically once every check passes. 434 pull requests have merged so far. Claude runs on a subscription and every other source stays on a free tier with hard daily caps.',
+            '代码由 Claude Code 与 Codex 写，每个改动一个独立 git worktree，agy 做只读体检，检查跑在自托管 CI runner 上，全部通过就自动合并，目前已合并 434 个 PR。Claude 用订阅，其余来源都守在免费档并写死每日上限。',
+          ),
+        ],
+      },
+      {
         title: L('Where it runs', '在哪里运行'),
         paragraphs: [
           L(
-            'Jiju is free, starts in Penang, Malaysia with depth over reach, and runs in any browser as a responsive web app that can be installed to the home screen from jiju.pet.',
+            'Jiju is free, started in Penang, Malaysia with depth over reach, and runs in any browser as a responsive web app that can be installed to the home screen from jiju.pet.',
             'Jiju 免费，从马来西亚 Penang 开始，先做深再做广；它是响应式 web app，在任何浏览器打开，也可以从 jiju.pet 安装到主画面。',
           ),
         ],
