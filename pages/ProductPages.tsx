@@ -1171,6 +1171,7 @@ export const JijuPetFullPage: React.FC<{
 
   return (
     <ProductStorePage
+      pageClassName="jiju-product-page"
       isZh={isZh}
       controls={<HeaderControls language={language} setLanguage={setLanguage} themePreference={themePreference} theme={theme} setThemePreference={setThemePreference} />}
       backHref={homeHref}

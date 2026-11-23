@@ -1,271 +1,256 @@
 import React from 'react';
 import type { CssArtComponent } from './index';
 
+/* ---- /jiju-pet "How Jiju runs itself" illustrations (styles/css-art/jiju-story.css, `.jjart`) ----
+   Drawn by the golden-ratio rules of the Jiju brand (golden-design-system skill):
+   · canvases are Fibonacci golden rectangles — banner 610 × 233 (night = 377 × 233 golden rectangle,
+     day = 233 × 233 square, seam at 610/φ), spots 89 × 55, storefront 233 × 144;
+   · sizes and radii are Fibonacci numbers (2 3 5 8 13 21 34 55 89 …); shapes are circles,
+     rounded rectangles and straight polygons — no Bézier curves;
+   · no outlines: flat fills only, separated by the three φ tones of one hue (main / tint / deep);
+   · colours are Jiju's golden-angle palette (amber #F59E0B, hue + k × 137.5° in OKLCH):
+     amber, sky, rose, leaf, iris, coral — each belief spot leads with one hue, in that order.
+   No words inside the art (the page around it is bilingual). An empty label makes the art
+   decorative (aria-hidden). Every loop stops under prefers-reduced-motion. */
+
 /** Decorative when used next to text that already says the same thing (empty label). */
 const a11y = (label: string) => (label ? { role: 'img' as const, 'aria-label': label } : { 'aria-hidden': true as const });
 
-/* ---- /jiju-pet "How Jiju runs itself" illustrations (styles/css-art/jiju-story.css, `.jjart`) ----
-   Flat, friendly spot art for non-technical readers, in the product page's palette:
-   one accent (mint in light mode, orange in dark), ink, paper and a night blue.
-   · JijuNightDayArt  — banner: at night little AI helpers carry shop cards into a laptop while a
-                        checker robot inspects them; a morning stamp in the middle; by day a person
-                        and the Jiju black cat walk to a shop while a phone shows a verified card.
-   · JijuBelief*Art   — one small scene per rule on the page (decide / source / blank / check / save).
-   · JijuStorefrontArt — the storefront used as the "photo" in the phone mock-up.
-   No words inside the art (the page around it is bilingual); every motion loop stops under
-   prefers-reduced-motion. */
-
-const Robot: React.FC<{ x: number; y: number; className?: string; scale?: number }> = ({ x, y, className = '', scale = 1 }) => (
-  <g className={`jjart-robot ${className}`} transform={`translate(${x} ${y}) scale(${scale})`}>
-    <line x1="10" y1="-6" x2="10" y2="0" className="jjart-stroke" />
-    <circle cx="10" cy="-8" r="2.4" className="jjart-accent" />
-    <rect x="0" y="0" width="20" height="15" rx="5" className="jjart-robot-head" />
-    <circle cx="6.5" cy="7.5" r="1.9" className="jjart-eye" />
-    <circle cx="13.5" cy="7.5" r="1.9" className="jjart-eye" />
-    <rect x="2" y="17" width="16" height="13" rx="4" className="jjart-robot-body" />
-    <rect x="4" y="31" width="4" height="5" rx="1.5" className="jjart-robot-leg" />
-    <rect x="12" y="31" width="4" height="5" rx="1.5" className="jjart-robot-leg" />
+/** Helper robot, 21 wide × 42 tall, origin at the top-left of the head. */
+const Robot: React.FC<{ x: number; y: number; className?: string }> = ({ x, y, className = '' }) => (
+  <g className={`jjart-robot ${className}`} transform={`translate(${x} ${y})`}>
+    <rect x="9.5" y="-6" width="2" height="6" rx="1" className="f-iris-deep" />
+    <circle cx="10.5" cy="-7" r="3" className="f-amber" />
+    <rect x="0" y="0" width="21" height="13" rx="5" className="f-iris-tint" />
+    <circle cx="7" cy="6.5" r="2" className="f-iris-deep" />
+    <circle cx="14" cy="6.5" r="2" className="f-iris-deep" />
+    <rect x="3" y="15" width="15" height="13" rx="3" className="f-iris" />
+    <rect x="5" y="30" width="3" height="5" rx="1.5" className="f-iris-deep" />
+    <rect x="13" y="30" width="3" height="5" rx="1.5" className="f-iris-deep" />
   </g>
 );
 
+/** Shop card, 21 × 13; optional verified badge (leaf). */
 const Card: React.FC<{ x: number; y: number; className?: string; check?: boolean }> = ({ x, y, className = '', check = false }) => (
   <g className={`jjart-card ${className}`} transform={`translate(${x} ${y})`}>
-    <rect width="22" height="16" rx="3" className="jjart-card-bg" />
-    <rect x="4" y="4" width="10" height="2.4" rx="1.2" className="jjart-card-line" />
-    <rect x="4" y="9" width="14" height="2.4" rx="1.2" className="jjart-card-line" />
+    <rect width="21" height="13" rx="3" className="f-paper" />
+    <rect x="3" y="3" width="8" height="2" rx="1" className="f-sky" />
+    <rect x="3" y="8" width="13" height="2" rx="1" className="f-line" />
     {check && (
-      <g transform="translate(16 -4)">
-        <circle r="5" className="jjart-accent" />
-        <path d="M-2.2 0 L-0.6 1.8 L2.4 -1.6" className="jjart-check" />
+      <g transform="translate(19 -2)">
+        <circle r="5" className="f-leaf" />
+        <path d="M-2.2 0 L-0.6 1.8 L2.4 -1.6" className="jjart-tick" />
       </g>
     )}
   </g>
 );
 
+/** The Jiju black cat with amber eyes, 34 wide; origin at the paws' baseline, left. */
 const Cat: React.FC<{ x: number; y: number }> = ({ x, y }) => (
   <g className="jjart-cat" transform={`translate(${x} ${y})`}>
-    <path d="M30 6 C40 0 42 -10 36 -14" className="jjart-cat-tail" />
-    <ellipse cx="18" cy="8" rx="15" ry="8" className="jjart-cat-body" />
-    <circle cx="4" cy="-2" r="7.5" className="jjart-cat-body" />
-    <path d="M-2 -6 L-1 -14 L4 -8 Z M5 -8 L10 -14 L10 -5 Z" className="jjart-cat-body" />
-    <circle cx="1.5" cy="-2.5" r="1.3" className="jjart-cat-eye" />
-    <circle cx="6.5" cy="-2.5" r="1.3" className="jjart-cat-eye" />
-    <rect x="6" y="13" width="3.5" height="6" rx="1.5" className="jjart-cat-body" />
-    <rect x="25" y="13" width="3.5" height="6" rx="1.5" className="jjart-cat-body" />
+    <g className="jjart-cat-tail"><rect x="29" y="-21" width="3" height="13" rx="1.5" className="f-cat" /></g>
+    <rect x="5" y="-16" width="26" height="13" rx="6.5" className="f-cat" />
+    <circle cx="8" cy="-18" r="8" className="f-cat" />
+    <polygon points="1,-21 2,-29 7,-24" className="f-cat" />
+    <polygon points="9,-24 14,-29 15,-21" className="f-cat" />
+    <circle cx="5" cy="-18" r="1.6" className="f-amber" />
+    <circle cx="11" cy="-18" r="1.6" className="f-amber" />
+    <rect x="8" y="-5" width="3" height="5" rx="1.5" className="f-cat" />
+    <rect x="24" y="-5" width="3" height="5" rx="1.5" className="f-cat" />
+  </g>
+);
+
+/** Magnifier lens built from two filled circles (no outline), handle a rotated bar. */
+const Lens: React.FC<{ x: number; y: number; r?: number }> = ({ x, y, r = 8 }) => (
+  <g transform={`translate(${x} ${y})`}>
+    <g transform="rotate(-45)"><rect x={-r * 0.3} y={r * 0.7} width={r * 0.6} height={r * 1.2} rx={r * 0.3} className="f-iris-deep" /></g>
+    <circle r={r} className="f-iris-deep" />
+    <circle r={r * 0.68} className="f-sky-tint" />
+  </g>
+);
+
+/** Shopfront with a scalloped awning; 89 wide (Fibonacci). Origin top-left of the awning. */
+const Shop: React.FC<{ x: number; y: number }> = ({ x, y }) => (
+  <g className="jjart-shop" transform={`translate(${x} ${y})`}>
+    <rect x="0" y="8" width="89" height="81" className="f-amber-tint" />
+    {/* scallops first, the awning bar on top: only their lower halves show */}
+    {Array.from({ length: 6 }, (_, index) => (
+      <circle key={index} cx={-5 + 8.25 + index * 16.5} cy="13" r="8.25" className={index % 2 ? 'f-coral-tint' : 'f-coral'} />
+    ))}
+    <rect x="-5" y="0" width="99" height="13" rx="3" className="f-coral" />
+    <rect x="8" y="34" width="34" height="21" rx="3" className="f-sky-tint" />
+    <rect x="18" y="42" width="13" height="10" rx="2" className="f-paper" />
+    <circle cx="24.5" cy="38" r="2" className="f-sky jjart-steam" />
+    <rect x="55" y="34" width="21" height="55" rx="3" className="f-leaf" />
+    <circle cx="71" cy="63" r="2" className="f-leaf-deep" />
+    <rect x="8" y="64" width="34" height="5" rx="2.5" className="f-amber" />
   </g>
 );
 
 export const JijuNightDayArt: CssArtComponent = ({ label }) => (
-  <svg className="jjart jjart-nightday" viewBox="0 0 640 260" {...a11y(label)}>
+  <svg className="jjart jjart-nightday" viewBox="0 0 610 233" {...a11y(label)}>
     <defs>
-      <linearGradient id="jjart-night-sky" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" className="jjart-stop-night-top" />
-        <stop offset="1" className="jjart-stop-night-bottom" />
-      </linearGradient>
-      <linearGradient id="jjart-day-sky" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" className="jjart-stop-day-top" />
-        <stop offset="1" className="jjart-stop-day-bottom" />
-      </linearGradient>
-      <clipPath id="jjart-frame"><rect width="640" height="260" rx="22" /></clipPath>
+      <clipPath id="jjart-frame"><rect width="610" height="233" rx="21" /></clipPath>
     </defs>
     <g clipPath="url(#jjart-frame)">
-      {/* skies */}
-      <rect width="640" height="260" fill="url(#jjart-day-sky)" />
-      <path d="M0 0 H330 C300 70 360 150 316 260 H0 Z" fill="url(#jjart-night-sky)" />
-
-      {/* night: moon and stars */}
-      <circle cx="62" cy="52" r="20" className="jjart-moon" />
-      <circle cx="72" cy="45" r="17" className="jjart-moon-cut" />
-      {[[120, 30], [180, 58], [236, 26], [270, 84], [40, 110], [150, 96]].map(([cx, cy], index) => (
-        <circle key={index} cx={cx} cy={cy} r={index % 2 ? 1.8 : 2.4} className={`jjart-star jjart-star-${index % 3}`} />
+      {/* night: golden rectangle 377 × 233 */}
+      <rect width="377" height="233" className="f-night" />
+      <circle cx="233" cy="144" r="144" className="f-night-glow" />
+      <circle cx="55" cy="55" r="21" className="f-amber-tint" />
+      <circle cx="68" cy="47" r="18" className="f-night" />
+      {[[110, 34], [178, 21], [233, 55], [300, 30], [34, 110], [340, 89], [150, 89]].map(([cx, cy], index) => (
+        <circle key={index} cx={cx} cy={cy} r={index % 2 ? 1.5 : 2.5} className={`f-amber-tint jjart-star jjart-star-${index % 3}`} />
       ))}
+      <rect x="0" y="178" width="377" height="55" className="f-night-deep" />
 
-      {/* night: desk, laptop and helpers */}
-      <rect x="0" y="206" width="330" height="54" className="jjart-desk" />
+      {/* laptop on the golden line x = 377/φ ≈ 233 */}
       <g className="jjart-laptop">
-        <rect x="168" y="128" width="104" height="70" rx="7" className="jjart-laptop-lid" />
-        <rect x="175" y="135" width="90" height="56" rx="4" className="jjart-screen" />
-        <rect x="183" y="144" width="40" height="5" rx="2.5" className="jjart-screen-line" />
-        <rect x="183" y="156" width="62" height="5" rx="2.5" className="jjart-screen-line" />
-        <rect x="183" y="168" width="52" height="5" rx="2.5" className="jjart-screen-line" />
-        <circle cx="253" cy="171" r="7" className="jjart-accent jjart-screen-tick" />
-        <path d="M249.6 171 L252 173.6 L256.6 168.6" className="jjart-check" />
-        <path d="M156 198 H284 L290 206 H150 Z" className="jjart-laptop-base" />
+        <rect x="189" y="115" width="89" height="58" rx="5" className="f-night-deep" />
+        <rect x="194" y="120" width="79" height="48" rx="3" className="f-screen" />
+        <rect x="202" y="128" width="34" height="5" rx="2.5" className="f-sky" />
+        <rect x="202" y="139" width="55" height="5" rx="2.5" className="f-iris-tint" />
+        <rect x="202" y="150" width="42" height="5" rx="2.5" className="f-iris-tint" />
+        <g transform="translate(260 152)"><g className="jjart-screen-tick"><circle r="6" className="f-leaf" /><path d="M-2.6 0 L-0.7 2.1 L2.8 -1.9" className="jjart-tick" /></g></g>
+        <polygon points="178,173 289,173 297,180 170,180" className="f-iris" />
       </g>
-      <g className="jjart-helpers" transform="translate(0 -32) scale(1.15)">
-        <g className="jjart-bob jjart-bob-1"><Robot x={28} y={168} /><Card x={46} y={170} className="jjart-carry" /></g>
-        <g className="jjart-bob jjart-bob-2"><Robot x={84} y={168} /><Card x={102} y={170} className="jjart-carry" /></g>
-        <Card x={120} y={150} className="jjart-fly" />
+      <g className="jjart-helpers">
+        <g className="jjart-bob jjart-bob-1"><Robot x={34} y={143} /><Card x={55} y={150} /></g>
+        <g className="jjart-bob jjart-bob-2"><Robot x={97} y={143} /><Card x={118} y={150} /></g>
+        <Card x={145} y={128} className="jjart-fly" />
       </g>
       <g className="jjart-checker">
-        <Robot x={286} y={168} />
-        <g className="jjart-magnifier">
-          <circle cx="282" cy="160" r="8" className="jjart-glass" />
-          <line x1="288" y1="166" x2="294" y2="173" className="jjart-stroke jjart-stroke-thick" />
-        </g>
+        <Robot x={316} y={143} />
+        <g className="jjart-magnifier"><Lens x={306} y={136} r={8} /></g>
       </g>
 
-      {/* morning stamp on the seam */}
-      <g transform="translate(322 118)">
-        <g className="jjart-stamp">
-          <circle r="24" className="jjart-stamp-ring" />
-          <circle r="17" className="jjart-accent" />
-          <path d="M-7 0 L-2 5 L8 -6" className="jjart-check jjart-check-big" />
-        </g>
-      </g>
-
-      {/* day: sun, ground, shop, person and cat */}
-      <g className="jjart-sun" transform="translate(586 54)">
+      {/* day: 233 × 233 square */}
+      <rect x="377" width="233" height="233" className="f-day" />
+      <rect x="377" y="178" width="233" height="55" className="f-ground" />
+      <g transform="translate(576 34)">
         <g className="jjart-sun-rays">
-          {Array.from({ length: 10 }, (_, index) => (
-            <rect key={index} x="-2" y="-34" width="4" height="9" rx="2" transform={`rotate(${index * 36})`} className="jjart-sun-ray" />
+          {Array.from({ length: 8 }, (_, index) => (
+            <g key={index} transform={`rotate(${index * 45})`}><rect x="-1.5" y="-21" width="3" height="5" rx="1.5" className="f-amber" /></g>
           ))}
         </g>
-        <circle r="19" className="jjart-sun-core" />
+        <circle r="13" className="f-amber" />
       </g>
-      <rect x="316" y="214" width="324" height="46" className="jjart-ground" />
-      <g className="jjart-shop">
-        <rect x="486" y="118" width="120" height="96" rx="4" className="jjart-shop-wall" />
-        <path d="M478 108 H614 L606 128 H486 Z" className="jjart-awning-base" />
-        {Array.from({ length: 6 }, (_, index) => (
-          <path key={index} d={`M${486 + index * 20} 128 a10 8 0 0 0 20 0`} className={index % 2 ? 'jjart-awning-a' : 'jjart-awning-b'} />
-        ))}
-        <rect x="498" y="146" width="44" height="34" rx="3" className="jjart-window" />
-        <path d="M502 176 l10 -12 l8 8 l6 -6 l12 10" className="jjart-window-shine" />
-        <rect x="556" y="150" width="34" height="64" rx="3" className="jjart-door" />
-        <circle cx="584" cy="184" r="2" className="jjart-accent" />
-        <rect x="490" y="96" width="44" height="10" rx="3" className="jjart-sign" />
-      </g>
+      <Shop x={500} y={89} />
       <g className="jjart-walk">
-        <g className="jjart-person">
-          <circle cx="410" cy="140" r="11" className="jjart-person-head" />
-          <path d="M398 160 Q410 150 422 160 L426 204 H394 Z" className="jjart-person-body" />
-          <rect x="398" y="202" width="8" height="14" rx="3" className="jjart-person-body" />
-          <rect x="413" y="202" width="8" height="14" rx="3" className="jjart-person-body" />
-          <rect x="424" y="166" width="14" height="22" rx="3" className="jjart-phone" />
-          <rect x="426.5" y="169" width="9" height="15" rx="1.5" className="jjart-phone-screen" />
-        </g>
-        <Cat x={444} y={198} />
+        <circle cx="433" cy="118" r="8" className="f-coral-tint" />
+        <rect x="425" y="108" width="16" height="6" rx="3" className="f-iris-deep" />
+        <rect x="423" y="128" width="21" height="34" rx="8" className="f-sky" />
+        <rect x="425" y="160" width="6" height="18" rx="3" className="f-iris-deep" />
+        <rect x="436" y="160" width="6" height="18" rx="3" className="f-iris-deep" />
+        <rect x="441" y="136" width="8" height="13" rx="2" className="f-iris-deep" />
+        <rect x="442.5" y="138" width="5" height="8" rx="1" className="f-leaf-tint" />
+        <Cat x={455} y={178} />
       </g>
-      <g className="jjart-popcard"><Card x={428} y={124} check /></g>
+      <g className="jjart-popcard"><Card x={444} y={104} check /></g>
+
+      {/* morning stamp on the seam, at the golden point (610/φ, 233/φ) */}
+      <g transform="translate(377 144)">
+        <g className="jjart-stamp">
+          <circle r="21" className="f-leaf-tint" />
+          <circle r="13" className="f-leaf" />
+          <path d="M-5.5 0 L-1.5 4 L6 -4.5" className="jjart-tick jjart-tick-big" />
+        </g>
+      </g>
     </g>
   </svg>
 );
 
-/* ---------- belief spot illustrations (96 × 72) ---------- */
+/* ---------- belief spot illustrations (89 × 55 golden rectangle) ---------- */
 
-const Spot: React.FC<{ label: string; kind: string; children: React.ReactNode }> = ({ label, kind, children }) => (
-  <svg className={`jjart jjart-spot jjart-spot-${kind}`} viewBox="0 0 96 72" {...a11y(label)}>
-    <rect width="96" height="72" rx="14" className="jjart-spot-bg" />
+const Spot: React.FC<{ label: string; kind: string; hue: string; children: React.ReactNode }> = ({ label, kind, hue, children }) => (
+  <svg className={`jjart jjart-spot jjart-spot-${kind}`} viewBox="0 0 89 55" {...a11y(label)}>
+    <rect width="89" height="55" rx="8" className={`f-${hue}-tint`} />
     {children}
   </svg>
 );
 
 export const JijuBeliefDecideArt: CssArtComponent = ({ label }) => (
-  <Spot label={label} kind="decide">
-    <Robot x={12} y={26} />
-    <Card x={34} y={34} />
+  <Spot label={label} kind="decide" hue="amber">
+    <Robot x={8} y={13} />
+    <Card x={27} y={21} />
     <g className="jjart-press">
-      <rect x="64" y="10" width="10" height="16" rx="3" className="jjart-ink-fill" />
-      <rect x="58" y="25" width="22" height="7" rx="2" className="jjart-ink-fill" />
+      <rect x="60" y="5" width="8" height="13" rx="3" className="f-amber-deep" />
+      <rect x="55" y="17" width="18" height="5" rx="2" className="f-amber-deep" />
     </g>
-    <g transform="translate(69 50)">
-      <g className="jjart-press-mark">
-        <circle r="9" className="jjart-accent" />
-        <path d="M-3.6 0 L-1 2.8 L4 -2.6" className="jjart-check" />
-      </g>
-    </g>
+    <g transform="translate(64 39)"><g className="jjart-press-mark"><circle r="8" className="f-leaf" /><path d="M-3.4 0 L-1 2.6 L3.8 -2.6" className="jjart-tick" /></g></g>
   </Spot>
 );
 
 export const JijuBeliefSourceArt: CssArtComponent = ({ label }) => (
-  <Spot label={label} kind="source">
-    <path d="M10 14 H44 a6 6 0 0 1 6 6 V36 a6 6 0 0 1 -6 6 H24 L16 50 V42 H10 a6 6 0 0 1 -6 -6 V20 a6 6 0 0 1 6 -6 Z" className="jjart-bubble" />
-    <path d="M16 24 q0 -4 4 -4 M16 24 v6 h5 v-6 h-5 M27 24 q0 -4 4 -4 M27 24 v6 h5 v-6 h-5" className="jjart-quote" />
-    <path d="M50 36 C58 36 58 30 62 30" className="jjart-dots" />
-    <rect x="60" y="10" width="28" height="40" rx="4" className="jjart-page" />
-    <rect x="65" y="16" width="16" height="3" rx="1.5" className="jjart-card-line" />
-    <rect x="64" y="27" width="20" height="6" rx="2" className="jjart-accent jjart-highlight" />
-    <rect x="65" y="38" width="14" height="3" rx="1.5" className="jjart-card-line" />
-    <rect x="12" y="56" width="72" height="5" rx="2.5" className="jjart-shadow" />
+  <Spot label={label} kind="source" hue="sky">
+    <rect x="5" y="8" width="34" height="21" rx="5" className="f-paper" />
+    <polygon points="11,28 11,36 19,28" className="f-paper" />
+    <circle cx="16" cy="19" r="3" className="f-sky" /><rect x="13" y="14" width="3" height="5" rx="1.5" className="f-sky" />
+    <circle cx="27" cy="19" r="3" className="f-sky" /><rect x="24" y="14" width="3" height="5" rx="1.5" className="f-sky" />
+    {[43, 47, 51].map((cx) => <circle key={cx} cx={cx} cy="21" r="1.2" className="f-sky-deep jjart-dot" />)}
+    <rect x="55" y="5" width="26" height="42" rx="3" className="f-paper" />
+    <rect x="59" y="10" width="13" height="3" rx="1.5" className="f-line" />
+    <rect x="58" y="18" width="21" height="8" rx="2" className="f-amber jjart-highlight" />
+    <rect x="59" y="31" width="16" height="3" rx="1.5" className="f-line" />
+    <rect x="59" y="38" width="10" height="3" rx="1.5" className="f-line" />
   </Spot>
 );
 
 export const JijuBeliefBlankArt: CssArtComponent = ({ label }) => (
-  <Spot label={label} kind="blank">
-    <rect x="14" y="12" width="52" height="46" rx="6" className="jjart-page" />
-    <rect x="21" y="20" width="30" height="4" rx="2" className="jjart-card-line" />
-    <rect x="21" y="29" width="38" height="4" rx="2" className="jjart-card-line" />
-    <rect x="21" y="39" width="38" height="11" rx="3" className="jjart-blank-box" />
-    <rect x="25" y="42" width="1.6" height="5" className="jjart-caret" />
-    <g className="jjart-pencil" transform="translate(74 18) rotate(30)">
-      <rect x="-3.5" y="0" width="7" height="30" rx="2" className="jjart-pencil-body" />
-      <path d="M-3.5 30 L0 37 L3.5 30 Z" className="jjart-ink-fill" />
+  <Spot label={label} kind="blank" hue="rose">
+    <rect x="8" y="5" width="47" height="45" rx="5" className="f-paper" />
+    <rect x="14" y="11" width="21" height="3" rx="1.5" className="f-rose" />
+    <rect x="14" y="19" width="34" height="3" rx="1.5" className="f-line" />
+    <rect x="14" y="28" width="34" height="13" rx="3" className="f-rose-tint jjart-blank-field" />
+    <rect x="18" y="31" width="1.6" height="7" className="f-rose-deep jjart-caret" />
+    <g transform="translate(70 8) rotate(30)">
+      <rect x="-3" y="0" width="6" height="26" rx="2" className="f-amber" />
+      <polygon points="-3,26 0,32 3,26" className="f-amber-deep" />
     </g>
-    <path d="M66 26 L86 50 M86 26 L66 50" className="jjart-cross" />
+    <g transform="translate(70 28) rotate(45)"><rect x="-13" y="-1.5" width="26" height="3" rx="1.5" className="f-coral-deep" /></g>
+    <g transform="translate(70 28) rotate(-45)"><rect x="-13" y="-1.5" width="26" height="3" rx="1.5" className="f-coral-deep" /></g>
   </Spot>
 );
 
 export const JijuBeliefCheckArt: CssArtComponent = ({ label }) => (
-  <Spot label={label} kind="check">
-    <Robot x={6} y={26} scale={0.9} />
-    <g transform="translate(26 36) rotate(-35)">
-      <g className="jjart-pen">
-        <rect x="-2" y="-14" width="4" height="14" rx="1.5" className="jjart-pencil-body" />
-      </g>
-    </g>
-    <rect x="30" y="20" width="32" height="38" rx="4" className="jjart-page" />
-    <rect x="35" y="27" width="20" height="3" rx="1.5" className="jjart-card-line" />
-    <rect x="35" y="35" width="22" height="3" rx="1.5" className="jjart-card-line" />
-    <rect x="35" y="43" width="14" height="3" rx="1.5" className="jjart-card-line" />
-    <Robot x={70} y={26} scale={0.9} />
-    <g className="jjart-scan">
-      <circle cx="52" cy="34" r="7" className="jjart-glass" />
-      <line x1="57" y1="39" x2="63" y2="45" className="jjart-stroke jjart-stroke-thick" />
-    </g>
+  <Spot label={label} kind="check" hue="leaf">
+    <Robot x={3} y={13} />
+    <g transform="translate(26 30) rotate(-35)"><g className="jjart-pen"><rect x="-1.5" y="-13" width="3" height="13" rx="1.5" className="f-amber" /></g></g>
+    <rect x="29" y="8" width="29" height="39" rx="3" className="f-paper" />
+    <rect x="33" y="14" width="18" height="3" rx="1.5" className="f-leaf" />
+    <rect x="33" y="21" width="21" height="3" rx="1.5" className="f-line" />
+    <rect x="33" y="28" width="13" height="3" rx="1.5" className="f-line" />
+    <Robot x={64} y={13} />
+    <g className="jjart-scan"><Lens x={50} y={24} r={6} /></g>
   </Spot>
 );
 
 export const JijuBeliefSaveArt: CssArtComponent = ({ label }) => (
-  <Spot label={label} kind="save">
-    <circle cx="80" cy="16" r="7" className="jjart-moon" />
-    <circle cx="84" cy="13" r="6" className="jjart-spot-moon-cut" />
-    <ellipse cx="42" cy="42" rx="24" ry="17" className="jjart-pig" />
-    <circle cx="22" cy="40" r="7" className="jjart-pig" />
-    <ellipse cx="17" cy="41" rx="3.4" ry="4" className="jjart-pig-snout" />
-    <path d="M30 26 L34 18 L39 26 Z" className="jjart-pig" />
-    <circle cx="25" cy="36" r="1.4" className="jjart-eye-dark" />
-    <rect x="30" y="54" width="6" height="8" rx="2" className="jjart-pig" />
-    <rect x="48" y="54" width="6" height="8" rx="2" className="jjart-pig" />
-    <rect x="38" y="26" width="12" height="3" rx="1.5" className="jjart-slot" />
+  <Spot label={label} kind="save" hue="iris">
+    <circle cx="76" cy="12" r="5" className="f-amber" />
+    <circle cx="79" cy="10" r="4.4" className="f-iris-tint" />
+    <circle cx="44" cy="32" r="15" className="f-rose" />
+    <circle cx="28" cy="32" r="8" className="f-rose" />
+    <circle cx="24" cy="33" r="3" className="f-rose-deep" />
+    <polygon points="34,20 37,13 41,19" className="f-rose" />
+    <circle cx="28" cy="29" r="1.3" className="f-iris-deep" />
+    <rect x="35" y="44" width="5" height="7" rx="2" className="f-rose-deep" />
+    <rect x="49" y="44" width="5" height="7" rx="2" className="f-rose-deep" />
+    <rect x="40" y="18" width="10" height="2.5" rx="1.25" className="f-rose-deep" />
     <g className="jjart-coin">
-      <circle cx="44" cy="14" r="6" className="jjart-coin-face" />
-      <rect x="43" y="10.5" width="2" height="7" rx="1" className="jjart-coin-mark" />
+      <circle cx="45" cy="8" r="5" className="f-amber" />
+      <rect x="44" y="5" width="2" height="6" rx="1" className="f-amber-deep" />
     </g>
   </Spot>
 );
 
-/* ---------- storefront used inside the phone mock-up ---------- */
+/* ---------- storefront used inside the phone mock-up (233 × 144) ---------- */
 
 export const JijuStorefrontArt: CssArtComponent = ({ label }) => (
-  <svg className="jjart jjart-storefront" viewBox="0 0 240 120" {...a11y(label)}>
-    <rect width="240" height="120" className="jjart-stop-day-fill" />
-    <g className="jjart-sun" transform="translate(206 26)">
-      <circle r="12" className="jjart-sun-core" />
-    </g>
-    <rect x="0" y="100" width="240" height="20" className="jjart-ground" />
-    <rect x="50" y="36" width="140" height="66" rx="4" className="jjart-shop-wall" />
-    <path d="M42 26 H198 L190 44 H50 Z" className="jjart-awning-base" />
-    {Array.from({ length: 7 }, (_, index) => (
-      <path key={index} d={`M${50 + index * 20} 44 a10 8 0 0 0 20 0`} className={index % 2 ? 'jjart-awning-a' : 'jjart-awning-b'} />
-    ))}
-    <rect x="62" y="60" width="62" height="34" rx="3" className="jjart-window" />
-    <g className="jjart-steam">
-      <path d="M84 72 q-3 -5 0 -9 M93 72 q-3 -5 0 -9" className="jjart-steam-line" />
-    </g>
-    <rect x="80" y="74" width="22" height="14" rx="3" className="jjart-cup" />
-    <rect x="138" y="58" width="40" height="44" rx="3" className="jjart-door" />
-    <circle cx="170" cy="82" r="2" className="jjart-accent" />
-    <Cat x={18} y={100} />
+  <svg className="jjart jjart-storefront" viewBox="0 0 233 144" {...a11y(label)}>
+    <rect width="233" height="144" className="f-day" />
+    <circle cx="199" cy="34" r="13" className="f-amber" />
+    <rect x="0" y="123" width="233" height="21" className="f-ground" />
+    <Shop x={72} y={34} />
+    <Cat x={21} y={123} />
   </svg>
 );
