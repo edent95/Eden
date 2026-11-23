@@ -90,7 +90,7 @@
   padding: 0.6rem 1rem;
   border-radius: 10px;
   background: var(--ig-card);
-  box-shadow: inset 3px 0 0 var(--ig-foil), inset 0 0 0 1px var(--ig-line-3);
+  box-shadow: inset 0 0 0 1px var(--ig-line-3);
   color: var(--theme-text-primary);
   font-size: 0.9rem;
   font-weight: 560;
@@ -101,7 +101,7 @@
 
 .igaming-hire:hover,
 .igaming-hire:focus-visible {
-  box-shadow: inset 3px 0 0 var(--ig-foil), inset 0 0 0 1px var(--ig-foil);
+  box-shadow: inset 0 0 0 1px var(--ig-foil);
 }
 
 .igaming-hire svg {

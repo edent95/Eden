@@ -42,7 +42,7 @@ export const IGAMING_RESUME = {
     'Open to provider-side roles in promotions, account management and partner marketing, and to operator-side CRM and retention.',
     '在找 provider 端的促销、Account Management、合作方营销职位;operator 端的 CRM 与留存也可以。',
   ),
-  availability: L('Available now · Penang, Malaysia · remote or hybrid', '可以马上上班 · 马来西亚槟城 · 远程或混合办公'),
+  availability: L('Available now · Penang, Malaysia · fully remote', '可以马上上班 · 马来西亚槟城 · 全远程'),
   emailCta: L('Email me', '写信给我'),
   linkedinLabel: L('LinkedIn', 'LinkedIn'),
 
