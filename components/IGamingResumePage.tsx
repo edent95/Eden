@@ -53,10 +53,18 @@ const IGamingResumePage: React.FC<{
           <h1>{t(page.claim)}</h1>
           <p className="igaming-standfirst">{t(page.standfirst)}</p>
           <p className="igaming-resume-difference">{t(page.difference)}</p>
+          <p className="igaming-resume-difference">{t(page.roles)}</p>
+          <p className="igaming-resume-note">{t(page.availability)}</p>
           <p className="igaming-resume-cv">
             <a href={cvHref} className="igaming-full-cta" download rel="nofollow">
               {t(page.cvLabel)}
               <ArrowRight size={16} aria-hidden="true" />
+            </a>
+            <a href={`mailto:${ABOUT_EMAIL}`} className="igaming-point-more">
+              {t(page.emailCta)} <span aria-hidden="true">→</span>
+            </a>
+            <a href={ABOUT_LINKEDIN} className="igaming-point-more" rel="noopener noreferrer" target="_blank">
+              {t(page.linkedinLabel)} <span aria-hidden="true">→</span>
             </a>
           </p>
         </header>

@@ -814,6 +814,7 @@ const App: React.FC = () => {
             fullHref={igamingFullHref}
             casesHref={igamingCasesHref}
             atlasHref={igamingAtlasHref}
+            resumeHref={joinBasePath(baseUrl, 'igaming/resume')}
             guideLinks={igamingGuideLinks}
             controls={igamingControls}
           />
