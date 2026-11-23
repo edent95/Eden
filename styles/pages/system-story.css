@@ -1,0 +1,51 @@
+/* System-story sections on /dr-racing, /etreporthub, /life-os (components/system-story/*).
+   Layout comes from styles/pages/jiju-charts.css (.jjc-* / .jjs-*); this file only sets each page's
+   accent to its own brand colour so charts, chips and illustrations share one palette
+   (illustrations: styles/css-art/system-story.css). Contrast of --ep-primary-outline on white ≥ 4.5. */
+
+.eden-product-page.ss-drracing-page {
+  --ep-primary: #991b1b;
+  --ep-primary-hover: #7f1d1d;
+  --ep-primary-text: #ffffff;
+  --ep-primary-outline: #991b1b;
+}
+
+:root[data-theme="dark"] .eden-product-page.ss-drracing-page {
+  --ep-primary: #e3655b;
+  --ep-primary-hover: #ec7f76;
+  --ep-primary-text: #2b0404;
+  --ep-primary-outline: #e3655b;
+}
+
+.eden-product-page.ss-etreport-page {
+  --ep-primary: #4f46e5;
+  --ep-primary-hover: #4338ca;
+  --ep-primary-text: #ffffff;
+  --ep-primary-outline: #4f46e5;
+}
+
+:root[data-theme="dark"] .eden-product-page.ss-etreport-page {
+  --ep-primary: #818cf8;
+  --ep-primary-hover: #a5b4fc;
+  --ep-primary-text: #0b0d12;
+  --ep-primary-outline: #818cf8;
+}
+
+.eden-product-page.ss-lifeos-page {
+  --ep-primary: #c28334;
+  --ep-primary-hover: #a86a12;
+  --ep-primary-text: #1f1300;
+  --ep-primary-outline: #693f00;
+}
+
+:root[data-theme="dark"] .eden-product-page.ss-lifeos-page {
+  --ep-primary: #c28334;
+  --ep-primary-hover: #e8c07a;
+  --ep-primary-text: #1f1300;
+  --ep-primary-outline: #e8c07a;
+}
+
+/* the schedule's first column holds words like "2 min" / "每小时" here, not only clock times */
+.ss-drracing-page .jjc-night-row,
+.ss-etreport-page .jjc-night-row,
+.ss-lifeos-page .jjc-night-row { grid-template-columns: 4.2rem 20px minmax(0, 1fr); }

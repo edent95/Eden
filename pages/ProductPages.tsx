@@ -5,6 +5,7 @@ import { DrRacingDealFlow, DrRacingGate, DrRacingGrowth, DrRacingMonthlyChanges 
 import { JijuCheckFunnels, JijuNightShift, JijuRegionBars, JijuShipGate } from '../components/JijuCharts';
 import { JijuBeliefs, JijuFlowChart, JijuGlossary, JijuJourney } from '../components/JijuStory';
 import { JijuPhoneCard } from '../components/JijuPhoneCard';
+import { drRacingStoryBlocks, etReportStoryBlocks, lifeOsStoryBlocks } from '../components/system-story/stories';
 import { JijuNightDayArt } from '../components/css-art/jiju-story-art';
 import { JijuPlaybook } from '../components/JijuPlaybook';
 import { ProjectsDrRacingCssIcon, ProjectsEtReportCssIcon, ProjectsJijuCssIcon, ProjectsLifeOsCssIcon, ProjectsPokerCssIcon, ProjectsPukimonCssIcon } from '../components/css-art/index';
@@ -379,6 +380,7 @@ export const ETReportHubFullPage: React.FC<{
 
   return (
     <ProductStorePage
+      pageClassName="ss-etreport-page"
       isZh={isZh}
       controls={<HeaderControls language={language} setLanguage={setLanguage} themePreference={themePreference} theme={theme} setThemePreference={setThemePreference} />}
       backHref={projectsHref}
@@ -417,6 +419,7 @@ export const ETReportHubFullPage: React.FC<{
         { kind: 'callout', label: { en: 'From report to action', zh: '从报表到行动' }, text: { en: 'Filter members by risk, activity, deposit recency, and conversion status—then export that exact list as the next CRM action instead of describing it in a meeting.', zh: '用风险、活跃度、存款时间和转化状态筛选会员，再把这份名单直接导出成下一个 CRM 动作，而不是在会议上口头描述。' } },
         { kind: 'p', text: { en: 'The familiar handoff stays. Management can still receive the Excel they expect, while the operations team gets a clearer dashboard for the daily review. Nobody has to be retrained into a new ritual.', zh: '熟悉的交付方式保留下来。管理层仍然可以收到他们习惯的 Excel，运营团队同时拥有更清楚的 Dashboard。没有人需要被重新训练成另一套仪式。' } },
         { kind: 'callout', tone: 'warning', label: { en: 'Data boundary', zh: '数据边界' }, text: { en: 'ETReportHub uses local SQLite and is designed for private deployment. Operational data does not need to enter a public cloud just to become visible in a dashboard. Access, audit, and exports remain inside the team’s own operating boundary.', zh: 'ETReportHub 使用本地 SQLite 保存整理后的数据，并为私有部署设计。原始运营资料不需要为了看 Dashboard 而进入公共云端。权限、审计与导出仍然属于团队自己的工作边界。' } },
+        ...etReportStoryBlocks(isZh),
       ]}
       tutorial={etReportHubTutorial}
       faq={[
@@ -455,6 +458,7 @@ export const DrRacingFullPage: React.FC<{
 
   return (
     <ProductStorePage
+      pageClassName="ss-drracing-page"
       isZh={isZh}
       controls={<HeaderControls language={language} setLanguage={setLanguage} themePreference={themePreference} theme={theme} setThemePreference={setThemePreference} />}
       backHref={projectsHref}
@@ -514,6 +518,7 @@ export const DrRacingFullPage: React.FC<{
         { kind: 'p', text: { en: 'Every change passes the same gate on the laptop, before push, and in CI: type check, unit tests, build, booting the real server, end-to-end tests and the whole security-rule test. Only a green gate merges. After the merge, the new security rules deploy themselves and are read back from production to confirm they match.', zh: '每个改动都要过同一道关卡，在本机、推送前、CI 上都一样：类型检查、单元测试、打包、把真正的服务器跑起来、端到端测试、整套安全规则测试。全部通过才能合并；合并之后，新的安全规则自动上线，再从正式环境读回来，核对是不是一致。' } },
         { kind: 'node', node: <DrRacingGate isZh={isZh} /> },
         { kind: 'callout', tone: 'warning', label: { en: 'About this demo', zh: '关于这个 Demo' }, text: { en: 'The public demo above runs the real dashboard (updated October 2026) with fixed anonymized sample data, entirely in your browser—no login, nothing saved to a server, and it resets on every reload. Parts that need the production backend, such as phone push, file uploads and the ledger sync, are off in the demo, and November additions such as several banks at once and the analytics page are not in it yet. The production system runs on Firebase with real authentication and role-based security rules.', zh: '上面的公开 Demo 用固定匿名示例数据跑真实仪表台（2026 年 10 月版本），完全在你的浏览器里——不用登录、不会写入服务器、刷新即重置。手机推送、文件上传、账本同步这些要正式后端的功能，在 Demo 里是关的；同时送几家银行、数据分析这些 11 月才加的功能，Demo 里还没有。正式系统跑在 Firebase 上，有真实登录与角色安全规则。' } },
+        ...drRacingStoryBlocks(isZh),
       ]}
       faq={[
         { q: { en: 'Who is this system for?', zh: '这个系统给谁用？' }, a: { en: 'Vehicle dealerships that sell on financing—where every sale depends on a loan getting approved, and the daily work is chasing documents, banks, and follow-ups.', zh: '靠贷款出车的车行——每一单都取决于贷款批不批，日常工作就是追文件、追银行、追跟进。' } },
@@ -1006,7 +1011,7 @@ export const LifeOsFullPage: React.FC<{
         { href: '#faq', label: { en: 'FAQ', zh: '常见问题' } },
         { href: '#information', label: { en: 'Information', zh: '产品资料' } },
       ]}
-      pageClassName="lifeos-page"
+      pageClassName="lifeos-page ss-lifeos-page"
       feature={<LifeOsFateMeter isZh={isZh} />}
       stage={{
         src: appUrl,
@@ -1041,6 +1046,7 @@ export const LifeOsFullPage: React.FC<{
         { kind: 'callout', label: { en: 'Sign-in, and the public case library', zh: '登录，以及公开命例库' }, text: { en: 'Building a profile requires signing in with Google or Apple, and signing in means agreeing that your chart and readings may appear anonymously in the public case library — names and account IDs removed. That consent is stated on the sign-in button itself.', zh: '建立档案需要用 Google 或 Apple 登录，而登录同时表示你同意：你的命盘与解读可能以匿名形式出现在公开命例库里（去掉姓名与账号标识）。这一点写在登录按钮上。' } },
         { kind: 'callout', label: { en: 'Where your data sits', zh: '资料放在哪里' }, text: { en: 'It is local-first but not local-only: readings, notes, people and records sync to your own account in the cloud, and the readings themselves are generated server-side. Billing data is kept where the client cannot read it.', zh: '它是 local-first，但不是只存本机：解读、笔记、人物和记录会同步到你自己的云端账号，解读本身也在服务器端生成。付费相关资料存在客户端读不到的地方。' } },
         { kind: 'callout', tone: 'warning', label: { en: 'Not a verdict on you', zh: '不是给你下判决' }, text: { en: 'The 73% is about how charts match outcomes across many lives, not a guarantee about any single one, and your 27% is real. Nothing here should stand in for medical, legal, or financial advice.', zh: '73% 说的是很多人的命盘与现实整体吻合的程度，不是对你个人的保证；属于你的那 27% 是真的。这里的任何内容都不应拿来代替医疗、法律或财务上的专业意见。' } },
+        ...lifeOsStoryBlocks(isZh),
       ]}
       faq={[
         { q: { en: 'Is this fortune telling?', zh: '这是算命吗？' }, a: { en: 'It uses the same traditional systems, but the goal is the opposite of telling fortunes: to test them. Every chart is locked before life happens, real events are recorded afterwards, and the match rate is measured instead of assumed.', zh: '用的是同样的传统系统，但目的正好相反：不是替你算命，而是检验命理。每张命盘都在事情发生之前锁定，现实事件之后再记录，吻合率是量出来的，不是说出来的。' } },
