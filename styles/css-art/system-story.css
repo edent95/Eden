@@ -1,0 +1,127 @@
+/* "How it works" illustrations for /dr-racing, /etreporthub, /life-os
+   (components/css-art/system-story-art.tsx). Same rules as styles/css-art/jiju-story.css:
+   flat fills, no outlines, each product's brand colour turned by the golden angle (137.5°) in OKLCH.
+   Per hue k = 0…5: main (L 0.66), tint (1 − (1 − L)/φ^2.5, C ÷ φ³), deep (L ÷ φ). Night tones walk
+   further down the φ ladder on the brand hue (L ÷ φ², ÷ φ^2.5, ÷ φ^1.5, ÷ φ³). Values computed with
+   Jiju utils/goldenPalette.ts (hexToOklch / oklchToHex) on 2026-11-23:
+     DrRacing  base #991b1b · ETReportHub base #4f46e5 · LifeOs base #A86A12 (foil gold). */
+
+.ssart { display: block; width: 100%; height: auto; --paper: #ffffff; --line: #e4e6ea; --skin: #f3c9a8; --moon: #fff1c2; }
+
+.ssart-drracing {
+  --c0: #e3655b; --c0t: #f6d4d0; --c0d: #8c0a10;
+  --c1: #0cac7c; --c1t: #c7e6d7; --c1d: #01583d;
+  --c2: #a577e3; --c2t: #e2d8f3; --c2d: #5b2a90;
+  --c3: #be8705; --c3t: #ebdbc2; --c3d: #624301;
+  --c4: #0da3c0; --c4t: #c2e4ee; --c4d: #025363;
+  --c5: #da6398; --c5t: #f3d4df; --c5d: #850b4f;
+  --night: #470204; --night-deep: #310102; --night-glow: #5b1815; --screen: #200101;
+  --day: #f6f3ef; --ground: #ebdbc2; --sun: var(--c3);
+}
+
+.ssart-etreport {
+  --c0: #7b85f2; --c0t: #d6dcf7; --c0d: #39389d;
+  --c1: #da7211; --c1t: #f2d7c6; --c1d: #723802;
+  --c2: #0aa7a4; --c2t: #c2e6e4; --c2d: #005653;
+  --c3: #c76ac1; --c3t: #ecd5ea; --c3d: #751a72;
+  --c4: #9d9707; --c4t: #e0e0c3; --c4d: #4f4c03;
+  --c5: #1399ec; --c5t: #c9e1f5; --c5d: #034e7c;
+  --night: #191850; --night-deep: #0f0e38; --night-glow: #282b64; --screen: #070725;
+  --day: #eef0fb; --ground: #d6dcf7; --sun: var(--c1);
+}
+
+.ssart-lifeos {
+  --c0: #c28334; --c0t: #ebdaca; --c0d: #693f00;
+  --c1: #0ca5b3; --c1t: #c8e3e6; --c1d: #01545c;
+  --c2: #c573a6; --c2t: #ecd6e2; --c2d: #74295b;
+  --c3: #889d40; --c3t: #dae1cc; --c3d: #435100;
+  --c4: #6293dc; --c4t: #d2def1; --c4d: #1a488a;
+  --c5: #d1755d; --c5t: #f0d7d1; --c5d: #7e2a13;
+  --night: #331c00; --night-deep: #221100; --night-glow: #4a2b02; --screen: #160900;
+  --day: #fbf2e3; --ground: #ebdaca; --sun: var(--c0);
+}
+
+.f0 { fill: var(--c0); } .f0t { fill: var(--c0t); } .f0d { fill: var(--c0d); }
+.f1 { fill: var(--c1); } .f1t { fill: var(--c1t); } .f1d { fill: var(--c1d); }
+.f2 { fill: var(--c2); } .f2t { fill: var(--c2t); } .f2d { fill: var(--c2d); }
+.f3 { fill: var(--c3); } .f3t { fill: var(--c3t); } .f3d { fill: var(--c3d); }
+.f4 { fill: var(--c4); } .f4t { fill: var(--c4t); } .f4d { fill: var(--c4d); }
+.f5 { fill: var(--c5); } .f5t { fill: var(--c5t); } .f5d { fill: var(--c5d); }
+.fn { fill: var(--night); } .fnd { fill: var(--night-deep); } .fng { fill: var(--night-glow); opacity: 0.55; } .fs { fill: var(--screen); }
+.fday { fill: var(--day); } .fground { fill: var(--ground); }
+.fsun { fill: var(--sun); }
+.fp { fill: var(--paper); } .fl { fill: var(--line); } .fskin { fill: var(--skin); } .fmoon { fill: var(--moon); }
+.ssart-glowdisc { opacity: 0.6; filter: brightness(1.06); }
+
+/* glyph lines (tick, heartbeat, turn arrow) — not outlines of shapes */
+.ssart-tick { fill: none; stroke: #ffffff; stroke-linecap: round; stroke-linejoin: round; }
+.ssart-beat { fill: none; stroke: var(--c1); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.ssart-arc { fill: none; stroke: var(--c2d); stroke-width: 2.5; stroke-linecap: round; }
+
+.ssart-banner { border-radius: 21px; }
+.ssart-spot { border-radius: 8px; }
+
+/* dark: objects keep their daylight colours; only the background planes sink */
+:root[data-theme="dark"] .ssart .ssart-bg { opacity: 0.16; }
+:root[data-theme="dark"] .ssart .ssart-glowdisc { opacity: 0.12; }
+:root[data-theme="dark"] .ssart { --paper: #f3f1ec; --line: #d6d3cc; }
+
+/* ---------- motion ---------- */
+.ssart-pop,
+.ssart-stamp,
+.ssart-spin,
+.ssart-spin-slow,
+.ssart-key,
+.ssart-wave,
+.ssart-flip,
+.ssart-pop-up,
+.ssart-grow { transform-box: fill-box; transform-origin: center; }
+.ssart-wave { transform-origin: 50% 100%; }
+.ssart-grow { transform-origin: 50% 100%; }
+
+.ssart-star { animation: ssart-twinkle 3.2s ease-in-out infinite; }
+.ssart-star-1 { animation-delay: -1.1s; }
+.ssart-star-2 { animation-delay: -2.2s; }
+.ssart-pop { animation: ssart-pop 3.2s ease-in-out infinite; }
+.ssart-stamp { animation: ssart-stamp 3.6s ease-in-out infinite; }
+.ssart-spin { animation: ssart-spin 34s linear infinite; }
+.ssart-spin-slow { animation: ssart-spin 8s linear infinite; }
+.ssart-fly { animation: ssart-fly 3.6s ease-in-out infinite; }
+.ssart-fly-2 { animation-delay: -1.8s; }
+.ssart-fly-short { animation: ssart-fly-short 3s ease-in-out infinite; }
+.ssart-bob { animation: ssart-bob 1.8s ease-in-out infinite; }
+.ssart-key { animation: ssart-sway 1.6s ease-in-out infinite; }
+.ssart-wave { animation: ssart-sway 1.2s ease-in-out infinite; }
+.ssart-glow { animation: ssart-glow 2.4s ease-in-out infinite; }
+.ssart-scan { animation: ssart-scan 2.8s ease-in-out infinite; }
+.ssart-bump { animation: ssart-bump 2.4s ease-in-out infinite; }
+.ssart-flip { animation: ssart-flip 3.2s ease-in-out infinite; }
+.ssart-pop-up { animation: ssart-pop-up 2.4s ease-in-out infinite; }
+.ssart-press { animation: ssart-press 2.4s ease-in-out infinite; }
+.ssart-grow { animation: ssart-grow 3.6s ease-out infinite; }
+.ssart-beat { stroke-dasharray: 89; animation: ssart-beat 2.4s linear infinite; }
+
+@keyframes ssart-twinkle { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+@keyframes ssart-pop { 0%, 60%, 100% { transform: scale(1); } 70% { transform: scale(1.236); } 80% { transform: scale(0.95); } }
+@keyframes ssart-stamp { 0%, 55%, 100% { transform: translateY(0) scale(1); } 62% { transform: translateY(-5px) scale(1.118); } 70% { transform: translateY(0) scale(0.96); } }
+@keyframes ssart-spin { to { transform: rotate(360deg); } }
+@keyframes ssart-fly { 0% { transform: translate(-21px, 13px); opacity: 0; } 21% { opacity: 1; } 70% { transform: translate(34px, 0); opacity: 1; } 85%, 100% { transform: translate(42px, 3px); opacity: 0; } }
+@keyframes ssart-fly-short { 0% { transform: translateX(-5px); opacity: 0.3; } 50% { transform: translateX(8px); opacity: 1; } 100% { transform: translateX(13px); opacity: 0; } }
+@keyframes ssart-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes ssart-sway { 0%, 100% { transform: rotate(-8deg); } 50% { transform: rotate(8deg); } }
+@keyframes ssart-glow { 0%, 100% { opacity: 0.618; } 50% { opacity: 1; } }
+@keyframes ssart-scan { 0%, 100% { transform: translateX(-8px); } 50% { transform: translateX(3px); } }
+@keyframes ssart-bump { 0%, 100% { transform: translateX(0); } 40% { transform: translateX(5px); } 50% { transform: translateX(2px); } }
+@keyframes ssart-flip { 0%, 40%, 100% { transform: scaleX(1); } 50% { transform: scaleX(0.05); } 60% { transform: scaleX(1); } }
+@keyframes ssart-pop-up { 0%, 100% { transform: translateY(2px); } 50% { transform: translateY(-3px); } }
+@keyframes ssart-press { 0%, 100% { transform: translateY(0); } 45%, 55% { transform: translateY(8px); } }
+@keyframes ssart-grow { 0% { transform: scaleY(0.2); } 30%, 100% { transform: scaleY(1); } }
+@keyframes ssart-beat { from { stroke-dashoffset: 89; } to { stroke-dashoffset: -89; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .ssart *,
+  .ssart { animation: none !important; }
+  .ssart-fly,
+  .ssart-fly-short { opacity: 1; }
+  .ssart-beat { stroke-dasharray: none; }
+}
