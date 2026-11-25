@@ -19,7 +19,7 @@ import {
 
 export type HomePenneyGameProps = {
   isZh: boolean;
-  /** `/igaming`; the link appears once the visitor has played ten rounds. */
+  /** The starter pack, now the Asia iGaming home page (absolute URL); the link appears once the visitor has played ten rounds. */
   igamingHref: string;
 };
 

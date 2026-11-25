@@ -2,7 +2,7 @@
  * Dev-only page that draws one 1200×630 share card for an /igaming route, so
  * scripts/og/render-igaming.mjs can screenshot it into public/og/igaming/<key>.jpg.
  * Not part of the site build (only index.html is a Vite entry); open it on the dev
- * server as /scripts/og/igaming-card.html?route=/igaming/provider-promotions.
+ * server as /scripts/og/igaming-card.html?route=/igaming/cases/ftd-growth.
  *
  * Guides and cases reuse the page's own engraved banner plate (IGamingBannerStage)
  * over the title; the hub pages reuse the lit hero stage behind a centred title,
@@ -12,7 +12,6 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import '../../index.css';
 import { ROUTE_SEO } from '../../seo-routes';
-import { IGAMING_GUIDES } from '../../components/igaming-guides-content';
 import { IGAMING_CASES } from '../../components/igaming-cases-content';
 import { IGamingBannerStage, IGamingHeroStage } from '../../components/css-art/igaming-hero-stage';
 import { IGAMING_BANNER_TONE, type IGamingBannerVariant } from '../../components/css-art/index';
@@ -22,8 +21,6 @@ type Card =
   | { layout: 'hero'; kicker: string; title: string };
 
 const HUB_KICKERS: Record<string, string> = {
-  '/igaming': 'iGaming, explained plainly',
-  '/igaming/full': 'iGaming, explained plainly',
   '/igaming/cases': 'iGaming Field Notes',
   '/igaming/resume': 'iGaming Résumé',
 };
@@ -32,8 +29,6 @@ const cardFor = (path: string): Card | null => {
   const route = ROUTE_SEO.find((entry) => entry.path === path);
   if (!route) return null;
   const title = route.title.en.replace(/\s*\|\s*Eden Tan\s*$/, '');
-  const guide = IGAMING_GUIDES.find((entry) => entry.path === path);
-  if (guide) return { layout: 'banner', kicker: 'iGaming Guide', title, variant: guide.banner };
   const study = IGAMING_CASES.find((entry) => `/igaming/cases/${entry.slug}` === path);
   if (study) return { layout: 'banner', kicker: 'iGaming Case Study', title: title.replace(/^Case:\s*/, ''), variant: study.banner };
   if (HUB_KICKERS[path]) return { layout: 'hero', kicker: HUB_KICKERS[path], title };
@@ -117,7 +112,7 @@ const OgCard: React.FC<{ card: Card }> = ({ card }) => {
   );
 };
 
-const path = new URLSearchParams(window.location.search).get('route') ?? '/igaming';
+const path = new URLSearchParams(window.location.search).get('route') ?? '/igaming/cases';
 const card = cardFor(path);
 const style = document.createElement('style');
 style.textContent = CSS;

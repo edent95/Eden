@@ -37,6 +37,18 @@ for (const route of ROUTE_SEO) {
   if (seen.has(route.path)) problems.push(`Duplicate route registry path: ${route.path}`);
   seen.add(route.path);
 
+  if (route.movedTo !== undefined) {
+    // Moved to Asia iGaming: the old URL is a redirect page, so it must stay out of the index and the sitemap.
+    if (route.index !== false || route.sitemap !== false) {
+      problems.push(`${route.path} has movedTo but is not index: false + sitemap: false`);
+    }
+    if (!/^\/([a-z0-9-]+\/)*$/.test(route.movedTo)) {
+      problems.push(`${route.path} movedTo must be a path with a trailing slash (got ${route.movedTo})`);
+    }
+    if (ROUTE_STATIC_COPY[route.path]) {
+      problems.push(`${route.path} moved away but still has static copy in seo-static-content.ts`);
+    }
+  }
   if (route.index === false && route.sitemap !== false) {
     problems.push(`${route.path} is noindex but is still eligible for the sitemap`);
   }

@@ -1,20 +1,21 @@
-import type { SeoLanguage } from './seo-routes.ts';
+import { asiaIgamingUrl, localizedCanonicalRoutePath, type SeoLanguage } from './seo-routes.ts';
 import { WIKI_INDEX, wikiTopics } from './components/wiki-content.ts';
 import { wikiEntries } from './generated/content.ts';
 import { MIYA_PRIVACY, miyaPlainText, type MiyaBlock } from './components/miya-privacy-content.ts';
 import { MIYA_BRAND, miyaBrandPlain } from './components/miya-brand-content.ts';
-import { IGAMING_PAGE, IGAMING_SUMMARY } from './components/igaming-content.ts';
+import { IGAMING_HUB } from './components/igaming-hub-content.ts';
 import { ABOUT_PAGE, aboutLinkLine } from './components/about-content.ts';
 import { IGAMING_CASES, IGAMING_CASES_INDEX, type CaseBlock, type IGamingCase } from './components/igaming-cases-content.ts';
-import { IGAMING_GUIDES, IGAMING_GUIDE_LABELS, type IGamingGuide } from './components/igaming-guides-content.ts';
-import { ATLAS_BASICS, ATLAS_CARDS, ATLAS_ERAS, ATLAS_NUMBERS, ATLAS_PAGE, ATLAS_SERVICES, ATLAS_STEPS, ATLAS_TOPICS, atlasCardPlain } from './components/igaming-atlas-content.ts';
 
 type Localized = Record<SeoLanguage, string>;
+
+/** A crawlable link under a static section. `href` is absolute, or a path on this site starting with `/`. */
+export type StaticLink = { label: Localized; href: Localized };
 
 export type StaticRouteCopy = {
   eyebrow: Localized;
   thesis?: Localized;
-  sections: Array<{ title: Localized; paragraphs: Localized[] }>;
+  sections: Array<{ title: Localized; paragraphs: Localized[]; links?: StaticLink[] }>;
 };
 
 const L = (en: string, zh: string): Localized => ({ en, zh });
@@ -124,35 +125,6 @@ function igamingBlockParagraphs(item: CaseBlock): Localized[] {
   }
 }
 
-/** Static body for one /igaming/<guide> explainer, from the same copy the page renders. */
-function igamingGuideStaticCopy(guide: IGamingGuide): StaticRouteCopy {
-  return {
-    eyebrow: IGAMING_GUIDE_LABELS.kicker,
-    thesis: guide.shortTitle,
-    sections: [
-      { title: guide.title, paragraphs: [guide.standfirst, joinLocalized(guide.tags, ' · ', ' · '), guide.answer] },
-      {
-        title: IGAMING_GUIDE_LABELS.plainKicker,
-        paragraphs: [
-          guide.plain.scene,
-          ...guide.plain.terms.map((row) => titledLocalized(row.term, row.everyday)),
-          guide.plain.takeaway,
-        ],
-      },
-      { title: guide.shortTitle, paragraphs: guide.blocks.flatMap(igamingBlockParagraphs) },
-      { title: IGAMING_GUIDE_LABELS.checklistTitle, paragraphs: guide.checklist },
-      { title: IGAMING_GUIDE_LABELS.limitsTitle, paragraphs: [guide.limits] },
-      {
-        title: IGAMING_GUIDE_LABELS.sourcesTitle,
-        paragraphs: [IGAMING_GUIDE_LABELS.sourcesNote, ...guide.sources.map((source, index) => ({
-          en: `[${index + 1}] ${source.publisher}, “${source.title},” ${source.year}. [Online]. Available: ${source.url} [Accessed: ${IGAMING_GUIDE_LABELS.sourcesAccessed.en}]. ${source.supports.en}`,
-          zh: `[${index + 1}] ${source.publisher}. ${source.title}[EB/OL]. ${source.year === 'n.d.' ? '' : source.year}[${IGAMING_GUIDE_LABELS.sourcesAccessed.zh}]. ${source.url}. ${source.supports.zh}`,
-        }))],
-      },
-    ],
-  };
-}
-
 /** Static body for one /igaming/cases/:slug field note, from the same copy the page renders. */
 function igamingCaseStaticCopy(study: IGamingCase): StaticRouteCopy {
   const join = joinLocalized;
@@ -172,56 +144,6 @@ function igamingCaseStaticCopy(study: IGamingCase): StaticRouteCopy {
 }
 
 /** Static body for the /igaming/cases index. */
-/** `/igaming/atlas`: hero, the basics and glossary, the topic groups, every method card in full, the worked numbers, the timeline, the seven questions, the services. */
-function igamingAtlasStaticCopy(): StaticRouteCopy {
-  const page = ATLAS_PAGE;
-  const both = (fn: (lang: 'en' | 'zh') => string): Localized => ({ en: fn('en'), zh: fn('zh') });
-  return {
-    eyebrow: page.kicker,
-    thesis: both((lang) => `${page.claimLead[lang]} ${page.claimFoil[lang]}`),
-    sections: [
-      { title: page.kicker, paragraphs: [page.standfirst] },
-      {
-        title: page.sections.basics.title,
-        paragraphs: [
-          ...ATLAS_BASICS.chain.map((r) => both((lang) => `${r.name[lang]} (${r.plain[lang]}): ${r.does[lang]}`)),
-          ATLAS_BASICS.me.body,
-          ...ATLAS_BASICS.glossary.map((g) => both((lang) => `${g.term}: ${g.plain[lang]}`)),
-        ],
-      },
-      {
-        title: page.sections.map.title,
-        paragraphs: ATLAS_TOPICS.map((tp) => both((lang) => `${tp.name[lang]} (${tp.ids.join(', ')}): ${tp.asks[lang]} ${tp.plain[lang]}`)),
-      },
-      ...ATLAS_CARDS.map((card) => ({
-        title: both((lang) => `${card.id} · ${card.title[lang]}`),
-        paragraphs: atlasCardPlain(card, 'en').map((en, i) => ({ en, zh: atlasCardPlain(card, 'zh')[i] })),
-      })),
-      {
-        title: page.sections.numbers.title,
-        paragraphs: [ATLAS_NUMBERS.wheel, ATLAS_NUMBERS.rebate, ATLAS_NUMBERS.channels]
-          .map((fig) => both((lang) => `${fig.title[lang]} ${fig.lede[lang]}`))
-          .concat([ATLAS_NUMBERS.note]),
-      },
-      {
-        title: page.sections.time.title,
-        paragraphs: ATLAS_ERAS.map((era) => both((lang) => `${era.year} · ${era.title[lang]}: ${era.body[lang]}`)),
-      },
-      {
-        title: page.sections.steps.title,
-        paragraphs: ATLAS_STEPS.map((step) => both((lang) => `${step.q[lang]} ${step.a[lang]}`)),
-      },
-      {
-        title: page.sections.services.title,
-        paragraphs: [
-          ...ATLAS_SERVICES.map((s) => both((lang) => `${s.name[lang]} (${s.time[lang]}): ${s.pain[lang]} ${s.out.map((o) => o[lang]).join('; ')}.`)),
-          page.boundaries,
-        ],
-      },
-    ],
-  };
-}
-
 function igamingCasesIndexStaticCopy(): StaticRouteCopy {
   const page = IGAMING_CASES_INDEX;
   return {
@@ -238,140 +160,32 @@ function igamingCasesIndexStaticCopy(): StaticRouteCopy {
   };
 }
 
-/** Static body for /igaming (key points), generated from the same copy the React page renders. */
-function igamingSummaryStaticCopy(): StaticRouteCopy {
-  const page = IGAMING_SUMMARY;
+/**
+ * Static body for the /igaming hub, from the same copy the React page renders
+ * (`components/igaming-hub-content.ts`). The starter pack and guides moved to Asia iGaming on
+ * 2026-11-25; their old paths are `movedTo` redirect pages and have no static copy here.
+ */
+function igamingHubStaticCopy(): StaticRouteCopy {
+  const page = IGAMING_HUB;
+  const local = (path: string): Localized => ({
+    en: localizedCanonicalRoutePath(path, 'en'),
+    zh: localizedCanonicalRoutePath(path, 'zh'),
+  });
   return {
     eyebrow: page.kicker,
     thesis: page.claim,
-    sections: [
-      { title: page.kicker, paragraphs: [page.standfirst] },
-      ...page.sections.map((section) => ({
-        title: { en: `${section.number} · ${section.title.en}`, zh: `${section.number} · ${section.title.zh}` },
-        paragraphs: [
-          section.line,
-          ...section.points.map((point) => ({
-            en: `${point.title.en}: ${point.body.en}`,
-            zh: `${point.title.zh}：${point.body.zh}`,
-          })),
-        ],
+    sections: page.sections.map((section, index) => ({
+      title: section.title,
+      paragraphs: index === 0 ? [page.standfirst, ...section.paragraphs] : section.paragraphs,
+      links: section.links.map((link) => ({
+        label: link.label,
+        href: link.href === 'cases'
+          ? local('/igaming/cases')
+          : link.href === 'resume'
+            ? local('/igaming/resume')
+            : { en: asiaIgamingUrl(link.href.slice('asia:'.length), 'en'), zh: asiaIgamingUrl(link.href.slice('asia:'.length), 'zh') },
       })),
-      { title: page.fullTitle, paragraphs: [page.fullBody, page.casesLine, ...IGAMING_GUIDES.map((guide) => ({ en: `${IGAMING_GUIDE_LABELS.guidePrefix.en}${guide.shortTitle.en}`, zh: `${IGAMING_GUIDE_LABELS.guidePrefix.zh}${guide.shortTitle.zh}` }))] },
-      { title: page.closingTitle, paragraphs: [page.closingBody] },
-    ],
-  };
-}
-
-/** Static body for /igaming/full, generated from the same copy the React page renders. */
-function igamingStaticCopy(): StaticRouteCopy {
-  const page = IGAMING_PAGE;
-  const titled = (title: Localized, body: Localized): Localized => ({
-    en: `${title.en}: ${body.en}`,
-    zh: `${title.zh}：${body.zh}`,
-  });
-  const joined = (items: Localized[], en: string, zh: string): Localized => ({
-    en: items.map((item) => item.en).join(en),
-    zh: items.map((item) => item.zh).join(zh),
-  });
-  const row = (cells: Localized[]): Localized => ({
-    en: cells.map((cell) => cell.en).join(' — '),
-    zh: cells.map((cell) => cell.zh).join(' — '),
-  });
-  const flow = (item: typeof page.dealFlow): Localized => ({
-    en: `${item.title.en} (${item.when.en}): ${item.steps.map((step) => step.title.en).join(' → ')}.`,
-    zh: `${item.title.zh}（${item.when.zh}）：${item.steps.map((step) => step.title.zh).join(' → ')}。`,
-  });
-  return {
-    eyebrow: page.kicker,
-    thesis: page.claim,
-    sections: [
-      { title: page.kicker, paragraphs: [page.standfirst] },
-      {
-        title: page.starterTitle,
-        paragraphs: [
-          page.starterLead,
-          ...page.roles.map((item) => titled(item.title, item.body)),
-          ...page.floor.map((item) => titled(item.title, item.body)),
-          joined(page.journey.map((item) => item.title), ' → ', ' → '),
-          titled(page.journeyNote.title, page.journeyNote.body),
-          ...page.terms.map((item) => titled({ en: item.term, zh: item.term }, item.body)),
-          ...page.money.map((item) => titled(item.title, item.body)),
-          titled(page.moneyNote.title, page.moneyNote.body),
-          page.riskLead,
-          ...page.risk.map((item) => titled(item.title, item.body)),
-          ...page.firstMonth.rows.map(row),
-          titled(page.newcomerRule.title, page.newcomerRule.body),
-        ],
-      },
-      {
-        title: page.promotionsTitle,
-        paragraphs: [
-          page.promotionsLead,
-          ...page.providerPromos.map((item) => titled(item.title, item.body)),
-          ...page.operatorPromos.map((item) => titled(item.title, item.body)),
-        ],
-      },
-      {
-        title: page.workflowTitle,
-        paragraphs: [
-          page.workflowLead,
-          ...page.flows.map((flow) => ({
-            en: `${flow.title.en} (${flow.when.en}): ${flow.steps.map((step) => step.title.en).join(' → ')}.`,
-            zh: `${flow.title.zh}（${flow.when.zh}）：${flow.steps.map((step) => step.title.zh).join(' → ')}。`,
-          })),
-        ],
-      },
-      {
-        title: page.reportingTitle,
-        paragraphs: [
-          page.reportingLead,
-          ...page.metrics.map((metric) => titled(metric.name, metric.definition)),
-          titled(page.reportingNote.title, page.reportingNote.body),
-          ...page.traps.map((item) => titled(item.title, item.body)),
-        ],
-      },
-      {
-        title: page.b2bTitle,
-        paragraphs: [
-          page.b2bLead,
-          ...page.b2bMap.map((item) => titled(item.title, item.body)),
-          flow(page.dealFlow),
-          titled(page.dealNote.title, page.dealNote.body),
-          ...page.stakeholders.rows.map(row),
-          ...page.qualify.map((item) => titled(item.title, item.body)),
-          page.commercialLead,
-          ...page.commercialModels.map((item) => titled(item.title, item.body)),
-          ...page.contract.map((item) => titled(item.title, item.body)),
-          flow(page.integrationFlow),
-          ...page.providerOps.map((item) => titled(item.title, item.body)),
-          ...page.aggregatorOps.map((item) => titled(item.title, item.body)),
-          titled(page.sponsorNote.title, page.sponsorNote.body),
-          flow(page.providerCampaignFlow),
-          page.growthLead,
-          joined(page.pipeline.map((item) => item.title), ' → ', ' → '),
-          ...page.accountWork.map((item) => titled(item.title, item.body)),
-          ...page.b2bScore.map((item) => titled(item.title, item.body)),
-          ...page.techTerms.map((item) => titled({ en: item.term, zh: item.term }, item.body)),
-          flow(page.incidentFlow),
-          titled(page.incidentNote.title, page.incidentNote.body),
-          titled(page.mistakesTitle, joined(page.mistakes, ' ', '')),
-          ...page.firstQuarter.rows.map(row),
-          titled(page.b2bRule.title, page.b2bRule.body),
-        ],
-      },
-      {
-        title: page.troubleshootingTitle,
-        paragraphs: [
-          page.troubleshootingLead,
-          joined(page.funnel, ' → ', ' → '),
-          ...page.ftdRelations.map((item) => titled(item.label, item.body)),
-          ...page.symptoms.map((item) => titled(item.title, joined(item.steps, ' → ', ' → '))),
-          ...page.playbooks.map((item) => titled(item.title, joined(item.steps, ' → ', ' → '))),
-          ...page.owners.rows.map(row),
-        ],
-      },
-      { title: page.closingTitle, paragraphs: [page.closingBody] },
-    ],
+    })),
   };
 }
 
@@ -380,8 +194,8 @@ function igamingStaticCopy(): StaticRouteCopy {
  * rather than in `wiki/`. Every fact here mirrors what the live page renders
  * (product modules, numbers, section order); keep the two in step when a page changes.
  * Wiki/Notes articles come from `generated/content.ts`; the Wiki hub combines those notes with its shared index copy.
- * `/project/miya`, `/igaming`, `/igaming/full` and the `/igaming/cases` pages are the exceptions: they are generated from
- * `components/miya-privacy-content.ts` / `components/igaming-content.ts`, the same copy
+ * `/project/miya`, `/igaming` (hub) and the `/igaming/cases` pages are the exceptions: they are generated from
+ * `components/miya-privacy-content.ts` / `components/igaming-hub-content.ts` / `components/igaming-cases-content.ts`, the same copy
  * the React pages render, so the static text cannot drift.
  */
 /** Static body for /project/miya/brand, generated from the same copy the React page renders. */
@@ -463,11 +277,8 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
   '/project/miya': miyaStaticCopy(),
   '/project/miya/brand': miyaBrandStaticCopy(),
   '/about': aboutStaticCopy(),
-  '/igaming': igamingSummaryStaticCopy(),
-  '/igaming/full': igamingStaticCopy(),
+  '/igaming': igamingHubStaticCopy(),
   '/igaming/cases': igamingCasesIndexStaticCopy(),
-  '/igaming/atlas': igamingAtlasStaticCopy(),
-  ...Object.fromEntries(IGAMING_GUIDES.map((guide) => [guide.path, igamingGuideStaticCopy(guide)])),
   ...Object.fromEntries(IGAMING_CASES.map((study) => [`/igaming/cases/${study.slug}`, igamingCaseStaticCopy(study)])),
 
   '/': {

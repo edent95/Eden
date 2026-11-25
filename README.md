@@ -75,20 +75,21 @@ npm run preview
 - `/icon-prompts` — ETReportHub / Jiju / Friday Poker Club 四宫格 icon prompt 复制页（隐藏直达页；不进 sitemap）
 - `/etreporthub` — ETReportHub 日报数据系统产品页
 - `/etreporthub-sales` — ETReportHub 售卖页与价格说明（iGaming 销售内容，`index: false`，主站不链过来）
-- `/igaming` — iGaming 入门包重点版：六节各三个重点（入门包、促销、工作流程、报表、B2B、排查），每节可跳到完整版对应位置（不放联系方式、不链接过往项目）；原本由首页 Mini Coin Slot 玩满 10 局后出现入口（带 `?from=coin-slot` 时显示解锁提示；Coin Slot 下了首页后这个入口暂时没有了）
+- `/igaming` — iGaming 中转页(2026-11-25 起)：入门包与专题已搬到独立站 Asia iGaming(https://asiaigaming.com，仓库 `edent95/asiaigaming`)。这一页只用第一人称说明「指南搬去哪了」，链到 asiaigaming.com(主入口)、`/igaming/cases` 与 `/igaming/resume`；canonical 仍在 eden-tan.com，文案在 `components/igaming-hub-content.ts`(React 页与静态正文共用)
 - `/igaming/cases` — iGaming 实战案例索引：四篇匿名案例（首存增长、新市场本地化、50+ operator 促销协调、operator → provider），说明写作原则与后续选题
-- `/igaming/atlas` — iGaming 知识地图：私人知识库的公开脱敏版。十一张方法卡围着「拼出共同事实」画成凹版地图(点圆章开卡、点服务高亮用到的卡)，加时间线、决策七问、四项顾问服务与「不接的事」；不出现任何公司 / 品牌 / 供应商名称
-- `/igaming/cases/:slug` — 单篇匿名案例：背景、排查过程、做了什么、学到什么、「不能证明什么」，并链回完整版对应小节；案例页是 iGaming 里唯一会链到过往项目（`/etreporthub`）的地方
-- `/igaming/ggr-vs-ngr` — iGaming 知识专题：流水、GGR、NGR、净存款各量什么；一组标明为示例的演算、「哪个决定看哪个数字」对照表、常见误读、看报表前要问的问题清单，以及这篇不涵盖什么；链回完整版报表一节与实战案例，`/igaming` 重点版有入口
-- `/igaming/provider-promotions` — iGaming 知识专题：供应商促销的两层（面向玩家的奖励 vs 给运营商的商业激励）、「激励换曝光」的义务清单、两笔交易抢同一个位置的匹配示例、比较优惠前先算清价值；链回完整版 B2B 一节
-- `/igaming/promotion-launch-checklist` — iGaming 知识专题：「上线」的四个状态、活动存在的五个地方、多语言条款逐条核对表、上线前清单与上线当天像玩家一样领一次；链回完整版促销一节
-- `/igaming/crm-player-lifecycle` — iGaming 知识专题：按玩家状态与时间窗口规划 CRM、事件消息与日历消息、「不需要动作」分支、负责任博彩的四条底线、用对照组衡量效果；链回完整版工作流程一节
-- `/igaming/marketing-report-beyond-cpa` — iGaming 知识专题：从花费到第 30 天活跃的成本链、各「每个多少钱」指标的算法与盲点、指标名称不等于定义(ROI 表头的实例)、自然月与同批人转化对比、每节以下一步收尾；链回完整版报表一节
-- `/igaming/rtp-explained` — iGaming 知识专题：理论 RTP 与实际 RTP、RTP 与 hold、样本量决定实际 RTP 会偏多远(示例表)、选择或调整 RTP 配置时怎么评估；链回完整版入门一节
-- `/igaming/wagering-requirements` — iGaming 知识专题：流水要求六项条款、为什么「奖金 − 庄家优势 × 要求下注额」会算少、奖金成本模拟计算器、英国 10 倍上限；链回完整版促销一节
+- `/igaming/atlas` — 已搬到 https://asiaigaming.com/atlas/ ，这里只剩静态跳转页(见下方「搬到 Asia iGaming 的页面」)
+- `/igaming/cases/:slug` — 单篇匿名案例：背景、排查过程、做了什么、学到什么、「不能证明什么」，并链到 Asia iGaming 完整版对应小节(`https://asiaigaming.com/guide/#<节>`)；案例页是 iGaming 里唯一会链到过往项目（`/etreporthub`）的地方
+- `/igaming/ggr-vs-ngr` — 已搬到 https://asiaigaming.com/ggr-vs-ngr/ ，静态跳转页
+- `/igaming/provider-promotions` — 已搬到 https://asiaigaming.com/provider-promotions/ ，静态跳转页
+- `/igaming/promotion-launch-checklist` — 已搬到 https://asiaigaming.com/promotion-launch-checklist/ ，静态跳转页
+- `/igaming/crm-player-lifecycle` — 已搬到 https://asiaigaming.com/crm-player-lifecycle/ ，静态跳转页
+- `/igaming/marketing-report-beyond-cpa` — 已搬到 https://asiaigaming.com/marketing-report-beyond-cpa/ ，静态跳转页
+- `/igaming/rtp-explained` — 已搬到 https://asiaigaming.com/rtp-explained/ ，静态跳转页
+- `/igaming/wagering-requirements` — 已搬到 https://asiaigaming.com/wagering-requirements/ ，静态跳转页
 - `/for/arzumy` — 只给一个人看的申请页(2026-11-23):向当天上任的 AI Malaysia CEO Arzumy Md Yusof 申请做他的个人 AI 顾问。照他 2016 年的文章《Throw your resume away, kid》的思路,用做出来的东西代替简历:Jiju 的三个数字(与 `/jiju-pet` 公开的一致)、复用 `JijuFlowChart` / `JijuBeliefs` / `JijuShipGate`、Jiju 的规矩怎么对应到 AI Malaysia、头 90 天、关于我、喝咖啡或通电话;披露照 `/igaming/resume` 的规矩(只写地区、不点名品牌、不放电话与薪资);整页完全不提线上博彩 / iGaming(用户 2026-11-23 定);有马来文版(顶栏 BM 按钮或 `?lang=ms`,2026-11-24 加),复用的 Jiju 图表只有中英,马来文模式下显示英文;`index: false`、`sitemap: false`,只靠私信里的链接进入
 - `/igaming/resume` — 给招聘方 / 面试前发的 iGaming 个人页兼公开履历：定位一句话、数字（各链到案例；+30% 留存来自履历、不链）、工作经历（雇主、职称、年份照 LinkedIn；市场只写「东南亚与澳洲」不点名国家）、下载 PDF 履历（`public/igaming/Eden-Tan-Resume.pdf`，不含电话，由 resume-tailor 技能生成）、三个优势、能力与证据对照表、进新市场的头 90 天、工作方式、邮箱与 LinkedIn；不放薪资和电话；`index: false`、`sitemap: false`，只靠链接进入，不从别的页面链过来
-- `/igaming/full` — iGaming 入门包完整版：行业角色、游戏类型、术语、资金流、风控合规、provider 与 operator 促销、每日报表 / 活动上线 / CRM 工作流程与报表指标、B2B（签约到上线与客户经营）、按症状排查与 playbook；返回键回到 `/igaming` 重点版
+- `/igaming/full` — 已搬到 https://asiaigaming.com/guide/ ，静态跳转页
+- 搬到 Asia iGaming 的页面(上面 9 条，中文版同样加 `/zh`)：GitHub Pages 发不了 301，所以旧网址在 `seo-routes.ts` 里保留登记并写 `movedTo`(同时 `index: false, sitemap: false`)。构建时 `vite.config.ts` 的 `renderMovedRouteHtml` 写出跳转页：canonical 与 hreflang 指向新站、`noindex, follow`、行内脚本 `location.replace()`(只保留 `utm_*`，其余参数与 hash 丢掉)、`<meta http-equiv="refresh">` 兜底、一行可见链接；`index.tsx` 启动时再跳一次(service worker 旧壳、`/?p=` 垫片、dev 预览)。`App.tsx` 里的字面量只是给路由门禁读的。新增 / 撤回搬迁只改 `movedTo`
 - `/dr-racing` — Dr Racing 摩托车贷款仪表台产品页，内嵌公开 Demo
 - `/poker` — Friday Poker Club 产品详情：私人房间、邀请、买入、实时牌桌与 Build Notes
 - `/wiki` — 系统、判断、人性、策略四个主题入口，链接现有 Notes 正文；原六篇技术笔记收在默认折叠的「构建经验」。主题选取与介绍在 `components/wiki-content.ts`，文章仍由 Markdown 维护
@@ -111,7 +112,7 @@ npm run preview
 - `/conways-game-of-life` 可通过页面内 `Install app / 安装 App` 安装为 standalone PWA；不支持安装提示的 Safari 会显示加入主画面 / Dock 指引
 - `/penneys-game` — Penney's Game 硬币骗局：5 关筹码对赌战役、限时盲选排位赛与全球排行榜、自由对战实验室
 - `/penneys-game` 的胜率用 Conway leading-numbers 公式精确计算（`services/penneyGame.ts`）；排行榜走 Firebase RTDB REST，无新增 npm 依赖，规则与部署见 `docs/penney-leaderboard.md`
-- （2026-10-14 起首页这一块换成 Pukimon 公开版 `#pukimon`，Coin Slot 不再挂在首页；`components/HomePenneyGame.tsx` 与 `penneyMiniApi` 保留未删）原首页 `/#penney` 是不公开攻略的 Mini Coin Slot：服务端按 IP 每天发放 100 credits，记录 lifetime plays / wins / win rate，满 10 局后进入访客排行榜并出现通往 `/igaming` 的入口；API、隐私边界与部署方式见 `docs/penney-mini-arena.md`
+- （2026-10-14 起首页这一块换成 Pukimon 公开版 `#pukimon`，Coin Slot 不再挂在首页；`components/HomePenneyGame.tsx` 与 `penneyMiniApi` 保留未删）原首页 `/#penney` 是不公开攻略的 Mini Coin Slot：服务端按 IP 每天发放 100 credits，记录 lifetime plays / wins / win rate，满 10 局后进入访客排行榜并出现通往 iGaming 入门包的入口(入门包 2026-11-25 搬到 https://asiaigaming.com/ ，重新挂回 Coin Slot 时入口要指向那里)；API、隐私边界与部署方式见 `docs/penney-mini-arena.md`
 - `/cellular-automata-lab` — 独立的 256 elementary cellular automata rules explorer
 - `/archive/:slug` — 归档项目详情
 - PWA manifest 按路由映射（`vite.config.ts` 的 `web-app-manifest-with-base`）：`/film-gallery` → `film-gallery.webmanifest`，`/conways-game-of-life` → `conway.webmanifest`，其余所有路由（含首页）→ `site.webmanifest`（Eden Tan，`start_url: ./`）

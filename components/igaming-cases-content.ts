@@ -8,9 +8,10 @@
  * owner chose to keep (the +120% month-on-month FTD move, the ~NPR 10M monthly
  * volume) stay, and each case states plainly what it does not prove.
  *
- * These pages are the one place `/igaming` links to a past project: a case may
- * link to `/etreporthub`, which grew out of the same daily-report work. The
- * `/igaming` key-points and full pages still link to no past projects.
+ * These pages are the one place the iGaming cluster links to a past project: a case may
+ * link to `/etreporthub`, which grew out of the same daily-report work.
+ * The starter pack and guides moved to Asia iGaming (asiaigaming.com) on 2026-11-25;
+ * `fullSection` now points at a section of https://asiaigaming.com/guide/.
  */
 
 import type { IGamingLocalized } from './igaming-content';
@@ -38,7 +39,7 @@ export type CaseBlock =
 export type IGamingCase = {
   slug: string;
   number: string;
-  /** Section id on `/igaming/full` this case sits closest to. */
+  /** Section id on the full guide (now https://asiaigaming.com/guide/#<id>) this case sits closest to. */
   fullSection: 'starter' | 'promotions' | 'workflow' | 'reporting' | 'b2b' | 'troubleshooting';
   banner: 'table' | 'chips' | 'loop' | 'ledger' | 'gears' | 'compass';
   datePublished: string;
@@ -487,7 +488,9 @@ export const IGAMING_CASES_INDEX = {
     'Next up: multi-brand CRM calendars, what a provider checks behind an RTP request, multi-currency operator onboarding, reactivation, lobby rollout, promotion reporting, gift-code systems, and how a B2B exhibition actually works.',
     '接下来会写：多品牌 CRM 日历、operator 问「能不能换 RTP」时 provider 要确认什么、多币种 operator 接入、玩家召回、大厅上线、活动复盘、礼品码系统，以及 B2B 展会实际怎么跑。',
   ),
-  backToIgaming: L('Back to the starter pack', '返回入门包'),
+  backToIgaming: L('Back to iGaming', '返回 iGaming'),
+  /** The full guide moved to Asia iGaming (asiaigaming.com/guide/) on 2026-11-25; say where the link goes. */
+  openGuide: L('Open the full guide on Asia iGaming', '到 Asia iGaming 看完整版'),
   readCase: L('Read the case', '看这个案例'),
   caseLabel: L('Case', '案例'),
 };

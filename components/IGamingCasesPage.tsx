@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { IGAMING_PAGE, IGAMING_SUMMARY, type IGamingLocalized } from './igaming-content';
+import { IGAMING_PAGE, type IGamingLocalized } from './igaming-content';
 import { IGAMING_CASES, IGAMING_CASES_INDEX, type CaseBlock, type IGamingCase } from './igaming-cases-content';
 import { IGamingEngravedBanner, IGamingHeroPlate, IGamingSeal } from './css-art/index';
 import { renderIGamingBlock } from './igaming-blocks';
@@ -10,7 +10,8 @@ type Lang = 'en' | 'zh';
 /**
  * `/igaming/cases` (index) and `/igaming/cases/:slug` (one field note).
  * Same engraved print language as `/igaming`; copy and anonymisation rules live in
- * `igaming-cases-content.ts`. These pages are the only part of the iGaming cluster
+ * `igaming-cases-content.ts`. `igamingHref` is the hub that stayed here; `fullHref` is the full
+ * guide on Asia iGaming (absolute URL, the guides moved there on 2026-11-25). These pages are the only part of the iGaming cluster
  * that links to a past project (`/etreporthub`), by the owner's decision.
  */
 const IGamingCasesPage: React.FC<{
@@ -78,7 +79,7 @@ const IGamingCasesPage: React.FC<{
             <h2>{t(index.moreTitle)}</h2>
             <p>{t(index.moreBody)}</p>
             <a href={fullHref} className="igaming-full-cta">
-              {t(IGAMING_SUMMARY.openFull)}
+              {t(index.openGuide)}
               <ArrowRight size={16} aria-hidden="true" />
             </a>
           </aside>
@@ -134,8 +135,8 @@ const IGamingCasesPage: React.FC<{
           <h2>{language === 'zh' ? '继续读下去' : 'Keep reading'}</h2>
           <p>
             {language === 'zh'
-              ? '这个案例背后的行业背景，在入门包完整版对应的一节里。'
-              : 'The industry background behind this case sits in the matching section of the full starter pack.'}
+              ? '这个案例背后的行业背景，在 Asia iGaming 上入门包完整版对应的一节里。'
+              : 'The industry background behind this case sits in the matching section of the full starter pack, on Asia iGaming.'}
           </p>
           <div className="igaming-case-links">
             <a href={`${fullHref}#${study.fullSection}`} className="igaming-full-cta">

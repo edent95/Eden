@@ -2,6 +2,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import {
   localizedCanonicalRoutePath,
+  movedRouteUrl,
   ROUTE_SEO,
   STATIC_PAGES,
 } from '../../seo-routes.ts';
@@ -93,6 +94,35 @@ if (problems.length === 0) {
         continue;
       }
       const routeHtml = readFileSync(path.join(root, artifact), 'utf8');
+      const movedUrl = movedRouteUrl(route, language);
+      if (movedUrl) {
+        // Moved to Asia iGaming: the artifact is a redirect page, not an article. It must point at the
+        // new URL every way a client can read it, and must not look like a page of this site any more.
+        const oldUrl = `${expectedSiteUrl}${localizedCanonicalRoutePath(route.path, language)}`;
+        for (const [needle, what] of [
+          [`<link rel="canonical" href="${movedUrl}" />`, 'canonical to the new URL'],
+          [`<meta http-equiv="refresh" content="0; url=${movedUrl}" />`, 'meta refresh to the new URL'],
+          ['<meta name="robots" content="noindex, follow" />', 'noindex, follow'],
+          [`<meta property="og:url" content="${movedUrl}" />`, 'og:url on the new URL'],
+          [`<a href="${movedUrl}">`, 'a visible fallback link'],
+          [`location.replace(`, 'the inline location.replace()'],
+          [`<link rel="alternate" hreflang="en" href="${movedRouteUrl(route, 'en')}" />`, 'hreflang en on the new site'],
+          [`<link rel="alternate" hreflang="zh-Hans" href="${movedRouteUrl(route, 'zh')}" />`, 'hreflang zh-Hans on the new site'],
+        ]) {
+          if (!routeHtml.includes(needle)) problems.push(`${artifact} (moved) is missing ${what}`);
+        }
+        if ((routeHtml.match(/rel="canonical"/g) ?? []).length !== 1) problems.push(`${artifact} (moved) must have exactly one canonical`);
+        if (routeHtml.indexOf('id="moved-redirect"') > routeHtml.indexOf('http-equiv="refresh"')) {
+          problems.push(`${artifact} (moved) must run the utm-keeping script before the meta refresh`);
+        }
+        if (routeHtml.includes(`"${oldUrl}"`)) problems.push(`${artifact} (moved) still names its old URL ${oldUrl}`);
+        if (routeHtml.includes('application/ld+json')) problems.push(`${artifact} (moved) should not carry JSON-LD`);
+        if (sitemap.includes(`<loc>${oldUrl}</loc>`) || sitemap.includes(`href="${oldUrl}"`)) {
+          problems.push(`sitemap.xml still lists moved URL ${oldUrl}`);
+        }
+        if (llms.includes(oldUrl)) problems.push(`llms.txt still lists moved URL ${oldUrl}`);
+        continue;
+      }
       const canonical = `${expectedSiteUrl}${localizedCanonicalRoutePath(route.path, language)}`;
       const expectedRobots = route.index === false
         ? 'noindex, follow'
