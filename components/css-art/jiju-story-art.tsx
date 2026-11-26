@@ -254,3 +254,115 @@ export const JijuStorefrontArt: CssArtComponent = ({ label }) => (
     <Cat x={21} y={123} />
   </svg>
 );
+
+/* ---------- /jiju-autopilot banner: the closed loop (610 × 233) ----------
+   Left, a 377 × 233 golden rectangle: one loop of six stations (discover → fill → check → publish →
+   share → watch) on a ring of radius 89 around the Jiju cat, with a dot running round it. Right, the
+   233 × 233 square: a search box over Fibonacci bars (13 → 89) that grow — the loop being found on
+   search. A trail of dots crosses the seam at 377 from the "publish" station to the bars. */
+
+const LOOP_CX = 189;
+const LOOP_CY = 116;
+const LOOP_R = 89;
+const loopAt = (deg: number) => {
+  const rad = (deg * Math.PI) / 180;
+  return [LOOP_CX + LOOP_R * Math.cos(rad), LOOP_CY + LOOP_R * Math.sin(rad)];
+};
+
+export const JijuLoopArt: CssArtComponent = ({ label }) => {
+  const [fx, fy] = loopAt(0);
+  return (
+    <svg className="jjart jjart-loop" viewBox="0 0 610 233" {...a11y(label)}>
+      <defs>
+        <clipPath id="jjart-loop-frame"><rect width="610" height="233" rx="21" /></clipPath>
+      </defs>
+      <g clipPath="url(#jjart-loop-frame)">
+        {/* the loop: golden rectangle 377 × 233 */}
+        <rect width="377" height="233" className="f-ground" />
+        <circle cx={LOOP_CX} cy={LOOP_CY} r="55" className="f-amber-tint jjart-loop-core" />
+        {Array.from({ length: 34 }, (_, index) => {
+          const [cx, cy] = loopAt((index * 360) / 34);
+          return <circle key={index} cx={cx} cy={cy} r="2" className="f-amber jjart-loop-track" />;
+        })}
+
+        {/* six stations, clockwise from the right */}
+        <g transform={`translate(${fx} ${fy})`}>{/* publish: a shopfront */}
+          <circle r="21" className="f-coral" />
+          <rect x="-10" y="-5" width="21" height="13" rx="2" className="f-paper" />
+          <rect x="-12" y="-9" width="25" height="5" rx="2.5" className="f-coral-deep" />
+          <rect x="-3" y="0" width="7" height="8" rx="1.5" className="f-coral-tint" />
+        </g>
+        <g transform={`translate(${loopAt(60).join(' ')})`}>{/* share: a speech bubble */}
+          <circle r="21" className="f-rose" />
+          <rect x="-11" y="-8" width="21" height="13" rx="5" className="f-paper" />
+          <polygon points="-6,4 -2,4 -8,10" className="f-paper" />
+          <circle cx="-4" cy="-1.5" r="1.6" className="f-rose-deep" />
+          <circle cx="0" cy="-1.5" r="1.6" className="f-rose-deep" />
+          <circle cx="4" cy="-1.5" r="1.6" className="f-rose-deep" />
+        </g>
+        <g transform={`translate(${loopAt(120).join(' ')})`}>{/* watch: an eye */}
+          <circle r="21" className="f-sky" />
+          <rect x="-13" y="-6" width="26" height="13" rx="6.5" className="f-paper" />
+          <circle cx="0" cy="0.5" r="5" className="f-sky-deep" />
+          <circle cx="1.5" cy="-1" r="1.5" className="f-paper" />
+        </g>
+        <g transform={`translate(${loopAt(180).join(' ')})`}>{/* discover: a news card */}
+          <circle r="21" className="f-amber" />
+          <rect x="-10" y="-8" width="21" height="16" rx="3" className="f-paper" />
+          <rect x="-7" y="-5" width="8" height="3" rx="1.5" className="f-amber-deep" />
+          <rect x="-7" y="0" width="14" height="2" rx="1" className="f-line" />
+          <rect x="-7" y="4" width="11" height="2" rx="1" className="f-line" />
+        </g>
+        <g transform={`translate(${loopAt(240).join(' ')})`}>{/* fill: a robot head */}
+          <circle r="21" className="f-iris" />
+          <rect x="-1" y="-14" width="2" height="5" rx="1" className="f-iris-deep" />
+          <circle cx="0" cy="-14" r="2.5" className="f-amber" />
+          <rect x="-10.5" y="-8" width="21" height="16" rx="5" className="f-paper" />
+          <circle cx="-4" cy="0" r="2" className="f-iris-deep" />
+          <circle cx="4" cy="0" r="2" className="f-iris-deep" />
+        </g>
+        <g transform={`translate(${loopAt(300).join(' ')})`}>{/* check: a tick */}
+          <circle r="21" className="f-leaf" />
+          <path d="M-6.5 0 L-2 4.5 L7 -5" className="jjart-tick jjart-tick-big" />
+        </g>
+
+        {/* the runner: a dot that goes round the loop */}
+        <g transform={`translate(${LOOP_CX} ${LOOP_CY})`}>
+          <g className="jjart-loop-orbit">
+            <circle cx={LOOP_R} cy="0" r="5" className="f-amber-deep" />
+          </g>
+        </g>
+
+        {/* the Jiju cat sits in the middle of the loop */}
+        <Cat x={172} y={132} />
+
+        {/* trail across the seam: from "publish" to the search bars */}
+        {[0, 1, 2, 3, 4].map((index) => (
+          <circle key={index} cx={fx + 34 + index * 13} cy={fy} r="2" className={`f-sky-deep jjart-trail jjart-trail-${index}`} />
+        ))}
+
+        {/* found on search: a 233 × 233 square */}
+        <rect x="377" width="233" height="233" className="f-day" />
+        <rect x="403" y="34" width="181" height="34" rx="17" className="f-paper" />
+        <Lens x={424} y={51} r={8} />
+        <rect x="443" y="48" width="89" height="5" rx="2.5" className="f-line" />
+        <rect x="535" y="45" width="2" height="12" rx="1" className="f-iris-deep jjart-caret" />
+        <rect x="377" y="199" width="233" height="34" className="f-ground" />
+        {[13, 21, 34, 55, 89].map((height, index) => (
+          <rect
+            key={height}
+            x={413 + index * 34}
+            y={199 - height}
+            width="21"
+            height={height}
+            rx="5"
+            className={`${index === 4 ? 'f-amber' : index > 1 ? 'f-iris' : 'f-sky'} jjart-grow jjart-grow-${index}`}
+          />
+        ))}
+        <g transform="translate(559 89)">
+          <g className="jjart-loop-spark"><circle r="5" className="f-amber" /><circle r="2" className="f-paper" /></g>
+        </g>
+      </g>
+    </svg>
+  );
+};

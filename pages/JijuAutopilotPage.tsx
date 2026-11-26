@@ -5,7 +5,8 @@
 
 // /jiju-autopilot — the Jiju full-automation system, shown end to end for people who may want to buy it
 // (owner's request 2026-11-26: English first + Chinese, fully transparent). Body: components/jiju-autopilot/.
-// The consumer product page stays at /jiju-pet; this page reuses its banner and belief art.
+// The consumer product page stays at /jiju-pet. Told buyer-first (owner, 2026-11-26): the problems, the
+// closed loop that solves them, search data as proof, then the machines. Own banner (JijuLoopArt).
 // No technical manual on this page (owner, 2026-11-26).
 
 import React from 'react';
@@ -43,8 +44,11 @@ const JijuAutopilotPage: React.FC<{
       primary={{ href: contactHref, icon: <Mail size={16} />, label: { en: 'Ask about buying it', zh: '洽询购买' } }}
       secondary={{ href: joinBasePath(baseUrl, 'jiju-pet'), ghost: true, label: { en: 'See Jiju itself', zh: '看 Jiju 本身' } }}
       quickLinks={[
-        { href: '#ap-news', label: { en: 'The ten machines', zh: '十台机器' } },
-        { href: '#ap-night', label: { en: 'One night', zh: '一晚' } },
+        { href: '#ap-problems', label: { en: 'The problems', zh: '问题' } },
+        { href: '#ap-loop', label: { en: 'The loop', zh: '闭环' } },
+        { href: '#ap-worth', label: { en: 'What it’s worth', zh: '值多少' } },
+        { href: '#ap-seo', label: { en: 'Search data', zh: '搜索数据' } },
+        { href: '#ap-machines', label: { en: 'The ten machines', zh: '十台机器' } },
         { href: '#ap-buy', label: { en: 'Buying it', zh: '购买' } },
         { href: '#faq', label: { en: 'FAQ', zh: '常见问题' } },
       ]}

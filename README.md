@@ -90,7 +90,7 @@ npm run preview
 - `/igaming/resume` — 给招聘方 / 面试前发的 iGaming 个人页兼公开履历：定位一句话、数字（各链到案例；+30% 留存来自履历、不链）、工作经历（雇主、职称、年份照 LinkedIn；市场只写「东南亚与澳洲」不点名国家）、下载 PDF 履历（`public/igaming/Eden-Tan-Resume.pdf`，不含电话，由 resume-tailor 技能生成）、三个优势、能力与证据对照表、进新市场的头 90 天、工作方式、邮箱与 LinkedIn；不放薪资和电话；`index: false`、`sitemap: false`，只靠链接进入，不从别的页面链过来
 - `/igaming/full` — 已搬到 https://asiaigaming.com/guide/ ，静态跳转页
 - 搬到 Asia iGaming 的页面(上面 9 条，中文版同样加 `/zh`)：GitHub Pages 发不了 301，所以旧网址在 `seo-routes.ts` 里保留登记并写 `movedTo`(同时 `index: false, sitemap: false`)。构建时 `vite.config.ts` 的 `renderMovedRouteHtml` 写出跳转页：canonical 与 hreflang 指向新站、`noindex, follow`、行内脚本 `location.replace()`(只保留 `utm_*`，其余参数与 hash 丢掉)、`<meta http-equiv="refresh">` 兜底、一行可见链接；`index.tsx` 启动时再跳一次(service worker 旧壳、`/?p=` 垫片、dev 预览)。`App.tsx` 里的字面量只是给路由门禁读的。新增 / 撤回搬迁只改 `movedTo`
-- `/jiju-autopilot` — Jiju 全自动系统的出售页(2026-11-26):十台机器(新闻、Grok bot、MCP 后台、自动上架 / 下架、图片、网上怎么说、店主 WhatsApp、控制室、社媒)各配流程图或动态图,一晚时间表、谁决定什么、购买须知;不放技术手册(用户 2026-11-26 定)
+- `/jiju-autopilot` — Jiju 全自动系统的出售页(2026-11-26):按买家的顺序讲 —— 六个维度的问题 → 一个闭环(环形图 + 问题 × 机器矩阵)→ Google Search Console 实证(每周展示 / 点击柱图)→ 十台机器(选一台看它的流程图与规矩)→ 一晚时间表、谁决定什么、购买须知;横幅是自己的闭环插画 JijuLoopArt;不放技术手册(用户 2026-11-26 定)
 - `/dr-racing` — Dr Racing 摩托车贷款仪表台产品页，内嵌公开 Demo
 - `/poker` — Friday Poker Club 产品详情：私人房间、邀请、买入、实时牌桌与 Build Notes
 - `/wiki` — 系统、判断、人性、策略四个主题入口，链接现有 Notes 正文；原六篇技术笔记收在默认折叠的「构建经验」。主题选取与介绍在 `components/wiki-content.ts`，文章仍由 Markdown 维护
