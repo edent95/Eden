@@ -1,7 +1,7 @@
 import type { CssArtComponent } from './components/css-art/index';
 import { IGamingHeroStageArt } from './components/css-art/igaming-hero-stage';
 import { DrRacingBeliefAsk, DrRacingBeliefQuiet, DrRacingBeliefRecord, DrRacingBeliefUseful, DrRacingBeliefVerified, DrRacingStoryBanner, ETReportBeliefAnswer, ETReportBeliefCompute, ETReportBeliefLatest, ETReportBeliefLocal, ETReportBeliefStop, ETReportStoryBanner, LifeOsBeliefBarnum, LifeOsBeliefIndependent, LifeOsBeliefLocal, LifeOsBeliefNatal, LifeOsBeliefPropose, LifeOsStoryBanner } from './components/css-art/system-story-art';
-import { JijuBeliefBlankArt, JijuBeliefCheckArt, JijuBeliefDecideArt, JijuBeliefSaveArt, JijuBeliefSourceArt, JijuNightDayArt, JijuStorefrontArt } from './components/css-art/jiju-story-art';
+import { JijuBeliefBlankArt, JijuBeliefCheckArt, JijuBeliefDecideArt, JijuBeliefSaveArt, JijuBeliefSourceArt, JijuLoopArt, JijuNightDayArt, JijuStorefrontArt } from './components/css-art/jiju-story-art';
 import {
   ElementFireCssIcon,
   ElementWindCssIcon,
@@ -506,6 +506,27 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
     copy: {
       en: 'The “photo” inside the phone mock-up of a Jiju shop card.',
       zh: 'Jiju 店家卡片手机示意图里的「照片」。',
+    },
+  },
+  {
+    id: 'jiju-autopilot-loop',
+    title: 'Jiju Autopilot · The closed loop',
+    projectTitle: 'Jiju',
+    category: 'product-story',
+    sourceRoute: '/jiju-autopilot',
+    ratio: 'banner',
+    background: 'scene',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/jiju-story.css',
+    Component: JijuLoopArt,
+    label: {
+      en: 'Six stations on one loop around the Jiju cat — news card, robot, tick, shop, speech bubble, eye — with a dot running round it; a trail leads to a search box over bars that grow.',
+      zh: '黑猫周围一圈六个站：新闻卡、机器人、勾、店面、对话框、眼睛，一个圆点绕圈跑；一串点通往搜索框，下面的柱子长高。',
+    },
+    copy: {
+      en: 'Banner for /jiju-autopilot: the closed loop on the left (golden rectangle), being found on search on the right (square).',
+      zh: '/jiju-autopilot 的横幅：左边黄金矩形里是闭环，右边正方形是被搜索到。',
     },
   },
   {

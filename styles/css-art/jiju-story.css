@@ -118,3 +118,23 @@
   .jjart { animation: none !important; }
   .jjart-fly { opacity: 0; }
 }
+
+/* ---------- /jiju-autopilot banner: the closed loop (JijuLoopArt) ---------- */
+.jjart-loop { border-radius: 21px; }
+:root[data-theme="dark"] .jjart-loop .f-paper { fill: #f3f1ec; }
+.jjart-loop-orbit { transform-box: view-box; transform-origin: 0 0; animation: jjart-spin 9s linear infinite; }
+.jjart-loop-core { animation: jjart-glow 3.2s ease-in-out infinite; }
+.jjart-grow,
+.jjart-loop-spark { transform-box: fill-box; transform-origin: 50% 100%; }
+.jjart-loop-spark { transform-origin: center; animation: jjart-pop 3.6s ease-in-out infinite; }
+.jjart-grow { animation: jjart-grow 3.6s ease-out infinite; }
+.jjart-grow-1 { animation-delay: 0.13s; }
+.jjart-grow-2 { animation-delay: 0.26s; }
+.jjart-grow-3 { animation-delay: 0.39s; }
+.jjart-grow-4 { animation-delay: 0.52s; }
+.jjart-trail { animation: jjart-glow 1.6s ease-in-out infinite; }
+.jjart-trail-1 { animation-delay: 0.2s; }
+.jjart-trail-2 { animation-delay: 0.4s; }
+.jjart-trail-3 { animation-delay: 0.6s; }
+.jjart-trail-4 { animation-delay: 0.8s; }
+@keyframes jjart-grow { 0% { transform: scaleY(0.236); } 34%, 89% { transform: scaleY(1); } 100% { transform: scaleY(0.236); } }

@@ -549,6 +549,23 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
     ),
     sections: [
       {
+        title: L('Six problems, one closed loop', '六个维度的问题，一个闭环'),
+        paragraphs: [
+          L(
+            'A directory goes wrong in six ways at once: coverage (new places nobody tells you about), completeness (no hours, no photos), accuracy (who says it is true), being found on Google, reach on social media, and freshness (closed shops still listed). Jiju Autopilot runs one loop — discover, fill in, check, go live, share, watch — and what the watch finds goes back to the start, while a control room runs the schedule and repairs the code.',
+            '名录会同时在六个维度上出问题：覆盖（新店没人告诉你）、完整（没营业时间、没照片）、准确（谁说这是真的）、在 Google 上被搜到、社媒声量、时效（店关了还挂着）。Jiju Autopilot 用一个闭环解决：发现、补齐、把关、上线、分享、巡查，巡查发现的变化回到起点；控制室负责排程、修代码。',
+          ),
+          L(
+            'What it is worth: in the 30 days to 26 Nov 2026 the machines found 1,616 places, stored 1,202 photos, checked 795 links, published 230 promos and 87 events and merged 389 code changes — about 139 working days by hand at assumed minutes per task. A traditional team of seven (JobStreet Malaysia median pay, November 2026, plus employer EPF, SOCSO and EIS) would cost about RM 29,289 a month; the system’s subscriptions, cloud and domains cost about RM 1,544.',
+            '值多少：截至 2026-11-26 的 30 天里，机器发现 1,616 个地点、存了 1,202 张照片、核对 795 条链接、上线 230 个优惠和 87 个活动、合并 389 个代码改动 —— 按假设的每件分钟数，人手约要 139 个工作日。七个人的传统团队（JobStreet 马来西亚 2026 年 11 月薪资中位数，加雇主 EPF、SOCSO、EIS）每月约 RM 29,289；系统的订阅、云端与域名每月约 RM 1,544。',
+          ),
+          L(
+            'Search data for jiju.pet (Google Search Console, 26 Nov 2026): 195,939 impressions and 523 clicks in the last 28 days, up from 38,024 and 180 in the 28 days before; weekly impressions grew from 223 in the first week of June to 80,407 in the week of 16 November; 76 % of clicks land on place pages the loop built, and organic search brought 48 of 51 key actions in GA4.',
+            'jiju.pet 的搜索数据（Google Search Console，2026-11-26）：最近 28 天展示 195,939 次、点击 523 次，前 28 天是 38,024 次和 180 次；每周展示从 6 月第一周的 223 次长到 11 月 16 日那周的 80,407 次；76% 的点击落在闭环做出来的地点页上；GA4 里 51 次关键行动有 48 次来自自然搜索。',
+          ),
+        ],
+      },
+      {
         title: L('The ten machines', '十台机器'),
         paragraphs: [
           L(
