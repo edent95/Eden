@@ -577,12 +577,12 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
         title: L('The dashboard: Now, Record, Loops', '仪表台：现在、对象、回路'),
         paragraphs: [
           L(
-            'The engine has three layers, each already running in a live system. Machines move records forward in a closed loop (Jiju). People take over on one pipeline per record, where each role sees its own step, a checklist gates the hand-over and a failed check becomes one plain next step (Dr Racing, a dealership’s daily tool). A third layer says where things stopped and how much is automatic: every item names who holds it, and a stuck step becomes one decision on the Now screen.',
-            '引擎有三层，每一层都已经在一个正在跑的系统里。机器用闭环把记录往前推（Jiju）。人在每条记录的流水线上接手：每个角色只看自己那一步，清单齐了才放行，没过的检查变成一句清楚的下一步（Dr Racing，一家车行每天在用的工具）。第三层回答哪里断了、自动到哪一档：每件事都写明球在谁那里，卡住的一步变成「现在」画面上的一个决定。',
+            'Underneath is the record layer an aggregator keeps: provider, integration line, account, operator and promotion, linked, with sensitive columns locked by role — the cost rate is removed on the server for every role but one, providers and operators see each other only by alias, and the AI assistant reads provider information only. On top of the records the engine has three layers, each already running in a live system. Machines move records forward in a closed loop (Jiju). People take over on one pipeline per record, where each role sees its own step, a checklist gates the hand-over and a failed check becomes one plain next step (Dr Racing, a dealership’s daily tool). A third layer says where things stopped and how much is automatic: every item names who holds it, and a stuck step becomes one decision on the Now screen.',
+            '最底下是聚合商手上的记录层：provider、接入线路、接入帐号、operator、promotion 互相连着，敏感栏位按角色上锁 —— 成本价除了一个角色之外在服务器就拿掉，provider 和 operator 互相只看到代号，AI 助手只读 provider 资料。记录之上，引擎有三层，每一层都已经在一个正在跑的系统里。机器用闭环把记录往前推（Jiju）。人在每条记录的流水线上接手：每个角色只看自己那一步，清单齐了才放行，没过的检查变成一句清楚的下一步（Dr Racing，一家车行每天在用的工具）。第三层回答哪里断了、自动到哪一档：每件事都写明球在谁那里，卡住的一步变成「现在」画面上的一个决定。',
           ),
           L(
-            'Automation comes in three levels — watch, propose, auto. Every loop starts on watch; it asks to go automatic only after ten approvals in a row, unchanged. Anything that spends money or messages a real person — promotion go-live, reports sent to operators, terms, pricing and disputes — is capped at propose.',
-            '自动化分三档：只看、提议、自动。每条回路从「只看」开始，要连续十次原样通过，才会问能不能升到自动。会花钱、会给真人发消息的 —— 促销上线、发给 operator 的报表、条款、价格与争议 —— 最高只到「提议」。',
+            'Automation comes in three levels — watch, propose, auto. Every loop starts on watch; it asks to go automatic only after ten approvals in a row, unchanged. Anything that spends money or messages a real person — promotion go-live, bulk messages to operators, sell rates, terms and disputes — is capped at propose.',
+            '自动化分三档：只看、提议、自动。每条回路从「只看」开始，要连续十次原样通过，才会问能不能升到自动。会花钱、会给真人发消息的 —— 促销上线、群发给 operator、售价、条款与争议 —— 最高只到「提议」。',
           ),
         ],
         links: [

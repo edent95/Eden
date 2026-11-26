@@ -656,6 +656,30 @@
   .igap-map-arrow { opacity: 1; }
 }
 
+/* ---------- /igaming-ai layer 0: the records and who sees which column (RecordFigures.tsx) ---------- */
+.igap-rec { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: 13px; min-width: 0; }
+.igap-rec-card { min-width: 0; padding: 13px; border: 1px solid var(--ep-line); border-top: 4px solid var(--hue); border-radius: var(--ep-radius-sm); background: var(--ep-paper); }
+.igap-rec-card.is-moving { background: var(--hue-tint); }
+.igap-rec-name { margin: 0 0 8px; font-size: 0.95rem; font-weight: 700; line-height: 1.3; color: var(--ep-ink); }
+.igap-rec-name small { display: block; margin-top: 2px; font-size: 0.76rem; font-weight: 400; line-height: 1.4; color: var(--ep-muted); }
+.igap-rec-fields { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 5px; }
+.igap-rec-fields li { padding: 2px 8px; border: 1px solid var(--ep-line); border-radius: 999px; font-size: 0.72rem; line-height: 1.4; color: var(--ep-ink); background: var(--ep-paper); }
+.igap-rec-card .igap-chain { margin-top: 10px; }
+.igap-rec-note { margin: 8px 0 0; font-size: 0.78rem; line-height: 1.45; color: var(--ep-ink); min-height: 2.9em; }
+
+.igap-vis { min-width: 0; }
+.igap-vis .igap-roles { margin-top: 0; }
+.igap-vis-rows { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
+.igap-vis-rows li { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid var(--ep-line); border-radius: var(--ep-radius-sm); background: var(--ep-paper); transition: opacity 0.35s ease, background-color 0.35s ease; }
+.igap-vis-rows li.is-no { opacity: 0.5; border-style: dashed; }
+.igap-vis-rows li.is-cost.is-yes { border-color: var(--ep-ink); }
+.igap-vis-mark { flex: none; display: inline-grid; place-items: center; width: 21px; height: 21px; border-radius: 999px; background: var(--ep-primary); color: var(--ep-primary-text, #fff); }
+.igap-vis-rows li.is-part .igap-vis-mark { background: none; border: 2px solid var(--ep-primary); color: var(--ep-ink); }
+.igap-vis-rows li.is-no .igap-vis-mark { background: none; border: 1.5px dashed var(--ep-muted); color: var(--ep-muted); }
+.igap-vis-name { flex: 1; min-width: 0; font-size: 0.86rem; font-weight: 700; color: var(--ep-ink); overflow-wrap: anywhere; }
+.igap-vis-state { flex: none; max-width: 48%; text-align: right; font-size: 0.78rem; font-weight: 700; color: var(--ep-ink); }
+.igap-vis-state small { display: block; font-size: 0.7rem; font-weight: 400; line-height: 1.35; color: var(--ep-muted); }
+
 /* ---------- /igaming-ai: three layers, the dashboard mock, automation levels (DashboardFigures.tsx) ---------- */
 .igap-layers { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: 13px; }
 .igap-layer {
@@ -782,7 +806,8 @@
   .igap-item,
   .igap-chain li,
   .igap-check li,
-  .igap-levels-cell { transition: none; }
+  .igap-levels-cell,
+  .igap-vis-rows li { transition: none; }
   .igap-layer { opacity: 1; transform: none; }
 }
 

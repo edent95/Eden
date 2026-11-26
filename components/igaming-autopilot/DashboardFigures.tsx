@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-// Dashboard figures for /igaming-ai (owner, 2026-11-26). The engine is told as three layers, each already
-// running somewhere: the loop that moves records (Jiju), the pipeline where people take over (Dr Racing,
+// Dashboard figures for /igaming-ai (owner, 2026-11-26). The engine is told as four layers. Layer 0, the
+// records, is in RecordFigures.tsx; the other three each already run somewhere: the loop that moves records (Jiju), the pipeline where people take over (Dr Racing,
 // a client's dealership tool — methods only, never its numbers or names), and the layer that says where
 // things stopped and how much is automatic (the owner's own operations dashboard — methods only).
 //   IgLayers     three questions, three answers, where each one runs today
@@ -26,7 +26,7 @@ const pick = (isZh: boolean, text: EpText) => (isZh ? text.zh : text.en);
 
 /* ---------- 1. three layers ---------- */
 
-export type IgLayer = { id: string; hue: ApHue; icon: React.ReactNode; tag: EpText; question: EpText; answer: EpText; from: EpText; href?: string };
+export type IgLayer = { id: string; hue: ApHue; icon: React.ReactNode; tag: EpText; question: EpText; answer: EpText; from?: EpText; href?: string };
 
 export const IgLayers: React.FC<{ isZh: boolean; title: EpText; items: IgLayer[]; runsLabel: EpText; caption: EpText }> = ({ isZh, title, items, runsLabel, caption }) => {
   const ref = React.useRef<HTMLOListElement | null>(null);
@@ -41,10 +41,12 @@ export const IgLayers: React.FC<{ isZh: boolean; title: EpText; items: IgLayer[]
             <p className="igap-layer-tag">{pick(isZh, item.tag)}</p>
             <p className="igap-layer-q">{pick(isZh, item.question)}</p>
             <p className="igap-layer-a">{pick(isZh, item.answer)}</p>
-            <p className="igap-layer-from">
-              <span>{pick(isZh, runsLabel)}</span>{' '}
-              {item.href ? <a href={item.href}>{pick(isZh, item.from)}</a> : pick(isZh, item.from)}
-            </p>
+            {item.from ? (
+              <p className="igap-layer-from">
+                <span>{pick(isZh, runsLabel)}</span>{' '}
+                {item.href ? <a href={item.href}>{pick(isZh, item.from)}</a> : pick(isZh, item.from)}
+              </p>
+            ) : null}
           </li>
         ))}
       </ol>
@@ -134,6 +136,7 @@ const NowScreen: React.FC<{ isZh: boolean; phase: Phase }> = ({ isZh, phase }) =
       <ul className="igap-quiet">
         <li>{p(t('Promotions — variants being checked and launched', '促销 —— 变体在核对、上线'))}</li>
         <li>{p(t('Game catalogue — a new release going out to every fitting operator', '游戏目录 —— 一款新游戏正在送到每家合适的 operator'))}</li>
+        <li>{p(t('Onboarding — one application on day 9; the account manager has been reminded', '接入 —— 一个申请停了 9 天，已经提醒客户经理'))}</li>
         <li>{p(t('Account watch — next weekly sweep on Monday', '账户巡查 —— 下一次每周巡查在周一'))}</li>
       </ul>
     </div>
@@ -190,6 +193,7 @@ const LoopsScreen: React.FC<{ isZh: boolean; phase: Phase }> = ({ isZh, phase })
       id: 'promo', name: t('Promotions', '促销'), level: LEVEL.propose, at: 2, stuck,
       status: stuck ? t('Stopped: 1 of 50 variants failed the check', '卡住：50 个变体里 1 个没过') : t('Turning · 50 variants in check', '在转 · 50 个变体在把关'),
     },
+    { id: 'onboard', name: t('Onboarding', '接入'), level: LEVEL.auto, at: 1, status: t('Turning · 1 application on day 9, reminder sent', '在转 · 1 个申请第 9 天，已提醒') },
     { id: 'catalogue', name: t('Game catalogue', '游戏目录'), level: LEVEL.auto, at: 3, status: t('Turning · next: tell the operators', '在转 · 下一步：通知 operator') },
     { id: 'support', name: t('Support', '客服'), level: LEVEL.propose, at: 4, status: t('Turning · 2 threads waiting for the operator to confirm', '在转 · 2 条对话等 operator 确认') },
   ];

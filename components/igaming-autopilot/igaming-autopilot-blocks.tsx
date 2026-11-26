@@ -16,6 +16,7 @@
 import React from 'react';
 import { DirectoryMap } from './DirectoryMap';
 import { IgDashboard, IgLayers, IgLevels } from './DashboardFigures';
+import { IgRecords, IgVisibility } from './RecordFigures';
 import {
   BadgeCheck, BarChart3, Bot, CalendarCheck, Database, Gamepad2, Gift, HeartPulse, Inbox, KeyRound,
   Layers, LayoutDashboard, MessageCircle, Repeat, ShieldCheck, UserPlus, Users, Wrench,
@@ -223,8 +224,8 @@ export const igamingAutopilotBlocks = (isZh: boolean, links: { jiju: string; drR
   )} caption={t('One provider, many operators, one checklist each — the loop sends, checks and watches; a person handles only the rows that need one.', '一个 provider、很多 operator、每家一张清单 —— 闭环负责送出、核对和巡查；人只处理真的需要人的那几行。')} /> },
   { kind: 'node', node: <DirectoryMap isZh={isZh} title={t('The same directory, two names for each row', '同一个名录，每一行换个名字')} heads={[t('Jiju directory', 'Jiju 名录'), t('Provider directory (iGaming B2B)', 'Provider 名录（iGaming B2B）')]} rows={[
     { id: 'who', hue: 'amber', jiju: t('Place / merchant', '地点 / 店家'), jijuNote: t('a café, a vet, a pet shop', '一家咖啡馆、兽医、宠物店'), igaming: t('Provider / merchant', 'Provider / merchant'), igamingNote: t('a game provider, an operator, a platform', '游戏供应商、operator、平台') },
-    { id: 'info', hue: 'sky', jiju: t('Merchant details', '店家资料'), jijuNote: t('hours, address, photos, pet rules', '营业时间、地址、照片、携宠规则'), igaming: t('Provider information', 'Provider information'), igamingNote: t('games, markets, currencies, contacts', '游戏、市场、币种、联系人') },
-    { id: 'promo', hue: 'coral', jiju: t('Promotions & events', '优惠与活动'), jijuNote: t('start date, end date, terms', '开始日、截止日、条件'), igaming: t('Provider promotion', 'Provider promotion'), igamingNote: t('campaign dates, caps, eligible games', '活动日期、上限、适用游戏') },
+    { id: 'info', hue: 'sky', jiju: t('Merchant details', '店家资料'), jijuNote: t('hours, address, photos, pet rules', '营业时间、地址、照片、携宠规则'), igaming: t('Provider information', 'Provider information'), igamingNote: t('wallet type, currencies, IP restriction, processing time', '钱包类型、支持币种、IP 限制、开户处理时间') },
+    { id: 'promo', hue: 'coral', jiju: t('Promotions & events', '优惠与活动'), jijuNote: t('start date, end date, terms', '开始日、截止日、条件'), igaming: t('Provider promotion', 'Provider promotion'), igamingNote: t('discount, duration, T&C, materials', '折扣、期限、条款、素材') },
     { id: 'brand', hue: 'rose', jiju: t('Merchant brand', '店家品牌'), jijuNote: t('logo, name, official links', 'logo、店名、官方链接'), igaming: t('Merchant brand', 'Merchant brand'), igamingNote: t('logo, brand name, assets', 'logo、品牌名、素材') },
   ]} verbs={[t('Collect', '收资料'), t('Check', '核对'), t('Publish', '上架'), t('Update', '更新'), t('Expire', '过期下架')]} conclusion={t(
     'Every row goes through the same five steps — so the engine that keeps Jiju true can keep a provider directory true.',
@@ -258,18 +259,38 @@ export const igamingAutopilotBlocks = (isZh: boolean, links: { jiju: string; drR
   ] },
 
   /* ------------------------------------------------------------ three layers */
-  heading('ig-engine', isZh, t('One engine, three layers', '一个引擎，三层')),
+  heading('ig-engine', isZh, t('One engine, four layers', '一个引擎，四层')),
   { kind: 'node', node: lead(isZh, t(
-    'iGaming Ai is an operation that runs by itself, stays in plain sight, and goes only as far as you let it. Strip any B2B operation down and it is records moving from one stage to the next. That leaves three questions — and each one already has a working answer in a live system.',
-    'iGaming Ai 是一个会自己转、人看得见、放手有档位的运营系统。任何 B2B 运营拆到底，都是一条条记录从一个阶段走到下一个阶段。剩下的只有三个问题 —— 而每一个，都已经在一个正在跑的系统里有了答案。',
+    'iGaming Ai is an operation that runs by itself, stays in plain sight, and goes only as far as you let it. Strip any B2B operation down and it is records moving from one stage to the next. So it starts with the records, and then three questions — each of which already has a working answer in a live system.',
+    'iGaming Ai 是一个会自己转、人看得见、放手有档位的运营系统。任何 B2B 运营拆到底，都是一条条记录从一个阶段走到下一个阶段。所以先把记录定清楚，再回答三个问题 —— 这三个问题，每一个都已经在一个正在跑的系统里有了答案。',
   )) },
-  { kind: 'node', node: <IgLayers isZh={isZh} title={t('Three questions, three answers', '三个问题，三个答案')} runsLabel={t('Running today:', '现在跑在：')} items={[
+  { kind: 'node', node: <IgLayers isZh={isZh} title={t('The records first, then three questions', '先有记录，再回答三个问题')} runsLabel={t('Running today:', '现在跑在：')} items={[
+    { id: 'records', hue: 'coral', icon: <Database size={18} />, tag: t('Records first', '记录在先'), question: t('What does a record look like — and who may see which column?', '记录长什么样？谁看得到哪一栏？'), answer: t('Provider, integration line, account, operator, promotion — linked, with every sensitive column locked to the roles that need it.', 'Provider、接入线路、接入帐号、operator、promotion —— 互相连着，每个敏感栏位只开给需要它的角色。') },
     { id: 'loop', hue: 'amber', icon: <Repeat size={18} />, tag: t('Machines push', '机器推'), question: t('Who moves the record forward?', '谁把记录往前推？'), answer: t('Machines, in a closed loop: collect, check, publish, update, expire — and what the watch finds goes back to the start.', '机器，一个闭环：收资料、核对、上架、更新、过期下架 —— 巡查出来的问题回到起点。'), from: t('Jiju, a live directory', 'Jiju，一个正在营运的名录'), href: links.jiju },
     { id: 'people', hue: 'sky', icon: <Users size={18} />, tag: t('People take over', '人接手'), question: t('Where do people take over?', '人在哪里接手？'), answer: t('One pipeline per record. Each role sees only its own step, a checklist gates the hand-over, and a rejection becomes one plain next step.', '每条记录一条流水线。每个角色只看自己那一步，清单齐了才放行，被拒会翻成一句清楚的下一步。'), from: t('Dr Racing, a dealership’s daily tool', 'Dr Racing，一家车行每天在用的工具'), href: links.drRacing },
     { id: 'trust', hue: 'leaf', icon: <LayoutDashboard size={18} />, tag: t('You set the dial', '档位放权'), question: t('Where did it stop — and how much can I let go?', '哪里断了？我能放手多少？'), answer: t('Every item says who holds it. A stuck step becomes one decision. Each loop has a level — watch, propose, auto — and money never goes past propose.', '每件事都写明球在谁那里。卡住的一步变成一个决定。每条回路有档位 —— 只看、提议、自动 —— 涉及钱的永远不超过提议。'), from: t('my own operations dashboard, used every day', '我自己每天在用的运营面板') },
   ]} caption={t(
-    'Three separate systems, all live. iGaming Ai puts the three layers on one set of records. Methods only: nothing from the dealership’s or my own data is shown on this page.',
-    '三个各自独立、都在跑的系统。iGaming Ai 把这三层放到同一份记录上。只讲做法：这一页不放车行的资料，也不放我自己的资料。',
+    'The three upper layers come from three separate systems, all live. iGaming Ai puts them on one set of records. Methods only: nothing from the dealership’s or my own data is shown on this page.',
+    '上面三层来自三个各自独立、都在跑的系统。iGaming Ai 把它们放到同一份记录上。只讲做法：这一页不放车行的资料，也不放我自己的资料。',
+  )} /> },
+
+  /* ------------------------------------------------------------ records (layer 0) */
+  heading('ig-records', isZh, t('Layer 0: the records an aggregator keeps', '第 0 层：聚合商手上的记录')),
+  { kind: 'node', node: lead(isZh, t(
+    'An aggregator sits in the middle: providers on one side, operators on the other, and every pair of them is something to open, configure and keep true. Five kinds of record hold all of it.',
+    '聚合商站在中间：一边是 provider，一边是 operator，每一对都要开户、配置、保持准确。全部的事，装在五种记录里。',
+  )) },
+  { kind: 'node', node: <IgRecords isZh={isZh} title={t('Five records, and the one that moves', '五种记录，会往前走的是其中一种')} caption={t(
+    'Field names are the common ones in the trade; yours are set with you, and an admin can add new columns without a developer. The day count is illustrative.',
+    '栏位名是行内通用的叫法；实际栏位和你一起定，管理员不用找开发也能加新栏位。天数是示意。',
+  )} /> },
+  { kind: 'p', text: t(
+    'The same provider can reach you by more than one line — direct, or through an agent — and each line has its own currencies, rates and credentials. That is why the line, not the provider, is what an operator’s account hangs on.',
+    '同一个 provider 可以有不止一条线路接进来 —— 直连，或经代理 —— 每条线路有自己的币种、费率和凭证。所以 operator 的接入帐号挂在线路上，而不是挂在 provider 上。',
+  ) },
+  { kind: 'node', node: <IgVisibility isZh={isZh} title={t('Who sees which column', '谁看得到哪一栏')} caption={t(
+    'It cycles through the roles; tap one to hold it. The cost rate is removed from the answer on the server for every role but one — it is not merely hidden on screen. Providers and operators see each other only by alias and never talk without your staff present. The AI assistant reads provider information and nothing else.',
+    '会自己轮流切换角色；点一个可以停住。成本价除了一个角色之外，在服务器回答时就已经拿掉，不是只在画面上藏起来。Provider 和 operator 互相只看到代号，没有你的人在场不能对话。AI 助手只读 provider 资料，别的都不读。',
   )} /> },
 
   /* ------------------------------------------------------------ problems */
@@ -423,12 +444,12 @@ export const igamingAutopilotBlocks = (isZh: boolean, links: { jiju: string; drR
     '一般的 AI 自动化卖的是「AI 替你做」。这里卖的是「你决定让它做到哪」。第一天没有任何东西是自动的；每条回路的档位，是你自己一次次通过换来的 —— 有些按设计永远过不了「提议」。',
   )) },
   { kind: 'node', node: <IgLevels isZh={isZh} title={t('Three levels: watch, propose, auto', '三档：只看、提议、自动')} rows={[
+    { id: 'ask', name: t('AI assistant answering from provider information', 'AI 助手查 provider 资料'), cap: 'auto', why: t('read only; never sees cost rate or credentials', '只读；读不到成本价和凭证') },
+    { id: 'follow', name: t('Follow-up on a stalled application', '申请卡住的跟进提醒'), cap: 'auto', why: t('reminds your own team only', '只提醒你自己的团队') },
     { id: 'catalogue', name: t('Game catalogue sync', '游戏目录同步'), cap: 'auto', why: t('same data, many lists', '同一份资料，送到很多清单') },
-    { id: 'faq', name: t('Reviewed support answers', '审过的客服答案'), cap: 'auto', why: t('fixed wording only', '只用固定措辞') },
-    { id: 'watch', name: t('Weekly account watch', '每周账户巡查'), cap: 'auto', why: t('only creates tasks', '只会开任务') },
+    { id: 'blast', name: t('Bulk message to operators', '群发给 operator'), cap: 'propose', why: t('a message to real people; you tick who gets it', '是发给真人的消息；发给谁由你勾') },
     { id: 'promo', name: t('Promotion go-live', '促销上线'), cap: 'propose', why: t('spends money: caps, payouts', '会花钱：上限、奖金') },
-    { id: 'report', name: t('Reports sent to operators', '发给 operator 的报表'), cap: 'propose', why: t('a message to a real person', '是发给真人的消息') },
-    { id: 'terms', name: t('Terms, pricing, disputes', '条款、价格、争议'), cap: 'propose', why: t('always a person’s decision', '永远由人决定') },
+    { id: 'terms', name: t('Sell rate, terms, disputes', '售价、条款、争议'), cap: 'propose', why: t('always a person’s decision', '永远由人决定') },
   ]} caption={t(
     'Illustrative rows; the loops and caps are set with you. The rule itself is real: on my own dashboard, anything that spends money or messages a real person is capped at “propose” in code, not in a setting. Stepping a loop back down is always one click.',
     '示意，回路和上限会和你一起定。规则本身是真的：在我自己的面板上，会花钱、会给真人发消息的回路，上限是写死在代码里的「提议」，不是一个可以改的设定。把一条回路降档永远只要一下。',
