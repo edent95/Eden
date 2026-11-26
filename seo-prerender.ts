@@ -1,7 +1,6 @@
 import { siteEssayNotes, wikiEntries } from './generated/content.ts';
 import { ROUTE_STATIC_COPY } from './seo-static-content.ts';
 import { textWidth } from './seo-text-width.ts';
-import { IGAMING_GUIDES } from './components/igaming-guides-content.ts';
 import { WIKI_INDEX, wikiTopics } from './components/wiki-content.ts';
 import {
   canonicalRoutePath,
@@ -18,6 +17,8 @@ type Localized = Record<SeoLanguage, string>;
 type StaticSection = {
   title: string;
   paragraphs: string[];
+  /** Crawlable links under the section; `href` is absolute or a path on this site starting with `/`. */
+  links?: Array<{ label: string; href: string }>;
 };
 
 export type StaticRouteContent = {
@@ -39,10 +40,9 @@ const CLUSTERS: Array<{ prefix?: string; paths: string[] }> = [
   },
   { prefix: '/wiki/', paths: ['/wiki', '/notes/turn-chaos-into-systems', '/notes/judgment-is-not-more-information'] },
   { prefix: '/notes/', paths: ['/notes', '/wiki', '/notes/turn-chaos-into-systems'] },
-  // /igaming (key points) and /igaming/full link to each other and back to the homepage only:
-  // the owner wants no past projects linked from them.
-  { prefix: '/igaming/cases/', paths: ['/igaming/cases', '/igaming', '/igaming/full', '/igaming/ggr-vs-ngr', '/igaming/provider-promotions', '/igaming/promotion-launch-checklist', '/igaming/crm-player-lifecycle', '/igaming/marketing-report-beyond-cpa', '/igaming/rtp-explained', '/igaming/wagering-requirements'] },
-  { paths: ['/igaming', '/igaming/full', '/igaming/cases', '/igaming/ggr-vs-ngr', '/igaming/provider-promotions', '/igaming/promotion-launch-checklist', '/igaming/crm-player-lifecycle', '/igaming/marketing-report-beyond-cpa', '/igaming/rtp-explained', '/igaming/wagering-requirements', '/'] },
+  // The starter pack and guides moved to Asia iGaming (2026-11-25); what is left here is the hub and the field notes.
+  { prefix: '/igaming/cases/', paths: ['/igaming/cases', '/igaming'] },
+  { paths: ['/igaming', '/igaming/cases', '/'] },
   {
     paths: ['/penneys-game', '/conways-game-of-life', '/cellular-automata-lab', '/wiki/rag-flow'],
   },
@@ -277,6 +277,7 @@ export function getStaticRouteContent(route: RouteSeo, language: SeoLanguage): S
       sections: copy.sections.map((section) => ({
         title: section.title[language],
         paragraphs: section.paragraphs.map((paragraph) => paragraph[language]),
+        links: section.links?.map((link) => ({ label: link.label[language], href: link.href[language] })),
       })),
       related: relatedRoutes(route),
     };
@@ -378,19 +379,12 @@ export function buildStaticJsonLd(route: RouteSeo, language: SeoLanguage, siteBa
       inLanguage: language === 'zh' ? 'zh-Hans' : 'en',
     }, person);
   } else {
-    const guide = IGAMING_GUIDES.find((entry) => entry.path === route.path);
     graph.push({
       '@type': route.path === '/film-gallery' ? 'ImageGallery' : 'WebPage',
       '@id': canonical, url: canonical, name: content.heading, description: content.summary,
       image, datePublished: dates.published, dateModified: dates.modified,
       inLanguage: language === 'zh' ? 'zh-Hans' : 'en',
       author: { '@id': person['@id'] },
-      ...(guide ? {
-        citation: guide.sources.map((source) => ({
-          '@type': 'CreativeWork', name: source.title, url: source.url,
-          publisher: { '@type': 'Organization', name: source.publisher },
-        })),
-      } : {}),
     }, person);
   }
   return { '@context': 'https://schema.org', '@graph': graph };

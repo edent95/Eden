@@ -17,8 +17,10 @@ leaderboard. The people who notice the pattern have discovered it from evidence.
   stays stable. Older auto aliases (`visitor`, `visitor-xxxx`) are treated as unset and get the new name.
 - Setting `hidden: true` on `penneyMiniPlayers/<id>` by hand keeps that player off the public board.
   `normalizePlayer` carries the flag, so later rounds do not clear it. Their own record and credits are unchanged.
-- Once a visitor has 10 lifetime plays, the slot shows a link to `/igaming?from=coin-slot`
-  (the iGaming starter-pack page). It is a client-side display rule only; `/igaming` itself is public.
+- Once a visitor has 10 lifetime plays, the slot shows a link to the iGaming starter pack with
+  `?from=coin-slot`. The starter pack moved to https://asiaigaming.com/ on 2026-11-25 (its home page
+  still reads `?from=coin-slot`); whoever mounts the slot again must pass that absolute URL as
+  `igamingHref`. `/igaming` on this site is now only a hub page. It is a client-side display rule only.
 - A shared NAT means a household or office intentionally shares one quota and one record.
 
 ## Trust boundary

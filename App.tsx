@@ -7,7 +7,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { applyPageSeo } from './seo';
 import {
+  asiaIgamingUrl,
   localizedCanonicalRoutePath,
+  movedRouteUrl,
   routeSeoForPath,
   stripLocaleFromRoutePath,
 } from './seo-routes';
@@ -20,6 +22,7 @@ import { siteEssayNotes, wikiEntries } from './generated/content';
 import { HeaderControls, joinBasePath, resolveAssetPath, type Language, type Theme, type ThemePreference } from './app/shared';
 import { useSiteKaleido } from './app/kaleido-routes';
 import NotFoundPage from './pages/NotFoundPage';
+import MovedPage from './pages/MovedPage';
 import IconPromptsPage from './pages/IconPromptsPage';
 import {
   DrRacingFullPage,
@@ -43,19 +46,15 @@ import { RiskTerminalPage } from './pages/RiskTerminalPage';
 import { ProjectHomePage } from './pages/ProjectHomePage';
 import { DelayedAboutProfileVideo, HomeCollage } from './app/home-collage';
 import { IGAMING_CASES as igamingCases } from './components/igaming-cases-content';
-import { IGAMING_GUIDES } from './components/igaming-guides-content';
 
 
 const PenneysGamePage = React.lazy(() => import('./components/PenneysGamePage'));
 const MiyaPrivacyPage = React.lazy(() => import('./components/MiyaPrivacyPage'));
 const MiyaBrandPage = React.lazy(() => import('./components/MiyaBrandPage'));
-const IGamingPage = React.lazy(() => import('./components/IGamingPage'));
-const IGamingSummaryPage = React.lazy(() => import('./components/IGamingSummaryPage'));
+const IGamingHubPage = React.lazy(() => import('./components/IGamingHubPage'));
 const IGamingCasesPage = React.lazy(() => import('./components/IGamingCasesPage'));
-const IGamingAtlasPage = React.lazy(() => import('./components/IGamingAtlasPage'));
 const IGamingResumePage = React.lazy(() => import('./components/IGamingResumePage'));
 const ArzumyAdvisorPage = React.lazy(() => import('./pages/ArzumyAdvisorPage'));
-const IGamingGuidePage = React.lazy(() => import('./components/IGamingGuidePage'));
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -198,13 +197,9 @@ const App: React.FC = () => {
   const miyaHref = joinBasePath(baseUrl, 'project/miya');
   const lifeOsHref = joinBasePath(baseUrl, 'life-os');
   const igamingHref = joinBasePath(baseUrl, 'igaming');
-  const igamingFullHref = joinBasePath(baseUrl, 'igaming/full');
+  // The full guide moved to Asia iGaming (2026-11-25): pages that stayed link to it with an absolute URL.
+  const igamingFullHref = asiaIgamingUrl('/guide/', language);
   const igamingCasesHref = joinBasePath(baseUrl, 'igaming/cases');
-  const igamingAtlasHref = joinBasePath(baseUrl, 'igaming/atlas');
-  const igamingGuideLinks = IGAMING_GUIDES.map((guide) => ({
-    guide,
-    href: joinBasePath(baseUrl, guide.path.slice(1)),
-  }));
   const cellularAutomataLabHref = joinBasePath(baseUrl, 'cellular-automata-lab');
   const homeSystemFiles: Array<{
     title: string;
@@ -334,13 +329,15 @@ const App: React.FC = () => {
   const isMiyaPrivacyPage = pathWithoutBase === '/project/miya';
   const isMiyaBrandPage = pathWithoutBase === '/project/miya/brand';
   const isIGamingPage = pathWithoutBase === '/igaming';
-  const isIGamingFullPage = pathWithoutBase === '/igaming/full';
   const isIGamingCasesPage = pathWithoutBase === '/igaming/cases';
   const isIGamingResumePage = pathWithoutBase === '/igaming/resume';
   const isArzumyAdvisorPage = pathWithoutBase === '/for/arzumy';
-  const isIGamingAtlasPage = pathWithoutBase === '/igaming/atlas';
-  // One literal per guide: the route harness reads these, it does not resolve IGAMING_GUIDES.
-  const isIGamingGuidePage =
+  // Moved to Asia iGaming (2026-11-25). One literal per path: the route harness reads these, it does
+  // not resolve the `movedTo` entries in seo-routes.ts. `index.tsx` already called
+  // `location.replace()` before this renders; MovedPage is only the visible fallback link.
+  const isMovedToAsiaIGaming =
+    pathWithoutBase === '/igaming/full' ||
+    pathWithoutBase === '/igaming/atlas' ||
     pathWithoutBase === '/igaming/ggr-vs-ngr' ||
     pathWithoutBase === '/igaming/provider-promotions' ||
     pathWithoutBase === '/igaming/promotion-launch-checklist' ||
@@ -348,8 +345,8 @@ const App: React.FC = () => {
     pathWithoutBase === '/igaming/marketing-report-beyond-cpa' ||
     pathWithoutBase === '/igaming/rtp-explained' ||
     pathWithoutBase === '/igaming/wagering-requirements';
-  const activeIGamingGuide = isIGamingGuidePage
-    ? IGAMING_GUIDES.find((guide) => guide.path === pathWithoutBase)
+  const movedTargetUrl = isMovedToAsiaIGaming
+    ? movedRouteUrl(routeSeoForPath(pathWithoutBase), stripLocaleFromRoutePath(pathWithOptionalLocale).language)
     : undefined;
   const igamingCaseSlug = pathWithoutBase.startsWith('/igaming/cases/')
     ? pathWithoutBase.replace('/igaming/cases/', '')
@@ -702,25 +699,8 @@ const App: React.FC = () => {
     );
   }
 
-  if (isIGamingAtlasPage) {
-    return (
-      <React.Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
-        <IGamingAtlasPage
-          language={language}
-          backHref={igamingHref}
-          casesHref={igamingCasesHref}
-          controls={
-            <HeaderControls
-              language={language}
-              setLanguage={setLanguage}
-              themePreference={themePreference}
-              theme={theme}
-              setThemePreference={setThemePreference}
-            />
-          }
-        />
-      </React.Suspense>
-    );
+  if (movedTargetUrl) {
+    return <MovedPage language={language} targetUrl={movedTargetUrl} />;
   }
 
   if (isArzumyAdvisorPage) {
@@ -749,34 +729,11 @@ const App: React.FC = () => {
         <IGamingResumePage
           language={language}
           igamingHref={igamingHref}
+          starterHref={asiaIgamingUrl('/', language)}
           fullHref={igamingFullHref}
           casesHref={igamingCasesHref}
           etReportHubHref={etReportHubHref}
           cvHref={joinBasePath(baseUrl, 'igaming/Eden-Tan-Resume.pdf')}
-          controls={
-            <HeaderControls
-              language={language}
-              setLanguage={setLanguage}
-              themePreference={themePreference}
-              theme={theme}
-              setThemePreference={setThemePreference}
-            />
-          }
-        />
-      </React.Suspense>
-    );
-  }
-
-  if (activeIGamingGuide) {
-    return (
-      <React.Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
-        <IGamingGuidePage
-          language={language}
-          guide={activeIGamingGuide}
-          guideLinks={igamingGuideLinks}
-          igamingHref={igamingHref}
-          fullHref={igamingFullHref}
-          casesHref={igamingCasesHref}
           controls={
             <HeaderControls
               language={language}
@@ -815,31 +772,23 @@ const App: React.FC = () => {
     );
   }
 
-  if (isIGamingPage || isIGamingFullPage) {
-    const igamingControls = (
-      <HeaderControls
-        language={language}
-        setLanguage={setLanguage}
-        themePreference={themePreference}
-        theme={theme}
-        setThemePreference={setThemePreference}
-      />
-    );
+  if (isIGamingPage) {
     return (
       <React.Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
-        {isIGamingFullPage ? (
-          <IGamingPage language={language} backHref={igamingHref} controls={igamingControls} />
-        ) : (
-          <IGamingSummaryPage
-            language={language}
-            homeHref={homeHref}
-            fullHref={igamingFullHref}
-            casesHref={igamingCasesHref}
-            atlasHref={igamingAtlasHref}
-            guideLinks={igamingGuideLinks}
-            controls={igamingControls}
-          />
-        )}
+        <IGamingHubPage
+          language={language}
+          homeHref={homeHref}
+          casesHref={igamingCasesHref}
+          controls={
+            <HeaderControls
+              language={language}
+              setLanguage={setLanguage}
+              themePreference={themePreference}
+              theme={theme}
+              setThemePreference={setThemePreference}
+            />
+          }
+        />
       </React.Suspense>
     );
   }

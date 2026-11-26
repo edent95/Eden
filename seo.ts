@@ -11,6 +11,7 @@ import {
   HOME_DESC,
   HOME_TITLE,
   localizedCanonicalRoutePath,
+  movedRouteUrl,
   OG_IMAGES,
   PAGE_COPY,
   routeSeoForPath,
@@ -244,7 +245,16 @@ export function applyPageSeo(
   setMetaProperty('og:description', description);
   setMetaProperty('og:site_name', 'Eden Tan');
   setMetaProperty('og:locale', loc);
-  if (canonical) {
+  const movedUrl = movedRouteUrl(routeSeo, lang);
+  if (movedUrl) {
+    // Moved to Asia iGaming: keep pointing at the new URL (same as the static redirect page)
+    // for the instant before index.tsx's location.replace() lands.
+    setMetaProperty('og:url', movedUrl);
+    setLinkRel('canonical', movedUrl);
+    setAlternateLink('en', movedRouteUrl(routeSeo, 'en') ?? movedUrl);
+    setAlternateLink('zh-Hans', movedRouteUrl(routeSeo, 'zh') ?? movedUrl);
+    setAlternateLink('x-default', movedRouteUrl(routeSeo, 'en') ?? movedUrl);
+  } else if (canonical) {
     setMetaProperty('og:url', canonical);
     setLinkRel('canonical', canonical);
     setAlternateLink('en', joinPath(siteRoot, localizedCanonicalRoutePath(pathWithoutBase, 'en')));

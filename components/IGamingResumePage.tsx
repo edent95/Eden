@@ -20,13 +20,17 @@ type Lang = 'en' | 'zh';
  */
 const IGamingResumePage: React.FC<{
   language: Lang;
+  /** The hub that stayed on this site (`/igaming`). */
   igamingHref: string;
+  /** Asia iGaming home: the starter pack (absolute URL). */
+  starterHref: string;
+  /** Asia iGaming full guide (absolute URL); proof rows append `#<section>`. */
   fullHref: string;
   casesHref: string;
   etReportHubHref: string;
   cvHref: string;
   controls: React.ReactNode;
-}> = ({ language, igamingHref, fullHref, casesHref, etReportHubHref, cvHref, controls }) => {
+}> = ({ language, igamingHref, starterHref, fullHref, casesHref, etReportHubHref, cvHref, controls }) => {
   const t = (value: IGamingLocalized) => value[language];
   const page = IGAMING_RESUME;
   const hrefFor = (href: ResumeHref) => {
@@ -185,7 +189,7 @@ const IGamingResumePage: React.FC<{
             {t(page.emailLabel)}: <a href={`mailto:${ABOUT_EMAIL}`}>{ABOUT_EMAIL}</a> · <a href={ABOUT_LINKEDIN} rel="noopener noreferrer" target="_blank">LinkedIn</a>
           </p>
           <div className="igaming-case-links">
-            <a href={igamingHref} className="igaming-full-cta">
+            <a href={starterHref} className="igaming-full-cta">
               {t(page.openStarter)}
               <ArrowRight size={16} aria-hidden="true" />
             </a>

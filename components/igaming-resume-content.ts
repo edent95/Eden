@@ -1,6 +1,6 @@
 /**
  * `/igaming/resume` — the page Eden sends to recruiters and hiring teams before an
- * interview. The starter pack (`/igaming`, `/igaming/full`) shows what Eden knows;
+ * interview. The starter pack (moved to https://asiaigaming.com on 2026-11-25) shows what Eden knows;
  * this page answers "what can you build for my company?".
  *
  * Disclosure rules (owner, 2026-11-18 — this page is now the public CV):
@@ -18,13 +18,13 @@ import type { IGamingLocalized } from './igaming-content';
 
 const L = (en: string, zh: string): IGamingLocalized => ({ en, zh });
 
-/** Where a proof row points. `case:<slug>` → `/igaming/cases/<slug>`, `full:<id>` → `/igaming/full#<id>`. */
+/** Where a proof row points. `case:<slug>` → `/igaming/cases/<slug>`, `full:<id>` → `https://asiaigaming.com/guide/#<id>` (the full guide moved there). */
 export type ResumeHref = `case:${string}` | `full:${string}` | 'etreporthub';
 
 export type ResumeProof = { value: string; label: IGamingLocalized; note: IGamingLocalized; href?: ResumeHref };
 
 export const IGAMING_RESUME = {
-  back: L('iGaming starter pack', 'iGaming 入门包'),
+  back: L('iGaming', 'iGaming'),
   kicker: L('For hiring teams', '给招聘方'),
   claim: L('Beyond marketing. From acquisition to market expansion.', '不只做营销：从获客一路做到开拓新市场'),
   standfirst: L(
@@ -152,7 +152,7 @@ export const IGAMING_RESUME = {
       points: [
         { title: L('Daily report system', '日报系统'), body: L('ETReportHub grew out of real daily-report work: one place for the numbers a team checks every morning.', 'ETReportHub 来自真实的日报工作：把团队每天早上要看的数字放在一个地方。') },
         { title: L('AI-assisted automation', 'AI 辅助自动化'), body: L('Repetitive checks, exports and reports become scripts instead of spreadsheets passed around.', '重复的检查、导出和报表变成脚本，而不是传来传去的表格。') },
-        { title: L('This site', '这个网站'), body: L('Designed and built by me, including the starter pack and field notes you can read here.', '由我自己设计和开发，包括这里能读到的入门包和实战案例。') },
+        { title: L('This site', '这个网站'), body: L('Designed and built by me, including the field notes you can read here. The starter pack I wrote now lives on Asia iGaming.', '由我自己设计和开发，包括这里能读到的实战案例。我写的入门包现在放在 Asia iGaming。') },
       ],
     },
   ],
@@ -251,7 +251,7 @@ export const IGAMING_RESUME = {
     'If this matches what your team needs, reply to the message that brought you here, or write to me directly — we can find a time.',
     '如果这和你的团队需要的对得上，回复把你带到这里的那条消息，或直接写信给我，我们约个时间。',
   ),
-  openStarter: L('Read the starter pack', '读入门包'),
+  openStarter: L('Read the starter pack on Asia iGaming', '到 Asia iGaming 读入门包'),
   openCases: L('Read the field notes', '读实战案例'),
   emailLabel: L('Email', '邮箱'),
   sealLabel: L('Eden Tan · iGaming', 'Eden Tan · iGaming'),

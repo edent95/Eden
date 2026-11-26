@@ -7,6 +7,7 @@ import { OG_IMAGE_FILE, OG_IMAGE_HEIGHT, OG_IMAGE_WIDTH } from './seo';
 import {
   HOME_DESC,
   localizedCanonicalRoutePath,
+  movedRouteUrl,
   ROUTE_SEO,
   SITE_CONTENT_LASTMOD,
   STATIC_PAGES,
@@ -153,10 +154,16 @@ function renderStaticBody(route: RouteSeo, language: SeoLanguage, siteBaseNoSlas
       ? `<span aria-current="page">${escapeHtml(item.name)}</span>`
       : `<a href="${escapeHtml(item.url)}">${escapeHtml(item.name)}</a>`;
   }).join('<span aria-hidden="true"> / </span>');
+  const sectionLinks = (links: Array<{ label: string; href: string }> | undefined) => (links?.length
+    ? `\n        <ul>${links.map((link) => {
+      const href = link.href.startsWith('/') ? `${siteBaseNoSlash}${link.href}` : link.href;
+      return `<li><a href="${escapeHtml(href)}">${escapeHtml(link.label)}</a></li>`;
+    }).join('')}</ul>`
+    : '');
   const sections = content.sections.map((section) => `
       <section>
         <h2>${escapeHtml(section.title)}</h2>
-        ${section.paragraphs.map((paragraph) => `<p>${linkifyEmails(escapeHtml(paragraph))}</p>`).join('\n        ')}
+        ${section.paragraphs.map((paragraph) => `<p>${linkifyEmails(escapeHtml(paragraph))}</p>`).join('\n        ')}${sectionLinks(section.links)}
       </section>`).join('');
   const related = content.related.map((entry) => {
     const href = languageAlternateUrl(entry, language, siteBaseNoSlash);
@@ -185,12 +192,64 @@ function renderStaticBody(route: RouteSeo, language: SeoLanguage, siteBaseNoSlas
   </div>`;
 }
 
+/**
+ * Static page for a route that moved to Asia iGaming (`movedTo` in seo-routes.ts).
+ * GitHub Pages cannot answer 301, so the old URL is a real 200 page that says "go there" every
+ * way a client can hear it: canonical to the new URL (search engines consolidate onto it),
+ * `noindex, follow`, an inline `location.replace()` that carries `utm_*` over, a zero-second
+ * meta refresh for clients without JavaScript, hreflang alternates on the new site, and a
+ * visible one-line link. No JSON-LD and no static article body: the content lives over there.
+ */
+export function renderMovedRouteHtml(shell: string, route: RouteSeo, language: SeoLanguage): string {
+  const target = movedRouteUrl(route, language);
+  if (!target) throw new Error(`${route.path} has no movedTo target`);
+  const title = route.title[language];
+  const description = language === 'zh'
+    ? `这一页已经搬到 Asia iGaming：${target}`
+    : `This page has moved to Asia iGaming: ${target}`;
+  let html = shell
+    .replace(/<html\b[^>]*>/i, `<html lang="${language === 'zh' ? 'zh-Hans' : 'en'}">`)
+    .replace(/<title>[\s\S]*?<\/title>/i, `<title>${escapeHtml(title)}</title>`);
+  for (const [attribute, key, value] of [
+    ['name', 'description', description],
+    ['name', 'robots', 'noindex, follow'],
+    ['name', 'twitter:title', title],
+    ['name', 'twitter:description', description],
+    ['property', 'og:title', title],
+    ['property', 'og:description', description],
+    ['property', 'og:locale', language === 'zh' ? 'zh_CN' : 'en_US'],
+    ['property', 'og:type', 'website'],
+    ['property', 'og:url', target],
+  ] as const) {
+    html = upsertMeta(html, attribute, key, value);
+  }
+  html = upsertCanonical(html, target);
+  html = upsertAlternate(html, 'en', movedRouteUrl(route, 'en')!);
+  html = upsertAlternate(html, 'zh-Hans', movedRouteUrl(route, 'zh')!);
+  html = upsertAlternate(html, 'x-default', movedRouteUrl(route, 'en')!);
+  // First in <head>, so the browser leaves before it fetches fonts, analytics or the app bundle.
+  // The script runs first and keeps utm_*; the meta refresh is the no-JavaScript fallback.
+  const redirect = `<script id="moved-redirect">(function(){var t=${JSON.stringify(target)},k=[];try{new URLSearchParams(location.search).forEach(function(v,n){if(/^utm_/i.test(n))k.push(encodeURIComponent(n)+"="+encodeURIComponent(v))})}catch(e){}location.replace(t+(k.length?"?"+k.join("&"):""))})();</script>
+    <meta http-equiv="refresh" content="0; url=${escapeHtml(target)}" />`;
+  html = html.replace(/<head>/i, `<head>\n    ${redirect}`);
+  const heading = language === 'zh' ? '这一页搬到 Asia iGaming 了' : 'This page moved to Asia iGaming';
+  const lead = language === 'zh' ? '新网址：' : 'New address: ';
+  html = html.replace('<div id="root"></div>', `<div id="root">
+    <main class="moved-page" style="max-width:720px;margin:0 auto;padding:96px 24px;font:17px/1.75 system-ui,-apple-system,sans-serif">
+      <h1 style="font-size:1.6rem;line-height:1.3">${heading}</h1>
+      <p>${lead}<a href="${escapeHtml(target)}">${escapeHtml(target)}</a></p>
+    </main>
+  </div>`);
+  return html;
+}
+
 function renderRouteHtml(
   shell: string,
   route: RouteSeo,
   language: SeoLanguage,
   siteBaseNoSlash: string | null,
 ): string {
+  if (route.movedTo) return renderMovedRouteHtml(shell, route, language);
   const title = route.title[language];
   const description = routeMetaDescription(route, language);
   const robots = route.index === false

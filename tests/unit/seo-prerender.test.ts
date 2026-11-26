@@ -194,3 +194,57 @@ test('key pages carry hand-written descriptions long enough on their own', () =>
     assert.ok(textWidth(entry.desc.zh) >= META_DESCRIPTION_LIMITS.zh.min, `${path} zh ${textWidth(entry.desc.zh)}`);
   }
 });
+
+test('pages moved to Asia iGaming map to the right URL in both languages and stay out of discovery', async () => {
+  const { asiaIgamingUrl, keepUtmQuery, movedRedirectUrl, movedRouteUrl } = await import('../../seo-routes.ts');
+  const expected: Record<string, string> = {
+    '/igaming/full': '/guide/',
+    '/igaming/ggr-vs-ngr': '/ggr-vs-ngr/',
+    '/igaming/provider-promotions': '/provider-promotions/',
+    '/igaming/promotion-launch-checklist': '/promotion-launch-checklist/',
+    '/igaming/crm-player-lifecycle': '/crm-player-lifecycle/',
+    '/igaming/marketing-report-beyond-cpa': '/marketing-report-beyond-cpa/',
+    '/igaming/rtp-explained': '/rtp-explained/',
+    '/igaming/wagering-requirements': '/wagering-requirements/',
+    '/igaming/atlas': '/atlas/',
+  };
+  const moved = ROUTE_SEO.filter((entry) => entry.movedTo !== undefined);
+  assert.deepEqual(Object.fromEntries(moved.map((entry) => [entry.path, entry.movedTo])), expected);
+  for (const entry of moved) {
+    assert.equal(entry.index, false, `${entry.path} is noindex`);
+    assert.equal(entry.sitemap, false, `${entry.path} is out of the sitemap`);
+    assert.equal(movedRouteUrl(entry, 'en'), `https://asiaigaming.com${expected[entry.path]}`);
+    assert.equal(movedRouteUrl(entry, 'zh'), `https://asiaigaming.com/zh${expected[entry.path]}`);
+  }
+  // What stays: the hub, the field notes and the résumé.
+  for (const path of ['/igaming', '/igaming/cases', '/igaming/cases/ftd-growth', '/igaming/resume']) {
+    assert.equal(movedRouteUrl(route(path), 'en'), undefined, `${path} stays on eden-tan.com`);
+  }
+  assert.equal(asiaIgamingUrl('/', 'zh'), 'https://asiaigaming.com/zh/');
+  assert.equal(asiaIgamingUrl('/guide', 'en'), 'https://asiaigaming.com/guide/');
+
+  // Boot-time redirect: path mapping only; utm_* is kept, everything else (and the hash) is dropped.
+  assert.equal(movedRedirectUrl('/igaming/full/', '/'), 'https://asiaigaming.com/guide/');
+  assert.equal(movedRedirectUrl('/zh/igaming/atlas', '/'), 'https://asiaigaming.com/zh/atlas/');
+  assert.equal(movedRedirectUrl('/Eden/zh/igaming/rtp-explained/', '/Eden/'), 'https://asiaigaming.com/zh/rtp-explained/');
+  assert.equal(
+    movedRedirectUrl('/igaming/ggr-vs-ngr/', '/', '?utm_source=li&from=coin-slot&UTM_campaign=a%20b&p=x'),
+    'https://asiaigaming.com/ggr-vs-ngr/?utm_source=li&UTM_campaign=a+b',
+  );
+  assert.equal(keepUtmQuery('?notrack=1'), '');
+  for (const path of ['/igaming', '/igaming/', '/zh/igaming/cases/', '/igaming/resume', '/igaming/cases/ftd-growth', '/', '/notes']) {
+    assert.equal(movedRedirectUrl(path, '/'), undefined, `${path} is not redirected`);
+  }
+});
+
+test('the /igaming hub links to Asia iGaming and the field notes, not the unlisted résumé, in the reader’s language', () => {
+  for (const language of ['en', 'zh'] as const) {
+    const content = getStaticRouteContent(route('/igaming'), language);
+    const links = content.sections.flatMap((section) => section.links ?? []).map((link) => link.href);
+    const zh = language === 'zh' ? '/zh' : '';
+    assert.ok(links.includes(`https://asiaigaming.com${zh}/`), `${language} links to Asia iGaming`);
+    assert.ok(links.includes(`${zh}/igaming/cases/`), `${language} links to the field notes`);
+    assert.ok(!links.some((href) => href.includes('/igaming/resume')), `${language} does not link to the unlisted résumé`);
+    assert.ok(!content.related.some((entry) => entry.movedTo), 'no related link to a moved page');
+  }
+});

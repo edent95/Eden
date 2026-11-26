@@ -35,7 +35,8 @@ if (!existsSync(chrome)) {
 const { ROUTE_SEO } = await import(path.join(root, 'seo-routes.ts'));
 const filter = process.argv[2] ?? '';
 const cards = ROUTE_SEO
-  .filter((route) => typeof route.og === 'string' && route.og.startsWith('igaming'))
+  // Routes that moved to Asia iGaming (`movedTo`) are redirect pages now: their cards are not re-rendered.
+  .filter((route) => typeof route.og === 'string' && route.og.startsWith('igaming') && !route.movedTo)
   .filter((route) => route.og.includes(filter));
 if (!cards.length) {
   console.error(`No /igaming share cards match "${filter}".`);

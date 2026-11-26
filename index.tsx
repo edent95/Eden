@@ -6,7 +6,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import { movedRedirectUrl } from './seo-routes';
 import './index.css';
+
+// Pages that moved to Asia iGaming (`movedTo` in seo-routes.ts): leave before anything renders.
+// The prerendered redirect page already does this with an inline script and a meta refresh;
+// this covers every other way the app can boot on an old path (the service worker's cached
+// shell, the `/?p=` 404 shim, a dev server). Only `utm_*` survives; other query and the hash drop.
+const movedTo = movedRedirectUrl(window.location.pathname, import.meta.env.BASE_URL || '/', window.location.search);
+if (movedTo) window.location.replace(movedTo);
 
 const SiteLiveChat = React.lazy(() => import('./components/HomeLiveChat'));
 
