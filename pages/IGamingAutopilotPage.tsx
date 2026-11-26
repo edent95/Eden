@@ -43,6 +43,7 @@ const IGamingAutopilotPage: React.FC<{
       primary={{ href: contactHref, icon: <Mail size={16} />, label: { en: 'Talk about your process', zh: '聊聊你的流程' } }}
       secondary={{ href: joinBasePath(baseUrl, 'jiju-autopilot'), ghost: true, label: { en: 'See the engine running', zh: '看引擎实际在跑' } }}
       quickLinks={[
+        { href: '#ig-records', label: { en: 'The records', zh: '记录' } },
         { href: '#ig-problems', label: { en: 'The problems', zh: '问题' } },
         { href: '#ig-loop', label: { en: 'The loop', zh: '闭环' } },
         { href: '#ig-dashboard', label: { en: 'The dashboard', zh: '仪表台' } },
@@ -63,6 +64,7 @@ const IGamingAutopilotPage: React.FC<{
         [{ en: 'What it is', zh: '是什么' }, { en: 'Closed-loop automation for B2B iGaming operations', zh: 'B2B iGaming 运营的闭环自动化' }],
         [{ en: 'Covers', zh: '覆盖' }, { en: 'Operator onboarding · Game catalogue · Promotions · Support · Reporting · Account watch', zh: 'Operator 接入 · 游戏目录 · 促销 · 客服 · 报表 · 账户巡查' }],
         [{ en: 'Engine', zh: '引擎' }, { en: 'Running on jiju.pet: 108 back-office tools, 2,381 auto-merged changes (Sep – Nov 2026)', zh: '在 jiju.pet 运行：108 个后台工具，2,381 个自动合并的改动（2026 年 9–11 月）' }],
+        [{ en: 'Records', zh: '记录' }, { en: 'Provider · Integration line · Account · Operator · Promotion; columns locked by role', zh: 'Provider · 接入线路 · 接入帐号 · Operator · Promotion；栏位按角色上锁' }],
         [{ en: 'Dashboard', zh: '仪表台' }, { en: 'Three screens: Now · Record · Loops; three levels: watch · propose · auto', zh: '三个画面：现在 · 对象 · 回路；三档：只看 · 提议 · 自动' }],
         [{ en: 'AI', zh: 'AI' }, { en: 'Claude Code · Codex review · Grok · local models on Ollama', zh: 'Claude Code · Codex 审查 · Grok · Ollama 本机模型' }],
         [{ en: 'Languages', zh: '语言' }, { en: 'English · 中文', zh: 'English · 中文' }],
