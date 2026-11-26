@@ -291,8 +291,8 @@ export const ROUTE_SEO: RouteSeo[] = [
       zh: 'iGaming：指南已搬到 Asia iGaming | Eden Tan',
     },
     desc: {
-      en: 'My iGaming guides now live at Asia iGaming (asiaigaming.com), the site I write. Still here on eden-tan.com: my anonymised field notes and my résumé.',
-      zh: '我写的 iGaming 指南已经搬到 Asia iGaming（asiaigaming.com）。留在 eden-tan.com 的有两样：我自己的匿名实战案例，和我的履历。',
+      en: 'My iGaming guides now live at Asia iGaming (asiaigaming.com), the site I write. Still here on eden-tan.com: my anonymised field notes.',
+      zh: '我写的 iGaming 指南已经搬到 Asia iGaming（asiaigaming.com）。留在 eden-tan.com 的是我自己的匿名实战案例。',
     },
     // No `og`: the old `igaming` card reads "Starter Pack: Key Points", which this page no longer is.
   },

@@ -19,14 +19,12 @@ const IGamingHubPage: React.FC<{
   language: Lang;
   homeHref: string;
   casesHref: string;
-  resumeHref: string;
   controls: React.ReactNode;
-}> = ({ language, homeHref, casesHref, resumeHref, controls }) => {
+}> = ({ language, homeHref, casesHref, controls }) => {
   const t = (value: IGamingLocalized) => value[language];
   const page = IGAMING_HUB;
   const hrefFor = (href: IGamingHubHref) => {
     if (href === 'cases') return casesHref;
-    if (href === 'resume') return resumeHref;
     return asiaIgamingUrl(href.slice('asia:'.length), language);
   };
 

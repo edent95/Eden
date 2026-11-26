@@ -237,14 +237,14 @@ test('pages moved to Asia iGaming map to the right URL in both languages and sta
   }
 });
 
-test('the /igaming hub links to Asia iGaming, the field notes and the résumé, in the reader’s language', () => {
+test('the /igaming hub links to Asia iGaming and the field notes, not the unlisted résumé, in the reader’s language', () => {
   for (const language of ['en', 'zh'] as const) {
     const content = getStaticRouteContent(route('/igaming'), language);
     const links = content.sections.flatMap((section) => section.links ?? []).map((link) => link.href);
     const zh = language === 'zh' ? '/zh' : '';
     assert.ok(links.includes(`https://asiaigaming.com${zh}/`), `${language} links to Asia iGaming`);
     assert.ok(links.includes(`${zh}/igaming/cases/`), `${language} links to the field notes`);
-    assert.ok(links.includes(`${zh}/igaming/resume/`), `${language} links to the résumé`);
+    assert.ok(!links.some((href) => href.includes('/igaming/resume')), `${language} does not link to the unlisted résumé`);
     assert.ok(!content.related.some((entry) => entry.movedTo), 'no related link to a moved page');
   }
 });

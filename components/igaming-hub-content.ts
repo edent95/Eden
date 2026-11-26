@@ -1,19 +1,20 @@
 /**
  * `/igaming` — the hub left on eden-tan.com after the iGaming starter pack and guides moved to
  * Asia iGaming (https://asiaigaming.com) on 2026-11-25. It only says where the guides went and
- * links to what stayed here: the field notes (`/igaming/cases`) and the résumé (`/igaming/resume`).
+ * links to what stayed here: the field notes (`/igaming/cases`). The résumé page is deliberately
+ * not linked: it is unlisted and only sent to recruiters (user decision 2026-11-26).
  *
  * One copy feeds both the React page (`IGamingHubPage.tsx`) and the prerendered static body
  * (`seo-static-content.ts`), so the two cannot drift. Written in first person as Eden Tan.
- * Keep it factual: nothing here may claim more than "the guides are over there, these two
- * things are still here, old links forward".
+ * Keep it factual: nothing here may claim more than "the guides are over there, the field
+ * notes are still here, old links forward".
  */
 import type { IGamingLocalized } from './igaming-content';
 
 const L = (en: string, zh: string): IGamingLocalized => ({ en, zh });
 
-/** `asia:<path>` → that path on asiaigaming.com (language-aware); `cases` / `resume` → pages on this site. */
-export type IGamingHubHref = `asia:${string}` | 'cases' | 'resume';
+/** `asia:<path>` → that path on asiaigaming.com (language-aware); `cases` → the field notes on this site. */
+export type IGamingHubHref = `asia:${string}` | 'cases';
 
 export type IGamingHubLink = { href: IGamingHubHref; label: IGamingLocalized; primary?: boolean };
 
@@ -22,8 +23,8 @@ export const IGAMING_HUB = {
   kicker: L('iGaming', 'iGaming'),
   claim: L('My iGaming guides now live at Asia iGaming.', '我的 iGaming 指南搬到 Asia iGaming 了。'),
   standfirst: L(
-    'I write Asia iGaming, a separate site for the starter pack and guides that used to be on this page. My field notes and my résumé stay here.',
-    'Asia iGaming 是我写的另一个网站，原本放在这一页的入门包和指南都搬过去了。我自己的实战案例和履历留在这里。',
+    'I write Asia iGaming, a separate site for the starter pack and guides that used to be on this page. My field notes stay here.',
+    'Asia iGaming 是我写的另一个网站，原本放在这一页的入门包和指南都搬过去了。我自己的实战案例留在这里。',
   ),
   openAsia: L('Open Asia iGaming', '打开 Asia iGaming'),
   sections: [
@@ -54,14 +55,9 @@ export const IGAMING_HUB = {
           'The field notes are anonymised case studies from my own operator-side and provider-side work: what the problem was, how I investigated it, what got built, and what each case does not prove.',
           '实战案例是我自己在 operator 和 provider 两边工作的匿名案例：问题是什么、我怎么查、最后做了什么，以及每个案例不能证明什么。',
         ),
-        L(
-          'The résumé page is the one I send before an interview: my iGaming work history and a CV you can download.',
-          '履历页是我面试前发给对方的那一页：我的 iGaming 工作经历，和一份可以下载的履历。',
-        ),
       ],
       links: [
         { href: 'cases', label: L('Read the field notes', '看实战案例') },
-        { href: 'resume', label: L('Open my résumé', '看我的履历') },
       ] as IGamingHubLink[],
     },
     {

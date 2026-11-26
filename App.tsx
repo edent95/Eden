@@ -200,7 +200,6 @@ const App: React.FC = () => {
   // The full guide moved to Asia iGaming (2026-11-25): pages that stayed link to it with an absolute URL.
   const igamingFullHref = asiaIgamingUrl('/guide/', language);
   const igamingCasesHref = joinBasePath(baseUrl, 'igaming/cases');
-  const igamingResumeHref = joinBasePath(baseUrl, 'igaming/resume');
   const cellularAutomataLabHref = joinBasePath(baseUrl, 'cellular-automata-lab');
   const homeSystemFiles: Array<{
     title: string;
@@ -780,7 +779,6 @@ const App: React.FC = () => {
           language={language}
           homeHref={homeHref}
           casesHref={igamingCasesHref}
-          resumeHref={igamingResumeHref}
           controls={
             <HeaderControls
               language={language}

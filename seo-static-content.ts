@@ -181,9 +181,7 @@ function igamingHubStaticCopy(): StaticRouteCopy {
         label: link.label,
         href: link.href === 'cases'
           ? local('/igaming/cases')
-          : link.href === 'resume'
-            ? local('/igaming/resume')
-            : { en: asiaIgamingUrl(link.href.slice('asia:'.length), 'en'), zh: asiaIgamingUrl(link.href.slice('asia:'.length), 'zh') },
+          : { en: asiaIgamingUrl(link.href.slice('asia:'.length), 'en'), zh: asiaIgamingUrl(link.href.slice('asia:'.length), 'zh') },
       })),
     })),
   };
