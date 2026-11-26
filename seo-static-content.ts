@@ -541,6 +541,56 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
     ],
   },
 
+  '/igaming-ai': {
+    eyebrow: L('B2B iGaming automation', 'B2B iGaming 自动化'),
+    thesis: L(
+      'Autopilot with a trust dial: operations that run by themselves, stay in plain sight, and go only as far as you let them.',
+      '一个会自己转、人看得见、放手有档位的运营系统。',
+    ),
+    sections: [
+      {
+        title: L('The same directory, two names for each row', '同一个名录，每一行换个名字'),
+        paragraphs: [
+          L(
+            'Jiju runs a directory of places, merchants, events and promotions. On the B2B side of iGaming the rows are the same: a merchant becomes a provider or merchant, merchant details become provider information, shop deals and events become provider promotions, and a shop’s logo and links become the merchant brand. Every row goes through the same steps — collect, check, publish, update, expire.',
+            'Jiju 经营一个名录：地点、店家、活动、优惠。换到 iGaming 的 B2B，每一行都对得上：店家对应 provider / merchant，店家资料对应 provider information，店家优惠与活动对应 provider promotion，店家的 logo 与链接对应 merchant brand。每一行走的都是同样几步 —— 收资料、核对、上架、更新、过期下架。',
+          ),
+        ],
+      },
+      {
+        title: L('Six problems, one loop', '六个问题，一个闭环'),
+        paragraphs: [
+          L(
+            'A B2B iGaming team leaks time in six places: onboarding a signed operator, keeping the game catalogue the same across operators, launching one promotion to many operators (50 operators × 8 fields is 400 confirmations), answering support, building reports by hand, and noticing a dropping account only at month-end. One loop — intake, configure, check, go live, report, watch — covers all six, with money, terms and relationships kept with people.',
+            'B2B iGaming 团队在六个地方漏时间：签下的 operator 迟迟上不了线、游戏目录在各家之间对不上、一个活动发给很多家（50 家 × 8 个字段就是 400 个确认）、客服重复回答、报表人手做、掉量的客户到月底才发现。一个闭环 —— 进来、配置、把关、上线、报表、巡查 —— 管住这六件事，钱、条款和关系留在人手里。',
+          ),
+          L(
+            'What it is worth: a typical seven-person B2B team (JobStreet Malaysia median pay read 26 Nov 2026, plus employer EPF, SOCSO and EIS) costs about RM 35,841 a month; the engine costs about RM 1,544 a month to run today. The engine already keeps the Jiju directory true — 944 live places, 108 back-office tools and 2,381 auto-merged changes between September and November 2026; the iGaming modules are built on it to the buyer’s process.',
+            '值多少：一个常见的七人 B2B 团队（JobStreet 马来西亚 2026-11-26 读取的月薪中位数，加雇主 EPF、SOCSO、EIS）每月约 RM 35,841；引擎现在每月运行成本约 RM 1,544。引擎已经在让 Jiju 名录保持准确 —— 944 家上线地点、108 个后台工具、2026 年 9–11 月 2,381 个自动合并的改动；iGaming 模块在它上面按买方流程搭。',
+          ),
+        ],
+        links: [
+          { label: L('The engine on Jiju', 'Jiju 上的引擎'), href: L('/jiju-autopilot', '/zh/jiju-autopilot') },
+        ],
+      },
+      {
+        title: L('The dashboard: Now, Record, Loops', '仪表台：现在、对象、回路'),
+        paragraphs: [
+          L(
+            'The engine has three layers, each already running in a live system. Machines move records forward in a closed loop (Jiju). People take over on one pipeline per record, where each role sees its own step, a checklist gates the hand-over and a failed check becomes one plain next step (Dr Racing, a dealership’s daily tool). A third layer says where things stopped and how much is automatic: every item names who holds it, and a stuck step becomes one decision on the Now screen.',
+            '引擎有三层，每一层都已经在一个正在跑的系统里。机器用闭环把记录往前推（Jiju）。人在每条记录的流水线上接手：每个角色只看自己那一步，清单齐了才放行，没过的检查变成一句清楚的下一步（Dr Racing，一家车行每天在用的工具）。第三层回答哪里断了、自动到哪一档：每件事都写明球在谁那里，卡住的一步变成「现在」画面上的一个决定。',
+          ),
+          L(
+            'Automation comes in three levels — watch, propose, auto. Every loop starts on watch; it asks to go automatic only after ten approvals in a row, unchanged. Anything that spends money or messages a real person — promotion go-live, reports sent to operators, terms, pricing and disputes — is capped at propose.',
+            '自动化分三档：只看、提议、自动。每条回路从「只看」开始，要连续十次原样通过，才会问能不能升到自动。会花钱、会给真人发消息的 —— 促销上线、发给 operator 的报表、条款、价格与争议 —— 最高只到「提议」。',
+          ),
+        ],
+        links: [
+          { label: L('The pipeline at a dealership', '车行的流水线仪表台'), href: L('/dr-racing', '/zh/dr-racing') },
+        ],
+      },
+    ],
+  },
   '/jiju-autopilot': {
     eyebrow: L('Full automation system · For sale', '全自动系统 · 可出售'),
     thesis: L(

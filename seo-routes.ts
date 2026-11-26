@@ -176,6 +176,22 @@ export const ROUTE_SEO: RouteSeo[] = [
     },
   },
   {
+    // Buyer-facing page: the Jiju closed-loop engine offered to B2B iGaming companies (2026-11-26).
+    path: '/igaming-ai',
+    datePublished: '2026-11-26',
+    dateModified: '2026-11-26',
+    og: 'jiju',
+    priority: '0.7',
+    title: {
+      en: 'iGaming Ai | B2B operations run by one closed loop',
+      zh: 'iGaming Ai | 用一个闭环跑 B2B 运营',
+    },
+    desc: {
+      en: 'A provider directory is Jiju’s directory under other names: one closed loop runs providers, provider info, promotions and merchant brands — and what it saves.',
+      zh: 'Provider 名录就是换了名字的 Jiju 名录：同一个闭环管 provider、provider information、provider promotion 与 merchant brand，并对比一个七人团队的月薪看它省下多少。',
+    },
+  },
+  {
     // Buyer-facing page for the Jiju full-automation system (2026-11-26). Numbers dated in the page captions.
     path: '/jiju-autopilot',
     datePublished: '2026-11-26',

@@ -138,3 +138,40 @@
 .jjart-trail-3 { animation-delay: 0.6s; }
 .jjart-trail-4 { animation-delay: 0.8s; }
 @keyframes jjart-grow { 0% { transform: scaleY(0.236); } 34%, 89% { transform: scaleY(1); } 100% { transform: scaleY(0.236); } }
+
+/* ---------- /igaming-ai banner: provider hub, operator ring, one checklist (IGamingAutopilotArt) ---------- */
+.jjart-igloop { border-radius: 21px; }
+.jjart-igloop-core { opacity: 0.618; }
+.jjart-igloop-chip { transform-box: fill-box; transform-origin: center; animation: jjart-spin 21s linear infinite; }
+.jjart-igloop-packet { animation: jjart-igpacket 2.6s ease-in-out infinite; }
+.jjart-igloop-packet-1 { animation-delay: -0.325s; }
+.jjart-igloop-packet-2 { animation-delay: -0.65s; }
+.jjart-igloop-packet-3 { animation-delay: -0.975s; }
+.jjart-igloop-packet-4 { animation-delay: -1.3s; }
+.jjart-igloop-packet-5 { animation-delay: -1.625s; }
+.jjart-igloop-packet-6 { animation-delay: -1.95s; }
+.jjart-igloop-packet-7 { animation-delay: -2.275s; }
+.jjart-igloop-tick,
+.jjart-igloop-row,
+.jjart-igloop-live { transform-box: fill-box; transform-origin: center; }
+.jjart-igloop-tick { animation: jjart-igtick 5.2s ease-out infinite; }
+.jjart-igloop-tick-1 { animation-delay: 0.65s; }
+.jjart-igloop-tick-2 { animation-delay: 1.3s; }
+.jjart-igloop-tick-3 { animation-delay: 1.95s; }
+.jjart-igloop-tick-4 { animation-delay: 2.6s; }
+.jjart-igloop-tick-5 { animation-delay: 3.25s; }
+.jjart-igloop-tick-6 { animation-delay: 3.9s; }
+.jjart-igloop-tick-7 { animation-delay: 4.55s; }
+.jjart-igloop-row { animation: jjart-pop 3.6s ease-in-out infinite; }
+.jjart-igloop-row-1 { animation-delay: 0.3s; }
+.jjart-igloop-row-2 { animation-delay: 0.6s; }
+.jjart-igloop-row-3 { animation-delay: 0.9s; }
+.jjart-igloop-row-4 { animation-delay: 1.2s; }
+.jjart-igloop-live { animation: jjart-glow 2.4s ease-in-out infinite; }
+@keyframes jjart-igpacket {
+  0% { transform: translateX(34px); opacity: 0; }
+  21% { opacity: 1; }
+  79% { transform: translateX(68px); opacity: 1; }
+  100% { transform: translateX(72px); opacity: 0; }
+}
+@keyframes jjart-igtick { 0% { transform: scale(0); } 8% { transform: scale(1.236); } 13%, 89% { transform: scale(1); } 100% { transform: scale(0); } }

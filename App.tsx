@@ -56,6 +56,7 @@ const IGamingCasesPage = React.lazy(() => import('./components/IGamingCasesPage'
 const IGamingResumePage = React.lazy(() => import('./components/IGamingResumePage'));
 const ArzumyAdvisorPage = React.lazy(() => import('./pages/ArzumyAdvisorPage'));
 const JijuAutopilotPage = React.lazy(() => import('./pages/JijuAutopilotPage'));
+const IGamingAutopilotPage = React.lazy(() => import('./pages/IGamingAutopilotPage'));
 
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
@@ -301,6 +302,7 @@ const App: React.FC = () => {
 
   const isJijuPetFullPage = pathWithoutBase === '/jiju-pet';
   const isJijuAutopilotPage = pathWithoutBase === '/jiju-autopilot';
+  const isIGamingAutopilotPage = pathWithoutBase === '/igaming-ai';
   const isJijuRevampFullPage = pathWithoutBase === '/jiju-revamp';
   const isProjectCssGalleryPage = pathWithoutBase === '/project-css';
   const isETReportHubFullPage = pathWithoutBase === '/etreporthub';
@@ -382,6 +384,22 @@ const App: React.FC = () => {
         theme={theme}
         setThemePreference={setThemePreference}
       />
+    );
+  }
+
+  if (isIGamingAutopilotPage) {
+    return (
+      <React.Suspense fallback={<main className="min-h-screen" aria-busy="true" />}>
+        <IGamingAutopilotPage
+          homeHref={homeHref}
+          baseUrl={baseUrl}
+          language={language}
+          setLanguage={setLanguage}
+          themePreference={themePreference}
+          theme={theme}
+          setThemePreference={setThemePreference}
+        />
+      </React.Suspense>
     );
   }
 
