@@ -108,7 +108,7 @@ const ROLES: { id: RoleId; name: EpText; sees: [See, EpText?][] }[] = [
   { id: 'admin', name: t('Super admin', '超级管理员'), sees: [['yes'], ['yes', t('and may change it', '也能改')], ['yes'], ['yes'], ['yes']] },
   { id: 'am', name: t('Account manager', '客户经理'), sees: [['yes'], ['yes', t('read only', '只读')], ['no'], ['yes', t('each view is logged', '每次查看都留记录')], ['part', own]] },
   { id: 'sales', name: t('Sales', '销售'), sees: [['yes'], ['yes', t('read only', '只读')], ['no'], ['no'], ['part', own]] },
-  { id: 'support', name: t('Support', '客服'), sees: [['yes'], ['yes', t('read only', '只读')], ['no'], ['yes', t('each view is logged', '每次查看都留记录')], ['part', own]] },
+  { id: 'support', name: t('Support', '客服'), sees: [['yes'], ['yes', t('read only', '只读')], ['no'], ['no'], ['part', own]] },
   { id: 'provider', name: t('Provider (guest)', 'Provider（访客）'), sees: [['part', t('their own only', '只看自己的')], ['no'], ['no'], ['no'], ['no', t('sees an alias', '只看到代号')]] },
   { id: 'operator', name: t('Operator (guest)', 'Operator（访客）'), sees: [['part', t('only providers they take', '只看自己接入的')], ['no'], ['no'], ['no'], ['no', t('sees an alias', '只看到代号')]] },
   { id: 'ai', name: t('AI assistant', 'AI 助手'), sees: [['yes', t('this is all it reads', '它只读这一栏')], ['no'], ['no'], ['no'], ['no']] },
