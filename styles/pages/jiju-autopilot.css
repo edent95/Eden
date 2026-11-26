@@ -1,0 +1,167 @@
+/* /jiju-autopilot figures (components/jiju-autopilot/AutopilotFigures.tsx).
+   Builds on .jjc-figure / .jjc-hbar (jiju-charts.css) and the Jiju accent from jiju-phone.css
+   (.jiju-product-page). Only colour, opacity and transform change; reduced motion shows the end state. */
+
+/* ---------- system map ---------- */
+.jap-map {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11.5rem), 1fr));
+  gap: 10px;
+  counter-reset: none;
+}
+
+.jap-map-stop a {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  align-items: center;
+  column-gap: 8px;
+  row-gap: 4px;
+  height: 100%;
+  padding: 12px;
+  border: 1px solid var(--ep-line);
+  border-radius: var(--ep-radius-sm);
+  background: var(--ep-paper);
+  color: var(--ep-ink);
+  text-decoration: none;
+  transition: border-color 0.35s ease, background-color 0.35s ease, transform 0.35s ease;
+}
+
+.jap-map-stop a:hover,
+.jap-map-stop a:focus-visible { border-color: var(--ep-primary-outline); }
+
+.jap-map-no {
+  display: inline-grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  background: var(--ep-soft);
+  color: var(--ep-muted);
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+.jap-map-icon { display: inline-flex; color: var(--ep-muted); transition: color 0.35s ease; }
+.jap-map-stop strong { font-size: 0.92rem; line-height: 1.25; overflow-wrap: anywhere; }
+.jap-map-text { grid-column: 1 / -1; font-size: 0.82rem; line-height: 1.4; color: var(--ep-muted); }
+
+.jap-map-stop.is-done .jap-map-no { background: var(--ep-primary); color: var(--ep-primary-text); }
+.jap-map-stop.is-done .jap-map-icon { color: var(--ep-primary-outline); }
+.jap-map-stop.is-current a { border-color: var(--ep-primary-outline); transform: translateY(-2px); }
+.jap-map-stop.is-current .jap-map-no { background: var(--ep-primary); color: var(--ep-primary-text); transform: scale(1.12); }
+
+/* ---------- publish gate ---------- */
+.jap-gate { display: grid; gap: 12px; }
+.jap-gate-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+
+.jap-gate-item {
+  display: grid;
+  grid-template-columns: 1.5rem minmax(5.5rem, 8rem) minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--ep-line);
+  border-radius: var(--ep-radius-sm);
+  background: var(--ep-paper);
+  font-size: 0.86rem;
+  color: var(--ep-muted);
+}
+
+.jap-gate-item strong { color: var(--ep-ink); }
+
+.jap-gate-check {
+  display: inline-grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 999px;
+  background: var(--ep-soft);
+  color: transparent;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.jap-gate-item.is-done .jap-gate-check { background: var(--ep-primary); color: var(--ep-primary-text); transform: scale(1.08); }
+
+.jap-gate-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: start;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px dashed var(--ep-line);
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--ep-muted);
+  opacity: 0.55;
+  transition: opacity 0.35s ease, border-color 0.35s ease, color 0.35s ease;
+}
+
+.jap-gate-dot { width: 8px; height: 8px; border-radius: 999px; background: var(--ep-line); transition: background-color 0.35s ease, transform 0.35s ease; }
+.jap-gate-live.is-live { opacity: 1; border-style: solid; border-color: var(--ep-primary-outline); color: var(--ep-ink); }
+.jap-gate-live.is-live .jap-gate-dot { background: var(--ep-primary); transform: scale(1.3); }
+
+@media (max-width: 520px) {
+  .jap-gate-item { grid-template-columns: 1.5rem minmax(0, 1fr); }
+  .jap-gate-item > span:last-child { grid-column: 2; }
+}
+
+/* ---------- bars: values up to 4 digits with a comma ---------- */
+.jap-bars .jjc-hbar { grid-template-columns: minmax(84px, 9.5rem) minmax(0, 1fr) 5.5ch; }
+
+/* ---------- split ---------- */
+.jap-split { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 12px; }
+
+.jap-split-col {
+  padding: 12px 14px;
+  border: 1px solid var(--ep-line);
+  border-top: 3px solid var(--ep-primary);
+  border-radius: var(--ep-radius-sm);
+  background: var(--ep-paper);
+}
+
+.jap-split-col.is-human { border-top-color: var(--ep-soft-ink); }
+.jap-split-head { margin: 0 0 8px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ep-muted); }
+.jap-split-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+
+.jap-split-col li {
+  position: relative;
+  padding-left: 16px;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--ep-ink);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.jap-split-col li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--ep-primary);
+}
+
+.jap-split-col.is-human li::before { background: var(--ep-soft-ink); }
+.jap-split-col li.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .jap-map-stop a,
+  .jap-map-no,
+  .jap-gate-check,
+  .jap-gate-live,
+  .jap-gate-dot,
+  .jap-split-col li { transition: none; }
+  .jap-split-col li { opacity: 1; transform: none; }
+}

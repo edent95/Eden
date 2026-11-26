@@ -31,7 +31,7 @@ type Base = { isZh: boolean };
 const pick = (isZh: boolean, text: EpText) => (isZh ? text.zh : text.en);
 const at = (isZh: boolean, value: string | EpText) => (typeof value === 'string' ? value : pick(isZh, value));
 
-const useLoopStep = (ref: React.RefObject<HTMLElement | null>, count: number, ms: number, still: number) => {
+export const useLoopStep = (ref: React.RefObject<HTMLElement | null>, count: number, ms: number, still: number) => {
   const [step, setStep] = React.useState(still);
   React.useEffect(() => {
     const node = ref.current;
