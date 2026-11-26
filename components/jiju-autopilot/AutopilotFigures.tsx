@@ -167,9 +167,61 @@ export const ApTeamCost: React.FC<{
   );
 };
 
+/* ---------- 0d. One campaign × many operators: every field to confirm is a dot. The loop checks them
+   all, field by field; only the few that fail go to a person. (Which dots fail is illustrative.) ---------- */
+
+export const ApFieldGrid: React.FC<{
+  isZh: boolean;
+  title: EpText;
+  operators: number;
+  fields: EpText[];
+  stuck: [number, number][];
+  handText: EpText;
+  loopText: EpText;
+  personText: EpText;
+  caption: EpText;
+}> = ({ isZh, title, operators, fields, stuck, handText, loopText, personText, caption }) => {
+  const ref = React.useRef<HTMLDivElement | null>(null);
+  const progress = useCountUp(ref, 3200);
+  const total = operators * fields.length;
+  const stuckSet = new Set(stuck.map(([field, op]) => `${field}:${op}`));
+  const checked = Math.round(progress * total);
+  const passed = total - stuck.length;
+  return (
+    <figure className="jjc-figure">
+      <p className="jjc-figure-title">{pick(isZh, title)}</p>
+      <div
+        ref={ref}
+        className="jap-fields"
+        role="img"
+        aria-label={`${fmt(total)} ${pick(isZh, handText)}; ${fmt(passed)} ${pick(isZh, loopText)}; ${stuck.length} ${pick(isZh, personText)}`}
+      >
+        {fields.map((field, f) => (
+          <div key={field.en} className="jap-fields-row" aria-hidden="true">
+            <span className="jap-fields-name">{pick(isZh, field)}</span>
+            <span className="jap-fields-dots" style={{ gridTemplateColumns: `repeat(${operators}, minmax(0, 1fr))` }}>
+              {Array.from({ length: operators }, (_, op) => {
+                const done = f * operators + op < checked;
+                const isStuck = stuckSet.has(`${f}:${op}`);
+                return <i key={op} className={done ? (isStuck ? 'is-stuck' : 'is-ok') : ''} />;
+              })}
+            </span>
+          </div>
+        ))}
+        <div className="jap-fields-sum" aria-hidden="true">
+          <p className="is-old"><b>{fmt(total)}</b> {pick(isZh, handText)}</p>
+          <p className="is-new"><b>{fmt(Math.min(passed, checked))}</b> {pick(isZh, loopText)}</p>
+          <p className="is-person"><b>{progress >= 1 ? stuck.length : 0}</b> {pick(isZh, personText)}</p>
+        </div>
+      </div>
+      <figcaption>{pick(isZh, caption)}</figcaption>
+    </figure>
+  );
+};
+
 /* ---------- 1. Six problem dimensions: cards turn over one by one, each with a real number ---------- */
 
-export type ApProblem = { id: string; hue: ApHue; icon: React.ReactNode; dim: EpText; pain: EpText; value: number; unit?: EpText; scale: EpText };
+export type ApProblem = { id: string; hue: ApHue; icon: React.ReactNode; dim: EpText; pain: EpText; value?: number; unit?: EpText; scale: EpText };
 
 export const ApProblems: React.FC<{ isZh: boolean; items: ApProblem[]; caption: EpText }> = ({ isZh, items, caption }) => {
   const ref = React.useRef<HTMLUListElement | null>(null);
@@ -186,9 +238,14 @@ export const ApProblems: React.FC<{ isZh: boolean; items: ApProblem[]; caption: 
               <span className="jap-problem-dim">{pick(isZh, item.dim)}</span>
               <strong className="jap-problem-pain">{pick(isZh, item.pain)}</strong>
               <span className="jap-problem-scale">
-                <b aria-hidden="true">{fmt(item.value * local)}{item.unit ? ` ${pick(isZh, item.unit)}` : ''}</b>
-                <span className="jap-sr">{fmt(item.value)}{item.unit ? ` ${pick(isZh, item.unit)}` : ''}</span>
-                {' '}{pick(isZh, item.scale)}
+                {item.value !== undefined && (
+                  <>
+                    <b aria-hidden="true">{fmt(item.value * local)}{item.unit ? ` ${pick(isZh, item.unit)}` : ''}</b>
+                    <span className="jap-sr">{fmt(item.value)}{item.unit ? ` ${pick(isZh, item.unit)}` : ''}</span>
+                    {' '}
+                  </>
+                )}
+                {pick(isZh, item.scale)}
               </span>
             </li>
           );
@@ -411,7 +468,7 @@ export const ApColumns: React.FC<{
 
 /* ---------- 5. The ten machines: pick one, its real rules open underneath ---------- */
 
-export type ApMachine = { id: string; hue: ApHue; icon: React.ReactNode; name: EpText; solves: EpText[]; text: EpText; detail: React.ReactNode };
+export type ApMachine = { id: string; hue: ApHue; icon: React.ReactNode; name: EpText; solves: EpText[]; text: EpText; detail: React.ReactNode; status?: EpText; live?: boolean };
 
 export const ApMachineDeck: React.FC<{ isZh: boolean; machines: ApMachine[]; hint: EpText }> = ({ isZh, machines, hint }) => {
   const [active, setActive] = React.useState(0);
@@ -446,6 +503,7 @@ export const ApMachineDeck: React.FC<{ isZh: boolean; machines: ApMachine[]; hin
             <span className="jap-deck-icon" aria-hidden="true">{item.icon}</span>
             <strong>{pick(isZh, item.name)}</strong>
             <span className="jap-deck-solves">{item.solves.map((dim) => pick(isZh, dim)).join(' · ')}</span>
+            {item.status && <span className={`jap-status${item.live ? ' is-live' : ''}`}>{pick(isZh, item.status)}</span>}
           </button>
         ))}
       </div>
@@ -454,6 +512,7 @@ export const ApMachineDeck: React.FC<{ isZh: boolean; machines: ApMachine[]; hin
           <span className="jap-deck-icon" aria-hidden="true">{machine.icon}</span>
           <strong>{pick(isZh, machine.name)}</strong>
           {machine.solves.map((dim) => <span key={dim.en} className="jap-chip is-hue">{pick(isZh, dim)}</span>)}
+          {machine.status && <span className={`jap-status${machine.live ? ' is-live' : ''}`}>{pick(isZh, machine.status)}</span>}
         </p>
         <p className="jap-deck-panel-text">{pick(isZh, machine.text)}</p>
         <div key={machine.id}>{machine.detail}</div>

@@ -1,6 +1,7 @@
 import type { CssArtComponent } from './components/css-art/index';
 import { IGamingHeroStageArt } from './components/css-art/igaming-hero-stage';
 import { DrRacingBeliefAsk, DrRacingBeliefQuiet, DrRacingBeliefRecord, DrRacingBeliefUseful, DrRacingBeliefVerified, DrRacingStoryBanner, ETReportBeliefAnswer, ETReportBeliefCompute, ETReportBeliefLatest, ETReportBeliefLocal, ETReportBeliefStop, ETReportStoryBanner, LifeOsBeliefBarnum, LifeOsBeliefIndependent, LifeOsBeliefLocal, LifeOsBeliefNatal, LifeOsBeliefPropose, LifeOsStoryBanner } from './components/css-art/system-story-art';
+import { IGamingAutopilotArt } from './components/css-art/igaming-autopilot-art';
 import { JijuBeliefBlankArt, JijuBeliefCheckArt, JijuBeliefDecideArt, JijuBeliefSaveArt, JijuBeliefSourceArt, JijuLoopArt, JijuNightDayArt, JijuStorefrontArt } from './components/css-art/jiju-story-art';
 import {
   ElementFireCssIcon,
@@ -506,6 +507,27 @@ export const cssArtRegistry: readonly CssArtRegistryItem[] = [
     copy: {
       en: 'The “photo” inside the phone mock-up of a Jiju shop card.',
       zh: 'Jiju 店家卡片手机示意图里的「照片」。',
+    },
+  },
+  {
+    id: 'igaming-autopilot-loop',
+    title: 'iGaming Ai · Provider hub and operator ring',
+    projectTitle: 'iGaming',
+    category: 'product-story',
+    sourceRoute: '/igaming-ai',
+    ratio: 'banner',
+    background: 'scene',
+    supportsDarkMode: true,
+    supportsReducedMotion: true,
+    cssFile: 'styles/css-art/jiju-story.css',
+    Component: IGamingAutopilotArt,
+    label: {
+      en: 'A provider chip in the middle of a ring of eight operator screens; packets run out along the spokes and screens tick as they go live; one checklist ticks row by row, the last row waiting for a person.',
+      zh: 'provider 筹码在中间，周围一圈八个 operator 屏幕；小圆点沿辐条送出、屏幕上线打勾；一张清单逐行打勾，最后一行等人处理。',
+    },
+    copy: {
+      en: 'Banner for /igaming-ai: the closed loop around a provider (golden rectangle) and one operator checklist (square).',
+      zh: '/igaming-ai 的横幅：左边黄金矩形是围着 provider 的闭环，右边正方形是一张 operator 清单。',
     },
   },
   {
