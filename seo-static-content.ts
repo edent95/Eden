@@ -541,6 +541,36 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
     ],
   },
 
+  '/jiju-autopilot': {
+    eyebrow: L('Full automation system · For sale', '全自动系统 · 可出售'),
+    thesis: L(
+      'A places directory that keeps itself true — run by one person and a crew of machines.',
+      '一个自己保持准确的地点名录 —— 一个人加一群机器在跑。',
+    ),
+    sections: [
+      {
+        title: L('The ten machines', '十台机器'),
+        paragraphs: [
+          L(
+            'Jiju (jiju.pet) lists 944 live pet-friendly places in Malaysia and Singapore (26 Nov 2026). News from five outlets is read every hour and events with an official source publish themselves. Five Grok bots pull research tasks from a queue ranked by gap size and search demand, with daily caps and a nightly check that every copied quote is still on its page. All agents read and write through 108 back-office tools that preview before every write and log every change.',
+            'Jiju（jiju.pet）收录马来西亚和新加坡 944 家上线的宠物友好地点（2026-11-26）。每小时读 5 家媒体，有官方来源的活动自己上线。5 个 Grok bot 从按缺口大小和搜索需求排序的队列里领任务，有每日上限，每晚核对抄来的原话还在不在网页上。所有 agent 都经 108 个后台工具读写，写之前先预演，每笔改动都记录。',
+          ),
+          L(
+            'A place goes live by itself when name, opening hours, description, a stored photo and a location are complete; every Monday a quarter of live places is checked against Google’s business status and closed ones drop back to draft, never deleted. Photos are copied with their source, links are ranked by trust and patrolled daily, owners confirm their details on WhatsApp at most five a day, and confirmed fields are locked against bots.',
+            '名字、营业时间、说明、自存照片、位置五项齐了，地点自己上线；每周一拿四分之一的上线地点对 Google 营业状态，倒闭的退回草稿、从不删除。照片连出处一起复制，链接按可信度排序并每天巡查，店主在 WhatsApp 上确认资料（一天最多五家），确认过的栏位 bot 改不了。',
+          ),
+          L(
+            'A control-room dashboard runs every job on a schedule, has AI write code fixes that a second AI reviews, runs the tests on a Mac at home and merges green changes itself (2,381 merges since 18 Sep 2026). Social posts are written by a local model, drawn as cards and posted through Meta’s official API, one a day.',
+            '控制室面板按时间表跑所有任务：AI 写代码修复、另一个 AI 审，测试在家里的 Mac 上跑，全绿的改动自己合并（2026-09-18 起合并 2,381 次）。社媒帖子由本机模型写、画成卡片、经 Meta 官方接口发出，一天一帖。',
+          ),
+        ],
+        links: [
+          { label: L('Jiju itself', 'Jiju 本身'), href: L('/jiju-pet', '/zh/jiju-pet') },
+          { label: L('jiju.pet', 'jiju.pet'), href: L('https://jiju.pet/', 'https://jiju.pet/') },
+        ],
+      },
+    ],
+  },
   '/dr-racing': {
     eyebrow: L('Loan operations · Dealership tool', '贷款运营 · 车行工具'),
     thesis: L(

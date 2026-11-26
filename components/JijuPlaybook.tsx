@@ -8,9 +8,11 @@
 // Inline `code` in prose is written with backticks in the content strings.
 
 import React from 'react';
-import { JIJU_LESSONS, JIJU_PLAYBOOK, type PbText } from './jiju-playbook-content';
+import { JIJU_LESSONS, JIJU_PLAYBOOK, type PbChapter, type PbText } from './jiju-playbook-content';
 
-type Props = { isZh: boolean };
+type Lesson = (typeof JIJU_LESSONS)[number];
+/** chapters / lessons default to the /jiju-pet manual; /jiju-autopilot appends its own. */
+type Props = { isZh: boolean; chapters?: PbChapter[]; lessons?: Lesson[] };
 
 const Inline: React.FC<{ text: string }> = ({ text }) => {
   const parts = text.split('`');
@@ -21,19 +23,19 @@ const Inline: React.FC<{ text: string }> = ({ text }) => {
   );
 };
 
-export const JijuPlaybook: React.FC<Props> = ({ isZh }) => {
+export const JijuPlaybook: React.FC<Props> = ({ isZh, chapters = JIJU_PLAYBOOK, lessons = JIJU_LESSONS }) => {
   const pick = (text: PbText) => (isZh ? text.zh : text.en);
-  const stepCount = JIJU_PLAYBOOK.reduce((sum, chapter) => sum + chapter.steps.length, 0);
+  const stepCount = chapters.reduce((sum, chapter) => sum + chapter.steps.length, 0);
   const [allOpen, setAllOpen] = React.useState<boolean | null>(null);
 
   return (
     <div className="jjp" id="playbook">
       <div className="jjp-toc">
         <p className="jjp-toc-title">
-          {isZh ? `完整手册 · ${JIJU_PLAYBOOK.length} 章 ${stepCount} 步` : `The full manual · ${JIJU_PLAYBOOK.length} chapters, ${stepCount} steps`}
+          {isZh ? `完整手册 · ${chapters.length} 章 ${stepCount} 步` : `The full manual · ${chapters.length} chapters, ${stepCount} steps`}
         </p>
         <ol>
-          {JIJU_PLAYBOOK.map((chapter) => (
+          {chapters.map((chapter) => (
             <li key={chapter.id}>
               <a href={`#${chapter.id}`} onClick={() => setAllOpen(null)}>{pick(chapter.title)}</a>
             </li>
@@ -45,7 +47,7 @@ export const JijuPlaybook: React.FC<Props> = ({ isZh }) => {
         </button>
       </div>
 
-      {JIJU_PLAYBOOK.map((chapter, chapterIndex) => (
+      {chapters.map((chapter, chapterIndex) => (
         <details
           key={chapter.id}
           id={chapter.id}
@@ -100,7 +102,7 @@ export const JijuPlaybook: React.FC<Props> = ({ isZh }) => {
       <details id="pb-lessons" className="jjp-chapter" open={allOpen ?? false}>
         <summary>
           <span className="jjp-chapter-title">{isZh ? '附 · 每条规矩是哪天、因为什么定的' : 'Appendix · when each rule was made, and why'}</span>
-          <span className="jjp-chapter-count">{isZh ? `${JIJU_LESSONS.length} 条` : `${JIJU_LESSONS.length} rules`}</span>
+          <span className="jjp-chapter-count">{isZh ? `${lessons.length} 条` : `${lessons.length} rules`}</span>
         </summary>
         <div className="jjp-table-wrap" tabIndex={0}>
           <table className="jjp-table">
@@ -112,7 +114,7 @@ export const JijuPlaybook: React.FC<Props> = ({ isZh }) => {
               </tr>
             </thead>
             <tbody>
-              {JIJU_LESSONS.map((row) => (
+              {lessons.map((row) => (
                 <tr key={row.date + row.rule.en}>
                   <td>{row.date}</td>
                   <td><Inline text={pick(row.rule)} /></td>

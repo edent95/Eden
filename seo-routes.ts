@@ -62,7 +62,7 @@ export type RouteSeo = {
  * Fallback freshness date for routes without their own `dateModified`, and the
  * homepage's dateModified. Bump when a sitewide SEO-visible change lands.
  */
-export const SITE_CONTENT_LASTMOD = '2026-11-25';
+export const SITE_CONTENT_LASTMOD = '2026-11-26';
 
 /** Every share image is 1200×630 JPEG. `site` is the classic root-level `og-image.jpg`. */
 export const OG_IMAGES: Record<OgImageKey, { file: string; alt: Record<SeoLanguage, string> }> = {
@@ -173,6 +173,22 @@ export const ROUTE_SEO: RouteSeo[] = [
     desc: {
       en: 'Discover genuinely pet-friendly places, verify real policies, save pet profiles and visit memories, and add trusted local context with Jiju.',
       zh: '用 Jiju 发现真正宠物友好的地点，确认真实政策与现场条件，保存宠物档案和到访记忆，并共同补充可信的本地资料。',
+    },
+  },
+  {
+    // Buyer-facing page for the Jiju full-automation system (2026-11-26). Numbers dated in the page captions.
+    path: '/jiju-autopilot',
+    datePublished: '2026-11-26',
+    dateModified: '2026-11-26',
+    og: 'jiju',
+    priority: '0.7',
+    title: {
+      en: 'Jiju Autopilot | A places directory that runs itself',
+      zh: 'Jiju Autopilot | 自己运转的地点名录系统',
+    },
+    desc: {
+      en: 'The automation behind jiju.pet: news intake, Grok bots, auto-publish and unpublish rules, photos, WhatsApp owner checks, AI code fixes and social posts.',
+      zh: 'jiju.pet 背后的整套自动化：新闻收录、Grok 调查 bot、自动上下架规则、图片、店主 WhatsApp 确认、AI 修代码与自动合并、社媒自动发帖。',
     },
   },
   {
