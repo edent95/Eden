@@ -38,7 +38,7 @@ const IGamingAutopilotPage: React.FC<{
       icon={<IGamingAutopilotIcon label="iGaming Ai icon" />}
       name="iGaming Ai"
       kicker={{ en: 'B2B iGaming automation · For providers, aggregators and platforms', zh: 'B2B iGaming 自动化 · 给供应商、聚合商与平台' }}
-      tagline={{ en: 'A provider directory run by one closed loop — and one dashboard that shows what is waiting for you, where it stopped, and how much runs by itself.', zh: '用一个闭环来跑 provider 名录 —— 再用一个仪表台告诉你：什么在等你、停在哪、放手到哪一档。' }}
+      tagline={{ en: 'Autopilot with a trust dial: operations that run by themselves, stay in plain sight, and go only as far as you let them.', zh: '一个会自己转、人看得见、放手有档位的运营系统。' }}
       meta={{ en: 'Loop running on jiju.pet · Pipeline dashboard running at a dealership · Numbers as of 26 Nov 2026', zh: '闭环正在 jiju.pet 运行 · 流水线仪表台正在一家车行使用 · 数字截至 2026-11-26' }}
       primary={{ href: contactHref, icon: <Mail size={16} />, label: { en: 'Talk about your process', zh: '聊聊你的流程' } }}
       secondary={{ href: joinBasePath(baseUrl, 'jiju-autopilot'), ghost: true, label: { en: 'See the engine running', zh: '看引擎实际在跑' } }}

@@ -26,7 +26,7 @@ const pick = (isZh: boolean, text: EpText) => (isZh ? text.zh : text.en);
 
 /* ---------- 1. three layers ---------- */
 
-export type IgLayer = { id: string; hue: ApHue; icon: React.ReactNode; question: EpText; answer: EpText; from: EpText; href?: string };
+export type IgLayer = { id: string; hue: ApHue; icon: React.ReactNode; tag: EpText; question: EpText; answer: EpText; from: EpText; href?: string };
 
 export const IgLayers: React.FC<{ isZh: boolean; title: EpText; items: IgLayer[]; runsLabel: EpText; caption: EpText }> = ({ isZh, title, items, runsLabel, caption }) => {
   const ref = React.useRef<HTMLOListElement | null>(null);
@@ -38,6 +38,7 @@ export const IgLayers: React.FC<{ isZh: boolean; title: EpText; items: IgLayer[]
         {items.map((item, index) => (
           <li key={item.id} className={`igap-layer jap-hue-${item.hue}${step >= index ? ' is-in' : ''}${step === index ? ' is-now' : ''}`}>
             <span className="igap-layer-icon" aria-hidden="true">{item.icon}</span>
+            <p className="igap-layer-tag">{pick(isZh, item.tag)}</p>
             <p className="igap-layer-q">{pick(isZh, item.question)}</p>
             <p className="igap-layer-a">{pick(isZh, item.answer)}</p>
             <p className="igap-layer-from">

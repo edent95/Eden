@@ -544,8 +544,8 @@ export const ROUTE_STATIC_COPY: Record<string, StaticRouteCopy> = {
   '/igaming-ai': {
     eyebrow: L('B2B iGaming automation', 'B2B iGaming 自动化'),
     thesis: L(
-      'A provider directory is the same directory as Jiju under other names — so the engine that keeps Jiju true can run it.',
-      'Provider 名录就是换了名字的 Jiju 名录 —— 让 Jiju 保持准确的引擎，也能把它跑起来。',
+      'Autopilot with a trust dial: operations that run by themselves, stay in plain sight, and go only as far as you let them.',
+      '一个会自己转、人看得见、放手有档位的运营系统。',
     ),
     sections: [
       {
