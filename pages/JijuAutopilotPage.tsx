@@ -5,21 +5,16 @@
 
 // /jiju-autopilot — the Jiju full-automation system, shown end to end for people who may want to buy it
 // (owner's request 2026-11-26: English first + Chinese, fully transparent). Body: components/jiju-autopilot/.
-// The consumer product page stays at /jiju-pet; this page reuses its banner, belief art and manual.
+// The consumer product page stays at /jiju-pet; this page reuses its banner and belief art.
+// No technical manual on this page (owner, 2026-11-26).
 
 import React from 'react';
 import { Mail } from 'lucide-react';
 import ProductStorePage from '../components/ProductStorePage';
-import { JijuPlaybook } from '../components/JijuPlaybook';
-import { JIJU_LESSONS, JIJU_PLAYBOOK } from '../components/jiju-playbook-content';
 import { jijuAutopilotBlocks } from '../components/jiju-autopilot/autopilot-blocks';
-import { AUTOPILOT_CHAPTERS, AUTOPILOT_LESSONS } from '../components/jiju-autopilot/autopilot-playbook';
 import { ProjectsJijuCssIcon } from '../components/css-art/index';
 import { HeaderControls, joinBasePath, type Language, type Theme, type ThemePreference } from '../app/shared';
 import { productSiblingCards } from '../app/product-siblings';
-
-const CHAPTERS = [...JIJU_PLAYBOOK, ...AUTOPILOT_CHAPTERS];
-const LESSONS = [...JIJU_LESSONS, ...AUTOPILOT_LESSONS].sort((a, b) => a.date.localeCompare(b.date));
 
 const JijuAutopilotPage: React.FC<{
   homeHref: string;
@@ -51,15 +46,9 @@ const JijuAutopilotPage: React.FC<{
         { href: '#ap-news', label: { en: 'The ten machines', zh: '十台机器' } },
         { href: '#ap-night', label: { en: 'One night', zh: '一晚' } },
         { href: '#ap-buy', label: { en: 'Buying it', zh: '购买' } },
-        { href: '#playbook', label: { en: 'Full manual', zh: '完整手册' } },
         { href: '#faq', label: { en: 'FAQ', zh: '常见问题' } },
       ]}
-      body={[
-        ...jijuAutopilotBlocks(isZh),
-        { kind: 'node', node: <h2 id="ap-manual">{isZh ? '给想看到底的人：完整技术手册' : 'For builders: the full technical manual'}</h2> },
-        { kind: 'p', text: { en: 'Commands, settings, thresholds, file paths and every rule with the date and the mistake it came from. Chapters 0–3 are shared with the Jiju page; 4–9 cover the machines above. Folded up — open only what you need.', zh: '命令、设定、阈值、文件路径，以及每条规矩的日期和它来自哪次出错。第 0–3 章和 Jiju 页共用；第 4–9 章讲上面这些机器。默认收起，需要哪章打开哪章。' } },
-        { kind: 'node', node: <JijuPlaybook isZh={isZh} chapters={CHAPTERS} lessons={LESSONS} /> },
-      ]}
+      body={jijuAutopilotBlocks(isZh)}
       faq={[
         { q: { en: 'Is this a demo or the real thing?', zh: '这是演示还是真的在跑？' }, a: { en: 'The real thing. Every rule on this page is read from the code that runs jiju.pet, and every number is from its live data or logs on the date in the caption.', zh: '真的在跑。页面上每条规矩都取自 jiju.pet 正在运行的代码，每个数字都来自图注日期当天的正式资料或日志。' } },
         { q: { en: 'Does it only work for pet-friendly places?', zh: '只能做宠物友好地点吗？' }, a: { en: 'No. The pet part is the categories and the questions asked of owners. The machines — intake, research queue, publish and unpublish rules, photos, links, owner confirmation, auto-merge, social posting — work for any directory of places, shops, events or deals.', zh: '不是。「宠物」只是类别和问店主的问题。收录、调查队列、上下架规则、图片、链接、店主确认、自动合并、社媒发帖这些机器，任何地点、店家、活动、优惠名录都能用。' } },
